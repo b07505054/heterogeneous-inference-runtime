@@ -40,6 +40,8 @@ def main():
     p99 = float(np.percentile(latencies, 99))
     qps = 1000.0 / avg
 
+    OUTPUT_PATH.parent.mkdir(exist_ok=True)
+
     row = {
         "backend": "ExecuTorch",
         "model": "MobileNetV2",
@@ -51,7 +53,6 @@ def main():
         "throughput_qps": round(qps, 4),
         "source": "executorch_runtime_python",
     }
-
     OUTPUT_PATH.parent.mkdir(exist_ok=True)
 
     with OUTPUT_PATH.open("w", newline="", encoding="utf-8") as f:

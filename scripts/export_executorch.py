@@ -13,8 +13,10 @@ def main():
     model = mobilenet_v2(weights=None).eval()
     example_inputs = (torch.randn(1, 3, 224, 224),)
 
-    exported_program = torch.export.export(model, example_inputs)
-
+    exported_program = torch.export.export(
+        model,
+        example_inputs,
+    )
     edge_program = to_edge_transform_and_lower(
         exported_program,
         partitioner=[XnnpackPartitioner()],

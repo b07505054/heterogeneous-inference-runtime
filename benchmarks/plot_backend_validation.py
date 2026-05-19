@@ -10,7 +10,7 @@ OUTPUT_PATH = Path("results/backend_validation_latency.png")
 
 def main():
     data = json.loads(INPUT_PATH.read_text(encoding="utf-8"))
-
+    data = [r for r in data if r["avg_latency_ms"] >= 0]
     labels = []
     latencies = []
 

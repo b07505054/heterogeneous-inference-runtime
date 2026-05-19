@@ -10,7 +10,7 @@ OUTPUT_PATH = Path("results/backend_validation_throughput.png")
 
 def main():
     data = json.loads(INPUT_PATH.read_text(encoding="utf-8"))
-
+    data = [r for r in data if r["throughput_qps"] is not None]
     labels = []
     qps = []
 
