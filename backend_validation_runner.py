@@ -2,8 +2,9 @@ import json
 from pathlib import Path
 from backends.pytorch_backend import PyTorchBackend
 from backends.onnxruntime_backend import ONNXRuntimeBackend
-
-
+from backends.executorch_backend import ExecuTorchBackend
+from backends.cpp_backend import CppInferenceBackend
+from backends.thread_scaling_backend import ThreadScalingBackend
 def serialize_result(r):
     return {
         "backend": r.backend,
@@ -34,6 +35,35 @@ def main():
         PyTorchBackend(
             precision="FP32",
             device="cpu",
+        ),
+        # ExecuTorchBackend(
+        #     csv_path="results/YOUR_EXECUTORCH_CSV.csv",
+        #     precision="FP32",
+        #     backend_name="XNNPACK",
+        # ),
+        CppInferenceBackend(
+            csv_path="results/cpp_benchmark.csv",
+            precision="FP32",
+            device="CPU C++",
+        ),
+        ThreadScalingBackend(
+            csv_path="results/mobilenet_v2_optimized_bs1_t1_benchmark.csv",
+            threads=1,
+        ),
+
+        ThreadScalingBackend(
+            csv_path="results/mobilenet_v2_optimized_bs1_t2_benchmark.csv",
+            threads=2,
+        ),
+
+        ThreadScalingBackend(
+            csv_path="results/mobilenet_v2_optimized_bs1_t4_benchmark.csv",
+            threads=4,
+        ),
+
+        ThreadScalingBackend(
+            csv_path="results/mobilenet_v2_optimized_bs1_t8_benchmark.csv",
+            threads=8,
         ),
     ]
 

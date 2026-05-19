@@ -5,51 +5,62 @@ import matplotlib.pyplot as plt
 
 
 INPUT_PATH = Path("results/backend_validation_summary.json")
-OUTPUT_PATH = Path("results/backend_validation_latency.png")
+OUTPUT_PATH = Path("results/backend_validation_p99.png")
 
 
 def main():
     data = json.loads(INPUT_PATH.read_text(encoding="utf-8"))
 
     labels = []
-    latencies = []
+    p99 = []
 
     for r in data:
+
         if r["backend"] == "ONNXRuntime":
-            label = f'ORT\n{r["precision"]}'
+            label = f"ORT\n{r['precision']}"
 
         elif r["backend"] == "ThreadScaling":
             threads = r["extra"]["threads"]
-            label = f'Thread\n{threads}T'
+            label = f"Thread\n{threads}T"
 
         elif r["backend"] == "CppInference":
             label = "C++\nFP32"
 
         else:
-            label = f'{r["backend"]}\n{r["precision"]}'
+            label = f"{r['backend']}\n{r['precision']}"
+
+        value = r.get("p99_latency_ms")
+
+        if value is None:
+            continue
 
         labels.append(label)
-        latencies.append(r["avg_latency_ms"])
+        p99.append(value)
 
     plt.figure(figsize=(14, 6))
-    bars = plt.bar(labels, latencies)
 
-    plt.ylabel("Average Latency (ms)")
-    plt.title("Backend Validation Latency Comparison")
+    bars = plt.bar(labels, p99)
+
+    plt.ylabel("p99 Latency (ms)")
+    plt.title("Backend Validation p99 Latency Comparison")
+
     plt.grid(axis="y", alpha=0.3)
+
     plt.xticks(rotation=15)
 
-    for bar, latency in zip(bars, latencies):
+    for bar, value in zip(bars, p99):
         plt.text(
             bar.get_x() + bar.get_width() / 2,
             bar.get_height(),
-            f"{latency:.2f} ms",
+            f"{value:.2f} ms",
             ha="center",
             va="bottom",
         )
 
     plt.tight_layout()
+
     plt.savefig(OUTPUT_PATH, dpi=200)
+
     print(f"Saved to {OUTPUT_PATH}")
 
 
