@@ -34,8 +34,12 @@ class ExecuTorchBackend(Backend):
             precision=self.precision,
             device=self.backend_name,
             avg_latency_ms=latency,
-            throughput_qps=round(1000.0 / latency, 4),
+            p95_latency_ms=float(row["p95_latency_ms"]) if row.get("p95_latency_ms") else None,
+            p99_latency_ms=float(row["p99_latency_ms"]) if row.get("p99_latency_ms") else None,
+            throughput_qps=float(row["throughput_qps"]) if row.get("throughput_qps") else round(1000.0 / latency, 4),
             extra={
                 "csv_path": str(self.csv_path),
+                "source": row.get("source"),
+                "delegate": row.get("delegate"),
             },
         )

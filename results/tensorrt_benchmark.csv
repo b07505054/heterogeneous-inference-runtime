@@ -1,0 +1,2 @@
+backend,precision,device,avg_latency_ms,p95_latency_ms,p99_latency_ms,throughput_qps
+TensorRT,FP16,CUDA,1.6426,1.7347,1.7429,608.785

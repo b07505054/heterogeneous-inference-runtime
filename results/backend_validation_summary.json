@@ -1,16 +1,17 @@
 [
   {
     "backend": "ONNXRuntime",
-    "precision": "FP32",
-    "device": "CPUExecutionProvider",
-    "avg_latency_ms": 2.9262,
-    "p95_latency_ms": 3.2762,
-    "p99_latency_ms": 3.3963,
-    "throughput_qps": 341.7368,
+    "precision": "FP32 CUDA",
+    "device": "CUDAExecutionProvider",
+    "avg_latency_ms": 2.9619,
+    "p95_latency_ms": 3.4173,
+    "p99_latency_ms": 3.4517,
+    "throughput_qps": 337.6214,
     "extra": {
       "model_path": "models/mobilenet_v2_fp32.onnx",
-      "requested_provider": "CPUExecutionProvider",
+      "requested_provider": "CUDAExecutionProvider",
       "actual_providers": [
+        "CUDAExecutionProvider",
         "CPUExecutionProvider"
       ],
       "runs": 100,
@@ -19,16 +20,17 @@
   },
   {
     "backend": "ONNXRuntime",
-    "precision": "Optimized FP32",
-    "device": "CPUExecutionProvider",
-    "avg_latency_ms": 2.8298,
-    "p95_latency_ms": 3.1419,
-    "p99_latency_ms": 3.179,
-    "throughput_qps": 353.3838,
+    "precision": "Optimized FP32 CUDA",
+    "device": "CUDAExecutionProvider",
+    "avg_latency_ms": 2.7297,
+    "p95_latency_ms": 2.9105,
+    "p99_latency_ms": 2.9259,
+    "throughput_qps": 366.3459,
     "extra": {
       "model_path": "models/mobilenet_v2_optimized.onnx",
-      "requested_provider": "CPUExecutionProvider",
+      "requested_provider": "CUDAExecutionProvider",
       "actual_providers": [
+        "CUDAExecutionProvider",
         "CPUExecutionProvider"
       ],
       "runs": 100,
@@ -37,12 +39,12 @@
   },
   {
     "backend": "ONNXRuntime",
-    "precision": "INT8",
+    "precision": "INT8 CPU",
     "device": "CPUExecutionProvider",
-    "avg_latency_ms": 30.1723,
-    "p95_latency_ms": 33.1014,
-    "p99_latency_ms": 36.6146,
-    "throughput_qps": 33.143,
+    "avg_latency_ms": 94.9283,
+    "p95_latency_ms": 102.3394,
+    "p99_latency_ms": 103.389,
+    "throughput_qps": 10.5343,
     "extra": {
       "model_path": "models/mobilenet_v2_int8.onnx",
       "requested_provider": "CPUExecutionProvider",
@@ -57,13 +59,27 @@
     "backend": "PyTorch",
     "precision": "FP32",
     "device": "cpu",
-    "avg_latency_ms": 17.137,
-    "p95_latency_ms": 17.3626,
-    "p99_latency_ms": 17.9914,
-    "throughput_qps": 58.3534,
+    "avg_latency_ms": 19.5518,
+    "p95_latency_ms": 21.6285,
+    "p99_latency_ms": 22.826,
+    "throughput_qps": 51.1462,
     "extra": {
       "runs": 100,
       "warmup": 10
+    }
+  },
+  {
+    "backend": "ExecuTorch",
+    "precision": "FP32",
+    "device": "XNNPACK",
+    "avg_latency_ms": 3.8093,
+    "p95_latency_ms": 5.1644,
+    "p99_latency_ms": 7.402,
+    "throughput_qps": 262.5135,
+    "extra": {
+      "csv_path": "results/executorch_benchmark.csv",
+      "source": "executorch_runtime_python",
+      "delegate": "XNNPACK"
     }
   },
   {
@@ -130,6 +146,19 @@
     "extra": {
       "threads": 8,
       "csv_path": "results/mobilenet_v2_optimized_bs1_t8_benchmark.csv"
+    }
+  },
+  {
+    "backend": "TensorRT",
+    "precision": "FP16",
+    "device": "CUDA",
+    "avg_latency_ms": 1.6426,
+    "p95_latency_ms": 1.7347,
+    "p99_latency_ms": 1.7429,
+    "throughput_qps": 608.785,
+    "extra": {
+      "csv_path": "results/tensorrt_benchmark.csv",
+      "source": "tensorrt_python_runtime"
     }
   }
 ]

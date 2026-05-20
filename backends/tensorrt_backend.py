@@ -1,4 +1,4 @@
-import json
+import csv
 from pathlib import Path
 
 from backends.base import Backend, BenchmarkResult
@@ -7,31 +7,33 @@ from backends.base import Backend, BenchmarkResult
 class TensorRTBackend(Backend):
     name = "TensorRT"
 
-    def __init__(self, summary_path: str = "results/tensorrt_precision_comparison.json"):
-        self.summary_path = Path(summary_path)
+    def __init__(
+        self,
+        csv_path: str = "results/tensorrt_benchmark.csv",
+        precision: str = "FP16",
+    ):
+        self.csv_path = Path(csv_path)
+        self.precision = precision
 
-    def benchmark(self) -> list[BenchmarkResult]:
-        data = json.loads(self.summary_path.read_text(encoding="utf-8"))
+    def benchmark(self) -> BenchmarkResult:
+        with self.csv_path.open(newline="", encoding="utf-8") as f:
+            rows = list(csv.DictReader(f))
 
-        results = []
+        if not rows:
+            raise RuntimeError(f"No rows found in {self.csv_path}")
 
-        for row in data["results"]:
-            results.append(
-                BenchmarkResult(
-                    backend="TensorRT",
-                    precision=row["mode"],
-                    device=data["device"],
-                    avg_latency_ms=row["latency_mean_ms"],
-                    p95_latency_ms=row["latency_p95_ms"],
-                    p99_latency_ms=row["latency_p99_ms"],
-                    throughput_qps=row["throughput_qps"],
-                    extra={
-                        "enqueue_mean_ms": row["enqueue_mean_ms"],
-                        "h2d_mean_ms": row["h2d_mean_ms"],
-                        "gpu_compute_mean_ms": row["gpu_compute_mean_ms"],
-                        "d2h_mean_ms": row["d2h_mean_ms"],
-                    },
-                )
-            )
+        row = rows[0]
 
-        return results
+        return BenchmarkResult(
+            backend="TensorRT",
+            precision=row.get("precision", self.precision),
+            device=row.get("device", "CUDA"),
+            avg_latency_ms=float(row["avg_latency_ms"]),
+            p95_latency_ms=float(row["p95_latency_ms"]),
+            p99_latency_ms=float(row["p99_latency_ms"]),
+            throughput_qps=float(row["throughput_qps"]),
+            extra={
+                "csv_path": str(self.csv_path),
+                "source": "tensorrt_python_runtime",
+            },
+        )

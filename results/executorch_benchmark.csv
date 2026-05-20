@@ -1,0 +1,2 @@
+backend,model,delegate,threads,avg_latency_ms,p95_latency_ms,p99_latency_ms,throughput_qps,source
+ExecuTorch,MobileNetV2,XNNPACK,,3.8093,5.1644,7.402,262.5135,executorch_runtime_python
