@@ -1,8 +1,8 @@
-# Edge AI Inference Optimization & Profiling Pipeline
+# Edge CV Inference Deployment & Profiling Platform
 
 ## Overview
 
-This project implements an end-to-end edge AI inference optimization and runtime benchmarking pipeline across heterogeneous AI inference backends.
+This project implements an end-to-end edge AI inference deployment, profiling, and runtime benchmarking platform across heterogeneous AI inference backends. :contentReference[oaicite:0]{index=0}
 
 The system evaluates real-world deployment trade-offs across:
 
@@ -14,41 +14,40 @@ The system evaluates real-world deployment trade-offs across:
 - Quantized INT8 inference
 - Multi-threaded CPU execution scaling
 - TensorRT dynamic batch scaling
-- Inference latency (avg / p95 / p99)
-- Throughput (QPS)
-- Memory footprint
-- Model size
-- Accuracy consistency
-- CPU thread scaling behavior
+- Async video inference pipelines
+- Backend fallback execution
+- Runtime monitoring APIs
+- Metrics export infrastructure
 
-The pipeline is designed to simulate a production-style AI deployment workflow similar to modern edge AI inference infrastructure systems.
+The platform simulates a production-style edge computer vision inference system similar to modern autonomous robotics and edge AI deployment infrastructure.
 
 ---
 
 ## System Pipeline
 
 ```text
-PyTorch Model
-   ↓
-ONNX Export
-   ↓
-ONNX Graph Optimization
-   ↓
-Quantization (INT8 Dynamic)
-   ↓
-Backend Conversion / Compilation
+Camera / Video Stream
+        ↓
+Frame Capture Thread
+        ↓
+Async Frame Queue
+        ↓
+Inference Worker Thread
+        ↓
+Backend Runtime
    ├── ONNX Runtime
-   ├── ExecuTorch XNNPACK
-   ├── TensorRT FP16 Engine
-   ├── TensorRT FP32 Engine
-   └── Native C++ Runtime
-   ↓
-Benchmarking + Profiling + Validation
-   ↓
-Nsight Systems GPU Profiling
+   ├── ExecuTorch
+   ├── TensorRT
+   └── Native Runtime
+        ↓
+Metrics Collector
+        ↓
+Monitoring API
+        ↓
+Metrics Export + Profiling
 ```
 
-This simulates a modern AI software deployment toolchain used in production inference systems.
+This architecture simulates production-style asynchronous edge inference deployment systems.
 
 ---
 
@@ -64,20 +63,6 @@ This simulates a modern AI software deployment toolchain used in production infe
 | TensorRT | FP16 | CUDA |
 | TensorRT | FP32 | CUDA |
 | Native C++ ONNX Runtime | FP32 | CPU |
-
----
-
-## Benchmark Setup
-
-- Model: MobileNetV2
-- Input Shape: (1, 3, 224, 224)
-- Iterations: 100
-- Warmup Iterations: 10
-- CPU Thread Sweep: 1 / 2 / 4 / 8
-- TensorRT Batch Sweep: 1 / 2 / 4 / 8 / 16
-- GPU Backend: CUDA
-- TensorRT Precision: FP16 / FP32
-- ExecuTorch Delegate: XNNPACK
 
 ---
 
@@ -124,56 +109,124 @@ This demonstrates typical GPU inference serving behavior where larger batches be
 
 ---
 
-## Key Findings
+## Async Video Inference Pipeline
 
-- TensorRT FP16 achieved the best inference performance across evaluated CUDA runtimes
-- TensorRT reduced latency by ~1.8× compared to ONNX Runtime CUDA FP32
-- TensorRT achieved over 608 QPS under batch-1 inference
-- TensorRT batch scaling achieved over 3823 QPS at batch-16 inference
-- ExecuTorch XNNPACK achieved 1.49 ms average latency and 669 QPS throughput
-- ONNX Runtime optimized CUDA execution improved throughput compared to baseline CUDA execution
-- CPU thread scaling saturated beyond 4 threads
-- Dynamic INT8 quantization caused severe latency regression on MobileNetV2 under ONNX Runtime CPU
+This project includes an asynchronous edge video inference deployment pipeline.
+
+### Features
+
+- Webcam / video-stream inference
+- Async frame capture
+- Queue-based inference scheduling
+- Multi-threaded inference execution
+- Runtime metrics tracking
+- Dropped-frame monitoring
+- Backend abstraction layer
+- Backend fallback support
+- Monitoring API integration
+- Metrics export pipeline
+
+### Runtime Architecture
+
+```text
+Video Source
+    ↓
+Capture Thread
+    ↓
+Frame Queue
+    ↓
+Inference Thread
+    ↓
+Backend Runtime
+    ↓
+Metrics Collector
+```
+
+### Example Runtime Metrics
+
+```json
+{
+  "frames_seen": 120,
+  "frames_processed": 120,
+  "frames_dropped": 0,
+  "fps": 29.655,
+  "avg_latency_ms": 3.688
+}
+```
+
+This demonstrates stable real-time edge inference execution at ~30 FPS with zero dropped frames.
 
 ---
 
-## Thread Scaling Analysis
+## Backend Fallback System
 
-| Threads | Avg Latency (ms) | Throughput (QPS) |
-|---|---|---|
-| 1 | 9.61 | 104.1 |
-| 2 | 5.53 | 181.0 |
-| 4 | 4.52 | 221.4 |
-| 8 | 4.46 | 224.3 |
+This project includes runtime backend fallback support.
 
-### Insight
+### Example
 
-Performance improvement saturated beyond 4 threads due to:
+```text
+Requested Provider:
+CUDAExecutionProvider
 
-- CPU scheduling overhead
-- Memory bandwidth limitations
-- Operator-level parallelism limits
-- Runtime synchronization overhead
+Fallback Provider:
+CPUExecutionProvider
+```
 
-This demonstrates that increasing thread count does not guarantee proportional inference acceleration.
+If a preferred execution backend is unavailable, the system automatically falls back to an available runtime backend without crashing inference execution.
+
+### Example Runtime Status
+
+```json
+{
+  "requested_provider": "FakeCUDAProvider",
+  "active_provider": "CPUExecutionProvider",
+  "session_providers": [
+    "CPUExecutionProvider"
+  ]
+}
+```
+
+This simulates production-style resilient inference deployment infrastructure.
 
 ---
 
-## Quantization Bottleneck Analysis
+## Monitoring API
 
-INT8 dynamic quantization resulted in:
+This project includes a runtime monitoring API using FastAPI.
 
-- Significant latency regression
-- Severe throughput degradation
-- Reduced inference efficiency
+### Supported Endpoints
 
-### Root Cause
+| Endpoint | Description |
+|---|---|
+| `/health` | Runtime health status |
+| `/metrics` | Live FPS / latency metrics |
+| `/backend` | Active backend runtime status |
 
-MobileNetV2 relies heavily on convolution operators, which are not efficiently accelerated under:
+### Example Metrics Endpoint
 
-- ONNX Runtime CPU dynamic quantization path
+```json
+{
+  "frames_seen": 91,
+  "frames_processed": 91,
+  "frames_dropped": 0,
+  "fps": 30.092,
+  "avg_latency_ms": 3.703
+}
+```
 
-Dynamic quantization is generally more effective for transformer-style Linear-heavy architectures than Conv-heavy CNN models.
+This enables real-time runtime observability for edge inference systems.
+
+---
+
+## Metrics Export Infrastructure
+
+The pipeline automatically exports runtime execution metrics to:
+
+```text
+results/video_pipeline_metrics.json
+```
+
+This enables reproducible runtime analysis and deployment reporting.
 
 ---
 
@@ -260,19 +313,6 @@ This project includes a native C++ ONNX Runtime inference pipeline using CMake.
 - Latency reporting
 - Production-style runtime integration
 
-### Build
-
-```bash
-cmake -S cpp_inference -B build_cpp
-cmake --build build_cpp --config Release
-```
-
-### Run
-
-```bash
-./build_cpp/edge_onnx_cpp models/mobilenet_v2_optimized.onnx
-```
-
 ---
 
 ## Profiling & Visualization
@@ -284,6 +324,7 @@ The project automatically generates:
 - p95 latency plots
 - p99 latency plots
 - Batch scaling plots
+- Runtime metrics exports
 - Backend validation summaries
 
 Generated benchmark figures are stored under:
@@ -302,6 +343,7 @@ heterogeneous-inference-runtime/
 ├── backends/
 ├── benchmarks/
 ├── cpp_inference/
+├── deployment/
 ├── models/
 ├── results/
 ├── scripts/
@@ -315,35 +357,22 @@ heterogeneous-inference-runtime/
 
 ## Reproduce Results
 
-### Export ONNX
+### Run Async Video Pipeline
 
 ```bash
-python scripts/export_onnx.py
+python -m deployment.async_video_pipeline \
+  --source 0 \
+  --backend onnx \
+  --provider CPUExecutionProvider \
+  --enable-api
 ```
 
-### Optimize ONNX
+### Query Monitoring API
 
 ```bash
-python scripts/optimize_onnx.py
-```
-
-### Quantize INT8
-
-```bash
-python scripts/quantize_int8.py
-```
-
-### Export ExecuTorch
-
-```bash
-python scripts/export_executorch.py
-```
-
-### Build TensorRT Engines
-
-```bash
-python scripts/build_tensorrt_engine.py
-python scripts/build_tensorrt_engine_fp32.py
+curl http://127.0.0.1:8000/health
+curl http://127.0.0.1:8000/backend
+curl http://127.0.0.1:8000/metrics
 ```
 
 ### Run Backend Validation
@@ -365,45 +394,37 @@ nsys profile -o trt_fp16_profile python benchmarks/benchmark_tensorrt.py
 nsys profile -o trt_fp32_profile python benchmarks/benchmark_tensorrt_fp32.py
 ```
 
-### Generate Plots
-
-```bash
-python benchmarks/plot_backend_validation.py
-python benchmarks/plot_backend_throughput.py
-python benchmarks/plot_backend_p95.py
-python benchmarks/plot_backend_p99.py
-```
-
 ---
 
 ## Future Work
 
 - Nsight Compute profiling
-- Kernel-level CUDA profiling
 - TensorRT INT8 calibration
-- Transformer model benchmark
+- Dynamic backend scheduling
+- Runtime backend auto-selection
 - CUDA stream overlap optimization
-- GPU memory transfer analysis
 - Operator fusion analysis
-- Runtime scheduling analysis
-- Dynamic shape inference
+- Edge model hot-swapping
+- Multi-camera inference
+- Distributed edge inference
 - vLLM / TensorRT-LLM integration
 
 ---
 
 ## Key Takeaway
 
-Efficient AI deployment requires more than model accuracy.
+Efficient edge AI deployment requires more than model accuracy.
 
-Real-world inference systems require optimization across:
+Production-grade inference systems require optimization across:
 
 - Runtime infrastructure
 - Execution backends
+- Asynchronous scheduling
+- Backend fallback
 - Quantization strategy
 - Thread scheduling
 - GPU acceleration
-- Memory efficiency
-- Compiler/runtime integration
-- Hardware-aware execution
+- Monitoring infrastructure
 - Runtime profiling
 - Batch scheduling behavior
+- Hardware-aware execution
