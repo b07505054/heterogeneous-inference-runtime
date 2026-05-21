@@ -1,6 +1,2 @@
 backend,model,delegate,threads,avg_latency_ms,p95_latency_ms,p99_latency_ms,throughput_qps,source
-<<<<<<< HEAD
-ExecuTorch,MobileNetV2,XNNPACK,,3.8093,5.1644,7.402,262.5135,executorch_runtime_python
-=======
-ExecuTorch,MobileNetV2,XNNPACK,,1.4828,1.5235,1.6279,674.4172,executorch_runtime_python
->>>>>>> 7241488 (Add ExecuTorch XNNPACK backend benchmark)
+ExecuTorch,MobileNetV2,XNNPACK,,1.4945,1.5469,1.6645,669.1399,executorch_runtime_python
