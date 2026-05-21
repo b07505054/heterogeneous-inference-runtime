@@ -1,0 +1,6 @@
+backend,precision,batch_size,avg_latency_ms,p95_latency_ms,p99_latency_ms,throughput_qps
+TensorRT,FP16,1,1.7083,1.7597,1.7799,585.3859
+TensorRT,FP16,2,1.463,1.9696,1.9941,1367.0798
+TensorRT,FP16,4,1.8012,1.892,1.9541,2220.7926
+TensorRT,FP16,8,2.6575,2.913,3.3264,3010.3987
+TensorRT,FP16,16,4.1844,4.2861,4.4303,3823.7087

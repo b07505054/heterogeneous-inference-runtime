@@ -79,6 +79,10 @@ def main():
         TensorRTBackend(
             csv_path="results/tensorrt_benchmark.csv",
         ),
+        TensorRTBackend(
+            csv_path="results/tensorrt_fp32_benchmark.csv",
+            precision="FP32",
+        ),
     ]
 
     results = []
