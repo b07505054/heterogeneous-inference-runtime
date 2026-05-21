@@ -10,6 +10,7 @@ from deployment.onnx_cv_backend import ONNXRuntimeCVBackend
 import uvicorn
 from deployment.monitoring_api import create_monitoring_app
 from deployment.export_metrics import export_metrics
+from deployment.model_registry import ModelRegistry
 
 
 class AsyncVideoInferencePipeline:
@@ -19,13 +20,16 @@ class AsyncVideoInferencePipeline:
         backend,
         queue_size: int = 8,
         max_frames: int = 300,
+        model_config=None,
     ):
+        
         self.source = VideoFrameSource(source)
         self.backend = backend
         self.frame_queue = queue.Queue(maxsize=queue_size)
         self.metrics = RuntimeMetrics()
         self.max_frames = max_frames
         self.stop_event = threading.Event()
+        self.model_config = model_config
 
     def capture_loop(self):
         frame_id = 0
@@ -115,17 +119,47 @@ def main():
         type=str,
         default="results/video_pipeline_metrics.json",
     )
+    parser.add_argument(
+        "--registry",
+        type=str,
+        default="configs/model_registry.json",
+    )
+
+    parser.add_argument(
+        "--model",
+        type=str,
+        default=None,
+    )
 
     args = parser.parse_args()
+    registry = ModelRegistry(args.registry)
 
+    model_config = (
+        registry.get_model(args.model)
+        if args.model is not None
+        else registry.active_model_config()
+    )
+
+    print(
+        {
+            "model_registry": args.registry,
+            "selected_model": model_config["name"],
+            "backend": model_config["backend"],
+            "provider": model_config.get("provider"),
+            "precision": model_config.get("precision"),
+        }
+    )
     if args.backend == "onnx":
-        backend = (
-            ONNXRuntimeCVBackend(
-                provider=args.provider,
-                fallback_provider=args.fallback_provider,
-            )
-            if args.backend == "onnx"
-            else MockCVBackend()
+        backend = ONNXRuntimeCVBackend(
+            model_path=model_config["model_path"],
+            provider=model_config.get(
+                "provider",
+                args.provider,
+            ),
+            fallback_provider=model_config.get(
+                "fallback_provider",
+                args.fallback_provider,
+            ),
         )
     else:
         backend = MockCVBackend()
@@ -135,6 +169,7 @@ def main():
         backend=backend,
         queue_size=args.queue_size,
         max_frames=args.max_frames,
+        model_config=model_config,
     )
     if args.enable_api:
         app = create_monitoring_app(pipeline)

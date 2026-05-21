@@ -1,16 +1,17 @@
 {
   "metrics": {
-    "frames_seen": 120,
-    "frames_processed": 120,
+    "frames_seen": 300,
+    "frames_processed": 300,
     "frames_dropped": 0,
-    "fps": 29.655,
-    "avg_latency_ms": 3.688
+    "fps": 29.832,
+    "avg_latency_ms": 2.744
   },
   "backend": {
     "name": "ONNXRuntimeCVBackend",
-    "requested_provider": "CPUExecutionProvider",
-    "active_provider": "CPUExecutionProvider",
+    "requested_provider": "CoreMLExecutionProvider",
+    "active_provider": "CoreMLExecutionProvider",
     "session_providers": [
+      "CoreMLExecutionProvider",
       "CPUExecutionProvider"
     ]
   }

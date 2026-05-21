@@ -2,12 +2,12 @@
 
 ## Overview
 
-This project implements an end-to-end edge AI inference deployment, profiling, and runtime benchmarking platform across heterogeneous AI inference backends. :contentReference[oaicite:0]{index=0}
+This project implements an end-to-end edge AI inference deployment, profiling, and runtime benchmarking platform across heterogeneous AI inference backends.
 
 The system evaluates real-world deployment trade-offs across:
 
 - PyTorch eager inference
-- ONNX Runtime CPU / CUDA execution providers
+- ONNX Runtime CPU / CUDA / CoreML execution providers
 - ExecuTorch XNNPACK runtime
 - TensorRT FP16 / FP32 inference engines
 - Native C++ ONNX Runtime inference
@@ -18,8 +18,9 @@ The system evaluates real-world deployment trade-offs across:
 - Backend fallback execution
 - Runtime monitoring APIs
 - Metrics export infrastructure
+- Model registry & versioning
 
-The platform simulates a production-style edge computer vision inference system similar to modern autonomous robotics and edge AI deployment infrastructure.
+The platform simulates a production-style edge computer vision inference system similar to modern autonomous robotics and edge AI deployment infrastructure. :contentReference[oaicite:0]{index=0}
 
 ---
 
@@ -59,6 +60,7 @@ This architecture simulates production-style asynchronous edge inference deploym
 | ONNX Runtime | FP32 | CUDA |
 | ONNX Runtime | Optimized FP32 | CUDA |
 | ONNX Runtime | INT8 | CPU |
+| ONNX Runtime | FP32 | CoreML |
 | ExecuTorch | FP32 | XNNPACK |
 | TensorRT | FP16 | CUDA |
 | TensorRT | FP32 | CUDA |
@@ -125,6 +127,7 @@ This project includes an asynchronous edge video inference deployment pipeline.
 - Backend fallback support
 - Monitoring API integration
 - Metrics export pipeline
+- Runtime model registry integration
 
 ### Runtime Architecture
 
@@ -190,6 +193,51 @@ This simulates production-style resilient inference deployment infrastructure.
 
 ---
 
+## Model Registry & Versioning
+
+This project includes a deployment-oriented model registry system.
+
+### Features
+
+- Active model selection
+- Runtime backend configuration
+- Backend-specific provider settings
+- Fallback-provider configuration
+- Runtime model metadata
+- Deployment-oriented model abstraction
+
+### Registry Example
+
+```json
+{
+  "active_model": "mobilenet_v2_onnx_coreml",
+
+  "models": {
+    "mobilenet_v2_onnx_coreml": {
+      "backend": "onnx",
+      "provider": "CoreMLExecutionProvider",
+      "fallback_provider": "CPUExecutionProvider"
+    }
+  }
+}
+```
+
+### Example Runtime Model Endpoint
+
+```json
+{
+  "name": "mobilenet_v2_onnx_coreml",
+  "backend": "onnx",
+  "provider": "CoreMLExecutionProvider",
+  "fallback_provider": "CPUExecutionProvider",
+  "precision": "FP32"
+}
+```
+
+This simulates production-style deployment configuration and runtime model selection systems.
+
+---
+
 ## Monitoring API
 
 This project includes a runtime monitoring API using FastAPI.
@@ -201,16 +249,17 @@ This project includes a runtime monitoring API using FastAPI.
 | `/health` | Runtime health status |
 | `/metrics` | Live FPS / latency metrics |
 | `/backend` | Active backend runtime status |
+| `/model` | Active model registry configuration |
 
 ### Example Metrics Endpoint
 
 ```json
 {
-  "frames_seen": 91,
-  "frames_processed": 91,
+  "frames_seen": 286,
+  "frames_processed": 286,
   "frames_dropped": 0,
-  "fps": 30.092,
-  "avg_latency_ms": 3.703
+  "fps": 29.918,
+  "avg_latency_ms": 2.787
 }
 ```
 
@@ -224,6 +273,26 @@ The pipeline automatically exports runtime execution metrics to:
 
 ```text
 results/video_pipeline_metrics.json
+```
+
+### Example Export
+
+```json
+{
+  "metrics": {
+    "frames_seen": 120,
+    "frames_processed": 120,
+    "frames_dropped": 0,
+    "fps": 29.655,
+    "avg_latency_ms": 3.688
+  },
+
+  "backend": {
+    "name": "ONNXRuntimeCVBackend",
+    "requested_provider": "CPUExecutionProvider",
+    "active_provider": "CPUExecutionProvider"
+  }
+}
 ```
 
 This enables reproducible runtime analysis and deployment reporting.
@@ -342,6 +411,7 @@ heterogeneous-inference-runtime/
 │
 ├── backends/
 ├── benchmarks/
+├── configs/
 ├── cpp_inference/
 ├── deployment/
 ├── models/
@@ -363,7 +433,7 @@ heterogeneous-inference-runtime/
 python -m deployment.async_video_pipeline \
   --source 0 \
   --backend onnx \
-  --provider CPUExecutionProvider \
+  --model mobilenet_v2_onnx_coreml \
   --enable-api
 ```
 
@@ -372,6 +442,7 @@ python -m deployment.async_video_pipeline \
 ```bash
 curl http://127.0.0.1:8000/health
 curl http://127.0.0.1:8000/backend
+curl http://127.0.0.1:8000/model
 curl http://127.0.0.1:8000/metrics
 ```
 
@@ -421,10 +492,11 @@ Production-grade inference systems require optimization across:
 - Execution backends
 - Asynchronous scheduling
 - Backend fallback
+- Model versioning
+- Runtime monitoring
 - Quantization strategy
 - Thread scheduling
 - GPU acceleration
-- Monitoring infrastructure
-- Runtime profiling
+- Profiling infrastructure
 - Batch scheduling behavior
 - Hardware-aware execution

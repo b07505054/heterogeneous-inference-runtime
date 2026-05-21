@@ -26,4 +26,8 @@ def create_monitoring_app(pipeline):
             "session_providers": getattr(backend, "actual_providers", None),
         }
 
+    @app.get("/model")
+    def model():
+        return pipeline.model_config or {}
+
     return app
