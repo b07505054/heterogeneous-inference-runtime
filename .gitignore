@@ -61,6 +61,23 @@ onnxruntime_profile__*.json
 results/*.png
 results/*.csv
 results/*.json
+!results/edge_inference_architecture.png
+!results/runtime_comparison_final.png
+!results/cuda_vector_add_block_sweep.png
+!results/tensorrt_throughput.png
+!results/tensorrt_latency.png
+!results/tensorrt_enqueue.png
+!results/tensorrt_gpu_compute.png
+!results/executorch_thread_scaling.png
+!results/cpu_usage_scaling.png
+!results/throughput_scaling.png
+!results/speedup_scaling.png
+!results/runtime_comparison.json
+!results/cuda_vector_add_block_sweep.csv
+!results/tensorrt_precision_comparison.json
+!results/executorch_thread_scaling.json
+!results/executorch_cpu_usage.json
+!results/scaling_metrics.json
 
 # executorch artifacts
 *.pte

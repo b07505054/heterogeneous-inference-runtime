@@ -90,7 +90,7 @@ The vector add kernel was evaluated across multiple CUDA block sizes.
 | 512 | 2048 | ~0.1317 ms |
 | 1024 | 1024 | ~0.1320 ms |
 
-![CUDA Vector Add Block Sweep](../results/cuda_vector_add_block_sweep.png)
+![CUDA Vector Add Block Sweep](../results/cuda_vector_add_block_sweep.svg)
 
 ### Key Insight
 

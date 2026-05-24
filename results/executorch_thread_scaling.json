@@ -1,0 +1,18 @@
+[
+  {
+    "threads": 1,
+    "avg_latency_ms": 14.6
+  },
+  {
+    "threads": 2,
+    "avg_latency_ms": 8.6
+  },
+  {
+    "threads": 4,
+    "avg_latency_ms": 5.7
+  },
+  {
+    "threads": 8,
+    "avg_latency_ms": 5.8
+  }
+]

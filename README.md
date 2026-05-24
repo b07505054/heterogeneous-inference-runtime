@@ -25,7 +25,7 @@ with a focus on:
 
 ## System Overview
 
-![Edge Inference Architecture](results/edge_inference_architecture.png)
+![Edge Inference Architecture](results/edge_inference_architecture.svg)
 
 This project evaluates edge inference across ONNX Runtime, TensorRT, ExecuTorch, and TFLite, then analyzes:
 - latency
@@ -84,7 +84,7 @@ The goal is to understand how inference systems behave under realistic deploymen
 
 This project benchmarks MobileNetV2 across ONNX Runtime, TensorRT, ExecuTorch, and TFLite.
 
-![Runtime Comparison](results/runtime_comparison_final.png)
+![Runtime Comparison](results/runtime_comparison_final.svg)
 
 | Runtime | Backend | Avg Latency |
 |---|---|---:|
@@ -122,7 +122,7 @@ Implemented kernels:
 
 ### Block Size Sweep
 
-![CUDA Vector Add](results/cuda_vector_add_block_sweep.png)
+![CUDA Vector Add](results/cuda_vector_add_block_sweep.svg)
 
 The experiment evaluates:
 - CUDA block size
@@ -176,7 +176,7 @@ The project evaluates TensorRT inference across:
 
 ## Throughput Comparison
 
-![TensorRT Throughput](results/tensorrt_throughput.png)
+![TensorRT Throughput](results/tensorrt_throughput.svg)
 
 Observed throughput:
 - FP32: ~504 qps
@@ -190,7 +190,7 @@ INT8 achieved:
 
 ## Mean Latency Comparison
 
-![TensorRT Latency](results/tensorrt_latency.png)
+![TensorRT Latency](results/tensorrt_latency.svg)
 
 Observed latency:
 - FP32: ~2.23 ms
@@ -204,7 +204,7 @@ INT8 achieved:
 
 ## GPU Compute Time
 
-![TensorRT GPU Compute](results/tensorrt_gpu_compute.png)
+![TensorRT GPU Compute](results/tensorrt_gpu_compute.svg)
 
 Observed behavior:
 - reduced GPU compute time with lower precision
@@ -235,7 +235,7 @@ to study:
 
 ## Enqueue Overhead
 
-![TensorRT Enqueue](results/tensorrt_enqueue.png)
+![TensorRT Enqueue](results/tensorrt_enqueue.svg)
 
 Observed enqueue overhead:
 - INT8 baseline: ~0.86 ms
@@ -261,16 +261,16 @@ However:
 ## Thread Scaling Analysis
 
 ### Latency vs Threads
-![Thread Scaling](results/executorch_thread_scaling.png)
+![Thread Scaling](results/executorch_thread_scaling.svg)
 
 ### CPU Utilization vs Threads
-![CPU Usage](results/cpu_usage_scaling.png)
+![CPU Usage](results/cpu_usage_scaling.svg)
 
 ### Throughput Scaling
-![Throughput](results/throughput_scaling.png)
+![Throughput](results/throughput_scaling.svg)
 
 ### Speedup Analysis
-![Speedup](results/speedup_scaling.png)
+![Speedup](results/speedup_scaling.svg)
 
 ---
 
