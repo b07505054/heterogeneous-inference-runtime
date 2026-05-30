@@ -1,0 +1,42 @@
+{
+  "source_profile": "results/onnxruntime_profile_2026-05-29_20-04-16_619.json",
+  "chrome_trace": "results/chrome_trace_onnx_cpu.json",
+  "event_count": 6842,
+  "total_recorded_duration_ms": 945.302,
+  "categories": {
+    "Session": 242,
+    "Node": 6600
+  },
+  "top_ops": [
+    {
+      "op": "FusedConv",
+      "total_ms": 260.8259999999971,
+      "count": 5400,
+      "avg_ms": 0.04830111111111058
+    },
+    {
+      "op": "Conv",
+      "total_ms": 28.4449999999998,
+      "count": 840,
+      "avg_ms": 0.033863095238095005
+    },
+    {
+      "op": "Gemm",
+      "total_ms": 8.253000000000016,
+      "count": 120,
+      "avg_ms": 0.06877500000000013
+    },
+    {
+      "op": "ReduceMean",
+      "total_ms": 1.0819999999999987,
+      "count": 120,
+      "avg_ms": 0.009016666666666655
+    },
+    {
+      "op": "Reshape",
+      "total_ms": 0.38200000000000023,
+      "count": 120,
+      "avg_ms": 0.0031833333333333353
+    }
+  ]
+}

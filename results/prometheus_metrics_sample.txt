@@ -1,0 +1,15 @@
+# HELP edge_frames_seen_total Total frames seen by the pipeline.
+# TYPE edge_frames_seen_total counter
+edge_frames_seen_total{backend="MockCVBackend",active_provider="unknown"} 725
+# HELP edge_frames_processed_total Total frames processed by the pipeline.
+# TYPE edge_frames_processed_total counter
+edge_frames_processed_total{backend="MockCVBackend",active_provider="unknown"} 725
+# HELP edge_frames_dropped_total Total frames dropped by the pipeline.
+# TYPE edge_frames_dropped_total counter
+edge_frames_dropped_total{backend="MockCVBackend",active_provider="unknown"} 0
+# HELP edge_pipeline_fps Current processed frames per second.
+# TYPE edge_pipeline_fps gauge
+edge_pipeline_fps{backend="MockCVBackend",active_provider="unknown"} 30.164
+# HELP edge_avg_latency_ms Average inference latency in milliseconds.
+# TYPE edge_avg_latency_ms gauge
+edge_avg_latency_ms{backend="MockCVBackend",active_provider="unknown"} 0.011

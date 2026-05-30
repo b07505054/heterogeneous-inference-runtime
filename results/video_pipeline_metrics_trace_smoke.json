@@ -1,0 +1,15 @@
+{
+  "metrics": {
+    "frames_seen": 30,
+    "frames_processed": 30,
+    "frames_dropped": 0,
+    "fps": 10540.496,
+    "avg_latency_ms": 0.001
+  },
+  "backend": {
+    "name": "MockCVBackend",
+    "requested_provider": null,
+    "active_provider": null,
+    "session_providers": null
+  }
+}

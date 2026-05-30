@@ -11,6 +11,7 @@ import uvicorn
 from deployment.monitoring_api import create_monitoring_app
 from deployment.export_metrics import export_metrics
 from deployment.model_registry import ModelRegistry
+from deployment.tracing import PipelineTracer
 
 
 class AsyncVideoInferencePipeline:
@@ -21,6 +22,7 @@ class AsyncVideoInferencePipeline:
         queue_size: int = 8,
         max_frames: int = 300,
         model_config=None,
+        trace_output: str | None = None,
     ):
         
         self.source = VideoFrameSource(source)
@@ -30,16 +32,26 @@ class AsyncVideoInferencePipeline:
         self.max_frames = max_frames
         self.stop_event = threading.Event()
         self.model_config = model_config
+        self.trace_output = trace_output
+        self.tracer = PipelineTracer() if trace_output else None
 
     def capture_loop(self):
         frame_id = 0
 
         while not self.stop_event.is_set() and frame_id < self.max_frames:
+            read_start = time.perf_counter()
             frame = self.source.read()
+            read_end = time.perf_counter()
 
             if frame is None:
                 break
-
+            if self.tracer:
+                self.tracer.record(
+                    frame_id,
+                    "capture",
+                    read_start,
+                    read_end,
+                )
             self.metrics.record_seen()
 
             item = {
@@ -49,9 +61,31 @@ class AsyncVideoInferencePipeline:
             }
 
             try:
+                enqueue_start = time.perf_counter()
                 self.frame_queue.put_nowait(item)
             except queue.Full:
+                drop_end = time.perf_counter()
                 self.metrics.record_dropped()
+
+                if self.tracer:
+                    self.tracer.record(
+                        frame_id,
+                        "queue_drop",
+                        enqueue_start,
+                        drop_end,
+                        queue_size=self.frame_queue.qsize(),
+                    )
+            else:
+                enqueue_end = time.perf_counter()
+
+                if self.tracer:
+                    self.tracer.record(
+                        frame_id,
+                        "queue_enqueue",
+                        enqueue_start,
+                        enqueue_end,
+                        queue_size=self.frame_queue.qsize(),
+                    )
 
             frame_id += 1
 
@@ -64,12 +98,42 @@ class AsyncVideoInferencePipeline:
             except queue.Empty:
                 continue
 
+            queue_wait_start = item["timestamp"]
+            queue_wait_end = time.perf_counter()
+
+            if self.tracer:
+                self.tracer.record(
+                    item["frame_id"],
+                    "queue_wait",
+                    queue_wait_start,
+                    queue_wait_end,
+                )
+
             start = time.perf_counter()
             result = self.backend.infer(item["frame"])
             end = time.perf_counter()
 
+            if self.tracer:
+                self.tracer.record(
+                    item["frame_id"],
+                    "inference",
+                    start,
+                    end,
+                    backend=result["backend"],
+                )
+
             latency_ms = (end - start) * 1000
+            metrics_start = time.perf_counter()
             self.metrics.record_processed(latency_ms)
+            metrics_end = time.perf_counter()
+
+            if self.tracer:
+                self.tracer.record(
+                    item["frame_id"],
+                    "metrics_update",
+                    metrics_start,
+                    metrics_end,
+                )
 
             if item["frame_id"] % 30 == 0:
                 print(
@@ -96,6 +160,9 @@ class AsyncVideoInferencePipeline:
         print("Final metrics:")
         print(self.metrics.snapshot())
 
+        if self.tracer and self.trace_output:
+            self.tracer.export(self.trace_output)
+
 
 def parse_source(value: str):
     if value.isdigit():
@@ -118,6 +185,11 @@ def main():
         "--metrics-output",
         type=str,
         default="results/video_pipeline_metrics.json",
+    )
+    parser.add_argument(
+        "--trace-output",
+        type=str,
+        default=None,
     )
     parser.add_argument(
         "--registry",
@@ -170,6 +242,7 @@ def main():
         queue_size=args.queue_size,
         max_frames=args.max_frames,
         model_config=model_config,
+        trace_output=args.trace_output,
     )
     if args.enable_api:
         app = create_monitoring_app(pipeline)

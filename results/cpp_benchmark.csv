@@ -1,2 +1,4 @@
 backend,model,avg_latency_ms
 ONNX Runtime C++,.\models\mobilenet_v2_optimized.onnx,9.25158
+backend,model,avg_latency_ms
+ONNX Runtime C++,models/mobilenet_v2_optimized.onnx,2.53237

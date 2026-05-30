@@ -18,6 +18,11 @@ The system evaluates real-world deployment trade-offs across:
 - Backend fallback execution
 - Runtime monitoring APIs
 - Metrics export infrastructure
+- Prometheus-compatible metrics endpoint
+- Chrome Trace / Perfetto timeline export
+- Pipeline-level tracing
+- Google Benchmark C++ microbenchmarking
+- AddressSanitizer-enabled native runtime validation
 - Model registry & versioning
 
 The platform simulates a production-style edge computer vision inference system similar to modern autonomous robotics and edge AI deployment infrastructure. :contentReference[oaicite:0]{index=0}
@@ -248,6 +253,7 @@ This project includes a runtime monitoring API using FastAPI.
 |---|---|
 | `/health` | Runtime health status |
 | `/metrics` | Live FPS / latency metrics |
+| `/metrics/prometheus` | Prometheus scrape-compatible runtime metrics |
 | `/backend` | Active backend runtime status |
 | `/model` | Active model registry configuration |
 
@@ -264,6 +270,26 @@ This project includes a runtime monitoring API using FastAPI.
 ```
 
 This enables real-time runtime observability for edge inference systems.
+
+### Prometheus Metrics Endpoint
+
+The monitoring API also exposes Prometheus text-format metrics:
+
+```bash
+curl http://127.0.0.1:8000/metrics/prometheus
+```
+
+Example output:
+
+```text
+edge_frames_seen_total{backend="MockCVBackend",active_provider="unknown"} 466
+edge_frames_processed_total{backend="MockCVBackend",active_provider="unknown"} 466
+edge_frames_dropped_total{backend="MockCVBackend",active_provider="unknown"} 0
+edge_pipeline_fps{backend="MockCVBackend",active_provider="unknown"} 30.231
+edge_avg_latency_ms{backend="MockCVBackend",active_provider="unknown"} 0.01
+```
+
+This bridges offline benchmarking with production-style observability.
 
 ---
 
@@ -381,6 +407,49 @@ This project includes a native C++ ONNX Runtime inference pipeline using CMake.
 - CSV benchmark export
 - Latency reporting
 - Production-style runtime integration
+- AddressSanitizer build option for native runtime safety checks
+- Google Benchmark target for standardized C++ latency measurement
+
+### AddressSanitizer Validation
+
+Prepare the ONNX Runtime C++ package:
+
+```bash
+tar -xzf third_party/onnxruntime-osx-arm64-1.26.0.tgz -C third_party
+```
+
+```bash
+cmake -S cpp_inference -B build/cpp_asan \
+  -DONNXRUNTIME_DIR=$PWD/third_party/onnxruntime-osx-arm64-1.26.0 \
+  -DENABLE_ASAN=ON \
+  -DCMAKE_BUILD_TYPE=Debug
+
+cmake --build build/cpp_asan
+
+ASAN_OPTIONS=abort_on_error=1 \
+./build/cpp_asan/edge_onnx_cpp models/mobilenet_v2_optimized.onnx
+```
+
+### Google Benchmark
+
+```bash
+cmake -S cpp_inference -B build/cpp_bench \
+  -DONNXRUNTIME_DIR=$PWD/third_party/onnxruntime-osx-arm64-1.26.0 \
+  -DENABLE_GOOGLE_BENCHMARK=ON \
+  -DCMAKE_BUILD_TYPE=Release
+
+cmake --build build/cpp_bench
+
+./build/cpp_bench/benchmark_onnx_cpp \
+  --benchmark_out=results/google_benchmark_onnx_cpp.json \
+  --benchmark_out_format=json
+```
+
+Example result:
+
+```text
+BM_ONNXRuntimeCpp/0    2.24 ms
+```
 
 ---
 
@@ -395,12 +464,78 @@ The project automatically generates:
 - Batch scaling plots
 - Runtime metrics exports
 - Backend validation summaries
+- ONNX Runtime operator profile summaries
+- Chrome Trace / Perfetto-compatible runtime timelines
+- Pipeline-level capture / queue / inference traces
 
 Generated benchmark figures are stored under:
 
 ```text
 results/
 ```
+
+### ONNX Runtime Operator Profiling
+
+```bash
+.venv/bin/python scripts/benchmark.py \
+  --backend onnx \
+  --model-path models/mobilenet_v2_optimized.onnx \
+  --batch-size 1 \
+  --threads 4 \
+  --iterations 100 \
+  --profile
+
+PROFILE=$(ls -t results/onnxruntime_profile*.json | head -1)
+
+.venv/bin/python scripts/analyze_onnx_profile.py \
+  --profile "$PROFILE" \
+  --output-json results/onnx_operator_profile_summary.json
+```
+
+Example operator summary:
+
+```text
+FusedConv    total=260.8260 ms count=5400 avg=0.0483 ms
+Conv         total=28.4450 ms count=840 avg=0.0339 ms
+Gemm         total=8.2530 ms count=120 avg=0.0688 ms
+```
+
+### Chrome Trace / Perfetto Export
+
+```bash
+PROFILE=$(ls -t results/onnxruntime_profile*.json | head -1)
+
+.venv/bin/python scripts/export_chrome_trace.py \
+  --profile "$PROFILE" \
+  --output-trace results/chrome_trace_onnx_cpu.json \
+  --output-summary results/chrome_trace_onnx_cpu_summary.json
+```
+
+Open the trace in:
+
+```text
+https://ui.perfetto.dev
+```
+
+### Pipeline-Level Trace
+
+```bash
+PYTHONPATH=$PWD .venv/bin/python deployment/async_video_pipeline.py \
+  --source data/synthetic_input.mp4 \
+  --backend mock \
+  --max-frames 300 \
+  --trace-output results/pipeline_trace_mock.json
+```
+
+The exported trace includes:
+
+- `capture`
+- `queue_enqueue`
+- `queue_wait`
+- `inference`
+- `metrics_update`
+
+This shows per-frame runtime behavior beyond aggregate latency numbers.
 
 ---
 
@@ -413,10 +548,12 @@ heterogeneous-inference-runtime/
 ├── benchmarks/
 ├── configs/
 ├── cpp_inference/
+├── data/
 ├── deployment/
 ├── models/
 ├── results/
 ├── scripts/
+├── third_party/
 │
 ├── backend_validation_runner.py
 ├── README.md
@@ -444,6 +581,13 @@ curl http://127.0.0.1:8000/health
 curl http://127.0.0.1:8000/backend
 curl http://127.0.0.1:8000/model
 curl http://127.0.0.1:8000/metrics
+curl http://127.0.0.1:8000/metrics/prometheus
+```
+
+### Run Monitoring API Smoke Test
+
+```bash
+.venv/bin/python scripts/smoke_test_monitoring_api.py
 ```
 
 ### Run Backend Validation

@@ -49,11 +49,13 @@ def benchmark_pytorch(iterations=100, warmup=20, batch_size=1):
     }
 
 
-def benchmark_onnx(model_path, iterations=100, warmup=20, batch_size=1, threads=1):
+def benchmark_onnx(model_path, iterations=100, warmup=20, batch_size=1, threads=1, profile=False):
     sess_options = ort.SessionOptions()
     sess_options.intra_op_num_threads = threads
     sess_options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
-
+    if profile:
+        sess_options.enable_profiling = True
+        sess_options.profile_file_prefix = "results/onnxruntime_profile"
     session = ort.InferenceSession(
         model_path,
         sess_options=sess_options,
@@ -79,6 +81,11 @@ def benchmark_onnx(model_path, iterations=100, warmup=20, batch_size=1, threads=
     peak_mem = process.memory_info().rss / 1024 / 1024
     model_size = os.path.getsize(model_path) / 1024 / 1024
 
+    profile_file = None
+    if profile:
+        profile_file = session.end_profiling()
+        print(f"ONNX Runtime profile saved to: {profile_file}")
+
     return {
         "backend": "ONNX Runtime",
         "model_format": "INT8" if "int8" in model_path.lower() else "FP32",
@@ -91,6 +98,7 @@ def benchmark_onnx(model_path, iterations=100, warmup=20, batch_size=1, threads=
         "throughput_qps": 1000 / np.mean(latencies) * batch_size,
         "memory_mb": peak_mem - start_mem,
         "model_size_mb": model_size,
+        "profile_file": profile_file,
     }
 
 
@@ -101,6 +109,7 @@ def main():
     parser.add_argument("--batch-size", type=int, default=1)
     parser.add_argument("--threads", type=int, default=1)
     parser.add_argument("--iterations", type=int, default=100)
+    parser.add_argument("--profile", action="store_true")
     args = parser.parse_args()
 
     if args.backend == "pytorch":
@@ -114,6 +123,7 @@ def main():
             iterations=args.iterations,
             batch_size=args.batch_size,
             threads=args.threads,
+            profile=args.profile,
         )
 
     os.makedirs("results", exist_ok=True)

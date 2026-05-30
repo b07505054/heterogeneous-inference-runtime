@@ -1,0 +1,51 @@
+{
+  "context": {
+    "date": "2026-05-29T19:50:17-07:00",
+    "host_name": "AllendeMacBook-Pro.local",
+    "executable": "./build/cpp_bench/benchmark_onnx_cpp",
+    "num_cpus": 10,
+    "mhz_per_cpu": 24,
+    "cpu_scaling_enabled": false,
+    "caches": [
+      {
+        "type": "Data",
+        "level": 1,
+        "size": 65536,
+        "num_sharing": 0
+      },
+      {
+        "type": "Instruction",
+        "level": 1,
+        "size": 131072,
+        "num_sharing": 0
+      },
+      {
+        "type": "Unified",
+        "level": 2,
+        "size": 6291456,
+        "num_sharing": 1
+      }
+    ],
+    "load_avg": [3.10742,2.57373,2.27197],
+    "library_version": "v1.9.5",
+    "library_build_type": "release",
+    "json_schema_version": 1
+  },
+  "benchmarks": [
+    {
+      "name": "BM_ONNXRuntimeCpp/0",
+      "family_index": 0,
+      "per_family_instance_index": 0,
+      "run_name": "BM_ONNXRuntimeCpp/0",
+      "run_type": "iteration",
+      "repetitions": 1,
+      "repetition_index": 0,
+      "threads": 1,
+      "iterations": 323,
+      "real_time": 2.2431661486101260e+00,
+      "cpu_time": 2.2294272445820442e+00,
+      "time_unit": "ms",
+      "items_per_second": 4.4854569819679062e+02
+    }
+  ]
+}

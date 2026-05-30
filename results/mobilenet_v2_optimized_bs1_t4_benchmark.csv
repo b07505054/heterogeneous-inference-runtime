@@ -1,2 +1,2 @@
-backend,model_format,batch_size,threads,avg_latency_ms,p50_latency_ms,p95_latency_ms,p99_latency_ms,throughput_qps,memory_mb,model_size_mb
-ONNX Runtime,FP32,1,4,4.515885999953753,4.604949999702512,6.11223000114478,6.797660000011092,221.440488092534,0.015625,13.32734489440918
+backend,model_format,batch_size,threads,avg_latency_ms,p50_latency_ms,p95_latency_ms,p99_latency_ms,throughput_qps,memory_mb,model_size_mb,profile_file
+ONNX Runtime,FP32,1,4,2.5678687002073275,2.4512915006198455,3.320734800763603,3.938830920415058,389.42801083219746,9.46875,13.32734489440918,results/onnxruntime_profile_2026-05-29_20-04-16_619.json
