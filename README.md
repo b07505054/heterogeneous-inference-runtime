@@ -24,8 +24,10 @@ The system evaluates real-world deployment trade-offs across:
 - Google Benchmark C++ microbenchmarking
 - AddressSanitizer-enabled native runtime validation
 - Model registry & versioning
+- LlamaForCausalLM backend profiling for compiler/runtime demo artifacts
 
-The platform simulates a production-style edge computer vision inference system similar to modern autonomous robotics and edge AI deployment infrastructure. :contentReference[oaicite:0]{index=0}
+The platform simulates a production-style edge computer vision inference system
+similar to modern autonomous robotics and edge AI deployment infrastructure.
 
 ---
 
@@ -467,6 +469,8 @@ The project automatically generates:
 - ONNX Runtime operator profile summaries
 - Chrome Trace / Perfetto-compatible runtime timelines
 - Pipeline-level capture / queue / inference traces
+- LlamaForCausalLM TTFT / TPOT scaling artifacts for MPS, CPU, and CUDA when
+  available
 
 Generated benchmark figures are stored under:
 
@@ -536,6 +540,57 @@ The exported trace includes:
 - `metrics_update`
 
 This shows per-frame runtime behavior beyond aggregate latency numbers.
+
+---
+
+## LLM Runtime Artifact Export
+
+This repo is also the runtime producer for the external
+`mini-llm-serving-runtime-demo` workbench. The demo does not import the Python
+runtime directly; it consumes committed artifact snapshots from:
+
+```text
+results/llm_runtime_artifacts/
+```
+
+Key outputs:
+
+- `runtime_profile.json`: aggregate serving-path metrics
+- `prefill_decode_benchmark.json`: prefill and decode phase timing
+- `scheduler_trace.json`: request admission, queue, prefill, and decode events
+- `kv_cache_trace.json`: KV-cache allocation and block-usage trace
+- `plan_benchmark_results.json`: measured plan comparison for Metal, CPU, and
+  hybrid candidates
+- `llm_runtime_chrome_trace.json`: Perfetto-compatible runtime timeline
+- `real_llama_profile.json`: HuggingFace `LlamaForCausalLM` backend profile with
+  TTFT, TPOT, batch/sequence scaling, and operator bottleneck breakdown
+
+Generate deterministic serving artifacts:
+
+```bash
+.venv/bin/python scripts/generate_llm_runtime_artifacts.py \
+  --output-dir results/llm_runtime_artifacts
+```
+
+Generate real backend Llama profiling artifacts:
+
+```bash
+.venv/bin/python scripts/profile_tiny_llama_backends.py \
+  --profile-mode hf \
+  --hf-model-id hf-internal-testing/tiny-random-LlamaForCausalLM \
+  --output-dir results/llm_runtime_artifacts \
+  --devices mps,cpu,cuda \
+  --batch-sizes 1,2 \
+  --sequence-lengths 64,128 \
+  --decode-steps 4 \
+  --warmup 1 \
+  --runs 2
+```
+
+`--hf-model-id` accepts either a HuggingFace model id or a local model path.
+The committed artifact uses a tiny public Llama model to keep the repo
+reproducible, while preserving the same profiling path for larger local
+Llama-family models.
 
 ---
 
