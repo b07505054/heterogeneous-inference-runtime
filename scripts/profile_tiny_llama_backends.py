@@ -10,6 +10,12 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+try:
+    from transformers import AutoConfig, AutoModelForCausalLM
+except ImportError:  # pragma: no cover - optional production profiling dependency
+    AutoConfig = None
+    AutoModelForCausalLM = None
+
 
 class RMSNorm(nn.Module):
     def __init__(self, hidden_size: int, eps: float = 1e-6) -> None:
@@ -229,9 +235,204 @@ def profile_backend(
     }
 
 
+def dtype_for_device(device: torch.device) -> torch.dtype:
+    if device.type in {"cuda", "mps"}:
+        return torch.float16
+    return torch.float32
+
+
+def load_hf_causal_lm(model_id: str, device: torch.device):
+    if AutoModelForCausalLM is None:
+        raise RuntimeError(
+            "transformers is required for --profile-mode hf. "
+            "Install it with: python -m pip install transformers accelerate"
+        )
+
+    dtype = dtype_for_device(device)
+    model = AutoModelForCausalLM.from_pretrained(
+        model_id,
+        torch_dtype=dtype,
+        low_cpu_mem_usage=True,
+    )
+    model.to(device)
+    model.eval()
+    return model
+
+
+def hf_vocab_size(model) -> int:
+    config_vocab = getattr(model.config, "vocab_size", None)
+    if isinstance(config_vocab, int) and config_vocab > 0:
+        return config_vocab
+    return 32000
+
+
+def summarize_model(model) -> dict:
+    config = model.config
+    param_count = sum(parameter.numel() for parameter in model.parameters())
+    size_mb = sum(parameter.numel() * parameter.element_size() for parameter in model.parameters()) / 1024 / 1024
+    return {
+        "model_class": model.__class__.__name__,
+        "architecture": list(getattr(config, "architectures", []) or []),
+        "hidden_size": getattr(config, "hidden_size", None),
+        "num_hidden_layers": getattr(config, "num_hidden_layers", None),
+        "num_attention_heads": getattr(config, "num_attention_heads", None),
+        "num_key_value_heads": getattr(config, "num_key_value_heads", None),
+        "vocab_size": getattr(config, "vocab_size", None),
+        "parameter_count": param_count,
+        "model_size_mb": round(size_mb, 4),
+    }
+
+
+def profile_selected_hf_modules(model, tokens: torch.Tensor, device: torch.device) -> list[dict]:
+    selected_suffixes = (
+        "embed_tokens",
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj",
+        "gate_proj",
+        "up_proj",
+        "down_proj",
+        "input_layernorm",
+        "post_attention_layernorm",
+        "lm_head",
+    )
+    timings: dict[str, float] = {}
+    handles = []
+
+    def make_pre_hook(name: str):
+        def pre_hook(_module, _inputs):
+            synchronize(device)
+            timings[f"{name}.__start"] = time.perf_counter()
+
+        return pre_hook
+
+    def make_post_hook(name: str):
+        def post_hook(_module, _inputs, _outputs):
+            synchronize(device)
+            start = timings.pop(f"{name}.__start", None)
+            if start is not None:
+                normalized = name.split(".")[-1]
+                timings[normalized] = timings.get(normalized, 0.0) + (time.perf_counter() - start) * 1000.0
+
+        return post_hook
+
+    for name, module in model.named_modules():
+        if name.endswith(selected_suffixes):
+            handles.append(module.register_forward_pre_hook(make_pre_hook(name)))
+            handles.append(module.register_forward_hook(make_post_hook(name)))
+
+    try:
+        with torch.no_grad():
+            model(input_ids=tokens, use_cache=True)
+    finally:
+        for handle in handles:
+            handle.remove()
+
+    total = sum(timings.values()) or 1.0
+    rows = []
+    for op, latency_ms in sorted(timings.items(), key=lambda item: item[1], reverse=True):
+        rows.append({
+            "op": op,
+            "latency_ms": round(latency_ms, 4),
+            "percent": round(latency_ms / total * 100.0, 2),
+        })
+    return rows
+
+
+def profile_hf_backend(
+    model_id: str,
+    device: torch.device,
+    batch_sizes: list[int],
+    sequence_lengths: list[int],
+    decode_steps: int,
+    warmup: int,
+    runs: int,
+) -> dict:
+    torch.manual_seed(0)
+    model = load_hf_causal_lm(model_id, device)
+    model_summary = summarize_model(model)
+    vocab_size = hf_vocab_size(model)
+    rows = []
+    operator_rows = []
+
+    for batch in batch_sizes:
+        for seq in sequence_lengths:
+            tokens = torch.randint(0, vocab_size, (batch, seq), device=device)
+            decode_token = torch.randint(0, vocab_size, (batch, 1), device=device)
+
+            with torch.no_grad():
+                for _ in range(warmup):
+                    out = model(input_ids=tokens, use_cache=True)
+                    model(input_ids=decode_token, past_key_values=out.past_key_values, use_cache=True)
+
+                prefill_latencies = []
+                tpot_latencies = []
+                for _ in range(runs):
+                    prefill_ms, out = measure(
+                        lambda: model(input_ids=tokens, use_cache=True),
+                        device,
+                    )
+                    prefill_latencies.append(prefill_ms)
+
+                    past = out.past_key_values
+                    for _step in range(decode_steps):
+                        step_ms, out = measure(
+                            lambda: model(
+                                input_ids=decode_token,
+                                past_key_values=past,
+                                use_cache=True,
+                            ),
+                            device,
+                        )
+                        past = out.past_key_values
+                        tpot_latencies.append(step_ms)
+
+                for op_row in profile_selected_hf_modules(model, tokens, device):
+                    operator_rows.append({
+                        "backend": device.type,
+                        "batch_size": batch,
+                        "sequence_length": seq,
+                        **op_row,
+                    })
+
+                rows.append({
+                    "backend": device.type,
+                    "batch_size": batch,
+                    "sequence_length": seq,
+                    "decode_steps": decode_steps,
+                    "ttft_ms": {
+                        "p50": round(statistics.median(prefill_latencies), 4),
+                        "p95": round(percentile(prefill_latencies, 95), 4),
+                        "p99": round(percentile(prefill_latencies, 99), 4),
+                    },
+                    "tpot_ms": {
+                        "p50": round(statistics.median(tpot_latencies), 4),
+                        "p95": round(percentile(tpot_latencies, 95), 4),
+                        "p99": round(percentile(tpot_latencies, 99), 4),
+                    },
+                    "tokens_per_second": round(1000.0 / max(statistics.mean(tpot_latencies), 1e-6), 4),
+                    "model_size_mb": model_summary["model_size_mb"],
+                })
+
+    return {
+        "backend": device.type,
+        "device": str(device),
+        "rows": rows,
+        "operator_breakdown": operator_rows,
+        "model_summary": model_summary,
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-dir", default="results/llm_runtime_artifacts")
+    parser.add_argument("--profile-mode", choices=["hf", "toy"], default="hf")
+    parser.add_argument(
+        "--hf-model-id",
+        default="hf-internal-testing/tiny-random-LlamaForCausalLM",
+        help="HuggingFace model id or local model path for real CausalLM profiling.",
+    )
     parser.add_argument("--devices", default="mps,cpu")
     parser.add_argument("--batch-sizes", default="1,2")
     parser.add_argument("--sequence-lengths", default="64,128")
@@ -249,8 +450,13 @@ def main() -> None:
 
     payload = {
         "artifact_type": "real_llama_profile",
-        "model": "tiny-llama-block-random-weights",
-        "profile_source": "torch_real_backend_execution",
+        "model": args.hf_model_id if args.profile_mode == "hf" else "tiny-llama-block-random-weights",
+        "profile_mode": args.profile_mode,
+        "profile_source": (
+            "hf_causal_lm_real_backend_execution"
+            if args.profile_mode == "hf"
+            else "torch_tiny_llama_block_real_backend_execution"
+        ),
         "platform": platform.platform(),
         "torch_version": torch.__version__,
         "requested_devices": requested_devices,
@@ -264,17 +470,44 @@ def main() -> None:
         ],
     }
 
+    if AutoConfig is not None and args.profile_mode == "hf":
+        try:
+            config = AutoConfig.from_pretrained(args.hf_model_id)
+            payload["hf_config"] = {
+                "model_type": getattr(config, "model_type", None),
+                "architectures": list(getattr(config, "architectures", []) or []),
+                "hidden_size": getattr(config, "hidden_size", None),
+                "num_hidden_layers": getattr(config, "num_hidden_layers", None),
+                "num_attention_heads": getattr(config, "num_attention_heads", None),
+                "num_key_value_heads": getattr(config, "num_key_value_heads", None),
+            }
+        except Exception as exc:
+            payload["hf_config_error"] = str(exc)
+
     for device in devices:
-        payload["backends"].append(
-            profile_backend(
-                device=device,
-                batch_sizes=batch_sizes,
-                sequence_lengths=sequence_lengths,
-                decode_steps=args.decode_steps,
-                warmup=args.warmup,
-                runs=args.runs,
+        if args.profile_mode == "hf":
+            payload["backends"].append(
+                profile_hf_backend(
+                    model_id=args.hf_model_id,
+                    device=device,
+                    batch_sizes=batch_sizes,
+                    sequence_lengths=sequence_lengths,
+                    decode_steps=args.decode_steps,
+                    warmup=args.warmup,
+                    runs=args.runs,
+                )
             )
-        )
+        else:
+            payload["backends"].append(
+                profile_backend(
+                    device=device,
+                    batch_sizes=batch_sizes,
+                    sequence_lengths=sequence_lengths,
+                    decode_steps=args.decode_steps,
+                    warmup=args.warmup,
+                    runs=args.runs,
+                )
+            )
 
     (output_dir / "real_llama_profile.json").write_text(
         json.dumps(payload, indent=2) + "\n",
