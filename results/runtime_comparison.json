@@ -1,0 +1,45 @@
+{
+  "model": "MobileNetV2",
+  "runtimes": [
+    {
+      "runtime": "ONNX Runtime",
+      "backend": "CPU EP",
+      "latency_ms": 5.0
+    },
+    {
+      "runtime": "ExecuTorch Python",
+      "backend": "Portable / XNNPACK",
+      "latency_ms": 6.0
+    },
+    {
+      "runtime": "ExecuTorch C++",
+      "backend": "XNNPACK, 4 threads",
+      "latency_ms": 5.7
+    },
+    {
+      "runtime": "TFLite",
+      "backend": "XNNPACK CPU delegate",
+      "latency_ms": 9.69
+    },
+    {
+      "runtime": "ONNX Runtime CUDA",
+      "backend": "CUDA EP",
+      "latency_ms": 3.41
+    },
+    {
+      "runtime": "TensorRT FP32",
+      "backend": "CUDA",
+      "latency_ms": 2.23
+    },
+    {
+      "runtime": "TensorRT FP16",
+      "backend": "CUDA",
+      "latency_ms": 1.92
+    },
+    {
+      "runtime": "TensorRT INT8",
+      "backend": "CUDA",
+      "latency_ms": 1.5
+    }
+  ]
+}

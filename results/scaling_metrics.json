@@ -1,0 +1,22 @@
+[
+  {
+    "threads": 1,
+    "throughput": 68.49,
+    "speedup": 1.0
+  },
+  {
+    "threads": 2,
+    "throughput": 116.28,
+    "speedup": 1.7
+  },
+  {
+    "threads": 4,
+    "throughput": 175.44,
+    "speedup": 2.56
+  },
+  {
+    "threads": 8,
+    "throughput": 172.41,
+    "speedup": 2.52
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "threads": 1,
+    "cpu_usage": 25
+  },
+  {
+    "threads": 2,
+    "cpu_usage": 48
+  },
+  {
+    "threads": 4,
+    "cpu_usage": 73
+  },
+  {
+    "threads": 8,
+    "cpu_usage": 90
+  }
+]
