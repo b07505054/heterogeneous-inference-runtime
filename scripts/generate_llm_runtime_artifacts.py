@@ -344,6 +344,7 @@ def main():
             "serving_trace.json",
             "llm_runtime_chrome_trace.json",
             "plan_benchmark_results.json",
+            "real_llama_profile.json",
         ],
     }
 
