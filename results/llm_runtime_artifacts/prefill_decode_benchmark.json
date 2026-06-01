@@ -2,10 +2,10 @@
   "model": "tiny-gpt",
   "prompt_tokens": 1024,
   "generated_tokens": 128,
-  "prefill_latency_ms": 185.464,
-  "avg_decode_latency_ms": 13.114,
-  "p50_decode_latency_ms": 13.24,
-  "p95_decode_latency_ms": 15.63,
-  "p99_decode_latency_ms": 15.869,
-  "tokens_per_second": 76.254
+  "prefill_latency_ms": 30.475,
+  "avg_decode_latency_ms": 2.599,
+  "p50_decode_latency_ms": 2.62,
+  "p95_decode_latency_ms": 3.324,
+  "p99_decode_latency_ms": 3.51,
+  "tokens_per_second": 1438.533
 }

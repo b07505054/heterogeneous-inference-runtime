@@ -561,9 +561,34 @@ Key outputs:
 - `kv_cache_trace.json`: KV-cache allocation and block-usage trace
 - `plan_benchmark_results.json`: measured plan comparison for Metal, CPU, and
   hybrid candidates
+- `scheduler_decision_report.json`: baseline-vs-cost-aware scheduling comparison
+  driven by a runtime cost model, KV memory planner, and profiling calibration
 - `llm_runtime_chrome_trace.json`: Perfetto-compatible runtime timeline
 - `real_llama_profile.json`: HuggingFace `LlamaForCausalLM` backend profile with
   TTFT, TPOT, batch/sequence scaling, and operator bottleneck breakdown
+
+The current LLM artifact generator now runs an actual scheduling decision loop:
+
+```text
+synthetic request stream
+  -> FCFS fixed-batch baseline scheduler
+  -> collect observed prefill/decode latency samples
+  -> calibrate runtime cost model
+  -> run cost-aware memory-pressure scheduler
+  -> select the better policy from measured throughput, p95 latency, and KV usage
+```
+
+The scheduler is implemented in `deployment/llm_runtime_decision.py`. It includes:
+
+- a table-free runtime cost model for prefill, decode, and KV update cost
+- a KV block memory planner with allocation, free, peak usage, and pressure tracking
+- a baseline FCFS policy
+- a cost-aware memory-pressure policy that forms larger decode batches when KV
+  capacity and shape compatibility allow it
+- a profiling feedback step that calibrates the cost model from observed samples
+
+This moves the LLM runtime path from artifact description toward runtime
+decision-making: the generated report records which scheduler policy won and why.
 
 Generate deterministic serving artifacts:
 
