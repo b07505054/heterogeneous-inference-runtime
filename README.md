@@ -31,6 +31,57 @@ similar to modern autonomous robotics and edge AI deployment infrastructure.
 
 ---
 
+## CUDA RMSNorm Compiler/Runtime Case Study
+
+This repo also provides the runtime evidence source for the MLIR compiler
+runtime project. The CUDA RMSNorm path compares a custom CUDA kernel against a
+PyTorch RMSNorm baseline, then exports benchmark evidence consumed by the
+compiler-side HIR kernel-selection pipeline.
+
+Artifacts:
+
+```text
+results/cuda_transformer/rmsnorm_benchmark.json
+results/cuda_transformer/rmsnorm_benchmark_report.md
+```
+
+Benchmark coverage:
+
+```text
+tokens: 1, 16, 128
+hidden: 768, 1024, 4096, 8192
+dtype: float32
+baseline: torch_rmsnorm
+custom: fused_rmsnorm_cuda
+```
+
+Run on the CUDA Linux machine:
+
+```bash
+export CUDA_HOME=/usr/local/cuda-13.1
+export PATH=$PWD/.venv-rmsnorm/bin:$CUDA_HOME/bin:$PATH
+export LD_LIBRARY_PATH=$CUDA_HOME/lib64:${LD_LIBRARY_PATH:-}
+
+.venv-rmsnorm/bin/python scripts/test_rmsnorm_cuda_correctness.py \
+  --tokens 1,16,128 \
+  --hidden 768,1024,4096,8192
+
+.venv-rmsnorm/bin/python scripts/benchmark_rmsnorm_cuda.py \
+  --output results/cuda_transformer/rmsnorm_benchmark.json \
+  --report-output results/cuda_transformer/rmsnorm_benchmark_report.md \
+  --tokens 1,16,128 \
+  --hidden 768,1024,4096,8192 \
+  --warmup 20 \
+  --runs 100
+```
+
+The report includes latency, p50/p95, speedup, bytes/token, FLOPs/token,
+effective bandwidth, arithmetic intensity, and memory-bound roofline notes.
+Nsight Compute metrics such as occupancy and DRAM throughput are optional and
+can be attached when `ncu` is available on the target machine.
+
+---
+
 ## System Pipeline
 
 ```text
