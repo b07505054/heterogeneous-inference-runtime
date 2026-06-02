@@ -33,7 +33,13 @@ __inline__ __device__ float block_reduce_sum(float value) {
     value = warp_reduce_sum(value);
   }
 
-  return value;
+  if (threadIdx.x == 0) {
+    shared[0] = value;
+  }
+
+  __syncthreads();
+
+  return shared[0];
 }
 
 __global__ void rmsnorm_f32_kernel(
