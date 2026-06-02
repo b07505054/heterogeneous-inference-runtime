@@ -582,13 +582,20 @@ The scheduler is implemented in `deployment/llm_runtime_decision.py`. It include
 
 - a table-free runtime cost model for prefill, decode, and KV update cost
 - a KV block memory planner with allocation, free, peak usage, and pressure tracking
+- explicit admission decisions: `admit`, `delay`, or `reject`
+- pressure levels: `low`, `medium`, `high`, and `critical`
 - a baseline FCFS policy
 - a cost-aware memory-pressure policy that forms larger decode batches when KV
   capacity and shape compatibility allow it
+- projected-pressure batch limiting, so the scheduler can reject a batch
+  candidate before admitting it would push KV usage into a higher pressure band
 - a profiling feedback step that calibrates the cost model from observed samples
 
 This moves the LLM runtime path from artifact description toward runtime
 decision-making: the generated report records which scheduler policy won and why.
+For the committed artifact snapshot, the optimized scheduler records
+`pressure_limited_candidates`, showing that memory pressure directly changed
+batching decisions rather than only being reported after the fact.
 
 Generate deterministic serving artifacts:
 

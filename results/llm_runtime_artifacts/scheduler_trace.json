@@ -30,7 +30,9 @@
         "req-011"
       ],
       "batch_size": 8,
-      "memory_pressure": 0.1836
+      "memory_pressure": 0.1836,
+      "pressure_level": "low",
+      "effective_batch_cap": 8
     },
     {
       "time_ms": 317.285,
@@ -51,90 +53,98 @@
         "req-003",
         "req-006",
         "req-007",
-        "req-012",
-        "req-013",
-        "req-014",
-        "req-015"
+        "req-012"
       ],
-      "batch_size": 7,
-      "memory_pressure": 0.8125
+      "batch_size": 4,
+      "memory_pressure": 0.543,
+      "pressure_level": "low",
+      "effective_batch_cap": 8
     },
     {
-      "time_ms": 839.257,
+      "time_ms": 825.69,
       "event": "prefill_start",
-      "request_id": "req-016",
+      "request_id": "req-013",
       "batch_size": 1
     },
     {
-      "time_ms": 870.386,
+      "time_ms": 920.545,
       "event": "prefill_end",
-      "request_id": "req-016",
+      "request_id": "req-013",
       "batch_size": 1
     },
     {
-      "time_ms": 870.386,
+      "time_ms": 920.545,
       "event": "decode_batch",
       "active_requests": [
+        "req-013",
+        "req-014",
+        "req-015",
         "req-016",
         "req-017",
         "req-018",
         "req-019",
-        "req-020",
-        "req-021",
-        "req-022",
-        "req-023"
+        "req-020"
       ],
       "batch_size": 8,
-      "memory_pressure": 0.2148
+      "memory_pressure": 0.4062,
+      "pressure_level": "low",
+      "effective_batch_cap": 8
     },
     {
-      "time_ms": 1183.276,
+      "time_ms": 1241.064,
       "event": "prefill_start",
-      "request_id": "req-024",
+      "request_id": "req-021",
       "batch_size": 1
     },
     {
-      "time_ms": 1213.751,
+      "time_ms": 1271.539,
       "event": "prefill_end",
-      "request_id": "req-024",
+      "request_id": "req-021",
       "batch_size": 1
     },
     {
-      "time_ms": 1213.751,
+      "time_ms": 1271.539,
       "event": "decode_batch",
       "active_requests": [
+        "req-021",
+        "req-022",
+        "req-023",
         "req-024",
         "req-025",
         "req-026",
         "req-027",
-        "req-028",
-        "req-029",
-        "req-030",
-        "req-031"
+        "req-028"
       ],
       "batch_size": 8,
-      "memory_pressure": 0.375
+      "memory_pressure": 0.3164,
+      "pressure_level": "low",
+      "effective_batch_cap": 8
     },
     {
-      "time_ms": 1576.812,
+      "time_ms": 1609.152,
       "event": "prefill_start",
-      "request_id": "req-032",
+      "request_id": "req-029",
       "batch_size": 1
     },
     {
-      "time_ms": 1606.458,
+      "time_ms": 1647.468,
       "event": "prefill_end",
-      "request_id": "req-032",
+      "request_id": "req-029",
       "batch_size": 1
     },
     {
-      "time_ms": 1606.458,
+      "time_ms": 1647.468,
       "event": "decode_batch",
       "active_requests": [
+        "req-029",
+        "req-030",
+        "req-031",
         "req-032"
       ],
-      "batch_size": 1,
-      "memory_pressure": 0.0117
+      "batch_size": 4,
+      "memory_pressure": 0.1484,
+      "pressure_level": "low",
+      "effective_batch_cap": 8
     }
   ]
 }
