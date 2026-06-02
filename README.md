@@ -624,6 +624,32 @@ The committed artifact uses a tiny public Llama model to keep the repo
 reproducible, while preserving the same profiling path for larger local
 Llama-family models.
 
+### Transformer Kernel Feedback
+
+This repo now also produces runtime kernel profile evidence for
+compiler-side kernel selection. The first transformer kernel target is
+RMSNorm:
+
+```text
+PyTorch RMSNorm fallback
+  vs
+custom fused_rmsnorm_cuda extension
+  -> results/cuda_transformer/rmsnorm_benchmark.json
+  -> ml-graph-compiler-runtime kernel-selection metadata
+```
+
+Run the benchmark on a CUDA-capable machine:
+
+```bash
+python3 scripts/benchmark_rmsnorm_cuda.py \
+  --output results/cuda_transformer/rmsnorm_benchmark.json
+```
+
+If CUDA or PyTorch is unavailable, the script still emits an explicit
+`profile_status: unavailable` artifact. The compiler should then retain the
+fallback kernel instead of claiming that a custom CUDA kernel won without
+runtime evidence.
+
 ---
 
 ## Project Structure

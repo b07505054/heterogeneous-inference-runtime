@@ -1,0 +1,18 @@
+{
+  "artifact_type": "runtime_kernel_profile",
+  "source": "scripts/benchmark_rmsnorm_cuda.py",
+  "profile_status": "unavailable",
+  "reason": "PyTorch import failed: No module named 'torch'",
+  "kernel_benchmarks": [
+    {
+      "fusion_candidate": "rmsnorm",
+      "custom_kernel": "fused_rmsnorm_cuda",
+      "fallback_kernel": "torch_rmsnorm",
+      "custom_latency_ms": null,
+      "fallback_latency_ms": null,
+      "speedup": null,
+      "correct": null,
+      "selection_ready": false
+    }
+  ]
+}

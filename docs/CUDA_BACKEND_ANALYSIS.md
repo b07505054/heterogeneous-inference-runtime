@@ -300,6 +300,9 @@ Potential next steps:
 - Add ONNX Runtime CUDA comparison
 - Add TensorRT FP32 / FP16 engine benchmarking
 - Add TensorRT kernel fusion analysis
+- Extend custom CUDA kernels from vector/matmul fundamentals to transformer
+  kernels such as fused RMSNorm, then feed measured PyTorch-vs-custom CUDA
+  results back into compiler kernel-selection metadata
 - Add GPU roofline-style analysis
 
 ---
