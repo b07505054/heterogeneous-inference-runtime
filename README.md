@@ -62,6 +62,8 @@ export CUDA_HOME=/usr/local/cuda-13.1
 export PATH=$PWD/.venv-rmsnorm/bin:$CUDA_HOME/bin:$PATH
 export LD_LIBRARY_PATH=$CUDA_HOME/lib64:${LD_LIBRARY_PATH:-}
 
+.venv-rmsnorm/bin/python -m pytest tests/test_rmsnorm_cuda_correctness.py
+
 .venv-rmsnorm/bin/python scripts/test_rmsnorm_cuda_correctness.py \
   --tokens 1,16,128 \
   --hidden 768,1024,4096,8192
@@ -75,10 +77,43 @@ export LD_LIBRARY_PATH=$CUDA_HOME/lib64:${LD_LIBRARY_PATH:-}
   --runs 100
 ```
 
+The correctness test covers the fixed FP32 sweep:
+
+```text
+tokens = 1, 16, 128
+hidden = 768, 1024, 4096, 8192
+rtol = 1e-4
+atol = 1e-4
+```
+
+It checks `torch.allclose`, rejects NaN/Inf outputs, skips cleanly when CUDA is
+unavailable, and asserts that non-contiguous inputs are rejected because the
+current CUDA kernel is a contiguous row-major implementation.
+
 The report includes latency, p50/p95, speedup, bytes/token, FLOPs/token,
-effective bandwidth, arithmetic intensity, and memory-bound roofline notes.
-Nsight Compute metrics such as occupancy and DRAM throughput are optional and
-can be attached when `ncu` is available on the target machine.
+effective bandwidth, arithmetic intensity, environment metadata, and
+memory-bound roofline notes. Environment metadata includes GPU name, CUDA
+version, NVCC version, PyTorch version, NVIDIA driver version, warmup/timed run
+counts, dtype, and the repo commit hash.
+
+Nsight Compute is optional and never blocks the benchmark path:
+
+```bash
+.venv-rmsnorm/bin/python scripts/benchmark_rmsnorm_cuda.py \
+  --with-nsight
+```
+
+If `ncu` is not available, the JSON report records:
+
+```json
+{
+  "nsight_compute": {
+    "requested": true,
+    "available": false,
+    "reason": "ncu not found"
+  }
+}
+```
 
 ---
 

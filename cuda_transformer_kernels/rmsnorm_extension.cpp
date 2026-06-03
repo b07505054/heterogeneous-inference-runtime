@@ -14,6 +14,8 @@ torch::Tensor fused_rmsnorm_forward(
   TORCH_CHECK(input.dim() == 2, "input must have shape [tokens, hidden]");
   TORCH_CHECK(weight.dim() == 1, "weight must have shape [hidden]");
   TORCH_CHECK(input.size(1) == weight.size(0), "weight hidden size mismatch");
+  TORCH_CHECK(input.is_contiguous(), "input must be contiguous");
+  TORCH_CHECK(weight.is_contiguous(), "weight must be contiguous");
   return fused_rmsnorm_forward_cuda(input, weight, eps);
 }
 

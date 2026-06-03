@@ -20,11 +20,16 @@ def main():
     parser.add_argument("--atol", type=float, default=1e-4)
     args = parser.parse_args()
 
-    import torch
-    from torch.utils.cpp_extension import load
+    try:
+        import torch
+        from torch.utils.cpp_extension import load
+    except ImportError as exc:
+        print(f"SKIP: PyTorch import failed: {exc}")
+        return 0
 
     if not torch.cuda.is_available():
-        raise SystemExit("CUDA is not available")
+        print("SKIP: CUDA is not available")
+        return 0
 
     extension = load(
         name="fused_rmsnorm_cuda_ext",
@@ -50,12 +55,25 @@ def main():
             torch.cuda.synchronize()
             max_abs_error = (expected - actual).abs().max().item()
             correct = bool(torch.allclose(expected, actual, rtol=args.rtol, atol=args.atol))
+            finite = bool(torch.isfinite(actual).all())
             print(
                 f"tokens={tokens} hidden={hidden} "
-                f"max_abs_error={max_abs_error:.6g} correct={correct}"
+                f"max_abs_error={max_abs_error:.6g} finite={finite} correct={correct}"
             )
-            if not correct:
+            if not finite or not correct:
                 failures.append((tokens, hidden, max_abs_error))
+
+    base = torch.randn(16, 4096, device="cuda", dtype=torch.float32)
+    non_contiguous = base[:, ::2]
+    weight = torch.randn(non_contiguous.shape[-1], device="cuda", dtype=torch.float32)
+    try:
+        extension.fused_rmsnorm_forward(non_contiguous, weight, args.eps)
+        failures.append(("non_contiguous_input", non_contiguous.shape, "expected RuntimeError"))
+    except RuntimeError as exc:
+        if "input must be contiguous" not in str(exc):
+            failures.append(("non_contiguous_input", non_contiguous.shape, str(exc)))
+        else:
+            print("non_contiguous_input rejected as expected")
 
     if failures:
         raise SystemExit(f"RMSNorm correctness failed: {failures}")

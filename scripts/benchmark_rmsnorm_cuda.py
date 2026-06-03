@@ -1,6 +1,8 @@
 import argparse
 import json
+import shutil
 import statistics
+import subprocess
 import sys
 from pathlib import Path
 
@@ -17,6 +19,76 @@ def write_json(path, payload):
 def write_text(path, text):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text, encoding="utf-8")
+
+
+def run_command(args):
+    try:
+        completed = subprocess.run(
+            args,
+            check=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+    except OSError:
+        return None
+    output = (completed.stdout or completed.stderr or "").strip()
+    return output or None
+
+
+def git_commit_hash():
+    return run_command(["git", "rev-parse", "--short", "HEAD"])
+
+
+def git_dirty():
+    output = run_command(["git", "status", "--short"])
+    return bool(output)
+
+
+def driver_version():
+    output = run_command([
+        "nvidia-smi",
+        "--query-gpu=driver_version",
+        "--format=csv,noheader",
+    ])
+    if not output:
+        return None
+    return output.splitlines()[0].strip()
+
+
+def cuda_version_from_nvcc():
+    output = run_command(["nvcc", "--version"])
+    if not output:
+        return None
+    for line in output.splitlines():
+        if "release" in line:
+            return line.strip()
+    return output.splitlines()[-1].strip() if output.splitlines() else None
+
+
+def nsight_compute_metadata(with_nsight):
+    ncu_path = shutil.which("ncu")
+    if not with_nsight:
+        return {
+            "requested": False,
+            "available": ncu_path is not None,
+            "path": ncu_path,
+            "reason": "not requested",
+        }
+    if not ncu_path:
+        return {
+            "requested": True,
+            "available": False,
+            "path": None,
+            "reason": "ncu not found",
+        }
+    return {
+        "requested": True,
+        "available": True,
+        "path": ncu_path,
+        "version": run_command([ncu_path, "--version"]),
+        "note": "ncu is available; collect detailed occupancy/DRAM metrics with the benchmark command under Nsight Compute.",
+    }
 
 
 def percentile(values, p):
@@ -66,12 +138,41 @@ def summarize_times(times):
     }
 
 
+def representative_row(rows):
+    for row in rows:
+        shape = row["shape"]
+        if shape["tokens"] == 16 and shape["hidden"] == 4096 and shape["dtype"] == "float32":
+            return row
+    selectable = [row for row in rows if row["selection_ready"]]
+    return max(selectable, key=lambda row: row["speedup"], default=None) or min(
+        rows,
+        key=lambda row: row["custom_latency_ms"],
+    )
+
+
 def write_markdown_report(path, payload):
+    env = payload.get("environment", {})
+    config = payload.get("benchmark_config", {})
+    nsight = payload.get("nsight_compute", {})
     lines = [
         "# CUDA RMSNorm Benchmark Report",
         "",
         f"Status: `{payload.get('profile_status')}`",
-        f"Device: `{payload.get('device', 'n/a')}`",
+        "",
+        "## Environment",
+        "",
+        f"- GPU: `{env.get('gpu_name')}`",
+        f"- CUDA version: `{env.get('cuda_version')}`",
+        f"- NVCC version: `{env.get('nvcc_version')}`",
+        f"- PyTorch version: `{env.get('pytorch_version')}`",
+        f"- Driver version: `{env.get('driver_version')}`",
+        f"- Commit: `{env.get('commit_hash')}`",
+        f"- Git dirty: `{env.get('git_dirty')}`",
+        f"- Warmup runs: `{config.get('warmup')}`",
+        f"- Timed runs: `{config.get('runs')}`",
+        f"- Dtype: `{config.get('dtype')}`",
+        "",
+        "## Shape Sweep",
         "",
         "| Tokens | Hidden | Custom ms | PyTorch ms | Speedup | Custom GB/s | Correct |",
         "|---:|---:|---:|---:|---:|---:|---:|",
@@ -101,17 +202,27 @@ def write_markdown_report(path, payload):
         "",
         "## Optional Nsight Compute",
         "",
-        "Run Nsight Compute on the benchmark command when available and attach metrics such as achieved occupancy, DRAM throughput, and SM efficiency.",
+        f"- Requested: `{nsight.get('requested')}`",
+        f"- Available: `{nsight.get('available')}`",
+        f"- Reason: `{nsight.get('reason')}`",
+        f"- Path: `{nsight.get('path')}`",
+        "",
+        "When available, run Nsight Compute on the same benchmark command and attach metrics such as achieved occupancy, DRAM throughput, and SM efficiency.",
     ])
     write_text(path, "\n".join(lines) + "\n")
 
 
-def unavailable_report(reason, output):
+def unavailable_report(reason, output, report_output=None, nsight=None):
     payload = {
         "artifact_type": "runtime_kernel_profile",
         "source": "scripts/benchmark_rmsnorm_cuda.py",
         "profile_status": "unavailable",
         "reason": reason,
+        "environment": {
+            "commit_hash": git_commit_hash(),
+            "git_dirty": git_dirty(),
+        },
+        "nsight_compute": nsight or nsight_compute_metadata(False),
         "kernel_benchmarks": [
             {
                 "fusion_candidate": "rmsnorm",
@@ -126,6 +237,8 @@ def unavailable_report(reason, output):
         ],
     }
     write_json(output, payload)
+    if report_output:
+        write_markdown_report(report_output, payload)
     return payload
 
 
@@ -160,20 +273,23 @@ def main():
     parser.add_argument("--warmup", type=int, default=20)
     parser.add_argument("--runs", type=int, default=100)
     parser.add_argument("--eps", type=float, default=1e-6)
+    parser.add_argument("--with-nsight", action="store_true")
     args = parser.parse_args()
 
     output = ROOT / args.output
+    report_output = ROOT / args.report_output
+    nsight = nsight_compute_metadata(args.with_nsight)
 
     try:
         import torch
         from torch.utils.cpp_extension import load
     except ImportError as exc:
-        payload = unavailable_report(f"PyTorch import failed: {exc}", output)
+        payload = unavailable_report(f"PyTorch import failed: {exc}", output, report_output, nsight)
         print(json.dumps(payload, indent=2))
         return 0
 
     if not torch.cuda.is_available():
-        payload = unavailable_report("CUDA is not available on this machine", output)
+        payload = unavailable_report("CUDA is not available on this machine", output, report_output, nsight)
         print(json.dumps(payload, indent=2))
         return 0
 
@@ -247,33 +363,38 @@ def main():
                 "custom_effective_bandwidth_gbps": round(bandwidth_gbps(perf["bytes_total"], custom_mean), 3),
                 "fallback_effective_bandwidth_gbps": round(bandwidth_gbps(perf["bytes_total"], fallback_mean), 3),
                 "roofline_classification": "memory_bound",
-                "nsight_compute": {
-                    "available": False,
-                    "achieved_occupancy": None,
-                    "dram_throughput_gbps": None,
-                    "sm_efficiency": None,
-                    "note": "Optional: collect with ncu on the same benchmark command.",
-                },
+                "nsight_compute": nsight,
                 "correct": correct,
                 "selection_ready": correct and custom_mean < fallback_mean,
             })
 
-    selectable = [row for row in rows if row["selection_ready"]]
-    best = max(selectable, key=lambda row: row["speedup"], default=None)
-    summary_row = best or min(rows, key=lambda row: row["custom_latency_ms"])
+    summary_row = representative_row(rows)
 
     payload = {
         "artifact_type": "runtime_kernel_profile",
         "source": "scripts/benchmark_rmsnorm_cuda.py",
         "profile_status": "measured",
         "device": torch.cuda.get_device_name(0),
+        "environment": {
+            "gpu_name": torch.cuda.get_device_name(0),
+            "cuda_version": torch.version.cuda,
+            "nvcc_version": cuda_version_from_nvcc(),
+            "pytorch_version": torch.__version__,
+            "driver_version": driver_version(),
+            "commit_hash": git_commit_hash(),
+            "git_dirty": git_dirty(),
+        },
         "benchmark_config": {
             "tokens": token_sizes,
             "hidden": hidden_sizes,
             "warmup": args.warmup,
             "runs": args.runs,
             "eps": args.eps,
+            "dtype": "float32",
+            "rtol": 1e-4,
+            "atol": 1e-4,
         },
+        "nsight_compute": nsight,
         "roofline_model": rmsnorm_perf_model(
             summary_row["shape"]["tokens"],
             summary_row["shape"]["hidden"],
@@ -299,7 +420,7 @@ def main():
         "sweep": rows,
     }
     write_json(output, payload)
-    write_markdown_report(ROOT / args.report_output, payload)
+    write_markdown_report(report_output, payload)
     print(json.dumps(payload, indent=2))
     return 0
 

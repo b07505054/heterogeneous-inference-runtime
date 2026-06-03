@@ -1,22 +1,36 @@
 # CUDA RMSNorm Benchmark Report
 
 Status: `measured`
-Device: `NVIDIA GeForce GTX 1650 with Max-Q Design`
+
+## Environment
+
+- GPU: `NVIDIA GeForce GTX 1650 with Max-Q Design`
+- CUDA version: `12.8`
+- NVCC version: `Cuda compilation tools, release 13.1, V13.1.115`
+- PyTorch version: `2.11.0+cu128`
+- Driver version: `595.71.05`
+- Commit: `4350e1b`
+- Git dirty: `True`
+- Warmup runs: `20`
+- Timed runs: `100`
+- Dtype: `float32`
+
+## Shape Sweep
 
 | Tokens | Hidden | Custom ms | PyTorch ms | Speedup | Custom GB/s | Correct |
 |---:|---:|---:|---:|---:|---:|---:|
-| 1 | 768 | 0.032968 | 0.093578 | 2.8385 | 0.373 | True |
-| 1 | 1024 | 0.032771 | 0.087741 | 2.6774 | 0.5 | True |
-| 1 | 4096 | 0.03156 | 0.089118 | 2.8238 | 2.077 | True |
-| 1 | 8192 | 0.033632 | 0.08897 | 2.6454 | 3.897 | True |
-| 16 | 768 | 0.032454 | 0.089096 | 2.7453 | 6.058 | True |
-| 16 | 1024 | 0.03268 | 0.089155 | 2.7281 | 8.021 | True |
-| 16 | 4096 | 0.031597 | 0.090415 | 2.8615 | 33.186 | True |
-| 16 | 8192 | 0.03889 | 0.089868 | 2.3108 | 53.925 | True |
-| 128 | 768 | 0.031841 | 0.090669 | 2.8476 | 49.398 | True |
-| 128 | 1024 | 0.031981 | 0.089589 | 2.8013 | 65.575 | True |
-| 128 | 4096 | 0.084528 | 0.181715 | 2.1498 | 99.24 | True |
-| 128 | 8192 | 0.15287 | 0.337329 | 2.2066 | 109.748 | True |
+| 1 | 768 | 0.032685 | 0.092775 | 2.8384 | 0.376 | True |
+| 1 | 1024 | 0.031624 | 0.08749 | 2.7666 | 0.518 | True |
+| 1 | 4096 | 0.029779 | 0.087292 | 2.9313 | 2.201 | True |
+| 1 | 8192 | 0.032861 | 0.086717 | 2.6389 | 3.989 | True |
+| 16 | 768 | 0.031847 | 0.087757 | 2.7556 | 6.173 | True |
+| 16 | 1024 | 0.031602 | 0.087226 | 2.7601 | 8.295 | True |
+| 16 | 4096 | 0.030196 | 0.088261 | 2.923 | 34.726 | True |
+| 16 | 8192 | 0.038131 | 0.087862 | 2.3042 | 54.998 | True |
+| 128 | 768 | 0.03029 | 0.088295 | 2.915 | 51.926 | True |
+| 128 | 1024 | 0.030821 | 0.087491 | 2.8387 | 68.043 | True |
+| 128 | 4096 | 0.083712 | 0.181661 | 2.1701 | 100.208 | True |
+| 128 | 8192 | 0.151385 | 0.336926 | 2.2256 | 110.825 | True |
 
 ## Roofline Notes
 
@@ -27,4 +41,9 @@ Device: `NVIDIA GeForce GTX 1650 with Max-Q Design`
 
 ## Optional Nsight Compute
 
-Run Nsight Compute on the benchmark command when available and attach metrics such as achieved occupancy, DRAM throughput, and SM efficiency.
+- Requested: `True`
+- Available: `True`
+- Reason: `None`
+- Path: `/usr/local/cuda-13.1/bin/ncu`
+
+When available, run Nsight Compute on the same benchmark command and attach metrics such as achieved occupancy, DRAM throughput, and SM efficiency.
