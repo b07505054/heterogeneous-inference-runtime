@@ -731,6 +731,21 @@ python3 scripts/benchmark_rmsnorm_cuda.py \
   --output results/cuda_transformer/rmsnorm_benchmark.json
 ```
 
+### Optional Triton RMSNorm Candidate
+
+The same RMSNorm compiler candidate can be benchmarked against a Triton kernel:
+
+```bash
+python3 scripts/benchmark_rmsnorm_triton.py \
+  --output results/cuda_transformer/rmsnorm_triton_benchmark.json \
+  --report-output results/cuda_transformer/rmsnorm_triton_benchmark_report.md
+```
+
+If Triton or CUDA is unavailable, the script writes an `unavailable` profile
+instead of failing CI. On a CUDA machine with Triton installed, it records
+correctness, latency, bandwidth, and `selection_ready` metadata for
+`fused_rmsnorm_triton` versus `torch_rmsnorm`.
+
 If CUDA or PyTorch is unavailable, the script still emits an explicit
 `profile_status: unavailable` artifact. The compiler should then retain the
 fallback kernel instead of claiming that a custom CUDA kernel won without

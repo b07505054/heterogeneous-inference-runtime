@@ -1,0 +1,18 @@
+{
+  "artifact_type": "runtime_kernel_profile",
+  "source": "scripts/benchmark_rmsnorm_triton.py",
+  "profile_status": "unavailable",
+  "reason": "import failed: No module named 'triton'",
+  "kernel_benchmarks": [
+    {
+      "fusion_candidate": "rmsnorm",
+      "custom_kernel": "fused_rmsnorm_triton",
+      "fallback_kernel": "torch_rmsnorm",
+      "custom_latency_ms": null,
+      "fallback_latency_ms": null,
+      "speedup": null,
+      "correct": null,
+      "selection_ready": false
+    }
+  ]
+}

@@ -80,6 +80,8 @@ results/*.json
 !results/scaling_metrics.json
 !results/tvm_tensorir/
 !results/tvm_tensorir/**
+!results/cuda_transformer/
+!results/cuda_transformer/**
 
 # executorch artifacts
 *.pte
