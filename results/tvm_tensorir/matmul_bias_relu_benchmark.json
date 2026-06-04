@@ -1,0 +1,120 @@
+{
+  "artifact_type": "tvm_tensorir_schedule_benchmark",
+  "source": "scripts/benchmark_tvm_matmul_bias_relu.py",
+  "status": "ok",
+  "target": "llvm",
+  "environment": {
+    "tvm_version": "0.24.0",
+    "llvm_enabled": true,
+    "python": "3.11.11",
+    "platform": "macOS-26.5-arm64-arm-64bit",
+    "machine": "arm64",
+    "processor": "arm",
+    "commit_hash": "86b79dc",
+    "git_dirty": true
+  },
+  "benchmark_config": {
+    "warmup": 3,
+    "number": 10,
+    "repeat": 5,
+    "atol": 0.0001,
+    "schedule": {
+      "tile_m": 16,
+      "tile_n": 16,
+      "tile_k": 8,
+      "vectorize_n": 16
+    }
+  },
+  "shape_sweep": [
+    {
+      "shape": {
+        "m": 64,
+        "n": 64,
+        "k": 64,
+        "dtype": "float32"
+      },
+      "shape_bucket": "64x64x64:float32",
+      "correct": true,
+      "max_abs_diff": 0.0,
+      "unscheduled_latency": {
+        "mean_ms": 0.008482,
+        "p50_ms": 0.008465,
+        "p95_ms": 0.008548,
+        "min_ms": 0.008463,
+        "max_ms": 0.008548
+      },
+      "scheduled_latency": {
+        "mean_ms": 0.001183,
+        "p50_ms": 0.001058,
+        "p95_ms": 0.001775,
+        "min_ms": 0.000511,
+        "max_ms": 0.001775
+      },
+      "speedup_p50": 8.0009,
+      "artifacts": {
+        "unscheduled_tensorir": "results/tvm_tensorir/tir/64_64_64_float32_unscheduled.py",
+        "scheduled_tensorir": "results/tvm_tensorir/tir/64_64_64_float32_scheduled.py"
+      }
+    },
+    {
+      "shape": {
+        "m": 128,
+        "n": 128,
+        "k": 128,
+        "dtype": "float32"
+      },
+      "shape_bucket": "128x128x128:float32",
+      "correct": true,
+      "max_abs_diff": 0.0,
+      "unscheduled_latency": {
+        "mean_ms": 0.101565,
+        "p50_ms": 0.101534,
+        "p95_ms": 0.101954,
+        "min_ms": 0.10129,
+        "max_ms": 0.101954
+      },
+      "scheduled_latency": {
+        "mean_ms": 0.001604,
+        "p50_ms": 0.001596,
+        "p95_ms": 0.00168,
+        "min_ms": 0.00156,
+        "max_ms": 0.00168
+      },
+      "speedup_p50": 63.6178,
+      "artifacts": {
+        "unscheduled_tensorir": "results/tvm_tensorir/tir/128_128_128_float32_unscheduled.py",
+        "scheduled_tensorir": "results/tvm_tensorir/tir/128_128_128_float32_scheduled.py"
+      }
+    },
+    {
+      "shape": {
+        "m": 256,
+        "n": 256,
+        "k": 256,
+        "dtype": "float32"
+      },
+      "shape_bucket": "256x256x256:float32",
+      "correct": true,
+      "max_abs_diff": 0.0,
+      "unscheduled_latency": {
+        "mean_ms": 1.019181,
+        "p50_ms": 1.021621,
+        "p95_ms": 1.071746,
+        "min_ms": 0.961487,
+        "max_ms": 1.071746
+      },
+      "scheduled_latency": {
+        "mean_ms": 0.010823,
+        "p50_ms": 0.010412,
+        "p95_ms": 0.011893,
+        "min_ms": 0.010219,
+        "max_ms": 0.011893
+      },
+      "speedup_p50": 98.1196,
+      "artifacts": {
+        "unscheduled_tensorir": "results/tvm_tensorir/tir/256_256_256_float32_unscheduled.py",
+        "scheduled_tensorir": "results/tvm_tensorir/tir/256_256_256_float32_scheduled.py"
+      }
+    }
+  ]
+}
