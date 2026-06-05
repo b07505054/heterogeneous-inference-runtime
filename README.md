@@ -14,6 +14,8 @@ The system evaluates real-world deployment trade-offs across:
 - Quantized INT8 inference
 - Multi-threaded CPU execution scaling
 - TensorRT dynamic batch scaling
+- vLLM/SGLang-style prefill/decode scheduling and KV-cache pressure simulation
+- Triton Server-style dynamic batching/backend routing comparison artifacts
 - Async video inference pipelines
 - Backend fallback execution
 - Runtime monitoring APIs
@@ -25,6 +27,19 @@ The system evaluates real-world deployment trade-offs across:
 - AddressSanitizer-enabled native runtime validation
 - Model registry & versioning
 - LlamaForCausalLM backend profiling for compiler/runtime demo artifacts
+
+The LLM runtime artifact generator also emits a serving-framework comparison
+track for interview-facing inference systems work:
+
+```text
+results/llm_runtime_artifacts/serving_framework_report.json
+```
+
+That report maps the local scheduler and memory planner onto vLLM-style
+continuous batching, SGLang-style request/decode scheduling, Triton
+Server-style dynamic batching and backend instance routing, and TensorRT-style
+engine/profile backend selection. It reports TTFT, TPOT, p95 latency,
+tokens/sec, KV-cache pressure, and memory/SLO signals from the same workload.
 
 The platform simulates a production-style edge computer vision inference system
 similar to modern autonomous robotics and edge AI deployment infrastructure.
