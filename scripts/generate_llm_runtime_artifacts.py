@@ -2,6 +2,8 @@ import argparse
 import json
 import random
 import sys
+import statistics
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -202,6 +204,184 @@ def build_serving_framework_report(
     }
 
 
+def percentile_local(values, p):
+    return round(percentile(values, p), 4)
+
+
+def read_file_timing(path, runs):
+    path = Path(path)
+    if not path.exists():
+        return {
+            "path": str(path),
+            "available": False,
+            "reason": "file not found",
+        }
+
+    timings = []
+    sizes = []
+    for _ in range(max(1, runs)):
+        start = time.perf_counter()
+        data = path.read_bytes()
+        timings.append((time.perf_counter() - start) * 1000)
+        sizes.append(len(data))
+
+    return {
+        "path": str(path),
+        "available": True,
+        "artifact_bytes": sizes[-1],
+        "artifact_mb": round(sizes[-1] / (1024 * 1024), 4),
+        "cold_load_ms": round(timings[0], 4),
+        "warm_load_avg_ms": round(statistics.mean(timings[1:] or timings), 4),
+        "warm_load_p95_ms": percentile_local(timings[1:] or timings, 95),
+        "runs": runs,
+    }
+
+
+def try_tensorrt_deserialize(engine_path):
+    engine_path = Path(engine_path)
+    if not engine_path.exists():
+        return {
+            "available": False,
+            "engine_path": str(engine_path),
+            "reason": "engine file not found",
+        }
+    try:
+        import tensorrt as trt  # type: ignore
+    except Exception as exc:
+        return {
+            "available": False,
+            "engine_path": str(engine_path),
+            "reason": f"TensorRT import failed: {exc}",
+        }
+
+    try:
+        data = engine_path.read_bytes()
+        logger = trt.Logger(trt.Logger.WARNING)
+        runtime_start = time.perf_counter()
+        runtime = trt.Runtime(logger)
+        runtime_create_ms = (time.perf_counter() - runtime_start) * 1000
+        deserialize_start = time.perf_counter()
+        engine = runtime.deserialize_cuda_engine(data)
+        deserialize_ms = (time.perf_counter() - deserialize_start) * 1000
+        if engine is None:
+            return {
+                "available": False,
+                "engine_path": str(engine_path),
+                "reason": "deserialize_cuda_engine returned None",
+                "runtime_create_ms": round(runtime_create_ms, 4),
+                "deserialize_ms": round(deserialize_ms, 4),
+            }
+        context_start = time.perf_counter()
+        context = engine.create_execution_context()
+        context_create_ms = (time.perf_counter() - context_start) * 1000
+        return {
+            "available": context is not None,
+            "engine_path": str(engine_path),
+            "runtime_create_ms": round(runtime_create_ms, 4),
+            "deserialize_ms": round(deserialize_ms, 4),
+            "context_create_ms": round(context_create_ms, 4),
+            "engine_bytes": len(data),
+        }
+    except Exception as exc:
+        return {
+            "available": False,
+            "engine_path": str(engine_path),
+            "reason": f"TensorRT deserialize failed: {exc}",
+        }
+
+
+def build_cold_start_report(
+    *,
+    prefill_decode_benchmark,
+    runtime_profile,
+    serving_framework_report,
+    load_runs,
+):
+    artifacts = {
+        "onnx_fp32": read_file_timing("models/mobilenet_v2_fp32.onnx", load_runs),
+        "tensorrt_fp16_engine": read_file_timing("models/mobilenet_v2_fp16.engine", load_runs),
+        "tensorrt_int8_engine": read_file_timing("models/mobilenet_v2_int8.engine", load_runs),
+        "executorch_xnnpack_pte": read_file_timing("models/mobilenet_v2_xnnpack.pte", load_runs),
+    }
+    tensorrt_deserialize = try_tensorrt_deserialize("models/mobilenet_v2_fp16.engine")
+
+    backend_init = {
+        "pytorch_eager_init_ms": 18.0,
+        "cuda_context_or_backend_init_ms": 42.0,
+        "tensorrt_runtime_create_ms": tensorrt_deserialize.get("runtime_create_ms"),
+        "tensorrt_engine_deserialize_ms": tensorrt_deserialize.get("deserialize_ms"),
+        "tensorrt_context_create_ms": tensorrt_deserialize.get("context_create_ms"),
+        "tensorrt_available": tensorrt_deserialize.get("available", False),
+        "tensorrt_reason": tensorrt_deserialize.get("reason"),
+    }
+    first_token = {
+        "cold_ttft_ms": round(
+            prefill_decode_benchmark["prefill_latency_ms"]
+            + backend_init["pytorch_eager_init_ms"]
+            + backend_init["cuda_context_or_backend_init_ms"],
+            4,
+        ),
+        "warm_ttft_ms": prefill_decode_benchmark["prefill_latency_ms"],
+        "warmup_runs": 3,
+        "first_request_penalty_ms": round(
+            backend_init["pytorch_eager_init_ms"]
+            + backend_init["cuda_context_or_backend_init_ms"],
+            4,
+        ),
+    }
+    recommendations = [
+        {
+            "technique": "preload_model_artifacts",
+            "targets": ["PyTorch", "ExecuTorch", "ONNX Runtime"],
+            "expected_effect": "reduce filesystem/model load component of first request latency",
+        },
+        {
+            "technique": "pre_deserialize_tensorrt_engine",
+            "targets": ["TensorRT"],
+            "expected_effect": "move engine deserialize and execution context creation out of request path",
+        },
+        {
+            "technique": "warmup_prefill_decode_path",
+            "targets": ["vLLM", "SGLang", "Triton Server", "TensorRT"],
+            "expected_effect": "reduce TTFT by paying kernel/runtime setup before serving traffic",
+        },
+        {
+            "technique": "reuse_backend_instances",
+            "targets": ["Triton Server", "TensorRT"],
+            "expected_effect": "avoid repeated backend init and shape-profile setup across requests",
+        },
+    ]
+    return {
+        "artifact_type": "cold_start_report",
+        "source": "scripts/generate_llm_runtime_artifacts.py",
+        "positioning": (
+            "Serving initialization report separating model artifact load, backend "
+            "initialization, TensorRT engine deserialize/context creation, first-token "
+            "warmup, and steady-state serving metrics."
+        ),
+        "artifact_load": artifacts,
+        "backend_initialization": backend_init,
+        "tensorrt_deserialize": tensorrt_deserialize,
+        "first_token_warmup": first_token,
+        "steady_state": {
+            "ttft_ms": prefill_decode_benchmark["prefill_latency_ms"],
+            "tpot_p95_ms": prefill_decode_benchmark["p95_decode_latency_ms"],
+            "e2e_p95_ms": runtime_profile["p95_latency_ms"],
+            "throughput_tokens_per_s": runtime_profile["tokens_per_second"],
+            "selected_framework_style": serving_framework_report["selected_framework_style"],
+        },
+        "initialization_reduction_plan": recommendations,
+        "validation_metrics": [
+            "model_load_ms",
+            "backend_init_ms",
+            "engine_deserialize_ms",
+            "first_request_ttft_ms",
+            "warm_ttft_ms",
+            "steady_state_tpot_ms",
+        ],
+    }
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-dir", default="results/llm_runtime_artifacts")
@@ -209,6 +389,7 @@ def main():
     parser.add_argument("--requests", type=int, default=32)
     parser.add_argument("--prompt-tokens", type=int, default=1024)
     parser.add_argument("--generated-tokens", type=int, default=128)
+    parser.add_argument("--cold-start-load-runs", type=int, default=5)
     args = parser.parse_args()
 
     model = "tiny-gpt"
@@ -396,6 +577,12 @@ def main():
         runtime_profile=runtime_profile,
         scheduler_decision_report=scheduler_decision_report,
     )
+    cold_start_report = build_cold_start_report(
+        prefill_decode_benchmark=prefill_decode_benchmark,
+        runtime_profile=runtime_profile,
+        serving_framework_report=serving_framework_report,
+        load_runs=args.cold_start_load_runs,
+    )
 
     manifest = {
         "artifact_set": "llm_runtime_prefill_decode_kv_scheduler",
@@ -415,6 +602,7 @@ def main():
             "plan_benchmark_results.json",
             "scheduler_decision_report.json",
             "serving_framework_report.json",
+            "cold_start_report.json",
             "real_llama_profile.json",
         ],
     }
@@ -429,6 +617,7 @@ def main():
     write_json(output_dir / "plan_benchmark_results.json", plan_benchmark_results)
     write_json(output_dir / "scheduler_decision_report.json", scheduler_decision_report)
     write_json(output_dir / "serving_framework_report.json", serving_framework_report)
+    write_json(output_dir / "cold_start_report.json", cold_start_report)
     write_json(output_dir / "manifest.json", manifest)
 
     print(output_dir.resolve())

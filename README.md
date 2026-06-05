@@ -16,6 +16,8 @@ The system evaluates real-world deployment trade-offs across:
 - TensorRT dynamic batch scaling
 - vLLM/SGLang-style prefill/decode scheduling and KV-cache pressure simulation
 - Triton Server-style dynamic batching/backend routing comparison artifacts
+- Cold-start/model-initialization analysis for model load, backend init, TensorRT
+  engine deserialize, first-token warmup, and steady-state TTFT/TPOT
 - Async video inference pipelines
 - Backend fallback execution
 - Runtime monitoring APIs
@@ -33,6 +35,7 @@ track for interview-facing inference systems work:
 
 ```text
 results/llm_runtime_artifacts/serving_framework_report.json
+results/llm_runtime_artifacts/cold_start_report.json
 ```
 
 That report maps the local scheduler and memory planner onto vLLM-style
@@ -40,6 +43,9 @@ continuous batching, SGLang-style request/decode scheduling, Triton
 Server-style dynamic batching and backend instance routing, and TensorRT-style
 engine/profile backend selection. It reports TTFT, TPOT, p95 latency,
 tokens/sec, KV-cache pressure, and memory/SLO signals from the same workload.
+The cold-start report separates model artifact load, backend initialization,
+TensorRT engine deserialization/context creation, first-request TTFT penalty,
+warm TTFT, steady-state TPOT, and concrete initialization-reduction techniques.
 
 The platform simulates a production-style edge computer vision inference system
 similar to modern autonomous robotics and edge AI deployment infrastructure.
