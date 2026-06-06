@@ -64,6 +64,8 @@ Artifacts:
 ```text
 results/cuda_transformer/rmsnorm_benchmark.json
 results/cuda_transformer/rmsnorm_benchmark_report.md
+results/cuda_transformer/gpu_pgo_like_rmsnorm_report.json
+results/cuda_transformer/gpu_pgo_like_rmsnorm_report.md
 ```
 
 Benchmark coverage:
@@ -135,6 +137,27 @@ If `ncu` is not available, the JSON report records:
   }
 }
 ```
+
+The GPU PGO-like report turns runtime benchmark evidence into a compiler-facing
+candidate selection table:
+
+```text
+compiler-emitted HIR op + runtime shape/workload distribution
+  -> benchmark CUDA/Triton/PyTorch RMSNorm candidates
+  -> select lowest-correct p95 latency by shape bucket
+  -> project TPOT / throughput impact for serving reports
+```
+
+Run it after the CUDA/Triton RMSNorm benchmark artifacts exist:
+
+```bash
+python3 scripts/generate_gpu_pgo_like_report.py
+```
+
+This is intentionally PGO-like rather than traditional CPU binary PGO: the
+profile input is GPU kernel latency/bandwidth evidence and serving workload
+shape distribution, and the decision is runtime/compiler kernel selection
+instead of function/basic-block layout in a CPU binary.
 
 ---
 

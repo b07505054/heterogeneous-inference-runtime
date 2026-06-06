@@ -342,6 +342,13 @@ def build_technology_gate_audit():
                 "status": "implemented",
             },
             {
+                "technology": "gpu_pgo_like_kernel_selection",
+                "input": "compiler-emitted HIR op plus runtime RMSNorm shape/workload distribution",
+                "decision": "profile-guided selection among CUDA/Triton/PyTorch RMSNorm candidates",
+                "metric": "kernel p95 latency, effective bandwidth, TPOT projection, throughput projection",
+                "status": "implemented_as_runtime_profile_feedback",
+            },
+            {
                 "technology": "vllm_trace_adapter",
                 "input": "vLLM-style request trace",
                 "decision": "continuous batching and paged-KV pressure mapping",
