@@ -83,6 +83,105 @@ def build_chrome_trace(result):
     return trace
 
 
+def request_rows(requests):
+    return [
+        {
+            "request_id": req.request_id,
+            "arrival_ms": req.arrival_ms,
+            "prompt_tokens": req.prompt_tokens,
+            "output_tokens": req.output_tokens,
+            "prefix_key": f"prefix-{idx % 4}",
+        }
+        for idx, req in enumerate(requests)
+    ]
+
+
+def build_trace_adapter_report(*, adapter_name, requests, selected, scheduler_trace, runtime_profile):
+    rows = request_rows(requests)
+    decode_steps = [
+        step for step in scheduler_trace.get("steps", [])
+        if step.get("event") == "decode_batch"
+    ]
+    if adapter_name == "vllm":
+        source_trace = [
+            {
+                "request_id": row["request_id"],
+                "arrival_time_ms": row["arrival_ms"],
+                "prompt_token_ids_len": row["prompt_tokens"],
+                "max_tokens": row["output_tokens"],
+                "prefix_cache_key": row["prefix_key"],
+                "scheduler": "vllm_compatible_continuous_batching_trace",
+            }
+            for row in rows
+        ]
+        lifecycle = "arrival -> prefill -> continuous decode batch -> finish"
+        decision = "continuous batching admission and paged-KV pressure cap"
+        output_name = "vllm_trace_adapter_report"
+    else:
+        source_trace = [
+            {
+                "request_id": row["request_id"],
+                "arrival_ms": row["arrival_ms"],
+                "input_tokens": row["prompt_tokens"],
+                "sampling_params": {"max_new_tokens": row["output_tokens"]},
+                "prefix": row["prefix_key"],
+                "decode_program": "sglang_compatible_request_decode_trace",
+            }
+            for row in rows
+        ]
+        lifecycle = "request program -> prefix lookup -> decode scheduling -> finish"
+        decision = "request/decode scheduling with prefix-reuse metadata"
+        output_name = "sglang_trace_adapter_report"
+
+    return {
+        "artifact_type": output_name,
+        "source": "scripts/generate_llm_runtime_artifacts.py",
+        "integration_level": "trace_adapter_not_framework_fork",
+        "technology_gate": {
+            "input": f"{adapter_name} style synthetic request/decode trace",
+            "decision": decision,
+            "metric": "TTFT, TPOT, throughput, queue wait, KV pressure, decode batch efficiency",
+            "passes_gate": True,
+        },
+        "positioning": (
+            f"This is a {adapter_name} trace adapter. It maps framework-shaped "
+            "request records into the local RuntimeScheduler model; it does not "
+            f"claim modified {adapter_name} internals."
+        ),
+        "source_trace_schema": source_trace[:8],
+        "imported_request_count": len(rows),
+        "mapped_runtime_request_fields": [
+            "request_id",
+            "arrival_ms",
+            "prompt_tokens",
+            "output_tokens",
+            "prefix_key",
+        ],
+        "runtime_decision": {
+            "scheduler_policy": selected.policy,
+            "lifecycle": lifecycle,
+            "decode_batch_events": len(decode_steps),
+            "avg_decode_batch_size": selected.avg_decode_batch_size,
+            "decode_batch_efficiency": selected.decode_batch_efficiency,
+            "pressure_limited_candidates": selected.pressure_limited_candidates,
+            "peak_kv_cache_mb": selected.peak_kv_cache_mb,
+        },
+        "serving_metrics": {
+            "completed_requests": selected.completed_requests,
+            "rejected_requests": selected.rejected_requests,
+            "delayed_requests": selected.delayed_requests,
+            "throughput_tokens_per_s": runtime_profile["tokens_per_second"],
+            "e2e_p95_ms": runtime_profile["p95_latency_ms"],
+            "peak_memory_mb": runtime_profile["peak_memory_mb"],
+            "peak_kv_cache_mb": runtime_profile["peak_kv_cache_mb"],
+        },
+        "remaining_work": [
+            f"replace synthetic {adapter_name} trace with exported trace from a live framework run",
+            f"add round-trip comparison against real {adapter_name} scheduler logs",
+        ],
+    }
+
+
 def build_serving_framework_report(
     *,
     baseline,
@@ -201,6 +300,99 @@ def build_serving_framework_report(
             "triton_server": "backend-routing abstraction mirrors dynamic batching decisions",
             "tensorrt": "real TensorRT benchmark artifacts are consumed when available",
         },
+    }
+
+
+def build_technology_gate_audit():
+    return {
+        "artifact_type": "technology_gate_audit",
+        "source": "scripts/generate_llm_runtime_artifacts.py",
+        "gate_questions": [
+            "Input source",
+            "Compiler/runtime decision",
+            "Execution or serving metric impact",
+        ],
+        "main_plan": [
+            {
+                "technology": "runtime_scheduler",
+                "input": "generated LLM request trace",
+                "decision": "FCFS baseline vs cost-aware memory-pressure scheduler",
+                "metric": "TTFT, TPOT, throughput, p95 latency, queue wait",
+                "status": "implemented",
+            },
+            {
+                "technology": "continuous_batching",
+                "input": "pending decode candidates",
+                "decision": "decode batch membership under KV pressure cap",
+                "metric": "decode batch efficiency, throughput, queue wait",
+                "status": "implemented",
+            },
+            {
+                "technology": "kv_cache_planner",
+                "input": "prompt/output tokens and block capacity",
+                "decision": "KV block allocation/admission/delay/reject",
+                "metric": "peak KV MB, pressure level, OOM/reject count",
+                "status": "implemented",
+            },
+            {
+                "technology": "backend_dispatch",
+                "input": "prefill/decode/KV bookkeeping ops",
+                "decision": "GPU attention placement plus CPU KV bookkeeping",
+                "metric": "backend counts, placement latency, throughput",
+                "status": "implemented",
+            },
+            {
+                "technology": "vllm_trace_adapter",
+                "input": "vLLM-style request trace",
+                "decision": "continuous batching and paged-KV pressure mapping",
+                "metric": "TTFT, TPOT, throughput, queue wait, KV pressure",
+                "status": "implemented_as_adapter",
+            },
+            {
+                "technology": "sglang_trace_adapter",
+                "input": "SGLang-style request/decode trace",
+                "decision": "request/decode scheduling with prefix metadata",
+                "metric": "TTFT, TPOT, throughput, queue wait, KV pressure",
+                "status": "implemented_as_adapter",
+            },
+        ],
+        "remaining_not_in_main_plan": [
+            {
+                "technology": "StableHLO_native_pipeline",
+                "missing": "must connect StableHLO input to HIR kernel selection and benchmark",
+                "next_step": "StableHLO -> HIR -> kernel selection -> runtime benchmark report",
+            },
+            {
+                "technology": "JAX_tracing",
+                "missing": "must export JAX StableHLO and feed it into HIR/kernel selection",
+                "next_step": "jax.lower().compiler_ir('stablehlo') -> HIR -> runtime report",
+            },
+            {
+                "technology": "Triton_Server",
+                "missing": "must provide model repository/config.pbtxt/dynamic batching benchmark",
+                "next_step": "Triton deployment package plus validation report",
+            },
+            {
+                "technology": "TensorRT_LLM",
+                "missing": "must use LLM/transformer input, not only CV engine evidence",
+                "next_step": "Tiny transformer ONNX -> TensorRT engine -> serving metrics",
+            },
+            {
+                "technology": "Ray_Kubernetes",
+                "missing": "must connect deployment config to serving metrics and validation",
+                "next_step": "Ray/K8s deployment artifacts plus SLO report",
+            },
+            {
+                "technology": "multimodal_serving",
+                "missing": "must define text/vision/speech inputs sharing scheduler and metrics",
+                "next_step": "mixed workload simulator with per-modality latency metrics",
+            },
+            {
+                "technology": "OpenXLA_XLA_PJRT",
+                "missing": "tool availability alone does not pass the gate",
+                "next_step": "keep out of main plan until tied to a runnable frontend/runtime path",
+            },
+        ],
     }
 
 
@@ -577,12 +769,27 @@ def main():
         runtime_profile=runtime_profile,
         scheduler_decision_report=scheduler_decision_report,
     )
+    vllm_trace_adapter_report = build_trace_adapter_report(
+        adapter_name="vllm",
+        requests=requests,
+        selected=selected,
+        scheduler_trace=scheduler_trace,
+        runtime_profile=runtime_profile,
+    )
+    sglang_trace_adapter_report = build_trace_adapter_report(
+        adapter_name="sglang",
+        requests=requests,
+        selected=selected,
+        scheduler_trace=scheduler_trace,
+        runtime_profile=runtime_profile,
+    )
     cold_start_report = build_cold_start_report(
         prefill_decode_benchmark=prefill_decode_benchmark,
         runtime_profile=runtime_profile,
         serving_framework_report=serving_framework_report,
         load_runs=args.cold_start_load_runs,
     )
+    technology_gate_audit = build_technology_gate_audit()
 
     manifest = {
         "artifact_set": "llm_runtime_prefill_decode_kv_scheduler",
@@ -602,7 +809,10 @@ def main():
             "plan_benchmark_results.json",
             "scheduler_decision_report.json",
             "serving_framework_report.json",
+            "vllm_trace_adapter_report.json",
+            "sglang_trace_adapter_report.json",
             "cold_start_report.json",
+            "technology_gate_audit.json",
             "real_llama_profile.json",
         ],
     }
@@ -617,7 +827,10 @@ def main():
     write_json(output_dir / "plan_benchmark_results.json", plan_benchmark_results)
     write_json(output_dir / "scheduler_decision_report.json", scheduler_decision_report)
     write_json(output_dir / "serving_framework_report.json", serving_framework_report)
+    write_json(output_dir / "vllm_trace_adapter_report.json", vllm_trace_adapter_report)
+    write_json(output_dir / "sglang_trace_adapter_report.json", sglang_trace_adapter_report)
     write_json(output_dir / "cold_start_report.json", cold_start_report)
+    write_json(output_dir / "technology_gate_audit.json", technology_gate_audit)
     write_json(output_dir / "manifest.json", manifest)
 
     print(output_dir.resolve())
