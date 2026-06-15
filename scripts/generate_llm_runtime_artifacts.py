@@ -16,6 +16,7 @@ from deployment.llm_runtime_decision import (  # noqa: E402
     build_requests,
     summarize_policy,
 )
+from deployment.distributed_serving import build_distributed_serving_artifacts  # noqa: E402
 
 
 def percentile(values, p):
@@ -191,6 +192,9 @@ def build_serving_framework_report(
     prefill_decode_benchmark,
     runtime_profile,
     scheduler_decision_report,
+    page_prefetch=None,
+    page_prefetch_summary=None,
+    page_prefetch_report=None,
 ):
     def metric_row(name, result, summary, style):
         decode_latencies = result.decode_step_latencies or [0.0]
@@ -244,6 +248,22 @@ def build_serving_framework_report(
             "backend_routing": "profile_guided_backend_dispatch",
         },
     )
+    rows = [baseline_row, optimized_row]
+    if page_prefetch is not None and page_prefetch_summary is not None:
+        page_prefetch_row = metric_row(
+            "vllm_style_page_prefetch",
+            page_prefetch,
+            page_prefetch_summary,
+            {
+                "scheduler_policy": "continuous_batching_with_kv_page_prefetch",
+                "batching": "memory_pressure_aware_adaptive_decode_batch",
+                "kv_cache_policy": "allocated_kv_page_prefetch_under_pressure_budget",
+                "backend_routing": "profile_guided_backend_dispatch",
+            },
+        )
+        page_prefetch_row["page_prefetch"] = page_prefetch.page_prefetch
+        page_prefetch_row["selection_status"] = (page_prefetch_report or {}).get("selected_policy")
+        rows.append(page_prefetch_row)
     triton_row = {
         **optimized_row,
         "framework_style": "triton_server_style",
@@ -260,6 +280,7 @@ def build_serving_framework_report(
         "kv_cache_policy": "engine_workspace_plus_kv_cache_budget",
         "backend_routing": "tensorrt_engine_candidate_when_available",
     }
+    rows.extend([triton_row, tensorrt_row])
 
     return {
         "artifact_type": "serving_framework_report",
@@ -272,6 +293,7 @@ def build_serving_framework_report(
         ),
         "framework_targets": [
             "vLLM continuous batching and paged KV-cache pressure",
+            "vLLM-style allocated KV page prefetch under memory-pressure budget",
             "SGLang request/decode scheduling and prefix/KV reuse hooks",
             "Triton Server dynamic batching and backend instance routing",
             "TensorRT engine/optimization-profile backend candidate selection",
@@ -285,12 +307,7 @@ def build_serving_framework_report(
             "peak_memory_mb": runtime_profile["peak_memory_mb"],
             "oom_events": runtime_profile["oom_events"],
         },
-        "comparisons": [
-            baseline_row,
-            optimized_row,
-            triton_row,
-            tensorrt_row,
-        ],
+        "comparisons": rows,
         "selected_framework_style": "vllm_sglang_style",
         "selection_reason": scheduler_decision_report["selection_reason"],
         "improvement": scheduler_decision_report["improvement"],
@@ -300,6 +317,99 @@ def build_serving_framework_report(
             "triton_server": "backend-routing abstraction mirrors dynamic batching decisions",
             "tensorrt": "real TensorRT benchmark artifacts are consumed when available",
         },
+    }
+
+
+def build_page_prefetch_report(*, optimized, page_prefetch, optimized_summary, page_prefetch_summary):
+    optimized_decode = optimized.decode_step_latencies or [0.0]
+    prefetch_decode = page_prefetch.decode_step_latencies or [0.0]
+    tpot_delta = round(
+        percentile(prefetch_decode, 95) - percentile(optimized_decode, 95),
+        4,
+    )
+    throughput_delta = round(
+        page_prefetch.tokens_per_second - optimized.tokens_per_second,
+        4,
+    )
+    e2e_delta = round(
+        page_prefetch_summary["p95_latency_ms"] - optimized_summary["p95_latency_ms"],
+        4,
+    )
+    prefetch = page_prefetch.page_prefetch
+    faster_or_equal = throughput_delta >= 0 and tpot_delta <= 0 and e2e_delta <= 0
+    correct = page_prefetch.oom_events == 0 and page_prefetch.completed_requests == optimized.completed_requests
+    selected_policy = (
+        "cost_aware_memory_pressure_page_prefetch"
+        if correct and faster_or_equal
+        else "cost_aware_memory_pressure"
+    )
+    return {
+        "artifact_type": "vllm_style_page_prefetch_report",
+        "source": "deployment.llm_runtime_decision",
+        "integration_level": "vllm_style_scheduler_simulation_not_framework_fork",
+        "technology_gate": {
+            "input": "vLLM-style request/decode trace plus allocated KV block map and pending decode candidates",
+            "decision": "prefetch next decode KV pages only when memory pressure is below the prefetch budget",
+            "metric": "prefetch hit rate, wasted prefetch blocks, TPOT p95, decode p95, throughput, queue wait, OOM/rejection rate",
+            "passes_gate": True,
+        },
+        "positioning": (
+            "Page prefetch is modeled as a real RuntimeScheduler policy over "
+            "already allocated KV blocks. It is not a vLLM fork and does not "
+            "claim CUDA cp.async or physical GPU page migration."
+        ),
+        "candidate_policy": "cost_aware_memory_pressure_page_prefetch",
+        "fallback_policy": "cost_aware_memory_pressure",
+        "selected_policy": selected_policy,
+        "selection_reason": (
+            "page prefetch improved TPOT/e2e/throughput without OOM regression"
+            if selected_policy == "cost_aware_memory_pressure_page_prefetch"
+            else "fallback retained because page prefetch did not improve all serving metrics or correctness"
+        ),
+        "input": {
+            "source": "synthetic vLLM-style trace adapter and RuntimeScheduler KV allocations",
+            "prefetch_scope": "allocated_kv_pages",
+            "decode_policy": page_prefetch.policy,
+        },
+        "decision": {
+            "pressure_disable_threshold": prefetch.get("pressure_disable_threshold"),
+            "max_prefetch_blocks_per_step": prefetch.get("max_prefetch_blocks_per_step"),
+            "hit_latency_saving_ms": prefetch.get("hit_latency_saving_ms"),
+            "wasted_prefetch_penalty_ms": prefetch.get("wasted_prefetch_penalty_ms"),
+            "correctness_guard": "reject candidate on OOM/completed-request regression",
+            "fallback_guard": "keep no-prefetch policy if p95/TPOT/throughput do not improve",
+        },
+        "metric": {
+            "prefetch_attempts": prefetch.get("attempts", 0),
+            "prefetch_hits": prefetch.get("hits", 0),
+            "prefetch_misses": prefetch.get("misses", 0),
+            "prefetch_hit_rate": prefetch.get("hit_rate", 0.0),
+            "wasted_prefetch_blocks": prefetch.get("wasted_prefetch_blocks", 0),
+            "pressure_skips": prefetch.get("pressure_skips", 0),
+            "optimized_tpot_p95_ms": round(percentile(optimized_decode, 95), 4),
+            "prefetch_tpot_p95_ms": round(percentile(prefetch_decode, 95), 4),
+            "tpot_p95_delta_ms": tpot_delta,
+            "optimized_e2e_p95_ms": optimized_summary["p95_latency_ms"],
+            "prefetch_e2e_p95_ms": page_prefetch_summary["p95_latency_ms"],
+            "e2e_p95_delta_ms": e2e_delta,
+            "optimized_tokens_per_second": optimized.tokens_per_second,
+            "prefetch_tokens_per_second": page_prefetch.tokens_per_second,
+            "tokens_per_second_delta": throughput_delta,
+            "optimized_peak_kv_cache_mb": optimized.peak_kv_cache_mb,
+            "prefetch_peak_kv_cache_mb": page_prefetch.peak_kv_cache_mb,
+            "oom_events": page_prefetch.oom_events,
+        },
+        "baseline_policy": optimized_summary,
+        "candidate_policy_summary": page_prefetch_summary,
+        "serving_effect": {
+            "affects": ["TPOT", "decode_p95", "throughput", "KV pressure"],
+            "selected_for_execution": selected_policy == "cost_aware_memory_pressure_page_prefetch",
+        },
+        "remaining_work": [
+            "replace synthetic trace with exported vLLM scheduler logs",
+            "wire policy into a real vLLM fork before claiming framework-internal modification",
+            "measure physical GPU page/cache prefetch separately before claiming CUDA cp.async",
+        ],
     }
 
 
@@ -356,11 +466,39 @@ def build_technology_gate_audit():
                 "status": "implemented_as_adapter",
             },
             {
+                "technology": "vllm_style_page_prefetch",
+                "input": "vLLM-style request/decode trace plus allocated KV block map",
+                "decision": "prefetch next decode KV pages when memory pressure is below budget",
+                "metric": "prefetch hit rate, wasted prefetch blocks, TPOT p95, throughput, OOM/rejection rate",
+                "status": "implemented_as_runtime_scheduler_candidate",
+            },
+            {
                 "technology": "sglang_trace_adapter",
                 "input": "SGLang-style request/decode trace",
                 "decision": "request/decode scheduling with prefix metadata",
                 "metric": "TTFT, TPOT, throughput, queue wait, KV pressure",
                 "status": "implemented_as_adapter",
+            },
+            {
+                "technology": "distributed_kv_aware_routing",
+                "input": "vLLM-style serving trace plus worker queue/KV residency state",
+                "decision": "round-robin vs least-queue vs KV-aware request routing",
+                "metric": "TTFT, TPOT, throughput, cache hit rate, queue wait, peak worker pressure",
+                "status": "implemented_as_distributed_serving_control_plane",
+            },
+            {
+                "technology": "worker_health_failover",
+                "input": "distributed serving trace with injected worker timeout",
+                "decision": "timeout detection, retry, quarantine, failover routing",
+                "metric": "retry count, failover count, request loss, latency regression",
+                "status": "implemented_as_fault_tolerance_simulation",
+            },
+            {
+                "technology": "protobuf_serving_contract",
+                "input": "GenerateRequest/WorkerHealth/RouteDecision/KVShardMetadata schema",
+                "decision": "define distributed serving RPC/control-plane boundary",
+                "metric": "schema coverage for request routing, worker health, route decision, KV shard metadata",
+                "status": "implemented_as_contract_not_production_grpc",
             },
         ],
         "remaining_not_in_main_plan": [
@@ -626,10 +764,32 @@ def main():
         block_size_tokens,
         kv_mb_per_block,
     )
+    page_prefetch_cost = CostModel(
+        observed_decode_scale=calibrated_cost.observed_decode_scale,
+        observed_prefill_scale=calibrated_cost.observed_prefill_scale,
+    )
+    page_prefetch = run_policy(
+        "cost_aware_memory_pressure_page_prefetch",
+        requests,
+        page_prefetch_cost,
+        args.seed + 200,
+        total_blocks,
+        block_size_tokens,
+        kv_mb_per_block,
+    )
 
     selected = optimized
     baseline_summary = summarize_policy(baseline)
     optimized_summary = summarize_policy(optimized)
+    page_prefetch_summary = summarize_policy(page_prefetch)
+    page_prefetch_report = build_page_prefetch_report(
+        optimized=optimized,
+        page_prefetch=page_prefetch,
+        optimized_summary=optimized_summary,
+        page_prefetch_summary=page_prefetch_summary,
+    )
+    if page_prefetch_report["selected_policy"] == "cost_aware_memory_pressure_page_prefetch":
+        selected = page_prefetch
     scheduler_decision_report = {
         "artifact_type": "scheduler_decision_report",
         "source": "deployment.llm_runtime_decision",
@@ -640,26 +800,33 @@ def main():
             "total_kv_blocks": total_blocks,
         },
         "cost_model_calibration": calibration_report,
-        "policies": [baseline_summary, optimized_summary],
+        "policies": [baseline_summary, optimized_summary, page_prefetch_summary],
         "selected_policy": selected.policy,
         "selection_reason": (
-            "cost-aware policy improved tokens/sec while staying within KV memory capacity"
-            if optimized.tokens_per_second >= baseline.tokens_per_second
+            "page prefetch candidate improved TPOT/e2e/throughput without KV regression"
+            if selected.policy == "cost_aware_memory_pressure_page_prefetch"
+            else "cost-aware policy improved tokens/sec while staying within KV memory capacity"
+            if selected.tokens_per_second >= baseline.tokens_per_second
             else "baseline retained because profiling feedback did not improve throughput"
         ),
         "improvement": {
             "tokens_per_second_delta": round(
-                optimized.tokens_per_second - baseline.tokens_per_second,
+                selected.tokens_per_second - baseline.tokens_per_second,
                 3,
             ),
             "decode_batch_efficiency_delta": round(
-                optimized.decode_batch_efficiency - baseline.decode_batch_efficiency,
+                selected.decode_batch_efficiency - baseline.decode_batch_efficiency,
                 4,
             ),
             "p95_latency_ms_delta": round(
-                optimized_summary["p95_latency_ms"] - baseline_summary["p95_latency_ms"],
+                summarize_policy(selected)["p95_latency_ms"] - baseline_summary["p95_latency_ms"],
                 3,
             ),
+        },
+        "page_prefetch_candidate": {
+            "selected_policy": page_prefetch_report["selected_policy"],
+            "selection_reason": page_prefetch_report["selection_reason"],
+            "metric": page_prefetch_report["metric"],
         },
     }
 
@@ -775,6 +942,9 @@ def main():
         prefill_decode_benchmark=prefill_decode_benchmark,
         runtime_profile=runtime_profile,
         scheduler_decision_report=scheduler_decision_report,
+        page_prefetch=page_prefetch,
+        page_prefetch_summary=page_prefetch_summary,
+        page_prefetch_report=page_prefetch_report,
     )
     vllm_trace_adapter_report = build_trace_adapter_report(
         adapter_name="vllm",
@@ -797,6 +967,11 @@ def main():
         load_runs=args.cold_start_load_runs,
     )
     technology_gate_audit = build_technology_gate_audit()
+    distributed_artifacts = build_distributed_serving_artifacts(
+        request_rows=request_rows(requests),
+        block_size_tokens=block_size_tokens,
+        proto_path=ROOT / "protos/distributed_serving.proto",
+    )
 
     manifest = {
         "artifact_set": "llm_runtime_prefill_decode_kv_scheduler",
@@ -817,9 +992,18 @@ def main():
             "scheduler_decision_report.json",
             "serving_framework_report.json",
             "vllm_trace_adapter_report.json",
+            "page_prefetch_report.json",
+            "page_prefetch_trace.json",
             "sglang_trace_adapter_report.json",
             "cold_start_report.json",
             "technology_gate_audit.json",
+            "distributed_serving_report.json",
+            "distributed_serving_trace.json",
+            "load_balancing_report.json",
+            "worker_health_report.json",
+            "fault_tolerance_report.json",
+            "failover_trace.json",
+            "grpc_contract_report.json",
             "real_llama_profile.json",
         ],
     }
@@ -835,9 +1019,28 @@ def main():
     write_json(output_dir / "scheduler_decision_report.json", scheduler_decision_report)
     write_json(output_dir / "serving_framework_report.json", serving_framework_report)
     write_json(output_dir / "vllm_trace_adapter_report.json", vllm_trace_adapter_report)
+    write_json(output_dir / "page_prefetch_report.json", page_prefetch_report)
+    write_json(
+        output_dir / "page_prefetch_trace.json",
+        {
+            "artifact_type": "vllm_style_page_prefetch_trace",
+            "policy": page_prefetch.policy,
+            "scheduler_events": [
+                event for event in page_prefetch.scheduler_steps
+                if event.get("event") in {"page_prefetch", "page_prefetch_skipped"}
+            ],
+            "serving_events": [
+                event for event in page_prefetch.serving_events
+                if event.get("event") in {"page_prefetch", "page_prefetch_skipped"}
+            ],
+            "summary": page_prefetch.page_prefetch,
+        },
+    )
     write_json(output_dir / "sglang_trace_adapter_report.json", sglang_trace_adapter_report)
     write_json(output_dir / "cold_start_report.json", cold_start_report)
     write_json(output_dir / "technology_gate_audit.json", technology_gate_audit)
+    for name, payload in distributed_artifacts.items():
+        write_json(output_dir / f"{name}.json", payload)
     write_json(output_dir / "manifest.json", manifest)
 
     print(output_dir.resolve())

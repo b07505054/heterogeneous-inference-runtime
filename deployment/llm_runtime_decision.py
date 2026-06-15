@@ -200,6 +200,152 @@ class MemoryPlanner:
 
 
 @dataclass
+class PagePrefetchPlanner:
+    lookahead_steps: int = 1
+    max_prefetch_blocks_per_step: int = 12
+    pressure_disable_threshold: float = 0.82
+    hit_latency_saving_ms: float = 0.075
+    wasted_prefetch_penalty_ms: float = 0.015
+    warmed_pages: set[tuple[str, int]] = field(default_factory=set)
+    attempts: int = 0
+    hits: int = 0
+    misses: int = 0
+    wasted: int = 0
+    pressure_skips: int = 0
+    events: list[dict] = field(default_factory=list)
+
+    def pages_for_step(
+        self,
+        request: Request,
+        blocks: list[int],
+        step: int,
+        block_size_tokens: int,
+    ) -> list[int]:
+        if not blocks:
+            return []
+        context_tokens = request.prompt_tokens + max(0, step)
+        tail_page = min(len(blocks) - 1, context_tokens // block_size_tokens)
+        pages = {blocks[tail_page]}
+        if tail_page > 0:
+            pages.add(blocks[tail_page - 1])
+        return sorted(pages)
+
+    def consume(
+        self,
+        *,
+        active_requests: list[Request],
+        allocations: dict[str, list[int]],
+        step: int,
+        block_size_tokens: int,
+    ) -> dict:
+        pages = []
+        hits = 0
+        misses = 0
+        for request in active_requests:
+            for block in self.pages_for_step(
+                request,
+                allocations.get(request.request_id, []),
+                step,
+                block_size_tokens,
+            ):
+                key = (request.request_id, block)
+                pages.append({"request_id": request.request_id, "block": block})
+                if key in self.warmed_pages:
+                    hits += 1
+                    self.warmed_pages.remove(key)
+                else:
+                    misses += 1
+        self.hits += hits
+        self.misses += misses
+        return {
+            "step": step,
+            "pages": pages,
+            "hits": hits,
+            "misses": misses,
+            "latency_saving_ms": round(hits * self.hit_latency_saving_ms, 4),
+        }
+
+    def plan(
+        self,
+        *,
+        active_requests: list[Request],
+        allocations: dict[str, list[int]],
+        step: int,
+        block_size_tokens: int,
+        pressure: float,
+    ) -> dict:
+        if pressure >= self.pressure_disable_threshold:
+            self.pressure_skips += 1
+            event = {
+                "event": "page_prefetch_skipped",
+                "reason": "memory_pressure_above_prefetch_budget",
+                "memory_pressure": round(pressure, 4),
+                "pressure_disable_threshold": self.pressure_disable_threshold,
+                "active_requests": [request.request_id for request in active_requests],
+                "step": step,
+            }
+            self.events.append(event)
+            return event
+
+        planned = []
+        for request in active_requests:
+            for block in self.pages_for_step(
+                request,
+                allocations.get(request.request_id, []),
+                step + self.lookahead_steps,
+                block_size_tokens,
+            ):
+                if len(planned) >= self.max_prefetch_blocks_per_step:
+                    break
+                key = (request.request_id, block)
+                if key in self.warmed_pages:
+                    continue
+                self.warmed_pages.add(key)
+                planned.append({"request_id": request.request_id, "block": block})
+            if len(planned) >= self.max_prefetch_blocks_per_step:
+                break
+
+        self.attempts += len(planned)
+        event = {
+            "event": "page_prefetch",
+            "reason": "prefetch_next_decode_kv_pages",
+            "memory_pressure": round(pressure, 4),
+            "active_requests": [request.request_id for request in active_requests],
+            "step": step,
+            "lookahead_steps": self.lookahead_steps,
+            "prefetched_pages": planned,
+            "prefetched_blocks": len(planned),
+        }
+        self.events.append(event)
+        return event
+
+    def release_request(self, request_id: str) -> None:
+        before = len(self.warmed_pages)
+        self.warmed_pages = {
+            key for key in self.warmed_pages
+            if key[0] != request_id
+        }
+        self.wasted += before - len(self.warmed_pages)
+
+    def summary(self) -> dict:
+        total_accesses = self.hits + self.misses
+        return {
+            "enabled": True,
+            "policy": "vllm_style_allocated_kv_page_prefetch",
+            "attempts": self.attempts,
+            "hits": self.hits,
+            "misses": self.misses,
+            "hit_rate": round(self.hits / total_accesses, 4) if total_accesses else 0.0,
+            "wasted_prefetch_blocks": self.wasted,
+            "pressure_skips": self.pressure_skips,
+            "max_prefetch_blocks_per_step": self.max_prefetch_blocks_per_step,
+            "pressure_disable_threshold": self.pressure_disable_threshold,
+            "hit_latency_saving_ms": self.hit_latency_saving_ms,
+            "wasted_prefetch_penalty_ms": self.wasted_prefetch_penalty_ms,
+        }
+
+
+@dataclass
 class SchedulerResult:
     policy: str
     scheduler_steps: list[dict]
@@ -220,6 +366,7 @@ class SchedulerResult:
     tokens_per_second: float
     finish_time_ms: float
     pressure_limited_candidates: int
+    page_prefetch: dict = field(default_factory=lambda: {"enabled": False})
 
 
 class RuntimeScheduler:
@@ -238,6 +385,11 @@ class RuntimeScheduler:
         self.rng = rng
         self.max_decode_batch_size = max_decode_batch_size
         self.pressure_limited_candidates = 0
+        self.page_prefetch = (
+            PagePrefetchPlanner()
+            if policy == "cost_aware_memory_pressure_page_prefetch"
+            else None
+        )
 
     def run(self, requests: list[Request]) -> SchedulerResult:
         time_ms = 0.0
@@ -414,9 +566,55 @@ class RuntimeScheduler:
             avg_context = sum(item.prompt_tokens for item in decode_batch) / batch_size
             for step in range(max_steps):
                 step_active = [item for item in decode_batch if step < item.output_tokens]
+                prefetch_consumed = None
+                if self.page_prefetch:
+                    prefetch_consumed = self.page_prefetch.consume(
+                        active_requests=step_active,
+                        allocations=self.memory.allocations,
+                        step=step,
+                        block_size_tokens=self.memory.block_size_tokens,
+                    )
                 step_ms = self._observed_decode(len(step_active), avg_context)
+                if prefetch_consumed:
+                    saving = prefetch_consumed["latency_saving_ms"]
+                    warmed_miss_penalty = 0.0
+                    if prefetch_consumed["misses"] and step > 0:
+                        warmed_miss_penalty = min(
+                            0.08,
+                            prefetch_consumed["misses"] * self.page_prefetch.wasted_prefetch_penalty_ms,
+                        )
+                    step_ms = round(max(0.05, step_ms - saving + warmed_miss_penalty), 3)
                 decode_step_latencies.append(step_ms)
                 decode_total += step_ms
+                if self.page_prefetch:
+                    event = self.page_prefetch.plan(
+                        active_requests=step_active,
+                        allocations=self.memory.allocations,
+                        step=step,
+                        block_size_tokens=self.memory.block_size_tokens,
+                        pressure=self.memory.pressure(),
+                    )
+                    if step % 16 == 0 or event["event"] == "page_prefetch_skipped":
+                        scheduler_steps.append(
+                            {
+                                "time_ms": round(time_ms, 3),
+                                **event,
+                            }
+                        )
+                        serving_events.append(
+                            {
+                                "time_ms": round(time_ms, 3),
+                                "event": event["event"],
+                                "request_id": req.request_id,
+                                "step": step,
+                                "active_requests": event.get("active_requests", []),
+                                "prefetched_blocks": event.get("prefetched_blocks", 0),
+                                "memory_pressure": event.get("memory_pressure"),
+                                "prefetch_hits": prefetch_consumed["hits"] if prefetch_consumed else 0,
+                                "prefetch_misses": prefetch_consumed["misses"] if prefetch_consumed else 0,
+                                "latency_saving_ms": prefetch_consumed["latency_saving_ms"] if prefetch_consumed else 0.0,
+                            }
+                        )
                 if step % 16 == 0:
                     serving_events.append(
                         {
@@ -445,6 +643,8 @@ class RuntimeScheduler:
                     }
                 )
                 freed = self.memory.free(done.request_id)
+                if self.page_prefetch:
+                    self.page_prefetch.release_request(done.request_id)
                 serving_events.append(
                     {
                         "time_ms": round(time_ms, 3),
@@ -475,6 +675,7 @@ class RuntimeScheduler:
             tokens_per_second=round((completed_output_tokens * 1000.0) / time_ms, 3) if time_ms else 0.0,
             finish_time_ms=round(time_ms, 3),
             pressure_limited_candidates=self.pressure_limited_candidates,
+            page_prefetch=self.page_prefetch.summary() if self.page_prefetch else {"enabled": False},
         )
 
     def _choose_decode_batch(self, req: Request, pending: list[Request], current_time_ms: float) -> list[Request]:
@@ -570,6 +771,7 @@ def summarize_policy(result: SchedulerResult) -> dict:
         "batch_cap_reductions": cap_reductions,
         "pressure_limited_candidates": result.pressure_limited_candidates,
         "finish_time_ms": result.finish_time_ms,
+        "page_prefetch": result.page_prefetch,
     }
 
 

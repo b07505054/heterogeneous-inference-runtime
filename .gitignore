@@ -95,3 +95,6 @@ build_cpp/
 *.lib
 *.engine
 *.pte
+
+# Nsight Systems profiling reports
+*.nsys-rep

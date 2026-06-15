@@ -1,0 +1,63 @@
+[
+  {
+    "backend": "ONNXRuntime",
+    "precision": "FP32 CUDA",
+    "device": "CUDAExecutionProvider",
+    "avg_latency_ms": 2.9833,
+    "p95_latency_ms": 3.4392,
+    "p99_latency_ms": 3.6986,
+    "throughput_qps": 335.198,
+    "extra": {}
+  },
+  {
+    "backend": "ONNXRuntime",
+    "precision": "Optimized FP32 CUDA",
+    "device": "CUDAExecutionProvider",
+    "avg_latency_ms": 2.9487,
+    "p95_latency_ms": 3.3046,
+    "p99_latency_ms": 3.7872,
+    "throughput_qps": 339.1333,
+    "extra": {}
+  },
+  {
+    "backend": "ONNXRuntime",
+    "precision": "INT8 CPU",
+    "device": "CPUExecutionProvider",
+    "avg_latency_ms": 30.3644,
+    "p95_latency_ms": 33.7762,
+    "p99_latency_ms": 35.2565,
+    "throughput_qps": 32.9333,
+    "extra": {}
+  },
+  {
+    "backend": "PyTorch",
+    "precision": "FP32",
+    "device": "cpu",
+    "avg_latency_ms": 16.8759,
+    "p95_latency_ms": 17.0831,
+    "p99_latency_ms": 17.6825,
+    "throughput_qps": 59.256,
+    "extra": {}
+  },
+  {
+    "backend": "CppInference",
+    "precision": "FP32",
+    "device": "CPU C++",
+    "avg_latency_ms": 9.2516,
+    "p95_latency_ms": null,
+    "p99_latency_ms": null,
+    "throughput_qps": 108.0896,
+    "extra": {}
+  },
+  {
+    "backend": "ThreadScaling",
+    "precision": "Optimized FP32",
+    "device": "8 threads",
+    "avg_latency_ms": 4.4589,
+    "p95_latency_ms": null,
+    "p99_latency_ms": null,
+    "throughput_qps": 224.2693,
+    "extra": {}
+  }
+]
+

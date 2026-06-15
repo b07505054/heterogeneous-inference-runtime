@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package heterogeneous_inference_runtime.distributed_serving;
+
+message GenerateRequest {
+  string request_id = 1;
+  double arrival_ms = 2;
+  int32 prompt_tokens = 3;
+  int32 output_tokens = 4;
+  string prefix_key = 5;
+  int32 kv_pages_needed = 6;
+}
+
+message GenerateResponse {
+  string request_id = 1;
+  string worker_id = 2;
+  double ttft_ms = 3;
+  double tpot_ms = 4;
+  double latency_ms = 5;
+  bool cache_hit = 6;
+  int32 retry_count = 7;
+}
+
+message WorkerHealth {
+  string worker_id = 1;
+  bool healthy = 2;
+  bool quarantined = 3;
+  int32 queue_depth = 4;
+  double memory_pressure = 5;
+}
+
+message RouteDecision {
+  string request_id = 1;
+  string policy = 2;
+  string worker_id = 3;
+  string reason = 4;
+  bool cache_hit = 5;
+  double queue_wait_ms = 6;
+  double memory_pressure = 7;
+}
+
+message KVShardMetadata {
+  string worker_id = 1;
+  string prefix_key = 2;
+  int32 resident_kv_pages = 3;
+  int32 capacity_pages = 4;
+  double memory_pressure = 5;
+}
+
+service DistributedServing {
+  rpc Generate(GenerateRequest) returns (GenerateResponse);
+  rpc ReportHealth(WorkerHealth) returns (WorkerHealth);
+  rpc Route(GenerateRequest) returns (RouteDecision);
+}

@@ -1,5 +1,7 @@
 # Edge CV Inference Deployment & Profiling Platform
 
+[![Agentic Eval CI](https://github.com/b07505054/heterogeneous-inference-runtime/actions/workflows/agentic-eval-ci.yml/badge.svg)](https://github.com/b07505054/heterogeneous-inference-runtime/actions/workflows/agentic-eval-ci.yml)
+
 ## Overview
 
 This project implements an end-to-end edge AI inference deployment, profiling, and runtime benchmarking platform across heterogeneous AI inference backends.
@@ -49,6 +51,29 @@ warm TTFT, steady-state TPOT, and concrete initialization-reduction techniques.
 
 The platform simulates a production-style edge computer vision inference system
 similar to modern autonomous robotics and edge AI deployment infrastructure.
+
+---
+
+## Agentic Benchmark Evaluation
+
+This repo includes a lightweight tool-using ML benchmarking agent with
+trace-based evaluation under `agentic_eval/`. The agent receives a high-level
+task, discovers allowlisted benchmark artifacts, chooses read/parse/filter/
+compare tools, and recommends the best MobileNetV2 backend under a p95 latency
+constraint.
+
+The deterministic CI policy validates the agent loop and judge without requiring
+external LLM APIs, CUDA, TensorRT, or ExecuTorch. The judge scores the tool
+trace, wrong-file access, p95 constraint handling, throughput tie-break, evidence
+quality, and final recommendation. It is intentionally an agentic evaluation
+scaffold rather than a production autonomous agent framework.
+
+Run:
+
+```bash
+python -m agentic_eval.run_agentic_eval
+pytest agentic_eval/tests
+```
 
 ---
 
@@ -693,6 +718,16 @@ Key outputs:
   hybrid candidates
 - `scheduler_decision_report.json`: baseline-vs-cost-aware scheduling comparison
   driven by a runtime cost model, KV memory planner, and profiling calibration
+- `page_prefetch_report.json`: vLLM-style allocated KV page prefetch policy
+  comparison against the no-prefetch scheduler
+- `page_prefetch_trace.json`: scheduler and serving events showing page prefetch
+  attempts, hits, misses, and pressure skips
+- `distributed_serving_report.json`: distributed serving routing comparison
+  across round-robin, least-queue, and KV-aware policies
+- `fault_tolerance_report.json`: worker timeout, retry, quarantine, and
+  failover behavior with latency impact
+- `grpc_contract_report.json`: protobuf contract coverage for distributed
+  serving control-plane messages
 - `llm_runtime_chrome_trace.json`: Perfetto-compatible runtime timeline
 - `real_llama_profile.json`: HuggingFace `LlamaForCausalLM` backend profile with
   TTFT, TPOT, batch/sequence scaling, and operator bottleneck breakdown
@@ -717,6 +752,8 @@ The scheduler is implemented in `deployment/llm_runtime_decision.py`. It include
 - a baseline FCFS policy
 - a cost-aware memory-pressure policy that forms larger decode batches when KV
   capacity and shape compatibility allow it
+- a vLLM-style page prefetch candidate that warms already allocated KV pages
+  when memory pressure is below budget
 - projected-pressure batch limiting, so the scheduler can reject a batch
   candidate before admitting it would push KV usage into a higher pressure band
 - a profiling feedback step that calibrates the cost model from observed samples
@@ -726,6 +763,29 @@ decision-making: the generated report records which scheduler policy won and why
 For the committed artifact snapshot, the optimized scheduler records
 `pressure_limited_candidates`, showing that memory pressure directly changed
 batching decisions rather than only being reported after the fact.
+
+The page prefetch path is intentionally labeled as vLLM-style rather than a
+real vLLM fork. Its gate is:
+
+```text
+vLLM-style request/decode trace + KV block allocations
+  -> prefetch next decode KV pages under memory-pressure budget
+  -> measure hit rate, wasted prefetch blocks, TPOT, throughput, and OOM rate
+```
+
+The distributed serving path is also artifact-backed rather than a production
+cluster claim:
+
+```text
+vLLM-style request trace + worker/KV residency state
+  -> round-robin vs least-queue vs KV-aware routing
+  -> measure TTFT, TPOT, throughput, cache hit rate, and queue wait
+```
+
+Fault tolerance is exercised by injecting a worker timeout, retrying the
+request, quarantining the worker, and recording failover plus latency impact.
+The protobuf schema in `protos/distributed_serving.proto` defines the control
+plane contract; it is not presented as a production gRPC deployment.
 
 Generate deterministic serving artifacts:
 
