@@ -1,0 +1,42 @@
+{
+  "artifact_type": "runtime_kernel_profile",
+  "source": "scripts/benchmark_rmsnorm_cuda.py",
+  "profile_status": "measured",
+  "device": "NVIDIA GeForce GTX 1650 with Max-Q Design",
+  "kernel_benchmarks": [
+    {
+      "fusion_candidate": "rmsnorm",
+      "custom_kernel": "fused_rmsnorm_cuda",
+      "fallback_kernel": "torch_rmsnorm",
+      "custom_latency_ms": 0.038016,
+      "fallback_latency_ms": 0.105254,
+      "speedup": 2.7687,
+      "correct": true,
+      "selection_ready": true,
+      "representative_shape": {
+        "tokens": 16,
+        "hidden": 768,
+        "dtype": "float32"
+      }
+    }
+  ],
+  "sweep": [
+    {
+      "fusion_candidate": "rmsnorm",
+      "shape": {
+        "tokens": 16,
+        "hidden": 768,
+        "dtype": "float32"
+      },
+      "custom_kernel": "fused_rmsnorm_cuda",
+      "fallback_kernel": "torch_rmsnorm",
+      "custom_latency_ms": 0.038016,
+      "fallback_latency_ms": 0.105254,
+      "custom_p95_ms": 0.043808,
+      "fallback_p95_ms": 0.125472,
+      "speedup": 2.7687,
+      "correct": true,
+      "selection_ready": true
+    }
+  ]
+}
