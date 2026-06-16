@@ -6,15 +6,16 @@
     "vLLM continuous batching and paged KV-cache pressure",
     "vLLM-style allocated KV page prefetch under memory-pressure budget",
     "TensorRT-LLM-aligned local in-flight batching and paged KV lifecycle",
+    "TensorRT-LLM-aligned local paged attention read-cost model",
     "SGLang request/decode scheduling and prefix/KV reuse hooks",
     "Triton Server dynamic batching and backend instance routing",
     "TensorRT engine/optimization-profile backend candidate selection"
   ],
   "metrics": {
     "ttft_ms": 38.316,
-    "tpot_p95_ms": 2.511,
-    "e2e_p95_ms": 1406.597,
-    "throughput_tokens_per_s": 1470.548,
+    "tpot_p95_ms": 3.574,
+    "e2e_p95_ms": 1774.462,
+    "throughput_tokens_per_s": 1200.054,
     "peak_kv_cache_mb": 868.75,
     "peak_memory_mb": 1636.75,
     "oom_events": 0
@@ -31,9 +32,9 @@
       "rejected_requests": 0,
       "delayed_requests": 0,
       "ttft_p95_ms": 175.864,
-      "tpot_p95_ms": 2.899,
-      "e2e_p95_ms": 7585.832,
-      "throughput_tokens_per_s": 298.047,
+      "tpot_p95_ms": 3.26,
+      "e2e_p95_ms": 7983.349,
+      "throughput_tokens_per_s": 283.685,
       "avg_decode_batch_size": 1.0,
       "decode_batch_efficiency": 0.125,
       "peak_kv_cache_mb": 225.0,
@@ -44,7 +45,8 @@
         "latency_p95",
         "tokens_per_second",
         "queue_wait",
-        "kv_cache_pressure"
+        "kv_cache_pressure",
+        "paged_attention_latency"
       ]
     },
     {
@@ -58,9 +60,9 @@
       "rejected_requests": 0,
       "delayed_requests": 0,
       "ttft_p95_ms": 154.956,
-      "tpot_p95_ms": 3.244,
-      "e2e_p95_ms": 1716.077,
-      "throughput_tokens_per_s": 1236.142,
+      "tpot_p95_ms": 4.351,
+      "e2e_p95_ms": 2119.371,
+      "throughput_tokens_per_s": 1023.533,
       "avg_decode_batch_size": 6.4,
       "decode_batch_efficiency": 0.8,
       "peak_kv_cache_mb": 868.75,
@@ -71,7 +73,8 @@
         "latency_p95",
         "tokens_per_second",
         "queue_wait",
-        "kv_cache_pressure"
+        "kv_cache_pressure",
+        "paged_attention_latency"
       ]
     },
     {
@@ -85,9 +88,9 @@
       "rejected_requests": 0,
       "delayed_requests": 0,
       "ttft_p95_ms": 154.956,
-      "tpot_p95_ms": 2.511,
-      "e2e_p95_ms": 1406.597,
-      "throughput_tokens_per_s": 1470.548,
+      "tpot_p95_ms": 3.574,
+      "e2e_p95_ms": 1774.462,
+      "throughput_tokens_per_s": 1200.054,
       "avg_decode_batch_size": 6.4,
       "decode_batch_efficiency": 0.8,
       "peak_kv_cache_mb": 868.75,
@@ -98,7 +101,8 @@
         "latency_p95",
         "tokens_per_second",
         "queue_wait",
-        "kv_cache_pressure"
+        "kv_cache_pressure",
+        "paged_attention_latency"
       ],
       "page_prefetch": {
         "enabled": true,
@@ -126,10 +130,10 @@
       "completed_requests": 32,
       "rejected_requests": 0,
       "delayed_requests": 0,
-      "ttft_p95_ms": 2501.243,
-      "tpot_p95_ms": 2.92,
-      "e2e_p95_ms": 3058.379,
-      "throughput_tokens_per_s": 725.419,
+      "ttft_p95_ms": 2825.94,
+      "tpot_p95_ms": 4.594,
+      "e2e_p95_ms": 3635.119,
+      "throughput_tokens_per_s": 617.574,
       "avg_decode_batch_size": 3.0038,
       "decode_batch_efficiency": 0.3755,
       "peak_kv_cache_mb": 1271.875,
@@ -140,7 +144,8 @@
         "latency_p95",
         "tokens_per_second",
         "queue_wait",
-        "kv_cache_pressure"
+        "kv_cache_pressure",
+        "paged_attention_latency"
       ],
       "positioning": "TensorRT-LLM-aligned concepts, not TensorRT-LLM internals",
       "lifecycle_invariants": {
@@ -165,17 +170,34 @@
           "lifecycle_invariants_pass": true
         },
         "metrics": {
-          "candidate_tpot_p95_ms": 3.137,
-          "incumbent_tpot_p95_ms": 2.511,
-          "candidate_ttft_p95_ms": 2501.243,
+          "candidate_tpot_p95_ms": 4.957,
+          "incumbent_tpot_p95_ms": 3.574,
+          "candidate_ttft_p95_ms": 2825.94,
           "incumbent_ttft_p95_ms": 154.956,
-          "candidate_tokens_per_second": 725.419,
-          "incumbent_tokens_per_second": 1470.548,
+          "candidate_tokens_per_second": 617.574,
+          "incumbent_tokens_per_second": 1200.054,
           "candidate_reject_oom_count": 0,
           "incumbent_reject_oom_count": 0
         },
         "scenario_gate": "throughput_tpot_ttft_guard",
         "objective": "throughput_under_mixed_prefill_decode_pressure"
+      },
+      "paged_attention": {
+        "enabled": true,
+        "policy": "paged_attention_read_cost_model",
+        "positioning": "Local paged-attention execution model over RuntimeScheduler KV page tables; this is not a TensorRT-LLM or vLLM kernel.",
+        "input": "decode batch request ids plus resident KV page table",
+        "decision": "model page-table reads, contiguous page segments, prefetch hit/miss effects, and memory-pressure skips before TPOT scoring",
+        "metric": "decode attention latency, pages read per decode step, non-contiguous segment penalty, prefetch hit/miss impact, TPOT",
+        "decode_steps": 799,
+        "pages_read": 61662,
+        "avg_pages_per_step": 77.174,
+        "non_contiguous_segments": 13309,
+        "prefetch_hits": 2077,
+        "prefetch_misses": 323,
+        "total_latency_ms": 528.112,
+        "avg_latency_ms": 0.661,
+        "p95_latency_ms": 1.523
       }
     },
     {
@@ -189,9 +211,9 @@
       "rejected_requests": 0,
       "delayed_requests": 0,
       "ttft_p95_ms": 154.956,
-      "tpot_p95_ms": 3.244,
-      "e2e_p95_ms": 1716.077,
-      "throughput_tokens_per_s": 1236.142,
+      "tpot_p95_ms": 4.351,
+      "e2e_p95_ms": 2119.371,
+      "throughput_tokens_per_s": 1023.533,
       "avg_decode_batch_size": 6.4,
       "decode_batch_efficiency": 0.8,
       "peak_kv_cache_mb": 868.75,
@@ -202,7 +224,8 @@
         "latency_p95",
         "tokens_per_second",
         "queue_wait",
-        "kv_cache_pressure"
+        "kv_cache_pressure",
+        "paged_attention_latency"
       ]
     },
     {
@@ -216,9 +239,9 @@
       "rejected_requests": 0,
       "delayed_requests": 0,
       "ttft_p95_ms": 154.956,
-      "tpot_p95_ms": 3.244,
-      "e2e_p95_ms": 1716.077,
-      "throughput_tokens_per_s": 1236.142,
+      "tpot_p95_ms": 4.351,
+      "e2e_p95_ms": 2119.371,
+      "throughput_tokens_per_s": 1023.533,
       "avg_decode_batch_size": 6.4,
       "decode_batch_efficiency": 0.8,
       "peak_kv_cache_mb": 868.75,
@@ -229,7 +252,8 @@
         "latency_p95",
         "tokens_per_second",
         "queue_wait",
-        "kv_cache_pressure"
+        "kv_cache_pressure",
+        "paged_attention_latency"
       ]
     }
   ],
@@ -301,9 +325,9 @@
   "selected_framework_style": "vllm_sglang_style",
   "selection_reason": "page prefetch candidate improved TPOT/e2e/throughput without KV regression",
   "improvement": {
-    "tokens_per_second_delta": 1172.501,
+    "tokens_per_second_delta": 916.369,
     "decode_batch_efficiency_delta": 0.675,
-    "p95_latency_ms_delta": -6179.235
+    "p95_latency_ms_delta": -6208.887
   },
   "optional_integrations": {
     "vllm": "design target only; no dependency required for CI",

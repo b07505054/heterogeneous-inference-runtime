@@ -3,9 +3,9 @@
   "prompt_tokens": 1024,
   "generated_tokens": 128,
   "prefill_latency_ms": 38.316,
-  "avg_decode_latency_ms": 2.01,
-  "p50_decode_latency_ms": 1.99,
-  "p95_decode_latency_ms": 2.511,
-  "p99_decode_latency_ms": 2.591,
-  "tokens_per_second": 1470.548
+  "avg_decode_latency_ms": 2.615,
+  "p50_decode_latency_ms": 2.488,
+  "p95_decode_latency_ms": 3.574,
+  "p99_decode_latency_ms": 3.864,
+  "tokens_per_second": 1200.054
 }

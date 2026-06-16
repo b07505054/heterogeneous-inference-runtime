@@ -349,6 +349,10 @@ def run_scenario_comparison(
                 "selected": selected.kv_page_lifecycle,
                 "inflight_candidate": inflight.kv_page_lifecycle,
             },
+            "paged_attention_execution": {
+                "selected": selected.paged_attention,
+                "inflight_candidate": inflight.paged_attention,
+            },
         },
     }
 
@@ -552,6 +556,7 @@ def build_serving_framework_report(
                 "tokens_per_second",
                 "queue_wait",
                 "kv_cache_pressure",
+                "paged_attention_latency",
             ],
         }
 
@@ -610,6 +615,7 @@ def build_serving_framework_report(
         )
         inflight_row["lifecycle_invariants"] = inflight_summary.get("invariants", {})
         inflight_row["selection_gate"] = inflight_gate_report or {}
+        inflight_row["paged_attention"] = inflight.paged_attention
         rows.append(inflight_row)
     triton_row = {
         **optimized_row,
@@ -642,6 +648,7 @@ def build_serving_framework_report(
             "vLLM continuous batching and paged KV-cache pressure",
             "vLLM-style allocated KV page prefetch under memory-pressure budget",
             "TensorRT-LLM-aligned local in-flight batching and paged KV lifecycle",
+            "TensorRT-LLM-aligned local paged attention read-cost model",
             "SGLang request/decode scheduling and prefix/KV reuse hooks",
             "Triton Server dynamic batching and backend instance routing",
             "TensorRT engine/optimization-profile backend candidate selection",
@@ -838,6 +845,13 @@ def build_technology_gate_audit():
                 "decision": "event-loop tick chooses chunked prefill, continuous decode, drain, delay, or reject",
                 "metric": "TTFT, TPOT, throughput, decode batch size, page hit rate, page leaks, reject/OOM gates",
                 "status": "implemented_as_local_policy_not_tensorrt_llm_internals",
+            },
+            {
+                "technology": "paged_attention_execution_model",
+                "input": "decode batch request ids plus resident KV page table",
+                "decision": "model page-table reads, contiguous page segments, and prefetch hit/miss effects before TPOT scoring",
+                "metric": "decode attention latency, pages read per step, non-contiguous segment penalty, TPOT p95",
+                "status": "implemented_as_local_execution_cost_model_not_gpu_kernel",
             },
             {
                 "technology": "sglang_trace_adapter",
@@ -1184,6 +1198,12 @@ def main():
             "metric": page_prefetch_report["metric"],
         },
         "inflight_paged_kv_candidate": inflight_gate_report,
+        "paged_attention_execution": {
+            "input": "selected runtime policy decode batch plus KV page table",
+            "decision": "score paged-attention page reads and prefetch hit/miss effects before TPOT reporting",
+            "metric": selected.paged_attention,
+            "candidate_metric": inflight.paged_attention,
+        },
     }
 
     decode_latencies = selected.decode_step_latencies or [0.0]
@@ -1208,14 +1228,26 @@ def main():
         "total_blocks": total_blocks,
         "requests": selected.kv_requests,
         "page_lifecycle": selected.kv_page_lifecycle,
+        "paged_attention_execution": selected.paged_attention,
         "candidate_page_lifecycle": {
             "inflight_paged_kv_continuous_batching": inflight.kv_page_lifecycle,
+        },
+        "candidate_paged_attention_execution": {
+            "inflight_paged_kv_continuous_batching": inflight.paged_attention,
         },
         "scenario_page_lifecycle": {
             row["scenario"]["name"]: {
                 "selected_policy": row["selected"].policy,
                 "selected": row["selected"].kv_page_lifecycle,
                 "inflight_candidate": row["inflight"].kv_page_lifecycle,
+            }
+            for row in scenario_comparisons
+        },
+        "scenario_paged_attention_execution": {
+            row["scenario"]["name"]: {
+                "selected_policy": row["selected"].policy,
+                "selected": row["selected"].paged_attention,
+                "inflight_candidate": row["inflight"].paged_attention,
             }
             for row in scenario_comparisons
         },

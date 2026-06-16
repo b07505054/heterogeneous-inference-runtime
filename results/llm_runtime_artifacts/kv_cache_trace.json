@@ -1078,6 +1078,23 @@
     }
   ],
   "page_lifecycle": {},
+  "paged_attention_execution": {
+    "enabled": true,
+    "policy": "paged_attention_read_cost_model",
+    "positioning": "Local paged-attention execution model over RuntimeScheduler KV page tables; this is not a TensorRT-LLM or vLLM kernel.",
+    "input": "decode batch request ids plus resident KV page table",
+    "decision": "model page-table reads, contiguous page segments, prefetch hit/miss effects, and memory-pressure skips before TPOT scoring",
+    "metric": "decode attention latency, pages read per decode step, non-contiguous segment penalty, prefetch hit/miss impact, TPOT",
+    "decode_steps": 608,
+    "pages_read": 62330,
+    "avg_pages_per_step": 102.5164,
+    "non_contiguous_segments": 2400,
+    "prefetch_hits": 4228,
+    "prefetch_misses": 572,
+    "total_latency_ms": 309.549,
+    "avg_latency_ms": 0.5091,
+    "p95_latency_ms": 1.197
+  },
   "candidate_page_lifecycle": {
     "inflight_paged_kv_continuous_batching": {
       "enabled": true,
@@ -1095,6 +1112,25 @@
       "prefetch_waste": 112,
       "pressure_prefetch_skips": 179,
       "page_leak_count": 0
+    }
+  },
+  "candidate_paged_attention_execution": {
+    "inflight_paged_kv_continuous_batching": {
+      "enabled": true,
+      "policy": "paged_attention_read_cost_model",
+      "positioning": "Local paged-attention execution model over RuntimeScheduler KV page tables; this is not a TensorRT-LLM or vLLM kernel.",
+      "input": "decode batch request ids plus resident KV page table",
+      "decision": "model page-table reads, contiguous page segments, prefetch hit/miss effects, and memory-pressure skips before TPOT scoring",
+      "metric": "decode attention latency, pages read per decode step, non-contiguous segment penalty, prefetch hit/miss impact, TPOT",
+      "decode_steps": 799,
+      "pages_read": 61662,
+      "avg_pages_per_step": 77.174,
+      "non_contiguous_segments": 13309,
+      "prefetch_hits": 2077,
+      "prefetch_misses": 323,
+      "total_latency_ms": 528.112,
+      "avg_latency_ms": 0.661,
+      "p95_latency_ms": 1.523
     }
   },
   "scenario_page_lifecycle": {
@@ -1154,6 +1190,82 @@
         "prefetch_waste": 0,
         "pressure_prefetch_skips": 0,
         "page_leak_count": 0
+      }
+    }
+  },
+  "scenario_paged_attention_execution": {
+    "default_mixed_pressure": {
+      "selected_policy": "cost_aware_memory_pressure_page_prefetch",
+      "selected": {
+        "enabled": true,
+        "policy": "paged_attention_read_cost_model",
+        "positioning": "Local paged-attention execution model over RuntimeScheduler KV page tables; this is not a TensorRT-LLM or vLLM kernel.",
+        "input": "decode batch request ids plus resident KV page table",
+        "decision": "model page-table reads, contiguous page segments, prefetch hit/miss effects, and memory-pressure skips before TPOT scoring",
+        "metric": "decode attention latency, pages read per decode step, non-contiguous segment penalty, prefetch hit/miss impact, TPOT",
+        "decode_steps": 608,
+        "pages_read": 62330,
+        "avg_pages_per_step": 102.5164,
+        "non_contiguous_segments": 2400,
+        "prefetch_hits": 4228,
+        "prefetch_misses": 572,
+        "total_latency_ms": 309.549,
+        "avg_latency_ms": 0.5091,
+        "p95_latency_ms": 1.197
+      },
+      "inflight_candidate": {
+        "enabled": true,
+        "policy": "paged_attention_read_cost_model",
+        "positioning": "Local paged-attention execution model over RuntimeScheduler KV page tables; this is not a TensorRT-LLM or vLLM kernel.",
+        "input": "decode batch request ids plus resident KV page table",
+        "decision": "model page-table reads, contiguous page segments, prefetch hit/miss effects, and memory-pressure skips before TPOT scoring",
+        "metric": "decode attention latency, pages read per decode step, non-contiguous segment penalty, prefetch hit/miss impact, TPOT",
+        "decode_steps": 799,
+        "pages_read": 61662,
+        "avg_pages_per_step": 77.174,
+        "non_contiguous_segments": 13309,
+        "prefetch_hits": 2077,
+        "prefetch_misses": 323,
+        "total_latency_ms": 528.112,
+        "avg_latency_ms": 0.661,
+        "p95_latency_ms": 1.523
+      }
+    },
+    "decode_interleave_heavy": {
+      "selected_policy": "inflight_paged_kv_continuous_batching",
+      "selected": {
+        "enabled": true,
+        "policy": "paged_attention_read_cost_model",
+        "positioning": "Local paged-attention execution model over RuntimeScheduler KV page tables; this is not a TensorRT-LLM or vLLM kernel.",
+        "input": "decode batch request ids plus resident KV page table",
+        "decision": "model page-table reads, contiguous page segments, prefetch hit/miss effects, and memory-pressure skips before TPOT scoring",
+        "metric": "decode attention latency, pages read per decode step, non-contiguous segment penalty, prefetch hit/miss impact, TPOT",
+        "decode_steps": 8,
+        "pages_read": 199,
+        "avg_pages_per_step": 24.875,
+        "non_contiguous_segments": 31,
+        "prefetch_hits": 15,
+        "prefetch_misses": 3,
+        "total_latency_ms": 1.6195,
+        "avg_latency_ms": 0.2024,
+        "p95_latency_ms": 0.5676
+      },
+      "inflight_candidate": {
+        "enabled": true,
+        "policy": "paged_attention_read_cost_model",
+        "positioning": "Local paged-attention execution model over RuntimeScheduler KV page tables; this is not a TensorRT-LLM or vLLM kernel.",
+        "input": "decode batch request ids plus resident KV page table",
+        "decision": "model page-table reads, contiguous page segments, prefetch hit/miss effects, and memory-pressure skips before TPOT scoring",
+        "metric": "decode attention latency, pages read per decode step, non-contiguous segment penalty, prefetch hit/miss impact, TPOT",
+        "decode_steps": 8,
+        "pages_read": 199,
+        "avg_pages_per_step": 24.875,
+        "non_contiguous_segments": 31,
+        "prefetch_hits": 15,
+        "prefetch_misses": 3,
+        "total_latency_ms": 1.6195,
+        "avg_latency_ms": 0.2024,
+        "p95_latency_ms": 0.5676
       }
     }
   },

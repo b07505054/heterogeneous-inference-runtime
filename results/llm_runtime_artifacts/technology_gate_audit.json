@@ -64,6 +64,13 @@
       "status": "implemented_as_local_policy_not_tensorrt_llm_internals"
     },
     {
+      "technology": "paged_attention_execution_model",
+      "input": "decode batch request ids plus resident KV page table",
+      "decision": "model page-table reads, contiguous page segments, and prefetch hit/miss effects before TPOT scoring",
+      "metric": "decode attention latency, pages read per step, non-contiguous segment penalty, TPOT p95",
+      "status": "implemented_as_local_execution_cost_model_not_gpu_kernel"
+    },
+    {
       "technology": "sglang_trace_adapter",
       "input": "SGLang-style request/decode trace",
       "decision": "request/decode scheduling with prefix metadata",

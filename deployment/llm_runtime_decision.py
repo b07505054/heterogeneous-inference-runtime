@@ -582,6 +582,7 @@ class SchedulerResult:
     page_prefetch: dict = field(default_factory=lambda: {"enabled": False})
     lifecycle: dict = field(default_factory=dict)
     kv_page_lifecycle: dict = field(default_factory=dict)
+    paged_attention: dict = field(default_factory=lambda: {"enabled": False})
 
 
 class RuntimeScheduler:
@@ -624,6 +625,7 @@ class RuntimeScheduler:
         delayed = 0
         oom = 0
         delayed_once: set[str] = set()
+        paged_attention = PagedAttentionCostModel()
 
         pending = sorted(requests, key=lambda req: req.arrival_ms)
 
@@ -792,7 +794,30 @@ class RuntimeScheduler:
                         step=step,
                         block_size_tokens=self.memory.block_size_tokens,
                     )
-                step_ms = self._observed_decode(len(step_active), avg_context)
+                active_pages = {}
+                for item in step_active:
+                    blocks = self.memory.allocations.get(item.request_id, [])
+                    context_tokens = item.prompt_tokens + step
+                    pages_needed = (
+                        min(
+                            len(blocks),
+                            max(1, math.ceil(context_tokens / self.memory.block_size_tokens)),
+                        )
+                        if blocks
+                        else 0
+                    )
+                    active_pages[item.request_id] = blocks[:pages_needed]
+                attention_event = paged_attention.estimate_step(
+                    step=step,
+                    active_page_ids=active_pages,
+                    prefetch_hits=prefetch_consumed["hits"] if prefetch_consumed else 0,
+                    prefetch_misses=prefetch_consumed["misses"] if prefetch_consumed else 0,
+                )
+                step_ms = round(
+                    self._observed_decode(len(step_active), avg_context)
+                    + attention_event["latency_ms"],
+                    3,
+                )
                 if prefetch_consumed:
                     saving = prefetch_consumed["latency_saving_ms"]
                     warmed_miss_penalty = 0.0
@@ -843,6 +868,7 @@ class RuntimeScheduler:
                             "active_requests": [item.request_id for item in step_active],
                             "batch_size": len(step_active),
                             "backend": "gpu",
+                            "paged_attention": attention_event,
                         }
                     )
                 time_ms += step_ms
@@ -894,6 +920,7 @@ class RuntimeScheduler:
             finish_time_ms=round(time_ms, 3),
             pressure_limited_candidates=self.pressure_limited_candidates,
             page_prefetch=self.page_prefetch.summary() if self.page_prefetch else {"enabled": False},
+            paged_attention=paged_attention.summary(),
         )
 
     def _run_inflight_paged_kv(self, requests: list[Request]) -> SchedulerResult:
@@ -935,6 +962,7 @@ class RuntimeScheduler:
         delayed = 0
         pressure_limited_ticks = 0
         prefill_chunk_count = 0
+        paged_attention = PagedAttentionCostModel()
 
         def transition(request_id: str, new_state: str, reason: str) -> None:
             state = states[request_id]
@@ -1113,11 +1141,12 @@ class RuntimeScheduler:
                 / len(active)
             )
             latency = self._observed_decode(len(active), avg_context)
-            decode_step_latencies.append(latency)
             access_events: list[dict] = []
             allocated_pages: list[int] = []
             freed_pages: list[int] = []
             still_decoding: list[str] = []
+            prefetch_hits = 0
+            prefetch_misses = 0
             for request_id in active:
                 state = states[request_id]
                 token_index = state.prompt_tokens_total + state.output_tokens_generated
@@ -1147,6 +1176,10 @@ class RuntimeScheduler:
                     allocated_pages.extend(pages)
                 access = kv.access_current_page(request_id, step)
                 access_events.append({"request_id": request_id, **access})
+                if access["hit"]:
+                    prefetch_hits += 1
+                else:
+                    prefetch_misses += 1
                 if access["page_id"] is None:
                     released = kv.release_request(request_id)
                     state.kv_pages = []
@@ -1197,6 +1230,22 @@ class RuntimeScheduler:
                     )
                     access_events.append(prefetch)
                     still_decoding.append(request_id)
+            active_pages = {
+                request_id: list(kv.request_pages.get(request_id, []))
+                for request_id in active
+                if request_id not in rejected_ids
+            }
+            attention_event = paged_attention.estimate_step(
+                step=step,
+                active_page_ids=active_pages,
+                prefetch_hits=prefetch_hits,
+                prefetch_misses=prefetch_misses,
+            )
+            latency = round(latency + attention_event["latency_ms"], 3)
+            decode_step_latencies.append(latency)
+            for idx in range(1, min(len(active_pages), len(tpot_latencies)) + 1):
+                tpot_latencies[-idx] = latency
+            access_events.append(attention_event)
             decode_queue.extend(still_decoding)
             return active, allocated_pages, freed_pages, access_events, latency
 
@@ -1376,6 +1425,7 @@ class RuntimeScheduler:
             },
             "pressure_limited_ticks": pressure_limited_ticks,
             "prefill_chunk_count": prefill_chunk_count,
+            "paged_attention": paged_attention.summary(),
         }
         kv_requests = [
             {
@@ -1421,6 +1471,7 @@ class RuntimeScheduler:
             },
             lifecycle=lifecycle,
             kv_page_lifecycle=page_summary,
+            paged_attention=paged_attention.summary(),
         )
 
     def _choose_decode_batch(self, req: Request, pending: list[Request], current_time_ms: float) -> list[Request]:
@@ -1476,6 +1527,117 @@ class RuntimeScheduler:
         return round(predicted * self.rng.uniform(0.86, 1.14), 3)
 
 
+@dataclass
+class PagedAttentionCostModel:
+    page_table_lookup_base_ms: float = 0.035
+    page_read_ms: float = 0.0045
+    non_contiguous_segment_penalty_ms: float = 0.018
+    prefetch_miss_penalty_ms: float = 0.012
+    prefetch_hit_saving_ms: float = 0.01
+    decode_events: list[dict] = field(default_factory=list)
+
+    def estimate_step(
+        self,
+        *,
+        step: int,
+        active_page_ids: dict[str, list[int]],
+        prefetch_hits: int = 0,
+        prefetch_misses: int = 0,
+    ) -> dict:
+        total_pages = sum(len(pages) for pages in active_page_ids.values())
+        non_contiguous_segments = 0
+        for pages in active_page_ids.values():
+            if not pages:
+                continue
+            ordered = sorted(pages)
+            non_contiguous_segments += 1
+            non_contiguous_segments += sum(
+                1
+                for left, right in zip(ordered, ordered[1:])
+                if right != left + 1
+            )
+
+        non_contiguous_penalty = (
+            non_contiguous_segments
+            * self.non_contiguous_segment_penalty_ms
+        )
+        read_cost = total_pages * self.page_read_ms
+        hit_saving = prefetch_hits * self.prefetch_hit_saving_ms
+        miss_penalty = prefetch_misses * self.prefetch_miss_penalty_ms
+        latency_ms = max(
+            0.0,
+            self.page_table_lookup_base_ms
+            + read_cost
+            + non_contiguous_penalty
+            + miss_penalty
+            - hit_saving,
+        )
+        event = {
+            "event": "paged_attention_read",
+            "step": step,
+            "active_request_ids": sorted(active_page_ids),
+            "requests": {
+                request_id: {
+                    "page_ids": pages,
+                    "page_count": len(pages),
+                }
+                for request_id, pages in active_page_ids.items()
+            },
+            "pages_read": total_pages,
+            "non_contiguous_segments": non_contiguous_segments,
+            "prefetch_hits": prefetch_hits,
+            "prefetch_misses": prefetch_misses,
+            "page_table_lookup_base_ms": self.page_table_lookup_base_ms,
+            "page_read_cost_ms": round(read_cost, 4),
+            "non_contiguous_penalty_ms": round(non_contiguous_penalty, 4),
+            "prefetch_hit_saving_ms": round(hit_saving, 4),
+            "prefetch_miss_penalty_ms": round(miss_penalty, 4),
+            "latency_ms": round(latency_ms, 4),
+        }
+        self.decode_events.append(event)
+        return event
+
+    def summary(self) -> dict:
+        total_steps = len(self.decode_events)
+        total_pages = sum(event["pages_read"] for event in self.decode_events)
+        total_latency = sum(event["latency_ms"] for event in self.decode_events)
+        total_hits = sum(event["prefetch_hits"] for event in self.decode_events)
+        total_misses = sum(event["prefetch_misses"] for event in self.decode_events)
+        total_non_contiguous = sum(
+            event["non_contiguous_segments"]
+            for event in self.decode_events
+        )
+        return {
+            "enabled": True,
+            "policy": "paged_attention_read_cost_model",
+            "positioning": (
+                "Local paged-attention execution model over RuntimeScheduler KV "
+                "page tables; this is not a TensorRT-LLM or vLLM kernel."
+            ),
+            "input": "decode batch request ids plus resident KV page table",
+            "decision": (
+                "model page-table reads, contiguous page segments, prefetch "
+                "hit/miss effects, and memory-pressure skips before TPOT scoring"
+            ),
+            "metric": (
+                "decode attention latency, pages read per decode step, "
+                "non-contiguous segment penalty, prefetch hit/miss impact, TPOT"
+            ),
+            "decode_steps": total_steps,
+            "pages_read": total_pages,
+            "avg_pages_per_step": round(total_pages / total_steps, 4) if total_steps else 0.0,
+            "non_contiguous_segments": total_non_contiguous,
+            "prefetch_hits": total_hits,
+            "prefetch_misses": total_misses,
+            "total_latency_ms": round(total_latency, 4),
+            "avg_latency_ms": round(total_latency / total_steps, 4) if total_steps else 0.0,
+            "p95_latency_ms": round(
+                _percentile([event["latency_ms"] for event in self.decode_events], 95),
+                4,
+            ) if self.decode_events else 0.0,
+        }
+
+
 def build_requests(count: int, rng: random.Random) -> list[Request]:
     requests = []
     arrival_ms = 0.0
@@ -1504,6 +1666,7 @@ def summarize_policy(result: SchedulerResult) -> dict:
 
     lifecycle_metrics = result.lifecycle or {}
     kv_page_lifecycle = result.kv_page_lifecycle or {}
+    paged_attention = result.paged_attention or {}
     return {
         "policy": result.policy,
         "completed_requests": result.completed_requests,
@@ -1537,6 +1700,10 @@ def summarize_policy(result: SchedulerResult) -> dict:
         "page_prefetch": result.page_prefetch,
         "prefill_chunk_count": lifecycle_metrics.get("prefill_chunk_count", 0),
         "kv_page_hit_rate": result.page_prefetch.get("hit_rate", 0.0),
+        "paged_attention_latency_p95_ms": paged_attention.get("p95_latency_ms", 0.0),
+        "paged_attention_pages_read": paged_attention.get("pages_read", 0),
+        "paged_attention_avg_pages_per_step": paged_attention.get("avg_pages_per_step", 0.0),
+        "paged_attention_non_contiguous_segments": paged_attention.get("non_contiguous_segments", 0),
         "pages_allocated": kv_page_lifecycle.get("allocated_pages", 0),
         "pages_freed": kv_page_lifecycle.get("freed_pages", 0),
         "pressure_limited_ticks": lifecycle_metrics.get(

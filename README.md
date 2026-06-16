@@ -772,6 +772,9 @@ The scheduler is implemented in `deployment/llm_runtime_decision.py`. It include
 - chunked prefill with `prefill_chunk_tokens = 256`
 - page-level KV lifecycle metadata: page id, owner request id, token range,
   resident/prefetched state, and last access step
+- a local paged-attention execution cost model that reads the resident KV page
+  table during decode, scores page-table lookups, pages read, non-contiguous
+  page segments, and prefetch hit/miss effects, then feeds the cost into TPOT
 - projected-pressure batch limiting, so the scheduler can reject a batch
   candidate before admitting it would push KV usage into a higher pressure band
 - a profiling feedback step that calibrates the cost model from observed samples
@@ -781,8 +784,8 @@ implementation:
 
 ```text
 Implemented a TensorRT-LLM-aligned local runtime policy with in-flight batching,
-paged KV cache orchestration, memory-pressure-aware admission, and TTFT/TPOT
-validation.
+paged KV cache orchestration, local paged-attention read-cost modeling,
+memory-pressure-aware admission, and TTFT/TPOT validation.
 ```
 
 It does not claim to modify TensorRT-LLM internals, implement a TensorRT-LLM

@@ -163,3 +163,25 @@ def test_workload_aware_scenarios_exercise_both_policy_outcomes():
     decode_heavy = by_name["decode_interleave_heavy"]
     assert decode_heavy["checks"]["oom_count_not_regressed"]
     assert decode_heavy["checks"]["reject_count_not_regressed"]
+
+
+def test_inflight_paged_attention_execution_model_feeds_decode_metrics():
+    result = run_inflight(
+        [
+            Request("decode-a", prompt_tokens=256, output_tokens=6, arrival_ms=0.0),
+            Request("decode-b", prompt_tokens=128, output_tokens=6, arrival_ms=1.0),
+        ],
+        total_blocks=128,
+    )
+    paged_attention = result.paged_attention
+
+    assert paged_attention["enabled"]
+    assert paged_attention["policy"] == "paged_attention_read_cost_model"
+    assert paged_attention["decode_steps"] > 0
+    assert paged_attention["pages_read"] > 0
+    assert paged_attention["p95_latency_ms"] > 0.0
+    assert any(
+        event.get("event") == "paged_attention_read"
+        for step in result.scheduler_steps
+        for event in step.get("kv_page_events", [])
+    )
