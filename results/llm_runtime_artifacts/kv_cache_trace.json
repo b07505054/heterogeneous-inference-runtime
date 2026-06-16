@@ -1097,6 +1097,66 @@
       "page_leak_count": 0
     }
   },
+  "scenario_page_lifecycle": {
+    "default_mixed_pressure": {
+      "selected_policy": "cost_aware_memory_pressure_page_prefetch",
+      "selected": {},
+      "inflight_candidate": {
+        "enabled": true,
+        "policy": "paged_kv_lifecycle_with_pressure_aware_prefetch",
+        "total_pages": 512,
+        "page_size_tokens": 16,
+        "resident_pages": 0,
+        "peak_pages": 407,
+        "allocated_pages": 818,
+        "freed_pages": 818,
+        "prefetch_attempts": 2189,
+        "prefetch_hits": 2077,
+        "prefetch_misses": 323,
+        "prefetch_hit_rate": 0.8654,
+        "prefetch_waste": 112,
+        "pressure_prefetch_skips": 179,
+        "page_leak_count": 0
+      }
+    },
+    "decode_interleave_heavy": {
+      "selected_policy": "inflight_paged_kv_continuous_batching",
+      "selected": {
+        "enabled": true,
+        "policy": "paged_kv_lifecycle_with_pressure_aware_prefetch",
+        "total_pages": 512,
+        "page_size_tokens": 16,
+        "resident_pages": 0,
+        "peak_pages": 139,
+        "allocated_pages": 139,
+        "freed_pages": 139,
+        "prefetch_attempts": 15,
+        "prefetch_hits": 15,
+        "prefetch_misses": 3,
+        "prefetch_hit_rate": 0.8333,
+        "prefetch_waste": 0,
+        "pressure_prefetch_skips": 0,
+        "page_leak_count": 0
+      },
+      "inflight_candidate": {
+        "enabled": true,
+        "policy": "paged_kv_lifecycle_with_pressure_aware_prefetch",
+        "total_pages": 512,
+        "page_size_tokens": 16,
+        "resident_pages": 0,
+        "peak_pages": 139,
+        "allocated_pages": 139,
+        "freed_pages": 139,
+        "prefetch_attempts": 15,
+        "prefetch_hits": 15,
+        "prefetch_misses": 3,
+        "prefetch_hit_rate": 0.8333,
+        "prefetch_waste": 0,
+        "pressure_prefetch_skips": 0,
+        "page_leak_count": 0
+      }
+    }
+  },
   "fragmentation_ratio": 0.05,
   "peak_allocated_blocks": 278,
   "peak_kv_cache_mb": 868.75

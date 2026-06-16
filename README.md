@@ -735,14 +735,22 @@ Key outputs:
 The current LLM artifact generator now runs an actual scheduling decision loop:
 
 ```text
-synthetic request stream
+workload scenario
   -> FCFS fixed-batch baseline scheduler
   -> collect observed prefill/decode latency samples
   -> calibrate runtime cost model
   -> run cost-aware memory-pressure scheduler
   -> run TensorRT-LLM-aligned local in-flight scheduler candidate
-  -> select the better policy from measured throughput, p95 latency, and KV usage
+  -> select the policy whose scenario gate matches the workload objective
 ```
+
+The generator records workload-aware policy selection for:
+
+- `default_mixed_pressure`: keeps the incumbent page-prefetch policy when the
+  in-flight candidate does not pass throughput, TPOT, TTFT, and lifecycle gates.
+- `decode_interleave_heavy`: selects the in-flight paged-KV policy when short
+  prompt TTFT improves under an interleaved long-prefill workload while TPOT,
+  OOM/reject, and page-lifecycle guards pass.
 
 The scheduler is implemented in `deployment/llm_runtime_decision.py`. It includes:
 
@@ -787,19 +795,27 @@ For the committed artifact snapshot, the optimized scheduler records
 `pressure_limited_candidates`, showing that memory pressure directly changed
 batching decisions rather than only being reported after the fact.
 
-The in-flight policy is selected only when its gate passes:
+The in-flight policy is selected only when the scenario gate passes:
 
 ```text
-TPOT p95 improves or stays within 3%
-throughput improves
-OOM/rejection does not regress
-TTFT p95 stays within tolerance
-lifecycle invariants pass
+default_mixed_pressure:
+  TPOT p95 improves or stays within 3%
+  throughput improves
+  OOM/rejection does not regress
+  TTFT p95 stays within tolerance
+  lifecycle invariants pass
+
+decode_interleave_heavy:
+  short-prompt service latency improves
+  TPOT p95 improves or stays within 3%
+  OOM/rejection does not regress
+  lifecycle invariants pass
 ```
 
 The artifact allows older policies to remain selected when those gates fail.
 Even when not selected, the in-flight candidate trace remains embedded in
-`scheduler_trace.json` for validation.
+`scheduler_trace.json` for validation. Scenario-level outcomes are recorded in
+`scheduler_decision_report.json` under `scenario_results`.
 
 The page prefetch path is intentionally labeled as vLLM-style rather than a
 real vLLM fork. Its gate is:

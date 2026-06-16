@@ -7,7 +7,11 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from deployment.llm_runtime_decision import CostModel, MemoryPlanner, Request, RuntimeScheduler, summarize_policy
-from generate_llm_runtime_artifacts import inflight_gate
+from generate_llm_runtime_artifacts import (
+    inflight_gate,
+    run_scenario_comparison,
+    workload_scenarios,
+)
 
 
 def run_inflight(requests, *, total_blocks=128, seed=7):
@@ -123,3 +127,39 @@ def test_inflight_policy_gate_can_select_or_retain_old_policy():
 
     assert inflight_gate(winning_candidate, incumbent)["passes_gate"]
     assert not inflight_gate(losing_candidate, incumbent)["passes_gate"]
+
+
+def test_workload_aware_scenarios_exercise_both_policy_outcomes():
+    default_requests = [
+        Request("mixed-001", prompt_tokens=1024, output_tokens=128, arrival_ms=0.0),
+        Request("mixed-002", prompt_tokens=512, output_tokens=64, arrival_ms=4.0),
+        Request("mixed-003", prompt_tokens=256, output_tokens=96, arrival_ms=8.0),
+        Request("mixed-004", prompt_tokens=1024, output_tokens=32, arrival_ms=12.0),
+    ]
+    results = [
+        run_scenario_comparison(
+            scenario,
+            seed=42 + idx * 1000,
+            total_blocks=512,
+            block_size_tokens=16,
+            kv_mb_per_block=3.125,
+        )
+        for idx, scenario in enumerate(workload_scenarios(default_requests))
+    ]
+    by_name = {row["scenario"]["name"]: row["scenario_result"] for row in results}
+
+    assert by_name["default_mixed_pressure"]["decision"]["selected_policy"] != (
+        "inflight_paged_kv_continuous_batching"
+    )
+    assert by_name["decode_interleave_heavy"]["decision"]["selected_policy"] == (
+        "inflight_paged_kv_continuous_batching"
+    )
+
+    for row in by_name.values():
+        lifecycle = row["page_lifecycle"]["inflight_candidate"]
+        assert lifecycle["allocated_pages"] == lifecycle["freed_pages"]
+        assert lifecycle["page_leak_count"] == 0
+
+    decode_heavy = by_name["decode_interleave_heavy"]
+    assert decode_heavy["checks"]["oom_count_not_regressed"]
+    assert decode_heavy["checks"]["reject_count_not_regressed"]

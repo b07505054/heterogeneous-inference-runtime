@@ -12,6 +12,7 @@ sys.path.insert(0, str(ROOT))
 from deployment.llm_runtime_decision import (  # noqa: E402
     CostModel,
     MemoryPlanner,
+    Request,
     RuntimeScheduler,
     build_requests,
     summarize_policy,
@@ -85,6 +86,269 @@ def inflight_gate(candidate_summary, incumbent_summary, *, ttft_tolerance=0.10):
             "incumbent_tokens_per_second": incumbent_summary["tokens_per_second"],
             "candidate_reject_oom_count": candidate_summary["reject_oom_count"],
             "incumbent_reject_oom_count": incumbent_summary["reject_oom_count"],
+        },
+    }
+
+
+def percentile_or_zero(values, p):
+    return round(percentile(values, p), 3) if values else 0.0
+
+
+def build_decode_interleave_heavy_requests():
+    return [
+        Request("long-prefill-001", prompt_tokens=2048, output_tokens=2, arrival_ms=0.0),
+        Request("short-decode-001", prompt_tokens=64, output_tokens=8, arrival_ms=1.0),
+        Request("short-decode-002", prompt_tokens=64, output_tokens=8, arrival_ms=2.0),
+    ]
+
+
+def workload_scenarios(default_requests):
+    return [
+        {
+            "name": "default_mixed_pressure",
+            "objective": "throughput_under_mixed_prefill_decode_pressure",
+            "requests": default_requests,
+            "gate": "throughput_tpot_ttft_guard",
+        },
+        {
+            "name": "decode_interleave_heavy",
+            "objective": "short_prompt_ttft_under_interleaved_long_prefill",
+            "requests": build_decode_interleave_heavy_requests(),
+            "gate": "short_prompt_ttft_tpot_guard",
+        },
+    ]
+
+
+def request_shape_metrics(requests):
+    prompts = [req.prompt_tokens for req in requests]
+    outputs = [req.output_tokens for req in requests]
+    return {
+        "request_count": len(requests),
+        "prompt_tokens": {
+            "min": min(prompts) if prompts else 0,
+            "max": max(prompts) if prompts else 0,
+            "p50": percentile_or_zero(prompts, 50),
+            "p95": percentile_or_zero(prompts, 95),
+        },
+        "output_tokens": {
+            "min": min(outputs) if outputs else 0,
+            "max": max(outputs) if outputs else 0,
+            "p50": percentile_or_zero(outputs, 50),
+            "p95": percentile_or_zero(outputs, 95),
+        },
+        "short_prompt_request_count": sum(1 for req in requests if req.prompt_tokens <= 128),
+        "long_prompt_request_count": sum(1 for req in requests if req.prompt_tokens >= 1024),
+    }
+
+
+def short_prompt_latency_metric(result, requests):
+    arrivals = {
+        req.request_id: req.arrival_ms
+        for req in requests
+        if req.prompt_tokens <= 128
+    }
+    queue_waits = [
+        event.get("queue_wait_ms", 0.0)
+        for event in result.serving_events
+        if event.get("event") == "request_admitted"
+        and event.get("request_id") in arrivals
+    ]
+    first_tokens = [
+        event.get("ttft_ms", 0.0)
+        for event in result.serving_events
+        if event.get("event") == "first_token"
+        and event.get("request_id") in arrivals
+    ]
+    prefill_starts = [
+        event.get("time_ms", 0.0) - arrivals[event.get("request_id")]
+        for event in result.serving_events
+        if event.get("event") == "prefill_start"
+        and event.get("request_id") in arrivals
+    ]
+    service_latencies = first_tokens or queue_waits or prefill_starts
+    return {
+        "short_prompt_count": len(arrivals),
+        "queue_wait_p95_ms": percentile_or_zero(queue_waits, 95),
+        "first_token_p95_ms": percentile_or_zero(first_tokens, 95),
+        "prefill_start_wait_p95_ms": percentile_or_zero(prefill_starts, 95),
+        "service_latency_p95_ms": percentile_or_zero(service_latencies, 95),
+        "metric_source": (
+            "first_token"
+            if first_tokens
+            else "queue_wait"
+            if queue_waits
+            else "prefill_start"
+            if prefill_starts
+            else "unavailable"
+        ),
+    }
+
+
+def inflight_gate_for_scenario(scenario, candidate, incumbent, candidate_summary, incumbent_summary):
+    if scenario["name"] == "default_mixed_pressure":
+        gate = inflight_gate(candidate_summary, incumbent_summary)
+        gate["scenario_gate"] = scenario["gate"]
+        gate["objective"] = scenario["objective"]
+        return gate
+
+    candidate_short = short_prompt_latency_metric(candidate, scenario["requests"])
+    incumbent_short = short_prompt_latency_metric(incumbent, scenario["requests"])
+    short_ttft_ok = (
+        candidate_short["service_latency_p95_ms"] > 0
+        and incumbent_short["service_latency_p95_ms"] > 0
+        and candidate_short["service_latency_p95_ms"] < incumbent_short["service_latency_p95_ms"]
+    )
+    tpot_ok = candidate_summary["tpot_p95_ms"] <= incumbent_summary["tpot_p95_ms"] * 1.03
+    oom_ok = candidate_summary["reject_oom_count"] <= incumbent_summary["reject_oom_count"]
+    reject_ok = candidate_summary["rejected_requests"] <= incumbent_summary["rejected_requests"]
+    invariants = candidate_summary.get("invariants", {})
+    invariant_ok = all(
+        value if isinstance(value, bool) else value == 0
+        for value in invariants.values()
+    )
+    passes = all([short_ttft_ok, tpot_ok, oom_ok, reject_ok, invariant_ok])
+    return {
+        "candidate_policy": candidate_summary["policy"],
+        "incumbent_policy": incumbent_summary["policy"],
+        "passes_gate": passes,
+        "scenario_gate": scenario["gate"],
+        "objective": scenario["objective"],
+        "checks": {
+            "short_prompt_service_latency_improves": short_ttft_ok,
+            "tpot_p95_within_3_percent": tpot_ok,
+            "oom_count_not_regressed": oom_ok,
+            "reject_count_not_regressed": reject_ok,
+            "lifecycle_invariants_pass": invariant_ok,
+        },
+        "metrics": {
+            "candidate_short_prompt": candidate_short,
+            "incumbent_short_prompt": incumbent_short,
+            "candidate_tpot_p95_ms": candidate_summary["tpot_p95_ms"],
+            "incumbent_tpot_p95_ms": incumbent_summary["tpot_p95_ms"],
+            "candidate_tokens_per_second": candidate_summary["tokens_per_second"],
+            "incumbent_tokens_per_second": incumbent_summary["tokens_per_second"],
+            "candidate_reject_oom_count": candidate_summary["reject_oom_count"],
+            "incumbent_reject_oom_count": incumbent_summary["reject_oom_count"],
+        },
+    }
+
+
+def run_scenario_comparison(
+    scenario,
+    *,
+    seed,
+    total_blocks,
+    block_size_tokens,
+    kv_mb_per_block,
+):
+    requests = scenario["requests"]
+    baseline = run_policy(
+        "fcfs_fixed_batch",
+        requests,
+        CostModel(),
+        seed + 100,
+        total_blocks,
+        block_size_tokens,
+        kv_mb_per_block,
+    )
+    calibrated_cost = CostModel()
+    calibration_report = calibrated_cost.calibrate(
+        baseline.prefill_latencies[:8],
+        baseline.decode_step_latencies[:64],
+    )
+    optimized = run_policy(
+        "cost_aware_memory_pressure",
+        requests,
+        calibrated_cost,
+        seed + 200,
+        total_blocks,
+        block_size_tokens,
+        kv_mb_per_block,
+    )
+    page_prefetch_cost = CostModel(
+        observed_decode_scale=calibrated_cost.observed_decode_scale,
+        observed_prefill_scale=calibrated_cost.observed_prefill_scale,
+    )
+    page_prefetch = run_policy(
+        "cost_aware_memory_pressure_page_prefetch",
+        requests,
+        page_prefetch_cost,
+        seed + 200,
+        total_blocks,
+        block_size_tokens,
+        kv_mb_per_block,
+    )
+    inflight_cost = CostModel(
+        observed_decode_scale=calibrated_cost.observed_decode_scale,
+        observed_prefill_scale=calibrated_cost.observed_prefill_scale,
+    )
+    inflight = run_policy(
+        "inflight_paged_kv_continuous_batching",
+        requests,
+        inflight_cost,
+        seed + 300,
+        total_blocks,
+        block_size_tokens,
+        kv_mb_per_block,
+    )
+
+    baseline_summary = summarize_policy(baseline)
+    optimized_summary = summarize_policy(optimized)
+    page_prefetch_summary = summarize_policy(page_prefetch)
+    inflight_summary = summarize_policy(inflight)
+    page_prefetch_report = build_page_prefetch_report(
+        optimized=optimized,
+        page_prefetch=page_prefetch,
+        optimized_summary=optimized_summary,
+        page_prefetch_summary=page_prefetch_summary,
+    )
+
+    incumbent = page_prefetch if page_prefetch_report["selected_policy"] == page_prefetch.policy else optimized
+    incumbent_summary = page_prefetch_summary if incumbent is page_prefetch else optimized_summary
+    inflight_gate_report = inflight_gate_for_scenario(
+        scenario,
+        inflight,
+        incumbent,
+        inflight_summary,
+        incumbent_summary,
+    )
+    selected = inflight if inflight_gate_report["passes_gate"] else incumbent
+    selected_summary = summarize_policy(selected)
+    summaries = [baseline_summary, optimized_summary, page_prefetch_summary, inflight_summary]
+    return {
+        "scenario": scenario,
+        "requests": requests,
+        "baseline": baseline,
+        "optimized": optimized,
+        "page_prefetch": page_prefetch,
+        "inflight": inflight,
+        "selected": selected,
+        "baseline_summary": baseline_summary,
+        "optimized_summary": optimized_summary,
+        "page_prefetch_summary": page_prefetch_summary,
+        "inflight_summary": inflight_summary,
+        "selected_summary": selected_summary,
+        "policy_summaries": summaries,
+        "page_prefetch_report": page_prefetch_report,
+        "calibration_report": calibration_report,
+        "inflight_gate_report": inflight_gate_report,
+        "scenario_result": {
+            "scenario": scenario["name"],
+            "objective": scenario["objective"],
+            "input": request_shape_metrics(requests),
+            "decision": {
+                "incumbent_policy": incumbent.policy,
+                "candidate_policy": inflight.policy,
+                "selected_policy": selected.policy,
+                "gate_passed": inflight_gate_report["passes_gate"],
+            },
+            "metric": inflight_gate_report["metrics"],
+            "checks": inflight_gate_report["checks"],
+            "policy_summaries": summaries,
+            "page_lifecycle": {
+                "selected": selected.kv_page_lifecycle,
+                "inflight_candidate": inflight.kv_page_lifecycle,
+            },
         },
     }
 
@@ -259,6 +523,7 @@ def build_serving_framework_report(
     inflight=None,
     inflight_summary=None,
     inflight_gate_report=None,
+    scenario_results=None,
 ):
     def metric_row(name, result, summary, style):
         decode_latencies = result.decode_step_latencies or [0.0]
@@ -391,6 +656,18 @@ def build_serving_framework_report(
             "oom_events": runtime_profile["oom_events"],
         },
         "comparisons": rows,
+        "workload_aware_policy_selection": [
+            {
+                "scenario": row["scenario"],
+                "objective": row["objective"],
+                "selected_policy": row["decision"]["selected_policy"],
+                "candidate_policy": row["decision"]["candidate_policy"],
+                "gate_passed": row["decision"]["gate_passed"],
+                "input": row["input"],
+                "checks": row["checks"],
+            }
+            for row in (scenario_results or [])
+        ],
         "selected_framework_style": "vllm_sglang_style",
         "selection_reason": scheduler_decision_report["selection_reason"],
         "improvement": scheduler_decision_report["improvement"],
@@ -827,77 +1104,36 @@ def main():
     kv_mb_per_block = 3.125
     total_blocks = 512
     workload_rng = random.Random(args.seed)
-    requests = build_requests(args.requests, workload_rng)
-
-    baseline_cost = CostModel()
-    baseline = run_policy(
-        "fcfs_fixed_batch",
-        requests,
-        baseline_cost,
-        args.seed + 100,
-        total_blocks,
-        block_size_tokens,
-        kv_mb_per_block,
+    default_requests = build_requests(args.requests, workload_rng)
+    scenario_comparisons = [
+        run_scenario_comparison(
+            scenario,
+            seed=args.seed + scenario_index * 1000,
+            total_blocks=total_blocks,
+            block_size_tokens=block_size_tokens,
+            kv_mb_per_block=kv_mb_per_block,
+        )
+        for scenario_index, scenario in enumerate(workload_scenarios(default_requests))
+    ]
+    default_comparison = next(
+        row for row in scenario_comparisons
+        if row["scenario"]["name"] == "default_mixed_pressure"
     )
 
-    calibrated_cost = CostModel()
-    calibration_report = calibrated_cost.calibrate(
-        baseline.prefill_latencies[:8],
-        baseline.decode_step_latencies[:64],
-    )
-    optimized = run_policy(
-        "cost_aware_memory_pressure",
-        requests,
-        calibrated_cost,
-        args.seed + 200,
-        total_blocks,
-        block_size_tokens,
-        kv_mb_per_block,
-    )
-    page_prefetch_cost = CostModel(
-        observed_decode_scale=calibrated_cost.observed_decode_scale,
-        observed_prefill_scale=calibrated_cost.observed_prefill_scale,
-    )
-    page_prefetch = run_policy(
-        "cost_aware_memory_pressure_page_prefetch",
-        requests,
-        page_prefetch_cost,
-        args.seed + 200,
-        total_blocks,
-        block_size_tokens,
-        kv_mb_per_block,
-    )
-    inflight_cost = CostModel(
-        observed_decode_scale=calibrated_cost.observed_decode_scale,
-        observed_prefill_scale=calibrated_cost.observed_prefill_scale,
-    )
-    inflight = run_policy(
-        "inflight_paged_kv_continuous_batching",
-        requests,
-        inflight_cost,
-        args.seed + 300,
-        total_blocks,
-        block_size_tokens,
-        kv_mb_per_block,
-    )
-
-    selected = optimized
-    baseline_summary = summarize_policy(baseline)
-    optimized_summary = summarize_policy(optimized)
-    page_prefetch_summary = summarize_policy(page_prefetch)
-    inflight_summary = summarize_policy(inflight)
-    page_prefetch_report = build_page_prefetch_report(
-        optimized=optimized,
-        page_prefetch=page_prefetch,
-        optimized_summary=optimized_summary,
-        page_prefetch_summary=page_prefetch_summary,
-    )
-    if page_prefetch_report["selected_policy"] == "cost_aware_memory_pressure_page_prefetch":
-        selected = page_prefetch
-    incumbent_summary = summarize_policy(selected)
-    inflight_gate_report = inflight_gate(inflight_summary, incumbent_summary)
-    if inflight_gate_report["passes_gate"]:
-        selected = inflight
+    requests = default_comparison["requests"]
+    baseline = default_comparison["baseline"]
+    optimized = default_comparison["optimized"]
+    page_prefetch = default_comparison["page_prefetch"]
+    inflight = default_comparison["inflight"]
+    selected = default_comparison["selected"]
+    baseline_summary = default_comparison["baseline_summary"]
+    optimized_summary = default_comparison["optimized_summary"]
+    page_prefetch_summary = default_comparison["page_prefetch_summary"]
+    inflight_summary = default_comparison["inflight_summary"]
+    page_prefetch_report = default_comparison["page_prefetch_report"]
+    calibration_report = default_comparison["calibration_report"]
+    inflight_gate_report = default_comparison["inflight_gate_report"]
+    scenario_results = [row["scenario_result"] for row in scenario_comparisons]
     scheduler_decision_report = {
         "artifact_type": "scheduler_decision_report",
         "source": "deployment.llm_runtime_decision",
@@ -916,6 +1152,7 @@ def main():
         },
         "cost_model_calibration": calibration_report,
         "policies": [baseline_summary, optimized_summary, page_prefetch_summary, inflight_summary],
+        "scenario_results": scenario_results,
         "selected_policy": selected.policy,
         "selection_reason": (
             "in-flight paged-KV policy passed TPOT/throughput/TTFT/OOM lifecycle gates"
@@ -974,6 +1211,14 @@ def main():
         "candidate_page_lifecycle": {
             "inflight_paged_kv_continuous_batching": inflight.kv_page_lifecycle,
         },
+        "scenario_page_lifecycle": {
+            row["scenario"]["name"]: {
+                "selected_policy": row["selected"].policy,
+                "selected": row["selected"].kv_page_lifecycle,
+                "inflight_candidate": row["inflight"].kv_page_lifecycle,
+            }
+            for row in scenario_comparisons
+        },
         "fragmentation_ratio": round(
             max(0.02, min(0.32, (total_blocks - selected.peak_allocated_blocks) / total_blocks * 0.11)),
             3,
@@ -983,6 +1228,7 @@ def main():
     }
 
     scheduler_trace = {
+        "scenario": "default_mixed_pressure",
         "policy": selected.policy,
         "max_decode_batch_size": 8,
         "avg_decode_batch_size": selected.avg_decode_batch_size,
@@ -1000,6 +1246,27 @@ def main():
                 "steps": compact_scheduler_steps(inflight.scheduler_steps),
                 "full_step_count": len(inflight.scheduler_steps),
             }
+        },
+        "scenario_candidate_traces": {
+            row["scenario"]["name"]: {
+                "objective": row["scenario"]["objective"],
+                "selected_policy": row["selected"].policy,
+                "gate": row["inflight_gate_report"],
+                "selected_trace": {
+                    "policy": row["selected"].policy,
+                    "steps": compact_scheduler_steps(row["selected"].scheduler_steps),
+                    "full_step_count": len(row["selected"].scheduler_steps),
+                    "page_lifecycle": row["selected"].kv_page_lifecycle,
+                },
+                "inflight_candidate_trace": {
+                    "policy": row["inflight"].policy,
+                    "steps": compact_scheduler_steps(row["inflight"].scheduler_steps),
+                    "full_step_count": len(row["inflight"].scheduler_steps),
+                    "lifecycle": row["inflight"].lifecycle,
+                    "page_lifecycle": row["inflight"].kv_page_lifecycle,
+                },
+            }
+            for row in scenario_comparisons
         },
         "steps": selected.scheduler_steps,
     }
@@ -1103,6 +1370,7 @@ def main():
         inflight=inflight,
         inflight_summary=inflight_summary,
         inflight_gate_report=inflight_gate_report,
+        scenario_results=scenario_results,
     )
     vllm_trace_adapter_report = build_trace_adapter_report(
         adapter_name="vllm",

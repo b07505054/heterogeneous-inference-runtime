@@ -173,7 +173,9 @@
           "incumbent_tokens_per_second": 1470.548,
           "candidate_reject_oom_count": 0,
           "incumbent_reject_oom_count": 0
-        }
+        },
+        "scenario_gate": "throughput_tpot_ttft_guard",
+        "objective": "throughput_under_mixed_prefill_decode_pressure"
       }
     },
     {
@@ -229,6 +231,71 @@
         "queue_wait",
         "kv_cache_pressure"
       ]
+    }
+  ],
+  "workload_aware_policy_selection": [
+    {
+      "scenario": "default_mixed_pressure",
+      "objective": "throughput_under_mixed_prefill_decode_pressure",
+      "selected_policy": "cost_aware_memory_pressure_page_prefetch",
+      "candidate_policy": "inflight_paged_kv_continuous_batching",
+      "gate_passed": false,
+      "input": {
+        "request_count": 32,
+        "prompt_tokens": {
+          "min": 64,
+          "max": 1024,
+          "p50": 192.0,
+          "p95": 1024.0
+        },
+        "output_tokens": {
+          "min": 32,
+          "max": 128,
+          "p50": 64.0,
+          "p95": 128.0
+        },
+        "short_prompt_request_count": 16,
+        "long_prompt_request_count": 5
+      },
+      "checks": {
+        "tpot_p95_within_3_percent": false,
+        "throughput_improves": false,
+        "oom_count_not_regressed": true,
+        "reject_count_not_regressed": true,
+        "ttft_p95_within_tolerance": false,
+        "lifecycle_invariants_pass": true
+      }
+    },
+    {
+      "scenario": "decode_interleave_heavy",
+      "objective": "short_prompt_ttft_under_interleaved_long_prefill",
+      "selected_policy": "inflight_paged_kv_continuous_batching",
+      "candidate_policy": "inflight_paged_kv_continuous_batching",
+      "gate_passed": true,
+      "input": {
+        "request_count": 3,
+        "prompt_tokens": {
+          "min": 64,
+          "max": 2048,
+          "p50": 64.0,
+          "p95": 1849.6
+        },
+        "output_tokens": {
+          "min": 2,
+          "max": 8,
+          "p50": 8.0,
+          "p95": 8.0
+        },
+        "short_prompt_request_count": 2,
+        "long_prompt_request_count": 1
+      },
+      "checks": {
+        "short_prompt_service_latency_improves": true,
+        "tpot_p95_within_3_percent": true,
+        "oom_count_not_regressed": true,
+        "reject_count_not_regressed": true,
+        "lifecycle_invariants_pass": true
+      }
     }
   ],
   "selected_framework_style": "vllm_sglang_style",
