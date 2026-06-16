@@ -52,6 +52,10 @@
     "rejected_requests": 0,
     "delayed_requests": 0,
     "p95_latency_ms": 1716.077,
+    "ttft_p50_ms": 38.316,
+    "ttft_p95_ms": 154.956,
+    "tpot_p50_ms": 2.486,
+    "tpot_p95_ms": 3.244,
     "tokens_per_second": 1236.142,
     "peak_kv_cache_mb": 868.75,
     "avg_decode_batch_size": 6.4,
@@ -64,7 +68,14 @@
     "finish_time_ms": 1941.525,
     "page_prefetch": {
       "enabled": false
-    }
+    },
+    "prefill_chunk_count": 0,
+    "kv_page_hit_rate": 0.0,
+    "pages_allocated": 0,
+    "pages_freed": 0,
+    "pressure_limited_ticks": 20,
+    "reject_oom_count": 0,
+    "invariants": {}
   },
   "candidate_policy_summary": {
     "policy": "cost_aware_memory_pressure_page_prefetch",
@@ -72,6 +83,10 @@
     "rejected_requests": 0,
     "delayed_requests": 0,
     "p95_latency_ms": 1406.597,
+    "ttft_p50_ms": 38.316,
+    "ttft_p95_ms": 154.956,
+    "tpot_p50_ms": 1.99,
+    "tpot_p95_ms": 2.511,
     "tokens_per_second": 1470.548,
     "peak_kv_cache_mb": 868.75,
     "avg_decode_batch_size": 6.4,
@@ -95,7 +110,14 @@
       "pressure_disable_threshold": 0.82,
       "hit_latency_saving_ms": 0.075,
       "wasted_prefetch_penalty_ms": 0.015
-    }
+    },
+    "prefill_chunk_count": 0,
+    "kv_page_hit_rate": 0.8808,
+    "pages_allocated": 0,
+    "pages_freed": 0,
+    "pressure_limited_ticks": 20,
+    "reject_oom_count": 0,
+    "invariants": {}
   },
   "serving_effect": {
     "affects": [

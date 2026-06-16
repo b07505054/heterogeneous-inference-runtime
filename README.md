@@ -713,7 +713,7 @@ Key outputs:
 - `runtime_profile.json`: aggregate serving-path metrics
 - `prefill_decode_benchmark.json`: prefill and decode phase timing
 - `scheduler_trace.json`: request admission, queue, prefill, and decode events
-- `kv_cache_trace.json`: KV-cache allocation and block-usage trace
+- `kv_cache_trace.json`: KV-cache allocation, page lifecycle, and block-usage trace
 - `plan_benchmark_results.json`: measured plan comparison for Metal, CPU, and
   hybrid candidates
 - `scheduler_decision_report.json`: baseline-vs-cost-aware scheduling comparison
@@ -740,6 +740,7 @@ synthetic request stream
   -> collect observed prefill/decode latency samples
   -> calibrate runtime cost model
   -> run cost-aware memory-pressure scheduler
+  -> run TensorRT-LLM-aligned local in-flight scheduler candidate
   -> select the better policy from measured throughput, p95 latency, and KV usage
 ```
 
@@ -754,15 +755,51 @@ The scheduler is implemented in `deployment/llm_runtime_decision.py`. It include
   capacity and shape compatibility allow it
 - a vLLM-style page prefetch candidate that warms already allocated KV pages
   when memory pressure is below budget
+- a local policy named `inflight_paged_kv_continuous_batching` with
+  TensorRT-LLM-aligned concepts, not TensorRT-LLM internals
+- request lifecycle states: `waiting`, `prefill`, `decode`, `finished`, and
+  `rejected`
+- event-loop scheduler ticks that choose `prefill_chunk`, `decode_batch`,
+  `mixed_step`, `drain_decode`, or `reject_or_delay`
+- chunked prefill with `prefill_chunk_tokens = 256`
+- page-level KV lifecycle metadata: page id, owner request id, token range,
+  resident/prefetched state, and last access step
 - projected-pressure batch limiting, so the scheduler can reject a batch
   candidate before admitting it would push KV usage into a higher pressure band
 - a profiling feedback step that calibrates the cost model from observed samples
+
+The in-flight policy is deliberately scoped as a local runtime policy
+implementation:
+
+```text
+Implemented a TensorRT-LLM-aligned local runtime policy with in-flight batching,
+paged KV cache orchestration, memory-pressure-aware admission, and TTFT/TPOT
+validation.
+```
+
+It does not claim to modify TensorRT-LLM internals, implement a TensorRT-LLM
+engine, or provide real multi-GPU/multi-node TensorRT-LLM serving. Distributed
+fields such as worker id and device id are trace hooks for future integration.
 
 This moves the LLM runtime path from artifact description toward runtime
 decision-making: the generated report records which scheduler policy won and why.
 For the committed artifact snapshot, the optimized scheduler records
 `pressure_limited_candidates`, showing that memory pressure directly changed
 batching decisions rather than only being reported after the fact.
+
+The in-flight policy is selected only when its gate passes:
+
+```text
+TPOT p95 improves or stays within 3%
+throughput improves
+OOM/rejection does not regress
+TTFT p95 stays within tolerance
+lifecycle invariants pass
+```
+
+The artifact allows older policies to remain selected when those gates fail.
+Even when not selected, the in-flight candidate trace remains embedded in
+`scheduler_trace.json` for validation.
 
 The page prefetch path is intentionally labeled as vLLM-style rather than a
 real vLLM fork. Its gate is:

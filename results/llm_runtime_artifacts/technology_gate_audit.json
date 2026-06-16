@@ -57,6 +57,13 @@
       "status": "implemented_as_runtime_scheduler_candidate"
     },
     {
+      "technology": "tensorrt_llm_aligned_inflight_runtime_policy",
+      "input": "local LLM request trace plus paged KV lifecycle state",
+      "decision": "event-loop tick chooses chunked prefill, continuous decode, drain, delay, or reject",
+      "metric": "TTFT, TPOT, throughput, decode batch size, page hit rate, page leaks, reject/OOM gates",
+      "status": "implemented_as_local_policy_not_tensorrt_llm_internals"
+    },
+    {
       "technology": "sglang_trace_adapter",
       "input": "SGLang-style request/decode trace",
       "decision": "request/decode scheduling with prefix metadata",

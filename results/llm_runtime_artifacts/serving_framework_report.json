@@ -5,6 +5,7 @@
   "framework_targets": [
     "vLLM continuous batching and paged KV-cache pressure",
     "vLLM-style allocated KV page prefetch under memory-pressure budget",
+    "TensorRT-LLM-aligned local in-flight batching and paged KV lifecycle",
     "SGLang request/decode scheduling and prefix/KV reuse hooks",
     "Triton Server dynamic batching and backend instance routing",
     "TensorRT engine/optimization-profile backend candidate selection"
@@ -114,6 +115,66 @@
         "wasted_prefetch_penalty_ms": 0.015
       },
       "selection_status": "cost_aware_memory_pressure_page_prefetch"
+    },
+    {
+      "framework_style": "tensorrt_llm_aligned_local_runtime_policy",
+      "policy": "inflight_paged_kv_continuous_batching",
+      "scheduler_policy": "inflight_paged_kv_continuous_batching",
+      "batching": "event_loop_chunked_prefill_plus_continuous_decode",
+      "kv_cache_policy": "paged_kv_lifecycle_with_pressure_aware_prefetch",
+      "backend_routing": "local_worker_device_fields_only_no_distributed_execution_claim",
+      "completed_requests": 32,
+      "rejected_requests": 0,
+      "delayed_requests": 0,
+      "ttft_p95_ms": 2501.243,
+      "tpot_p95_ms": 2.92,
+      "e2e_p95_ms": 3058.379,
+      "throughput_tokens_per_s": 725.419,
+      "avg_decode_batch_size": 3.0038,
+      "decode_batch_efficiency": 0.3755,
+      "peak_kv_cache_mb": 1271.875,
+      "pressure_limited_candidates": 506,
+      "serving_metrics": [
+        "TTFT",
+        "TPOT",
+        "latency_p95",
+        "tokens_per_second",
+        "queue_wait",
+        "kv_cache_pressure"
+      ],
+      "positioning": "TensorRT-LLM-aligned concepts, not TensorRT-LLM internals",
+      "lifecycle_invariants": {
+        "finished_request_releases_pages": true,
+        "rejected_request_owns_no_pages": true,
+        "decode_request_has_resident_page": true,
+        "hard_limit_forbids_new_prefill": true,
+        "every_admitted_request_reaches_terminal_state": true,
+        "page_leak_count": 0
+      },
+      "selection_gate": {
+        "candidate_policy": "inflight_paged_kv_continuous_batching",
+        "incumbent_policy": "cost_aware_memory_pressure_page_prefetch",
+        "passes_gate": false,
+        "ttft_tolerance": 0.1,
+        "checks": {
+          "tpot_p95_within_3_percent": false,
+          "throughput_improves": false,
+          "oom_count_not_regressed": true,
+          "reject_count_not_regressed": true,
+          "ttft_p95_within_tolerance": false,
+          "lifecycle_invariants_pass": true
+        },
+        "metrics": {
+          "candidate_tpot_p95_ms": 3.137,
+          "incumbent_tpot_p95_ms": 2.511,
+          "candidate_ttft_p95_ms": 2501.243,
+          "incumbent_ttft_p95_ms": 154.956,
+          "candidate_tokens_per_second": 725.419,
+          "incumbent_tokens_per_second": 1470.548,
+          "candidate_reject_oom_count": 0,
+          "incumbent_reject_oom_count": 0
+        }
+      }
     },
     {
       "framework_style": "triton_server_style",

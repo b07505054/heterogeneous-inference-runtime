@@ -12,6 +12,34 @@ class Request:
     arrival_ms: float
 
 
+@dataclass
+class RuntimeRequestState:
+    request: Request
+    state: str = "waiting"
+    prompt_tokens_total: int = 0
+    prompt_tokens_prefilled: int = 0
+    output_tokens_generated: int = 0
+    kv_pages: list[int] = field(default_factory=list)
+    ttft_step: int | None = None
+    finish_step: int | None = None
+    admitted_step: int | None = None
+    rejected_reason: str | None = None
+
+    def __post_init__(self) -> None:
+        if self.prompt_tokens_total == 0:
+            self.prompt_tokens_total = self.request.prompt_tokens
+
+
+@dataclass
+class KVPage:
+    page_id: int
+    owner_request_id: str
+    token_begin: int
+    token_end: int
+    state: str
+    last_access_step: int
+
+
 @dataclass(frozen=True)
 class AdmissionDecision:
     action: str
@@ -346,6 +374,191 @@ class PagePrefetchPlanner:
 
 
 @dataclass
+class PagedKVLifecycle:
+    total_pages: int
+    page_size_tokens: int
+    kv_mb_per_page: float
+    free_pages: list[int] = field(init=False)
+    pages: dict[int, KVPage] = field(default_factory=dict)
+    request_pages: dict[str, list[int]] = field(default_factory=dict)
+    peak_pages: int = 0
+    allocated_pages: int = 0
+    freed_pages: int = 0
+    prefetch_attempts: int = 0
+    prefetch_hits: int = 0
+    prefetch_misses: int = 0
+    prefetch_waste: int = 0
+    pressure_prefetch_skips: int = 0
+
+    def __post_init__(self) -> None:
+        self.free_pages = list(range(self.total_pages))
+
+    def pressure(self) -> float:
+        return 1.0 - (len(self.free_pages) / self.total_pages)
+
+    def pressure_level(self) -> str:
+        pressure = self.pressure()
+        if pressure >= 0.90:
+            return "critical"
+        if pressure >= 0.75:
+            return "high"
+        if pressure >= 0.55:
+            return "medium"
+        return "low"
+
+    def used_pages(self) -> int:
+        return self.total_pages - len(self.free_pages)
+
+    def peak_kv_mb(self) -> float:
+        return round(self.peak_pages * self.kv_mb_per_page, 3)
+
+    def pages_needed_for_tokens(self, tokens: int) -> int:
+        return math.ceil(max(0, tokens) / self.page_size_tokens)
+
+    def can_cover(self, additional_tokens: int) -> bool:
+        return len(self.free_pages) >= self.pages_needed_for_tokens(additional_tokens)
+
+    def allocate_range(
+        self,
+        *,
+        request_id: str,
+        token_begin: int,
+        token_end: int,
+        step: int,
+    ) -> list[int]:
+        needed = self.pages_needed_for_tokens(token_end - token_begin)
+        if needed > len(self.free_pages):
+            raise MemoryError("insufficient KV pages")
+
+        allocated = []
+        cursor = token_begin
+        for _ in range(needed):
+            page_id = self.free_pages.pop(0)
+            page_end = min(token_end, cursor + self.page_size_tokens)
+            self.pages[page_id] = KVPage(
+                page_id=page_id,
+                owner_request_id=request_id,
+                token_begin=cursor,
+                token_end=page_end,
+                state="resident",
+                last_access_step=step,
+            )
+            self.request_pages.setdefault(request_id, []).append(page_id)
+            allocated.append(page_id)
+            cursor = page_end
+
+        self.allocated_pages += len(allocated)
+        self.peak_pages = max(self.peak_pages, self.used_pages())
+        return allocated
+
+    def access_current_page(self, request_id: str, step: int) -> dict:
+        pages = self.request_pages.get(request_id, [])
+        if not pages:
+            return {"hit": False, "page_id": None, "reason": "no_resident_pages"}
+
+        page_id = pages[-1]
+        page = self.pages[page_id]
+        hit = page.state == "prefetched"
+        if hit:
+            self.prefetch_hits += 1
+            page.state = "resident"
+        else:
+            self.prefetch_misses += 1
+        page.last_access_step = step
+        return {"hit": hit, "page_id": page_id, "reason": "accessed_current_page"}
+
+    def prefetch_next_decode_page(
+        self,
+        *,
+        request_id: str,
+        step: int,
+        pressure_disable_threshold: float,
+    ) -> dict:
+        pressure = self.pressure()
+        if pressure >= pressure_disable_threshold:
+            self.pressure_prefetch_skips += 1
+            return {
+                "event": "page_prefetch_skipped",
+                "request_id": request_id,
+                "reason": "memory_pressure_above_prefetch_budget",
+                "memory_pressure": round(pressure, 4),
+            }
+
+        pages = self.request_pages.get(request_id, [])
+        if not pages:
+            return {
+                "event": "page_prefetch_skipped",
+                "request_id": request_id,
+                "reason": "no_resident_pages",
+                "memory_pressure": round(pressure, 4),
+            }
+
+        page = self.pages[pages[-1]]
+        if page.state == "resident":
+            page.state = "prefetched"
+            page.last_access_step = step
+            self.prefetch_attempts += 1
+            return {
+                "event": "page_prefetch",
+                "request_id": request_id,
+                "page_id": page.page_id,
+                "memory_pressure": round(pressure, 4),
+            }
+
+        return {
+            "event": "page_prefetch_skipped",
+            "request_id": request_id,
+            "reason": "already_prefetched",
+            "memory_pressure": round(pressure, 4),
+        }
+
+    def release_request(self, request_id: str) -> list[int]:
+        pages = self.request_pages.pop(request_id, [])
+        for page_id in pages:
+            page = self.pages.pop(page_id, None)
+            if page and page.state == "prefetched":
+                self.prefetch_waste += 1
+            self.free_pages.append(page_id)
+        self.free_pages.sort()
+        self.freed_pages += len(pages)
+        return pages
+
+    def pages_for_request(self, request_id: str) -> list[dict]:
+        return [
+            {
+                "page_id": page_id,
+                "owner_request_id": self.pages[page_id].owner_request_id,
+                "token_begin": self.pages[page_id].token_begin,
+                "token_end": self.pages[page_id].token_end,
+                "state": self.pages[page_id].state,
+                "last_access_step": self.pages[page_id].last_access_step,
+            }
+            for page_id in self.request_pages.get(request_id, [])
+            if page_id in self.pages
+        ]
+
+    def summary(self) -> dict:
+        accesses = self.prefetch_hits + self.prefetch_misses
+        return {
+            "enabled": True,
+            "policy": "paged_kv_lifecycle_with_pressure_aware_prefetch",
+            "total_pages": self.total_pages,
+            "page_size_tokens": self.page_size_tokens,
+            "resident_pages": self.used_pages(),
+            "peak_pages": self.peak_pages,
+            "allocated_pages": self.allocated_pages,
+            "freed_pages": self.freed_pages,
+            "prefetch_attempts": self.prefetch_attempts,
+            "prefetch_hits": self.prefetch_hits,
+            "prefetch_misses": self.prefetch_misses,
+            "prefetch_hit_rate": round(self.prefetch_hits / accesses, 4) if accesses else 0.0,
+            "prefetch_waste": self.prefetch_waste,
+            "pressure_prefetch_skips": self.pressure_prefetch_skips,
+            "page_leak_count": self.used_pages(),
+        }
+
+
+@dataclass
 class SchedulerResult:
     policy: str
     scheduler_steps: list[dict]
@@ -367,6 +580,8 @@ class SchedulerResult:
     finish_time_ms: float
     pressure_limited_candidates: int
     page_prefetch: dict = field(default_factory=lambda: {"enabled": False})
+    lifecycle: dict = field(default_factory=dict)
+    kv_page_lifecycle: dict = field(default_factory=dict)
 
 
 class RuntimeScheduler:
@@ -392,6 +607,9 @@ class RuntimeScheduler:
         )
 
     def run(self, requests: list[Request]) -> SchedulerResult:
+        if self.policy == "inflight_paged_kv_continuous_batching":
+            return self._run_inflight_paged_kv(requests)
+
         time_ms = 0.0
         scheduler_steps = []
         serving_events = []
@@ -678,6 +896,533 @@ class RuntimeScheduler:
             page_prefetch=self.page_prefetch.summary() if self.page_prefetch else {"enabled": False},
         )
 
+    def _run_inflight_paged_kv(self, requests: list[Request]) -> SchedulerResult:
+        prefill_chunk_tokens = 256
+        max_batched_tokens_per_step = 768
+        max_prefill_chunks_per_step = 2
+        soft_limit = 0.72
+        hard_limit = 0.88
+        prefetch_disable_threshold = 0.78
+
+        kv = PagedKVLifecycle(
+            total_pages=self.memory.total_blocks,
+            page_size_tokens=self.memory.block_size_tokens,
+            kv_mb_per_page=self.memory.kv_mb_per_block,
+        )
+        states = {req.request_id: RuntimeRequestState(request=req) for req in requests}
+        future = sorted(requests, key=lambda req: req.arrival_ms)
+        waiting: list[str] = []
+        prefill_queue: list[str] = []
+        decode_queue: list[str] = []
+        finished: set[str] = set()
+        rejected_ids: set[str] = set()
+
+        time_ms = 0.0
+        step = 0
+        scheduler_steps: list[dict] = []
+        serving_events: list[dict] = []
+        backend_placements: list[dict] = []
+        request_latencies: list[float] = []
+        decode_step_latencies: list[float] = []
+        prefill_latencies: list[float] = []
+        decode_batch_sizes: list[int] = []
+        ttft_latencies: list[float] = []
+        tpot_latencies: list[float] = []
+        lifecycle_transitions: list[dict] = []
+        completed_output_tokens = 0
+        rejected = 0
+        oom = 0
+        delayed = 0
+        pressure_limited_ticks = 0
+        prefill_chunk_count = 0
+
+        def transition(request_id: str, new_state: str, reason: str) -> None:
+            state = states[request_id]
+            old_state = state.state
+            state.state = new_state
+            row = {
+                "time_ms": round(time_ms, 3),
+                "step": step,
+                "request_id": request_id,
+                "from": old_state,
+                "to": new_state,
+                "reason": reason,
+            }
+            lifecycle_transitions.append(row)
+            serving_events.append({"event": "request_state_transition", **row})
+
+        def admit_waiting_requests() -> tuple[list[str], list[str]]:
+            nonlocal rejected, oom, delayed
+            admitted: list[str] = []
+            held: list[str] = []
+            remaining: list[str] = []
+            for request_id in waiting:
+                state = states[request_id]
+                total_tokens = state.request.prompt_tokens + state.request.output_tokens
+                if kv.pages_needed_for_tokens(total_tokens) > kv.total_pages:
+                    state.rejected_reason = "request_exceeds_total_kv_pages"
+                    transition(request_id, "rejected", state.rejected_reason)
+                    rejected += 1
+                    oom += 1
+                    rejected_ids.add(request_id)
+                    continue
+                if kv.pressure() >= hard_limit:
+                    delayed += 1
+                    held.append(request_id)
+                    remaining.append(request_id)
+                    continue
+                transition(request_id, "prefill", "admitted_under_kv_pressure_budget")
+                state.admitted_step = step
+                admitted.append(request_id)
+                prefill_queue.append(request_id)
+            waiting[:] = remaining
+            return admitted, held
+
+        def decode_cap_for_pressure() -> int:
+            level = kv.pressure_level()
+            if level == "critical":
+                return 1
+            if level == "high":
+                return min(2, self.max_decode_batch_size)
+            if level == "medium":
+                return min(4, self.max_decode_batch_size)
+            return self.max_decode_batch_size
+
+        def choose_action() -> str:
+            if kv.pressure() >= hard_limit:
+                return "drain_decode" if decode_queue else "reject_or_delay"
+            if prefill_queue and decode_queue and kv.pressure() < soft_limit:
+                return "mixed_step"
+            if decode_queue:
+                return "decode_batch"
+            if prefill_queue:
+                return "prefill_chunk"
+            if waiting:
+                return "reject_or_delay"
+            return "idle"
+
+        def run_prefill_chunks(limit: int) -> tuple[list[str], int, list[int], float]:
+            nonlocal prefill_chunk_count, oom, rejected
+            active: list[str] = []
+            allocated_pages: list[int] = []
+            chunk_tokens_total = 0
+            latency = 0.0
+            token_budget = max_batched_tokens_per_step
+            chunks = 0
+            remaining: list[str] = []
+            for request_id in prefill_queue:
+                state = states[request_id]
+                if chunks >= limit or token_budget <= 0 or kv.pressure() >= hard_limit:
+                    remaining.append(request_id)
+                    continue
+                chunk = min(
+                    prefill_chunk_tokens,
+                    token_budget,
+                    state.prompt_tokens_total - state.prompt_tokens_prefilled,
+                )
+                if chunk <= 0:
+                    transition(request_id, "decode", "prefill_complete")
+                    decode_queue.append(request_id)
+                    continue
+                try:
+                    pages = kv.allocate_range(
+                        request_id=request_id,
+                        token_begin=state.prompt_tokens_prefilled,
+                        token_end=state.prompt_tokens_prefilled + chunk,
+                        step=step,
+                    )
+                except MemoryError:
+                    released = kv.release_request(request_id)
+                    state.kv_pages = []
+                    state.rejected_reason = "oom_during_prefill_chunk"
+                    transition(request_id, "rejected", state.rejected_reason)
+                    serving_events.append(
+                        {
+                            "time_ms": round(time_ms, 3),
+                            "event": "kv_pages_freed",
+                            "request_id": request_id,
+                            "freed_pages": released,
+                            "reason": "prefill_oom_cleanup",
+                        }
+                    )
+                    rejected += 1
+                    oom += 1
+                    rejected_ids.add(request_id)
+                    continue
+                state.prompt_tokens_prefilled += chunk
+                state.kv_pages.extend(pages)
+                active.append(request_id)
+                allocated_pages.extend(pages)
+                chunk_tokens_total += chunk
+                token_budget -= chunk
+                chunks += 1
+                prefill_chunk_count += 1
+                chunk_latency = self._observed_prefill(chunk)
+                latency = max(latency, chunk_latency)
+                prefill_latencies.append(chunk_latency)
+                backend_placements.append(
+                    {
+                        "request_id": request_id,
+                        "op": "attention_prefill_chunk",
+                        "backend": "gpu",
+                        "latency_ms": round(chunk_latency * 0.41, 3),
+                    }
+                )
+                backend_placements.append(
+                    {
+                        "request_id": request_id,
+                        "op": "kv_page_update",
+                        "backend": "cpu",
+                        "latency_ms": round(self.cost_model.predict_kv_update_ms(len(pages)), 3),
+                    }
+                )
+                serving_events.append(
+                    {
+                        "time_ms": round(time_ms, 3),
+                        "event": "prefill_chunk",
+                        "request_id": request_id,
+                        "chunk_tokens": chunk,
+                        "prompt_tokens_prefilled": state.prompt_tokens_prefilled,
+                        "allocated_pages": pages,
+                        "memory_pressure": round(kv.pressure(), 4),
+                    }
+                )
+                if state.prompt_tokens_prefilled >= state.prompt_tokens_total:
+                    transition(request_id, "decode", "prefill_complete")
+                    decode_queue.append(request_id)
+                else:
+                    remaining.append(request_id)
+            prefill_queue[:] = remaining
+            return active, chunk_tokens_total, allocated_pages, latency
+
+        def run_decode_batch(force_drain: bool) -> tuple[list[str], list[int], list[int], list[dict], float]:
+            nonlocal completed_output_tokens, rejected, oom
+            cap = 1 if force_drain else decode_cap_for_pressure()
+            active = decode_queue[:cap]
+            decode_queue[:] = decode_queue[cap:]
+            if not active:
+                return [], [], [], [], 0.0
+
+            decode_batch_sizes.append(len(active))
+            avg_context = (
+                sum(
+                    states[request_id].request.prompt_tokens
+                    + states[request_id].output_tokens_generated
+                    for request_id in active
+                )
+                / len(active)
+            )
+            latency = self._observed_decode(len(active), avg_context)
+            decode_step_latencies.append(latency)
+            access_events: list[dict] = []
+            allocated_pages: list[int] = []
+            freed_pages: list[int] = []
+            still_decoding: list[str] = []
+            for request_id in active:
+                state = states[request_id]
+                token_index = state.prompt_tokens_total + state.output_tokens_generated
+                if token_index % kv.page_size_tokens == 0:
+                    token_end = min(
+                        state.prompt_tokens_total + state.request.output_tokens,
+                        token_index + kv.page_size_tokens,
+                    )
+                    try:
+                        pages = kv.allocate_range(
+                            request_id=request_id,
+                            token_begin=token_index,
+                            token_end=token_end,
+                            step=step,
+                        )
+                    except MemoryError:
+                        released = kv.release_request(request_id)
+                        state.kv_pages = []
+                        state.rejected_reason = "oom_during_decode_kv_growth"
+                        transition(request_id, "rejected", state.rejected_reason)
+                        rejected += 1
+                        oom += 1
+                        rejected_ids.add(request_id)
+                        freed_pages.extend(released)
+                        continue
+                    state.kv_pages.extend(pages)
+                    allocated_pages.extend(pages)
+                access = kv.access_current_page(request_id, step)
+                access_events.append({"request_id": request_id, **access})
+                if access["page_id"] is None:
+                    released = kv.release_request(request_id)
+                    state.kv_pages = []
+                    state.rejected_reason = "decode_without_resident_page"
+                    transition(request_id, "rejected", state.rejected_reason)
+                    rejected += 1
+                    oom += 1
+                    rejected_ids.add(request_id)
+                    freed_pages.extend(released)
+                    continue
+                if state.output_tokens_generated == 0:
+                    state.ttft_step = step
+                    ttft = round(max(0.0, time_ms - state.request.arrival_ms), 3)
+                    ttft_latencies.append(ttft)
+                    serving_events.append(
+                        {
+                            "time_ms": round(time_ms, 3),
+                            "event": "first_token",
+                            "request_id": request_id,
+                            "ttft_ms": ttft,
+                        }
+                    )
+                state.output_tokens_generated += 1
+                completed_output_tokens += 1
+                tpot_latencies.append(latency)
+                if state.output_tokens_generated >= state.request.output_tokens:
+                    state.finish_step = step
+                    transition(request_id, "finished", "output_tokens_complete")
+                    released = kv.release_request(request_id)
+                    state.kv_pages = []
+                    finished.add(request_id)
+                    freed_pages.extend(released)
+                    request_latencies.append(round(time_ms + latency - state.request.arrival_ms, 3))
+                    serving_events.append(
+                        {
+                            "time_ms": round(time_ms + latency, 3),
+                            "event": "kv_pages_freed",
+                            "request_id": request_id,
+                            "freed_pages": released,
+                            "reason": "request_finished",
+                        }
+                    )
+                else:
+                    prefetch = kv.prefetch_next_decode_page(
+                        request_id=request_id,
+                        step=step,
+                        pressure_disable_threshold=prefetch_disable_threshold,
+                    )
+                    access_events.append(prefetch)
+                    still_decoding.append(request_id)
+            decode_queue.extend(still_decoding)
+            return active, allocated_pages, freed_pages, access_events, latency
+
+        while len(finished) + len(rejected_ids) < len(requests):
+            if not (waiting or prefill_queue or decode_queue) and future:
+                time_ms = max(time_ms, future[0].arrival_ms)
+            while future and future[0].arrival_ms <= time_ms:
+                req = future.pop(0)
+                waiting.append(req.request_id)
+                serving_events.append(
+                    {
+                        "time_ms": round(time_ms, 3),
+                        "event": "request_arrived",
+                        "request_id": req.request_id,
+                        "prompt_tokens": req.prompt_tokens,
+                        "generated_tokens_target": req.output_tokens,
+                    }
+                )
+
+            pressure_before = kv.pressure()
+            pressure_level_before = kv.pressure_level()
+            admitted, held = admit_waiting_requests()
+            action = choose_action()
+            if pressure_level_before in {"high", "critical"} or held:
+                pressure_limited_ticks += 1
+
+            active_prefill: list[str] = []
+            active_decode: list[str] = []
+            prefill_tokens = 0
+            pages_allocated: list[int] = []
+            pages_freed: list[int] = []
+            page_events: list[dict] = []
+            step_latency = 0.0
+
+            if action in {"prefill_chunk", "mixed_step"}:
+                limit = 1 if kv.pressure_level() == "high" else max_prefill_chunks_per_step
+                active_prefill, prefill_tokens, allocated, latency = run_prefill_chunks(limit)
+                pages_allocated.extend(allocated)
+                step_latency = max(step_latency, latency)
+            if action in {"decode_batch", "mixed_step", "drain_decode"}:
+                active_decode, allocated, freed, events, latency = run_decode_batch(action == "drain_decode")
+                pages_allocated.extend(allocated)
+                pages_freed.extend(freed)
+                page_events.extend(events)
+                step_latency = max(step_latency, latency)
+            if action == "reject_or_delay" and waiting and kv.pressure() >= hard_limit:
+                pressure_limited_ticks += 1
+            if action == "reject_or_delay" and prefill_queue and kv.pressure() >= hard_limit:
+                request_id = prefill_queue.pop()
+                state = states[request_id]
+                released = kv.release_request(request_id)
+                state.kv_pages = []
+                state.rejected_reason = "hard_pressure_without_decode_drain_capacity"
+                transition(request_id, "rejected", state.rejected_reason)
+                rejected += 1
+                oom += 1
+                rejected_ids.add(request_id)
+                pages_freed.extend(released)
+                serving_events.append(
+                    {
+                        "time_ms": round(time_ms, 3),
+                        "event": "kv_pages_freed",
+                        "request_id": request_id,
+                        "freed_pages": released,
+                        "reason": "hard_pressure_cleanup",
+                    }
+                )
+                step_latency = max(step_latency, 0.001)
+
+            scheduler_steps.append(
+                {
+                    "time_ms": round(time_ms, 3),
+                    "event": "scheduler_tick",
+                    "step": step,
+                    "selected_action": action,
+                    "active_request_ids": sorted(set(active_prefill + active_decode)),
+                    "prefill_request_ids": active_prefill,
+                    "decode_request_ids": active_decode,
+                    "prefill_chunk_tokens": prefill_tokens,
+                    "decode_batch_size": len(active_decode),
+                    "kv_pages_allocated": pages_allocated,
+                    "kv_pages_freed": pages_freed,
+                    "kv_page_events": page_events,
+                    "memory_pressure_before": round(pressure_before, 4),
+                    "memory_pressure_after": round(kv.pressure(), 4),
+                    "pressure_level": pressure_level_before,
+                    "effective_batch_cap": decode_cap_for_pressure(),
+                    "waiting": len(waiting),
+                    "prefill_queue": len(prefill_queue),
+                    "decode_queue": len(decode_queue),
+                    "admitted_request_ids": admitted,
+                    "delayed_request_ids": held,
+                    "worker_id": "local-worker-0",
+                    "device_id": "local-gpu-sim-0",
+                }
+            )
+
+            if step_latency <= 0.0:
+                if future:
+                    time_ms = max(time_ms + 0.001, future[0].arrival_ms)
+                else:
+                    break
+            else:
+                time_ms += step_latency
+            step += 1
+            if step > 20000:
+                raise RuntimeError("in-flight scheduler exceeded deterministic tick budget")
+
+        avg_batch = sum(decode_batch_sizes) / len(decode_batch_sizes) if decode_batch_sizes else 0.0
+        page_summary = kv.summary()
+        finished_leaks = {
+            request_id: kv.pages_for_request(request_id)
+            for request_id, state in states.items()
+            if state.state == "finished" and kv.pages_for_request(request_id)
+        }
+        rejected_leaks = {
+            request_id: kv.pages_for_request(request_id)
+            for request_id, state in states.items()
+            if state.state == "rejected" and kv.pages_for_request(request_id)
+        }
+        complete_lifecycle = all(state.state in {"finished", "rejected"} for state in states.values())
+        lifecycle = {
+            "policy": self.policy,
+            "positioning": (
+                "Implemented a TensorRT-LLM-aligned local runtime policy with "
+                "in-flight batching, paged KV cache orchestration, "
+                "memory-pressure-aware admission, and TTFT/TPOT validation. "
+                "This does not modify TensorRT-LLM internals."
+            ),
+            "request_states": [
+                {
+                    "request_id": state.request.request_id,
+                    "state": state.state,
+                    "prompt_tokens_total": state.prompt_tokens_total,
+                    "prompt_tokens_prefilled": state.prompt_tokens_prefilled,
+                    "output_tokens_generated": state.output_tokens_generated,
+                    "kv_pages": state.kv_pages,
+                    "ttft_step": state.ttft_step,
+                    "finish_step": state.finish_step,
+                    "rejected_reason": state.rejected_reason,
+                }
+                for state in states.values()
+            ],
+            "transitions": lifecycle_transitions,
+            "invariants": {
+                "finished_request_releases_pages": not finished_leaks,
+                "rejected_request_owns_no_pages": not rejected_leaks,
+                "decode_request_has_resident_page": all(
+                    event.get("page_id") is not None
+                    for tick in scheduler_steps
+                    for event in tick.get("kv_page_events", [])
+                    if event.get("reason") == "accessed_current_page"
+                ),
+                "hard_limit_forbids_new_prefill": all(
+                    not tick["prefill_request_ids"]
+                    for tick in scheduler_steps
+                    if tick["memory_pressure_before"] >= hard_limit
+                ),
+                "every_admitted_request_reaches_terminal_state": complete_lifecycle,
+                "page_leak_count": page_summary["page_leak_count"],
+            },
+            "config": {
+                "prefill_chunk_tokens": prefill_chunk_tokens,
+                "max_batched_tokens_per_step": max_batched_tokens_per_step,
+                "max_decode_batch_size": self.max_decode_batch_size,
+                "max_prefill_chunks_per_step": max_prefill_chunks_per_step,
+                "memory_pressure_soft_limit": soft_limit,
+                "memory_pressure_hard_limit": hard_limit,
+            },
+            "ttft_ms": {
+                "p50": round(_percentile(ttft_latencies, 50), 3),
+                "p95": round(_percentile(ttft_latencies, 95), 3),
+            },
+            "tpot_ms": {
+                "p50": round(_percentile(tpot_latencies, 50), 3),
+                "p95": round(_percentile(tpot_latencies, 95), 3),
+            },
+            "pressure_limited_ticks": pressure_limited_ticks,
+            "prefill_chunk_count": prefill_chunk_count,
+        }
+        kv_requests = [
+            {
+                "request_id": state.request.request_id,
+                "logical_pages_observed": state.kv_pages,
+                "context_tokens": state.request.prompt_tokens,
+                "generated_tokens": state.request.output_tokens,
+                "terminal_state": state.state,
+                "kv_cache_mb": round(len(state.kv_pages) * kv.kv_mb_per_page, 3),
+            }
+            for state in states.values()
+        ]
+
+        return SchedulerResult(
+            policy=self.policy,
+            scheduler_steps=scheduler_steps,
+            serving_events=serving_events,
+            backend_placements=backend_placements,
+            kv_requests=kv_requests,
+            request_latencies=request_latencies,
+            decode_step_latencies=decode_step_latencies,
+            prefill_latencies=ttft_latencies or prefill_latencies,
+            completed_requests=len(finished),
+            rejected_requests=len(rejected_ids),
+            delayed_requests=delayed,
+            oom_events=oom,
+            peak_allocated_blocks=kv.peak_pages,
+            peak_kv_cache_mb=kv.peak_kv_mb(),
+            avg_decode_batch_size=round(avg_batch, 4),
+            decode_batch_efficiency=round(avg_batch / self.max_decode_batch_size, 4) if self.max_decode_batch_size else 0.0,
+            tokens_per_second=round((completed_output_tokens * 1000.0) / time_ms, 3) if time_ms else 0.0,
+            finish_time_ms=round(time_ms, 3),
+            pressure_limited_candidates=pressure_limited_ticks,
+            page_prefetch={
+                "enabled": True,
+                "policy": "pressure_aware_page_prefetch_inside_inflight_scheduler",
+                "attempts": page_summary["prefetch_attempts"],
+                "hits": page_summary["prefetch_hits"],
+                "misses": page_summary["prefetch_misses"],
+                "hit_rate": page_summary["prefetch_hit_rate"],
+                "wasted_prefetch_blocks": page_summary["prefetch_waste"],
+                "pressure_skips": page_summary["pressure_prefetch_skips"],
+            },
+            lifecycle=lifecycle,
+            kv_page_lifecycle=page_summary,
+        )
+
     def _choose_decode_batch(self, req: Request, pending: list[Request], current_time_ms: float) -> list[Request]:
         if self.policy == "fcfs_fixed_batch":
             return [req]
@@ -757,12 +1502,30 @@ def summarize_policy(result: SchedulerResult) -> dict:
         if step.get("effective_batch_cap", 8) < 8:
             cap_reductions += 1
 
+    lifecycle_metrics = result.lifecycle or {}
+    kv_page_lifecycle = result.kv_page_lifecycle or {}
     return {
         "policy": result.policy,
         "completed_requests": result.completed_requests,
         "rejected_requests": result.rejected_requests,
         "delayed_requests": result.delayed_requests,
         "p95_latency_ms": round(_percentile(result.request_latencies, 95), 3),
+        "ttft_p50_ms": lifecycle_metrics.get("ttft_ms", {}).get(
+            "p50",
+            round(_percentile(result.prefill_latencies, 50), 3),
+        ),
+        "ttft_p95_ms": lifecycle_metrics.get("ttft_ms", {}).get(
+            "p95",
+            round(_percentile(result.prefill_latencies, 95), 3),
+        ),
+        "tpot_p50_ms": lifecycle_metrics.get("tpot_ms", {}).get(
+            "p50",
+            round(_percentile(result.decode_step_latencies, 50), 3),
+        ),
+        "tpot_p95_ms": lifecycle_metrics.get("tpot_ms", {}).get(
+            "p95",
+            round(_percentile(result.decode_step_latencies, 95), 3),
+        ),
         "tokens_per_second": result.tokens_per_second,
         "peak_kv_cache_mb": result.peak_kv_cache_mb,
         "avg_decode_batch_size": result.avg_decode_batch_size,
@@ -772,6 +1535,16 @@ def summarize_policy(result: SchedulerResult) -> dict:
         "pressure_limited_candidates": result.pressure_limited_candidates,
         "finish_time_ms": result.finish_time_ms,
         "page_prefetch": result.page_prefetch,
+        "prefill_chunk_count": lifecycle_metrics.get("prefill_chunk_count", 0),
+        "kv_page_hit_rate": result.page_prefetch.get("hit_rate", 0.0),
+        "pages_allocated": kv_page_lifecycle.get("allocated_pages", 0),
+        "pages_freed": kv_page_lifecycle.get("freed_pages", 0),
+        "pressure_limited_ticks": lifecycle_metrics.get(
+            "pressure_limited_ticks",
+            result.pressure_limited_candidates,
+        ),
+        "reject_oom_count": result.oom_events,
+        "invariants": lifecycle_metrics.get("invariants", {}),
     }
 
 

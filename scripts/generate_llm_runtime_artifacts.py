@@ -51,6 +51,44 @@ def run_policy(policy, requests, cost_model, seed, total_blocks, block_size_toke
     return scheduler.run(requests)
 
 
+def inflight_gate(candidate_summary, incumbent_summary, *, ttft_tolerance=0.10):
+    tpot_ok = candidate_summary["tpot_p95_ms"] <= incumbent_summary["tpot_p95_ms"] * 1.03
+    throughput_ok = candidate_summary["tokens_per_second"] > incumbent_summary["tokens_per_second"]
+    oom_ok = candidate_summary["reject_oom_count"] <= incumbent_summary["reject_oom_count"]
+    reject_ok = candidate_summary["rejected_requests"] <= incumbent_summary["rejected_requests"]
+    ttft_ok = candidate_summary["ttft_p95_ms"] <= incumbent_summary["ttft_p95_ms"] * (1.0 + ttft_tolerance)
+    invariants = candidate_summary.get("invariants", {})
+    invariant_ok = all(
+        value if isinstance(value, bool) else value == 0
+        for value in invariants.values()
+    )
+    passes = all([tpot_ok, throughput_ok, oom_ok, reject_ok, ttft_ok, invariant_ok])
+    return {
+        "candidate_policy": candidate_summary["policy"],
+        "incumbent_policy": incumbent_summary["policy"],
+        "passes_gate": passes,
+        "ttft_tolerance": ttft_tolerance,
+        "checks": {
+            "tpot_p95_within_3_percent": tpot_ok,
+            "throughput_improves": throughput_ok,
+            "oom_count_not_regressed": oom_ok,
+            "reject_count_not_regressed": reject_ok,
+            "ttft_p95_within_tolerance": ttft_ok,
+            "lifecycle_invariants_pass": invariant_ok,
+        },
+        "metrics": {
+            "candidate_tpot_p95_ms": candidate_summary["tpot_p95_ms"],
+            "incumbent_tpot_p95_ms": incumbent_summary["tpot_p95_ms"],
+            "candidate_ttft_p95_ms": candidate_summary["ttft_p95_ms"],
+            "incumbent_ttft_p95_ms": incumbent_summary["ttft_p95_ms"],
+            "candidate_tokens_per_second": candidate_summary["tokens_per_second"],
+            "incumbent_tokens_per_second": incumbent_summary["tokens_per_second"],
+            "candidate_reject_oom_count": candidate_summary["reject_oom_count"],
+            "incumbent_reject_oom_count": incumbent_summary["reject_oom_count"],
+        },
+    }
+
+
 def build_chrome_trace(result):
     trace = []
     for event in result.serving_events:
@@ -82,6 +120,29 @@ def build_chrome_trace(result):
             }
         )
     return trace
+
+
+def compact_scheduler_steps(steps, *, max_steps=160):
+    selected = []
+    seen = set()
+    for idx, step in enumerate(steps):
+        action = step.get("selected_action")
+        important = (
+            idx < 48
+            or action in {"prefill_chunk", "mixed_step", "drain_decode", "reject_or_delay"}
+            or step.get("pressure_level") in {"high", "critical"}
+            or idx % 64 == 0
+        )
+        if not important:
+            continue
+        key = (idx, step.get("step"))
+        if key in seen:
+            continue
+        selected.append(step)
+        seen.add(key)
+        if len(selected) >= max_steps:
+            break
+    return selected
 
 
 def request_rows(requests):
@@ -195,6 +256,9 @@ def build_serving_framework_report(
     page_prefetch=None,
     page_prefetch_summary=None,
     page_prefetch_report=None,
+    inflight=None,
+    inflight_summary=None,
+    inflight_gate_report=None,
 ):
     def metric_row(name, result, summary, style):
         decode_latencies = result.decode_step_latencies or [0.0]
@@ -264,6 +328,24 @@ def build_serving_framework_report(
         page_prefetch_row["page_prefetch"] = page_prefetch.page_prefetch
         page_prefetch_row["selection_status"] = (page_prefetch_report or {}).get("selected_policy")
         rows.append(page_prefetch_row)
+    if inflight is not None and inflight_summary is not None:
+        inflight_row = metric_row(
+            "tensorrt_llm_aligned_local_runtime_policy",
+            inflight,
+            inflight_summary,
+            {
+                "scheduler_policy": "inflight_paged_kv_continuous_batching",
+                "batching": "event_loop_chunked_prefill_plus_continuous_decode",
+                "kv_cache_policy": "paged_kv_lifecycle_with_pressure_aware_prefetch",
+                "backend_routing": "local_worker_device_fields_only_no_distributed_execution_claim",
+            },
+        )
+        inflight_row["positioning"] = (
+            "TensorRT-LLM-aligned concepts, not TensorRT-LLM internals"
+        )
+        inflight_row["lifecycle_invariants"] = inflight_summary.get("invariants", {})
+        inflight_row["selection_gate"] = inflight_gate_report or {}
+        rows.append(inflight_row)
     triton_row = {
         **optimized_row,
         "framework_style": "triton_server_style",
@@ -294,6 +376,7 @@ def build_serving_framework_report(
         "framework_targets": [
             "vLLM continuous batching and paged KV-cache pressure",
             "vLLM-style allocated KV page prefetch under memory-pressure budget",
+            "TensorRT-LLM-aligned local in-flight batching and paged KV lifecycle",
             "SGLang request/decode scheduling and prefix/KV reuse hooks",
             "Triton Server dynamic batching and backend instance routing",
             "TensorRT engine/optimization-profile backend candidate selection",
@@ -471,6 +554,13 @@ def build_technology_gate_audit():
                 "decision": "prefetch next decode KV pages when memory pressure is below budget",
                 "metric": "prefetch hit rate, wasted prefetch blocks, TPOT p95, throughput, OOM/rejection rate",
                 "status": "implemented_as_runtime_scheduler_candidate",
+            },
+            {
+                "technology": "tensorrt_llm_aligned_inflight_runtime_policy",
+                "input": "local LLM request trace plus paged KV lifecycle state",
+                "decision": "event-loop tick chooses chunked prefill, continuous decode, drain, delay, or reject",
+                "metric": "TTFT, TPOT, throughput, decode batch size, page hit rate, page leaks, reject/OOM gates",
+                "status": "implemented_as_local_policy_not_tensorrt_llm_internals",
             },
             {
                 "technology": "sglang_trace_adapter",
@@ -777,11 +867,25 @@ def main():
         block_size_tokens,
         kv_mb_per_block,
     )
+    inflight_cost = CostModel(
+        observed_decode_scale=calibrated_cost.observed_decode_scale,
+        observed_prefill_scale=calibrated_cost.observed_prefill_scale,
+    )
+    inflight = run_policy(
+        "inflight_paged_kv_continuous_batching",
+        requests,
+        inflight_cost,
+        args.seed + 300,
+        total_blocks,
+        block_size_tokens,
+        kv_mb_per_block,
+    )
 
     selected = optimized
     baseline_summary = summarize_policy(baseline)
     optimized_summary = summarize_policy(optimized)
     page_prefetch_summary = summarize_policy(page_prefetch)
+    inflight_summary = summarize_policy(inflight)
     page_prefetch_report = build_page_prefetch_report(
         optimized=optimized,
         page_prefetch=page_prefetch,
@@ -790,9 +894,20 @@ def main():
     )
     if page_prefetch_report["selected_policy"] == "cost_aware_memory_pressure_page_prefetch":
         selected = page_prefetch
+    incumbent_summary = summarize_policy(selected)
+    inflight_gate_report = inflight_gate(inflight_summary, incumbent_summary)
+    if inflight_gate_report["passes_gate"]:
+        selected = inflight
     scheduler_decision_report = {
         "artifact_type": "scheduler_decision_report",
         "source": "deployment.llm_runtime_decision",
+        "positioning": (
+            "Implemented a TensorRT-LLM-aligned local runtime policy with "
+            "in-flight batching, paged KV cache orchestration, "
+            "memory-pressure-aware admission, and TTFT/TPOT validation. "
+            "This is a local runtime policy implementation and does not modify "
+            "TensorRT-LLM internals."
+        ),
         "workload": {
             "model": model,
             "requests": args.requests,
@@ -800,9 +915,12 @@ def main():
             "total_kv_blocks": total_blocks,
         },
         "cost_model_calibration": calibration_report,
-        "policies": [baseline_summary, optimized_summary, page_prefetch_summary],
+        "policies": [baseline_summary, optimized_summary, page_prefetch_summary, inflight_summary],
         "selected_policy": selected.policy,
         "selection_reason": (
+            "in-flight paged-KV policy passed TPOT/throughput/TTFT/OOM lifecycle gates"
+            if selected.policy == "inflight_paged_kv_continuous_batching"
+            else
             "page prefetch candidate improved TPOT/e2e/throughput without KV regression"
             if selected.policy == "cost_aware_memory_pressure_page_prefetch"
             else "cost-aware policy improved tokens/sec while staying within KV memory capacity"
@@ -828,6 +946,7 @@ def main():
             "selection_reason": page_prefetch_report["selection_reason"],
             "metric": page_prefetch_report["metric"],
         },
+        "inflight_paged_kv_candidate": inflight_gate_report,
     }
 
     decode_latencies = selected.decode_step_latencies or [0.0]
@@ -851,6 +970,10 @@ def main():
         "block_size_tokens": block_size_tokens,
         "total_blocks": total_blocks,
         "requests": selected.kv_requests,
+        "page_lifecycle": selected.kv_page_lifecycle,
+        "candidate_page_lifecycle": {
+            "inflight_paged_kv_continuous_batching": inflight.kv_page_lifecycle,
+        },
         "fragmentation_ratio": round(
             max(0.02, min(0.32, (total_blocks - selected.peak_allocated_blocks) / total_blocks * 0.11)),
             3,
@@ -864,6 +987,20 @@ def main():
         "max_decode_batch_size": 8,
         "avg_decode_batch_size": selected.avg_decode_batch_size,
         "decode_batch_efficiency": selected.decode_batch_efficiency,
+        "lifecycle": selected.lifecycle,
+        "candidate_traces": {
+            "inflight_paged_kv_continuous_batching": {
+                "positioning": (
+                    "TensorRT-LLM-aligned concepts, not TensorRT-LLM internals"
+                ),
+                "avg_decode_batch_size": inflight.avg_decode_batch_size,
+                "decode_batch_efficiency": inflight.decode_batch_efficiency,
+                "lifecycle": inflight.lifecycle,
+                "page_lifecycle": inflight.kv_page_lifecycle,
+                "steps": compact_scheduler_steps(inflight.scheduler_steps),
+                "full_step_count": len(inflight.scheduler_steps),
+            }
+        },
         "steps": selected.scheduler_steps,
     }
 
@@ -877,11 +1014,16 @@ def main():
     }
 
     request_latencies = selected.request_latencies or [0.0]
+    selected_summary = summarize_policy(selected)
     runtime_profile = {
         "model": model,
         "total_requests": args.requests,
         "completed_requests": selected.completed_requests,
         "rejected_requests": selected.rejected_requests,
+        "ttft_p50_ms": selected_summary["ttft_p50_ms"],
+        "ttft_p95_ms": selected_summary["ttft_p95_ms"],
+        "tpot_p50_ms": selected_summary["tpot_p50_ms"],
+        "tpot_p95_ms": selected_summary["tpot_p95_ms"],
         "p50_latency_ms": round(percentile(request_latencies, 50), 3),
         "p95_latency_ms": round(percentile(request_latencies, 95), 3),
         "p99_latency_ms": round(percentile(request_latencies, 99), 3),
@@ -889,6 +1031,19 @@ def main():
         "peak_kv_cache_mb": selected.peak_kv_cache_mb,
         "oom_events": selected.oom_events,
         "tokens_per_second": selected.tokens_per_second,
+        "avg_decode_batch_size": selected.avg_decode_batch_size,
+        "max_decode_batch_size": max(
+            [
+                step.get("decode_batch_size", step.get("batch_size", 0))
+                for step in selected.scheduler_steps
+            ] or [0]
+        ),
+        "prefill_chunk_count": selected_summary["prefill_chunk_count"],
+        "kv_page_hit_rate": selected_summary["kv_page_hit_rate"],
+        "pages_allocated": selected_summary["pages_allocated"],
+        "pages_freed": selected_summary["pages_freed"],
+        "pressure_limited_ticks": selected_summary["pressure_limited_ticks"],
+        "reject_oom_count": selected_summary["reject_oom_count"],
     }
 
     plan_benchmark_results = {
@@ -945,6 +1100,9 @@ def main():
         page_prefetch=page_prefetch,
         page_prefetch_summary=page_prefetch_summary,
         page_prefetch_report=page_prefetch_report,
+        inflight=inflight,
+        inflight_summary=inflight_summary,
+        inflight_gate_report=inflight_gate_report,
     )
     vllm_trace_adapter_report = build_trace_adapter_report(
         adapter_name="vllm",
