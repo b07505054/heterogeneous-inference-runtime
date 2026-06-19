@@ -1,0 +1,77 @@
+{
+  "artifact_type": "nsight_compute_kernel_capture",
+  "source": "scripts/capture_rmsnorm_nsight_compute.py",
+  "environment": {
+    "commit_hash": "5bc0d99",
+    "git_dirty": false,
+    "python": "/home/allen/Desktop/Project/heterogeneous-inference-runtime/.venv-rmsnorm/bin/python"
+  },
+  "benchmark_summary": {
+    "fusion_candidate": "rmsnorm",
+    "custom_kernel": "fused_rmsnorm_cuda",
+    "fallback_kernel": "torch_rmsnorm",
+    "custom_latency_ms": 0.195117,
+    "fallback_latency_ms": 0.984902,
+    "speedup": 5.0478,
+    "correct": true,
+    "selection_ready": true,
+    "representative_shape": {
+      "tokens": 16,
+      "hidden": 4096,
+      "dtype": "float32"
+    },
+    "custom_effective_bandwidth_gbps": 5.374,
+    "fallback_effective_bandwidth_gbps": 1.065,
+    "bytes_per_token": 65536,
+    "flops_per_token": 16384,
+    "arithmetic_intensity_flops_per_byte": 0.25
+  },
+  "nsight_compute_capture": {
+    "requested": true,
+    "available": true,
+    "ncu_path": "/usr/local/cuda-13.1/bin/ncu",
+    "ncu_version": "NVIDIA (R) Nsight Compute Command Line Profiler\nCopyright (c) 2018-2025 NVIDIA Corporation\nVersion 2025.4.1.0 (build 37053803) (public-release)",
+    "status": "permission_blocked",
+    "metrics": [
+      "sm__throughput.avg.pct_of_peak_sustained_elapsed",
+      "dram__throughput.avg.pct_of_peak_sustained_elapsed",
+      "smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct",
+      "smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct",
+      "smsp__warp_issue_stalled_barrier_per_warp_active.pct"
+    ],
+    "command": [
+      "/usr/local/cuda-13.1/bin/ncu",
+      "--target-processes",
+      "all",
+      "--csv",
+      "--page",
+      "raw",
+      "--metrics",
+      "sm__throughput.avg.pct_of_peak_sustained_elapsed,dram__throughput.avg.pct_of_peak_sustained_elapsed,smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_short_scoreboard_per_warp_active.pct,smsp__warp_issue_stalled_barrier_per_warp_active.pct",
+      "--log-file",
+      "/tmp/hir-latest-ncu/results/cuda_transformer/rmsnorm_nsight_compute_raw.csv",
+      "--force-overwrite",
+      "/home/allen/Desktop/Project/heterogeneous-inference-runtime/.venv-rmsnorm/bin/python",
+      "/tmp/hir-latest-ncu/scripts/benchmark_rmsnorm_cuda.py",
+      "--tokens",
+      "16",
+      "--hidden",
+      "4096",
+      "--warmup",
+      "5",
+      "--runs",
+      "10",
+      "--output",
+      "/tmp/hir-latest-ncu/results/cuda_transformer/rmsnorm_nsight_compute_capture_benchmark.json",
+      "--report-output",
+      "/tmp/hir-latest-ncu/results/cuda_transformer/rmsnorm_nsight_compute_capture_benchmark.md"
+    ],
+    "returncode": 1,
+    "duration_seconds": 55.32,
+    "metric_rows": [],
+    "raw_output": "results/cuda_transformer/rmsnorm_nsight_compute_raw.csv",
+    "log_tail": "==PROF== Connected to process 11156 (/usr/bin/python3.14)\n==ERROR== ERR_NVGPUCTRPERM - The user does not have permission to access NVIDIA GPU Performance Counters on the target device 0. For instructions on enabling permissions and to get more information see https://developer.nvidia.com/ERR_NVGPUCTRPERM\n==PROF== Disconnected from process 11156",
+    "stdout_tail": "    \"requested\": false,\n    \"available\": true,\n    \"path\": \"/usr/local/cuda-13.1/bin/ncu\",\n    \"reason\": \"not requested\"\n  },\n  \"roofline_model\": {\n    \"bytes_per_token\": 65536,\n    \"bytes_total\": 1048576,\n    \"flops_per_token\": 16384,\n    \"flops_total\": 262144,\n    \"arithmetic_intensity_flops_per_byte\": 0.25,\n    \"memory_bound\": true,\n    \"model_notes\": [\n      \"RMSNorm is dominated by input/weight reads and output writes.\",\n      \"The custom kernel reads input twice: once for sum-of-squares reduction and once for output.\",\n      \"Low arithmetic intensity makes effective bandwidth and launch overhead key latency drivers.\"\n    ]\n  },\n  \"kernel_benchmarks\": [\n    {\n      \"fusion_candidate\": \"rmsnorm\",\n      \"custom_kernel\": \"fused_rmsnorm_cuda\",\n      \"fallback_kernel\": \"torch_rmsnorm\",\n      \"custom_latency_ms\": 0.195117,\n      \"fallback_latency_ms\": 0.984902,\n      \"speedup\": 5.0478,\n      \"correct\": true,\n      \"selection_ready\": true,\n      \"representative_shape\": {\n        \"tokens\": 16,\n        \"hidden\": 4096,\n        \"dtype\": \"float32\"\n      },\n      \"custom_effective_bandwidth_gbps\": 5.374,\n      \"fallback_effective_bandwidth_gbps\": 1.065,\n      \"bytes_per_token\": 65536,\n      \"flops_per_token\": 16384,\n      \"arithmetic_intensity_flops_per_byte\": 0.25\n    }\n  ],\n  \"sweep\": [\n    {\n      \"fusion_candidate\": \"rmsnorm\",\n      \"shape\": {\n        \"tokens\": 16,\n        \"hidden\": 4096,\n        \"dtype\": \"float32\"\n      },\n      \"custom_kernel\": \"fused_rmsnorm_cuda\",\n      \"fallback_kernel\": \"torch_rmsnorm\",\n      \"custom_latency_ms\": 0.195117,\n      \"fallback_latency_ms\": 0.984902,\n      \"custom_p50_ms\": 0.194208,\n      \"custom_p95_ms\": 0.202016,\n      \"custom_min_ms\": 0.191392,\n      \"custom_max_ms\": 0.202016,\n      \"fallback_p50_ms\": 0.979968,\n      \"fallback_p95_ms\": 1.011424,\n      \"fallback_min_ms\": 0.97296,\n      \"fallback_max_ms\": 1.011424,\n      \"speedup\": 5.0478,\n      \"bytes_per_token\": 65536,\n      \"bytes_total\": 1048576,\n      \"flops_per_token\": 16384,\n      \"flops_total\": 262144,\n      \"arithmetic_intensity_flops_per_byte\": 0.25,\n      \"custom_effective_bandwidth_gbps\": 5.374,\n      \"fallback_effective_bandwidth_gbps\": 1.065,\n      \"roofline_classification\": \"memory_bound\",\n      \"nsight_compute\": {\n        \"requested\": false,\n        \"available\": true,\n        \"path\": \"/usr/local/cuda-13.1/bin/ncu\",\n        \"reason\": \"not requested\"\n      },\n      \"correct\": true,\n      \"selection_ready\": true\n    }\n  ]\n}",
+    "stderr_tail": "Traceback (most recent call last):\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 1176, in exec_module\n  File \"<frozen site>\", line 635, in <module>\n  File \"<frozen site>\", line 618, in main\n  File \"<frozen site>\", line 550, in venv\n  File \"<frozen site>\", line 405, in addsitepackages\n  File \"<frozen site>\", line 247, in addsitedir\n  File \"<frozen site>\", line 190, in addpackage\nLookupError: unknown encoding: utf-8-sig"
+  }
+}

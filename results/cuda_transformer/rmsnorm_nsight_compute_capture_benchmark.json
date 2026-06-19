@@ -1,0 +1,109 @@
+{
+  "artifact_type": "runtime_kernel_profile",
+  "source": "scripts/benchmark_rmsnorm_cuda.py",
+  "profile_status": "measured",
+  "device": "NVIDIA GeForce GTX 1650 with Max-Q Design",
+  "environment": {
+    "gpu_name": "NVIDIA GeForce GTX 1650 with Max-Q Design",
+    "cuda_version": "12.8",
+    "nvcc_version": "Cuda compilation tools, release 13.1, V13.1.115",
+    "pytorch_version": "2.11.0+cu128",
+    "driver_version": "595.71.05",
+    "commit_hash": "5bc0d99",
+    "git_dirty": true
+  },
+  "benchmark_config": {
+    "tokens": [
+      16
+    ],
+    "hidden": [
+      4096
+    ],
+    "warmup": 5,
+    "runs": 10,
+    "eps": 1e-06,
+    "dtype": "float32",
+    "rtol": 0.0001,
+    "atol": 0.0001
+  },
+  "nsight_compute": {
+    "requested": false,
+    "available": true,
+    "path": "/usr/local/cuda-13.1/bin/ncu",
+    "reason": "not requested"
+  },
+  "roofline_model": {
+    "bytes_per_token": 65536,
+    "bytes_total": 1048576,
+    "flops_per_token": 16384,
+    "flops_total": 262144,
+    "arithmetic_intensity_flops_per_byte": 0.25,
+    "memory_bound": true,
+    "model_notes": [
+      "RMSNorm is dominated by input/weight reads and output writes.",
+      "The custom kernel reads input twice: once for sum-of-squares reduction and once for output.",
+      "Low arithmetic intensity makes effective bandwidth and launch overhead key latency drivers."
+    ]
+  },
+  "kernel_benchmarks": [
+    {
+      "fusion_candidate": "rmsnorm",
+      "custom_kernel": "fused_rmsnorm_cuda",
+      "fallback_kernel": "torch_rmsnorm",
+      "custom_latency_ms": 0.195117,
+      "fallback_latency_ms": 0.984902,
+      "speedup": 5.0478,
+      "correct": true,
+      "selection_ready": true,
+      "representative_shape": {
+        "tokens": 16,
+        "hidden": 4096,
+        "dtype": "float32"
+      },
+      "custom_effective_bandwidth_gbps": 5.374,
+      "fallback_effective_bandwidth_gbps": 1.065,
+      "bytes_per_token": 65536,
+      "flops_per_token": 16384,
+      "arithmetic_intensity_flops_per_byte": 0.25
+    }
+  ],
+  "sweep": [
+    {
+      "fusion_candidate": "rmsnorm",
+      "shape": {
+        "tokens": 16,
+        "hidden": 4096,
+        "dtype": "float32"
+      },
+      "custom_kernel": "fused_rmsnorm_cuda",
+      "fallback_kernel": "torch_rmsnorm",
+      "custom_latency_ms": 0.195117,
+      "fallback_latency_ms": 0.984902,
+      "custom_p50_ms": 0.194208,
+      "custom_p95_ms": 0.202016,
+      "custom_min_ms": 0.191392,
+      "custom_max_ms": 0.202016,
+      "fallback_p50_ms": 0.979968,
+      "fallback_p95_ms": 1.011424,
+      "fallback_min_ms": 0.97296,
+      "fallback_max_ms": 1.011424,
+      "speedup": 5.0478,
+      "bytes_per_token": 65536,
+      "bytes_total": 1048576,
+      "flops_per_token": 16384,
+      "flops_total": 262144,
+      "arithmetic_intensity_flops_per_byte": 0.25,
+      "custom_effective_bandwidth_gbps": 5.374,
+      "fallback_effective_bandwidth_gbps": 1.065,
+      "roofline_classification": "memory_bound",
+      "nsight_compute": {
+        "requested": false,
+        "available": true,
+        "path": "/usr/local/cuda-13.1/bin/ncu",
+        "reason": "not requested"
+      },
+      "correct": true,
+      "selection_ready": true
+    }
+  ]
+}

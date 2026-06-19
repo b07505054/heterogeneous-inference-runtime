@@ -121,6 +121,8 @@ results/cuda_transformer/rmsnorm_benchmark_report.md
 results/cuda_transformer/rmsnorm_nsight_compute_capture.json
 results/cuda_transformer/rmsnorm_nsight_compute_capture.md
 results/cuda_transformer/rmsnorm_nsight_compute_raw.csv
+results/cuda_transformer/rmsnorm_nsight_compute_capture_benchmark.json
+results/cuda_transformer/rmsnorm_nsight_compute_capture_benchmark.md
 results/cuda_transformer/gpu_pgo_like_rmsnorm_report.json
 results/cuda_transformer/gpu_pgo_like_rmsnorm_report.md
 ```
