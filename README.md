@@ -118,6 +118,9 @@ Artifacts:
 ```text
 results/cuda_transformer/rmsnorm_benchmark.json
 results/cuda_transformer/rmsnorm_benchmark_report.md
+results/cuda_transformer/rmsnorm_nsight_compute_capture.json
+results/cuda_transformer/rmsnorm_nsight_compute_capture.md
+results/cuda_transformer/rmsnorm_nsight_compute_raw.csv
 results/cuda_transformer/gpu_pgo_like_rmsnorm_report.json
 results/cuda_transformer/gpu_pgo_like_rmsnorm_report.md
 ```
@@ -173,24 +176,32 @@ memory-bound roofline notes. Environment metadata includes GPU name, CUDA
 version, NVCC version, PyTorch version, NVIDIA driver version, warmup/timed run
 counts, dtype, and the repo commit hash.
 
-Nsight Compute is optional and never blocks the benchmark path:
+Nsight Compute capture is split into a separate artifact so the benchmark path
+stays reproducible even when Linux locks NVIDIA performance counters:
 
 ```bash
-.venv-rmsnorm/bin/python scripts/benchmark_rmsnorm_cuda.py \
-  --with-nsight
+.venv-rmsnorm/bin/python scripts/capture_rmsnorm_nsight_compute.py \
+  --output results/cuda_transformer/rmsnorm_nsight_compute_capture.json \
+  --report-output results/cuda_transformer/rmsnorm_nsight_compute_capture.md \
+  --raw-output results/cuda_transformer/rmsnorm_nsight_compute_raw.csv \
+  --tokens 16 \
+  --hidden 4096 \
+  --warmup 5 \
+  --runs 10
 ```
 
-If `ncu` is not available, the JSON report records:
+The capture artifact records one of three interview-relevant states:
 
-```json
-{
-  "nsight_compute": {
-    "requested": true,
-    "available": false,
-    "reason": "ncu not found"
-  }
-}
+```text
+captured             real Nsight Compute metrics parsed from ncu output
+permission_blocked   ncu launched, but ERR_NVGPUCTRPERM blocked counters
+unavailable          ncu was not installed or not on PATH
 ```
+
+When capture succeeds, the report includes SM throughput, DRAM throughput, and
+warp stall metrics for the representative `tokens=16, hidden=4096` RMSNorm
+case. If the machine returns `ERR_NVGPUCTRPERM`, enable NVIDIA performance
+counter access and rerun the same command.
 
 The GPU PGO-like report turns runtime benchmark evidence into a compiler-facing
 candidate selection table:
@@ -920,6 +931,15 @@ python3 scripts/benchmark_rmsnorm_cuda.py \
   --output results/cuda_transformer/rmsnorm_benchmark.json
 ```
 
+Capture Nsight Compute metrics for the representative CUDA RMSNorm case:
+
+```bash
+python3 scripts/capture_rmsnorm_nsight_compute.py \
+  --output results/cuda_transformer/rmsnorm_nsight_compute_capture.json \
+  --report-output results/cuda_transformer/rmsnorm_nsight_compute_capture.md \
+  --raw-output results/cuda_transformer/rmsnorm_nsight_compute_raw.csv
+```
+
 ### Optional Triton RMSNorm Candidate
 
 The same RMSNorm compiler candidate can be benchmarked against a Triton kernel:
@@ -1016,7 +1036,6 @@ nsys profile -o trt_fp32_profile python benchmarks/benchmark_tensorrt_fp32.py
 
 ## Future Work
 
-- Nsight Compute profiling
 - TensorRT INT8 calibration
 - Dynamic backend scheduling
 - Runtime backend auto-selection
