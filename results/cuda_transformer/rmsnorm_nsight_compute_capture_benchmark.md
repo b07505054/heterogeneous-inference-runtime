@@ -9,7 +9,7 @@ Status: `measured`
 - NVCC version: `Cuda compilation tools, release 13.1, V13.1.115`
 - PyTorch version: `2.11.0+cu128`
 - Driver version: `595.71.05`
-- Commit: `5bc0d99`
+- Commit: `4d079e7`
 - Git dirty: `True`
 - Warmup runs: `5`
 - Timed runs: `10`
@@ -19,7 +19,7 @@ Status: `measured`
 
 | Tokens | Hidden | Custom ms | PyTorch ms | Speedup | Custom GB/s | Correct |
 |---:|---:|---:|---:|---:|---:|---:|
-| 16 | 4096 | 0.195117 | 0.984902 | 5.0478 | 5.374 | True |
+| 16 | 4096 | 474.403342 | 2830.196069 | 5.9658 | 0.002 | True |
 
 ## Roofline Notes
 
