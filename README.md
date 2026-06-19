@@ -49,6 +49,35 @@ The cold-start report separates model artifact load, backend initialization,
 TensorRT engine deserialization/context creation, first-request TTFT penalty,
 warm TTFT, steady-state TPOT, and concrete initialization-reduction techniques.
 
+The LLM runtime evidence is reported in two artifact modes so the performance
+story and the later memory-modeling work can both be represented without
+mixing benchmarks:
+
+| Artifact mode | What it isolates | Baseline throughput | Optimized throughput | Baseline p95 | Optimized p95 | TPOT p95 | Notes |
+|---|---|---:|---:|---:|---:|---:|---|
+| `scheduler_focused` | Scheduler, memory-pressure admission, continuous batching-style decode grouping, and KV page prefetch before paged-attention read-cost accounting | 298.047 tok/s | 1,470.548 tok/s | 7,585.832 ms | 1,406.597 ms | 2.511 ms | Best for discussing scheduler optimization impact |
+| `paged_attention` | Same scheduler policies plus paged-attention read-cost modeling, page-table effects, non-contiguous segment accounting, and paged-KV lifecycle evidence | 283.685 tok/s | 1,200.054 tok/s | 7,983.349 ms | 1,774.462 ms | 3.574 ms | More conservative and more complete runtime evidence |
+
+Both modes use the same 32-request synthetic TinyGPT-shaped serving workload and
+select `cost_aware_memory_pressure_page_prefetch` over the `fcfs_fixed_batch`
+baseline. In both cases the optimized policy raises average decode batch size
+from 1.0 to 6.4, reaches a 0.8808 KV page-prefetch hit rate, and reports zero
+OOM events. The `scheduler_focused` mode shows the larger throughput and latency
+gain because it isolates scheduling and KV prefetch. The `paged_attention` mode
+keeps those wins but adds a 1.197 ms p95 local paged-attention read-cost model,
+so the numbers are intentionally more conservative.
+
+The committed comparison artifacts are:
+
+```text
+results/llm_runtime_artifacts/mode_comparison/summary.json
+results/llm_runtime_artifacts/mode_comparison/scheduler_focused/
+results/llm_runtime_artifacts/mode_comparison/paged_attention/
+```
+
+Boundary: these are artifact-backed local runtime simulator results. They are
+not production vLLM, SGLang, or TensorRT-LLM forks.
+
 The platform simulates a production-style edge computer vision inference system
 similar to modern autonomous robotics and edge AI deployment infrastructure.
 

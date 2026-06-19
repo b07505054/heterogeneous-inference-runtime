@@ -594,12 +594,14 @@ class RuntimeScheduler:
         memory: MemoryPlanner,
         rng: random.Random,
         max_decode_batch_size: int = 8,
+        paged_attention_cost_enabled: bool = True,
     ) -> None:
         self.policy = policy
         self.cost_model = cost_model
         self.memory = memory
         self.rng = rng
         self.max_decode_batch_size = max_decode_batch_size
+        self.paged_attention_cost_enabled = paged_attention_cost_enabled
         self.pressure_limited_candidates = 0
         self.page_prefetch = (
             PagePrefetchPlanner()
@@ -625,7 +627,9 @@ class RuntimeScheduler:
         delayed = 0
         oom = 0
         delayed_once: set[str] = set()
-        paged_attention = PagedAttentionCostModel()
+        paged_attention = PagedAttentionCostModel(
+            enabled=self.paged_attention_cost_enabled,
+        )
 
         pending = sorted(requests, key=lambda req: req.arrival_ms)
 
@@ -962,7 +966,9 @@ class RuntimeScheduler:
         delayed = 0
         pressure_limited_ticks = 0
         prefill_chunk_count = 0
-        paged_attention = PagedAttentionCostModel()
+        paged_attention = PagedAttentionCostModel(
+            enabled=self.paged_attention_cost_enabled,
+        )
 
         def transition(request_id: str, new_state: str, reason: str) -> None:
             state = states[request_id]
@@ -1529,6 +1535,7 @@ class RuntimeScheduler:
 
 @dataclass
 class PagedAttentionCostModel:
+    enabled: bool = True
     page_table_lookup_base_ms: float = 0.035
     page_read_ms: float = 0.0045
     non_contiguous_segment_penalty_ms: float = 0.018
@@ -1544,6 +1551,32 @@ class PagedAttentionCostModel:
         prefetch_hits: int = 0,
         prefetch_misses: int = 0,
     ) -> dict:
+        if not self.enabled:
+            event = {
+                "event": "paged_attention_read",
+                "step": step,
+                "active_request_ids": sorted(active_page_ids),
+                "requests": {
+                    request_id: {
+                        "page_ids": pages,
+                        "page_count": len(pages),
+                    }
+                    for request_id, pages in active_page_ids.items()
+                },
+                "pages_read": 0,
+                "non_contiguous_segments": 0,
+                "prefetch_hits": prefetch_hits,
+                "prefetch_misses": prefetch_misses,
+                "page_table_lookup_base_ms": 0.0,
+                "page_read_cost_ms": 0.0,
+                "non_contiguous_penalty_ms": 0.0,
+                "prefetch_hit_saving_ms": 0.0,
+                "prefetch_miss_penalty_ms": 0.0,
+                "latency_ms": 0.0,
+            }
+            self.decode_events.append(event)
+            return event
+
         total_pages = sum(len(pages) for pages in active_page_ids.values())
         non_contiguous_segments = 0
         for pages in active_page_ids.values():
@@ -1608,11 +1641,17 @@ class PagedAttentionCostModel:
             for event in self.decode_events
         )
         return {
-            "enabled": True,
-            "policy": "paged_attention_read_cost_model",
+            "enabled": self.enabled,
+            "policy": (
+                "paged_attention_read_cost_model"
+                if self.enabled
+                else "disabled_for_scheduler_focused_artifact"
+            ),
             "positioning": (
                 "Local paged-attention execution model over RuntimeScheduler KV "
                 "page tables; this is not a TensorRT-LLM or vLLM kernel."
+                if self.enabled
+                else "Disabled to reproduce the scheduler-focused artifact before paged-attention read-cost accounting was added."
             ),
             "input": "decode batch request ids plus resident KV page table",
             "decision": (

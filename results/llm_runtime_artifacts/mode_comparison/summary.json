@@ -1,0 +1,122 @@
+{
+  "artifact_type": "llm_runtime_two_mode_summary",
+  "source": "scripts/generate_llm_runtime_mode_comparison.py",
+  "modes": {
+    "scheduler_focused": {
+      "artifact_type": "llm_runtime_mode_comparison",
+      "source": "scripts/generate_llm_runtime_artifacts.py",
+      "runtime_mode": {
+        "mode": "scheduler_focused",
+        "paged_attention_cost_enabled": false,
+        "label": "Scheduler-focused artifact",
+        "description": "Measures scheduler policy, memory-pressure admission, continuous batching-style decode grouping, and KV page prefetch before paged-attention read-cost accounting is applied.",
+        "interview_positioning": "Use this result for the larger scheduler optimization impact."
+      },
+      "workload": {
+        "model": "tiny-gpt",
+        "requests": 32,
+        "block_size_tokens": 16,
+        "total_kv_blocks": 512
+      },
+      "baseline_policy": {
+        "policy": "fcfs_fixed_batch",
+        "p95_latency_ms": 7585.832,
+        "tokens_per_second": 298.047,
+        "avg_decode_batch_size": 1.0,
+        "decode_batch_efficiency": 0.125
+      },
+      "selected_policy": {
+        "policy": "cost_aware_memory_pressure_page_prefetch",
+        "p95_latency_ms": 1406.597,
+        "ttft_p95_ms": 154.956,
+        "tpot_p95_ms": 2.511,
+        "tokens_per_second": 1470.548,
+        "avg_decode_batch_size": 6.4,
+        "decode_batch_efficiency": 0.8,
+        "kv_page_hit_rate": 0.8808,
+        "paged_attention_latency_p95_ms": 0.0,
+        "oom_events": 0
+      },
+      "page_prefetch": {
+        "prefetch_hit_rate": 0.8808,
+        "prefetch_tpot_p95_ms": 2.5111,
+        "tpot_p95_delta_ms": -0.7331,
+        "prefetch_tokens_per_second": 1470.548,
+        "tokens_per_second_delta": 234.406
+      },
+      "headline": {
+        "throughput_multiplier_vs_baseline": 4.9339,
+        "p95_latency_reduction_multiplier_vs_baseline": 5.393,
+        "tokens_per_second_delta": 1172.501,
+        "p95_latency_ms_delta": -6179.235,
+        "tpot_p95_ms": 2.511
+      },
+      "claim_boundary": "Artifact-backed local runtime simulator result. It is not a production vLLM, SGLang, or TensorRT-LLM fork."
+    },
+    "paged_attention": {
+      "artifact_type": "llm_runtime_mode_comparison",
+      "source": "scripts/generate_llm_runtime_artifacts.py",
+      "runtime_mode": {
+        "mode": "paged_attention",
+        "paged_attention_cost_enabled": true,
+        "label": "Paged-attention lifecycle artifact",
+        "description": "Keeps the same scheduler policies but includes local paged-attention read-cost modeling, page-table read effects, non-contiguous segment accounting, and paged-KV lifecycle invariants.",
+        "interview_positioning": "Use this result for the more conservative memory/lifecycle validation artifact."
+      },
+      "workload": {
+        "model": "tiny-gpt",
+        "requests": 32,
+        "block_size_tokens": 16,
+        "total_kv_blocks": 512
+      },
+      "baseline_policy": {
+        "policy": "fcfs_fixed_batch",
+        "p95_latency_ms": 7983.349,
+        "tokens_per_second": 283.685,
+        "avg_decode_batch_size": 1.0,
+        "decode_batch_efficiency": 0.125
+      },
+      "selected_policy": {
+        "policy": "cost_aware_memory_pressure_page_prefetch",
+        "p95_latency_ms": 1774.462,
+        "ttft_p95_ms": 154.956,
+        "tpot_p95_ms": 3.574,
+        "tokens_per_second": 1200.054,
+        "avg_decode_batch_size": 6.4,
+        "decode_batch_efficiency": 0.8,
+        "kv_page_hit_rate": 0.8808,
+        "paged_attention_latency_p95_ms": 1.197,
+        "oom_events": 0
+      },
+      "page_prefetch": {
+        "prefetch_hit_rate": 0.8808,
+        "prefetch_tpot_p95_ms": 3.5743,
+        "tpot_p95_delta_ms": -0.7763,
+        "prefetch_tokens_per_second": 1200.054,
+        "tokens_per_second_delta": 176.521
+      },
+      "headline": {
+        "throughput_multiplier_vs_baseline": 4.2302,
+        "p95_latency_reduction_multiplier_vs_baseline": 4.499,
+        "tokens_per_second_delta": 916.369,
+        "p95_latency_ms_delta": -6208.887,
+        "tpot_p95_ms": 3.574
+      },
+      "claim_boundary": "Artifact-backed local runtime simulator result. It is not a production vLLM, SGLang, or TensorRT-LLM fork."
+    }
+  },
+  "interpretation": {
+    "scheduler_focused": "Performance-oriented scheduler artifact. Paged-attention read-cost accounting is disabled to isolate continuous batching-style scheduling, memory-pressure admission, and KV page prefetch impact.",
+    "paged_attention": "More conservative artifact. It keeps the same scheduler policies but adds paged-attention read-cost modeling and paged-KV lifecycle evidence."
+  },
+  "headline_comparison": {
+    "scheduler_focused_tokens_per_second": 1470.548,
+    "scheduler_focused_p95_latency_ms": 1406.597,
+    "scheduler_focused_tpot_p95_ms": 2.511,
+    "paged_attention_tokens_per_second": 1200.054,
+    "paged_attention_p95_latency_ms": 1774.462,
+    "paged_attention_tpot_p95_ms": 3.574,
+    "paged_attention_cost_p95_ms": 1.197
+  },
+  "claim_boundary": "Both modes are artifact-backed local runtime simulator results, not production vLLM, SGLang, or TensorRT-LLM forks."
+}

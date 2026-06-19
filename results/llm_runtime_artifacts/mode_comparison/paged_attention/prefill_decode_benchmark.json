@@ -1,0 +1,12 @@
+{
+  "model": "tiny-gpt",
+  "runtime_mode": "paged_attention",
+  "prompt_tokens": 1024,
+  "generated_tokens": 128,
+  "prefill_latency_ms": 38.316,
+  "avg_decode_latency_ms": 2.615,
+  "p50_decode_latency_ms": 2.488,
+  "p95_decode_latency_ms": 3.574,
+  "p99_decode_latency_ms": 3.864,
+  "tokens_per_second": 1200.054
+}

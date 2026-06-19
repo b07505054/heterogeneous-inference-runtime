@@ -37,7 +37,17 @@ def write_json(path, payload):
     path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
 
 
-def run_policy(policy, requests, cost_model, seed, total_blocks, block_size_tokens, kv_mb_per_block):
+def run_policy(
+    policy,
+    requests,
+    cost_model,
+    seed,
+    total_blocks,
+    block_size_tokens,
+    kv_mb_per_block,
+    *,
+    paged_attention_cost_enabled=True,
+):
     scheduler = RuntimeScheduler(
         policy=policy,
         cost_model=cost_model,
@@ -48,6 +58,7 @@ def run_policy(policy, requests, cost_model, seed, total_blocks, block_size_toke
         ),
         rng=random.Random(seed),
         max_decode_batch_size=8,
+        paged_attention_cost_enabled=paged_attention_cost_enabled,
     )
     return scheduler.run(requests)
 
@@ -240,6 +251,7 @@ def run_scenario_comparison(
     total_blocks,
     block_size_tokens,
     kv_mb_per_block,
+    paged_attention_cost_enabled=True,
 ):
     requests = scenario["requests"]
     baseline = run_policy(
@@ -250,6 +262,7 @@ def run_scenario_comparison(
         total_blocks,
         block_size_tokens,
         kv_mb_per_block,
+        paged_attention_cost_enabled=paged_attention_cost_enabled,
     )
     calibrated_cost = CostModel()
     calibration_report = calibrated_cost.calibrate(
@@ -264,6 +277,7 @@ def run_scenario_comparison(
         total_blocks,
         block_size_tokens,
         kv_mb_per_block,
+        paged_attention_cost_enabled=paged_attention_cost_enabled,
     )
     page_prefetch_cost = CostModel(
         observed_decode_scale=calibrated_cost.observed_decode_scale,
@@ -277,6 +291,7 @@ def run_scenario_comparison(
         total_blocks,
         block_size_tokens,
         kv_mb_per_block,
+        paged_attention_cost_enabled=paged_attention_cost_enabled,
     )
     inflight_cost = CostModel(
         observed_decode_scale=calibrated_cost.observed_decode_scale,
@@ -290,6 +305,7 @@ def run_scenario_comparison(
         total_blocks,
         block_size_tokens,
         kv_mb_per_block,
+        paged_attention_cost_enabled=paged_attention_cost_enabled,
     )
 
     baseline_summary = summarize_policy(baseline)
@@ -1100,6 +1116,104 @@ def build_cold_start_report(
     }
 
 
+def runtime_mode_metadata(mode):
+    if mode == "scheduler_focused":
+        return {
+            "mode": "scheduler_focused",
+            "paged_attention_cost_enabled": False,
+            "label": "Scheduler-focused artifact",
+            "description": (
+                "Measures scheduler policy, memory-pressure admission, continuous "
+                "batching-style decode grouping, and KV page prefetch before "
+                "paged-attention read-cost accounting is applied."
+            ),
+            "interview_positioning": (
+                "Use this result for the larger scheduler optimization impact."
+            ),
+        }
+    return {
+        "mode": "paged_attention",
+        "paged_attention_cost_enabled": True,
+        "label": "Paged-attention lifecycle artifact",
+        "description": (
+            "Keeps the same scheduler policies but includes local paged-attention "
+            "read-cost modeling, page-table read effects, non-contiguous segment "
+            "accounting, and paged-KV lifecycle invariants."
+        ),
+        "interview_positioning": (
+            "Use this result for the more conservative memory/lifecycle validation artifact."
+        ),
+    }
+
+
+def build_runtime_mode_comparison(
+    mode_metadata,
+    scheduler_decision_report,
+    runtime_profile,
+    prefill_decode_benchmark,
+):
+    policies = {
+        row["policy"]: row
+        for row in scheduler_decision_report.get("policies", [])
+    }
+    baseline = policies.get("fcfs_fixed_batch", {})
+    selected = policies.get(scheduler_decision_report.get("selected_policy"), {})
+    metric = scheduler_decision_report.get("page_prefetch_candidate", {}).get("metric", {})
+    throughput_x = (
+        round(selected["tokens_per_second"] / baseline["tokens_per_second"], 4)
+        if baseline.get("tokens_per_second") and selected.get("tokens_per_second")
+        else None
+    )
+    p95_x = (
+        round(baseline["p95_latency_ms"] / selected["p95_latency_ms"], 4)
+        if baseline.get("p95_latency_ms") and selected.get("p95_latency_ms")
+        else None
+    )
+    return {
+        "artifact_type": "llm_runtime_mode_comparison",
+        "source": "scripts/generate_llm_runtime_artifacts.py",
+        "runtime_mode": mode_metadata,
+        "workload": scheduler_decision_report.get("workload", {}),
+        "baseline_policy": {
+            "policy": baseline.get("policy"),
+            "p95_latency_ms": baseline.get("p95_latency_ms"),
+            "tokens_per_second": baseline.get("tokens_per_second"),
+            "avg_decode_batch_size": baseline.get("avg_decode_batch_size"),
+            "decode_batch_efficiency": baseline.get("decode_batch_efficiency"),
+        },
+        "selected_policy": {
+            "policy": selected.get("policy"),
+            "p95_latency_ms": selected.get("p95_latency_ms"),
+            "ttft_p95_ms": selected.get("ttft_p95_ms"),
+            "tpot_p95_ms": selected.get("tpot_p95_ms"),
+            "tokens_per_second": selected.get("tokens_per_second"),
+            "avg_decode_batch_size": selected.get("avg_decode_batch_size"),
+            "decode_batch_efficiency": selected.get("decode_batch_efficiency"),
+            "kv_page_hit_rate": selected.get("kv_page_hit_rate"),
+            "paged_attention_latency_p95_ms": selected.get("paged_attention_latency_p95_ms"),
+            "oom_events": runtime_profile.get("oom_events"),
+        },
+        "page_prefetch": {
+            "prefetch_hit_rate": metric.get("prefetch_hit_rate"),
+            "prefetch_tpot_p95_ms": metric.get("prefetch_tpot_p95_ms"),
+            "tpot_p95_delta_ms": metric.get("tpot_p95_delta_ms"),
+            "prefetch_tokens_per_second": metric.get("prefetch_tokens_per_second"),
+            "tokens_per_second_delta": metric.get("tokens_per_second_delta"),
+        },
+        "headline": {
+            "throughput_multiplier_vs_baseline": throughput_x,
+            "p95_latency_reduction_multiplier_vs_baseline": p95_x,
+            "tokens_per_second_delta": scheduler_decision_report.get("improvement", {}).get("tokens_per_second_delta"),
+            "p95_latency_ms_delta": scheduler_decision_report.get("improvement", {}).get("p95_latency_ms_delta"),
+            "tpot_p95_ms": prefill_decode_benchmark.get("p95_decode_latency_ms"),
+        },
+        "claim_boundary": (
+            "Artifact-backed local runtime simulator result. It is not a "
+            "production vLLM, SGLang, or TensorRT-LLM fork."
+        ),
+    }
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-dir", default="results/llm_runtime_artifacts")
@@ -1108,7 +1222,18 @@ def main():
     parser.add_argument("--prompt-tokens", type=int, default=1024)
     parser.add_argument("--generated-tokens", type=int, default=128)
     parser.add_argument("--cold-start-load-runs", type=int, default=5)
+    parser.add_argument(
+        "--runtime-mode",
+        choices=["paged_attention", "scheduler_focused"],
+        default="paged_attention",
+        help=(
+            "paged_attention keeps current paged-attention read-cost accounting; "
+            "scheduler_focused disables that cost model to reproduce the earlier "
+            "scheduler-focused artifact."
+        ),
+    )
     args = parser.parse_args()
+    mode_metadata = runtime_mode_metadata(args.runtime_mode)
 
     model = "tiny-gpt"
     output_dir = Path(args.output_dir)
@@ -1126,6 +1251,7 @@ def main():
             total_blocks=total_blocks,
             block_size_tokens=block_size_tokens,
             kv_mb_per_block=kv_mb_per_block,
+            paged_attention_cost_enabled=mode_metadata["paged_attention_cost_enabled"],
         )
         for scenario_index, scenario in enumerate(workload_scenarios(default_requests))
     ]
@@ -1151,6 +1277,7 @@ def main():
     scheduler_decision_report = {
         "artifact_type": "scheduler_decision_report",
         "source": "deployment.llm_runtime_decision",
+        "runtime_mode": mode_metadata,
         "positioning": (
             "Implemented a TensorRT-LLM-aligned local runtime policy with "
             "in-flight batching, paged KV cache orchestration, "
@@ -1213,6 +1340,7 @@ def main():
 
     prefill_decode_benchmark = {
         "model": model,
+        "runtime_mode": args.runtime_mode,
         "prompt_tokens": args.prompt_tokens,
         "generated_tokens": args.generated_tokens,
         "prefill_latency_ms": prefill_latency_ms,
@@ -1316,6 +1444,7 @@ def main():
     selected_summary = summarize_policy(selected)
     runtime_profile = {
         "model": model,
+        "runtime_mode": args.runtime_mode,
         "total_requests": args.requests,
         "completed_requests": selected.completed_requests,
         "rejected_requests": selected.rejected_requests,
@@ -1425,6 +1554,12 @@ def main():
         load_runs=args.cold_start_load_runs,
     )
     technology_gate_audit = build_technology_gate_audit()
+    runtime_mode_comparison = build_runtime_mode_comparison(
+        mode_metadata,
+        scheduler_decision_report,
+        runtime_profile,
+        prefill_decode_benchmark,
+    )
     distributed_artifacts = build_distributed_serving_artifacts(
         request_rows=request_rows(requests),
         block_size_tokens=block_size_tokens,
@@ -1455,6 +1590,7 @@ def main():
             "sglang_trace_adapter_report.json",
             "cold_start_report.json",
             "technology_gate_audit.json",
+            "runtime_mode_comparison.json",
             "distributed_serving_report.json",
             "distributed_serving_trace.json",
             "load_balancing_report.json",
@@ -1497,6 +1633,7 @@ def main():
     write_json(output_dir / "sglang_trace_adapter_report.json", sglang_trace_adapter_report)
     write_json(output_dir / "cold_start_report.json", cold_start_report)
     write_json(output_dir / "technology_gate_audit.json", technology_gate_audit)
+    write_json(output_dir / "runtime_mode_comparison.json", runtime_mode_comparison)
     for name, payload in distributed_artifacts.items():
         write_json(output_dir / f"{name}.json", payload)
     write_json(output_dir / "manifest.json", manifest)
