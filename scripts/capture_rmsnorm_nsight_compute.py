@@ -72,6 +72,39 @@ def parse_ncu_csv(text):
                 "metric_unit": row.get("Metric Unit") or row.get("Metric Unit "),
                 "metric_value": metric_value,
             })
+    if rows:
+        return rows
+
+    reader = csv.reader(csv_lines)
+    try:
+        header = next(reader)
+        units = next(reader)
+    except StopIteration:
+        return rows
+
+    metric_columns = [
+        (idx, name, units[idx] if idx < len(units) else "")
+        for idx, name in enumerate(header)
+        if name in DEFAULT_METRICS
+    ]
+    if not metric_columns:
+        return rows
+
+    for raw_row in reader:
+        if not raw_row or len(raw_row) < len(header):
+            continue
+        kernel_name = raw_row[header.index("Kernel Name")] if "Kernel Name" in header else None
+        kernel_id = raw_row[header.index("ID")] if "ID" in header else None
+        for idx, metric_name, metric_unit in metric_columns:
+            metric_value = raw_row[idx].strip() if idx < len(raw_row) else ""
+            if metric_value:
+                rows.append({
+                    "kernel_id": kernel_id,
+                    "kernel_name": kernel_name,
+                    "metric_name": metric_name,
+                    "metric_unit": metric_unit,
+                    "metric_value": metric_value,
+                })
     return rows
 
 
@@ -131,7 +164,7 @@ def write_markdown_report(path, payload):
         "",
     ]
 
-    metric_rows = capture.get("metric_rows", [])
+    metric_rows = capture.get("representative_kernel_metric_rows") or capture.get("metric_rows", [])
     if metric_rows:
         lines.extend([
             "| Kernel | Metric | Value | Unit |",
@@ -257,7 +290,11 @@ def main():
     if raw_output.exists():
         log_text = raw_output.read_text(encoding="utf-8", errors="replace")
     combined_output = "\n".join(part for part in [completed.stdout, completed.stderr, log_text] if part)
-    metric_rows = parse_ncu_csv(log_text)
+    all_metric_rows = parse_ncu_csv(log_text)
+    representative_kernel_metric_rows = [
+        row for row in all_metric_rows if "rmsnorm_f32_kernel" in (row.get("kernel_name") or "")
+    ]
+    metric_rows = representative_kernel_metric_rows or all_metric_rows[:100]
 
     benchmark_summary = None
     if benchmark_output.exists():
@@ -272,6 +309,8 @@ def main():
         "returncode": completed.returncode,
         "duration_seconds": round(duration, 3),
         "metric_rows": metric_rows,
+        "representative_kernel_metric_rows": representative_kernel_metric_rows,
+        "all_metric_row_count": len(all_metric_rows),
         "stdout_tail": tail(completed.stdout or ""),
         "stderr_tail": tail(completed.stderr or ""),
         "log_tail": tail(log_text),
