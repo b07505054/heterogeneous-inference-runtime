@@ -1048,6 +1048,20 @@ nsys profile -o trt_fp32_profile python benchmarks/benchmark_tensorrt_fp32.py
 - Distributed edge inference
 - vLLM / TensorRT-LLM integration
 
+## Handoff Documentation
+
+For Codex-to-Claude Code handoff, start with:
+
+- `CLAUDE.md`
+- `docs/architecture.md`
+- `docs/data_flow.md`
+- `docs/design_decisions.md`
+- `docs/technical_debt.md`
+- `docs/future_work.md`
+
+These files distinguish implemented runtime paths from benchmark scripts,
+artifact-backed evidence, simulations, assumptions, and follow-up work.
+
 ---
 
 ## Key Takeaway
