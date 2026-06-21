@@ -9,4 +9,4 @@ if [[ ! -x .venv/bin/python ]]; then
   exit 1
 fi
 
-exec env PYTHONPATH="$PWD" .venv/bin/python -m pytest agentic_eval/tests tests
+exec env PYTHONPATH="$PWD" .venv/bin/python -m pytest -vv agentic_eval/tests tests
