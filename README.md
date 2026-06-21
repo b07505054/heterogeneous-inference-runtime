@@ -104,6 +104,26 @@ python -m agentic_eval.run_agentic_eval
 pytest agentic_eval/tests
 ```
 
+### Canonical Validation
+
+The single canonical validation command for this repo is:
+
+```bash
+bash scripts/check.sh
+```
+
+This requires a local `.venv` and runs the same `pytest -vv agentic_eval/tests
+tests` invocation for humans, Claude Code, and CI alike:
+
+- Claude Code's `.claude/settings.json` `PostToolUse` hook runs this script
+  automatically after any Edit/Write/MultiEdit on a `.py` file.
+- CI (`.github/workflows/agentic-eval-ci.yml`) creates a `.venv` and invokes
+  this same script rather than embedding its own pytest command.
+
+CUDA- and TVM-dependent tests skip cleanly on machines without those
+dependencies (e.g. no CUDA-capable GPU or no TVM install). Seeing those tests
+reported as `skipped` rather than `passed` is expected, not a failure.
+
 ---
 
 ## CUDA RMSNorm Compiler/Runtime Case Study

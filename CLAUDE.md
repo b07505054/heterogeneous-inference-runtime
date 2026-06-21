@@ -37,11 +37,22 @@ Do not invent benchmark numbers. If a metric is not freshly measured, say whethe
 
 ## Common Commands
 
-Run core Python tests:
+Run the canonical validation command (single source of truth for local runs,
+the Claude Code hook, and CI):
 
 ```bash
-pytest
+bash scripts/check.sh
 ```
+
+This requires a local `.venv` (`.venv/bin/python`) and runs
+`pytest -vv agentic_eval/tests tests` with `PYTHONPATH` set to the repo root.
+The `.claude/settings.json` `PostToolUse` hook runs this script automatically
+after any Edit/Write/MultiEdit on a `.py` file. CI
+(`.github/workflows/agentic-eval-ci.yml`) invokes the same script rather than
+embedding its own pytest command. CUDA- and TVM-dependent tests
+(`tests/test_rmsnorm_cuda_correctness.py`, `tests/test_tvm_matmul_bias_relu.py`)
+skip cleanly on machines without those dependencies; skips there are expected,
+not failures.
 
 Run agentic eval:
 
