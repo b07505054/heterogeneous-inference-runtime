@@ -40,6 +40,16 @@ Tradeoff: maintaining multiple modes increases artifact complexity, but it avoid
 
 Assumption: mode comparisons should continue to state what each mode isolates.
 
+## Inflight Paged KV Prefetch Usefulness Score Is Reporting-Only
+
+`PagedKVLifecycle.summary()` exposes `usefulness_score = prefetch_hits / (prefetch_hits + prefetch_waste)` for the `inflight_paged_kv_continuous_batching` policy's speculative next-page prefetch (`prefetch_next_decode_page`), with `0.0` when the denominator is zero (no speculative prefetch attempt has resolved yet).
+
+This is distinct from `prefetch_hit_rate` (`hits / (hits + misses)`), which is access-centric: it measures how often a current-page access found a warm page, including accesses where no prefetch was ever attempted (first page of a request, a pressure-guard skip, or a failed speculative allocation). `usefulness_score` is spend-centric: misses are excluded by design, because it should only describe the fate of pages that were actually prefetched speculatively — consumed (`hit`) versus discarded unused (`waste`) — not whether prefetch had the opportunity to run at all.
+
+Tradeoff: a low `usefulness_score` with very few `prefetch_attempts` is a weak signal (most resolved attempts could be hits by chance with little data), while `prefetch_attempts` in the same summary lets a reader distinguish "no data yet" from "this policy's prefetch effort is genuinely being wasted."
+
+Assumption: this metric is reporting-only. It is read inside `summary()` and has no effect on `prefetch_next_decode_page`'s allocation/guard logic. It is not wired into an adaptive guard, and `cost_aware_memory_pressure_page_prefetch` is unaffected.
+
 ## Bounded Queue for Video Pipeline Backpressure
 
 The async video pipeline uses a bounded `queue.Queue` and drops frames when the queue is full.

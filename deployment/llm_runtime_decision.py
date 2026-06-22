@@ -583,6 +583,7 @@ class PagedKVLifecycle:
 
     def summary(self) -> dict:
         accesses = self.prefetch_hits + self.prefetch_misses
+        resolved_attempts = self.prefetch_hits + self.prefetch_waste
         return {
             "enabled": True,
             "policy": "paged_kv_lifecycle_with_pressure_aware_prefetch",
@@ -599,6 +600,9 @@ class PagedKVLifecycle:
             "prefetch_waste": self.prefetch_waste,
             "pressure_prefetch_skips": self.pressure_prefetch_skips,
             "page_leak_count": self.used_pages(),
+            "usefulness_score": (
+                round(self.prefetch_hits / resolved_attempts, 4) if resolved_attempts else 0.0
+            ),
         }
 
 
