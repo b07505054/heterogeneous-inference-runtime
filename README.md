@@ -113,10 +113,8 @@ bash scripts/check.sh
 ```
 
 This requires a local `.venv` and runs the same `pytest -vv agentic_eval/tests
-tests` invocation for humans, Claude Code, and CI alike:
+tests` invocation for local validation and CI:
 
-- Claude Code's `.claude/settings.json` `PostToolUse` hook runs this script
-  automatically after any Edit/Write/MultiEdit on a `.py` file.
 - CI (`.github/workflows/agentic-eval-ci.yml`) creates a `.venv` and invokes
   this same script rather than embedding its own pytest command.
 
@@ -1068,11 +1066,10 @@ nsys profile -o trt_fp32_profile python benchmarks/benchmark_tensorrt_fp32.py
 - Distributed edge inference
 - vLLM / TensorRT-LLM integration
 
-## Handoff Documentation
+## Documentation
 
-For Codex-to-Claude Code handoff, start with:
+For deeper project notes, start with:
 
-- `CLAUDE.md`
 - `docs/architecture.md`
 - `docs/data_flow.md`
 - `docs/design_decisions.md`
@@ -1088,7 +1085,7 @@ artifact-backed evidence, simulations, assumptions, and follow-up work.
 
 Efficient edge AI deployment requires more than model accuracy.
 
-Production-grade inference systems require optimization across:
+Robust inference systems require optimization across:
 
 - Runtime infrastructure
 - Execution backends
