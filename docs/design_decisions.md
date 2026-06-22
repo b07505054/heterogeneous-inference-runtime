@@ -50,6 +50,12 @@ Tradeoff: a low `usefulness_score` with very few `prefetch_attempts` is a weak s
 
 Assumption: this metric is reporting-only. It is read inside `summary()` and has no effect on `prefetch_next_decode_page`'s allocation/guard logic. It is not wired into an adaptive guard, and `cost_aware_memory_pressure_page_prefetch` is unaffected.
 
+`PagedKVLifecycle` also tracks `usefulness_score_ema`, an exponential moving average over the same per-attempt outcomes (`1.0` on a hit, `0.0` on waste), updated incrementally at the same two resolution points (`access_current_page` on a hit, `release_request` on waste) with a fixed smoothing factor `usefulness_ema_alpha = 0.2`. The first resolved sample initializes the EMA directly rather than blending against an arbitrary seed value.
+
+Tradeoff: unlike the cumulative `usefulness_score`, the EMA is order-sensitive — the same total hits and waste produce a different EMA depending on the sequence in which they resolved, which is the point: it reflects whether prefetch usefulness is trending recently versus over the whole run. The cost is that it carries less statistical weight per sample and can swing on a short run.
+
+Assumption: `usefulness_score_ema` is reporting-only, exposed in `summary()` alongside `usefulness_ema_alpha` for transparency. It does not feed into `prefetch_next_decode_page` and is not part of an adaptive guard.
+
 ## Bounded Queue for Video Pipeline Backpressure
 
 The async video pipeline uses a bounded `queue.Queue` and drops frames when the queue is full.

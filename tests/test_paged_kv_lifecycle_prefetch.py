@@ -168,3 +168,93 @@ def test_usefulness_score_is_read_only_and_does_not_mutate_counters():
     assert first == second
     assert kv.prefetch_hits == 1
     assert kv.prefetch_waste == 0
+
+
+def _resolve_hit(kv: PagedKVLifecycle, request_id: str) -> None:
+    kv.allocate_range(request_id=request_id, token_begin=0, token_end=4, step=0)
+    kv.access_current_page(request_id, step=0)
+    kv.prefetch_next_decode_page(
+        request_id=request_id,
+        step=0,
+        pressure_disable_threshold=0.82,
+        token_index=3,
+        request_token_budget=12,
+    )
+    kv.access_current_page(request_id, step=1)
+
+
+def _resolve_waste(kv: PagedKVLifecycle, request_id: str) -> None:
+    kv.allocate_range(request_id=request_id, token_begin=0, token_end=4, step=0)
+    kv.access_current_page(request_id, step=0)
+    kv.prefetch_next_decode_page(
+        request_id=request_id,
+        step=0,
+        pressure_disable_threshold=0.82,
+        token_index=3,
+        request_token_budget=12,
+    )
+    kv.release_request(request_id)
+
+
+def test_usefulness_ema_zero_denominator_defaults_to_zero():
+    kv = PagedKVLifecycle(total_pages=10, page_size_tokens=4, kv_mb_per_page=1.0)
+    summary = kv.summary()
+    assert summary["usefulness_score_ema"] == 0.0
+    assert summary["usefulness_ema_alpha"] == 0.2
+
+
+def test_usefulness_ema_cold_start_initializes_directly_from_first_sample():
+    kv_hit_first = PagedKVLifecycle(total_pages=10, page_size_tokens=4, kv_mb_per_page=1.0)
+    _resolve_hit(kv_hit_first, "r1")
+    assert kv_hit_first.summary()["usefulness_score_ema"] == 1.0
+
+    kv_waste_first = PagedKVLifecycle(total_pages=10, page_size_tokens=4, kv_mb_per_page=1.0)
+    _resolve_waste(kv_waste_first, "r1")
+    assert kv_waste_first.summary()["usefulness_score_ema"] == 0.0
+
+
+def test_usefulness_ema_matches_manual_formula_across_sequence():
+    kv = PagedKVLifecycle(total_pages=30, page_size_tokens=4, kv_mb_per_page=1.0)
+    _resolve_hit(kv, "r1")
+    _resolve_hit(kv, "r2")
+    _resolve_waste(kv, "r3")
+
+    assert kv.summary()["usefulness_score_ema"] == 0.8
+
+
+def test_usefulness_ema_is_order_sensitive_unlike_cumulative_score():
+    hit_first = PagedKVLifecycle(total_pages=30, page_size_tokens=4, kv_mb_per_page=1.0)
+    _resolve_hit(hit_first, "r1")
+    _resolve_hit(hit_first, "r2")
+    _resolve_waste(hit_first, "r3")
+
+    waste_first = PagedKVLifecycle(total_pages=30, page_size_tokens=4, kv_mb_per_page=1.0)
+    _resolve_waste(waste_first, "r1")
+    _resolve_hit(waste_first, "r2")
+    _resolve_hit(waste_first, "r3")
+
+    hit_first_summary = hit_first.summary()
+    waste_first_summary = waste_first.summary()
+
+    assert hit_first_summary["usefulness_score"] == waste_first_summary["usefulness_score"]
+    assert hit_first_summary["usefulness_score_ema"] != waste_first_summary["usefulness_score_ema"]
+    assert hit_first_summary["usefulness_score_ema"] == 0.8
+    assert waste_first_summary["usefulness_score_ema"] == 0.36
+
+
+def test_usefulness_ema_does_not_affect_prefetch_decisions():
+    kv = PagedKVLifecycle(total_pages=30, page_size_tokens=4, kv_mb_per_page=1.0)
+    for idx in range(5):
+        _resolve_waste(kv, f"waste-{idx}")
+    assert kv.summary()["usefulness_score_ema"] == 0.0
+
+    kv.allocate_range(request_id="r-final", token_begin=0, token_end=4, step=0)
+    kv.access_current_page("r-final", step=0)
+    prefetch = kv.prefetch_next_decode_page(
+        request_id="r-final",
+        step=0,
+        pressure_disable_threshold=0.82,
+        token_index=3,
+        request_token_budget=12,
+    )
+    assert prefetch["event"] == "page_prefetch"

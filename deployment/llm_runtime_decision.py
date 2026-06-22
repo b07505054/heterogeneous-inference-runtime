@@ -390,9 +390,20 @@ class PagedKVLifecycle:
     prefetch_waste: int = 0
     pressure_prefetch_skips: int = 0
     prefetch_lookahead_tokens: int = 1
+    usefulness_ema_alpha: float = 0.2
+    usefulness_ema: float | None = field(default=None, init=False)
 
     def __post_init__(self) -> None:
         self.free_pages = list(range(self.total_pages))
+
+    def _update_usefulness_ema(self, sample: float) -> None:
+        if self.usefulness_ema is None:
+            self.usefulness_ema = sample
+        else:
+            self.usefulness_ema = (
+                self.usefulness_ema_alpha * sample
+                + (1 - self.usefulness_ema_alpha) * self.usefulness_ema
+            )
 
     def pressure(self) -> float:
         return 1.0 - (len(self.free_pages) / self.total_pages)
@@ -463,6 +474,7 @@ class PagedKVLifecycle:
         hit = page.state == "prefetched"
         if hit:
             self.prefetch_hits += 1
+            self._update_usefulness_ema(1.0)
             page.state = "resident"
         else:
             self.prefetch_misses += 1
@@ -562,6 +574,7 @@ class PagedKVLifecycle:
             page = self.pages.pop(page_id, None)
             if page and page.state == "prefetched":
                 self.prefetch_waste += 1
+                self._update_usefulness_ema(0.0)
             self.free_pages.append(page_id)
         self.free_pages.sort()
         self.freed_pages += len(pages)
@@ -603,6 +616,10 @@ class PagedKVLifecycle:
             "usefulness_score": (
                 round(self.prefetch_hits / resolved_attempts, 4) if resolved_attempts else 0.0
             ),
+            "usefulness_score_ema": (
+                round(self.usefulness_ema, 4) if self.usefulness_ema is not None else 0.0
+            ),
+            "usefulness_ema_alpha": self.usefulness_ema_alpha,
         }
 
 
