@@ -69,6 +69,21 @@ Implemented behavior: deterministic local simulation logic, policy comparisons, 
 
 Simulated behavior: vLLM, SGLang, Triton Server, TensorRT-LLM, distributed serving, worker health, TTFT/TPOT, and KV-cache behavior are modeled locally. The repository does not run those production serving frameworks.
 
+### KV page physical-memory microbenchmark
+
+Implemented in `scripts/benchmark_kv_page_microbenchmark.py`, tested in `tests/test_kv_page_microbenchmark.py`.
+
+This is a separate, measured benchmark and is not part of the `llm_runtime_decision.py` simulation described above:
+
+- `KVPagePool` allocates a real tensor (`torch.empty`) sized by page count, KV heads, and head dim, and tracks free/owned pages with plain Python lists/dicts.
+- Checkout/release, tensor materialization, paged gather-to-contiguous, and one-token scatter update are timed with `time.perf_counter()` against a CPU/CUDA/MPS device, with device synchronization before/after each timed call.
+- An allocator churn stress pass performs randomized checkout/release cycles and reports two things, separate from the steady-state request-loop numbers: free-list fragmentation (`contiguous_free_run_ratio` — largest contiguous run of free page indices as a fraction of pool size; this is free-list index fragmentation, not GPU/CPU allocator memory fragmentation), and raw page-reuse counters (`unique_pages_seen`, `pages_reused`, `page_reuse_events`).
+- Each report carries a `provenance` block (git commit, timestamp, invocation args) in addition to the existing `dependency_status` block.
+
+Implemented behavior: real tensor allocation, real timed tensor operations, real device guarding (skips/reports `"unavailable"` cleanly when a requested device is absent).
+
+Truth boundary: this benchmark measures tensor-backed paged KV storage and gather/copy/scatter overhead on the local device. It is not vLLM PagedAttention, not TensorRT-LLM paged attention, and not wired into live Qwen (or any other model's) attention. It does not invoke or claim to invoke a live vLLM/PagedAttention CUDA kernel. It is intentionally decoupled from the `MemoryPlanner`/`PagedKVLifecycle`/`RuntimeScheduler` logical simulation above — extending one does not change numbers produced by the other.
+
 ### Native runtime and CUDA experiments
 
 Implemented under `cpp_inference/`, `cuda_backend/`, `cuda_transformer_kernels/`, and `cuda_backend/kernels/`.

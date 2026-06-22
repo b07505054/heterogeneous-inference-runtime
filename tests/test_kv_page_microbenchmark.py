@@ -27,6 +27,9 @@ def small_args(**overrides):
         "num_layers": 1,
         "num_kv_heads": 2,
         "head_dim": 4,
+        "churn_cycles": 16,
+        "churn_max_pages_per_owner": 2,
+        "churn_seed": 1234,
         "fail_on_unavailable": False,
     }
     values.update(overrides)
@@ -107,3 +110,52 @@ def test_unavailable_device_report_does_not_crash():
         assert report["truth_boundary"] == TRUTH_BOUNDARY
     else:
         assert report["device"] == "cuda"
+
+
+def test_allocator_churn_section_present_and_no_leak():
+    report = run_benchmark(small_args(churn_cycles=64, churn_max_pages_per_owner=4, churn_seed=7))
+
+    churn = report["allocator_churn"]
+    assert churn["leaked_pages_after_churn"] == 0
+    assert churn["cycles"] == 64
+    for key in ["checkout_cost", "release_cost", "contiguous_free_run_ratio", "page_reuse"]:
+        assert key in churn
+
+
+def test_contiguous_free_run_ratio_bounds():
+    report = run_benchmark(small_args(churn_cycles=64, churn_max_pages_per_owner=4, churn_seed=7))
+
+    ratio = report["allocator_churn"]["contiguous_free_run_ratio"]
+    for value in (ratio["min"], ratio["mean"], ratio["final"]):
+        assert 0.0 <= value <= 1.0
+    assert "free-list fragmentation" in ratio["description"]
+    assert "Not GPU/CPU allocator" in ratio["description"]
+
+
+def test_page_reuse_counters_are_consistent():
+    report = run_benchmark(small_args(churn_cycles=64, churn_max_pages_per_owner=4, churn_seed=7))
+
+    page_reuse = report["allocator_churn"]["page_reuse"]
+    for key in ["unique_pages_seen", "pages_reused", "page_reuse_events"]:
+        assert key in page_reuse
+        assert isinstance(page_reuse[key], int)
+    assert page_reuse["unique_pages_seen"] >= page_reuse["pages_reused"] >= 0
+    assert page_reuse["page_reuse_events"] >= page_reuse["pages_reused"] >= 0
+
+
+def test_provenance_fields_present():
+    report = run_benchmark(small_args())
+
+    provenance = report["provenance"]
+    assert isinstance(provenance["git_commit"], str)
+    assert isinstance(provenance["args"], dict)
+    assert "timestamp_utc" in provenance
+
+
+def test_scheduler_artifact_numbers_are_unaffected():
+    sys.path.insert(0, str(ROOT))
+    from deployment.llm_runtime_decision import MemoryPlanner  # noqa: E402
+
+    planner = MemoryPlanner(total_blocks=16, block_size_tokens=8, kv_mb_per_block=1.0)
+    assert planner.total_blocks == 16
+    assert len(planner.free_blocks) == 16

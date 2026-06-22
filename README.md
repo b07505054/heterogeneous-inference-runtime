@@ -791,6 +791,11 @@ Key outputs:
 - `llm_runtime_chrome_trace.json`: Perfetto-compatible runtime timeline
 - `real_llama_profile.json`: HuggingFace `LlamaForCausalLM` backend profile with
   TTFT, TPOT, batch/sequence scaling, and operator bottleneck breakdown
+- `kv_page_microbenchmark_report.json`: measured, not simulated — real
+  `torch.empty`-backed paged KV tensors with timed checkout/release, gather,
+  scatter, and allocator churn/fragmentation costs from
+  `scripts/benchmark_kv_page_microbenchmark.py`. Distinct from the KV-cache
+  simulation artifacts above; it does not run live vLLM/PagedAttention kernels.
 
 The current LLM artifact generator now runs an actual scheduling decision loop:
 

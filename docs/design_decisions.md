@@ -106,6 +106,14 @@ Tradeoff: deterministic CI is stable and cheap, but it does not measure the vari
 
 Assumption: this scaffold is intended to evaluate tool-use structure and artifact discipline, not open-ended model intelligence.
 
+## Keep Physical KV Microbenchmark Separate From Scheduler Simulation
+
+`scripts/benchmark_kv_page_microbenchmark.py` allocates real tensors and times real gather/copy/scatter operations, while `deployment/llm_runtime_decision.py` tracks KV pages as plain IDs in a logical simulation with formula-based cost models. The two are not merged.
+
+Tradeoff: keeping them separate means the scheduler simulation's policy invariants stay fast and deterministic for CI, while the physical-memory benchmark stays free to add real allocator stress (e.g. checkout/release churn, fragmentation) without affecting scheduler-reported numbers or pytest runtime.
+
+Assumption: extensions to the physical KV microbenchmark must not modify `MemoryPlanner`, `RuntimeScheduler`, or `PagedKVLifecycle`, and must not claim to measure or invoke a live vLLM/PagedAttention CUDA kernel.
+
 ## Metrics Are Evidence, Not Universal Claims
 
 The repository contains many historical result artifacts. Documentation should describe where metrics come from and whether they are measured, artifact-backed, simulated, or estimated.

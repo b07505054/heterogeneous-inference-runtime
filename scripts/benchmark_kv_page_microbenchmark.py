@@ -2,10 +2,14 @@ import argparse
 import json
 import math
 import platform
+import random
 import statistics
+import subprocess
 import sys
 import time
+from collections import Counter
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -186,6 +190,22 @@ class KVPagePool:
     def leaked_pages(self):
         return len(self.owners)
 
+    def largest_contiguous_free_run(self):
+        """Longest run of consecutive free page indices in the free list.
+
+        This measures free-list index fragmentation, not GPU/CPU allocator
+        memory fragmentation -- the pool's tensor is one fixed contiguous
+        allocation for the lifetime of the pool.
+        """
+        if not self.free_pages:
+            return 0
+        pages = sorted(self.free_pages)
+        best = run = 1
+        for prev, curr in zip(pages, pages[1:]):
+            run = run + 1 if curr == prev + 1 else 1
+            best = max(best, run)
+        return best
+
 
 def synthetic_requests(count=32):
     seed = [
@@ -325,6 +345,94 @@ def contiguous_update_one_token(torch, contiguous, token_index):
     contiguous[token_index] = value
 
 
+def run_allocator_churn(torch, device, pool, *, cycles, max_pages_per_owner, seed):
+    """Randomized checkout/release stress against KVPagePool's free list.
+
+    Reports free-list fragmentation (contiguous_free_run_ratio) and raw page
+    reuse counters. This is fragmentation of the pool's Python-side free-page
+    list/index bookkeeping, not GPU/CPU allocator memory fragmentation -- the
+    underlying tensor backing the pool is one fixed-size contiguous allocation
+    for the whole run.
+    """
+    rng = random.Random(seed)
+    checkout_ms = []
+    release_ms = []
+    free_run_ratios = []
+    live_owners = []
+    page_checkout_counts = Counter()
+    total_checkouts = 0
+
+    for _ in range(cycles):
+        if live_owners and (len(live_owners) >= 4 or rng.random() < 0.5):
+            owner_pages = live_owners.pop(rng.randrange(len(live_owners)))
+            ms, _ = timed_ms(torch, device, lambda pages=owner_pages: pool.release(pages))
+            release_ms.append(ms)
+        else:
+            request_size = min(rng.randint(1, max_pages_per_owner), len(pool.free_pages))
+            if request_size <= 0:
+                continue
+            owner_id = f"churn-{total_checkouts}"
+            ms, pages = timed_ms(torch, device, lambda owner_id=owner_id, request_size=request_size: pool.checkout(owner_id, request_size))
+            checkout_ms.append(ms)
+            live_owners.append(pages)
+            total_checkouts += 1
+            for page in pages:
+                page_checkout_counts[page] += 1
+
+        free_run_ratios.append(pool.largest_contiguous_free_run() / max(pool.page_count, 1))
+
+    for owner_pages in live_owners:
+        pool.release(owner_pages)
+
+    unique_pages_seen = len(page_checkout_counts)
+    total_page_checkouts = sum(page_checkout_counts.values())
+    pages_reused = sum(1 for count in page_checkout_counts.values() if count > 1)
+    page_reuse_events = total_page_checkouts - unique_pages_seen
+
+    return {
+        "cycles": cycles,
+        "total_checkouts": total_checkouts,
+        "checkout_cost": summarize_ms(checkout_ms),
+        "release_cost": summarize_ms(release_ms),
+        "contiguous_free_run_ratio": {
+            "description": "free-list fragmentation: largest contiguous run of free page indices divided by pool size. Not GPU/CPU allocator memory fragmentation.",
+            "min": round(min(free_run_ratios), 6) if free_run_ratios else 0.0,
+            "mean": round(statistics.mean(free_run_ratios), 6) if free_run_ratios else 0.0,
+            "final": round(free_run_ratios[-1], 6) if free_run_ratios else 0.0,
+        },
+        "page_reuse": {
+            "unique_pages_seen": unique_pages_seen,
+            "pages_reused": pages_reused,
+            "page_reuse_events": page_reuse_events,
+        },
+        "leaked_pages_after_churn": pool.leaked_pages(),
+    }
+
+
+def git_commit():
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            capture_output=True,
+            text=True,
+            timeout=5,
+            check=False,
+        )
+        if result.returncode == 0:
+            return result.stdout.strip()
+    except Exception:
+        pass
+    return "unknown"
+
+
+def build_provenance(args):
+    return {
+        "git_commit": git_commit(),
+        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+        "args": vars(args),
+    }
+
+
 def unavailable_report(args, reason, dependency_status):
     return {
         "artifact_type": "kv_page_microbenchmark_report",
@@ -334,6 +442,7 @@ def unavailable_report(args, reason, dependency_status):
         "dtype": args.dtype,
         "truth_boundary": TRUTH_BOUNDARY,
         "dependency_status": dependency_status,
+        "provenance": build_provenance(args),
     }
 
 
@@ -459,6 +568,15 @@ def run_benchmark(args):
             ms, _ = timed_ms(torch, device, lambda pages=pages: pool.release(pages))
             release_ms.append(ms)
 
+    allocator_churn = run_allocator_churn(
+        torch,
+        device,
+        pool,
+        cycles=args.churn_cycles,
+        max_pages_per_owner=min(args.churn_max_pages_per_owner, page_count),
+        seed=args.churn_seed,
+    )
+
     bytes_per_element = torch.empty((), dtype=dtype).element_size()
     logical_token_count = sum(req.prompt_tokens + req.output_tokens for req in requests)
     logical_bytes = logical_token_count * 2 * args.num_kv_heads * args.head_dim * bytes_per_element
@@ -530,6 +648,8 @@ def run_benchmark(args):
             "logical_kv_mb": round(logical_bytes / (1024 * 1024), 6),
             "allocated_page_kv_mb": round(allocated_bytes / (1024 * 1024), 6),
         },
+        "allocator_churn": allocator_churn,
+        "provenance": build_provenance(args),
     }
 
 
@@ -551,6 +671,9 @@ def parse_args():
     parser.add_argument("--num-layers", type=int, default=1)
     parser.add_argument("--num-kv-heads", type=int, default=8)
     parser.add_argument("--head-dim", type=int, default=64)
+    parser.add_argument("--churn-cycles", type=int, default=256)
+    parser.add_argument("--churn-max-pages-per-owner", type=int, default=8)
+    parser.add_argument("--churn-seed", type=int, default=1234)
     parser.add_argument("--fail-on-unavailable", action="store_true")
     return parser.parse_args()
 
