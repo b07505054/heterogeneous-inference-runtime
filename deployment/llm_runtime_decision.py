@@ -392,6 +392,11 @@ class PagedKVLifecycle:
     prefetch_lookahead_tokens: int = 1
     usefulness_ema_alpha: float = 0.2
     usefulness_ema: float | None = field(default=None, init=False)
+    usefulness_min_samples: int = 5
+    usefulness_disable_threshold: float = 0.3
+    usefulness_reenable_threshold: float = 0.5
+    adaptive_guard_active: bool = field(default=False, init=False)
+    adaptive_prefetch_skips: int = field(default=0, init=False)
 
     def __post_init__(self) -> None:
         self.free_pages = list(range(self.total_pages))
@@ -404,6 +409,17 @@ class PagedKVLifecycle:
                 self.usefulness_ema_alpha * sample
                 + (1 - self.usefulness_ema_alpha) * self.usefulness_ema
             )
+
+    def _update_adaptive_guard_state(self) -> None:
+        resolved_samples = self.prefetch_hits + self.prefetch_waste
+        if resolved_samples < self.usefulness_min_samples:
+            return
+        if self.adaptive_guard_active:
+            if self.usefulness_ema >= self.usefulness_reenable_threshold:
+                self.adaptive_guard_active = False
+        else:
+            if self.usefulness_ema <= self.usefulness_disable_threshold:
+                self.adaptive_guard_active = True
 
     def pressure(self) -> float:
         return 1.0 - (len(self.free_pages) / self.total_pages)
@@ -505,6 +521,17 @@ class PagedKVLifecycle:
                 "request_id": request_id,
                 "reason": "memory_pressure_above_prefetch_budget",
                 "memory_pressure": round(pressure, 4),
+            }
+
+        self._update_adaptive_guard_state()
+        if self.adaptive_guard_active:
+            self.adaptive_prefetch_skips += 1
+            return {
+                "event": "page_prefetch_skipped",
+                "request_id": request_id,
+                "reason": "usefulness_below_adaptive_guard_threshold",
+                "memory_pressure": round(pressure, 4),
+                "usefulness_score_ema": round(self.usefulness_ema, 4),
             }
 
         pages = self.request_pages.get(request_id, [])
@@ -620,6 +647,11 @@ class PagedKVLifecycle:
                 round(self.usefulness_ema, 4) if self.usefulness_ema is not None else 0.0
             ),
             "usefulness_ema_alpha": self.usefulness_ema_alpha,
+            "usefulness_min_samples": self.usefulness_min_samples,
+            "usefulness_disable_threshold": self.usefulness_disable_threshold,
+            "usefulness_reenable_threshold": self.usefulness_reenable_threshold,
+            "adaptive_guard_active": self.adaptive_guard_active,
+            "adaptive_prefetch_skips": self.adaptive_prefetch_skips,
         }
 
 

@@ -54,7 +54,17 @@ Assumption: this metric is reporting-only. It is read inside `summary()` and has
 
 Tradeoff: unlike the cumulative `usefulness_score`, the EMA is order-sensitive — the same total hits and waste produce a different EMA depending on the sequence in which they resolved, which is the point: it reflects whether prefetch usefulness is trending recently versus over the whole run. The cost is that it carries less statistical weight per sample and can swing on a short run.
 
-Assumption: `usefulness_score_ema` is reporting-only, exposed in `summary()` alongside `usefulness_ema_alpha` for transparency. It does not feed into `prefetch_next_decode_page` and is not part of an adaptive guard.
+Assumption: `usefulness_score_ema` is exposed in `summary()` alongside `usefulness_ema_alpha` for transparency. The cumulative `usefulness_score` remains reporting-only with no consumer; `usefulness_score_ema` is now also read by the adaptive guard described below.
+
+## Adaptive Usefulness Guard Is Secondary and Strictly Restrictive
+
+`PagedKVLifecycle.prefetch_next_decode_page` gates speculative next-page prefetch with two independent checks, evaluated in a fixed order: the existing memory-pressure check first, then a second adaptive check based on `usefulness_score_ema`. The pressure check returns early on its own skip reason (`memory_pressure_above_prefetch_budget`) before the adaptive check ever runs, so the adaptive guard can never see a request that pressure has already blocked, and it has no code path that allocates a page or clears a pressure-driven skip. It can only add a new reason to skip (`usefulness_below_adaptive_guard_threshold`), never override or bypass the pressure decision.
+
+The adaptive guard only evaluates once `prefetch_hits + prefetch_waste >= usefulness_min_samples` (default `5`) — below that floor it never activates, so a handful of early misses cannot disable prefetch for the rest of a run on a noisy signal. Once warmed up, it uses two distinct thresholds rather than one, with persisted on/off state (`adaptive_guard_active`) to avoid flapping: it disables prefetch once `usefulness_score_ema <= usefulness_disable_threshold` (default `0.3`), and only re-enables once the EMA recovers to `>= usefulness_reenable_threshold` (default `0.5`). The gap between the two thresholds is the anti-flap margin.
+
+Tradeoff: hysteresis means the guard can lag a genuine recovery in usefulness by a few resolved samples (it won't re-enable the instant the EMA ticks above the disable threshold), but the alternative — a single threshold checked statelessly every call — would toggle on and off as the EMA oscillates near that one value, producing prefetch behavior that changes step to step for no externally visible reason.
+
+Assumption: this is the only behavioral consumer of `usefulness_score_ema` introduced so far. `cost_aware_memory_pressure_page_prefetch` and the `KVPagePool` physical benchmark are unaffected. Because this guard changes `prefetch_next_decode_page`'s actual decisions (unlike the purely-reporting `usefulness_score`/`usefulness_score_ema` metrics themselves), committed artifacts under `results/llm_runtime_artifacts/` predate this change and will not reflect it until intentionally regenerated.
 
 ## Bounded Queue for Video Pipeline Backpressure
 

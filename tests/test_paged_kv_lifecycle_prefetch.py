@@ -242,11 +242,12 @@ def test_usefulness_ema_is_order_sensitive_unlike_cumulative_score():
     assert waste_first_summary["usefulness_score_ema"] == 0.36
 
 
-def test_usefulness_ema_does_not_affect_prefetch_decisions():
+def test_usefulness_ema_tracking_alone_does_not_block_prefetch_when_guard_inactive():
     kv = PagedKVLifecycle(total_pages=30, page_size_tokens=4, kv_mb_per_page=1.0)
     for idx in range(5):
-        _resolve_waste(kv, f"waste-{idx}")
-    assert kv.summary()["usefulness_score_ema"] == 0.0
+        _resolve_hit(kv, f"hit-{idx}")
+    assert kv.summary()["usefulness_score_ema"] == 1.0
+    assert kv.adaptive_guard_active is False
 
     kv.allocate_range(request_id="r-final", token_begin=0, token_end=4, step=0)
     kv.access_current_page("r-final", step=0)
@@ -258,3 +259,131 @@ def test_usefulness_ema_does_not_affect_prefetch_decisions():
         request_token_budget=12,
     )
     assert prefetch["event"] == "page_prefetch"
+
+
+def _attempt_prefetch_with_fresh_page(kv: PagedKVLifecycle, request_id: str) -> dict:
+    kv.allocate_range(request_id=request_id, token_begin=0, token_end=4, step=0)
+    kv.access_current_page(request_id, step=0)
+    return kv.prefetch_next_decode_page(
+        request_id=request_id,
+        step=0,
+        pressure_disable_threshold=0.82,
+        token_index=3,
+        request_token_budget=12,
+    )
+
+
+def test_adaptive_guard_summary_fields_default_values():
+    kv = PagedKVLifecycle(total_pages=10, page_size_tokens=4, kv_mb_per_page=1.0)
+    summary = kv.summary()
+    assert summary["usefulness_min_samples"] == 5
+    assert summary["usefulness_disable_threshold"] == 0.3
+    assert summary["usefulness_reenable_threshold"] == 0.5
+    assert summary["adaptive_guard_active"] is False
+    assert summary["adaptive_prefetch_skips"] == 0
+
+
+def test_adaptive_guard_inactive_before_min_samples_reached():
+    kv = PagedKVLifecycle(total_pages=50, page_size_tokens=4, kv_mb_per_page=1.0)
+    for idx in range(4):
+        _resolve_waste(kv, f"r{idx}")
+    assert kv.prefetch_waste == 4
+    assert kv.adaptive_guard_active is False
+
+    attempt = _attempt_prefetch_with_fresh_page(kv, "r-check")
+    assert attempt["event"] == "page_prefetch"
+    assert kv.adaptive_guard_active is False
+
+
+def test_adaptive_guard_activates_after_min_samples_with_low_ema():
+    kv = PagedKVLifecycle(total_pages=50, page_size_tokens=4, kv_mb_per_page=1.0)
+    for idx in range(5):
+        _resolve_waste(kv, f"r{idx}")
+    assert kv.prefetch_waste == 5
+    assert kv.usefulness_ema == 0.0
+    assert kv.adaptive_guard_active is False  # not yet evaluated with resolved == 5
+
+    attempt = _attempt_prefetch_with_fresh_page(kv, "r-trigger")
+    assert attempt["event"] == "page_prefetch_skipped"
+    assert attempt["reason"] == "usefulness_below_adaptive_guard_threshold"
+    assert kv.adaptive_guard_active is True
+    assert kv.adaptive_prefetch_skips == 1
+    # guard only skips; it must not have allocated a second page
+    assert len(kv.request_pages["r-trigger"]) == 1
+
+
+def test_adaptive_guard_hysteresis_avoids_flapping_and_recovers():
+    kv = PagedKVLifecycle(total_pages=50, page_size_tokens=4, kv_mb_per_page=1.0)
+
+    # Build 5 wastes (guard stays inactive at each check, since resolved < 5
+    # at the start of every one of these calls) while leaving 4 speculative
+    # pages pending (not yet accessed) to resolve as hits afterward.
+    _resolve_waste(kv, "waste-0")
+    _attempt_prefetch_with_fresh_page(kv, "pending-0")
+    _resolve_waste(kv, "waste-1")
+    _attempt_prefetch_with_fresh_page(kv, "pending-1")
+    _resolve_waste(kv, "waste-2")
+    _attempt_prefetch_with_fresh_page(kv, "pending-2")
+    _resolve_waste(kv, "waste-3")
+    _attempt_prefetch_with_fresh_page(kv, "pending-3")
+    _resolve_waste(kv, "waste-4")
+
+    assert kv.prefetch_waste == 5
+    assert kv.adaptive_guard_active is False
+
+    # 6th distinct call crosses the min-sample floor with ema == 0.0 -> activates.
+    blocked = _attempt_prefetch_with_fresh_page(kv, "trigger")
+    assert blocked["reason"] == "usefulness_below_adaptive_guard_threshold"
+    assert kv.adaptive_guard_active is True
+    assert len(kv.request_pages["trigger"]) == 1
+
+    # Resolve the 4 pending pages as hits one at a time. ema rises but must
+    # not cross the reenable threshold (0.5) until the 4th resolution, so the
+    # guard must stay active (no flapping) for the first three probes.
+    kv.access_current_page("pending-0", step=1)
+    assert round(kv.usefulness_ema, 4) == 0.2
+    probe = _attempt_prefetch_with_fresh_page(kv, "probe-1")
+    assert probe["reason"] == "usefulness_below_adaptive_guard_threshold"
+    assert kv.adaptive_guard_active is True
+
+    kv.access_current_page("pending-1", step=1)
+    assert round(kv.usefulness_ema, 4) == 0.36
+    probe = _attempt_prefetch_with_fresh_page(kv, "probe-2")
+    assert probe["reason"] == "usefulness_below_adaptive_guard_threshold"
+    assert kv.adaptive_guard_active is True
+
+    kv.access_current_page("pending-2", step=1)
+    assert round(kv.usefulness_ema, 4) == 0.488
+    probe = _attempt_prefetch_with_fresh_page(kv, "probe-3")
+    assert probe["reason"] == "usefulness_below_adaptive_guard_threshold"
+    assert kv.adaptive_guard_active is True
+
+    kv.access_current_page("pending-3", step=1)
+    assert round(kv.usefulness_ema, 4) == 0.5904
+    recovered = _attempt_prefetch_with_fresh_page(kv, "recovered")
+    assert recovered["event"] == "page_prefetch"
+    assert kv.adaptive_guard_active is False
+
+
+def test_pressure_guard_checked_before_and_takes_priority_over_adaptive_guard():
+    kv = PagedKVLifecycle(total_pages=2, page_size_tokens=4, kv_mb_per_page=1.0)
+    kv.prefetch_waste = 5
+    kv.usefulness_ema = 0.0
+    kv._update_adaptive_guard_state()
+    assert kv.adaptive_guard_active is True
+
+    kv.allocate_range(request_id="r1", token_begin=0, token_end=4, step=0)
+    kv.allocate_range(request_id="r2", token_begin=0, token_end=4, step=0)
+    kv.access_current_page("r1", step=0)
+
+    attempt = kv.prefetch_next_decode_page(
+        request_id="r1",
+        step=0,
+        pressure_disable_threshold=0.5,
+        token_index=3,
+        request_token_budget=12,
+    )
+    assert attempt["reason"] == "memory_pressure_above_prefetch_budget"
+    assert kv.pressure_prefetch_skips == 1
+    # the adaptive check never ran because the pressure guard returned first
+    assert kv.adaptive_prefetch_skips == 0
