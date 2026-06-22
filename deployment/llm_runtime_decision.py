@@ -389,6 +389,7 @@ class PagedKVLifecycle:
     prefetch_misses: int = 0
     prefetch_waste: int = 0
     pressure_prefetch_skips: int = 0
+    prefetch_lookahead_tokens: int = 1
 
     def __post_init__(self) -> None:
         self.free_pages = list(range(self.total_pages))
@@ -425,6 +426,7 @@ class PagedKVLifecycle:
         token_begin: int,
         token_end: int,
         step: int,
+        initial_state: str = "resident",
     ) -> list[int]:
         needed = self.pages_needed_for_tokens(token_end - token_begin)
         if needed > len(self.free_pages):
@@ -440,7 +442,7 @@ class PagedKVLifecycle:
                 owner_request_id=request_id,
                 token_begin=cursor,
                 token_end=page_end,
-                state="resident",
+                state=initial_state,
                 last_access_step=step,
             )
             self.request_pages.setdefault(request_id, []).append(page_id)
@@ -467,12 +469,21 @@ class PagedKVLifecycle:
         page.last_access_step = step
         return {"hit": hit, "page_id": page_id, "reason": "accessed_current_page"}
 
+    def has_page_for_token(self, request_id: str, token_index: int) -> bool:
+        pages = self.request_pages.get(request_id, [])
+        if not pages:
+            return False
+        tail = self.pages[pages[-1]]
+        return tail.token_begin <= token_index < tail.token_end
+
     def prefetch_next_decode_page(
         self,
         *,
         request_id: str,
         step: int,
         pressure_disable_threshold: float,
+        token_index: int,
+        request_token_budget: int,
     ) -> dict:
         pressure = self.pressure()
         if pressure >= pressure_disable_threshold:
@@ -493,22 +504,55 @@ class PagedKVLifecycle:
                 "memory_pressure": round(pressure, 4),
             }
 
-        page = self.pages[pages[-1]]
-        if page.state == "resident":
-            page.state = "prefetched"
-            page.last_access_step = step
-            self.prefetch_attempts += 1
+        tail = self.pages[pages[-1]]
+        if tail.state == "prefetched":
             return {
-                "event": "page_prefetch",
+                "event": "page_prefetch_skipped",
                 "request_id": request_id,
-                "page_id": page.page_id,
+                "reason": "already_prefetched",
                 "memory_pressure": round(pressure, 4),
             }
 
+        if tail.token_end - token_index > self.prefetch_lookahead_tokens:
+            return {
+                "event": "page_prefetch_skipped",
+                "request_id": request_id,
+                "reason": "not_near_page_boundary",
+                "memory_pressure": round(pressure, 4),
+            }
+
+        if tail.token_end >= request_token_budget:
+            return {
+                "event": "page_prefetch_skipped",
+                "request_id": request_id,
+                "reason": "no_further_pages_needed",
+                "memory_pressure": round(pressure, 4),
+            }
+
+        next_token_end = min(request_token_budget, tail.token_end + self.page_size_tokens)
+        try:
+            allocated = self.allocate_range(
+                request_id=request_id,
+                token_begin=tail.token_end,
+                token_end=next_token_end,
+                step=step,
+                initial_state="prefetched",
+            )
+        except MemoryError:
+            self.pressure_prefetch_skips += 1
+            return {
+                "event": "page_prefetch_skipped",
+                "request_id": request_id,
+                "reason": "insufficient_free_pages",
+                "memory_pressure": round(pressure, 4),
+            }
+
+        self.prefetch_attempts += len(allocated)
         return {
-            "event": "page_prefetch_skipped",
+            "event": "page_prefetch",
             "request_id": request_id,
-            "reason": "already_prefetched",
+            "page_id": allocated[-1] if allocated else None,
+            "prefetched_pages": allocated,
             "memory_pressure": round(pressure, 4),
         }
 
@@ -1156,7 +1200,9 @@ class RuntimeScheduler:
             for request_id in active:
                 state = states[request_id]
                 token_index = state.prompt_tokens_total + state.output_tokens_generated
-                if token_index % kv.page_size_tokens == 0:
+                if token_index % kv.page_size_tokens == 0 and not kv.has_page_for_token(
+                    request_id, token_index
+                ):
                     token_end = min(
                         state.prompt_tokens_total + state.request.output_tokens,
                         token_index + kv.page_size_tokens,
@@ -1233,7 +1279,13 @@ class RuntimeScheduler:
                         request_id=request_id,
                         step=step,
                         pressure_disable_threshold=prefetch_disable_threshold,
+                        token_index=token_index,
+                        request_token_budget=state.prompt_tokens_total + state.request.output_tokens,
                     )
+                    prefetched_pages = prefetch.get("prefetched_pages") or []
+                    if prefetched_pages:
+                        state.kv_pages.extend(prefetched_pages)
+                        allocated_pages.extend(prefetched_pages)
                     access_events.append(prefetch)
                     still_decoding.append(request_id)
             active_pages = {
