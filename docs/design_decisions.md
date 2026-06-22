@@ -114,6 +114,20 @@ Tradeoff: keeping them separate means the scheduler simulation's policy invarian
 
 Assumption: extensions to the physical KV microbenchmark must not modify `MemoryPlanner`, `RuntimeScheduler`, or `PagedKVLifecycle`, and must not claim to measure or invoke a live vLLM/PagedAttention CUDA kernel.
 
+## KV Cache "Fragmentation" Must Measure Fragmentation
+
+`kv_cache_trace.json` used to report a field named `fragmentation_ratio` computed as `(total_blocks - peak_allocated_blocks) / total_blocks * 0.11`, clamped to `[0.02, 0.32]`. That formula measures unused peak capacity, not fragmentation (wasted/unusable space within or between allocations), and the `0.11` scale and clamp bounds had no derivation. The field has been removed; no external consumer depended on it.
+
+It is replaced by four honestly-named fields:
+
+- `free_capacity_ratio` and `peak_allocation_utilization` (in `kv_cache_trace.json`, top level): exact complements of `total_blocks` vs `peak_allocated_blocks` — headroom and utilization at peak load. Neither is fragmentation.
+- `kv_internal_fragmentation_ratio` (in `page_lifecycle`, from `PagedKVLifecycle.summary()`): `1 - tokens_written / tokens_capacity_allocated`, accumulated cumulatively inside `allocate_range` across every page ever allocated for the run's lifetime, not derived from a point-in-time snapshot (released pages are popped from `PagedKVLifecycle.pages`, so a snapshot would undercount). This is true internal fragmentation: unused token capacity within allocated pages, computed from the simulation's own token/page bookkeeping.
+- `contiguous_free_run_ratio` (in `page_lifecycle`, from `PagedKVLifecycle.summary()`): largest contiguous run of free page indices over pool size, an end-of-run snapshot. This reuses the exact name and definition already established by `scripts/benchmark_kv_page_microbenchmark.py`'s allocator-churn pass — free-list *index* fragmentation, not real GPU/CPU allocator memory fragmentation, since the simulation's pages are logical indices with no memory addresses.
+
+Tradeoff: `kv_internal_fragmentation_ratio` is a true lifetime measure but `contiguous_free_run_ratio` is necessarily a snapshot (free-list contiguity has no meaningful lifetime accumulation).
+
+Assumption: these are "Simulated" metrics per the repo's truth-boundary labels — real bookkeeping inside a simulated scheduler, not measured hardware fragmentation. They must not be conflated with `scripts/benchmark_kv_page_microbenchmark.py`'s own `contiguous_free_run_ratio`, which is the same name/definition computed from a different, measured source.
+
 ## Metrics Are Evidence, Not Universal Claims
 
 The repository contains many historical result artifacts. Documentation should describe where metrics come from and whether they are measured, artifact-backed, simulated, or estimated.

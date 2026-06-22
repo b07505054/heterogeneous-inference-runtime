@@ -82,6 +82,8 @@ This is a separate, measured benchmark and is not part of the `llm_runtime_decis
 
 Implemented behavior: real tensor allocation, real timed tensor operations, real device guarding (skips/reports `"unavailable"` cleanly when a requested device is absent).
 
+The simulated `PagedKVLifecycle` in `deployment/llm_runtime_decision.py` reports a `contiguous_free_run_ratio` field with the same name and definition as this microbenchmark's free-list fragmentation metric, computed from the same shape of data (a free page-index list) but from the simulation's logical page table, not from the measured tensor pool above. It also reports `kv_internal_fragmentation_ratio` — true lifetime unused-token-capacity-within-allocated-pages, accumulated across `allocate_range` calls. Both are "Simulated" per the truth-boundary labels; do not blur them with this microbenchmark's measured numbers even though `contiguous_free_run_ratio` shares a name across both. See `docs/design_decisions.md`'s "KV Cache 'Fragmentation' Must Measure Fragmentation" section.
+
 Truth boundary: this benchmark measures tensor-backed paged KV storage and gather/copy/scatter overhead on the local device. It is not vLLM PagedAttention, not TensorRT-LLM paged attention, and not wired into live Qwen (or any other model's) attention. It does not invoke or claim to invoke a live vLLM/PagedAttention CUDA kernel. It is intentionally decoupled from the `MemoryPlanner`/`PagedKVLifecycle`/`RuntimeScheduler` logical simulation above — extending one does not change numbers produced by the other.
 
 ### Native runtime and CUDA experiments

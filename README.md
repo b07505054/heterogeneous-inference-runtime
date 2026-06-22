@@ -773,7 +773,13 @@ Key outputs:
 - `runtime_profile.json`: aggregate serving-path metrics
 - `prefill_decode_benchmark.json`: prefill and decode phase timing
 - `scheduler_trace.json`: request admission, queue, prefill, and decode events
-- `kv_cache_trace.json`: KV-cache allocation, page lifecycle, and block-usage trace
+- `kv_cache_trace.json`: KV-cache allocation, page lifecycle, and block-usage trace.
+  Capacity/utilization at peak load is reported as `free_capacity_ratio` and
+  `peak_allocation_utilization`; true (simulated) fragmentation is reported inside
+  `page_lifecycle` as `kv_internal_fragmentation_ratio` (lifetime unused token
+  capacity within allocated pages) and `contiguous_free_run_ratio` (free-list index
+  contiguity snapshot, same name/definition as the measured KV page microbenchmark's
+  allocator-churn metric). See `docs/design_decisions.md`.
 - `plan_benchmark_results.json`: measured plan comparison for Metal, CPU, and
   hybrid candidates
 - `scheduler_decision_report.json`: baseline-vs-cost-aware scheduling comparison

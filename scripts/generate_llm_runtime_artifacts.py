@@ -1379,9 +1379,16 @@ def main():
             }
             for row in scenario_comparisons
         },
-        "fragmentation_ratio": round(
-            max(0.02, min(0.32, (total_blocks - selected.peak_allocated_blocks) / total_blocks * 0.11)),
-            3,
+        # free_capacity_ratio / peak_allocation_utilization are exact
+        # complements of total_blocks vs peak_allocated_blocks (headroom and
+        # utilization at peak load) -- not fragmentation. True fragmentation
+        # is tracked inside page_lifecycle (kv_internal_fragmentation_ratio,
+        # contiguous_free_run_ratio); see docs/design_decisions.md.
+        "free_capacity_ratio": round(
+            (total_blocks - selected.peak_allocated_blocks) / total_blocks, 4
+        ),
+        "peak_allocation_utilization": round(
+            selected.peak_allocated_blocks / total_blocks, 4
         ),
         "peak_allocated_blocks": selected.peak_allocated_blocks,
         "peak_kv_cache_mb": selected.peak_kv_cache_mb,

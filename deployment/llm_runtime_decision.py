@@ -384,6 +384,8 @@ class PagedKVLifecycle:
     peak_pages: int = 0
     allocated_pages: int = 0
     freed_pages: int = 0
+    tokens_capacity_allocated: int = 0
+    tokens_written: int = 0
     prefetch_attempts: int = 0
     prefetch_hits: int = 0
     prefetch_misses: int = 0
@@ -474,11 +476,28 @@ class PagedKVLifecycle:
             )
             self.request_pages.setdefault(request_id, []).append(page_id)
             allocated.append(page_id)
+            self.tokens_capacity_allocated += self.page_size_tokens
+            self.tokens_written += page_end - cursor
             cursor = page_end
 
         self.allocated_pages += len(allocated)
         self.peak_pages = max(self.peak_pages, self.used_pages())
         return allocated
+
+    def contiguous_free_run_ratio(self) -> float:
+        """Largest contiguous run of free page indices over pool size.
+
+        Free-list index contiguity, not real GPU/CPU allocator memory
+        fragmentation — same definition as the measured allocator-churn
+        benchmark's contiguous_free_run_ratio. End-of-run snapshot.
+        """
+        if not self.free_pages:
+            return 0.0
+        longest = current = 1
+        for prev, nxt in zip(self.free_pages, self.free_pages[1:]):
+            current = current + 1 if nxt == prev + 1 else 1
+            longest = max(longest, current)
+        return round(longest / self.total_pages, 4)
 
     def access_current_page(self, request_id: str, step: int) -> dict:
         pages = self.request_pages.get(request_id, [])
@@ -652,6 +671,12 @@ class PagedKVLifecycle:
             "usefulness_reenable_threshold": self.usefulness_reenable_threshold,
             "adaptive_guard_active": self.adaptive_guard_active,
             "adaptive_prefetch_skips": self.adaptive_prefetch_skips,
+            "kv_internal_fragmentation_ratio": (
+                round(1 - self.tokens_written / self.tokens_capacity_allocated, 4)
+                if self.tokens_capacity_allocated
+                else 0.0
+            ),
+            "contiguous_free_run_ratio": self.contiguous_free_run_ratio(),
         }
 
 

@@ -387,3 +387,59 @@ def test_pressure_guard_checked_before_and_takes_priority_over_adaptive_guard():
     assert kv.pressure_prefetch_skips == 1
     # the adaptive check never ran because the pressure guard returned first
     assert kv.adaptive_prefetch_skips == 0
+
+
+def test_kv_internal_fragmentation_ratio_zero_when_pages_fully_packed():
+    kv = PagedKVLifecycle(total_pages=10, page_size_tokens=4, kv_mb_per_page=1.0)
+    kv.allocate_range(request_id="r1", token_begin=0, token_end=8, step=0)
+    assert kv.summary()["kv_internal_fragmentation_ratio"] == 0.0
+
+
+def test_kv_internal_fragmentation_ratio_reflects_partial_last_page():
+    kv = PagedKVLifecycle(total_pages=10, page_size_tokens=16, kv_mb_per_page=1.0)
+    kv.allocate_range(request_id="r1", token_begin=0, token_end=20, step=0)
+    # 2 pages allocated (32 tokens capacity), only 20 tokens written
+    assert kv.summary()["kv_internal_fragmentation_ratio"] == round(1 - 20 / 32, 4)
+
+
+def test_kv_internal_fragmentation_ratio_zero_denominator_defaults_to_zero():
+    kv = PagedKVLifecycle(total_pages=10, page_size_tokens=4, kv_mb_per_page=1.0)
+    assert kv.summary()["kv_internal_fragmentation_ratio"] == 0.0
+
+
+def test_kv_internal_fragmentation_ratio_is_lifetime_not_snapshot():
+    kv = PagedKVLifecycle(total_pages=10, page_size_tokens=16, kv_mb_per_page=1.0)
+    kv.allocate_range(request_id="r1", token_begin=0, token_end=20, step=0)
+    kv.release_request("r1")
+    assert kv.pages == {}
+
+    kv.allocate_range(request_id="r2", token_begin=0, token_end=16, step=1)
+    # lifetime: 32 + 16 = 48 capacity, 20 + 16 = 36 written, despite r1's
+    # pages having been released and popped from self.pages
+    summary = kv.summary()
+    assert kv.tokens_capacity_allocated == 48
+    assert kv.tokens_written == 36
+    assert summary["kv_internal_fragmentation_ratio"] == round(1 - 36 / 48, 4)
+
+
+def test_contiguous_free_run_ratio_full_pool_free():
+    kv = PagedKVLifecycle(total_pages=8, page_size_tokens=4, kv_mb_per_page=1.0)
+    assert kv.summary()["contiguous_free_run_ratio"] == 1.0
+
+
+def test_contiguous_free_run_ratio_reflects_scattered_releases():
+    kv = PagedKVLifecycle(total_pages=8, page_size_tokens=4, kv_mb_per_page=1.0)
+    for i in range(8):
+        kv.allocate_range(request_id=f"r{i}", token_begin=0, token_end=4, step=0)
+    assert kv.summary()["contiguous_free_run_ratio"] == 0.0
+
+    # release alternating pages -> free indices {0, 2, 4, 6}, longest run is 1
+    for i in (0, 2, 4, 6):
+        kv.release_request(f"r{i}")
+    assert kv.free_pages == [0, 2, 4, 6]
+    assert kv.summary()["contiguous_free_run_ratio"] == round(1 / 8, 4)
+
+    # release the remaining pages too -> free indices {0..7}, longest run is 8
+    for i in (1, 3, 5, 7):
+        kv.release_request(f"r{i}")
+    assert kv.summary()["contiguous_free_run_ratio"] == 1.0
