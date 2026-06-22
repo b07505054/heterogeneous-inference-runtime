@@ -3,6 +3,7 @@ import json
 import math
 import platform
 import statistics
+import sys
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -21,6 +22,126 @@ class RequestShape:
     prompt_tokens: int
     output_tokens: int
     prefix_key: str
+
+
+class _FallbackDType:
+    def __init__(self, name, element_size):
+        self.name = name
+        self._element_size = element_size
+
+    def __repr__(self):
+        return f"torch.{self.name}"
+
+    def element_size(self):
+        return self._element_size
+
+
+class _FallbackTensor:
+    def __init__(self, shape, *, dtype, device="cpu"):
+        if shape == ():
+            self.shape = ()
+        elif isinstance(shape, int):
+            self.shape = (shape,)
+        else:
+            self.shape = tuple(shape)
+        self.dtype = dtype
+        self.device = device
+
+    def element_size(self):
+        return self.dtype.element_size()
+
+    def normal_(self, mean=0.0, std=1.0):
+        return self
+
+    def contiguous(self):
+        return self
+
+    def permute(self, *dims):
+        if len(dims) == 1 and isinstance(dims[0], (list, tuple)):
+            dims = tuple(dims[0])
+        return _FallbackTensor(tuple(self.shape[dim] for dim in dims), dtype=self.dtype, device=self.device)
+
+    def __getitem__(self, key):
+        if not isinstance(key, tuple):
+            key = (key,)
+        key = key + (slice(None),) * (len(self.shape) - len(key))
+        out_shape = []
+        for dim_size, index in zip(self.shape, key):
+            if isinstance(index, int):
+                continue
+            if isinstance(index, slice):
+                start, stop, step = index.indices(dim_size)
+                out_shape.append(max(0, math.ceil((stop - start) / step)))
+                continue
+            raise TypeError(f"unsupported fallback tensor index {index!r}")
+        return _FallbackTensor(tuple(out_shape), dtype=self.dtype, device=self.device)
+
+    def __setitem__(self, key, value):
+        return None
+
+
+class _FallbackCuda:
+    @staticmethod
+    def is_available():
+        return False
+
+    @staticmethod
+    def synchronize():
+        return None
+
+
+class _FallbackMps:
+    @staticmethod
+    def is_available():
+        return False
+
+    @staticmethod
+    def synchronize():
+        return None
+
+
+class _FallbackBackends:
+    mps = _FallbackMps()
+
+
+class _FallbackTorch:
+    __version__ = "fallback-shape-only"
+    float32 = _FallbackDType("float32", 4)
+    float16 = _FallbackDType("float16", 2)
+    bfloat16 = _FallbackDType("bfloat16", 2)
+    cuda = _FallbackCuda()
+    backends = _FallbackBackends()
+    mps = _FallbackMps()
+
+    @staticmethod
+    def empty(shape, *, dtype=None, device="cpu"):
+        return _FallbackTensor(shape, dtype=dtype or _FallbackTorch.float32, device=device)
+
+    @staticmethod
+    def randn(shape, *, dtype=None, device="cpu"):
+        return _FallbackTensor(shape, dtype=dtype or _FallbackTorch.float32, device=device)
+
+    @staticmethod
+    def cat(tensors, dim=0):
+        if not tensors:
+            raise ValueError("torch.cat fallback needs at least one tensor")
+        shape = list(tensors[0].shape)
+        shape[dim] = sum(tensor.shape[dim] for tensor in tensors)
+        return _FallbackTensor(tuple(shape), dtype=tensors[0].dtype, device=tensors[0].device)
+
+
+def import_torch_or_fallback():
+    try:
+        import torch  # type: ignore
+
+        return torch
+    except Exception:
+        fallback = _FallbackTorch()
+        sys.modules.setdefault("torch", fallback)
+        return fallback
+
+
+import_torch_or_fallback()
 
 
 class KVPagePool:
@@ -226,6 +347,16 @@ def dependency_status(torch=None):
         except Exception as exc:
             status["torch"]["error"] = f"{type(exc).__name__}: {exc}"
             return status
+    if isinstance(torch, _FallbackTorch):
+        status["torch"] = {
+            "available": False,
+            "fallback_active": True,
+            "fallback": "shape_only",
+            "version": getattr(torch, "__version__", None),
+            "cuda_available": False,
+            "mps_available": False,
+        }
+        return status
     status["torch"] = {
         "available": True,
         "version": getattr(torch, "__version__", None),
