@@ -27,6 +27,17 @@ Do not invent benchmark numbers. If a metric is not freshly measured, say whethe
 - Run tests after changes.
 - Explain changes after implementation.
 
+## Environment and Dependencies Policy
+
+- This repo uses a project-local `.venv` only. There is no system/global Python fallback for validation.
+- Do not install, upgrade, or uninstall packages (pip, brew, npm, system package managers, etc.) automatically.
+- `scripts/check.sh` requires `.venv/bin/python` to exist and fails with a clear message (not a silent fallback) if `.venv` is missing.
+- If a required dependency is missing inside `.venv`, stop and report exactly what's missing and which requirements file it belongs in (`requirements.txt` for runtime deps, `requirements-dev.txt` for test-only deps such as `pytest`/`numpy`). Do not work around the gap by installing it yourself.
+- `pytest`/`numpy` are hard-required by `scripts/check.sh`; `torch` is soft-checked — its absence is reported as a warning, not a failure, since dependent tests already degrade gracefully (report `status: "unavailable"`) when `torch` is missing.
+- Always ask before any pip/brew/npm/system install, even for a single test dependency, even if it seems low-risk.
+- `bash scripts/check.sh` is the canonical validation command. It never installs anything; it fails fast with a clear message when `.venv` or a required dependency is missing.
+- `.venv-rmsnorm` is a separate, CUDA-specific environment documented in `README.md`'s CUDA RMSNorm section. It is out of scope for `scripts/check.sh` and should not be modified as part of general dependency/test policy changes.
+
 ## Coding Guidance
 
 - Preserve the measured/artifact/simulated boundary in names, docs, and result metadata.
@@ -44,8 +55,9 @@ the Claude Code hook, and CI):
 bash scripts/check.sh
 ```
 
-This requires a local `.venv` (`.venv/bin/python`) and runs
-`pytest -vv agentic_eval/tests tests` with `PYTHONPATH` set to the repo root.
+This is equivalent to CI and never installs dependencies. It requires a local
+`.venv` (`.venv/bin/python`) and runs `pytest -vv agentic_eval/tests tests`
+with `PYTHONPATH` set to the repo root.
 The `.claude/settings.json` `PostToolUse` hook runs this script automatically
 after any Edit/Write/MultiEdit on a `.py` file. CI
 (`.github/workflows/agentic-eval-ci.yml`) invokes the same script rather than
@@ -53,6 +65,12 @@ embedding its own pytest command. CUDA- and TVM-dependent tests
 (`tests/test_rmsnorm_cuda_correctness.py`, `tests/test_tvm_matmul_bias_relu.py`)
 skip cleanly on machines without those dependencies; skips there are expected,
 not failures.
+
+Run core Python tests directly:
+
+```bash
+PYTHONPATH="$PWD" .venv/bin/python -m pytest -vv agentic_eval/tests tests
+```
 
 Run agentic eval:
 

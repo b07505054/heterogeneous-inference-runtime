@@ -1010,6 +1010,27 @@ heterogeneous-inference-runtime/
 
 ---
 
+## Validation
+
+This repo uses a project-local `.venv` only — there is no system/global Python fallback for validation. Create it and install dependencies manually (this repo never installs packages for you):
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt -r requirements-dev.txt
+```
+
+Run the canonical validation command, which mirrors CI exactly:
+
+```bash
+bash scripts/check.sh
+```
+
+`scripts/check.sh` requires `.venv/bin/python` to exist and fails with a clear message (it does not fall back to `python3` or any system interpreter) if `.venv` is missing. It hard-requires `pytest` and `numpy` to be importable inside `.venv` and stops with a clear message if either is missing. `torch` is soft-checked: if it's missing, the script prints a warning and continues, since dependent tests already degrade gracefully (`status: "unavailable"`) without it. The script never installs anything.
+
+`.venv-rmsnorm` is a separate, CUDA-specific environment for the RMSNorm case study (see the "CUDA RMSNorm Compiler/Runtime Case Study" section above) and is not covered by `scripts/check.sh`.
+
+---
+
 ## Reproduce Results
 
 ### Run Async Video Pipeline

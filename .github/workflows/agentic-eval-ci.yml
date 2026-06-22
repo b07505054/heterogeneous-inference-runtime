@@ -12,9 +12,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Create venv and install test dependencies
-        run: |
-          python -m venv .venv
-          .venv/bin/python -m pip install --upgrade pip pytest numpy
-      - name: Run validation
+      - name: Create project-local .venv
+        run: python -m venv .venv
+      - name: Install test dependencies into .venv
+        run: .venv/bin/pip install --upgrade pip && .venv/bin/pip install -r requirements-dev.txt
+      - name: Run canonical validation
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: bash scripts/check.sh
