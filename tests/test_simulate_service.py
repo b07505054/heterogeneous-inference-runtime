@@ -149,3 +149,121 @@ def test_simulate_rejects_unknown_path():
         assert status == 404
     finally:
         fixture.close()
+
+
+def test_simulate_batch_returns_simulated_batch_result():
+    fixture = _ServiceFixture()
+    try:
+        status, data = fixture.post(
+            {
+                "requests": [
+                    {"prompt_tokens": 256, "max_output_tokens": 32, "arrival_ms": 0.0},
+                ],
+                "policy": DEFAULT_POLICY,
+            },
+            path="/simulate_batch",
+        )
+        assert status == 200
+        assert data["result_type"] == "simulated"
+        assert data["mode"] == "batch"
+        assert data["policy"] == DEFAULT_POLICY
+        assert "git_commit" in data
+        assert "ttft_ms" in data
+        assert "tpot_ms" in data
+        assert "e2e_latency_ms" in data
+        assert "rejected_requests" in data
+        assert "oom_events" in data
+        assert "kv_page_lifecycle" in data
+    finally:
+        fixture.close()
+
+
+def test_simulate_batch_accepts_multiple_requests_and_matches_request_count():
+    fixture = _ServiceFixture()
+    try:
+        requests = [
+            {
+                "request_id": f"r{i}",
+                "prompt_tokens": 128,
+                "max_output_tokens": 16,
+                "arrival_ms": float(i),
+            }
+            for i in range(5)
+        ]
+        status, data = fixture.post({"requests": requests}, path="/simulate_batch")
+        assert status == 200
+        assert data["request_count"] == len(requests)
+    finally:
+        fixture.close()
+
+
+def test_simulate_batch_load_changes_pressure_related_fields():
+    fixture = _ServiceFixture()
+    try:
+        light_requests = [
+            {"request_id": f"light-{i}", "prompt_tokens": 128, "max_output_tokens": 16, "arrival_ms": float(i)}
+            for i in range(3)
+        ]
+        heavy_requests = [
+            {
+                "request_id": f"heavy-{i}",
+                "prompt_tokens": 4096,
+                "max_output_tokens": 256,
+                "arrival_ms": float(i) * 0.05,
+            }
+            for i in range(60)
+        ]
+        _, light = fixture.post(
+            {"requests": light_requests, "policy": DEFAULT_POLICY},
+            path="/simulate_batch",
+        )
+        _, heavy = fixture.post(
+            {"requests": heavy_requests, "policy": DEFAULT_POLICY},
+            path="/simulate_batch",
+        )
+        assert (
+            heavy["rejected_requests"] != light["rejected_requests"]
+            or heavy["oom_events"] != light["oom_events"]
+            or heavy["kv_page_lifecycle"]["pressure_prefetch_skips"]
+            != light["kv_page_lifecycle"]["pressure_prefetch_skips"]
+        )
+    finally:
+        fixture.close()
+
+
+def test_simulate_batch_rejects_empty_requests_list():
+    fixture = _ServiceFixture()
+    try:
+        status, data = fixture.post({"requests": []}, path="/simulate_batch")
+        assert status == 400
+        assert "error" in data
+    finally:
+        fixture.close()
+
+
+def test_simulate_batch_rejects_missing_requests_key():
+    fixture = _ServiceFixture()
+    try:
+        status, data = fixture.post({}, path="/simulate_batch")
+        assert status == 400
+        assert "error" in data
+    finally:
+        fixture.close()
+
+
+def test_simulate_batch_rejects_non_positive_tokens_in_entry():
+    fixture = _ServiceFixture()
+    try:
+        status, data = fixture.post(
+            {
+                "requests": [
+                    {"prompt_tokens": 128, "max_output_tokens": 16},
+                    {"prompt_tokens": 0, "max_output_tokens": 16},
+                ]
+            },
+            path="/simulate_batch",
+        )
+        assert status == 400
+        assert "error" in data
+    finally:
+        fixture.close()
