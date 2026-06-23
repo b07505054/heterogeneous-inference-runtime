@@ -803,6 +803,37 @@ Key outputs:
   `scripts/benchmark_kv_page_microbenchmark.py`. Distinct from the KV-cache
   simulation artifacts above; it does not run live vLLM/PagedAttention kernels.
 
+The KV page microbenchmark is an offline/manual calibration input, not an
+online scheduler control path. The scheduler already has a local paged-KV cost
+model; the `KVPagePool` benchmark is a physical measurement layer for
+offline/manual calibration, not runtime control. Keep the three layers separate:
+
+```text
+Runtime decision loop:
+  RuntimeScheduler / CostModel / PagedAttentionCostModel / PagedKVLifecycle
+
+Physical measurement layer:
+  scripts/benchmark_kv_page_microbenchmark.py
+
+Offline calibration bridge:
+  benchmark report -> inspect constants manually/future helper -> regenerate artifacts
+```
+
+Offline calibration workflow:
+
+```text
+run KVPagePool benchmark on target hardware
+-> inspect report provenance and p50/p95 movement costs
+-> manually calibrate scheduler cost constants if appropriate
+-> regenerate LLM runtime artifacts
+-> compare TPOT / throughput / OOM / reject / page lifecycle gates
+```
+
+Do not make `RuntimeScheduler` read `kv_page_microbenchmark_report.json` at
+startup or policy-selection time. The report is hardware- and workload-specific;
+future tooling may output suggested constants for review, but should not
+auto-edit code or auto-drive scheduler policy.
+
 The current LLM artifact generator now runs an actual scheduling decision loop:
 
 ```text

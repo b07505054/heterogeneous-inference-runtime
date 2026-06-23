@@ -86,6 +86,8 @@ The simulated `PagedKVLifecycle` in `deployment/llm_runtime_decision.py` reports
 
 Truth boundary: this benchmark measures tensor-backed paged KV storage and gather/copy/scatter overhead on the local device. It is not vLLM PagedAttention, not TensorRT-LLM paged attention, and not wired into live Qwen (or any other model's) attention. It does not invoke or claim to invoke a live vLLM/PagedAttention CUDA kernel. It is intentionally decoupled from the `MemoryPlanner`/`PagedKVLifecycle`/`RuntimeScheduler` logical simulation above — extending one does not change numbers produced by the other.
 
+Offline calibration boundary: the scheduler already has a local paged-KV cost model; the `KVPagePool` benchmark is a physical measurement layer for offline/manual calibration, not runtime control. A calibrated workflow should run the benchmark on target hardware, inspect report provenance plus p50/p95 movement costs, manually adjust cost-model constants if justified, regenerate LLM runtime artifacts, and compare TPOT, throughput, OOM/reject, and page-lifecycle gates. The runtime scheduler must not load `kv_page_microbenchmark_report.json` directly as an online control signal.
+
 ### Native runtime and CUDA experiments
 
 Implemented under `cpp_inference/`, `cuda_backend/`, `cuda_transformer_kernels/`, and `cuda_backend/kernels/`.

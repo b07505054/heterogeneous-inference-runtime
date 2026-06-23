@@ -1,0 +1,169 @@
+{
+  "artifact_type": "kv_page_microbenchmark_report",
+  "status": "completed",
+  "source": "scripts/benchmark_kv_page_microbenchmark.py",
+  "device": "mps",
+  "dtype": "float32",
+  "page_size_tokens": 16,
+  "num_layers": 1,
+  "num_kv_heads": 8,
+  "head_dim": 64,
+  "truth_boundary": "This benchmark measures tensor-backed paged KV storage and gather/copy overhead. It is not vLLM PagedAttention, not TensorRT-LLM paged attention, and not wired into live Qwen attention.",
+  "dependency_status": {
+    "python": "3.11.11",
+    "platform": "macOS-26.5.1-arm64-arm-64bit",
+    "torch": {
+      "available": true,
+      "version": "2.12.1",
+      "cuda_available": false,
+      "mps_available": true
+    }
+  },
+  "workload": {
+    "request_count": 32,
+    "generated_decode_steps": 3,
+    "prompt_tokens": {
+      "min": 128,
+      "max": 4096,
+      "total": 38400
+    },
+    "output_tokens": {
+      "min": 32,
+      "max": 256,
+      "total": 3456
+    }
+  },
+  "contiguous_baseline": {
+    "contiguous_slice_copy": {
+      "p50_ms": 0.001646,
+      "p95_ms": 0.01201,
+      "mean_ms": 0.007648,
+      "runs": 96
+    },
+    "one_token_append_update": {
+      "p50_ms": 0.1735,
+      "p95_ms": 0.247063,
+      "mean_ms": 0.202921,
+      "runs": 96
+    }
+  },
+  "paged_kv": {
+    "page_pool_init_cost": {
+      "ms": 0.789417,
+      "page_count": 8192
+    },
+    "page_checkout_cost": {
+      "p50_ms": 0.002312,
+      "p95_ms": 0.006156,
+      "mean_ms": 0.003298,
+      "runs": 96
+    },
+    "page_release_cost": {
+      "p50_ms": 0.015458,
+      "p95_ms": 0.019739,
+      "mean_ms": 0.016436,
+      "runs": 96
+    },
+    "free_list_reuse_cost": {
+      "p50_ms": 0.014062,
+      "p95_ms": 0.018696,
+      "mean_ms": 0.009867,
+      "runs": 192
+    },
+    "tensor_materialization_cost": {
+      "p50_ms": 1.09502,
+      "p95_ms": 3.611458,
+      "mean_ms": 1.376247,
+      "runs": 96
+    },
+    "leaked_pages_after_run": 0
+  },
+  "movement_cost": {
+    "paged_gather_to_contiguous": {
+      "p50_ms": 0.431729,
+      "p95_ms": 1.677937,
+      "mean_ms": 0.702743,
+      "runs": 96
+    },
+    "contiguous_slice_copy": {
+      "p50_ms": 0.001646,
+      "p95_ms": 0.01201,
+      "mean_ms": 0.007648,
+      "runs": 96
+    },
+    "scatter_update_one_token_kv": {
+      "p50_ms": 0.185562,
+      "p95_ms": 0.318895,
+      "mean_ms": 0.802159,
+      "runs": 96
+    },
+    "contiguous_update_one_token_kv": {
+      "p50_ms": 0.1735,
+      "p95_ms": 0.247063,
+      "mean_ms": 0.202921,
+      "runs": 96
+    }
+  },
+  "prefix_reuse_proxy": {
+    "reused_pages": 4272,
+    "avoided_copy_bytes": 279969792,
+    "estimated_saved_prefill_copy_mb": 267.0
+  },
+  "comparison": {
+    "paged_gather_p95_over_contiguous_copy_p95_ms": 1.665927,
+    "paged_gather_overhead_pct": 13871.166,
+    "paged_update_p95_over_contiguous_update_p95_ms": 0.071832,
+    "paged_update_overhead_pct": 29.074,
+    "fragmentation_ratio": 0.0,
+    "logical_kv_mb": 163.5,
+    "allocated_page_kv_mb": 163.5
+  },
+  "allocator_churn": {
+    "cycles": 256,
+    "total_checkouts": 129,
+    "checkout_cost": {
+      "p50_ms": 0.001292,
+      "p95_ms": 0.001709,
+      "mean_ms": 0.001359,
+      "runs": 129
+    },
+    "release_cost": {
+      "p50_ms": 0.014041,
+      "p95_ms": 0.014613,
+      "mean_ms": 0.014009,
+      "runs": 127
+    },
+    "contiguous_free_run_ratio": {
+      "description": "free-list fragmentation: largest contiguous run of free page indices divided by pool size. Not GPU/CPU allocator memory fragmentation.",
+      "min": 0.996338,
+      "mean": 0.998407,
+      "final": 0.999023
+    },
+    "page_reuse": {
+      "unique_pages_seen": 30,
+      "pages_reused": 29,
+      "page_reuse_events": 607
+    },
+    "leaked_pages_after_churn": 0
+  },
+  "provenance": {
+    "git_commit": "dcdae3655b7a3f08ab5ab14fbffab48cabd82ef4",
+    "timestamp_utc": "2026-06-23T04:42:39.712761+00:00",
+    "args": {
+      "output": "results/llm_runtime_artifacts/kv_page_microbenchmark_report.json",
+      "device": "auto",
+      "dtype": "float32",
+      "request_count": 32,
+      "iterations": 3,
+      "page_size_tokens": 16,
+      "page_count": 8192,
+      "num_layers": 1,
+      "num_kv_heads": 8,
+      "head_dim": 64,
+      "churn_cycles": 256,
+      "churn_max_pages_per_owner": 8,
+      "churn_seed": 1234,
+      "fail_on_unavailable": false
+    }
+  }
+}

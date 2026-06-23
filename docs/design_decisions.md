@@ -114,6 +114,14 @@ Tradeoff: keeping them separate means the scheduler simulation's policy invarian
 
 Assumption: extensions to the physical KV microbenchmark must not modify `MemoryPlanner`, `RuntimeScheduler`, or `PagedKVLifecycle`, and must not claim to measure or invoke a live vLLM/PagedAttention CUDA kernel.
 
+## Treat KV Microbenchmarks As Offline Calibration Evidence
+
+The scheduler already uses a local paged-KV cost model through `CostModel`, `PagedAttentionCostModel`, and `PagedKVLifecycle`. The `KVPagePool` benchmark is a physical measurement layer that can inform those constants offline, but it is not an online scheduler input.
+
+Tradeoff: reading a benchmark JSON directly at runtime would make scheduler behavior depend on stale, hardware-specific, workload-specific measurements. The safer flow is manual/offline: run the benchmark on target hardware, inspect provenance and p50/p95 movement costs, adjust constants only when justified, regenerate artifacts, then compare TPOT, throughput, OOM/reject, and page-lifecycle gates.
+
+Assumption: a future helper may emit suggested values for constants such as `page_read_ms`, `non_contiguous_segment_penalty_ms`, `kv_update_ms_per_block`, and prefetch hit/miss terms, but it must not auto-edit code or auto-drive scheduler policy.
+
 ## KV Cache "Fragmentation" Must Measure Fragmentation
 
 `kv_cache_trace.json` used to report a field named `fragmentation_ratio` computed as `(total_blocks - peak_allocated_blocks) / total_blocks * 0.11`, clamped to `[0.02, 0.32]`. That formula measures unused peak capacity, not fragmentation (wasted/unusable space within or between allocations), and the `0.11` scale and clamp bounds had no derivation. The field has been removed; no external consumer depended on it.

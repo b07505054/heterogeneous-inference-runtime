@@ -29,6 +29,13 @@
 - Add a script that validates whether committed result artifacts match the current schema.
 - Label modeled or estimated metrics as modeled/estimated in generated reports.
 
+## Add Offline KV Cost Calibration Helper
+
+- Add a helper that reads `kv_page_microbenchmark_report.json` and prints suggested scheduler constants for manual review.
+- Candidate suggestions may cover `page_read_ms`, `non_contiguous_segment_penalty_ms`, `kv_update_ms_per_block`, and prefetch hit/miss terms.
+- The helper must not edit source files, write runtime config, or make `RuntimeScheduler` consume benchmark JSON directly.
+- Validate any accepted constants by regenerating LLM runtime artifacts and comparing TPOT, throughput, OOM/reject, and page-lifecycle gates.
+
 ## Split Large LLM Runtime Files
 
 Potential module boundaries:
