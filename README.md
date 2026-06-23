@@ -972,6 +972,75 @@ The committed artifact uses a tiny public Llama model to keep the repo
 reproducible, while preserving the same profiling path for larger local
 Llama-family models.
 
+### GPU Batch-Scaling Benchmark
+
+`scripts/benchmark_gpu_decode_batch_scaling.py` measures real CUDA latency for
+a synthetic transformer decode block (attention + MLP) across batch sizes and
+context lengths, on a target GPU. Like the KV page microbenchmark above, this
+is a physical measurement layer, not a runtime control path:
+
+```text
+Truth boundary: measured (latency/memory numbers), synthetic workload
+  -> NOT a full pretrained model (not Qwen)
+  -> NOT vLLM, NOT TensorRT-LLM, NOT a production serving benchmark
+  -> does not currently feed RuntimeScheduler, CostModel, or
+     PagedAttentionCostModel
+```
+
+Today's reference hardware is a remote GTX 1650 Max-Q box:
+
+```text
+remote target: allen@192.168.1.182
+GPU: NVIDIA GTX 1650 Max-Q
+CUDA_HOME: /usr/local/cuda-13.1
+Python env: uv-managed Python 3.12 virtualenv (.venv-gpu-bench),
+  separate from this repo's canonical .venv and out of scope for
+  scripts/check.sh
+```
+
+Remote setup:
+
+```bash
+ssh allen@192.168.1.182
+cd ~/Desktop/Project/heterogeneous-inference-runtime
+uv venv .venv-gpu-bench --python 3.12
+source .venv-gpu-bench/bin/activate
+uv pip install torch --index-url https://download.pytorch.org/whl/cu124  # placeholder: confirm the cu1xx tag against the installed driver before running
+```
+
+Verify CUDA is visible before trusting any measured output:
+
+```bash
+python -c "import torch; print(torch.__version__, torch.version.cuda, torch.cuda.is_available(), torch.cuda.get_device_name(0))"
+nvidia-smi --query-gpu=name,driver_version,memory.total --format=csv
+```
+
+Run the benchmark:
+
+```bash
+python scripts/benchmark_gpu_decode_batch_scaling.py \
+  --batch-sizes 1,2,4,8 \
+  --context-tokens 128,512,1024,2048 \
+  --prefill-tokens 128,512,1024,2048,4096 \
+  --include-prefill \
+  --dtype fp16 \
+  --warmup 20 \
+  --runs 50 \
+  --output results/llm_runtime_artifacts/gpu_decode_batch_scaling_gtx1650maxq.json
+```
+
+If `torch` or CUDA is unavailable (e.g. running locally on a Mac), the script
+writes `status: "unavailable"` instead of crashing, and that artifact must not
+be committed in place of a real GPU run (see
+`results/llm_runtime_artifacts/manifest.json`).
+
+Future calibration note: this artifact may later be used as an input to
+`CostModel.calibrate()` in `deployment/llm_runtime_decision.py`, the same way
+the KV page microbenchmark is an offline calibration input for KV-related
+constants. As of this benchmark's introduction, it does not control any
+scheduler decision — wiring it into calibration is a separate, explicit future
+step.
+
 ### Transformer Kernel Feedback
 
 This repo now also produces runtime kernel profile evidence for
