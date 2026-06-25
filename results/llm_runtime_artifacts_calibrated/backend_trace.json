@@ -1,0 +1,69 @@
+{
+  "placements": [
+    {
+      "request_id": "req-001",
+      "op": "attention_prefill",
+      "backend": "gpu",
+      "latency_ms": 47.809
+    },
+    {
+      "request_id": "req-001",
+      "op": "kv_cache_update",
+      "backend": "cpu",
+      "latency_ms": 0.29
+    },
+    {
+      "request_id": "req-003",
+      "op": "attention_prefill",
+      "backend": "gpu",
+      "latency_ms": 484.75
+    },
+    {
+      "request_id": "req-003",
+      "op": "kv_cache_update",
+      "backend": "cpu",
+      "latency_ms": 0.906
+    },
+    {
+      "request_id": "req-013",
+      "op": "attention_prefill",
+      "backend": "gpu",
+      "latency_ms": 220.067
+    },
+    {
+      "request_id": "req-013",
+      "op": "kv_cache_update",
+      "backend": "cpu",
+      "latency_ms": 0.554
+    },
+    {
+      "request_id": "req-021",
+      "op": "attention_prefill",
+      "backend": "gpu",
+      "latency_ms": 50.595
+    },
+    {
+      "request_id": "req-021",
+      "op": "kv_cache_update",
+      "backend": "cpu",
+      "latency_ms": 0.268
+    },
+    {
+      "request_id": "req-029",
+      "op": "attention_prefill",
+      "backend": "gpu",
+      "latency_ms": 49.219
+    },
+    {
+      "request_id": "req-029",
+      "op": "kv_cache_update",
+      "backend": "cpu",
+      "latency_ms": 0.334
+    }
+  ],
+  "summary": {
+    "gpu_ops": 5,
+    "cpu_ops": 5,
+    "heterogeneous_policy": "attention on gpu, kv bookkeeping on cpu"
+  }
+}

@@ -1,0 +1,2382 @@
+{
+  "artifact_type": "vllm_style_page_prefetch_trace",
+  "policy": "cost_aware_memory_pressure_page_prefetch",
+  "scheduler_events": [
+    {
+      "time_ms": 126.839,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.1836,
+      "active_requests": [
+        "req-001",
+        "req-002",
+        "req-004",
+        "req-005",
+        "req-008",
+        "req-009",
+        "req-010",
+        "req-011"
+      ],
+      "step": 0,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-001",
+          "block": 3
+        },
+        {
+          "request_id": "req-001",
+          "block": 4
+        },
+        {
+          "request_id": "req-002",
+          "block": 17
+        },
+        {
+          "request_id": "req-002",
+          "block": 18
+        },
+        {
+          "request_id": "req-004",
+          "block": 23
+        },
+        {
+          "request_id": "req-004",
+          "block": 24
+        },
+        {
+          "request_id": "req-005",
+          "block": 33
+        },
+        {
+          "request_id": "req-005",
+          "block": 34
+        },
+        {
+          "request_id": "req-008",
+          "block": 39
+        },
+        {
+          "request_id": "req-008",
+          "block": 40
+        },
+        {
+          "request_id": "req-009",
+          "block": 59
+        },
+        {
+          "request_id": "req-009",
+          "block": 60
+        }
+      ],
+      "prefetched_blocks": 12
+    },
+    {
+      "time_ms": 423.625,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.1836,
+      "active_requests": [
+        "req-001",
+        "req-002",
+        "req-004",
+        "req-005",
+        "req-008",
+        "req-009",
+        "req-010",
+        "req-011"
+      ],
+      "step": 16,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-001",
+          "block": 4
+        },
+        {
+          "request_id": "req-001",
+          "block": 5
+        },
+        {
+          "request_id": "req-002",
+          "block": 18
+        },
+        {
+          "request_id": "req-002",
+          "block": 19
+        },
+        {
+          "request_id": "req-004",
+          "block": 24
+        },
+        {
+          "request_id": "req-004",
+          "block": 25
+        },
+        {
+          "request_id": "req-005",
+          "block": 34
+        },
+        {
+          "request_id": "req-005",
+          "block": 35
+        },
+        {
+          "request_id": "req-008",
+          "block": 40
+        },
+        {
+          "request_id": "req-008",
+          "block": 41
+        },
+        {
+          "request_id": "req-009",
+          "block": 60
+        },
+        {
+          "request_id": "req-009",
+          "block": 61
+        }
+      ],
+      "prefetched_blocks": 12
+    },
+    {
+      "time_ms": 716.109,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.1836,
+      "active_requests": [
+        "req-001",
+        "req-008",
+        "req-009",
+        "req-011"
+      ],
+      "step": 32,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-001",
+          "block": 5
+        },
+        {
+          "request_id": "req-001",
+          "block": 6
+        },
+        {
+          "request_id": "req-008",
+          "block": 41
+        },
+        {
+          "request_id": "req-008",
+          "block": 42
+        },
+        {
+          "request_id": "req-009",
+          "block": 61
+        },
+        {
+          "request_id": "req-009",
+          "block": 62
+        },
+        {
+          "request_id": "req-011",
+          "block": 89
+        },
+        {
+          "request_id": "req-011",
+          "block": 90
+        }
+      ],
+      "prefetched_blocks": 8
+    },
+    {
+      "time_ms": 990.228,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.1836,
+      "active_requests": [
+        "req-001",
+        "req-008",
+        "req-009",
+        "req-011"
+      ],
+      "step": 48,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-001",
+          "block": 6
+        },
+        {
+          "request_id": "req-001",
+          "block": 7
+        },
+        {
+          "request_id": "req-008",
+          "block": 42
+        },
+        {
+          "request_id": "req-008",
+          "block": 43
+        },
+        {
+          "request_id": "req-009",
+          "block": 62
+        },
+        {
+          "request_id": "req-009",
+          "block": 63
+        },
+        {
+          "request_id": "req-011",
+          "block": 90
+        },
+        {
+          "request_id": "req-011",
+          "block": 91
+        }
+      ],
+      "prefetched_blocks": 8
+    },
+    {
+      "time_ms": 1280.133,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.1836,
+      "active_requests": [
+        "req-001",
+        "req-009",
+        "req-011"
+      ],
+      "step": 64,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-001",
+          "block": 7
+        },
+        {
+          "request_id": "req-001",
+          "block": 8
+        },
+        {
+          "request_id": "req-009",
+          "block": 63
+        },
+        {
+          "request_id": "req-009",
+          "block": 64
+        },
+        {
+          "request_id": "req-011",
+          "block": 91
+        },
+        {
+          "request_id": "req-011",
+          "block": 92
+        }
+      ],
+      "prefetched_blocks": 6
+    },
+    {
+      "time_ms": 1558.651,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.1836,
+      "active_requests": [
+        "req-001",
+        "req-009",
+        "req-011"
+      ],
+      "step": 80,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-001",
+          "block": 8
+        },
+        {
+          "request_id": "req-001",
+          "block": 9
+        },
+        {
+          "request_id": "req-009",
+          "block": 64
+        },
+        {
+          "request_id": "req-009",
+          "block": 65
+        },
+        {
+          "request_id": "req-011",
+          "block": 92
+        },
+        {
+          "request_id": "req-011",
+          "block": 93
+        }
+      ],
+      "prefetched_blocks": 6
+    },
+    {
+      "time_ms": 3009.696,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.543,
+      "active_requests": [
+        "req-003",
+        "req-006",
+        "req-007",
+        "req-012"
+      ],
+      "step": 0,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-003",
+          "block": 63
+        },
+        {
+          "request_id": "req-003",
+          "block": 64
+        },
+        {
+          "request_id": "req-006",
+          "block": 129
+        },
+        {
+          "request_id": "req-006",
+          "block": 130
+        },
+        {
+          "request_id": "req-007",
+          "block": 201
+        },
+        {
+          "request_id": "req-007",
+          "block": 202
+        },
+        {
+          "request_id": "req-012",
+          "block": 271
+        },
+        {
+          "request_id": "req-012",
+          "block": 272
+        }
+      ],
+      "prefetched_blocks": 8
+    },
+    {
+      "time_ms": 3384.262,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.543,
+      "active_requests": [
+        "req-003",
+        "req-006",
+        "req-007",
+        "req-012"
+      ],
+      "step": 16,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-003",
+          "block": 64
+        },
+        {
+          "request_id": "req-003",
+          "block": 65
+        },
+        {
+          "request_id": "req-006",
+          "block": 130
+        },
+        {
+          "request_id": "req-006",
+          "block": 131
+        },
+        {
+          "request_id": "req-007",
+          "block": 202
+        },
+        {
+          "request_id": "req-007",
+          "block": 203
+        },
+        {
+          "request_id": "req-012",
+          "block": 272
+        },
+        {
+          "request_id": "req-012",
+          "block": 273
+        }
+      ],
+      "prefetched_blocks": 8
+    },
+    {
+      "time_ms": 3783.896,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.543,
+      "active_requests": [
+        "req-006",
+        "req-007",
+        "req-012"
+      ],
+      "step": 32,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-006",
+          "block": 131
+        },
+        {
+          "request_id": "req-006",
+          "block": 132
+        },
+        {
+          "request_id": "req-007",
+          "block": 203
+        },
+        {
+          "request_id": "req-007",
+          "block": 204
+        },
+        {
+          "request_id": "req-012",
+          "block": 273
+        },
+        {
+          "request_id": "req-012",
+          "block": 274
+        }
+      ],
+      "prefetched_blocks": 6
+    },
+    {
+      "time_ms": 4109.388,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.543,
+      "active_requests": [
+        "req-006",
+        "req-007",
+        "req-012"
+      ],
+      "step": 48,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-006",
+          "block": 132
+        },
+        {
+          "request_id": "req-006",
+          "block": 133
+        },
+        {
+          "request_id": "req-007",
+          "block": 204
+        },
+        {
+          "request_id": "req-007",
+          "block": 205
+        },
+        {
+          "request_id": "req-012",
+          "block": 274
+        },
+        {
+          "request_id": "req-012",
+          "block": 275
+        }
+      ],
+      "prefetched_blocks": 6
+    },
+    {
+      "time_ms": 4435.565,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.543,
+      "active_requests": [
+        "req-006",
+        "req-007",
+        "req-012"
+      ],
+      "step": 64,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-006",
+          "block": 133
+        },
+        {
+          "request_id": "req-006",
+          "block": 134
+        },
+        {
+          "request_id": "req-007",
+          "block": 205
+        },
+        {
+          "request_id": "req-007",
+          "block": 206
+        },
+        {
+          "request_id": "req-012",
+          "block": 275
+        },
+        {
+          "request_id": "req-012",
+          "block": 276
+        }
+      ],
+      "prefetched_blocks": 6
+    },
+    {
+      "time_ms": 4773.708,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.543,
+      "active_requests": [
+        "req-006",
+        "req-007",
+        "req-012"
+      ],
+      "step": 80,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-006",
+          "block": 134
+        },
+        {
+          "request_id": "req-006",
+          "block": 135
+        },
+        {
+          "request_id": "req-007",
+          "block": 206
+        },
+        {
+          "request_id": "req-007",
+          "block": 207
+        },
+        {
+          "request_id": "req-012",
+          "block": 276
+        },
+        {
+          "request_id": "req-012",
+          "block": 277
+        }
+      ],
+      "prefetched_blocks": 6
+    },
+    {
+      "time_ms": 5101.315,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.543,
+      "active_requests": [
+        "req-006"
+      ],
+      "step": 96,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-006",
+          "block": 135
+        },
+        {
+          "request_id": "req-006",
+          "block": 136
+        }
+      ],
+      "prefetched_blocks": 2
+    },
+    {
+      "time_ms": 5331.903,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.543,
+      "active_requests": [
+        "req-006"
+      ],
+      "step": 112,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-006",
+          "block": 136
+        },
+        {
+          "request_id": "req-006",
+          "block": 137
+        }
+      ],
+      "prefetched_blocks": 2
+    },
+    {
+      "time_ms": 6107.155,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.4062,
+      "active_requests": [
+        "req-013",
+        "req-014",
+        "req-015",
+        "req-016",
+        "req-017",
+        "req-018",
+        "req-019",
+        "req-020"
+      ],
+      "step": 0,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-013",
+          "block": 31
+        },
+        {
+          "request_id": "req-013",
+          "block": 32
+        },
+        {
+          "request_id": "req-014",
+          "block": 65
+        },
+        {
+          "request_id": "req-014",
+          "block": 66
+        },
+        {
+          "request_id": "req-015",
+          "block": 131
+        },
+        {
+          "request_id": "req-015",
+          "block": 132
+        },
+        {
+          "request_id": "req-016",
+          "block": 141
+        },
+        {
+          "request_id": "req-016",
+          "block": 142
+        },
+        {
+          "request_id": "req-017",
+          "block": 159
+        },
+        {
+          "request_id": "req-017",
+          "block": 160
+        },
+        {
+          "request_id": "req-018",
+          "block": 165
+        },
+        {
+          "request_id": "req-018",
+          "block": 166
+        }
+      ],
+      "prefetched_blocks": 12
+    },
+    {
+      "time_ms": 6499.271,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.4062,
+      "active_requests": [
+        "req-013",
+        "req-014",
+        "req-015",
+        "req-016",
+        "req-017",
+        "req-018",
+        "req-019",
+        "req-020"
+      ],
+      "step": 16,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-013",
+          "block": 32
+        },
+        {
+          "request_id": "req-013",
+          "block": 33
+        },
+        {
+          "request_id": "req-014",
+          "block": 66
+        },
+        {
+          "request_id": "req-014",
+          "block": 67
+        },
+        {
+          "request_id": "req-015",
+          "block": 132
+        },
+        {
+          "request_id": "req-015",
+          "block": 133
+        },
+        {
+          "request_id": "req-016",
+          "block": 142
+        },
+        {
+          "request_id": "req-016",
+          "block": 143
+        },
+        {
+          "request_id": "req-017",
+          "block": 160
+        },
+        {
+          "request_id": "req-017",
+          "block": 161
+        },
+        {
+          "request_id": "req-018",
+          "block": 166
+        },
+        {
+          "request_id": "req-018",
+          "block": 167
+        }
+      ],
+      "prefetched_blocks": 12
+    },
+    {
+      "time_ms": 6872.924,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.4062,
+      "active_requests": [
+        "req-015",
+        "req-018",
+        "req-019",
+        "req-020"
+      ],
+      "step": 32,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-015",
+          "block": 133
+        },
+        {
+          "request_id": "req-015",
+          "block": 134
+        },
+        {
+          "request_id": "req-018",
+          "block": 167
+        },
+        {
+          "request_id": "req-018",
+          "block": 168
+        },
+        {
+          "request_id": "req-019",
+          "block": 191
+        },
+        {
+          "request_id": "req-019",
+          "block": 192
+        },
+        {
+          "request_id": "req-020",
+          "block": 203
+        },
+        {
+          "request_id": "req-020",
+          "block": 204
+        }
+      ],
+      "prefetched_blocks": 8
+    },
+    {
+      "time_ms": 7204.008,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.4062,
+      "active_requests": [
+        "req-015",
+        "req-018",
+        "req-019",
+        "req-020"
+      ],
+      "step": 48,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-015",
+          "block": 134
+        },
+        {
+          "request_id": "req-015",
+          "block": 135
+        },
+        {
+          "request_id": "req-018",
+          "block": 168
+        },
+        {
+          "request_id": "req-018",
+          "block": 169
+        },
+        {
+          "request_id": "req-019",
+          "block": 192
+        },
+        {
+          "request_id": "req-019",
+          "block": 193
+        },
+        {
+          "request_id": "req-020",
+          "block": 204
+        },
+        {
+          "request_id": "req-020",
+          "block": 205
+        }
+      ],
+      "prefetched_blocks": 8
+    },
+    {
+      "time_ms": 7536.927,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.4062,
+      "active_requests": [
+        "req-015",
+        "req-018",
+        "req-020"
+      ],
+      "step": 64,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-015",
+          "block": 135
+        },
+        {
+          "request_id": "req-015",
+          "block": 136
+        },
+        {
+          "request_id": "req-018",
+          "block": 169
+        },
+        {
+          "request_id": "req-018",
+          "block": 170
+        },
+        {
+          "request_id": "req-020",
+          "block": 205
+        },
+        {
+          "request_id": "req-020",
+          "block": 206
+        }
+      ],
+      "prefetched_blocks": 6
+    },
+    {
+      "time_ms": 7825.058,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.4062,
+      "active_requests": [
+        "req-015",
+        "req-018",
+        "req-020"
+      ],
+      "step": 80,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-015",
+          "block": 136
+        },
+        {
+          "request_id": "req-015",
+          "block": 137
+        },
+        {
+          "request_id": "req-018",
+          "block": 170
+        },
+        {
+          "request_id": "req-018",
+          "block": 171
+        },
+        {
+          "request_id": "req-020",
+          "block": 206
+        },
+        {
+          "request_id": "req-020",
+          "block": 207
+        }
+      ],
+      "prefetched_blocks": 6
+    },
+    {
+      "time_ms": 8123.163,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.4062,
+      "active_requests": [
+        "req-018"
+      ],
+      "step": 96,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-018",
+          "block": 171
+        },
+        {
+          "request_id": "req-018",
+          "block": 172
+        }
+      ],
+      "prefetched_blocks": 2
+    },
+    {
+      "time_ms": 8340.139,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.4062,
+      "active_requests": [
+        "req-018"
+      ],
+      "step": 112,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-018",
+          "block": 172
+        },
+        {
+          "request_id": "req-018",
+          "block": 173
+        }
+      ],
+      "prefetched_blocks": 2
+    },
+    {
+      "time_ms": 8677.309,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.3164,
+      "active_requests": [
+        "req-021",
+        "req-022",
+        "req-023",
+        "req-024",
+        "req-025",
+        "req-026",
+        "req-027",
+        "req-028"
+      ],
+      "step": 0,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-021",
+          "block": 3
+        },
+        {
+          "request_id": "req-021",
+          "block": 4
+        },
+        {
+          "request_id": "req-022",
+          "block": 15
+        },
+        {
+          "request_id": "req-022",
+          "block": 16
+        },
+        {
+          "request_id": "req-023",
+          "block": 35
+        },
+        {
+          "request_id": "req-023",
+          "block": 36
+        },
+        {
+          "request_id": "req-024",
+          "block": 43
+        },
+        {
+          "request_id": "req-024",
+          "block": 44
+        },
+        {
+          "request_id": "req-025",
+          "block": 63
+        },
+        {
+          "request_id": "req-025",
+          "block": 64
+        },
+        {
+          "request_id": "req-026",
+          "block": 79
+        },
+        {
+          "request_id": "req-026",
+          "block": 80
+        }
+      ],
+      "prefetched_blocks": 12
+    },
+    {
+      "time_ms": 8977.594,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.3164,
+      "active_requests": [
+        "req-021",
+        "req-022",
+        "req-023",
+        "req-024",
+        "req-025",
+        "req-026",
+        "req-027",
+        "req-028"
+      ],
+      "step": 16,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-021",
+          "block": 4
+        },
+        {
+          "request_id": "req-021",
+          "block": 5
+        },
+        {
+          "request_id": "req-022",
+          "block": 16
+        },
+        {
+          "request_id": "req-022",
+          "block": 17
+        },
+        {
+          "request_id": "req-023",
+          "block": 36
+        },
+        {
+          "request_id": "req-023",
+          "block": 37
+        },
+        {
+          "request_id": "req-024",
+          "block": 44
+        },
+        {
+          "request_id": "req-024",
+          "block": 45
+        },
+        {
+          "request_id": "req-025",
+          "block": 64
+        },
+        {
+          "request_id": "req-025",
+          "block": 65
+        },
+        {
+          "request_id": "req-026",
+          "block": 80
+        },
+        {
+          "request_id": "req-026",
+          "block": 81
+        }
+      ],
+      "prefetched_blocks": 12
+    },
+    {
+      "time_ms": 9285.022,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.3164,
+      "active_requests": [
+        "req-021",
+        "req-022",
+        "req-023",
+        "req-024",
+        "req-025",
+        "req-026",
+        "req-027",
+        "req-028"
+      ],
+      "step": 32,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-021",
+          "block": 5
+        },
+        {
+          "request_id": "req-021",
+          "block": 6
+        },
+        {
+          "request_id": "req-022",
+          "block": 17
+        },
+        {
+          "request_id": "req-022",
+          "block": 18
+        },
+        {
+          "request_id": "req-023",
+          "block": 37
+        },
+        {
+          "request_id": "req-023",
+          "block": 38
+        },
+        {
+          "request_id": "req-024",
+          "block": 45
+        },
+        {
+          "request_id": "req-024",
+          "block": 46
+        },
+        {
+          "request_id": "req-025",
+          "block": 65
+        },
+        {
+          "request_id": "req-025",
+          "block": 66
+        },
+        {
+          "request_id": "req-026",
+          "block": 81
+        },
+        {
+          "request_id": "req-026",
+          "block": 82
+        }
+      ],
+      "prefetched_blocks": 12
+    },
+    {
+      "time_ms": 9583.024,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.3164,
+      "active_requests": [
+        "req-021",
+        "req-022",
+        "req-023",
+        "req-024",
+        "req-025",
+        "req-026",
+        "req-027",
+        "req-028"
+      ],
+      "step": 48,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-021",
+          "block": 6
+        },
+        {
+          "request_id": "req-021",
+          "block": 7
+        },
+        {
+          "request_id": "req-022",
+          "block": 18
+        },
+        {
+          "request_id": "req-022",
+          "block": 19
+        },
+        {
+          "request_id": "req-023",
+          "block": 38
+        },
+        {
+          "request_id": "req-023",
+          "block": 39
+        },
+        {
+          "request_id": "req-024",
+          "block": 46
+        },
+        {
+          "request_id": "req-024",
+          "block": 47
+        },
+        {
+          "request_id": "req-025",
+          "block": 66
+        },
+        {
+          "request_id": "req-025",
+          "block": 67
+        },
+        {
+          "request_id": "req-026",
+          "block": 82
+        },
+        {
+          "request_id": "req-026",
+          "block": 83
+        }
+      ],
+      "prefetched_blocks": 12
+    },
+    {
+      "time_ms": 9896.271,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.3164,
+      "active_requests": [
+        "req-025",
+        "req-026",
+        "req-027"
+      ],
+      "step": 64,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-025",
+          "block": 67
+        },
+        {
+          "request_id": "req-025",
+          "block": 68
+        },
+        {
+          "request_id": "req-026",
+          "block": 83
+        },
+        {
+          "request_id": "req-026",
+          "block": 84
+        },
+        {
+          "request_id": "req-027",
+          "block": 121
+        },
+        {
+          "request_id": "req-027",
+          "block": 122
+        }
+      ],
+      "prefetched_blocks": 6
+    },
+    {
+      "time_ms": 10179.378,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.3164,
+      "active_requests": [
+        "req-025",
+        "req-026",
+        "req-027"
+      ],
+      "step": 80,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-025",
+          "block": 68
+        },
+        {
+          "request_id": "req-025",
+          "block": 69
+        },
+        {
+          "request_id": "req-026",
+          "block": 84
+        },
+        {
+          "request_id": "req-026",
+          "block": 85
+        },
+        {
+          "request_id": "req-027",
+          "block": 122
+        },
+        {
+          "request_id": "req-027",
+          "block": 123
+        }
+      ],
+      "prefetched_blocks": 6
+    },
+    {
+      "time_ms": 10462.167,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.3164,
+      "active_requests": [
+        "req-025",
+        "req-027"
+      ],
+      "step": 96,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-025",
+          "block": 69
+        },
+        {
+          "request_id": "req-025",
+          "block": 70
+        },
+        {
+          "request_id": "req-027",
+          "block": 123
+        },
+        {
+          "request_id": "req-027",
+          "block": 124
+        }
+      ],
+      "prefetched_blocks": 4
+    },
+    {
+      "time_ms": 10741.289,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.3164,
+      "active_requests": [
+        "req-025",
+        "req-027"
+      ],
+      "step": 112,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-025",
+          "block": 70
+        },
+        {
+          "request_id": "req-025",
+          "block": 71
+        },
+        {
+          "request_id": "req-027",
+          "block": 124
+        },
+        {
+          "request_id": "req-027",
+          "block": 125
+        }
+      ],
+      "prefetched_blocks": 4
+    },
+    {
+      "time_ms": 11142.939,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.1484,
+      "active_requests": [
+        "req-029",
+        "req-030",
+        "req-031",
+        "req-032"
+      ],
+      "step": 0,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-029",
+          "block": 7
+        },
+        {
+          "request_id": "req-029",
+          "block": 8
+        },
+        {
+          "request_id": "req-030",
+          "block": 45
+        },
+        {
+          "request_id": "req-030",
+          "block": 46
+        },
+        {
+          "request_id": "req-031",
+          "block": 61
+        },
+        {
+          "request_id": "req-031",
+          "block": 62
+        },
+        {
+          "request_id": "req-032",
+          "block": 73
+        },
+        {
+          "request_id": "req-032",
+          "block": 74
+        }
+      ],
+      "prefetched_blocks": 8
+    },
+    {
+      "time_ms": 11435.453,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.1484,
+      "active_requests": [
+        "req-029",
+        "req-030",
+        "req-031",
+        "req-032"
+      ],
+      "step": 16,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-029",
+          "block": 8
+        },
+        {
+          "request_id": "req-029",
+          "block": 9
+        },
+        {
+          "request_id": "req-030",
+          "block": 46
+        },
+        {
+          "request_id": "req-030",
+          "block": 47
+        },
+        {
+          "request_id": "req-031",
+          "block": 62
+        },
+        {
+          "request_id": "req-031",
+          "block": 63
+        },
+        {
+          "request_id": "req-032",
+          "block": 74
+        },
+        {
+          "request_id": "req-032",
+          "block": 75
+        }
+      ],
+      "prefetched_blocks": 8
+    },
+    {
+      "time_ms": 11711.969,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.1484,
+      "active_requests": [
+        "req-029",
+        "req-030",
+        "req-031"
+      ],
+      "step": 32,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-029",
+          "block": 9
+        },
+        {
+          "request_id": "req-029",
+          "block": 10
+        },
+        {
+          "request_id": "req-030",
+          "block": 47
+        },
+        {
+          "request_id": "req-030",
+          "block": 48
+        },
+        {
+          "request_id": "req-031",
+          "block": 63
+        },
+        {
+          "request_id": "req-031",
+          "block": 64
+        }
+      ],
+      "prefetched_blocks": 6
+    },
+    {
+      "time_ms": 11997.048,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.1484,
+      "active_requests": [
+        "req-029",
+        "req-030",
+        "req-031"
+      ],
+      "step": 48,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-029",
+          "block": 10
+        },
+        {
+          "request_id": "req-029",
+          "block": 11
+        },
+        {
+          "request_id": "req-030",
+          "block": 48
+        },
+        {
+          "request_id": "req-030",
+          "block": 49
+        },
+        {
+          "request_id": "req-031",
+          "block": 64
+        },
+        {
+          "request_id": "req-031",
+          "block": 65
+        }
+      ],
+      "prefetched_blocks": 6
+    },
+    {
+      "time_ms": 12266.194,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.1484,
+      "active_requests": [
+        "req-029",
+        "req-030",
+        "req-031"
+      ],
+      "step": 64,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-029",
+          "block": 11
+        },
+        {
+          "request_id": "req-029",
+          "block": 12
+        },
+        {
+          "request_id": "req-030",
+          "block": 49
+        },
+        {
+          "request_id": "req-030",
+          "block": 50
+        },
+        {
+          "request_id": "req-031",
+          "block": 65
+        },
+        {
+          "request_id": "req-031",
+          "block": 66
+        }
+      ],
+      "prefetched_blocks": 6
+    },
+    {
+      "time_ms": 12546.211,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.1484,
+      "active_requests": [
+        "req-029",
+        "req-030",
+        "req-031"
+      ],
+      "step": 80,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-029",
+          "block": 12
+        },
+        {
+          "request_id": "req-029",
+          "block": 13
+        },
+        {
+          "request_id": "req-030",
+          "block": 50
+        },
+        {
+          "request_id": "req-030",
+          "block": 51
+        },
+        {
+          "request_id": "req-031",
+          "block": 66
+        },
+        {
+          "request_id": "req-031",
+          "block": 67
+        }
+      ],
+      "prefetched_blocks": 6
+    },
+    {
+      "time_ms": 12821.808,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.1484,
+      "active_requests": [
+        "req-030",
+        "req-031"
+      ],
+      "step": 96,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-030",
+          "block": 51
+        },
+        {
+          "request_id": "req-030",
+          "block": 52
+        },
+        {
+          "request_id": "req-031",
+          "block": 67
+        },
+        {
+          "request_id": "req-031",
+          "block": 68
+        }
+      ],
+      "prefetched_blocks": 4
+    },
+    {
+      "time_ms": 13100.999,
+      "event": "page_prefetch",
+      "reason": "prefetch_next_decode_kv_pages",
+      "memory_pressure": 0.1484,
+      "active_requests": [
+        "req-030",
+        "req-031"
+      ],
+      "step": 112,
+      "lookahead_steps": 1,
+      "prefetched_pages": [
+        {
+          "request_id": "req-030",
+          "block": 52
+        },
+        {
+          "request_id": "req-030",
+          "block": 53
+        },
+        {
+          "request_id": "req-031",
+          "block": 68
+        },
+        {
+          "request_id": "req-031",
+          "block": 69
+        }
+      ],
+      "prefetched_blocks": 4
+    }
+  ],
+  "serving_events": [
+    {
+      "time_ms": 126.839,
+      "event": "page_prefetch",
+      "request_id": "req-001",
+      "step": 0,
+      "active_requests": [
+        "req-001",
+        "req-002",
+        "req-004",
+        "req-005",
+        "req-008",
+        "req-009",
+        "req-010",
+        "req-011"
+      ],
+      "prefetched_blocks": 12,
+      "memory_pressure": 0.1836,
+      "prefetch_hits": 0,
+      "prefetch_misses": 16,
+      "latency_saving_ms": 0.0
+    },
+    {
+      "time_ms": 423.625,
+      "event": "page_prefetch",
+      "request_id": "req-001",
+      "step": 16,
+      "active_requests": [
+        "req-001",
+        "req-002",
+        "req-004",
+        "req-005",
+        "req-008",
+        "req-009",
+        "req-010",
+        "req-011"
+      ],
+      "prefetched_blocks": 12,
+      "memory_pressure": 0.1836,
+      "prefetch_hits": 12,
+      "prefetch_misses": 4,
+      "latency_saving_ms": 0.9
+    },
+    {
+      "time_ms": 716.109,
+      "event": "page_prefetch",
+      "request_id": "req-001",
+      "step": 32,
+      "active_requests": [
+        "req-001",
+        "req-008",
+        "req-009",
+        "req-011"
+      ],
+      "prefetched_blocks": 8,
+      "memory_pressure": 0.1836,
+      "prefetch_hits": 6,
+      "prefetch_misses": 2,
+      "latency_saving_ms": 0.45
+    },
+    {
+      "time_ms": 990.228,
+      "event": "page_prefetch",
+      "request_id": "req-001",
+      "step": 48,
+      "active_requests": [
+        "req-001",
+        "req-008",
+        "req-009",
+        "req-011"
+      ],
+      "prefetched_blocks": 8,
+      "memory_pressure": 0.1836,
+      "prefetch_hits": 8,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.6
+    },
+    {
+      "time_ms": 1280.133,
+      "event": "page_prefetch",
+      "request_id": "req-001",
+      "step": 64,
+      "active_requests": [
+        "req-001",
+        "req-009",
+        "req-011"
+      ],
+      "prefetched_blocks": 6,
+      "memory_pressure": 0.1836,
+      "prefetch_hits": 6,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.45
+    },
+    {
+      "time_ms": 1558.651,
+      "event": "page_prefetch",
+      "request_id": "req-001",
+      "step": 80,
+      "active_requests": [
+        "req-001",
+        "req-009",
+        "req-011"
+      ],
+      "prefetched_blocks": 6,
+      "memory_pressure": 0.1836,
+      "prefetch_hits": 6,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.45
+    },
+    {
+      "time_ms": 3009.696,
+      "event": "page_prefetch",
+      "request_id": "req-003",
+      "step": 0,
+      "active_requests": [
+        "req-003",
+        "req-006",
+        "req-007",
+        "req-012"
+      ],
+      "prefetched_blocks": 8,
+      "memory_pressure": 0.543,
+      "prefetch_hits": 0,
+      "prefetch_misses": 8,
+      "latency_saving_ms": 0.0
+    },
+    {
+      "time_ms": 3384.262,
+      "event": "page_prefetch",
+      "request_id": "req-003",
+      "step": 16,
+      "active_requests": [
+        "req-003",
+        "req-006",
+        "req-007",
+        "req-012"
+      ],
+      "prefetched_blocks": 8,
+      "memory_pressure": 0.543,
+      "prefetch_hits": 8,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.6
+    },
+    {
+      "time_ms": 3783.896,
+      "event": "page_prefetch",
+      "request_id": "req-003",
+      "step": 32,
+      "active_requests": [
+        "req-006",
+        "req-007",
+        "req-012"
+      ],
+      "prefetched_blocks": 6,
+      "memory_pressure": 0.543,
+      "prefetch_hits": 6,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.45
+    },
+    {
+      "time_ms": 4109.388,
+      "event": "page_prefetch",
+      "request_id": "req-003",
+      "step": 48,
+      "active_requests": [
+        "req-006",
+        "req-007",
+        "req-012"
+      ],
+      "prefetched_blocks": 6,
+      "memory_pressure": 0.543,
+      "prefetch_hits": 6,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.45
+    },
+    {
+      "time_ms": 4435.565,
+      "event": "page_prefetch",
+      "request_id": "req-003",
+      "step": 64,
+      "active_requests": [
+        "req-006",
+        "req-007",
+        "req-012"
+      ],
+      "prefetched_blocks": 6,
+      "memory_pressure": 0.543,
+      "prefetch_hits": 6,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.45
+    },
+    {
+      "time_ms": 4773.708,
+      "event": "page_prefetch",
+      "request_id": "req-003",
+      "step": 80,
+      "active_requests": [
+        "req-006",
+        "req-007",
+        "req-012"
+      ],
+      "prefetched_blocks": 6,
+      "memory_pressure": 0.543,
+      "prefetch_hits": 6,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.45
+    },
+    {
+      "time_ms": 5101.315,
+      "event": "page_prefetch",
+      "request_id": "req-003",
+      "step": 96,
+      "active_requests": [
+        "req-006"
+      ],
+      "prefetched_blocks": 2,
+      "memory_pressure": 0.543,
+      "prefetch_hits": 2,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.15
+    },
+    {
+      "time_ms": 5331.903,
+      "event": "page_prefetch",
+      "request_id": "req-003",
+      "step": 112,
+      "active_requests": [
+        "req-006"
+      ],
+      "prefetched_blocks": 2,
+      "memory_pressure": 0.543,
+      "prefetch_hits": 2,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.15
+    },
+    {
+      "time_ms": 6107.155,
+      "event": "page_prefetch",
+      "request_id": "req-013",
+      "step": 0,
+      "active_requests": [
+        "req-013",
+        "req-014",
+        "req-015",
+        "req-016",
+        "req-017",
+        "req-018",
+        "req-019",
+        "req-020"
+      ],
+      "prefetched_blocks": 12,
+      "memory_pressure": 0.4062,
+      "prefetch_hits": 0,
+      "prefetch_misses": 16,
+      "latency_saving_ms": 0.0
+    },
+    {
+      "time_ms": 6499.271,
+      "event": "page_prefetch",
+      "request_id": "req-013",
+      "step": 16,
+      "active_requests": [
+        "req-013",
+        "req-014",
+        "req-015",
+        "req-016",
+        "req-017",
+        "req-018",
+        "req-019",
+        "req-020"
+      ],
+      "prefetched_blocks": 12,
+      "memory_pressure": 0.4062,
+      "prefetch_hits": 12,
+      "prefetch_misses": 4,
+      "latency_saving_ms": 0.9
+    },
+    {
+      "time_ms": 6872.924,
+      "event": "page_prefetch",
+      "request_id": "req-013",
+      "step": 32,
+      "active_requests": [
+        "req-015",
+        "req-018",
+        "req-019",
+        "req-020"
+      ],
+      "prefetched_blocks": 8,
+      "memory_pressure": 0.4062,
+      "prefetch_hits": 4,
+      "prefetch_misses": 4,
+      "latency_saving_ms": 0.3
+    },
+    {
+      "time_ms": 7204.008,
+      "event": "page_prefetch",
+      "request_id": "req-013",
+      "step": 48,
+      "active_requests": [
+        "req-015",
+        "req-018",
+        "req-019",
+        "req-020"
+      ],
+      "prefetched_blocks": 8,
+      "memory_pressure": 0.4062,
+      "prefetch_hits": 8,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.6
+    },
+    {
+      "time_ms": 7536.927,
+      "event": "page_prefetch",
+      "request_id": "req-013",
+      "step": 64,
+      "active_requests": [
+        "req-015",
+        "req-018",
+        "req-020"
+      ],
+      "prefetched_blocks": 6,
+      "memory_pressure": 0.4062,
+      "prefetch_hits": 6,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.45
+    },
+    {
+      "time_ms": 7825.058,
+      "event": "page_prefetch",
+      "request_id": "req-013",
+      "step": 80,
+      "active_requests": [
+        "req-015",
+        "req-018",
+        "req-020"
+      ],
+      "prefetched_blocks": 6,
+      "memory_pressure": 0.4062,
+      "prefetch_hits": 6,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.45
+    },
+    {
+      "time_ms": 8123.163,
+      "event": "page_prefetch",
+      "request_id": "req-013",
+      "step": 96,
+      "active_requests": [
+        "req-018"
+      ],
+      "prefetched_blocks": 2,
+      "memory_pressure": 0.4062,
+      "prefetch_hits": 2,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.15
+    },
+    {
+      "time_ms": 8340.139,
+      "event": "page_prefetch",
+      "request_id": "req-013",
+      "step": 112,
+      "active_requests": [
+        "req-018"
+      ],
+      "prefetched_blocks": 2,
+      "memory_pressure": 0.4062,
+      "prefetch_hits": 2,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.15
+    },
+    {
+      "time_ms": 8677.309,
+      "event": "page_prefetch",
+      "request_id": "req-021",
+      "step": 0,
+      "active_requests": [
+        "req-021",
+        "req-022",
+        "req-023",
+        "req-024",
+        "req-025",
+        "req-026",
+        "req-027",
+        "req-028"
+      ],
+      "prefetched_blocks": 12,
+      "memory_pressure": 0.3164,
+      "prefetch_hits": 0,
+      "prefetch_misses": 16,
+      "latency_saving_ms": 0.0
+    },
+    {
+      "time_ms": 8977.594,
+      "event": "page_prefetch",
+      "request_id": "req-021",
+      "step": 16,
+      "active_requests": [
+        "req-021",
+        "req-022",
+        "req-023",
+        "req-024",
+        "req-025",
+        "req-026",
+        "req-027",
+        "req-028"
+      ],
+      "prefetched_blocks": 12,
+      "memory_pressure": 0.3164,
+      "prefetch_hits": 12,
+      "prefetch_misses": 4,
+      "latency_saving_ms": 0.9
+    },
+    {
+      "time_ms": 9285.022,
+      "event": "page_prefetch",
+      "request_id": "req-021",
+      "step": 32,
+      "active_requests": [
+        "req-021",
+        "req-022",
+        "req-023",
+        "req-024",
+        "req-025",
+        "req-026",
+        "req-027",
+        "req-028"
+      ],
+      "prefetched_blocks": 12,
+      "memory_pressure": 0.3164,
+      "prefetch_hits": 12,
+      "prefetch_misses": 4,
+      "latency_saving_ms": 0.9
+    },
+    {
+      "time_ms": 9583.024,
+      "event": "page_prefetch",
+      "request_id": "req-021",
+      "step": 48,
+      "active_requests": [
+        "req-021",
+        "req-022",
+        "req-023",
+        "req-024",
+        "req-025",
+        "req-026",
+        "req-027",
+        "req-028"
+      ],
+      "prefetched_blocks": 12,
+      "memory_pressure": 0.3164,
+      "prefetch_hits": 12,
+      "prefetch_misses": 4,
+      "latency_saving_ms": 0.9
+    },
+    {
+      "time_ms": 9896.271,
+      "event": "page_prefetch",
+      "request_id": "req-021",
+      "step": 64,
+      "active_requests": [
+        "req-025",
+        "req-026",
+        "req-027"
+      ],
+      "prefetched_blocks": 6,
+      "memory_pressure": 0.3164,
+      "prefetch_hits": 4,
+      "prefetch_misses": 2,
+      "latency_saving_ms": 0.3
+    },
+    {
+      "time_ms": 10179.378,
+      "event": "page_prefetch",
+      "request_id": "req-021",
+      "step": 80,
+      "active_requests": [
+        "req-025",
+        "req-026",
+        "req-027"
+      ],
+      "prefetched_blocks": 6,
+      "memory_pressure": 0.3164,
+      "prefetch_hits": 6,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.45
+    },
+    {
+      "time_ms": 10462.167,
+      "event": "page_prefetch",
+      "request_id": "req-021",
+      "step": 96,
+      "active_requests": [
+        "req-025",
+        "req-027"
+      ],
+      "prefetched_blocks": 4,
+      "memory_pressure": 0.3164,
+      "prefetch_hits": 4,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.3
+    },
+    {
+      "time_ms": 10741.289,
+      "event": "page_prefetch",
+      "request_id": "req-021",
+      "step": 112,
+      "active_requests": [
+        "req-025",
+        "req-027"
+      ],
+      "prefetched_blocks": 4,
+      "memory_pressure": 0.3164,
+      "prefetch_hits": 4,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.3
+    },
+    {
+      "time_ms": 11142.939,
+      "event": "page_prefetch",
+      "request_id": "req-029",
+      "step": 0,
+      "active_requests": [
+        "req-029",
+        "req-030",
+        "req-031",
+        "req-032"
+      ],
+      "prefetched_blocks": 8,
+      "memory_pressure": 0.1484,
+      "prefetch_hits": 0,
+      "prefetch_misses": 8,
+      "latency_saving_ms": 0.0
+    },
+    {
+      "time_ms": 11435.453,
+      "event": "page_prefetch",
+      "request_id": "req-029",
+      "step": 16,
+      "active_requests": [
+        "req-029",
+        "req-030",
+        "req-031",
+        "req-032"
+      ],
+      "prefetched_blocks": 8,
+      "memory_pressure": 0.1484,
+      "prefetch_hits": 8,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.6
+    },
+    {
+      "time_ms": 11711.969,
+      "event": "page_prefetch",
+      "request_id": "req-029",
+      "step": 32,
+      "active_requests": [
+        "req-029",
+        "req-030",
+        "req-031"
+      ],
+      "prefetched_blocks": 6,
+      "memory_pressure": 0.1484,
+      "prefetch_hits": 6,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.45
+    },
+    {
+      "time_ms": 11997.048,
+      "event": "page_prefetch",
+      "request_id": "req-029",
+      "step": 48,
+      "active_requests": [
+        "req-029",
+        "req-030",
+        "req-031"
+      ],
+      "prefetched_blocks": 6,
+      "memory_pressure": 0.1484,
+      "prefetch_hits": 6,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.45
+    },
+    {
+      "time_ms": 12266.194,
+      "event": "page_prefetch",
+      "request_id": "req-029",
+      "step": 64,
+      "active_requests": [
+        "req-029",
+        "req-030",
+        "req-031"
+      ],
+      "prefetched_blocks": 6,
+      "memory_pressure": 0.1484,
+      "prefetch_hits": 6,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.45
+    },
+    {
+      "time_ms": 12546.211,
+      "event": "page_prefetch",
+      "request_id": "req-029",
+      "step": 80,
+      "active_requests": [
+        "req-029",
+        "req-030",
+        "req-031"
+      ],
+      "prefetched_blocks": 6,
+      "memory_pressure": 0.1484,
+      "prefetch_hits": 6,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.45
+    },
+    {
+      "time_ms": 12821.808,
+      "event": "page_prefetch",
+      "request_id": "req-029",
+      "step": 96,
+      "active_requests": [
+        "req-030",
+        "req-031"
+      ],
+      "prefetched_blocks": 4,
+      "memory_pressure": 0.1484,
+      "prefetch_hits": 4,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.3
+    },
+    {
+      "time_ms": 13100.999,
+      "event": "page_prefetch",
+      "request_id": "req-029",
+      "step": 112,
+      "active_requests": [
+        "req-030",
+        "req-031"
+      ],
+      "prefetched_blocks": 4,
+      "memory_pressure": 0.1484,
+      "prefetch_hits": 4,
+      "prefetch_misses": 0,
+      "latency_saving_ms": 0.3
+    }
+  ],
+  "summary": {
+    "enabled": true,
+    "policy": "vllm_style_allocated_kv_page_prefetch",
+    "attempts": 4288,
+    "hits": 4228,
+    "misses": 572,
+    "hit_rate": 0.8808,
+    "wasted_prefetch_blocks": 60,
+    "pressure_skips": 0,
+    "max_prefetch_blocks_per_step": 12,
+    "pressure_disable_threshold": 0.82,
+    "hit_latency_saving_ms": 0.075,
+    "wasted_prefetch_penalty_ms": 0.015
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "model": "tiny-gpt",
+  "runtime_mode": "paged_attention",
+  "prompt_tokens": 1024,
+  "generated_tokens": 128,
+  "prefill_latency_ms": 123.403,
+  "avg_decode_latency_ms": 18.582,
+  "p50_decode_latency_ms": 18.468,
+  "p95_decode_latency_ms": 24.256,
+  "p99_decode_latency_ms": 26.535,
+  "tokens_per_second": 179.277,
+  "cost_model_source": "gpu_batch_scaling_artifact",
+  "gpu_batch_scaling_artifact": "results/llm_runtime_artifacts/gpu_decode_batch_scaling_gtx1650maxq.json",
+  "calibration_truth_boundary": "Decode/prefill estimates are calibrated from a synthetic transformer workload measured on GTX 1650 Max-Q; this is not production serving."
+}

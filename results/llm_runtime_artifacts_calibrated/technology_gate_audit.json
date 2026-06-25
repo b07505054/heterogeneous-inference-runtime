@@ -1,0 +1,139 @@
+{
+  "artifact_type": "technology_gate_audit",
+  "source": "scripts/generate_llm_runtime_artifacts.py",
+  "gate_questions": [
+    "Input source",
+    "Compiler/runtime decision",
+    "Execution or serving metric impact"
+  ],
+  "main_plan": [
+    {
+      "technology": "runtime_scheduler",
+      "input": "generated LLM request trace",
+      "decision": "FCFS baseline vs cost-aware memory-pressure scheduler",
+      "metric": "TTFT, TPOT, throughput, p95 latency, queue wait",
+      "status": "implemented"
+    },
+    {
+      "technology": "continuous_batching",
+      "input": "pending decode candidates",
+      "decision": "decode batch membership under KV pressure cap",
+      "metric": "decode batch efficiency, throughput, queue wait",
+      "status": "implemented"
+    },
+    {
+      "technology": "kv_cache_planner",
+      "input": "prompt/output tokens and block capacity",
+      "decision": "KV block allocation/admission/delay/reject",
+      "metric": "peak KV MB, pressure level, OOM/reject count",
+      "status": "implemented"
+    },
+    {
+      "technology": "backend_dispatch",
+      "input": "prefill/decode/KV bookkeeping ops",
+      "decision": "GPU attention placement plus CPU KV bookkeeping",
+      "metric": "backend counts, placement latency, throughput",
+      "status": "implemented"
+    },
+    {
+      "technology": "gpu_pgo_like_kernel_selection",
+      "input": "compiler-emitted HIR op plus runtime RMSNorm shape/workload distribution",
+      "decision": "profile-guided selection among CUDA/Triton/PyTorch RMSNorm candidates",
+      "metric": "kernel p95 latency, effective bandwidth, TPOT projection, throughput projection",
+      "status": "implemented_as_runtime_profile_feedback"
+    },
+    {
+      "technology": "vllm_trace_adapter",
+      "input": "vLLM-style request trace",
+      "decision": "continuous batching and paged-KV pressure mapping",
+      "metric": "TTFT, TPOT, throughput, queue wait, KV pressure",
+      "status": "implemented_as_adapter"
+    },
+    {
+      "technology": "vllm_style_page_prefetch",
+      "input": "vLLM-style request/decode trace plus allocated KV block map",
+      "decision": "prefetch next decode KV pages when memory pressure is below budget",
+      "metric": "prefetch hit rate, wasted prefetch blocks, TPOT p95, throughput, OOM/rejection rate",
+      "status": "implemented_as_runtime_scheduler_candidate"
+    },
+    {
+      "technology": "tensorrt_llm_aligned_inflight_runtime_policy",
+      "input": "local LLM request trace plus paged KV lifecycle state",
+      "decision": "event-loop tick chooses chunked prefill, continuous decode, drain, delay, or reject",
+      "metric": "TTFT, TPOT, throughput, decode batch size, page hit rate, page leaks, reject/OOM gates",
+      "status": "implemented_as_local_policy_not_tensorrt_llm_internals"
+    },
+    {
+      "technology": "paged_attention_execution_model",
+      "input": "decode batch request ids plus resident KV page table",
+      "decision": "model page-table reads, contiguous page segments, and prefetch hit/miss effects before TPOT scoring",
+      "metric": "decode attention latency, pages read per step, non-contiguous segment penalty, TPOT p95",
+      "status": "implemented_as_local_execution_cost_model_not_gpu_kernel"
+    },
+    {
+      "technology": "sglang_trace_adapter",
+      "input": "SGLang-style request/decode trace",
+      "decision": "request/decode scheduling with prefix metadata",
+      "metric": "TTFT, TPOT, throughput, queue wait, KV pressure",
+      "status": "implemented_as_adapter"
+    },
+    {
+      "technology": "distributed_kv_aware_routing",
+      "input": "vLLM-style serving trace plus worker queue/KV residency state",
+      "decision": "round-robin vs least-queue vs KV-aware request routing",
+      "metric": "TTFT, TPOT, throughput, cache hit rate, queue wait, peak worker pressure",
+      "status": "implemented_as_distributed_serving_control_plane"
+    },
+    {
+      "technology": "worker_health_failover",
+      "input": "distributed serving trace with injected worker timeout",
+      "decision": "timeout detection, retry, quarantine, failover routing",
+      "metric": "retry count, failover count, request loss, latency regression",
+      "status": "implemented_as_fault_tolerance_simulation"
+    },
+    {
+      "technology": "protobuf_serving_contract",
+      "input": "GenerateRequest/WorkerHealth/RouteDecision/KVShardMetadata schema",
+      "decision": "define distributed serving RPC/control-plane boundary",
+      "metric": "schema coverage for request routing, worker health, route decision, KV shard metadata",
+      "status": "implemented_as_contract_not_production_grpc"
+    }
+  ],
+  "remaining_not_in_main_plan": [
+    {
+      "technology": "StableHLO_native_pipeline",
+      "missing": "must connect StableHLO input to HIR kernel selection and benchmark",
+      "next_step": "StableHLO -> HIR -> kernel selection -> runtime benchmark report"
+    },
+    {
+      "technology": "JAX_tracing",
+      "missing": "must export JAX StableHLO and feed it into HIR/kernel selection",
+      "next_step": "jax.lower().compiler_ir('stablehlo') -> HIR -> runtime report"
+    },
+    {
+      "technology": "Triton_Server",
+      "missing": "must provide model repository/config.pbtxt/dynamic batching benchmark",
+      "next_step": "Triton deployment package plus validation report"
+    },
+    {
+      "technology": "TensorRT_LLM",
+      "missing": "must use LLM/transformer input, not only CV engine evidence",
+      "next_step": "Tiny transformer ONNX -> TensorRT engine -> serving metrics"
+    },
+    {
+      "technology": "Ray_Kubernetes",
+      "missing": "must connect deployment config to serving metrics and validation",
+      "next_step": "Ray/K8s deployment artifacts plus SLO report"
+    },
+    {
+      "technology": "multimodal_serving",
+      "missing": "must define text/vision/speech inputs sharing scheduler and metrics",
+      "next_step": "mixed workload simulator with per-modality latency metrics"
+    },
+    {
+      "technology": "OpenXLA_XLA_PJRT",
+      "missing": "tool availability alone does not pass the gate",
+      "next_step": "keep out of main plan until tied to a runnable frontend/runtime path"
+    }
+  ]
+}

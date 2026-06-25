@@ -1,0 +1,54 @@
+{
+  "artifact_type": "llm_runtime_mode_comparison",
+  "source": "scripts/generate_llm_runtime_artifacts.py",
+  "runtime_mode": {
+    "mode": "paged_attention",
+    "paged_attention_cost_enabled": true,
+    "label": "Paged-attention lifecycle artifact",
+    "description": "Keeps the same scheduler policies but includes local paged-attention read-cost modeling, page-table read effects, non-contiguous segment accounting, and paged-KV lifecycle invariants.",
+    "interview_positioning": "Use this result for the more conservative memory/lifecycle validation artifact."
+  },
+  "workload": {
+    "model": "tiny-gpt",
+    "requests": 32,
+    "block_size_tokens": 16,
+    "total_kv_blocks": 512
+  },
+  "baseline_policy": {
+    "policy": "fcfs_fixed_batch",
+    "p95_latency_ms": 43253.558,
+    "tokens_per_second": 53.617,
+    "avg_decode_batch_size": 1.0,
+    "decode_batch_efficiency": 0.125
+  },
+  "selected_policy": {
+    "policy": "cost_aware_memory_pressure_page_prefetch",
+    "p95_latency_ms": 13243.406,
+    "ttft_p95_ms": 1053.203,
+    "tpot_p95_ms": 24.256,
+    "tokens_per_second": 179.277,
+    "avg_decode_batch_size": 6.4,
+    "decode_batch_efficiency": 0.8,
+    "kv_page_hit_rate": 0.8808,
+    "paged_attention_latency_p95_ms": 1.197,
+    "oom_events": 0
+  },
+  "page_prefetch": {
+    "prefetch_hit_rate": 0.8808,
+    "prefetch_tpot_p95_ms": 24.2558,
+    "tpot_p95_delta_ms": -0.912,
+    "prefetch_tokens_per_second": 179.277,
+    "tokens_per_second_delta": 4.503
+  },
+  "headline": {
+    "throughput_multiplier_vs_baseline": 3.3437,
+    "p95_latency_reduction_multiplier_vs_baseline": 3.266,
+    "tokens_per_second_delta": 125.66,
+    "p95_latency_ms_delta": -30010.152,
+    "tpot_p95_ms": 24.256
+  },
+  "claim_boundary": "Artifact-backed local runtime simulator result. It is not a production vLLM, SGLang, or TensorRT-LLM fork.",
+  "cost_model_source": "gpu_batch_scaling_artifact",
+  "gpu_batch_scaling_artifact": "results/llm_runtime_artifacts/gpu_decode_batch_scaling_gtx1650maxq.json",
+  "calibration_truth_boundary": "Decode/prefill estimates are calibrated from a synthetic transformer workload measured on GTX 1650 Max-Q; this is not production serving."
+}

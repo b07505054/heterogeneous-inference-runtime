@@ -1,0 +1,144 @@
+{
+  "artifact_type": "vllm_style_page_prefetch_report",
+  "source": "deployment.llm_runtime_decision",
+  "integration_level": "vllm_style_scheduler_simulation_not_framework_fork",
+  "technology_gate": {
+    "input": "vLLM-style request/decode trace plus allocated KV block map and pending decode candidates",
+    "decision": "prefetch next decode KV pages only when memory pressure is below the prefetch budget",
+    "metric": "prefetch hit rate, wasted prefetch blocks, TPOT p95, decode p95, throughput, queue wait, OOM/rejection rate",
+    "passes_gate": true
+  },
+  "positioning": "Page prefetch is modeled as a real RuntimeScheduler policy over already allocated KV blocks. It is not a vLLM fork and does not claim CUDA cp.async or physical GPU page migration.",
+  "candidate_policy": "cost_aware_memory_pressure_page_prefetch",
+  "fallback_policy": "cost_aware_memory_pressure",
+  "selected_policy": "cost_aware_memory_pressure_page_prefetch",
+  "selection_reason": "page prefetch improved TPOT/e2e/throughput without OOM regression",
+  "input": {
+    "source": "synthetic vLLM-style trace adapter and RuntimeScheduler KV allocations",
+    "prefetch_scope": "allocated_kv_pages",
+    "decode_policy": "cost_aware_memory_pressure_page_prefetch"
+  },
+  "decision": {
+    "pressure_disable_threshold": 0.82,
+    "max_prefetch_blocks_per_step": 12,
+    "hit_latency_saving_ms": 0.075,
+    "wasted_prefetch_penalty_ms": 0.015,
+    "correctness_guard": "reject candidate on OOM/completed-request regression",
+    "fallback_guard": "keep no-prefetch policy if p95/TPOT/throughput do not improve"
+  },
+  "metric": {
+    "prefetch_attempts": 4288,
+    "prefetch_hits": 4228,
+    "prefetch_misses": 572,
+    "prefetch_hit_rate": 0.8808,
+    "wasted_prefetch_blocks": 60,
+    "pressure_skips": 0,
+    "optimized_tpot_p95_ms": 25.1678,
+    "prefetch_tpot_p95_ms": 24.2558,
+    "tpot_p95_delta_ms": -0.912,
+    "optimized_e2e_p95_ms": 13588.314,
+    "prefetch_e2e_p95_ms": 13243.406,
+    "e2e_p95_delta_ms": -344.908,
+    "optimized_tokens_per_second": 174.774,
+    "prefetch_tokens_per_second": 179.277,
+    "tokens_per_second_delta": 4.503,
+    "optimized_peak_kv_cache_mb": 868.75,
+    "prefetch_peak_kv_cache_mb": 868.75,
+    "oom_events": 0
+  },
+  "baseline_policy": {
+    "policy": "cost_aware_memory_pressure",
+    "completed_requests": 32,
+    "rejected_requests": 0,
+    "delayed_requests": 0,
+    "p95_latency_ms": 13588.314,
+    "ttft_p50_ms": 123.403,
+    "ttft_p95_ms": 1053.203,
+    "tpot_p50_ms": 18.968,
+    "tpot_p95_ms": 25.168,
+    "tokens_per_second": 174.774,
+    "peak_kv_cache_mb": 868.75,
+    "avg_decode_batch_size": 6.4,
+    "decode_batch_efficiency": 0.8,
+    "pressure_level_counts": {
+      "low": 5
+    },
+    "batch_cap_reductions": 0,
+    "pressure_limited_candidates": 20,
+    "finish_time_ms": 13732.032,
+    "page_prefetch": {
+      "enabled": false
+    },
+    "prefill_chunk_count": 0,
+    "kv_page_hit_rate": 0.0,
+    "paged_attention_latency_p95_ms": 1.2707,
+    "paged_attention_pages_read": 62330,
+    "paged_attention_avg_pages_per_step": 102.5164,
+    "paged_attention_non_contiguous_segments": 2400,
+    "pages_allocated": 0,
+    "pages_freed": 0,
+    "pressure_limited_ticks": 20,
+    "reject_oom_count": 0,
+    "invariants": {}
+  },
+  "candidate_policy_summary": {
+    "policy": "cost_aware_memory_pressure_page_prefetch",
+    "completed_requests": 32,
+    "rejected_requests": 0,
+    "delayed_requests": 0,
+    "p95_latency_ms": 13243.406,
+    "ttft_p50_ms": 123.403,
+    "ttft_p95_ms": 1053.203,
+    "tpot_p50_ms": 18.468,
+    "tpot_p95_ms": 24.256,
+    "tokens_per_second": 179.277,
+    "peak_kv_cache_mb": 868.75,
+    "avg_decode_batch_size": 6.4,
+    "decode_batch_efficiency": 0.8,
+    "pressure_level_counts": {
+      "low": 5
+    },
+    "batch_cap_reductions": 0,
+    "pressure_limited_candidates": 20,
+    "finish_time_ms": 13387.124,
+    "page_prefetch": {
+      "enabled": true,
+      "policy": "vllm_style_allocated_kv_page_prefetch",
+      "attempts": 4288,
+      "hits": 4228,
+      "misses": 572,
+      "hit_rate": 0.8808,
+      "wasted_prefetch_blocks": 60,
+      "pressure_skips": 0,
+      "max_prefetch_blocks_per_step": 12,
+      "pressure_disable_threshold": 0.82,
+      "hit_latency_saving_ms": 0.075,
+      "wasted_prefetch_penalty_ms": 0.015
+    },
+    "prefill_chunk_count": 0,
+    "kv_page_hit_rate": 0.8808,
+    "paged_attention_latency_p95_ms": 1.197,
+    "paged_attention_pages_read": 62330,
+    "paged_attention_avg_pages_per_step": 102.5164,
+    "paged_attention_non_contiguous_segments": 2400,
+    "pages_allocated": 0,
+    "pages_freed": 0,
+    "pressure_limited_ticks": 20,
+    "reject_oom_count": 0,
+    "invariants": {}
+  },
+  "serving_effect": {
+    "affects": [
+      "TPOT",
+      "decode_p95",
+      "throughput",
+      "KV pressure"
+    ],
+    "selected_for_execution": true
+  },
+  "remaining_work": [
+    "replace synthetic trace with exported vLLM scheduler logs",
+    "wire policy into a real vLLM fork before claiming framework-internal modification",
+    "measure physical GPU page/cache prefetch separately before claiming CUDA cp.async"
+  ]
+}

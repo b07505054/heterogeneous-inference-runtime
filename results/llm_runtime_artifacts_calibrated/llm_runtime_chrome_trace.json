@@ -1,0 +1,67 @@
+[
+  {
+    "name": "prefill",
+    "cat": "llm_runtime",
+    "ph": "X",
+    "ts": 10231.0,
+    "dur": 116608.0,
+    "pid": 1,
+    "tid": 1,
+    "args": {
+      "request_id": "req-001",
+      "tokens": null
+    }
+  },
+  {
+    "name": "prefill",
+    "cat": "llm_runtime",
+    "ph": "X",
+    "ts": 1827380.0,
+    "dur": 1182316.0,
+    "pid": 1,
+    "tid": 1,
+    "args": {
+      "request_id": "req-003",
+      "tokens": null
+    }
+  },
+  {
+    "name": "prefill",
+    "cat": "llm_runtime",
+    "ph": "X",
+    "ts": 5570406.0,
+    "dur": 536749.0,
+    "pid": 1,
+    "tid": 1,
+    "args": {
+      "request_id": "req-013",
+      "tokens": null
+    }
+  },
+  {
+    "name": "prefill",
+    "cat": "llm_runtime",
+    "ph": "X",
+    "ts": 8553906.0,
+    "dur": 123403.0,
+    "pid": 1,
+    "tid": 1,
+    "args": {
+      "request_id": "req-021",
+      "tokens": null
+    }
+  },
+  {
+    "name": "prefill",
+    "cat": "llm_runtime",
+    "ph": "X",
+    "ts": 11022893.0,
+    "dur": 120046.0,
+    "pid": 1,
+    "tid": 1,
+    "args": {
+      "request_id": "req-029",
+      "tokens": null
+    }
+  }
+]

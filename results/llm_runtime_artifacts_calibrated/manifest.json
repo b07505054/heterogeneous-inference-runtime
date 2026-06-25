@@ -1,0 +1,32 @@
+{
+  "artifact_set": "llm_runtime_prefill_decode_kv_scheduler",
+  "description": "Runtime executes prefill/decode, manages KV cache blocks, schedules requests, calibrates a cost model, and emits profiling traces.",
+  "output_dir": "/Users/allen/Documents/Codex/project/systems-portfolio/heterogeneous-inference-runtime/results/llm_runtime_artifacts_calibrated",
+  "files": [
+    "prefill_decode_benchmark.json",
+    "kv_cache_trace.json",
+    "scheduler_trace.json",
+    "backend_trace.json",
+    "runtime_profile.json",
+    "serving_trace.json",
+    "llm_runtime_chrome_trace.json",
+    "plan_benchmark_results.json",
+    "scheduler_decision_report.json",
+    "serving_framework_report.json",
+    "vllm_trace_adapter_report.json",
+    "page_prefetch_report.json",
+    "page_prefetch_trace.json",
+    "sglang_trace_adapter_report.json",
+    "cold_start_report.json",
+    "technology_gate_audit.json",
+    "runtime_mode_comparison.json",
+    "distributed_serving_report.json",
+    "distributed_serving_trace.json",
+    "load_balancing_report.json",
+    "worker_health_report.json",
+    "fault_tolerance_report.json",
+    "failover_trace.json",
+    "grpc_contract_report.json",
+    "real_llama_profile.json"
+  ]
+}
