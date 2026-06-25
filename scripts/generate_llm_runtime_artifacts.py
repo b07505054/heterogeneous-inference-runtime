@@ -15,6 +15,7 @@ from deployment.llm_runtime_decision import (  # noqa: E402
     Request,
     RuntimeScheduler,
     build_requests,
+    load_gpu_batch_scaling_artifact,
     summarize_policy,
 )
 from deployment.distributed_serving import build_distributed_serving_artifacts  # noqa: E402
@@ -35,6 +36,19 @@ def percentile(values, p):
 def write_json(path, payload):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+
+
+def build_calibration_metadata(artifact_path, gpu_batch_scaling):
+    if gpu_batch_scaling is None:
+        return {"cost_model_source": "formula"}
+    return {
+        "cost_model_source": "gpu_batch_scaling_artifact",
+        "gpu_batch_scaling_artifact": artifact_path,
+        "calibration_truth_boundary": (
+            "Decode/prefill estimates are calibrated from a synthetic transformer "
+            "workload measured on GTX 1650 Max-Q; this is not production serving."
+        ),
+    }
 
 
 def run_policy(
@@ -252,19 +266,20 @@ def run_scenario_comparison(
     block_size_tokens,
     kv_mb_per_block,
     paged_attention_cost_enabled=True,
+    gpu_batch_scaling=None,
 ):
     requests = scenario["requests"]
     baseline = run_policy(
         "fcfs_fixed_batch",
         requests,
-        CostModel(),
+        CostModel(gpu_batch_scaling=gpu_batch_scaling),
         seed + 100,
         total_blocks,
         block_size_tokens,
         kv_mb_per_block,
         paged_attention_cost_enabled=paged_attention_cost_enabled,
     )
-    calibrated_cost = CostModel()
+    calibrated_cost = CostModel(gpu_batch_scaling=gpu_batch_scaling)
     calibration_report = calibrated_cost.calibrate(
         baseline.prefill_latencies[:8],
         baseline.decode_step_latencies[:64],
@@ -282,6 +297,7 @@ def run_scenario_comparison(
     page_prefetch_cost = CostModel(
         observed_decode_scale=calibrated_cost.observed_decode_scale,
         observed_prefill_scale=calibrated_cost.observed_prefill_scale,
+        gpu_batch_scaling=gpu_batch_scaling,
     )
     page_prefetch = run_policy(
         "cost_aware_memory_pressure_page_prefetch",
@@ -296,6 +312,7 @@ def run_scenario_comparison(
     inflight_cost = CostModel(
         observed_decode_scale=calibrated_cost.observed_decode_scale,
         observed_prefill_scale=calibrated_cost.observed_prefill_scale,
+        gpu_batch_scaling=gpu_batch_scaling,
     )
     inflight = run_policy(
         "inflight_paged_kv_continuous_batching",
@@ -1232,8 +1249,22 @@ def main():
             "scheduler-focused artifact."
         ),
     )
+    parser.add_argument(
+        "--gpu-batch-scaling-artifact",
+        default=None,
+        help=(
+            "Optional path to a measured GPU decode/prefill batch-scaling artifact "
+            "(e.g. results/llm_runtime_artifacts/gpu_decode_batch_scaling_gtx1650maxq.json). "
+            "When it loads successfully, CostModel predictions use nearest-neighbor "
+            "lookups against this measured data instead of the formula model. If "
+            "missing or unloadable, generation falls back to the formula model "
+            "without error."
+        ),
+    )
     args = parser.parse_args()
     mode_metadata = runtime_mode_metadata(args.runtime_mode)
+    gpu_batch_scaling = load_gpu_batch_scaling_artifact(args.gpu_batch_scaling_artifact)
+    calibration_metadata = build_calibration_metadata(args.gpu_batch_scaling_artifact, gpu_batch_scaling)
 
     model = "tiny-gpt"
     output_dir = Path(args.output_dir)
@@ -1252,6 +1283,7 @@ def main():
             block_size_tokens=block_size_tokens,
             kv_mb_per_block=kv_mb_per_block,
             paged_attention_cost_enabled=mode_metadata["paged_attention_cost_enabled"],
+            gpu_batch_scaling=gpu_batch_scaling,
         )
         for scenario_index, scenario in enumerate(workload_scenarios(default_requests))
     ]
@@ -1572,6 +1604,15 @@ def main():
         block_size_tokens=block_size_tokens,
         proto_path=ROOT / "protos/distributed_serving.proto",
     )
+
+    for report in (
+        runtime_profile,
+        scheduler_decision_report,
+        prefill_decode_benchmark,
+        serving_framework_report,
+        runtime_mode_comparison,
+    ):
+        report.update(calibration_metadata)
 
     manifest = {
         "artifact_set": "llm_runtime_prefill_decode_kv_scheduler",
