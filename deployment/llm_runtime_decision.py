@@ -1,3 +1,4 @@
+import json
 import math
 import random
 from dataclasses import dataclass, field
@@ -51,8 +52,105 @@ class AdmissionDecision:
     effective_batch_cap: int
 
 
+@dataclass(frozen=True)
+class GPUBatchScalingArtifact:
+    """Nearest-neighbor lookup table built from a measured GPU decode/prefill
+    batch-scaling artifact.
+
+    Truth boundary: the artifact is a synthetic transformer workload measured
+    on real GPU hardware. It calibrates latency estimates but is not
+    production serving, not vLLM, and not TensorRT-LLM.
+    """
+
+    decode_rows: tuple[tuple[int, float, float], ...]
+    prefill_rows: tuple[tuple[int, float, float], ...]
+
+    def lookup_decode_ms(self, batch_size: int, context_tokens: float) -> float | None:
+        return _nearest_neighbor_lookup(self.decode_rows, batch_size, context_tokens)
+
+    def lookup_prefill_ms(self, prompt_tokens: float, batch_size: int = 1) -> float | None:
+        return _nearest_neighbor_lookup(self.prefill_rows, batch_size, prompt_tokens)
+
+
+def _nearest_neighbor_lookup(
+    rows: tuple[tuple[int, float, float], ...], batch_size: int, secondary: float
+) -> float | None:
+    if not rows:
+        return None
+    batch_sizes = sorted({row[0] for row in rows})
+    nearest_batch = min(batch_sizes, key=lambda b: abs(b - batch_size))
+    bucket = [row for row in rows if row[0] == nearest_batch]
+    nearest_row = min(bucket, key=lambda row: abs(row[1] - secondary))
+    return nearest_row[2]
+
+
+def _parse_gpu_batch_scaling_rows(rows: object, secondary_key: str) -> list[tuple[int, float, float]]:
+    parsed: list[tuple[int, float, float]] = []
+    if not isinstance(rows, list):
+        return parsed
+    for row in rows:
+        if not isinstance(row, dict) or row.get("status") == "oom":
+            continue
+        batch_size = row.get("batch_size")
+        secondary = row.get(secondary_key)
+        latency = row.get("latency_ms")
+        mean_ms = latency.get("mean_ms") if isinstance(latency, dict) else None
+        if not isinstance(batch_size, int) or isinstance(batch_size, bool):
+            continue
+        if not isinstance(secondary, (int, float)) or isinstance(secondary, bool):
+            continue
+        if not isinstance(mean_ms, (int, float)) or isinstance(mean_ms, bool):
+            continue
+        parsed.append((batch_size, float(secondary), float(mean_ms)))
+    return parsed
+
+
+def load_gpu_batch_scaling_artifact(path: str | None) -> "GPUBatchScalingArtifact | None":
+    """Load a measured GPU decode/prefill batch-scaling artifact for CostModel calibration.
+
+    Never raises: returns None for a missing path, unreadable/malformed JSON,
+    wrong artifact_type, or a non-"measured" status, so callers can always
+    fall back to the formula-based CostModel.
+    """
+    if not path:
+        return None
+    try:
+        with open(path, "r", encoding="utf-8") as handle:
+            payload = json.load(handle)
+    except (OSError, json.JSONDecodeError):
+        return None
+
+    if not isinstance(payload, dict):
+        return None
+    if payload.get("artifact_type") != "gpu_decode_batch_scaling_benchmark":
+        return None
+    if payload.get("status") != "measured":
+        return None
+
+    results = payload.get("results")
+    if not isinstance(results, dict):
+        return None
+
+    decode_rows = _parse_gpu_batch_scaling_rows(results.get("decode"), "context_tokens")
+    prefill_rows = _parse_gpu_batch_scaling_rows(results.get("prefill"), "prefill_tokens")
+    if not decode_rows and not prefill_rows:
+        return None
+
+    return GPUBatchScalingArtifact(decode_rows=tuple(decode_rows), prefill_rows=tuple(prefill_rows))
+
+
 @dataclass
 class CostModel:
+    """Predicts prefill/decode latency for the scheduler simulation.
+
+    By default this is a pure formula model. If ``gpu_batch_scaling`` is set
+    to a loaded GPUBatchScalingArtifact, predictions use nearest-neighbor
+    lookups against measured GPU latency instead of the formula. That
+    artifact is a synthetic workload measured on real GPU hardware -- it
+    calibrates latency estimates but is not production serving, not vLLM,
+    and not TensorRT-LLM.
+    """
+
     prefill_base_ms: float = 24.0
     prefill_ms_per_token: float = 0.155
     decode_base_ms: float = 2.15
@@ -62,11 +160,20 @@ class CostModel:
     kv_update_ms_per_block: float = 0.011
     observed_decode_scale: float = 1.0
     observed_prefill_scale: float = 1.0
+    gpu_batch_scaling: GPUBatchScalingArtifact | None = None
 
-    def predict_prefill_ms(self, prompt_tokens: int) -> float:
+    def predict_prefill_ms(self, prompt_tokens: int, batch_size: int = 1) -> float:
+        if self.gpu_batch_scaling is not None:
+            measured = self.gpu_batch_scaling.lookup_prefill_ms(prompt_tokens, batch_size)
+            if measured is not None:
+                return measured * self.observed_prefill_scale
         return (self.prefill_base_ms + prompt_tokens * self.prefill_ms_per_token) * self.observed_prefill_scale
 
     def predict_decode_step_ms(self, batch_size: int, avg_context_tokens: float) -> float:
+        if self.gpu_batch_scaling is not None:
+            measured = self.gpu_batch_scaling.lookup_decode_ms(batch_size, avg_context_tokens)
+            if measured is not None:
+                return measured * self.observed_decode_scale
         return (
             self.decode_base_ms
             + max(0, batch_size - 1) * self.decode_ms_per_batch_item
