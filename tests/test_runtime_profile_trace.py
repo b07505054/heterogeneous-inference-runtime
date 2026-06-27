@@ -14,6 +14,8 @@ import pytest
 
 from deployment.execution_trace_recorder import ExecutionTraceRecorder
 from deployment.runtime_profile_trace import (
+    COMPILER_PLAN_SOURCE_ARTIFACT,
+    COMPILER_PLAN_SOURCE_FIXTURE,
     ComparisonSummary,
     RuntimeProfileTrace,
     RuntimeProfileTraceBuilder,
@@ -624,3 +626,271 @@ def test_variant_total_events_count():
         rec.instant_event("backend", "backend_dispatch", "runtime")
     variant = _make_variant(recorder=rec)
     assert variant.summary.total_events == 7
+
+
+# ---------------------------------------------------------------------------
+# Provenance fields — compiler_plan_source, compiler_plan_path,
+# do_not_use_for_demo, provenance_notes
+# ---------------------------------------------------------------------------
+
+def test_compiler_plan_source_default_is_compiler_artifact():
+    trace = RuntimeProfileTraceBuilder.build_trace(
+        target_profile_id="t",
+        model_name="m",
+        compiler_plan_ref="plan.json",
+        baseline=_make_variant("baseline"),
+        optimized=_make_variant("optimized"),
+    )
+    assert trace.compiler_plan_source == COMPILER_PLAN_SOURCE_ARTIFACT
+    assert trace.compiler_plan_source == "compiler_artifact"
+
+
+def test_compiler_plan_source_fixture_value():
+    trace = RuntimeProfileTraceBuilder.build_trace(
+        target_profile_id="t",
+        model_name="m",
+        compiler_plan_ref="fixture:built_in",
+        baseline=_make_variant("baseline"),
+        optimized=_make_variant("optimized"),
+        compiler_plan_source=COMPILER_PLAN_SOURCE_FIXTURE,
+        do_not_use_for_demo=True,
+    )
+    assert trace.compiler_plan_source == COMPILER_PLAN_SOURCE_FIXTURE
+    assert trace.compiler_plan_source == "built_in_fixture"
+
+
+def test_compiler_plan_source_serializes():
+    trace = RuntimeProfileTraceBuilder.build_trace(
+        target_profile_id="t",
+        model_name="m",
+        compiler_plan_ref="plan.json",
+        baseline=_make_variant("baseline"),
+        optimized=_make_variant("optimized"),
+        compiler_plan_source=COMPILER_PLAN_SOURCE_ARTIFACT,
+    )
+    d = trace.to_dict()
+    assert "compiler_plan_source" in d
+    assert d["compiler_plan_source"] == "compiler_artifact"
+
+
+def test_compiler_plan_path_serializes():
+    trace = RuntimeProfileTraceBuilder.build_trace(
+        target_profile_id="t",
+        model_name="m",
+        compiler_plan_ref="plan.json",
+        baseline=_make_variant("baseline"),
+        optimized=_make_variant("optimized"),
+        compiler_plan_path="/some/path/serving_execution_plan_iphone.json",
+    )
+    d = trace.to_dict()
+    assert "compiler_plan_path" in d
+    assert d["compiler_plan_path"] == "/some/path/serving_execution_plan_iphone.json"
+
+
+def test_do_not_use_for_demo_false_by_default():
+    trace = RuntimeProfileTraceBuilder.build_trace(
+        target_profile_id="t",
+        model_name="m",
+        compiler_plan_ref="plan.json",
+        baseline=_make_variant("baseline"),
+        optimized=_make_variant("optimized"),
+    )
+    assert trace.do_not_use_for_demo is False
+
+
+def test_do_not_use_for_demo_true_when_fixture():
+    trace = RuntimeProfileTraceBuilder.build_trace(
+        target_profile_id="t",
+        model_name="m",
+        compiler_plan_ref="fixture:built_in",
+        baseline=_make_variant("baseline"),
+        optimized=_make_variant("optimized"),
+        compiler_plan_source=COMPILER_PLAN_SOURCE_FIXTURE,
+        do_not_use_for_demo=True,
+    )
+    assert trace.do_not_use_for_demo is True
+
+
+def test_do_not_use_for_demo_serializes():
+    trace = RuntimeProfileTraceBuilder.build_trace(
+        target_profile_id="t",
+        model_name="m",
+        compiler_plan_ref="fixture:built_in",
+        baseline=_make_variant("baseline"),
+        optimized=_make_variant("optimized"),
+        compiler_plan_source=COMPILER_PLAN_SOURCE_FIXTURE,
+        do_not_use_for_demo=True,
+    )
+    d = trace.to_dict()
+    assert "do_not_use_for_demo" in d
+    assert d["do_not_use_for_demo"] is True
+
+
+def test_do_not_use_for_demo_false_serializes():
+    trace = RuntimeProfileTraceBuilder.build_trace(
+        target_profile_id="t",
+        model_name="m",
+        compiler_plan_ref="plan.json",
+        baseline=_make_variant("baseline"),
+        optimized=_make_variant("optimized"),
+        do_not_use_for_demo=False,
+    )
+    d = trace.to_dict()
+    assert d["do_not_use_for_demo"] is False
+
+
+def test_provenance_notes_empty_by_default():
+    trace = RuntimeProfileTraceBuilder.build_trace(
+        target_profile_id="t",
+        model_name="m",
+        compiler_plan_ref="plan.json",
+        baseline=_make_variant("baseline"),
+        optimized=_make_variant("optimized"),
+    )
+    assert trace.provenance_notes == []
+
+
+def test_provenance_notes_serializes():
+    trace = RuntimeProfileTraceBuilder.build_trace(
+        target_profile_id="t",
+        model_name="m",
+        compiler_plan_ref="fixture:built_in",
+        baseline=_make_variant("baseline"),
+        optimized=_make_variant("optimized"),
+        compiler_plan_source=COMPILER_PLAN_SOURCE_FIXTURE,
+        do_not_use_for_demo=True,
+        provenance_notes=["compiler_not_in_pipeline"],
+    )
+    d = trace.to_dict()
+    assert "provenance_notes" in d
+    assert "compiler_not_in_pipeline" in d["provenance_notes"]
+
+
+def test_fixture_trace_carries_compiler_not_in_pipeline():
+    trace = RuntimeProfileTraceBuilder.build_trace(
+        target_profile_id="t",
+        model_name="m",
+        compiler_plan_ref="fixture:built_in",
+        baseline=_make_variant("baseline"),
+        optimized=_make_variant("optimized"),
+        compiler_plan_source=COMPILER_PLAN_SOURCE_FIXTURE,
+        do_not_use_for_demo=True,
+        provenance_notes=["compiler_not_in_pipeline"],
+    )
+    assert "compiler_not_in_pipeline" in trace.provenance_notes
+
+
+def test_compiler_artifact_trace_has_do_not_use_false_and_no_compiler_not_in_pipeline():
+    trace = RuntimeProfileTraceBuilder.build_trace(
+        target_profile_id="t",
+        model_name="m",
+        compiler_plan_ref="artifacts/apple_demo/serving_execution_plan_iphone.json",
+        baseline=_make_variant("baseline"),
+        optimized=_make_variant("optimized"),
+        compiler_plan_source=COMPILER_PLAN_SOURCE_ARTIFACT,
+        do_not_use_for_demo=False,
+        provenance_notes=[],
+    )
+    assert trace.do_not_use_for_demo is False
+    assert "compiler_not_in_pipeline" not in trace.provenance_notes
+
+
+# ---------------------------------------------------------------------------
+# Fixture headline prefix
+# ---------------------------------------------------------------------------
+
+def test_fixture_mode_headline_prefixed():
+    """When fixture_mode=True, headline must start with [FIXTURE]."""
+    baseline_rec = ExecutionTraceRecorder()
+    baseline_rec.record_request_latency(1000.0)
+    opt_rec = ExecutionTraceRecorder()
+    opt_rec.record_request_latency(500.0)
+
+    comp = RuntimeProfileTraceBuilder.build_comparison_summary(
+        _make_variant("b", recorder=baseline_rec),
+        _make_variant("o", recorder=opt_rec),
+        fixture_mode=True,
+    )
+    assert comp.headline.startswith("[FIXTURE]")
+    assert "Compiler artifact missing." in comp.headline
+    assert "reduces" in comp.headline
+
+
+def test_non_fixture_mode_headline_not_prefixed():
+    baseline_rec = ExecutionTraceRecorder()
+    baseline_rec.record_request_latency(1000.0)
+    opt_rec = ExecutionTraceRecorder()
+    opt_rec.record_request_latency(500.0)
+
+    comp = RuntimeProfileTraceBuilder.build_comparison_summary(
+        _make_variant("b", recorder=baseline_rec),
+        _make_variant("o", recorder=opt_rec),
+        fixture_mode=False,
+    )
+    assert not comp.headline.startswith("[FIXTURE]")
+
+
+def test_build_trace_fixture_source_applies_fixture_prefix_to_headline():
+    """build_trace with compiler_plan_source=built_in_fixture must apply [FIXTURE] prefix."""
+    baseline_rec = ExecutionTraceRecorder()
+    baseline_rec.record_request_latency(1000.0)
+    opt_rec = ExecutionTraceRecorder()
+    opt_rec.record_request_latency(500.0)
+
+    trace = RuntimeProfileTraceBuilder.build_trace(
+        target_profile_id="t",
+        model_name="m",
+        compiler_plan_ref="fixture:built_in",
+        baseline=_make_variant("b", recorder=baseline_rec),
+        optimized=_make_variant("o", recorder=opt_rec),
+        compiler_plan_source=COMPILER_PLAN_SOURCE_FIXTURE,
+        do_not_use_for_demo=True,
+    )
+    assert trace.comparison_summary.headline.startswith("[FIXTURE]")
+
+
+def test_build_trace_compiler_artifact_source_no_fixture_prefix():
+    """build_trace with compiler_plan_source=compiler_artifact must not apply [FIXTURE] prefix."""
+    baseline_rec = ExecutionTraceRecorder()
+    baseline_rec.record_request_latency(1000.0)
+    opt_rec = ExecutionTraceRecorder()
+    opt_rec.record_request_latency(500.0)
+
+    trace = RuntimeProfileTraceBuilder.build_trace(
+        target_profile_id="t",
+        model_name="m",
+        compiler_plan_ref="artifacts/apple_demo/plan.json",
+        baseline=_make_variant("b", recorder=baseline_rec),
+        optimized=_make_variant("o", recorder=opt_rec),
+        compiler_plan_source=COMPILER_PLAN_SOURCE_ARTIFACT,
+        do_not_use_for_demo=False,
+    )
+    assert not trace.comparison_summary.headline.startswith("[FIXTURE]")
+
+
+# ---------------------------------------------------------------------------
+# write_json roundtrip includes provenance fields
+# ---------------------------------------------------------------------------
+
+def test_write_json_includes_provenance_fields(tmp_path):
+    trace = RuntimeProfileTraceBuilder.build_trace(
+        target_profile_id="apple-a17pro-mobile",
+        model_name="tiny-gpt",
+        compiler_plan_ref="fixture:built_in",
+        baseline=_make_variant("baseline"),
+        optimized=_make_variant("optimized"),
+        compiler_plan_source=COMPILER_PLAN_SOURCE_FIXTURE,
+        compiler_plan_path="/path/to/serving_execution_plan_iphone.json",
+        do_not_use_for_demo=True,
+        provenance_notes=["compiler_not_in_pipeline"],
+    )
+    out = tmp_path / "trace.json"
+    trace.write_json(out)
+    with out.open() as f:
+        d = json.load(f)
+
+    assert d["compiler_plan_source"] == "built_in_fixture"
+    assert d["compiler_plan_path"] == "/path/to/serving_execution_plan_iphone.json"
+    assert d["do_not_use_for_demo"] is True
+    assert "compiler_not_in_pipeline" in d["provenance_notes"]
+    assert d["comparison_summary"]["headline"].startswith("[FIXTURE]")

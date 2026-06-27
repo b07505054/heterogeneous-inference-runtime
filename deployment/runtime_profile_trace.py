@@ -14,6 +14,18 @@ Data flow:
   ExecutionTraceRecorder
     → RuntimeProfileTraceBuilder.from_recorder()  → TraceVariant
     → RuntimeProfileTraceBuilder.build_trace()    → RuntimeProfileTrace
+
+Compiler plan provenance:
+  compiler_plan_source = "compiler_artifact" when the optimized variant was
+    built from a real compiler ServingExecutionPlan.
+  compiler_plan_source = "built_in_fixture" when the compiler artifact was
+    absent and the generator used its built-in development fixture.
+
+  do_not_use_for_demo is set to True when compiler_plan_source is
+    "built_in_fixture". PocketChef must render a visible warning when
+    this flag is true:
+      "⚠ Development Fixture — compiler pipeline is bypassed."
+    Do not implement PocketChef behavior here — this is a contract note only.
 """
 
 from __future__ import annotations
@@ -28,6 +40,10 @@ if TYPE_CHECKING:
     from deployment.execution_trace_recorder import ExecutionTraceRecorder, TraceEvent
 
 _DEFAULT_TRUTH_BOUNDARY = "offline_runtime_simulation_not_iphone_execution"
+
+# Allowed values for compiler_plan_source.
+COMPILER_PLAN_SOURCE_ARTIFACT = "compiler_artifact"
+COMPILER_PLAN_SOURCE_FIXTURE = "built_in_fixture"
 
 
 # ---------------------------------------------------------------------------
@@ -145,6 +161,10 @@ class ComparisonSummary:
     All delta values are percentages. Negative = optimized is better for latency.
     Comparison is only meaningful when both variants have the same workload.
     headline is a human-readable one-liner derived from latency_delta_pct.
+
+    When built from a fixture (compiler artifact absent), headline is prefixed
+    with "[FIXTURE] Compiler artifact missing. " to make the provenance gap
+    visible in any consumer that displays the headline.
     """
 
     latency_delta_pct: float
@@ -171,6 +191,17 @@ class RuntimeProfileTrace:
 
     Consumed by RuntimePlaybackEngine (Commit D+). Not consumed directly
     by SwiftUI. Not a live device measurement.
+
+    Provenance fields:
+      compiler_plan_source: "compiler_artifact" | "built_in_fixture"
+      compiler_plan_path:   path or "fixture:built_in" when no artifact
+      do_not_use_for_demo:  True when compiler_plan_source is "built_in_fixture"
+      provenance_notes:     additional flags; includes "compiler_not_in_pipeline"
+                            when fixture was used
+
+    PocketChef must render a visible warning when do_not_use_for_demo is True:
+      "⚠ Development Fixture — compiler pipeline is bypassed."
+    (Implementation is in PocketChef, not here.)
     """
 
     schema_version: str = "1"
@@ -179,6 +210,10 @@ class RuntimeProfileTrace:
     model_name: str = ""
     trace_truth_boundary: str = _DEFAULT_TRUTH_BOUNDARY
     compiler_plan_ref: str = ""
+    compiler_plan_source: str = COMPILER_PLAN_SOURCE_ARTIFACT
+    compiler_plan_path: str = ""
+    do_not_use_for_demo: bool = False
+    provenance_notes: list[str] = field(default_factory=list)
     variants: dict[str, TraceVariant] = field(default_factory=dict)
     comparison_summary: ComparisonSummary = field(
         default_factory=lambda: ComparisonSummary(
@@ -197,6 +232,10 @@ class RuntimeProfileTrace:
             "model_name": self.model_name,
             "trace_truth_boundary": self.trace_truth_boundary,
             "compiler_plan_ref": self.compiler_plan_ref,
+            "compiler_plan_source": self.compiler_plan_source,
+            "compiler_plan_path": self.compiler_plan_path,
+            "do_not_use_for_demo": self.do_not_use_for_demo,
+            "provenance_notes": list(self.provenance_notes),
             "variants": {k: v.to_dict() for k, v in self.variants.items()},
             "comparison_summary": self.comparison_summary.to_dict(),
         }
@@ -309,10 +348,14 @@ class RuntimeProfileTraceBuilder:
     def build_comparison_summary(
         baseline: TraceVariant,
         optimized: TraceVariant,
+        *,
+        fixture_mode: bool = False,
     ) -> ComparisonSummary:
         """Compute relative deltas between baseline and optimized variants.
 
         latency_delta_pct < 0 means optimized is faster.
+        When fixture_mode is True, headline is prefixed with
+        "[FIXTURE] Compiler artifact missing. " to surface the provenance gap.
         """
         latency_delta_pct = _safe_delta_pct(
             optimized.summary.p95_latency_ms,
@@ -329,15 +372,21 @@ class RuntimeProfileTraceBuilder:
 
         if latency_delta_pct < 0:
             reduction_pct = abs(latency_delta_pct)
-            headline = (
+            core_headline = (
                 f"Compiler-guided runtime reduces p95 latency by {reduction_pct:.1f}%"
             )
         elif latency_delta_pct > 0:
-            headline = (
+            core_headline = (
                 f"Compiler-guided runtime increases p95 latency by {latency_delta_pct:.1f}%"
             )
         else:
-            headline = "Compiler-guided runtime shows no p95 latency change"
+            core_headline = "Compiler-guided runtime shows no p95 latency change"
+
+        headline = (
+            f"[FIXTURE] Compiler artifact missing. {core_headline}"
+            if fixture_mode
+            else core_headline
+        )
 
         return ComparisonSummary(
             latency_delta_pct=latency_delta_pct,
@@ -354,15 +403,24 @@ class RuntimeProfileTraceBuilder:
         compiler_plan_ref: str,
         baseline: TraceVariant,
         optimized: TraceVariant,
+        compiler_plan_source: str = COMPILER_PLAN_SOURCE_ARTIFACT,
+        compiler_plan_path: str = "",
+        do_not_use_for_demo: bool = False,
+        provenance_notes: list[str] | None = None,
     ) -> RuntimeProfileTrace:
         """Assemble a complete RuntimeProfileTrace from two variants."""
+        fixture_mode = (compiler_plan_source == COMPILER_PLAN_SOURCE_FIXTURE)
         comparison = RuntimeProfileTraceBuilder.build_comparison_summary(
-            baseline, optimized
+            baseline, optimized, fixture_mode=fixture_mode
         )
         return RuntimeProfileTrace(
             target_profile_id=target_profile_id,
             model_name=model_name,
             compiler_plan_ref=compiler_plan_ref,
+            compiler_plan_source=compiler_plan_source,
+            compiler_plan_path=compiler_plan_path,
+            do_not_use_for_demo=do_not_use_for_demo,
+            provenance_notes=list(provenance_notes or []),
             variants={
                 baseline.variant_id: baseline,
                 optimized.variant_id: optimized,

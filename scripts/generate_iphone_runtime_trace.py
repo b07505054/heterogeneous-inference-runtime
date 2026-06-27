@@ -43,7 +43,13 @@ sys.path.insert(0, str(_REPO_ROOT))
 from deployment.compiler_runtime_adapter import CompilerRuntimeAdapter
 from deployment.execution_engine import ExecutionEngine
 from deployment.execution_trace_recorder import ExecutionTraceRecorder
-from deployment.runtime_profile_trace import RuntimeProfileTrace, RuntimeProfileTraceBuilder
+from deployment.runtime_profile_trace import (
+    COMPILER_PLAN_SOURCE_ARTIFACT,
+    COMPILER_PLAN_SOURCE_FIXTURE,
+    RuntimeProfileTrace,
+    RuntimeProfileTraceBuilder,
+    TraceVariant,
+)
 
 # ---------------------------------------------------------------------------
 # Paths
@@ -165,8 +171,7 @@ _FIXTURE_OPTIMIZED: dict = {
 }
 
 # Baseline: cpu-only, no compiler optimizations, contiguous KV, no replay.
-# Uses same cost estimates as fixture optimized — the difference in latency
-# comes from higher baseline costs reflecting unoptimized CPU execution.
+# Higher cost estimates reflect unoptimized CPU execution without hardware dispatch.
 _FIXTURE_BASELINE: dict = {
     "target_profile_id": _FIXTURE_TARGET_PROFILE_ID,
     "model_name": _FIXTURE_MODEL_NAME,
@@ -267,6 +272,31 @@ def _simulated_memory_mb(req_idx: int, variant: str) -> float:
     return 140.0 + (req_idx % 4) * 8.0
 
 
+def _cpu_only_overlay(plan_dict: dict) -> dict:
+    """Return a copy of plan_dict with every function plan forced to cpu-only, contiguous KV."""
+    import copy
+    d = copy.deepcopy(plan_dict)
+    for fp in d.get("function_plans", []):
+        bep = fp.setdefault("backend_execution_plan", {})
+        bep["primary_backend"] = "cpu"
+        bep["fallback_chain"] = ["cpu"]
+        bep["decision_source"] = "baseline_cpu_fixed"
+        bep["requires_replay"] = False
+        kv = fp.setdefault("kv_plan", {})
+        kv["layout"] = "contiguous"
+        rp = fp.setdefault("replay_plan", {})
+        rp["replay_eligible"] = False
+        rp["cuda_graph_bucket"] = ""
+        rp["override_reason"] = "baseline_no_replay"
+        # Scale up cost estimates to simulate unoptimized CPU execution:
+        # multiply compiler cost by a fixed factor representing the absence of
+        # hardware-accelerated dispatch.
+        cs = fp.setdefault("cost_summary", {})
+        base_ms = float(cs.get("colocated_total_ms", 8.0))
+        cs["colocated_total_ms"] = round(base_ms * 5.5, 2)
+    return d
+
+
 def _run_variant(
     serving_plan_dict: dict,
     *,
@@ -275,7 +305,7 @@ def _run_variant(
     optimizer_features: list[str],
     gap_ms: float,
     num_requests: int,
-) -> object:
+) -> TraceVariant:
     """Run num_requests simulated requests and return a TraceVariant."""
     plans = CompilerRuntimeAdapter.from_serving_plan(serving_plan_dict)
     engine = ExecutionEngine()
@@ -310,55 +340,101 @@ def _run_variant(
 
 
 # ---------------------------------------------------------------------------
-# Entry point
+# Warning / summary printers
 # ---------------------------------------------------------------------------
 
-def main() -> None:
-    # ── Load or fall back ────────────────────────────────────────────────
-    compiler_plan_ref: str
+def _print_fixture_warning(expected_path: Path) -> None:
+    print("=========================================================")
+    print("WARNING: COMPILER ARTIFACT MISSING")
+    print()
+    print("Compiler ServingExecutionPlan was NOT found.")
+    print()
+    print("Falling back to built-in development fixture.")
+    print()
+    print("This runtime trace DOES NOT originate from the compiler.")
+    print()
+    print("DO_NOT_USE_FOR_DEMO = true")
+    print()
+    print(f"Expected artifact:")
+    print(f"  {expected_path}")
+    print("=========================================================")
+
+
+def _print_summary(
+    *,
+    compiler_plan_source: str,
+    compiler_plan_path: str,
+    do_not_use_for_demo: bool,
+    output_path: Path,
+    baseline_p95: float,
+    optimized_p95: float,
+    headline: str,
+    size_kb: float,
+) -> None:
+    source_label = (
+        "COMPILER ARTIFACT"
+        if compiler_plan_source == COMPILER_PLAN_SOURCE_ARTIFACT
+        else "BUILT-IN FIXTURE"
+    )
+    print()
+    print(f"Compiler Plan Source:  {source_label}")
+    print(f"  compiler_plan_path:  {compiler_plan_path}")
+    print(f"  do_not_use_for_demo: {str(do_not_use_for_demo).lower()}")
+    print(f"  output:              {output_path}")
+    print(f"  file size:           {size_kb:.1f} KB")
+    print(f"  baseline p95:        {baseline_p95:.1f} ms")
+    print(f"  optimized p95:       {optimized_p95:.1f} ms")
+    print(f"  headline:            {headline}")
+
+
+# ---------------------------------------------------------------------------
+# Core generation logic (extracted for testability)
+# ---------------------------------------------------------------------------
+
+def _generate_trace(
+    compiler_plan_path: Path,
+    *,
+    num_requests: int = _NUM_REQUESTS,
+) -> RuntimeProfileTrace:
+    """Build a RuntimeProfileTrace from compiler plan or fixture.
+
+    Does not write output or print anything. Returns the assembled trace.
+    Callers (main, tests) handle I/O and printing.
+    """
     optimized_dict: dict
-    baseline_dict: dict = _FIXTURE_BASELINE
+    baseline_dict: dict
 
-    if _COMPILER_PLAN_PATH.exists():
-        with _COMPILER_PLAN_PATH.open(encoding="utf-8") as f:
+    if compiler_plan_path.exists():
+        with compiler_plan_path.open(encoding="utf-8") as f:
             optimized_dict = json.load(f)
-        compiler_plan_ref = str(_COMPILER_PLAN_PATH.relative_to(_REPO_ROOT.parent))
-        print(f"[generate] Compiler plan loaded: {_COMPILER_PLAN_PATH}")
-        print(f"[generate] Source: compiler artifact")
-
-        # Derive baseline by overlaying cpu-only settings on every function plan.
+        compiler_plan_ref = str(compiler_plan_path)
+        compiler_plan_path_str = str(compiler_plan_path)
+        compiler_plan_source = COMPILER_PLAN_SOURCE_ARTIFACT
+        do_not_use_for_demo = False
+        provenance_notes: list[str] = []
         baseline_dict = _cpu_only_overlay(optimized_dict)
     else:
         optimized_dict = _FIXTURE_OPTIMIZED
+        baseline_dict = _FIXTURE_BASELINE
         compiler_plan_ref = "fixture:built_in"
-        print(f"[generate] Compiler plan NOT found at {_COMPILER_PLAN_PATH}")
-        print(f"[generate] Source: built-in fixture (serving_execution_plan_iphone.json pending)")
+        compiler_plan_path_str = str(compiler_plan_path)
+        compiler_plan_source = COMPILER_PLAN_SOURCE_FIXTURE
+        do_not_use_for_demo = True
+        provenance_notes = ["compiler_not_in_pipeline"]
 
-    target_profile_id: str = optimized_dict.get("target_profile_id", _FIXTURE_TARGET_PROFILE_ID)
+    target_profile_id: str = optimized_dict.get(
+        "target_profile_id", _FIXTURE_TARGET_PROFILE_ID
+    )
     model_name: str = optimized_dict.get("model_name", _FIXTURE_MODEL_NAME)
 
-    print(f"[generate] target_profile_id: {target_profile_id}")
-    print(f"[generate] model_name: {model_name}")
-    print(f"[generate] requests per variant: {_NUM_REQUESTS}")
-
-    # ── Baseline variant ─────────────────────────────────────────────────
-    print("[generate] Running baseline variant...")
     baseline = _run_variant(
         baseline_dict,
         variant_id="baseline",
         runtime_mode="fcfs_fixed_batch_cpu",
         optimizer_features=[],
         gap_ms=_BASELINE_GAP_MS,
-        num_requests=_NUM_REQUESTS,
+        num_requests=num_requests,
     )
-    print(
-        f"[generate]   baseline p95: {baseline.summary.p95_latency_ms:.1f} ms  "
-        f"  peak_memory: {baseline.summary.peak_memory_mb:.1f} MB  "
-        f"  total_events: {baseline.summary.total_events}"
-    )
-
-    # ── Optimized variant ────────────────────────────────────────────────
-    print("[generate] Running optimized variant...")
     optimized = _run_variant(
         optimized_dict,
         variant_id="optimized",
@@ -370,55 +446,53 @@ def main() -> None:
             "cost_aware_scheduling",
         ],
         gap_ms=_OPTIMIZED_GAP_MS,
-        num_requests=_NUM_REQUESTS,
-    )
-    print(
-        f"[generate]   optimized p95: {optimized.summary.p95_latency_ms:.1f} ms  "
-        f"  peak_memory: {optimized.summary.peak_memory_mb:.1f} MB  "
-        f"  total_events: {optimized.summary.total_events}"
+        num_requests=num_requests,
     )
 
-    # ── Assemble trace ───────────────────────────────────────────────────
-    trace = RuntimeProfileTraceBuilder.build_trace(
+    return RuntimeProfileTraceBuilder.build_trace(
         target_profile_id=target_profile_id,
         model_name=model_name,
         compiler_plan_ref=compiler_plan_ref,
         baseline=baseline,
         optimized=optimized,
+        compiler_plan_source=compiler_plan_source,
+        compiler_plan_path=compiler_plan_path_str,
+        do_not_use_for_demo=do_not_use_for_demo,
+        provenance_notes=provenance_notes,
     )
 
-    # ── Write ────────────────────────────────────────────────────────────
+
+# ---------------------------------------------------------------------------
+# Entry point
+# ---------------------------------------------------------------------------
+
+def main() -> None:
+    using_fixture = not _COMPILER_PLAN_PATH.exists()
+
+    if using_fixture:
+        _print_fixture_warning(_COMPILER_PLAN_PATH)
+    else:
+        print(f"[generate] Compiler plan loaded: {_COMPILER_PLAN_PATH}")
+
+    print(f"[generate] requests per variant: {_NUM_REQUESTS}")
+    print("[generate] Running baseline variant...")
+    print("[generate] Running optimized variant...")
+
+    trace = _generate_trace(_COMPILER_PLAN_PATH)
+
     trace.write_json(_OUTPUT_PATH)
     size_kb = _OUTPUT_PATH.stat().st_size / 1024
 
-    print(f"[generate] Output: {_OUTPUT_PATH}")
-    print(f"[generate] File size: {size_kb:.1f} KB")
-    print(f"[generate] Comparison: {trace.comparison_summary.headline}")
-
-
-def _cpu_only_overlay(plan_dict: dict) -> dict:
-    """Return a copy of plan_dict with every function plan forced to cpu-only, contiguous KV."""
-    import copy
-    d = copy.deepcopy(plan_dict)
-    for fp in d.get("function_plans", []):
-        bep = fp.setdefault("backend_execution_plan", {})
-        bep["primary_backend"] = "cpu"
-        bep["fallback_chain"] = ["cpu"]
-        bep["decision_source"] = "baseline_cpu_fixed"
-        bep["requires_replay"] = False
-        kv = fp.setdefault("kv_plan", {})
-        kv["layout"] = "contiguous"
-        rp = fp.setdefault("replay_plan", {})
-        rp["replay_eligible"] = False
-        rp["cuda_graph_bucket"] = ""
-        rp["override_reason"] = "baseline_no_replay"
-        # Scale up cost estimates to simulate unoptimized CPU execution:
-        # multiply compiler cost by a fixed factor representing the absence of
-        # hardware-accelerated dispatch.
-        cs = fp.setdefault("cost_summary", {})
-        base_ms = float(cs.get("colocated_total_ms", 8.0))
-        cs["colocated_total_ms"] = round(base_ms * 5.5, 2)
-    return d
+    _print_summary(
+        compiler_plan_source=trace.compiler_plan_source,
+        compiler_plan_path=trace.compiler_plan_path,
+        do_not_use_for_demo=trace.do_not_use_for_demo,
+        output_path=_OUTPUT_PATH,
+        baseline_p95=trace.variants["baseline"].summary.p95_latency_ms,
+        optimized_p95=trace.variants["optimized"].summary.p95_latency_ms,
+        headline=trace.comparison_summary.headline,
+        size_kb=size_kb,
+    )
 
 
 if __name__ == "__main__":
