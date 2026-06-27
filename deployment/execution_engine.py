@@ -1,27 +1,39 @@
 """ExecutionEngine: runtime orchestrator for compiler-derived execution plans.
 
-ExecutionEngine is the root of the runtime execution framework. It owns
-sub-components (BackendDispatcher; future: Scheduler, MemoryPlanner,
-ReplayManager). It does not mutate RuntimeExecutionPlan. It creates an
-ExecutionContext, passes the plan to each sub-component, and assembles
-RuntimeResult from their decisions.
+ExecutionEngine owns the decision pipeline. It does not mutate
+RuntimeExecutionPlan. It creates an ExecutionContext, calls each evaluator
+and dispatcher in order, and assembles a frozen RuntimeResult.
 
-Pipeline:
+Pipeline (in execution order):
   RuntimeExecutionPlan
     → ExecutionContext (mutable scratchpad)
-    → BackendDispatcher.dispatch()  → BackendDecision
-    → (future) Scheduler.plan()     → SchedulingDecision
-    → (future) MemoryPlanner.allocate() → MemoryDecision
-    → (future) ReplayManager.attempt()  → ReplayDecision
-    → RuntimeResult
+    → SchedulingDecisionEvaluator.evaluate()  → SchedulingDecision
+    → MemoryDecisionEvaluator.evaluate()      → MemoryDecision
+    → ReplayDecisionEvaluator.evaluate()      → ReplayDecision
+    → BackendDispatcher.dispatch()            → BackendDecision
+    → RuntimeResult (frozen)
 """
 
 from __future__ import annotations
 
 from deployment.backend_dispatcher import BackendDecision, BackendDispatcher
 from deployment.execution_context import ExecutionContext
+from deployment.runtime_decisions import (
+    MemoryDecisionEvaluator,
+    ReplayDecisionEvaluator,
+    SchedulingDecisionEvaluator,
+)
 from deployment.runtime_execution_plan import RuntimeExecutionPlan
 from deployment.runtime_result import CompilerSummary, RuntimeResult
+
+_DECISION_TRACE: list[str] = [
+    "compiler_runtime_adapter",
+    "scheduling_decision_evaluator",
+    "memory_decision_evaluator",
+    "replay_decision_evaluator",
+    "backend_dispatcher",
+    "execution_engine",
+]
 
 
 class ExecutionEngine:
@@ -31,8 +43,15 @@ class ExecutionEngine:
     def execute(self, plan: RuntimeExecutionPlan) -> RuntimeResult:
         ctx = ExecutionContext(plan=plan)
 
+        ctx.scheduling_decision = SchedulingDecisionEvaluator.evaluate(plan)
+        ctx.memory_decision = MemoryDecisionEvaluator.evaluate(plan)
+        ctx.replay_decision = ReplayDecisionEvaluator.evaluate(plan)
         ctx.backend_decision = self._dispatcher.dispatch(plan)
+
         assert isinstance(ctx.backend_decision, BackendDecision)
+        assert ctx.scheduling_decision is not None
+        assert ctx.memory_decision is not None
+        assert ctx.replay_decision is not None
 
         compiler_summary = CompilerSummary(
             function_name=plan.function_name,
@@ -52,6 +71,10 @@ class ExecutionEngine:
         return RuntimeResult(
             function_name=plan.function_name,
             compiler_summary=compiler_summary,
+            scheduling_decision=ctx.scheduling_decision,
+            memory_decision=ctx.memory_decision,
+            replay_decision=ctx.replay_decision,
             backend_decision=ctx.backend_decision,
             compiler_vs_runtime_backend=match_flag,
+            decision_trace=list(_DECISION_TRACE),
         )

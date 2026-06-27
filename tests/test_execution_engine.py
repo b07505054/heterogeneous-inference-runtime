@@ -164,8 +164,44 @@ def test_runtime_result_truth_boundary():
 def test_runtime_result_has_no_measurement_claims():
     plan = RuntimeExecutionPlanAdapter.from_dict(CONSTRAINED_DECODE_FIXTURE)
     result = ExecutionEngine().execute(plan)
-    assert result.replay_result is None
-    assert result.memory_result is None
+    assert result.replay_decision.captured is False
+    assert result.replay_decision.capture_attempted is False
+    assert result.memory_decision.admitted is True
     assert result.execution_statistics is None
     assert not hasattr(result, "actual_latency_ms")
     assert not hasattr(result, "cuda_graph_captured")
+
+
+def test_runtime_result_contains_all_typed_decisions():
+    from deployment.backend_dispatcher import BackendDecision
+    from deployment.runtime_decisions import MemoryDecision, ReplayDecision, SchedulingDecision
+
+    plan = RuntimeExecutionPlanAdapter.from_dict(CONSTRAINED_DECODE_FIXTURE)
+    result = ExecutionEngine().execute(plan)
+    assert isinstance(result.scheduling_decision, SchedulingDecision)
+    assert isinstance(result.memory_decision, MemoryDecision)
+    assert isinstance(result.replay_decision, ReplayDecision)
+    assert isinstance(result.backend_decision, BackendDecision)
+
+
+def test_decision_trace_lists_all_stages_in_order():
+    plan = RuntimeExecutionPlanAdapter.from_dict(CONSTRAINED_DECODE_FIXTURE)
+    result = ExecutionEngine().execute(plan)
+    expected = [
+        "compiler_runtime_adapter",
+        "scheduling_decision_evaluator",
+        "memory_decision_evaluator",
+        "replay_decision_evaluator",
+        "backend_dispatcher",
+        "execution_engine",
+    ]
+    assert result.decision_trace == expected
+
+
+def test_backend_runs_after_replay_in_decision_trace():
+    plan = RuntimeExecutionPlanAdapter.from_dict(CONSTRAINED_DECODE_FIXTURE)
+    result = ExecutionEngine().execute(plan)
+    trace = result.decision_trace
+    replay_idx = trace.index("replay_decision_evaluator")
+    backend_idx = trace.index("backend_dispatcher")
+    assert backend_idx > replay_idx

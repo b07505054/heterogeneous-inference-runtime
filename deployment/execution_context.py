@@ -2,9 +2,14 @@
 
 ExecutionContext is not compiler IR and not the final result. It is the
 scratchpad that ExecutionEngine populates as it calls each sub-component
-in order: BackendDispatcher, then (future) Scheduler, MemoryPlanner, and
-ReplayManager. Once all sub-components have run, ExecutionEngine assembles
-RuntimeResult from this context and discards it.
+in order:
+  1. SchedulingDecisionEvaluator
+  2. MemoryDecisionEvaluator
+  3. ReplayDecisionEvaluator
+  4. BackendDispatcher
+
+Once all sub-components have run, ExecutionEngine assembles RuntimeResult
+from this context and discards it.
 
 ExecutionContext must never be returned to callers or stored beyond a single
 execute() call.
@@ -12,15 +17,24 @@ execute() call.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
 from deployment.runtime_execution_plan import RuntimeExecutionPlan
+
+if TYPE_CHECKING:
+    from deployment.backend_dispatcher import BackendDecision
+    from deployment.runtime_decisions import (
+        MemoryDecision,
+        ReplayDecision,
+        SchedulingDecision,
+    )
 
 
 @dataclass
 class ExecutionContext:
     plan: RuntimeExecutionPlan
-    backend_decision: object | None = None
-    scheduling_decision: object | None = None
-    memory_decision: object | None = None
-    replay_decision: object | None = None
+    scheduling_decision: SchedulingDecision | None = None
+    memory_decision: MemoryDecision | None = None
+    replay_decision: ReplayDecision | None = None
+    backend_decision: BackendDecision | None = None
