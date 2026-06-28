@@ -29,6 +29,7 @@ Usage:
 
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -467,27 +468,51 @@ def _generate_trace(
 # ---------------------------------------------------------------------------
 
 def main() -> None:
-    using_fixture = not _COMPILER_PLAN_PATH.exists()
+    parser = argparse.ArgumentParser(
+        description="Generate offline iPhone runtime profile trace.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument(
+        "--compiler-plan",
+        type=Path,
+        default=_COMPILER_PLAN_PATH,
+        metavar="PATH",
+        help="Path to ServingExecutionPlan JSON from compile-for-target",
+    )
+    parser.add_argument(
+        "--out",
+        type=Path,
+        default=_OUTPUT_PATH,
+        metavar="PATH",
+        help="Output path for the runtime profile trace JSON",
+    )
+    args = parser.parse_args()
+
+    compiler_plan_path: Path = args.compiler_plan
+    output_path: Path = args.out
+
+    using_fixture = not compiler_plan_path.exists()
 
     if using_fixture:
-        _print_fixture_warning(_COMPILER_PLAN_PATH)
+        _print_fixture_warning(compiler_plan_path)
     else:
-        print(f"[generate] Compiler plan loaded: {_COMPILER_PLAN_PATH}")
+        print(f"[generate] Compiler plan loaded: {compiler_plan_path}")
 
     print(f"[generate] requests per variant: {_NUM_REQUESTS}")
     print("[generate] Running baseline variant...")
     print("[generate] Running optimized variant...")
 
-    trace = _generate_trace(_COMPILER_PLAN_PATH)
+    trace = _generate_trace(compiler_plan_path)
 
-    trace.write_json(_OUTPUT_PATH)
-    size_kb = _OUTPUT_PATH.stat().st_size / 1024
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    trace.write_json(output_path)
+    size_kb = output_path.stat().st_size / 1024
 
     _print_summary(
         compiler_plan_source=trace.compiler_plan_source,
         compiler_plan_path=trace.compiler_plan_path,
         do_not_use_for_demo=trace.do_not_use_for_demo,
-        output_path=_OUTPUT_PATH,
+        output_path=output_path,
         baseline_p95=trace.variants["baseline"].summary.p95_latency_ms,
         optimized_p95=trace.variants["optimized"].summary.p95_latency_ms,
         headline=trace.comparison_summary.headline,
