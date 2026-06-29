@@ -6,6 +6,24 @@
 
 This project implements an end-to-end edge AI inference deployment, profiling, and runtime benchmarking platform across heterogeneous AI inference backends.
 
+## Recent Updates
+
+- Added runtime execution plan IR, compiler runtime adapter, backend
+  dispatcher, typed runtime decisions, and execution trace recorder
+  instrumentation.
+- Added runtime profile trace generation from compiler artifacts, including an
+  iPhone A17 Pro trace and a frontend-normalized Qwen plan trace.
+- Added GPU-calibrated runtime artifacts and GTX 1650 Max-Q decode
+  batch-scaling calibration evidence for the LLM runtime cost model.
+- Added stateful and batch runtime simulation service paths.
+- Extended KV page microbenchmark/provenance and replaced unclear KV
+  fragmentation proxies with explicit artifact-backed metrics.
+
+Truth boundary: runtime traces and generated LLM artifacts are evidence
+snapshots or simulator outputs unless a command has just measured them on the
+current machine. Do not treat committed JSON as freshly measured live serving
+results.
+
 The system evaluates real-world deployment trade-offs across:
 
 - PyTorch eager inference
