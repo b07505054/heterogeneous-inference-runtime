@@ -19,8 +19,10 @@ Truth boundaries used throughout:
 from __future__ import annotations
 
 from dataclasses import dataclass
+from enum import Enum
 
 from deployment.runtime_execution_plan import RuntimeExecutionPlan
+from deployment.prefix_cache_simulator import PrefixCacheResult
 
 _TB_PLAN = "pd_split_schedule_static_plan_not_live_cluster_execution"
 _TB_KV = "kv_transfer_cost_model_not_measured_network"
@@ -28,6 +30,7 @@ _TB_GOODPUT = "goodput_proxy_not_cluster_throughput"
 _TB_COST = "prefill_decode_cost_model_based_on_compiler_estimates"
 _TB_QUEUE = "queue_wait_derived_from_worker_availability_not_live_scheduler"
 _TB_SERVICE = "service_time_model_static_estimate_not_live_measurement"
+_TB_PREFIX = "prefix_cache_simulated_adjusted_plan_not_real_kv_cache_or_network_measurement"
 
 # Sources whose service time already embeds interference/batching overhead.
 # Adding service adjustments on top would double-count that cost.
@@ -35,6 +38,68 @@ _MEASURED_SOURCES: frozenset[str] = frozenset({
     "measured_continuous_batching_curve",
     "production_trace_service_time",
 })
+
+
+# ---------------------------------------------------------------------------
+# Hardware model
+# ---------------------------------------------------------------------------
+
+class LinkType(Enum):
+    """GPU interconnect preset used for KV handoff bandwidth modeling."""
+
+    PCIE_GEN4_X16 = "pcie_gen4_x16"
+    PCIE_GEN5_X16 = "pcie_gen5_x16"
+    NVLINK = "nvlink"
+    CUSTOM = "custom"
+
+
+_LINK_BANDWIDTH_GB_PER_S: dict[LinkType, float] = {
+    LinkType.PCIE_GEN4_X16: 32.0,
+    LinkType.PCIE_GEN5_X16: 64.0,
+    LinkType.NVLINK: 900.0,
+}
+
+
+def link_bandwidth_gb_per_s(link_type: LinkType) -> float:
+    """Return nominal one-way link bandwidth in GB/s for built-in presets."""
+    if link_type is LinkType.CUSTOM:
+        raise ValueError("CUSTOM link type requires bandwidth_override_gb_per_s")
+    return _LINK_BANDWIDTH_GB_PER_S[link_type]
+
+
+@dataclass(frozen=True)
+class HardwareConfig:
+    """Hardware assumptions for the distributed runtime simulator.
+
+    gpu_count=2 models the current PD-split setup: one prefill GPU and one
+    decode GPU. gpu_count=1 means colocated execution; no KV crosses GPUs.
+
+    bandwidth_override_gb_per_s is for measured or experimental links. When it
+    is set, link_type is treated as descriptive metadata and the override is
+    used for the transfer-cost calculation.
+    """
+
+    gpu_count: int = 2
+    link_type: LinkType = LinkType.PCIE_GEN4_X16
+    gpu_memory_gb: float | None = None
+    bandwidth_override_gb_per_s: float | None = None
+
+    def __post_init__(self) -> None:
+        if self.gpu_count < 1:
+            raise ValueError("HardwareConfig.gpu_count must be >= 1")
+        if (
+            self.bandwidth_override_gb_per_s is not None
+            and self.bandwidth_override_gb_per_s <= 0.0
+        ):
+            raise ValueError("bandwidth_override_gb_per_s must be > 0")
+        if self.link_type is LinkType.CUSTOM and self.bandwidth_override_gb_per_s is None:
+            raise ValueError("LinkType.CUSTOM requires bandwidth_override_gb_per_s")
+
+    @property
+    def effective_bandwidth_gb_per_s(self) -> float:
+        if self.bandwidth_override_gb_per_s is not None:
+            return self.bandwidth_override_gb_per_s
+        return link_bandwidth_gb_per_s(self.link_type)
 
 
 # ---------------------------------------------------------------------------
@@ -201,6 +266,7 @@ class KVTransferStage:
     """KV transfer stage between prefill and decode workers.
 
     transfer_cost_ms = (transfer_bytes / 1024^2) / bandwidth_mb_per_ms.
+    bandwidth_mb_per_ms is numerically equivalent to GB/s in this model.
     This is a bandwidth-model estimate, not a measured network transfer.
     truth_boundary = "kv_transfer_cost_model_not_measured_network"
     """
@@ -208,6 +274,9 @@ class KVTransferStage:
     transfer_bytes: int
     transfer_cost_ms: float
     bandwidth_mb_per_ms: float
+    link_type: str
+    gpu_count: int
+    bandwidth_source: str
     truth_boundary: str
 
 
@@ -238,6 +307,36 @@ class OptionalReplayStage:
 
 
 # ---------------------------------------------------------------------------
+# Prefix cache adjustment record
+# ---------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class PrefixCacheAdjustment:
+    """Effect of a prefix-cache lookup on the distributed runtime plan.
+
+    Captures both the token savings (reduced prefill service time) and any
+    remote transfer overhead for remote_hit (additional network cost).
+
+    adjusted_prefill_service_ms is max(0.0, original_prefill_service_ms - saved_prefill_ms).
+    remote_transfer_cost_ms is the bandwidth-model cost of moving the prefix KV
+    from the remote cache worker; 0.0 for local_hit and miss.
+
+    All values are derived from PrefixCacheResult; the planner does not call
+    PrefixCacheSimulator directly. No wall clock. No real KV memory.
+
+    truth_boundary = "prefix_cache_simulated_adjusted_plan_not_real_kv_cache_or_network_measurement"
+    """
+
+    hit_type: str
+    hit_tokens: int
+    saved_prefill_ms: float
+    remote_transfer_bytes: float
+    remote_transfer_cost_ms: float
+    adjusted_prefill_service_ms: float
+    truth_boundary: str
+
+
+# ---------------------------------------------------------------------------
 # Top-level plan
 # ---------------------------------------------------------------------------
 
@@ -262,6 +361,7 @@ class DistributedRuntimePlan:
     decision_comparison: PDSplitDecisionComparison
     total_compiler_cost_ms: float
     truth_boundary: str
+    prefix_cache_adjustment: PrefixCacheAdjustment | None = None
 
 
 # ---------------------------------------------------------------------------
@@ -288,10 +388,12 @@ class PDSplitPlanner:
         *,
         slo_ttft_ms: float = 200.0,
         slo_tpot_ms: float = 20.0,
-        kv_bandwidth_mb_per_ms: float = 24.0,
+        hardware_config: HardwareConfig | None = None,
+        kv_bandwidth_mb_per_ms: float | None = None,
         handoff_overhead_ms: float = 0.2,
         queue_state: QueueState | None = None,
         service_time_model: ServiceTimeModel | None = None,
+        prefix_cache_result: PrefixCacheResult | None = None,
     ) -> DistributedRuntimePlan:
         """Build a DistributedRuntimePlan from a prefill + decode plan pair.
 
@@ -306,6 +408,17 @@ class PDSplitPlanner:
             )
         if service_time_model is None:
             service_time_model = ServiceTimeModel(source="compiler_estimate")
+        if hardware_config is None:
+            hardware_config = HardwareConfig()
+        if kv_bandwidth_mb_per_ms is not None:
+            if kv_bandwidth_mb_per_ms <= 0.0:
+                raise ValueError("kv_bandwidth_mb_per_ms must be > 0")
+            hardware_config = HardwareConfig(
+                gpu_count=hardware_config.gpu_count,
+                link_type=LinkType.CUSTOM,
+                gpu_memory_gb=hardware_config.gpu_memory_gb,
+                bandwidth_override_gb_per_s=kv_bandwidth_mb_per_ms,
+            )
 
         prefill_plan = _find_plan(plans, "prefill")
         decode_plan = _find_plan(plans, "decode")
@@ -323,9 +436,44 @@ class PDSplitPlanner:
         # KV transfer: bytes from prefill memory policy; cost from bandwidth model.
         kv_mb = prefill_plan.memory_policy.kv_byte_estimate_mb
         kv_bytes = int(kv_mb * 1024 * 1024)
+        effective_bandwidth_mb_per_ms = hardware_config.effective_bandwidth_gb_per_s
         kv_transfer_ms = (
-            kv_mb / kv_bandwidth_mb_per_ms if kv_bandwidth_mb_per_ms > 0.0 else 0.0
+            kv_mb / effective_bandwidth_mb_per_ms if hardware_config.gpu_count > 1 else 0.0
         )
+        effective_handoff_overhead_ms = (
+            handoff_overhead_ms if hardware_config.gpu_count > 1 else 0.0
+        )
+
+        # ── Prefix cache adjustment ───────────────────────────────────────────
+        # Applied after KV transfer is computed (remote transfer cost shares the
+        # same bandwidth model) and before queue wait derivation (so decode_ready_ms
+        # reflects the adjusted prefill service time).
+        prefix_cache_adj: PrefixCacheAdjustment | None = None
+        if prefix_cache_result is not None:
+            _saved_ms = prefix_cache_result.saved_prefill_ms
+            _adj_prefill_ms = max(0.0, prefill_service_ms - _saved_ms)
+
+            if (
+                prefix_cache_result.hit_type == "remote_hit"
+                and effective_bandwidth_mb_per_ms > 0.0
+            ):
+                _remote_mb = prefix_cache_result.remote_transfer_bytes / (1024.0 * 1024.0)
+                _remote_transfer_cost_ms = _remote_mb / effective_bandwidth_mb_per_ms
+            else:
+                _remote_transfer_cost_ms = 0.0
+
+            prefix_cache_adj = PrefixCacheAdjustment(
+                hit_type=prefix_cache_result.hit_type,
+                hit_tokens=prefix_cache_result.hit_tokens,
+                saved_prefill_ms=_saved_ms,
+                remote_transfer_bytes=prefix_cache_result.remote_transfer_bytes,
+                remote_transfer_cost_ms=_remote_transfer_cost_ms,
+                adjusted_prefill_service_ms=_adj_prefill_ms,
+                truth_boundary=_TB_PREFIX,
+            )
+
+            prefill_service_ms = _adj_prefill_ms
+            kv_transfer_ms = kv_transfer_ms + _remote_transfer_cost_ms
 
         # ── Queue wait derivation ─────────────────────────────────────────────
         arrival = queue_state.arrival_time_ms
@@ -348,7 +496,10 @@ class PDSplitPlanner:
 
         # PD-split decode queue wait: decode may only start after prefill + KV + handoff.
         decode_ready_ms = (
-            prefill_start_ms + prefill_service_ms + kv_transfer_ms + handoff_overhead_ms
+            prefill_start_ms
+            + prefill_service_ms
+            + kv_transfer_ms
+            + effective_handoff_overhead_ms
         )
         decode_start_ms = max(decode_ready_ms, queue_state.decode_worker_available_at_ms)
         queue_wait_decode_ms = decode_start_ms - decode_ready_ms
@@ -374,7 +525,7 @@ class PDSplitPlanner:
             queue_wait_prefill_ms
             + prefill_service_ms
             + kv_transfer_ms
-            + handoff_overhead_ms
+            + effective_handoff_overhead_ms
             + queue_wait_decode_ms
             + decode_service_ms
         )
@@ -382,7 +533,7 @@ class PDSplitPlanner:
             queue_wait_prefill_ms
             + prefill_service_ms
             + kv_transfer_ms
-            + handoff_overhead_ms
+            + effective_handoff_overhead_ms
             + queue_wait_decode_ms
         )
         pd_tpot = decode_service_ms
@@ -392,7 +543,7 @@ class PDSplitPlanner:
             prefill_service_ms=prefill_service_ms,
             kv_transfer_ms=kv_transfer_ms,
             kv_transfer_bytes=kv_bytes,
-            handoff_overhead_ms=handoff_overhead_ms,
+            handoff_overhead_ms=effective_handoff_overhead_ms,
             queue_wait_decode_ms=queue_wait_decode_ms,
             decode_service_ms=decode_service_ms,
             total_ms=pd_total,
@@ -407,7 +558,14 @@ class PDSplitPlanner:
         pd_ttft_ok = pd_split.ttft_ms <= slo_ttft_ms
         pd_tpot_ok = pd_split.tpot_ms <= slo_tpot_ms
 
-        if pd_total_lower and pd_ttft_ok and pd_tpot_ok:
+        if hardware_config.gpu_count < 2:
+            selected_policy = "colocated"
+            goodput_proxy = 1.0 / max(colocated.total_ms, 1e-6)
+            decision_reason = (
+                "colocated selected: HardwareConfig.gpu_count < 2, so PD-split "
+                "prefill/decode handoff is not available"
+            )
+        elif pd_total_lower and pd_ttft_ok and pd_tpot_ok:
             selected_policy = "pd_split"
             goodput_proxy = 1.0 / max(pd_split.total_ms, 1e-6)
             decision_reason = (
@@ -452,7 +610,13 @@ class PDSplitPlanner:
         kv_stage = KVTransferStage(
             transfer_bytes=kv_bytes,
             transfer_cost_ms=kv_transfer_ms,
-            bandwidth_mb_per_ms=kv_bandwidth_mb_per_ms,
+            bandwidth_mb_per_ms=effective_bandwidth_mb_per_ms,
+            link_type=hardware_config.link_type.value,
+            gpu_count=hardware_config.gpu_count,
+            bandwidth_source=(
+                "override" if hardware_config.bandwidth_override_gb_per_s is not None
+                else "link_type_preset"
+            ),
             truth_boundary=_TB_KV,
         )
         decode_stage = DecodeStage(
@@ -470,7 +634,10 @@ class PDSplitPlanner:
         )
 
         total_compiler_cost_ms = (
-            prefill_service_ms + kv_transfer_ms + handoff_overhead_ms + decode_service_ms
+            prefill_service_ms
+            + kv_transfer_ms
+            + effective_handoff_overhead_ms
+            + decode_service_ms
         )
         target_profile_id = prefill_plan.target_profile_id or decode_plan.target_profile_id
 
@@ -484,6 +651,7 @@ class PDSplitPlanner:
             decision_comparison=comparison,
             total_compiler_cost_ms=total_compiler_cost_ms,
             truth_boundary=_TB_PLAN,
+            prefix_cache_adjustment=prefix_cache_adj,
         )
 
 
