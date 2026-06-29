@@ -44,13 +44,30 @@ def test_off_grid_decode_lookup_chooses_nearest_row():
     assert measured == expected
 
 
-def test_cost_model_without_artifact_preserves_current_formula():
+def test_cost_model_without_artifact_models_prefill_parallel_efficiency():
     model = CostModel()
 
-    prefill = model.predict_prefill_ms(512)
+    small_prefill = model.predict_prefill_ms(256)
+    large_prefill = model.predict_prefill_ms(1024)
     decode = model.predict_decode_step_ms(4, 512)
 
-    assert prefill == (model.prefill_base_ms + 512 * model.prefill_ms_per_token)
+    assert small_prefill == (model.prefill_base_ms + 256 * model.prefill_ms_per_token)
+    assert large_prefill < (model.prefill_base_ms + 1024 * model.prefill_ms_per_token)
+    assert decode == (
+        model.decode_base_ms
+        + 3 * model.decode_ms_per_batch_item
+        + (512 / 1000.0) * model.decode_ms_per_1k_context
+    )
+
+
+def test_chunked_prefill_adds_boundary_overhead_without_decode_penalty():
+    model = CostModel()
+
+    full_prefill = model.predict_prefill_ms(256)
+    chunked_prefill = model.predict_prefill_ms(256, chunked=True)
+    decode = model.predict_decode_step_ms(4, 512)
+
+    assert chunked_prefill == full_prefill + model.prefill_chunk_overhead_ms
     assert decode == (
         model.decode_base_ms
         + 3 * model.decode_ms_per_batch_item

@@ -36,10 +36,10 @@
       ]
     },
     {
-      "time_ms": 39.028,
+      "time_ms": 36.739,
       "event": "prefill_end",
       "request_id": "req-001",
-      "prefill_latency_ms": 28.797
+      "prefill_latency_ms": 26.508
     },
     {
       "time_ms": 76.523,
@@ -1208,18 +1208,18 @@
       ]
     },
     {
-      "time_ms": 465.188,
+      "time_ms": 395.711,
       "event": "prefill_end",
       "request_id": "req-003",
-      "prefill_latency_ms": 169.981
+      "prefill_latency_ms": 100.504
     },
     {
-      "time_ms": 465.188,
+      "time_ms": 395.711,
       "event": "request_admitted",
       "request_id": "req-006",
       "prompt_tokens": 1024,
       "generated_tokens_target": 128,
-      "queue_wait_ms": 420.285,
+      "queue_wait_ms": 350.808,
       "needed_blocks": 72,
       "memory_pressure": 0.543,
       "pressure_level": "low",
@@ -1228,12 +1228,12 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 465.188,
+      "time_ms": 395.711,
       "event": "request_admitted",
       "request_id": "req-007",
       "prompt_tokens": 1024,
       "generated_tokens_target": 96,
-      "queue_wait_ms": 416.758,
+      "queue_wait_ms": 347.281,
       "needed_blocks": 70,
       "memory_pressure": 0.543,
       "pressure_level": "low",
@@ -1242,12 +1242,12 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 465.188,
+      "time_ms": 395.711,
       "event": "request_admitted",
       "request_id": "req-012",
       "prompt_tokens": 1024,
       "generated_tokens_target": 96,
-      "queue_wait_ms": 375.105,
+      "queue_wait_ms": 305.628,
       "needed_blocks": 70,
       "memory_pressure": 0.543,
       "pressure_level": "low",
@@ -1256,7 +1256,7 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 465.188,
+      "time_ms": 395.711,
       "event": "page_prefetch",
       "request_id": "req-003",
       "step": 0,
@@ -1273,7 +1273,7 @@
       "latency_saving_ms": 0.0
     },
     {
-      "time_ms": 465.188,
+      "time_ms": 395.711,
       "event": "decode_step",
       "request_id": "req-003",
       "step": 0,
@@ -1585,7 +1585,7 @@
       }
     },
     {
-      "time_ms": 521.051,
+      "time_ms": 451.574,
       "event": "page_prefetch",
       "request_id": "req-003",
       "step": 16,
@@ -1602,7 +1602,7 @@
       "latency_saving_ms": 0.6
     },
     {
-      "time_ms": 521.051,
+      "time_ms": 451.574,
       "event": "decode_step",
       "request_id": "req-003",
       "step": 16,
@@ -1918,7 +1918,7 @@
       }
     },
     {
-      "time_ms": 579.622,
+      "time_ms": 510.145,
       "event": "page_prefetch",
       "request_id": "req-003",
       "step": 32,
@@ -1934,7 +1934,7 @@
       "latency_saving_ms": 0.45
     },
     {
-      "time_ms": 579.622,
+      "time_ms": 510.145,
       "event": "decode_step",
       "request_id": "req-003",
       "step": 32,
@@ -2181,7 +2181,7 @@
       }
     },
     {
-      "time_ms": 631.159,
+      "time_ms": 561.682,
       "event": "page_prefetch",
       "request_id": "req-003",
       "step": 48,
@@ -2197,7 +2197,7 @@
       "latency_saving_ms": 0.45
     },
     {
-      "time_ms": 631.159,
+      "time_ms": 561.682,
       "event": "decode_step",
       "request_id": "req-003",
       "step": 48,
@@ -2447,7 +2447,7 @@
       }
     },
     {
-      "time_ms": 682.979,
+      "time_ms": 613.502,
       "event": "page_prefetch",
       "request_id": "req-003",
       "step": 64,
@@ -2463,7 +2463,7 @@
       "latency_saving_ms": 0.45
     },
     {
-      "time_ms": 682.979,
+      "time_ms": 613.502,
       "event": "decode_step",
       "request_id": "req-003",
       "step": 64,
@@ -2716,7 +2716,7 @@
       }
     },
     {
-      "time_ms": 736.636,
+      "time_ms": 667.159,
       "event": "page_prefetch",
       "request_id": "req-003",
       "step": 80,
@@ -2732,7 +2732,7 @@
       "latency_saving_ms": 0.45
     },
     {
-      "time_ms": 736.636,
+      "time_ms": 667.159,
       "event": "decode_step",
       "request_id": "req-003",
       "step": 80,
@@ -2988,7 +2988,7 @@
       }
     },
     {
-      "time_ms": 789.025,
+      "time_ms": 719.548,
       "event": "page_prefetch",
       "request_id": "req-003",
       "step": 96,
@@ -3002,7 +3002,7 @@
       "latency_saving_ms": 0.15
     },
     {
-      "time_ms": 789.025,
+      "time_ms": 719.548,
       "event": "decode_step",
       "request_id": "req-003",
       "step": 96,
@@ -3107,7 +3107,7 @@
       }
     },
     {
-      "time_ms": 831.478,
+      "time_ms": 762.001,
       "event": "page_prefetch",
       "request_id": "req-003",
       "step": 112,
@@ -3121,7 +3121,7 @@
       "latency_saving_ms": 0.15
     },
     {
-      "time_ms": 831.478,
+      "time_ms": 762.001,
       "event": "decode_step",
       "request_id": "req-003",
       "step": 112,
@@ -3227,14 +3227,14 @@
       }
     },
     {
-      "time_ms": 875.358,
+      "time_ms": 805.881,
       "event": "tokens_generated",
       "request_id": "req-003",
       "tokens_generated": 32,
       "decode_latency_ms": 410.17
     },
     {
-      "time_ms": 875.358,
+      "time_ms": 805.881,
       "event": "kv_blocks_freed",
       "request_id": "req-003",
       "freed_blocks": [
@@ -3307,14 +3307,14 @@
       ]
     },
     {
-      "time_ms": 875.358,
+      "time_ms": 805.881,
       "event": "tokens_generated",
       "request_id": "req-006",
       "tokens_generated": 128,
       "decode_latency_ms": 410.17
     },
     {
-      "time_ms": 875.358,
+      "time_ms": 805.881,
       "event": "kv_blocks_freed",
       "request_id": "req-006",
       "freed_blocks": [
@@ -3393,14 +3393,14 @@
       ]
     },
     {
-      "time_ms": 875.358,
+      "time_ms": 805.881,
       "event": "tokens_generated",
       "request_id": "req-007",
       "tokens_generated": 96,
       "decode_latency_ms": 410.17
     },
     {
-      "time_ms": 875.358,
+      "time_ms": 805.881,
       "event": "kv_blocks_freed",
       "request_id": "req-007",
       "freed_blocks": [
@@ -3477,14 +3477,14 @@
       ]
     },
     {
-      "time_ms": 875.358,
+      "time_ms": 805.881,
       "event": "tokens_generated",
       "request_id": "req-012",
       "tokens_generated": 96,
       "decode_latency_ms": 410.17
     },
     {
-      "time_ms": 875.358,
+      "time_ms": 805.881,
       "event": "kv_blocks_freed",
       "request_id": "req-012",
       "freed_blocks": [
@@ -3561,12 +3561,12 @@
       ]
     },
     {
-      "time_ms": 875.358,
+      "time_ms": 805.881,
       "event": "request_admitted",
       "request_id": "req-013",
       "prompt_tokens": 512,
       "generated_tokens_target": 32,
-      "queue_wait_ms": 772.361,
+      "queue_wait_ms": 702.884,
       "needed_blocks": 34,
       "available_blocks": 512,
       "memory_pressure": 0.0,
@@ -3576,7 +3576,7 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 875.358,
+      "time_ms": 805.881,
       "event": "prefill_start",
       "request_id": "req-013",
       "backend": "gpu",
@@ -3618,18 +3618,18 @@
       ]
     },
     {
-      "time_ms": 970.213,
+      "time_ms": 875.816,
       "event": "prefill_end",
       "request_id": "req-013",
-      "prefill_latency_ms": 94.855
+      "prefill_latency_ms": 69.935
     },
     {
-      "time_ms": 970.213,
+      "time_ms": 875.816,
       "event": "request_admitted",
       "request_id": "req-014",
       "prompt_tokens": 512,
       "generated_tokens_target": 32,
-      "queue_wait_ms": 851.646,
+      "queue_wait_ms": 757.249,
       "needed_blocks": 34,
       "memory_pressure": 0.4062,
       "pressure_level": "low",
@@ -3638,12 +3638,12 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 970.213,
+      "time_ms": 875.816,
       "event": "request_admitted",
       "request_id": "req-015",
       "prompt_tokens": 1024,
       "generated_tokens_target": 96,
-      "queue_wait_ms": 842.814,
+      "queue_wait_ms": 748.417,
       "needed_blocks": 70,
       "memory_pressure": 0.4062,
       "pressure_level": "low",
@@ -3652,12 +3652,12 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 970.213,
+      "time_ms": 875.816,
       "event": "request_admitted",
       "request_id": "req-016",
       "prompt_tokens": 64,
       "generated_tokens_target": 32,
-      "queue_wait_ms": 833.576,
+      "queue_wait_ms": 739.179,
       "needed_blocks": 6,
       "memory_pressure": 0.4062,
       "pressure_level": "low",
@@ -3666,12 +3666,12 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 970.213,
+      "time_ms": 875.816,
       "event": "request_admitted",
       "request_id": "req-017",
       "prompt_tokens": 256,
       "generated_tokens_target": 32,
-      "queue_wait_ms": 822.996,
+      "queue_wait_ms": 728.599,
       "needed_blocks": 18,
       "memory_pressure": 0.4062,
       "pressure_level": "low",
@@ -3680,12 +3680,12 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 970.213,
+      "time_ms": 875.816,
       "event": "request_admitted",
       "request_id": "req-018",
       "prompt_tokens": 64,
       "generated_tokens_target": 128,
-      "queue_wait_ms": 809.311,
+      "queue_wait_ms": 714.914,
       "needed_blocks": 12,
       "memory_pressure": 0.4062,
       "pressure_level": "low",
@@ -3694,12 +3694,12 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 970.213,
+      "time_ms": 875.816,
       "event": "request_admitted",
       "request_id": "req-019",
       "prompt_tokens": 256,
       "generated_tokens_target": 64,
-      "queue_wait_ms": 804.863,
+      "queue_wait_ms": 710.466,
       "needed_blocks": 20,
       "memory_pressure": 0.4062,
       "pressure_level": "low",
@@ -3708,12 +3708,12 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 970.213,
+      "time_ms": 875.816,
       "event": "request_admitted",
       "request_id": "req-020",
       "prompt_tokens": 128,
       "generated_tokens_target": 96,
-      "queue_wait_ms": 798.94,
+      "queue_wait_ms": 704.543,
       "needed_blocks": 14,
       "memory_pressure": 0.4062,
       "pressure_level": "low",
@@ -3722,7 +3722,7 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 970.213,
+      "time_ms": 875.816,
       "event": "page_prefetch",
       "request_id": "req-013",
       "step": 0,
@@ -3743,7 +3743,7 @@
       "latency_saving_ms": 0.0
     },
     {
-      "time_ms": 970.213,
+      "time_ms": 875.816,
       "event": "decode_step",
       "request_id": "req-013",
       "step": 0,
@@ -4003,7 +4003,7 @@
       }
     },
     {
-      "time_ms": 1025.3,
+      "time_ms": 930.903,
       "event": "page_prefetch",
       "request_id": "req-013",
       "step": 16,
@@ -4024,7 +4024,7 @@
       "latency_saving_ms": 0.9
     },
     {
-      "time_ms": 1025.3,
+      "time_ms": 930.903,
       "event": "decode_step",
       "request_id": "req-013",
       "step": 16,
@@ -4292,7 +4292,7 @@
       }
     },
     {
-      "time_ms": 1077.441,
+      "time_ms": 983.044,
       "event": "page_prefetch",
       "request_id": "req-013",
       "step": 32,
@@ -4309,7 +4309,7 @@
       "latency_saving_ms": 0.3
     },
     {
-      "time_ms": 1077.441,
+      "time_ms": 983.044,
       "event": "decode_step",
       "request_id": "req-013",
       "step": 32,
@@ -4465,7 +4465,7 @@
       }
     },
     {
-      "time_ms": 1118.607,
+      "time_ms": 1024.21,
       "event": "page_prefetch",
       "request_id": "req-013",
       "step": 48,
@@ -4482,7 +4482,7 @@
       "latency_saving_ms": 0.6
     },
     {
-      "time_ms": 1118.607,
+      "time_ms": 1024.21,
       "event": "decode_step",
       "request_id": "req-013",
       "step": 48,
@@ -4642,7 +4642,7 @@
       }
     },
     {
-      "time_ms": 1159.866,
+      "time_ms": 1065.469,
       "event": "page_prefetch",
       "request_id": "req-013",
       "step": 64,
@@ -4658,7 +4658,7 @@
       "latency_saving_ms": 0.45
     },
     {
-      "time_ms": 1159.866,
+      "time_ms": 1065.469,
       "event": "decode_step",
       "request_id": "req-013",
       "step": 64,
@@ -4795,7 +4795,7 @@
       }
     },
     {
-      "time_ms": 1197.497,
+      "time_ms": 1103.1,
       "event": "page_prefetch",
       "request_id": "req-013",
       "step": 80,
@@ -4811,7 +4811,7 @@
       "latency_saving_ms": 0.45
     },
     {
-      "time_ms": 1197.497,
+      "time_ms": 1103.1,
       "event": "decode_step",
       "request_id": "req-013",
       "step": 80,
@@ -4951,7 +4951,7 @@
       }
     },
     {
-      "time_ms": 1236.633,
+      "time_ms": 1142.236,
       "event": "page_prefetch",
       "request_id": "req-013",
       "step": 96,
@@ -4965,7 +4965,7 @@
       "latency_saving_ms": 0.15
     },
     {
-      "time_ms": 1236.633,
+      "time_ms": 1142.236,
       "event": "decode_step",
       "request_id": "req-013",
       "step": 96,
@@ -5010,7 +5010,7 @@
       }
     },
     {
-      "time_ms": 1269.866,
+      "time_ms": 1175.469,
       "event": "page_prefetch",
       "request_id": "req-013",
       "step": 112,
@@ -5024,7 +5024,7 @@
       "latency_saving_ms": 0.15
     },
     {
-      "time_ms": 1269.866,
+      "time_ms": 1175.469,
       "event": "decode_step",
       "request_id": "req-013",
       "step": 112,
@@ -5070,14 +5070,14 @@
       }
     },
     {
-      "time_ms": 1302.652,
+      "time_ms": 1208.255,
       "event": "tokens_generated",
       "request_id": "req-013",
       "tokens_generated": 32,
       "decode_latency_ms": 332.439
     },
     {
-      "time_ms": 1302.652,
+      "time_ms": 1208.255,
       "event": "kv_blocks_freed",
       "request_id": "req-013",
       "freed_blocks": [
@@ -5118,14 +5118,14 @@
       ]
     },
     {
-      "time_ms": 1302.652,
+      "time_ms": 1208.255,
       "event": "tokens_generated",
       "request_id": "req-014",
       "tokens_generated": 32,
       "decode_latency_ms": 332.439
     },
     {
-      "time_ms": 1302.652,
+      "time_ms": 1208.255,
       "event": "kv_blocks_freed",
       "request_id": "req-014",
       "freed_blocks": [
@@ -5166,14 +5166,14 @@
       ]
     },
     {
-      "time_ms": 1302.652,
+      "time_ms": 1208.255,
       "event": "tokens_generated",
       "request_id": "req-015",
       "tokens_generated": 96,
       "decode_latency_ms": 332.439
     },
     {
-      "time_ms": 1302.652,
+      "time_ms": 1208.255,
       "event": "kv_blocks_freed",
       "request_id": "req-015",
       "freed_blocks": [
@@ -5250,14 +5250,14 @@
       ]
     },
     {
-      "time_ms": 1302.652,
+      "time_ms": 1208.255,
       "event": "tokens_generated",
       "request_id": "req-016",
       "tokens_generated": 32,
       "decode_latency_ms": 332.439
     },
     {
-      "time_ms": 1302.652,
+      "time_ms": 1208.255,
       "event": "kv_blocks_freed",
       "request_id": "req-016",
       "freed_blocks": [
@@ -5270,14 +5270,14 @@
       ]
     },
     {
-      "time_ms": 1302.652,
+      "time_ms": 1208.255,
       "event": "tokens_generated",
       "request_id": "req-017",
       "tokens_generated": 32,
       "decode_latency_ms": 332.439
     },
     {
-      "time_ms": 1302.652,
+      "time_ms": 1208.255,
       "event": "kv_blocks_freed",
       "request_id": "req-017",
       "freed_blocks": [
@@ -5302,14 +5302,14 @@
       ]
     },
     {
-      "time_ms": 1302.652,
+      "time_ms": 1208.255,
       "event": "tokens_generated",
       "request_id": "req-018",
       "tokens_generated": 128,
       "decode_latency_ms": 332.439
     },
     {
-      "time_ms": 1302.652,
+      "time_ms": 1208.255,
       "event": "kv_blocks_freed",
       "request_id": "req-018",
       "freed_blocks": [
@@ -5328,14 +5328,14 @@
       ]
     },
     {
-      "time_ms": 1302.652,
+      "time_ms": 1208.255,
       "event": "tokens_generated",
       "request_id": "req-019",
       "tokens_generated": 64,
       "decode_latency_ms": 332.439
     },
     {
-      "time_ms": 1302.652,
+      "time_ms": 1208.255,
       "event": "kv_blocks_freed",
       "request_id": "req-019",
       "freed_blocks": [
@@ -5362,14 +5362,14 @@
       ]
     },
     {
-      "time_ms": 1302.652,
+      "time_ms": 1208.255,
       "event": "tokens_generated",
       "request_id": "req-020",
       "tokens_generated": 96,
       "decode_latency_ms": 332.439
     },
     {
-      "time_ms": 1302.652,
+      "time_ms": 1208.255,
       "event": "kv_blocks_freed",
       "request_id": "req-020",
       "freed_blocks": [
@@ -5390,12 +5390,12 @@
       ]
     },
     {
-      "time_ms": 1302.652,
+      "time_ms": 1208.255,
       "event": "request_admitted",
       "request_id": "req-021",
       "prompt_tokens": 64,
       "generated_tokens_target": 64,
-      "queue_wait_ms": 1120.15,
+      "queue_wait_ms": 1025.753,
       "needed_blocks": 8,
       "available_blocks": 512,
       "memory_pressure": 0.0,
@@ -5405,7 +5405,7 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 1302.652,
+      "time_ms": 1208.255,
       "event": "prefill_start",
       "request_id": "req-021",
       "backend": "gpu",
@@ -5421,18 +5421,18 @@
       ]
     },
     {
-      "time_ms": 1333.127,
+      "time_ms": 1236.308,
       "event": "prefill_end",
       "request_id": "req-021",
-      "prefill_latency_ms": 30.475
+      "prefill_latency_ms": 28.053
     },
     {
-      "time_ms": 1333.127,
+      "time_ms": 1236.308,
       "event": "request_admitted",
       "request_id": "req-022",
       "prompt_tokens": 128,
       "generated_tokens_target": 64,
-      "queue_wait_ms": 1142.079,
+      "queue_wait_ms": 1045.26,
       "needed_blocks": 12,
       "memory_pressure": 0.3164,
       "pressure_level": "low",
@@ -5441,12 +5441,12 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 1333.127,
+      "time_ms": 1236.308,
       "event": "request_admitted",
       "request_id": "req-023",
       "prompt_tokens": 256,
       "generated_tokens_target": 64,
-      "queue_wait_ms": 1134.683,
+      "queue_wait_ms": 1037.864,
       "needed_blocks": 20,
       "memory_pressure": 0.3164,
       "pressure_level": "low",
@@ -5455,12 +5455,12 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 1333.127,
+      "time_ms": 1236.308,
       "event": "request_admitted",
       "request_id": "req-024",
       "prompt_tokens": 64,
       "generated_tokens_target": 64,
-      "queue_wait_ms": 1123.729,
+      "queue_wait_ms": 1026.91,
       "needed_blocks": 8,
       "memory_pressure": 0.3164,
       "pressure_level": "low",
@@ -5469,12 +5469,12 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 1333.127,
+      "time_ms": 1236.308,
       "event": "request_admitted",
       "request_id": "req-025",
       "prompt_tokens": 256,
       "generated_tokens_target": 128,
-      "queue_wait_ms": 1110.58,
+      "queue_wait_ms": 1013.761,
       "needed_blocks": 24,
       "memory_pressure": 0.3164,
       "pressure_level": "low",
@@ -5483,12 +5483,12 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 1333.127,
+      "time_ms": 1236.308,
       "event": "request_admitted",
       "request_id": "req-026",
       "prompt_tokens": 128,
       "generated_tokens_target": 96,
-      "queue_wait_ms": 1106.296,
+      "queue_wait_ms": 1009.477,
       "needed_blocks": 14,
       "memory_pressure": 0.3164,
       "pressure_level": "low",
@@ -5497,12 +5497,12 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 1333.127,
+      "time_ms": 1236.308,
       "event": "request_admitted",
       "request_id": "req-027",
       "prompt_tokens": 512,
       "generated_tokens_target": 128,
-      "queue_wait_ms": 1102.894,
+      "queue_wait_ms": 1006.075,
       "needed_blocks": 40,
       "memory_pressure": 0.3164,
       "pressure_level": "low",
@@ -5511,12 +5511,12 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 1333.127,
+      "time_ms": 1236.308,
       "event": "request_admitted",
       "request_id": "req-028",
       "prompt_tokens": 512,
       "generated_tokens_target": 64,
-      "queue_wait_ms": 1088.739,
+      "queue_wait_ms": 991.92,
       "needed_blocks": 36,
       "memory_pressure": 0.3164,
       "pressure_level": "low",
@@ -5525,7 +5525,7 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 1333.127,
+      "time_ms": 1236.308,
       "event": "page_prefetch",
       "request_id": "req-021",
       "step": 0,
@@ -5546,7 +5546,7 @@
       "latency_saving_ms": 0.0
     },
     {
-      "time_ms": 1333.127,
+      "time_ms": 1236.308,
       "event": "decode_step",
       "request_id": "req-021",
       "step": 0,
@@ -5750,7 +5750,7 @@
       }
     },
     {
-      "time_ms": 1381.09,
+      "time_ms": 1284.271,
       "event": "page_prefetch",
       "request_id": "req-021",
       "step": 16,
@@ -5771,7 +5771,7 @@
       "latency_saving_ms": 0.9
     },
     {
-      "time_ms": 1381.09,
+      "time_ms": 1284.271,
       "event": "decode_step",
       "request_id": "req-021",
       "step": 16,
@@ -5983,7 +5983,7 @@
       }
     },
     {
-      "time_ms": 1429.779,
+      "time_ms": 1332.96,
       "event": "page_prefetch",
       "request_id": "req-021",
       "step": 32,
@@ -6004,7 +6004,7 @@
       "latency_saving_ms": 0.9
     },
     {
-      "time_ms": 1429.779,
+      "time_ms": 1332.96,
       "event": "decode_step",
       "request_id": "req-021",
       "step": 32,
@@ -6224,7 +6224,7 @@
       }
     },
     {
-      "time_ms": 1477.407,
+      "time_ms": 1380.588,
       "event": "page_prefetch",
       "request_id": "req-021",
       "step": 48,
@@ -6245,7 +6245,7 @@
       "latency_saving_ms": 0.9
     },
     {
-      "time_ms": 1477.407,
+      "time_ms": 1380.588,
       "event": "decode_step",
       "request_id": "req-021",
       "step": 48,
@@ -6473,7 +6473,7 @@
       }
     },
     {
-      "time_ms": 1528.013,
+      "time_ms": 1431.194,
       "event": "page_prefetch",
       "request_id": "req-021",
       "step": 64,
@@ -6489,7 +6489,7 @@
       "latency_saving_ms": 0.3
     },
     {
-      "time_ms": 1528.013,
+      "time_ms": 1431.194,
       "event": "decode_step",
       "request_id": "req-021",
       "step": 64,
@@ -6606,7 +6606,7 @@
       }
     },
     {
-      "time_ms": 1565.583,
+      "time_ms": 1468.764,
       "event": "page_prefetch",
       "request_id": "req-021",
       "step": 80,
@@ -6622,7 +6622,7 @@
       "latency_saving_ms": 0.45
     },
     {
-      "time_ms": 1565.583,
+      "time_ms": 1468.764,
       "event": "decode_step",
       "request_id": "req-021",
       "step": 80,
@@ -6742,7 +6742,7 @@
       }
     },
     {
-      "time_ms": 1603.1,
+      "time_ms": 1506.281,
       "event": "page_prefetch",
       "request_id": "req-021",
       "step": 96,
@@ -6757,7 +6757,7 @@
       "latency_saving_ms": 0.3
     },
     {
-      "time_ms": 1603.1,
+      "time_ms": 1506.281,
       "event": "decode_step",
       "request_id": "req-021",
       "step": 96,
@@ -6859,7 +6859,7 @@
       }
     },
     {
-      "time_ms": 1639.122,
+      "time_ms": 1542.303,
       "event": "page_prefetch",
       "request_id": "req-021",
       "step": 112,
@@ -6874,7 +6874,7 @@
       "latency_saving_ms": 0.3
     },
     {
-      "time_ms": 1639.122,
+      "time_ms": 1542.303,
       "event": "decode_step",
       "request_id": "req-021",
       "step": 112,
@@ -6978,14 +6978,14 @@
       }
     },
     {
-      "time_ms": 1675.585,
+      "time_ms": 1578.766,
       "event": "tokens_generated",
       "request_id": "req-021",
       "tokens_generated": 64,
       "decode_latency_ms": 342.458
     },
     {
-      "time_ms": 1675.585,
+      "time_ms": 1578.766,
       "event": "kv_blocks_freed",
       "request_id": "req-021",
       "freed_blocks": [
@@ -7000,14 +7000,14 @@
       ]
     },
     {
-      "time_ms": 1675.585,
+      "time_ms": 1578.766,
       "event": "tokens_generated",
       "request_id": "req-022",
       "tokens_generated": 64,
       "decode_latency_ms": 342.458
     },
     {
-      "time_ms": 1675.585,
+      "time_ms": 1578.766,
       "event": "kv_blocks_freed",
       "request_id": "req-022",
       "freed_blocks": [
@@ -7026,14 +7026,14 @@
       ]
     },
     {
-      "time_ms": 1675.585,
+      "time_ms": 1578.766,
       "event": "tokens_generated",
       "request_id": "req-023",
       "tokens_generated": 64,
       "decode_latency_ms": 342.458
     },
     {
-      "time_ms": 1675.585,
+      "time_ms": 1578.766,
       "event": "kv_blocks_freed",
       "request_id": "req-023",
       "freed_blocks": [
@@ -7060,14 +7060,14 @@
       ]
     },
     {
-      "time_ms": 1675.585,
+      "time_ms": 1578.766,
       "event": "tokens_generated",
       "request_id": "req-024",
       "tokens_generated": 64,
       "decode_latency_ms": 342.458
     },
     {
-      "time_ms": 1675.585,
+      "time_ms": 1578.766,
       "event": "kv_blocks_freed",
       "request_id": "req-024",
       "freed_blocks": [
@@ -7082,14 +7082,14 @@
       ]
     },
     {
-      "time_ms": 1675.585,
+      "time_ms": 1578.766,
       "event": "tokens_generated",
       "request_id": "req-025",
       "tokens_generated": 128,
       "decode_latency_ms": 342.458
     },
     {
-      "time_ms": 1675.585,
+      "time_ms": 1578.766,
       "event": "kv_blocks_freed",
       "request_id": "req-025",
       "freed_blocks": [
@@ -7120,14 +7120,14 @@
       ]
     },
     {
-      "time_ms": 1675.585,
+      "time_ms": 1578.766,
       "event": "tokens_generated",
       "request_id": "req-026",
       "tokens_generated": 96,
       "decode_latency_ms": 342.458
     },
     {
-      "time_ms": 1675.585,
+      "time_ms": 1578.766,
       "event": "kv_blocks_freed",
       "request_id": "req-026",
       "freed_blocks": [
@@ -7148,14 +7148,14 @@
       ]
     },
     {
-      "time_ms": 1675.585,
+      "time_ms": 1578.766,
       "event": "tokens_generated",
       "request_id": "req-027",
       "tokens_generated": 128,
       "decode_latency_ms": 342.458
     },
     {
-      "time_ms": 1675.585,
+      "time_ms": 1578.766,
       "event": "kv_blocks_freed",
       "request_id": "req-027",
       "freed_blocks": [
@@ -7202,14 +7202,14 @@
       ]
     },
     {
-      "time_ms": 1675.585,
+      "time_ms": 1578.766,
       "event": "tokens_generated",
       "request_id": "req-028",
       "tokens_generated": 64,
       "decode_latency_ms": 342.458
     },
     {
-      "time_ms": 1675.585,
+      "time_ms": 1578.766,
       "event": "kv_blocks_freed",
       "request_id": "req-028",
       "freed_blocks": [
@@ -7252,12 +7252,12 @@
       ]
     },
     {
-      "time_ms": 1675.585,
+      "time_ms": 1578.766,
       "event": "request_admitted",
       "request_id": "req-029",
       "prompt_tokens": 128,
       "generated_tokens_target": 96,
-      "queue_wait_ms": 1426.959,
+      "queue_wait_ms": 1330.14,
       "needed_blocks": 14,
       "available_blocks": 512,
       "memory_pressure": 0.0,
@@ -7267,7 +7267,7 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 1675.585,
+      "time_ms": 1578.766,
       "event": "prefill_start",
       "request_id": "req-029",
       "backend": "gpu",
@@ -7289,18 +7289,18 @@
       ]
     },
     {
-      "time_ms": 1713.901,
+      "time_ms": 1614.037,
       "event": "prefill_end",
       "request_id": "req-029",
-      "prefill_latency_ms": 38.316
+      "prefill_latency_ms": 35.271
     },
     {
-      "time_ms": 1713.901,
+      "time_ms": 1614.037,
       "event": "request_admitted",
       "request_id": "req-030",
       "prompt_tokens": 512,
       "generated_tokens_target": 128,
-      "queue_wait_ms": 1453.323,
+      "queue_wait_ms": 1353.459,
       "needed_blocks": 40,
       "memory_pressure": 0.1484,
       "pressure_level": "low",
@@ -7309,12 +7309,12 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 1713.901,
+      "time_ms": 1614.037,
       "event": "request_admitted",
       "request_id": "req-031",
       "prompt_tokens": 128,
       "generated_tokens_target": 128,
-      "queue_wait_ms": 1447.531,
+      "queue_wait_ms": 1347.667,
       "needed_blocks": 16,
       "memory_pressure": 0.1484,
       "pressure_level": "low",
@@ -7323,12 +7323,12 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 1713.901,
+      "time_ms": 1614.037,
       "event": "request_admitted",
       "request_id": "req-032",
       "prompt_tokens": 64,
       "generated_tokens_target": 32,
-      "queue_wait_ms": 1446.076,
+      "queue_wait_ms": 1346.212,
       "needed_blocks": 6,
       "memory_pressure": 0.1484,
       "pressure_level": "low",
@@ -7337,7 +7337,7 @@
       "effective_batch_cap": 8
     },
     {
-      "time_ms": 1713.901,
+      "time_ms": 1614.037,
       "event": "page_prefetch",
       "request_id": "req-029",
       "step": 0,
@@ -7354,7 +7354,7 @@
       "latency_saving_ms": 0.0
     },
     {
-      "time_ms": 1713.901,
+      "time_ms": 1614.037,
       "event": "decode_step",
       "request_id": "req-029",
       "step": 0,
@@ -7462,7 +7462,7 @@
       }
     },
     {
-      "time_ms": 1750.961,
+      "time_ms": 1651.097,
       "event": "page_prefetch",
       "request_id": "req-029",
       "step": 16,
@@ -7479,7 +7479,7 @@
       "latency_saving_ms": 0.6
     },
     {
-      "time_ms": 1750.961,
+      "time_ms": 1651.097,
       "event": "decode_step",
       "request_id": "req-029",
       "step": 16,
@@ -7591,7 +7591,7 @@
       }
     },
     {
-      "time_ms": 1785.369,
+      "time_ms": 1685.505,
       "event": "page_prefetch",
       "request_id": "req-029",
       "step": 32,
@@ -7607,7 +7607,7 @@
       "latency_saving_ms": 0.45
     },
     {
-      "time_ms": 1785.369,
+      "time_ms": 1685.505,
       "event": "decode_step",
       "request_id": "req-029",
       "step": 32,
@@ -7710,7 +7710,7 @@
       }
     },
     {
-      "time_ms": 1821.87,
+      "time_ms": 1722.006,
       "event": "page_prefetch",
       "request_id": "req-029",
       "step": 48,
@@ -7726,7 +7726,7 @@
       "latency_saving_ms": 0.45
     },
     {
-      "time_ms": 1821.87,
+      "time_ms": 1722.006,
       "event": "decode_step",
       "request_id": "req-029",
       "step": 48,
@@ -7832,7 +7832,7 @@
       }
     },
     {
-      "time_ms": 1856.395,
+      "time_ms": 1756.531,
       "event": "page_prefetch",
       "request_id": "req-029",
       "step": 64,
@@ -7848,7 +7848,7 @@
       "latency_saving_ms": 0.45
     },
     {
-      "time_ms": 1856.395,
+      "time_ms": 1756.531,
       "event": "decode_step",
       "request_id": "req-029",
       "step": 64,
@@ -7957,7 +7957,7 @@
       }
     },
     {
-      "time_ms": 1892.586,
+      "time_ms": 1792.722,
       "event": "page_prefetch",
       "request_id": "req-029",
       "step": 80,
@@ -7973,7 +7973,7 @@
       "latency_saving_ms": 0.45
     },
     {
-      "time_ms": 1892.586,
+      "time_ms": 1792.722,
       "event": "decode_step",
       "request_id": "req-029",
       "step": 80,
@@ -8085,7 +8085,7 @@
       }
     },
     {
-      "time_ms": 1928.361,
+      "time_ms": 1828.497,
       "event": "page_prefetch",
       "request_id": "req-029",
       "step": 96,
@@ -8100,7 +8100,7 @@
       "latency_saving_ms": 0.3
     },
     {
-      "time_ms": 1928.361,
+      "time_ms": 1828.497,
       "event": "decode_step",
       "request_id": "req-029",
       "step": 96,
@@ -8194,7 +8194,7 @@
       }
     },
     {
-      "time_ms": 1963.63,
+      "time_ms": 1863.766,
       "event": "page_prefetch",
       "request_id": "req-029",
       "step": 112,
@@ -8209,7 +8209,7 @@
       "latency_saving_ms": 0.3
     },
     {
-      "time_ms": 1963.63,
+      "time_ms": 1863.766,
       "event": "decode_step",
       "request_id": "req-029",
       "step": 112,
@@ -8305,14 +8305,14 @@
       }
     },
     {
-      "time_ms": 1999.91,
+      "time_ms": 1900.046,
       "event": "tokens_generated",
       "request_id": "req-029",
       "tokens_generated": 96,
       "decode_latency_ms": 286.009
     },
     {
-      "time_ms": 1999.91,
+      "time_ms": 1900.046,
       "event": "kv_blocks_freed",
       "request_id": "req-029",
       "freed_blocks": [
@@ -8333,14 +8333,14 @@
       ]
     },
     {
-      "time_ms": 1999.91,
+      "time_ms": 1900.046,
       "event": "tokens_generated",
       "request_id": "req-030",
       "tokens_generated": 128,
       "decode_latency_ms": 286.009
     },
     {
-      "time_ms": 1999.91,
+      "time_ms": 1900.046,
       "event": "kv_blocks_freed",
       "request_id": "req-030",
       "freed_blocks": [
@@ -8387,14 +8387,14 @@
       ]
     },
     {
-      "time_ms": 1999.91,
+      "time_ms": 1900.046,
       "event": "tokens_generated",
       "request_id": "req-031",
       "tokens_generated": 128,
       "decode_latency_ms": 286.009
     },
     {
-      "time_ms": 1999.91,
+      "time_ms": 1900.046,
       "event": "kv_blocks_freed",
       "request_id": "req-031",
       "freed_blocks": [
@@ -8417,14 +8417,14 @@
       ]
     },
     {
-      "time_ms": 1999.91,
+      "time_ms": 1900.046,
       "event": "tokens_generated",
       "request_id": "req-032",
       "tokens_generated": 32,
       "decode_latency_ms": 286.009
     },
     {
-      "time_ms": 1999.91,
+      "time_ms": 1900.046,
       "event": "kv_blocks_freed",
       "request_id": "req-032",
       "freed_blocks": [
@@ -8439,20 +8439,21 @@
   ],
   "summary": {
     "model": "tiny-gpt",
+    "runtime_mode": "paged_attention",
     "total_requests": 32,
     "completed_requests": 32,
     "rejected_requests": 0,
-    "ttft_p50_ms": 38.316,
-    "ttft_p95_ms": 154.956,
+    "ttft_p50_ms": 35.271,
+    "ttft_p95_ms": 94.39,
     "tpot_p50_ms": 2.488,
     "tpot_p95_ms": 3.574,
-    "p50_latency_ms": 1255.58,
-    "p95_latency_ms": 1774.462,
-    "p99_latency_ms": 1785.895,
+    "p50_latency_ms": 1136.263,
+    "p95_latency_ms": 1671.553,
+    "p99_latency_ms": 1682.986,
     "peak_memory_mb": 1636.75,
     "peak_kv_cache_mb": 868.75,
     "oom_events": 0,
-    "tokens_per_second": 1200.054,
+    "tokens_per_second": 1263.127,
     "avg_decode_batch_size": 6.4,
     "max_decode_batch_size": 8,
     "prefill_chunk_count": 0,
@@ -8460,6 +8461,7 @@
     "pages_allocated": 0,
     "pages_freed": 0,
     "pressure_limited_ticks": 20,
-    "reject_oom_count": 0
+    "reject_oom_count": 0,
+    "cost_model_source": "formula"
   }
 }

@@ -9,7 +9,7 @@
       "measured_latency_ms": 2.615,
       "p95_latency_ms": 3.574,
       "peak_memory_mb": 1636.75,
-      "throughput_tokens_per_s": 1200.054
+      "throughput_tokens_per_s": 1263.127
     },
     {
       "plan_id": "plan_cpu",
@@ -18,7 +18,7 @@
       "measured_latency_ms": 6.145,
       "p95_latency_ms": 7.505,
       "peak_memory_mb": 1476.75,
-      "throughput_tokens_per_s": 504.023
+      "throughput_tokens_per_s": 530.513
     },
     {
       "plan_id": "plan_hybrid",
@@ -27,7 +27,7 @@
       "measured_latency_ms": 3.19,
       "p95_latency_ms": 4.217,
       "peak_memory_mb": 1540.75,
-      "throughput_tokens_per_s": 936.042
+      "throughput_tokens_per_s": 985.239
     }
   ],
   "selected_plan_id": "plan_metal",

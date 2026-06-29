@@ -153,6 +153,10 @@ class CostModel:
 
     prefill_base_ms: float = 24.0
     prefill_ms_per_token: float = 0.155
+    prefill_parallel_tokens: float = 256.0
+    prefill_parallel_gain_per_doubling: float = 0.35
+    prefill_parallel_efficiency_cap: float = 2.25
+    prefill_chunk_overhead_ms: float = 0.45
     decode_base_ms: float = 2.15
     decode_ms_per_batch_item: float = 0.16
     decode_ms_per_1k_context: float = 0.55
@@ -162,12 +166,27 @@ class CostModel:
     observed_prefill_scale: float = 1.0
     gpu_batch_scaling: GPUBatchScalingArtifact | None = None
 
-    def predict_prefill_ms(self, prompt_tokens: int, batch_size: int = 1) -> float:
+    def prefill_parallel_efficiency(self, prompt_tokens: int, batch_size: int = 1) -> float:
+        token_ratio = max(1.0, prompt_tokens / self.prefill_parallel_tokens)
+        token_gain = math.log2(token_ratio) * self.prefill_parallel_gain_per_doubling
+        batch_gain = max(0, batch_size - 1) * 0.12
+        return min(
+            self.prefill_parallel_efficiency_cap,
+            max(1.0, 1.0 + token_gain + batch_gain),
+        )
+
+    def predict_prefill_ms(self, prompt_tokens: int, batch_size: int = 1, *, chunked: bool = False) -> float:
+        chunk_overhead = self.prefill_chunk_overhead_ms if chunked else 0.0
         if self.gpu_batch_scaling is not None:
             measured = self.gpu_batch_scaling.lookup_prefill_ms(prompt_tokens, batch_size)
             if measured is not None:
-                return measured * self.observed_prefill_scale
-        return (self.prefill_base_ms + prompt_tokens * self.prefill_ms_per_token) * self.observed_prefill_scale
+                return (measured + chunk_overhead) * self.observed_prefill_scale
+        efficiency = self.prefill_parallel_efficiency(prompt_tokens, batch_size)
+        return (
+            self.prefill_base_ms
+            + chunk_overhead
+            + (prompt_tokens * self.prefill_ms_per_token / efficiency)
+        ) * self.observed_prefill_scale
 
     def predict_decode_step_ms(self, batch_size: int, avg_context_tokens: float) -> float:
         if self.gpu_batch_scaling is not None:
@@ -1320,7 +1339,7 @@ class RuntimeScheduler:
                 token_budget -= chunk
                 chunks += 1
                 prefill_chunk_count += 1
-                chunk_latency = self._observed_prefill(chunk)
+                chunk_latency = self._observed_prefill(chunk, chunked=True)
                 latency = max(latency, chunk_latency)
                 prefill_latencies.append(chunk_latency)
                 backend_placements.append(
@@ -1657,6 +1676,10 @@ class RuntimeScheduler:
                 "max_prefill_chunks_per_step": max_prefill_chunks_per_step,
                 "memory_pressure_soft_limit": soft_limit,
                 "memory_pressure_hard_limit": hard_limit,
+                "prefill_parallel_tokens": self.cost_model.prefill_parallel_tokens,
+                "prefill_parallel_gain_per_doubling": self.cost_model.prefill_parallel_gain_per_doubling,
+                "prefill_parallel_efficiency_cap": self.cost_model.prefill_parallel_efficiency_cap,
+                "prefill_chunk_overhead_ms": self.cost_model.prefill_chunk_overhead_ms,
             },
             "ttft_ms": {
                 "p50": round(_percentile(ttft_latencies, 50), 3),
@@ -1761,8 +1784,8 @@ class RuntimeScheduler:
         pending[:] = remaining
         return candidates
 
-    def _observed_prefill(self, prompt_tokens: int) -> float:
-        predicted = self.cost_model.predict_prefill_ms(prompt_tokens)
+    def _observed_prefill(self, prompt_tokens: int, *, chunked: bool = False) -> float:
+        predicted = self.cost_model.predict_prefill_ms(prompt_tokens, chunked=chunked)
         return round(predicted * self.rng.uniform(0.92, 1.08), 3)
 
     def _observed_decode(self, batch_size: int, avg_context_tokens: float) -> float:

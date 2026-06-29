@@ -4,9 +4,9 @@
   "target_profile_id": "apple-a17pro-mobile",
   "model_name": "tiny-gpt",
   "trace_truth_boundary": "offline_runtime_simulation_not_iphone_execution",
-  "compiler_plan_ref": "/Users/allen/Documents/Codex/project/systems-portfolio/ml-graph-compiler-runtime/artifacts/apple_demo/serving_execution_plan_iphone.json",
+  "compiler_plan_ref": "../ml-graph-compiler-runtime/artifacts/apple_demo/serving_execution_plan_iphone.json",
   "compiler_plan_source": "compiler_artifact",
-  "compiler_plan_path": "/Users/allen/Documents/Codex/project/systems-portfolio/ml-graph-compiler-runtime/artifacts/apple_demo/serving_execution_plan_iphone.json",
+  "compiler_plan_path": "../ml-graph-compiler-runtime/artifacts/apple_demo/serving_execution_plan_iphone.json",
   "do_not_use_for_demo": false,
   "provenance_notes": [],
   "variants": {

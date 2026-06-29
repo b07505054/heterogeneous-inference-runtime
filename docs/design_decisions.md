@@ -32,6 +32,14 @@ Tradeoff: simulations are easy to run and inspect in CI-like environments, but t
 
 Assumption: serving-framework reports should be read as conceptual/runtime-model evidence, not as vLLM, SGLang, Triton Server, or TensorRT-LLM benchmark results.
 
+## Make PD-Split Bandwidth a Hardware Assumption
+
+`deployment/distributed_runtime_plan.py` models KV handoff bandwidth through `HardwareConfig` and `LinkType` instead of an unexplained fixed constant. The default is a two-GPU PD split (`gpu_count=2`) over PCIe Gen4 x16 at 32 GB/s. PCIe Gen5 x16 and NVLink presets are available, and a custom override remains for measured or experimental links.
+
+Tradeoff: preset bandwidths are still nominal cost-model assumptions, not measured transfers, but the assumption is now named and inspectable in the plan (`link_type`, `gpu_count`, and `bandwidth_source`).
+
+Assumption: this planner simulates prefill/decode disaggregation, not tensor parallelism. `gpu_count=1` means colocated single-GPU execution with zero cross-GPU KV transfer; it does not model all-reduce or per-layer sharding.
+
 ## Separate Scheduler and Paged-Attention Evidence Modes
 
 The README documents two LLM artifact modes: scheduler-focused and paged-attention. This keeps scheduler wins separate from extra paged-attention read-cost accounting.

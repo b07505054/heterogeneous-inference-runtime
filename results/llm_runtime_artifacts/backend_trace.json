@@ -4,7 +4,7 @@
       "request_id": "req-001",
       "op": "attention_prefill",
       "backend": "gpu",
-      "latency_ms": 11.807
+      "latency_ms": 10.868
     },
     {
       "request_id": "req-001",
@@ -16,7 +16,7 @@
       "request_id": "req-003",
       "op": "attention_prefill",
       "backend": "gpu",
-      "latency_ms": 69.692
+      "latency_ms": 41.207
     },
     {
       "request_id": "req-003",
@@ -28,7 +28,7 @@
       "request_id": "req-013",
       "op": "attention_prefill",
       "backend": "gpu",
-      "latency_ms": 38.891
+      "latency_ms": 28.673
     },
     {
       "request_id": "req-013",
@@ -40,7 +40,7 @@
       "request_id": "req-021",
       "op": "attention_prefill",
       "backend": "gpu",
-      "latency_ms": 12.495
+      "latency_ms": 11.502
     },
     {
       "request_id": "req-021",
@@ -52,7 +52,7 @@
       "request_id": "req-029",
       "op": "attention_prefill",
       "backend": "gpu",
-      "latency_ms": 15.71
+      "latency_ms": 14.461
     },
     {
       "request_id": "req-029",

@@ -4,7 +4,7 @@
     "cat": "llm_runtime",
     "ph": "X",
     "ts": 10231.0,
-    "dur": 28797.0,
+    "dur": 26508.0,
     "pid": 1,
     "tid": 1,
     "args": {
@@ -17,7 +17,7 @@
     "cat": "llm_runtime",
     "ph": "X",
     "ts": 295207.0,
-    "dur": 169981.0,
+    "dur": 100504.0,
     "pid": 1,
     "tid": 1,
     "args": {
@@ -29,8 +29,8 @@
     "name": "prefill",
     "cat": "llm_runtime",
     "ph": "X",
-    "ts": 875358.0,
-    "dur": 94855.0,
+    "ts": 805881.0,
+    "dur": 69935.0,
     "pid": 1,
     "tid": 1,
     "args": {
@@ -42,8 +42,8 @@
     "name": "prefill",
     "cat": "llm_runtime",
     "ph": "X",
-    "ts": 1302652.0,
-    "dur": 30475.0,
+    "ts": 1208255.0,
+    "dur": 28053.0,
     "pid": 1,
     "tid": 1,
     "args": {
@@ -55,8 +55,8 @@
     "name": "prefill",
     "cat": "llm_runtime",
     "ph": "X",
-    "ts": 1675585.0,
-    "dur": 38316.0,
+    "ts": 1578766.0,
+    "dur": 35271.0,
     "pid": 1,
     "tid": 1,
     "args": {

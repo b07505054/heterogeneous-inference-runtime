@@ -8,9 +8,9 @@
       "available": true,
       "artifact_bytes": 279771,
       "artifact_mb": 0.2668,
-      "cold_load_ms": 0.3707,
-      "warm_load_avg_ms": 0.0351,
-      "warm_load_p95_ms": 0.0545,
+      "cold_load_ms": 0.3247,
+      "warm_load_avg_ms": 0.0204,
+      "warm_load_p95_ms": 0.0268,
       "runs": 5
     },
     "tensorrt_fp16_engine": {
@@ -18,9 +18,9 @@
       "available": true,
       "artifact_bytes": 10799732,
       "artifact_mb": 10.2994,
-      "cold_load_ms": 2.2022,
-      "warm_load_avg_ms": 1.064,
-      "warm_load_p95_ms": 1.4304,
+      "cold_load_ms": 1.7665,
+      "warm_load_avg_ms": 0.5489,
+      "warm_load_p95_ms": 0.7635,
       "runs": 5
     },
     "tensorrt_int8_engine": {
@@ -28,9 +28,9 @@
       "available": true,
       "artifact_bytes": 6805924,
       "artifact_mb": 6.4906,
-      "cold_load_ms": 1.3441,
-      "warm_load_avg_ms": 0.4975,
-      "warm_load_p95_ms": 0.5478,
+      "cold_load_ms": 1.294,
+      "warm_load_avg_ms": 0.2703,
+      "warm_load_p95_ms": 0.3211,
       "runs": 5
     },
     "executorch_xnnpack_pte": {
@@ -38,9 +38,9 @@
       "available": true,
       "artifact_bytes": 13950240,
       "artifact_mb": 13.304,
-      "cold_load_ms": 2.5179,
-      "warm_load_avg_ms": 1.2193,
-      "warm_load_p95_ms": 1.5294,
+      "cold_load_ms": 2.2629,
+      "warm_load_avg_ms": 0.7075,
+      "warm_load_p95_ms": 0.9621,
       "runs": 5
     }
   },
@@ -59,16 +59,16 @@
     "reason": "TensorRT import failed: No module named 'tensorrt'"
   },
   "first_token_warmup": {
-    "cold_ttft_ms": 98.316,
-    "warm_ttft_ms": 38.316,
+    "cold_ttft_ms": 95.271,
+    "warm_ttft_ms": 35.271,
     "warmup_runs": 3,
     "first_request_penalty_ms": 60.0
   },
   "steady_state": {
-    "ttft_ms": 38.316,
+    "ttft_ms": 35.271,
     "tpot_p95_ms": 3.574,
-    "e2e_p95_ms": 1774.462,
-    "throughput_tokens_per_s": 1200.054,
+    "e2e_p95_ms": 1671.553,
+    "throughput_tokens_per_s": 1263.127,
     "selected_framework_style": "vllm_sglang_style"
   },
   "initialization_reduction_plan": [

@@ -5,7 +5,9 @@ import pytest
 from deployment.distributed_runtime_plan import (
     DecodeStage,
     DistributedRuntimePlan,
+    HardwareConfig,
     KVTransferStage,
+    LinkType,
     OptionalReplayStage,
     PDSplitDecisionComparison,
     PDSplitPlanner,
@@ -132,12 +134,50 @@ def test_target_profile_id_propagated():
 # ---------------------------------------------------------------------------
 
 def test_kv_transfer_cost_computed_from_bytes_and_bandwidth():
-    # kv_byte_estimate_mb = 4.0 from prefill plan; default bandwidth = 24.0 mb/ms
+    # kv_byte_estimate_mb = 4.0 from prefill plan.
     result = PDSplitPlanner.plan(_make_plans(), kv_bandwidth_mb_per_ms=24.0)
     expected_ms = 4.0 / 24.0
     assert result.kv_transfer.transfer_cost_ms == pytest.approx(expected_ms)
     assert result.kv_transfer.transfer_bytes == 4 * 1024 * 1024
     assert result.kv_transfer.bandwidth_mb_per_ms == pytest.approx(24.0)
+    assert result.kv_transfer.link_type == "custom"
+    assert result.kv_transfer.gpu_count == 2
+    assert result.kv_transfer.bandwidth_source == "override"
+
+
+def test_default_hardware_config_models_two_gpu_pcie_gen4_pd_split():
+    result = PDSplitPlanner.plan(_make_plans())
+    assert result.kv_transfer.gpu_count == 2
+    assert result.kv_transfer.link_type == LinkType.PCIE_GEN4_X16.value
+    assert result.kv_transfer.bandwidth_mb_per_ms == pytest.approx(32.0)
+    assert result.kv_transfer.transfer_cost_ms == pytest.approx(4.0 / 32.0)
+    assert result.kv_transfer.bandwidth_source == "link_type_preset"
+
+
+def test_nvlink_hardware_config_uses_nvlink_bandwidth():
+    result = PDSplitPlanner.plan(
+        _make_plans(),
+        hardware_config=HardwareConfig(gpu_count=2, link_type=LinkType.NVLINK),
+    )
+    assert result.kv_transfer.link_type == LinkType.NVLINK.value
+    assert result.kv_transfer.bandwidth_mb_per_ms == pytest.approx(900.0)
+    assert result.kv_transfer.transfer_cost_ms == pytest.approx(4.0 / 900.0)
+
+
+def test_single_gpu_hardware_config_has_no_cross_gpu_kv_transfer_or_handoff():
+    result = PDSplitPlanner.plan(
+        _make_plans(),
+        hardware_config=HardwareConfig(gpu_count=1, link_type=LinkType.PCIE_GEN4_X16),
+        handoff_overhead_ms=0.2,
+    )
+    assert result.kv_transfer.gpu_count == 1
+    assert result.kv_transfer.transfer_cost_ms == pytest.approx(0.0)
+    assert result.decision_comparison.pd_split.handoff_overhead_ms == pytest.approx(0.0)
+    assert result.decision_comparison.pd_split.ttft_ms == pytest.approx(31.2)
+    assert result.decision_comparison.pd_split.total_ms == pytest.approx(31.2 + 8.5)
+    assert result.total_compiler_cost_ms == pytest.approx(31.2 + 8.5)
+    assert result.decision_comparison.selected_policy == "colocated"
+    assert "gpu_count < 2" in result.decision_comparison.decision_reason
 
 
 def test_kv_transfer_zero_when_no_kv_estimate():

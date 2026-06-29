@@ -1,6 +1,6 @@
 {
   "artifact_type": "grpc_contract_report",
-  "source": "/Users/allen/Documents/Codex/project/heterogeneous-inference-runtime/protos/distributed_serving.proto",
+  "source": "/Users/allen/Documents/Codex/project/systems-portfolio/heterogeneous-inference-runtime/protos/distributed_serving.proto",
   "integration_level": "protobuf_contract_no_production_grpc_server",
   "technology_gate": {
     "input": "distributed serving request, worker-health, route-decision, and KV-shard metadata",

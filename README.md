@@ -912,6 +912,15 @@ It does not claim to modify TensorRT-LLM internals, implement a TensorRT-LLM
 engine, or provide real multi-GPU/multi-node TensorRT-LLM serving. Distributed
 fields such as worker id and device id are trace hooks for future integration.
 
+The PD-split planner models a two-GPU handoff by default: one prefill GPU and
+one decode GPU. KV transfer latency is computed from the prefill KV byte
+estimate divided by the configured GPU interconnect bandwidth. The default
+`HardwareConfig` uses `gpu_count=2` with `LinkType.PCIE_GEN4_X16` at 32 GB/s;
+other presets include PCIe Gen5 x16 at 64 GB/s and NVLink at 900 GB/s. Set
+`gpu_count=1` to model colocated single-GPU execution, where cross-GPU KV
+transfer and handoff overhead are both zero. Experimental or measured links can
+still use the legacy/custom `kv_bandwidth_mb_per_ms` override.
+
 This moves the LLM runtime path from artifact description toward runtime
 decision-making: the generated report records which scheduler policy won and why.
 For the committed artifact snapshot, the optimized scheduler records
