@@ -23,6 +23,12 @@ from enum import Enum
 
 from deployment.runtime_execution_plan import RuntimeExecutionPlan
 from deployment.prefix_cache_simulator import PrefixCacheResult
+from deployment.speculative_decoding import (
+    SpeculativeDecodingConfig,
+    SpeculativeDecodingDecision,
+    SpeculativeDecodingEvaluator,
+    SpeculativeRuntimeContext,
+)
 
 _TB_PLAN = "pd_split_schedule_static_plan_not_live_cluster_execution"
 _TB_KV = "kv_transfer_cost_model_not_measured_network"
@@ -295,6 +301,7 @@ class DecodeStage:
     service_ms: float
     queue_wait_ms: float
     truth_boundary: str
+    speculative_decoding: SpeculativeDecodingDecision | None = None
 
 
 @dataclass(frozen=True)
@@ -394,6 +401,8 @@ class PDSplitPlanner:
         queue_state: QueueState | None = None,
         service_time_model: ServiceTimeModel | None = None,
         prefix_cache_result: PrefixCacheResult | None = None,
+        speculative_decoding_config: SpeculativeDecodingConfig | None = None,
+        speculative_runtime_context: SpeculativeRuntimeContext | None = None,
     ) -> DistributedRuntimePlan:
         """Build a DistributedRuntimePlan from a prefill + decode plan pair.
 
@@ -432,6 +441,18 @@ class PDSplitPlanner:
         decode_service_ms = (
             decode_compiler_cost_ms + service_time_model.decode_service_adjustment_ms
         )
+        speculative_decision: SpeculativeDecodingDecision | None = None
+        if speculative_decoding_config is not None:
+            if speculative_runtime_context is None:
+                raise ValueError(
+                    "speculative_runtime_context is required when "
+                    "speculative_decoding_config is provided"
+                )
+            speculative_decision = SpeculativeDecodingEvaluator.evaluate(
+                speculative_decoding_config,
+                baseline_decode_service_ms=decode_service_ms,
+                runtime_context=speculative_runtime_context,
+            )
 
         # KV transfer: bytes from prefill memory policy; cost from bandwidth model.
         kv_mb = prefill_plan.memory_policy.kv_byte_estimate_mb
@@ -626,6 +647,7 @@ class PDSplitPlanner:
             service_ms=decode_service_ms,
             queue_wait_ms=queue_wait_decode_ms,
             truth_boundary=_TB_PLAN,
+            speculative_decoding=speculative_decision,
         )
         replay_stage = OptionalReplayStage(
             eligible=decode_plan.replay_policy.eligible,

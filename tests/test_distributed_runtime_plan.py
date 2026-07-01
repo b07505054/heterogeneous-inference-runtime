@@ -16,6 +16,11 @@ from deployment.distributed_runtime_plan import (
     ServiceTimeModel,
 )
 from deployment.runtime_execution_plan import RuntimeExecutionPlanAdapter
+from deployment.speculative_decoding import (
+    BASELINE_DECODE_STAGE_SERVICE_MS,
+    SpeculativeDecodingConfig,
+    SpeculativeRuntimeContext,
+)
 
 # ---------------------------------------------------------------------------
 # Shared test fixtures
@@ -90,6 +95,42 @@ def _make_plans(prefill_dict=None, decode_dict=None):
     return [p, d]
 
 
+def _speculative_config(**overrides):
+    fields = {
+        "enabled": True,
+        "draft_model_name": "tiny-draft",
+        "target_model_name": "target-llm",
+        "draft_length": 4,
+        "draft_model_decode_ms_per_token": 0.2,
+        "target_verify_ms_per_draft_token": 0.2,
+        "expected_acceptance_rate": 0.75,
+        "draft_kv_overhead_ms": 0.1,
+        "target_kv_commit_ms": 0.1,
+        "acceptance_check_ms": 0.05,
+        "correction_token_ms": 0.5,
+        "rollback_cost_ms": 0.1,
+        "output_commit_ms": 0.05,
+        "coordinator_overhead_ms": 0.1,
+    }
+    fields.update(overrides)
+    return SpeculativeDecodingConfig(**fields)
+
+
+def _speculative_context(**overrides):
+    fields = {
+        "request_id": "req-pd",
+        "decode_iteration": 1,
+        "current_sequence_length": 128,
+        "generated_tokens_so_far": 16,
+        "remaining_token_budget": 32,
+        "target_kv_ready": True,
+        "draft_kv_ready": True,
+        "backend": "cuda",
+    }
+    fields.update(overrides)
+    return SpeculativeRuntimeContext(**fields)
+
+
 # ---------------------------------------------------------------------------
 # Stage construction
 # ---------------------------------------------------------------------------
@@ -116,6 +157,131 @@ def test_decode_stage_fields():
     assert result.decode.backend == "cuda"
     assert result.decode.compiler_cost_ms == pytest.approx(8.5)
     assert result.decode.worker_id == "decode-worker-0"
+    assert result.decode.speculative_decoding is None
+
+
+def test_no_speculative_config_leaves_decode_decision_unset():
+    result = PDSplitPlanner.plan(
+        _make_plans(),
+        speculative_runtime_context=_speculative_context(),
+    )
+
+    assert result.decode.speculative_decoding is None
+
+
+def test_speculative_config_attaches_decision_to_decode_stage():
+    result = PDSplitPlanner.plan(
+        _make_plans(),
+        speculative_decoding_config=_speculative_config(),
+        speculative_runtime_context=_speculative_context(),
+    )
+
+    decision = result.decode.speculative_decoding
+    assert decision is not None
+    assert decision.selected is True
+    assert decision.plan is not None
+    assert decision.plan.runtime_context.request_id == "req-pd"
+
+
+def test_speculative_decision_baseline_equals_decode_service_ms():
+    result = PDSplitPlanner.plan(
+        _make_plans(),
+        speculative_decoding_config=_speculative_config(),
+        speculative_runtime_context=_speculative_context(),
+    )
+
+    assert result.decode.speculative_decoding is not None
+    plan = result.decode.speculative_decoding.plan
+    assert plan is not None
+    assert plan.baseline_decode_service_ms == pytest.approx(result.decode.service_ms)
+    assert plan.baseline_source == BASELINE_DECODE_STAGE_SERVICE_MS
+
+
+def test_speculative_requires_runtime_context_when_config_is_provided():
+    with pytest.raises(ValueError, match="speculative_runtime_context"):
+        PDSplitPlanner.plan(
+            _make_plans(),
+            speculative_decoding_config=_speculative_config(),
+        )
+
+
+def test_service_time_adjustment_affects_speculative_baseline():
+    stm = ServiceTimeModel(
+        source="compiler_estimate",
+        decode_service_adjustment_ms=2.0,
+    )
+    result = PDSplitPlanner.plan(
+        _make_plans(),
+        service_time_model=stm,
+        speculative_decoding_config=_speculative_config(),
+        speculative_runtime_context=_speculative_context(),
+    )
+
+    assert result.decode.service_ms == pytest.approx(10.5)
+    assert result.decode.speculative_decoding is not None
+    plan = result.decode.speculative_decoding.plan
+    assert plan is not None
+    assert plan.baseline_decode_service_ms == pytest.approx(10.5)
+
+
+def test_decode_queue_wait_does_not_affect_speculative_baseline():
+    kv_ms = 4.0 / 24.0
+    decode_ready = 31.2 + kv_ms + 0.2
+    result = PDSplitPlanner.plan(
+        _make_plans(),
+        kv_bandwidth_mb_per_ms=24.0,
+        queue_state=QueueState(
+            arrival_time_ms=0.0,
+            prefill_worker_available_at_ms=0.0,
+            decode_worker_available_at_ms=decode_ready + 9.0,
+        ),
+        speculative_decoding_config=_speculative_config(),
+        speculative_runtime_context=_speculative_context(),
+    )
+
+    assert result.decode.queue_wait_ms == pytest.approx(9.0)
+    assert result.decode.speculative_decoding is not None
+    plan = result.decode.speculative_decoding.plan
+    assert plan is not None
+    assert plan.baseline_decode_service_ms == pytest.approx(result.decode.service_ms)
+    assert plan.baseline_decode_service_ms == pytest.approx(8.5)
+
+
+def test_kv_transfer_and_handoff_do_not_affect_speculative_baseline():
+    result = PDSplitPlanner.plan(
+        _make_plans(),
+        kv_bandwidth_mb_per_ms=0.5,
+        handoff_overhead_ms=7.0,
+        speculative_decoding_config=_speculative_config(),
+        speculative_runtime_context=_speculative_context(),
+    )
+
+    assert result.kv_transfer.transfer_cost_ms == pytest.approx(8.0)
+    assert result.decision_comparison.pd_split.handoff_overhead_ms == pytest.approx(7.0)
+    assert result.decode.speculative_decoding is not None
+    plan = result.decode.speculative_decoding.plan
+    assert plan is not None
+    assert plan.baseline_decode_service_ms == pytest.approx(8.5)
+
+
+def test_speculative_attachment_does_not_change_decode_service_tpot_or_total_cost():
+    base = PDSplitPlanner.plan(_make_plans())
+    with_spec = PDSplitPlanner.plan(
+        _make_plans(),
+        speculative_decoding_config=_speculative_config(),
+        speculative_runtime_context=_speculative_context(),
+    )
+
+    assert with_spec.decode.service_ms == pytest.approx(base.decode.service_ms)
+    assert with_spec.decision_comparison.pd_split.tpot_ms == pytest.approx(
+        with_spec.decode.service_ms
+    )
+    assert with_spec.decision_comparison.colocated.tpot_ms == pytest.approx(
+        with_spec.decode.service_ms
+    )
+    assert with_spec.total_compiler_cost_ms == pytest.approx(
+        base.total_compiler_cost_ms
+    )
 
 
 def test_replay_stage_from_decode_plan():
