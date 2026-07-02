@@ -28,7 +28,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 from deployment.distributed_runtime_plan import DistributedRuntimePlan
-from deployment.speculative_execution import SpeculativeExecutionSimulator
+from deployment.speculative_execution import SpeculativeCoordinator
 
 _TB_ENGINE = "distributed_runtime_execution_simulated_not_real_cluster_execution"
 
@@ -160,8 +160,8 @@ class DistributedExecutionEngine:
             plan.decode.truth_boundary,
         )
         speculative_decision = plan.decode.speculative_decoding
-        if speculative_decision is not None and speculative_decision.selected:
-            for speculative_stage in SpeculativeExecutionSimulator.build_stages(
+        if SpeculativeCoordinator.should_use_speculative(speculative_decision):
+            for speculative_stage in SpeculativeCoordinator.build_simulated_stages(
                 speculative_decision
             ):
                 _run(

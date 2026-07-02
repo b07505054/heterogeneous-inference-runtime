@@ -92,3 +92,19 @@ class SpeculativeExecutionSimulator:
             )
 
         return tuple(stages)
+
+
+class SpeculativeCoordinator:
+    """Owns the decision boundary for simulated speculative decode execution."""
+
+    @staticmethod
+    def should_use_speculative(
+        decision: SpeculativeDecodingDecision | None,
+    ) -> bool:
+        return decision is not None and decision.selected
+
+    @staticmethod
+    def build_simulated_stages(
+        decision: SpeculativeDecodingDecision,
+    ) -> tuple[SpeculativeStageSimulation, ...]:
+        return SpeculativeExecutionSimulator.build_stages(decision)
