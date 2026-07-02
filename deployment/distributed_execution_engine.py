@@ -28,6 +28,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 from deployment.distributed_runtime_plan import DistributedRuntimePlan
+from deployment.speculative_execution import SpeculativeExecutionSimulator
 
 _TB_ENGINE = "distributed_runtime_execution_simulated_not_real_cluster_execution"
 
@@ -158,12 +159,24 @@ class DistributedExecutionEngine:
             plan.decode.worker_id, None,
             plan.decode.truth_boundary,
         )
-        _run(
-            "decode_compute", "decode",
-            plan.decode.service_ms,
-            plan.decode.worker_id, plan.decode.backend,
-            plan.decode.truth_boundary,
-        )
+        speculative_decision = plan.decode.speculative_decoding
+        if speculative_decision is not None and speculative_decision.selected:
+            for speculative_stage in SpeculativeExecutionSimulator.build_stages(
+                speculative_decision
+            ):
+                _run(
+                    speculative_stage.stage_name, speculative_stage.category,
+                    speculative_stage.duration_ms,
+                    plan.decode.worker_id, plan.decode.backend,
+                    speculative_stage.truth_boundary,
+                )
+        else:
+            _run(
+                "decode_compute", "decode",
+                plan.decode.service_ms,
+                plan.decode.worker_id, plan.decode.backend,
+                plan.decode.truth_boundary,
+            )
 
         total_latency_ms = stages[-1].end_ms
 

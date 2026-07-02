@@ -11,6 +11,11 @@ from deployment.distributed_execution_engine import (
 )
 from deployment.distributed_runtime_plan import PDSplitPlanner, QueueState
 from deployment.runtime_execution_plan import RuntimeExecutionPlanAdapter
+from deployment.speculative_decoding import (
+    TB_SPECULATIVE_SIMULATION,
+    SpeculativeDecodingConfig,
+    SpeculativeRuntimeContext,
+)
 
 # ---------------------------------------------------------------------------
 # Shared fixtures
@@ -85,6 +90,49 @@ def _make_plan(**kwargs):
     return PDSplitPlanner.plan([p, d], **kwargs)
 
 
+def _speculative_config(**overrides):
+    fields = {
+        "enabled": True,
+        "draft_model_name": "tiny-draft",
+        "target_model_name": "target-llm",
+        "draft_length": 4,
+        "draft_model_decode_ms_per_token": 0.2,
+        "target_verify_ms_per_draft_token": 0.2,
+        "expected_acceptance_rate": 0.75,
+        "draft_kv_overhead_ms": 0.1,
+        "target_kv_commit_ms": 0.1,
+        "acceptance_check_ms": 0.05,
+        "correction_token_ms": 0.5,
+        "rollback_cost_ms": 0.1,
+        "output_commit_ms": 0.05,
+        "coordinator_overhead_ms": 0.1,
+    }
+    fields.update(overrides)
+    return SpeculativeDecodingConfig(**fields)
+
+
+def _speculative_context(**overrides):
+    fields = {
+        "request_id": "req-exec",
+        "decode_iteration": 1,
+        "current_sequence_length": 128,
+        "generated_tokens_so_far": 16,
+        "remaining_token_budget": 32,
+        "target_kv_ready": True,
+        "draft_kv_ready": True,
+        "backend": "cuda",
+    }
+    fields.update(overrides)
+    return SpeculativeRuntimeContext(**fields)
+
+
+def _make_speculative_plan(**config_overrides):
+    return _make_plan(
+        speculative_decoding_config=_speculative_config(**config_overrides),
+        speculative_runtime_context=_speculative_context(),
+    )
+
+
 def _engine():
     return DistributedExecutionEngine()
 
@@ -120,6 +168,124 @@ def test_stage_order_matches_plan():
         "decode_queue_wait",
         "decode_compute",
     ]
+
+
+def test_selected_speculative_decode_emits_simulated_substages():
+    result = _engine().execute(_make_speculative_plan())
+    names = [s.stage_name for s in result.stage_results]
+
+    assert "decode_compute" not in names
+    assert names[-5:] == [
+        "speculative_draft",
+        "speculative_verify",
+        "speculative_accept",
+        "speculative_recover",
+        "speculative_commit",
+    ]
+
+
+def test_speculative_recovering_stage_absent_without_expected_rejection():
+    result = _engine().execute(
+        _make_speculative_plan(expected_acceptance_rate=1.0, rollback_cost_ms=0.0)
+    )
+    names = [s.stage_name for s in result.stage_results]
+
+    assert "speculative_recover" not in names
+    assert names[-4:] == [
+        "speculative_draft",
+        "speculative_verify",
+        "speculative_accept",
+        "speculative_commit",
+    ]
+
+
+def test_no_recovery_path_with_rollback_cost_still_matches_cycle_cost():
+    plan = _make_speculative_plan(expected_acceptance_rate=1.0, rollback_cost_ms=0.4)
+    result = _engine().execute(plan)
+    names = [s.stage_name for s in result.stage_results]
+    assert plan.decode.speculative_decoding is not None
+    decision_plan = plan.decode.speculative_decoding.plan
+    assert decision_plan is not None
+
+    assert "speculative_recover" not in names
+    assert names[-4:] == [
+        "speculative_draft",
+        "speculative_verify",
+        "speculative_accept",
+        "speculative_commit",
+    ]
+    speculative_duration = sum(
+        s.duration_ms
+        for s in result.stage_results
+        if s.stage_name.startswith("speculative_")
+    )
+    assert speculative_duration == pytest.approx(
+        decision_plan.estimated_cycle_cost_ms
+    )
+
+
+def test_selected_speculative_decode_duration_equals_estimated_cycle_cost():
+    plan = _make_speculative_plan()
+    result = _engine().execute(plan)
+    assert plan.decode.speculative_decoding is not None
+    decision_plan = plan.decode.speculative_decoding.plan
+    assert decision_plan is not None
+
+    speculative_duration = sum(
+        s.duration_ms
+        for s in result.stage_results
+        if s.stage_name.startswith("speculative_")
+    )
+    assert speculative_duration == pytest.approx(
+        decision_plan.estimated_cycle_cost_ms
+    )
+
+
+def test_selected_speculative_execution_does_not_mutate_decode_service_ms():
+    plan = _make_speculative_plan()
+    before = plan.decode.service_ms
+
+    _engine().execute(plan)
+
+    assert plan.decode.service_ms == pytest.approx(before)
+    assert plan.decode.service_ms == pytest.approx(8.5)
+
+
+def test_unselected_speculative_decision_falls_back_to_decode_compute():
+    plan = _make_speculative_plan(
+        draft_model_decode_ms_per_token=10.0,
+        target_verify_ms_per_draft_token=10.0,
+    )
+    assert plan.decode.speculative_decoding is not None
+    assert plan.decode.speculative_decoding.selected is False
+
+    result = _engine().execute(plan)
+    names = [s.stage_name for s in result.stage_results]
+    by = {s.stage_name: s for s in result.stage_results}
+
+    assert "decode_compute" in names
+    assert not any(name.startswith("speculative_") for name in names)
+    assert by["decode_compute"].duration_ms == pytest.approx(plan.decode.service_ms)
+
+
+def test_speculative_stages_use_simulated_truth_boundary():
+    result = _engine().execute(_make_speculative_plan())
+    speculative_stages = [
+        s for s in result.stage_results if s.stage_name.startswith("speculative_")
+    ]
+
+    assert speculative_stages
+    assert all(
+        s.truth_boundary == TB_SPECULATIVE_SIMULATION
+        for s in speculative_stages
+    )
+
+
+def test_speculative_execution_does_not_produce_cycle_result():
+    result = _engine().execute(_make_speculative_plan())
+
+    assert not hasattr(result, "speculative_cycle_result")
+    assert all(not hasattr(s, "speculative_cycle_result") for s in result.stage_results)
 
 
 # ---------------------------------------------------------------------------
