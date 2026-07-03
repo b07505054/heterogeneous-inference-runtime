@@ -31,10 +31,18 @@ start, stop, or manage vLLM or any other server.
 Example:
 
 ```bash
+PYTHONPATH=$PWD .venv/bin/python scripts/generate_llm_request_trace.py \
+  --output traces/llm_request_trace.jsonl \
+  --num-requests 32 \
+  --prompt-set mixed \
+  --max-tokens 64 \
+  --arrival-pattern burst \
+  --seed 0
+
 PYTHONPATH=$PWD .venv/bin/python scripts/benchmark_openai_compatible_server.py \
   --base-url http://127.0.0.1:8000 \
   --model Qwen/Qwen2.5-0.5B-Instruct \
-  --trace traces/openai_requests.jsonl \
+  --trace traces/llm_request_trace.jsonl \
   --concurrency 4 \
   --warmup 2 \
   --claimed-server vllm \
@@ -43,6 +51,10 @@ PYTHONPATH=$PWD .venv/bin/python scripts/benchmark_openai_compatible_server.py \
 
 `benchmark_target.kind` remains `openai_compatible_server`. The optional
 `claimed_server` field is only a user-supplied label.
+
+Example deterministic traces are available under `traces/examples/`. These
+files contain `request_id`, `prompt`, `max_tokens`, and monotonic `arrival_ms`
+fields; the benchmark client currently uses the prompt and token limit.
 
 ## Native CoreML CV
 
