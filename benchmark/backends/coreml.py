@@ -5,12 +5,34 @@ from pathlib import Path
 
 import numpy as np
 
+
+COMPUTE_UNIT_CHOICES = ("cpu", "cpu_gpu", "all")
+
+
 def coreml_available() -> bool:
     try:
         import coremltools  # noqa: F401
     except Exception:
         return False
     return True
+
+
+def resolve_compute_unit(compute_unit: str, coremltools_module=None):
+    if compute_unit not in COMPUTE_UNIT_CHOICES:
+        raise ValueError(f"unsupported CoreML compute unit: {compute_unit}")
+    ct = coremltools_module
+    if ct is None:
+        import coremltools as ct
+    mapping = {
+        "cpu": "CPU_ONLY",
+        "cpu_gpu": "CPU_AND_GPU",
+        "all": "ALL",
+    }
+    enum_name = mapping[compute_unit]
+    try:
+        return getattr(ct.ComputeUnit, enum_name)
+    except AttributeError as exc:
+        raise RuntimeError(f"CoreML ComputeUnit.{enum_name} is not available") from exc
 
 
 def package_size_mb(path: str | Path) -> float | None:
@@ -36,8 +58,9 @@ def numerical_drift(reference: np.ndarray, candidate: np.ndarray) -> dict:
 
 
 class CoreMLMobileNetV2Backend:
-    def __init__(self, model_path: str | Path):
+    def __init__(self, model_path: str | Path, compute_unit: str = "all"):
         self.model_path = Path(model_path)
+        self.compute_unit = compute_unit
         self.model = None
         self.sample = None
         self.input_name = None
@@ -57,7 +80,10 @@ class CoreMLMobileNetV2Backend:
         self.sample = sample if sample is not None else np.random.randn(1, 3, 224, 224).astype(np.float32)
         self.process = psutil.Process(os.getpid())
         self.rss_before = self.process.memory_info().rss
-        self.model = ct.models.MLModel(str(self.model_path))
+        self.model = ct.models.MLModel(
+            str(self.model_path),
+            compute_units=resolve_compute_unit(self.compute_unit, ct),
+        )
         self.rss_after_load = self.process.memory_info().rss
         self.input_name = self.model.get_spec().description.input[0].name
         return {"status": "ok"}

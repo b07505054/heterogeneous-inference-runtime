@@ -14,13 +14,18 @@ from benchmark.metrics import latency_summary_ms
 from benchmark.runner import BenchmarkRunner
 
 
-def main() -> None:
+def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Benchmark native CoreML MobileNetV2 against PyTorch CPU/MPS.")
     parser.add_argument("--mlpackage", default="models/mobilenet_v2.mlpackage")
     parser.add_argument("--runs", type=int, default=50)
     parser.add_argument("--warmup", type=int, default=5)
+    parser.add_argument("--compute-unit", choices=["cpu", "cpu_gpu", "all"], default="all")
     parser.add_argument("--output", default="results/measured_baselines/coreml_mobilenetv2_baseline.json")
-    args = parser.parse_args()
+    return parser
+
+
+def main() -> None:
+    args = build_parser().parse_args()
 
     sample_np = np.random.default_rng(0).standard_normal((1, 3, 224, 224)).astype(np.float32)
     metrics = {
@@ -49,7 +54,14 @@ def main() -> None:
         metrics["pytorch_cpu"] = {"status": "unavailable", "reason": "torch_or_torchvision_not_installed"}
         metrics["pytorch_mps"] = {"status": "unavailable", "reason": "torch_or_torchvision_not_installed"}
 
-    coreml = _run_coreml_backend(args.mlpackage, sample_np, reference_output, args.runs, args.warmup)
+    coreml = _run_coreml_backend(
+        args.mlpackage,
+        sample_np,
+        reference_output,
+        args.runs,
+        args.warmup,
+        args.compute_unit,
+    )
     if coreml["status"] != "ok":
         status = "partial"
         coreml.setdefault("metrics", {})["package_size_mb"] = package_size_mb(args.mlpackage)
@@ -59,6 +71,7 @@ def main() -> None:
         artifact_type="coreml_mobilenetv2_baseline",
         benchmark_target={
             "kind": "native_coreml_cv",
+            "backend": "coreml",
             "model": "MobileNetV2",
             "mlpackage": args.mlpackage,
             "comparators": ["pytorch_cpu", "pytorch_mps"],
@@ -69,6 +82,7 @@ def main() -> None:
         notes=notes,
         command=sys.argv,
         status=status,
+        extra={"execution": {"compute_unit": args.compute_unit}},
     )
     write_json(args.output, payload)
     print(args.output)
@@ -116,8 +130,9 @@ def _run_coreml_backend(
     reference_output: np.ndarray | None,
     runs: int,
     warmup: int,
+    compute_unit: str = "all",
 ) -> dict:
-    backend = CoreMLMobileNetV2Backend(mlpackage)
+    backend = CoreMLMobileNetV2Backend(mlpackage, compute_unit=compute_unit)
     load_start = time.perf_counter()
     setup = backend.setup(sample_np)
     load_ms = (time.perf_counter() - load_start) * 1000.0

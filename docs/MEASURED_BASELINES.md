@@ -54,10 +54,20 @@ against PyTorch CPU and, when available, PyTorch MPS. Missing optional
 dependencies or missing CoreML packages are reported as `status: "partial"` or
 backend-level `status: "unavailable"` rather than failing CI.
 
+The CoreML benchmark accepts `--compute-unit`:
+
+- `cpu`: maps to CoreML `CPU_ONLY`.
+- `cpu_gpu`: maps to CoreML `CPU_AND_GPU`.
+- `all`: maps to CoreML `ALL` and is the default.
+
+`ALL` allows the CoreML runtime to use the Neural Engine when supported by the
+model, OS, and hardware. The measured artifact records the requested compute
+unit, but actual hardware placement is determined by CoreML. Do not claim ANE
+execution unless it is separately measured or reported by runtime tooling.
+
 ## Simulator Boundary
 
 Existing LLM runtime outputs under `results/llm_runtime_artifacts/` are
 internal simulator, policy-ablation, and invariant-validation artifacts. They
 may be inspired by vLLM/SGLang/TensorRT-LLM concepts, but they are not measured
 external serving baselines.
-
