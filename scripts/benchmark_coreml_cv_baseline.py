@@ -20,6 +20,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--runs", type=int, default=50)
     parser.add_argument("--warmup", type=int, default=5)
     parser.add_argument("--compute-unit", choices=["cpu", "cpu_gpu", "all"], default="all")
+    parser.add_argument("--model-precision", choices=["fp16"], default="fp16")
+    parser.add_argument("--model-compression", choices=["none", "palettize", "unknown"], default="unknown")
     parser.add_argument("--output", default="results/measured_baselines/coreml_mobilenetv2_baseline.json")
     return parser
 
@@ -29,7 +31,12 @@ def main() -> None:
 
     sample_np = np.random.default_rng(0).standard_normal((1, 3, 224, 224)).astype(np.float32)
     metrics = {
-        "model": "MobileNetV2",
+        "model": {
+            "name": "MobileNetV2",
+            "precision": args.model_precision,
+            "compression": args.model_compression,
+            "package_size_mb": package_size_mb(args.mlpackage),
+        },
         "coreml": {},
         "pytorch_cpu": {},
         "pytorch_mps": {},
@@ -74,6 +81,8 @@ def main() -> None:
             "backend": "coreml",
             "model": "MobileNetV2",
             "mlpackage": args.mlpackage,
+            "model_precision": args.model_precision,
+            "model_compression": args.model_compression,
             "comparators": ["pytorch_cpu", "pytorch_mps"],
             "runs": args.runs,
             "warmup": args.warmup,

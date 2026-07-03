@@ -48,11 +48,34 @@ PYTHONPATH=$PWD .venv/bin/python scripts/benchmark_openai_compatible_server.py \
 
 `scripts/export_coreml_mobilenetv2.py` exports a native MobileNetV2
 `.mlpackage` when `coremltools`, `torch`, and `torchvision` are installed.
+The default export is FP16:
+
+```bash
+PYTHONPATH=$PWD .venv/bin/python scripts/export_coreml_mobilenetv2.py \
+  --precision fp16 \
+  --compression none \
+  --output models/coreml/mobilenet_v2_fp16.mlpackage
+```
+
+Compressed exports are optional. Palettization uses `coremltools` optimization
+APIs when they are available:
+
+```bash
+PYTHONPATH=$PWD .venv/bin/python scripts/export_coreml_mobilenetv2.py \
+  --precision fp16 \
+  --compression palettize \
+  --output models/coreml/mobilenet_v2_fp16_palettized.mlpackage
+```
 
 `scripts/benchmark_coreml_cv_baseline.py` compares the native CoreML package
 against PyTorch CPU and, when available, PyTorch MPS. Missing optional
 dependencies or missing CoreML packages are reported as `status: "partial"` or
 backend-level `status: "unavailable"` rather than failing CI.
+
+Pass `--model-precision fp16` and `--model-compression none|palettize|unknown`
+so the measured artifact records which package was benchmarked. Palettization
+can reduce package size and may affect latency or numerical drift. Actual
+speedup depends on the model, OS, hardware, and CoreML runtime placement.
 
 The CoreML benchmark accepts `--compute-unit`:
 
