@@ -58,6 +58,8 @@ Thumbs.db
 onnxruntime_profile__*.json
 
 # benchmark outputs
+models/coreml/
+results/measured_baselines/
 results/*.png
 results/*.csv
 results/*.json

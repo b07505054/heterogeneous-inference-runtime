@@ -4,6 +4,9 @@ from __future__ import annotations
 import argparse
 import sys
 import time
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import numpy as np
 
@@ -16,9 +19,10 @@ from benchmark.runner import BenchmarkRunner
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Benchmark native CoreML MobileNetV2 against PyTorch CPU/MPS.")
-    parser.add_argument("--mlpackage", default="models/mobilenet_v2.mlpackage")
-    parser.add_argument("--runs", type=int, default=50)
+    parser.add_argument("--mlpackage", "--coreml-model", dest="mlpackage", default="models/mobilenet_v2.mlpackage")
+    parser.add_argument("--runs", "--iterations", dest="runs", type=int, default=50)
     parser.add_argument("--warmup", type=int, default=5)
+    parser.add_argument("--include-pytorch", default="cpu,mps")
     parser.add_argument("--compute-unit", choices=["cpu", "cpu_gpu", "all"], default="all")
     parser.add_argument("--model-precision", choices=["fp16"], default="fp16")
     parser.add_argument("--model-compression", choices=["none", "palettize", "unknown"], default="unknown")
@@ -48,14 +52,22 @@ def main() -> None:
     ]
     reference_output = None
 
+    include_pytorch = {item.strip() for item in args.include_pytorch.split(",") if item.strip()}
+
     if torch_available():
-        cpu = _run_pytorch_backend("cpu", sample_np, args.runs, args.warmup)
-        metrics["pytorch_cpu"] = _strip_reference(cpu)
-        reference = cpu.get("metrics", {}).get("reference_output")
-        if reference is not None:
-            reference_output = reference.numpy()
-        mps = _run_pytorch_backend("mps", sample_np, args.runs, args.warmup)
-        metrics["pytorch_mps"] = _strip_reference(mps)
+        if "cpu" in include_pytorch:
+            cpu = _run_pytorch_backend("cpu", sample_np, args.runs, args.warmup)
+            metrics["pytorch_cpu"] = _strip_reference(cpu)
+            reference = cpu.get("metrics", {}).get("reference_output")
+            if reference is not None:
+                reference_output = reference.numpy()
+        else:
+            metrics["pytorch_cpu"] = {"status": "skipped", "reason": "not_requested"}
+        if "mps" in include_pytorch:
+            mps = _run_pytorch_backend("mps", sample_np, args.runs, args.warmup)
+            metrics["pytorch_mps"] = _strip_reference(mps)
+        else:
+            metrics["pytorch_mps"] = {"status": "skipped", "reason": "not_requested"}
     else:
         status = "partial"
         metrics["pytorch_cpu"] = {"status": "unavailable", "reason": "torch_or_torchvision_not_installed"}
@@ -75,7 +87,7 @@ def main() -> None:
     metrics["coreml"] = coreml
 
     payload = measured_envelope(
-        artifact_type="coreml_mobilenetv2_baseline",
+        artifact_type="measured_baseline",
         benchmark_target={
             "kind": "native_coreml_cv",
             "backend": "coreml",
