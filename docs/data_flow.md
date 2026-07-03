@@ -129,6 +129,37 @@ Metrics:
 
 Metrics caveat: these metrics are produced by local models and synthetic workloads. They are not measurements from production vLLM, SGLang, Triton Server, or TensorRT-LLM.
 
+Naming caveat: these outputs should be described as internal simulator,
+policy-ablation, and invariant-validation artifacts. They are not measured
+external serving baselines. External OpenAI-compatible measurements use the
+separate measured baseline schema documented in `docs/MEASURED_BASELINES.md`.
+
+## Measured Baseline Flow
+
+Inputs:
+
+- OpenAI-compatible server URL, model id, JSONL trace, concurrency, warmup, and output path.
+- Native CoreML `.mlpackage` path for MobileNetV2 when `coremltools` is available.
+
+Processing:
+
+1. Thin utilities in `benchmark/` load traces, compute metric summaries, collect provenance, and export the measured evidence envelope.
+2. `scripts/benchmark_openai_compatible_server.py` acts only as an HTTP client for an already running OpenAI-compatible server.
+3. `scripts/benchmark_coreml_cv_baseline.py` benchmarks native CoreML against PyTorch CPU and optional PyTorch MPS.
+
+Outputs:
+
+- JSON files under `results/measured_baselines/` or a user-supplied output path.
+
+Metrics:
+
+- OpenAI-compatible server: TTFT, TPOT, end-to-end latency p50/p95/p99, tokens/sec, success/error counts, and server/model metadata.
+- Native CoreML CV: model load, cold start, warm start, steady-state p50/p95/p99, RSS delta, package size, and numerical drift where a PyTorch reference is available.
+
+Boundary: measured baseline scripts report optional dependencies and missing
+servers as unavailable or errors in the output. They must not start vLLM,
+install CoreML, or mutate simulator artifacts.
+
 ## Native/CUDA Flow
 
 Inputs:

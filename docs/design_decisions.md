@@ -151,3 +151,17 @@ The repository contains many historical result artifacts. Documentation should d
 Tradeoff: preserving artifacts is useful for demos and analysis, but stale metrics can be mistaken for current measurements.
 
 Assumption: no new benchmark numbers should be added to documentation unless regenerated and labeled with environment metadata.
+
+## Separate Measured Baselines From Simulator Artifacts
+
+New measured baselines use the `benchmark/` helpers and the envelope documented
+in `docs/MEASURED_BASELINES.md`. Existing LLM serving outputs remain internal
+simulator, policy-ablation, and invariant-validation artifacts even when their
+names refer to vLLM-style or serving-framework concepts.
+
+Tradeoff: keeping the measured baseline path separate adds a small amount of
+schema code, but it prevents live external-server evidence from being confused
+with deterministic simulator artifacts.
+
+Assumption: OpenAI-compatible server benchmarks are client-only; lifecycle
+management for vLLM or any other server belongs outside this repo.

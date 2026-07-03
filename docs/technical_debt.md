@@ -44,6 +44,7 @@
 - The agentic judge expects exact metric values; regenerating artifacts can break tests or require updating expectations.
 - Throughput and latency fields from simulations should not be mixed with measured runtime benchmarks without labels.
 - Estimated or modeled serving metrics must be labeled as estimated/modeled when referenced.
+- Measured baseline JSON should use the `docs/MEASURED_BASELINES.md` envelope; internal simulator, policy-ablation, and invariant-validation artifacts should not be described as external baselines.
 
 ## Dependency And Environment Risks
 

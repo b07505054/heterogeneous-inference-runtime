@@ -93,8 +93,14 @@ results/llm_runtime_artifacts/mode_comparison/scheduler_focused/
 results/llm_runtime_artifacts/mode_comparison/paged_attention/
 ```
 
-Boundary: these are artifact-backed local runtime simulator results. They are
+Boundary: these are internal simulator, policy-ablation, and
+invariant-validation artifacts. They are not measured external baselines and
 not production vLLM, SGLang, or TensorRT-LLM forks.
+
+Measured baseline clients are documented separately in
+`docs/MEASURED_BASELINES.md`. The OpenAI-compatible server benchmark is
+client-only and does not install, launch, stop, or manage vLLM or any other
+serving process.
 
 The platform simulates a production-style edge computer vision inference system
 similar to modern autonomous robotics and edge AI deployment infrastructure.
@@ -821,6 +827,10 @@ Key outputs:
   `scripts/benchmark_kv_page_microbenchmark.py`. Distinct from the KV-cache
   simulation artifacts above; it does not run live vLLM/PagedAttention kernels.
 
+External serving measurements, when collected, must use the measured baseline
+schema from `docs/MEASURED_BASELINES.md`; the simulator and policy outputs in
+this directory should not be described as external baselines.
+
 The KV page microbenchmark is an offline/manual calibration input, not an
 online scheduler control path. The scheduler already has a local paged-KV cost
 model; the `KVPagePool` benchmark is a physical measurement layer for
@@ -1224,6 +1234,8 @@ nsys profile -o trt_fp32_profile python benchmarks/benchmark_tensorrt_fp32.py
 - Multi-camera inference
 - Distributed edge inference
 - vLLM / TensorRT-LLM integration
+- Measured OpenAI-compatible server baselines and native CoreML `.mlpackage`
+  CV baselines
 
 ## Documentation
 
