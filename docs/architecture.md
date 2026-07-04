@@ -327,6 +327,11 @@ The core runtime should not directly depend on ONNX, CoreML, TensorRT, PyTorch,
 vLLM, Qwen, Llama, MobileNet, or compiler IR. Format-specific handling belongs
 behind model adapters.
 
+Implementation status: Step 1 adds the neutral runtime graph schema, base model
+adapter interface, and a test-only mock adapter. It does not add CoreML, vLLM,
+ONNX, TensorRT, PyTorch, or compiler adapters, and it does not change runtime or
+benchmark behavior.
+
 Adapters translate source artifacts into a neutral graph:
 
 - `CoreMLModelAdapter`: consumes `.mlpackage` plus optional
