@@ -21,11 +21,76 @@ Phase 3:
 - Capability-driven quantization policy.
 - Capability-driven deployment policy that joins hardware capability, backend
   capability, kernel-library capability, and measured support.
+- Model Adapter and Neutral Runtime Graph architecture, so runtime orchestration
+  consumes neutral model-family/stage/tensor/memory/KV/backend-target concepts
+  instead of ONNX, CoreML, TensorRT, PyTorch, vLLM, or model-name internals.
 
 Phase 4:
 
 - Future measured optimizations, added only when the optimization can be
   benchmarked and exported through the measured baseline schema.
+- Richer compiler-runtime contracts such as ExecutionPlan-driven execution,
+  after the first CoreML package-centered path is measured and stable.
+
+## CoreML Compiler Runtime Integration
+
+The first Apple/CoreML compiler-runtime milestone should use `.mlpackage` as
+the executable handoff:
+
+```text
+ONNX / model graph
+  -> compiler static optimization from shared capability profiles
+  -> compiler-produced or compiler-directed .mlpackage
+  -> compiler_metadata.json beside the package
+  -> runtime CoreMLModelAdapter
+  -> NeutralRuntimeGraph
+  -> CoreML benchmark and runtime policy
+```
+
+ExecutionPlan artifacts remain useful future contracts, but they are not the
+first-stage CoreML runtime centerpiece.
+
+Required future work:
+
+- Define the CoreML compiler candidate bundle:
+  `model.mlpackage` plus `compiler_metadata.json`.
+- Add a runtime `CoreMLModelAdapter` that validates compiler metadata and
+  produces a neutral runtime graph without depending on compiler IR.
+- Keep direct CoreML baselines, compiler-produced package baselines, and
+  runtime-policy-selected package results as separate measured paths.
+- Ensure compiler and runtime read the same hardware/backend/kernel capability
+  profile source, or update their profile copies together with matching profile
+  IDs and digests.
+
+Do not claim compiler CoreML speedup until a compiler-produced `.mlpackage` is
+benchmarked against a direct CoreML export. Do not claim runtime policy speedup
+until the selected runtime configuration is benchmarked.
+
+## Neutral Runtime Graph
+
+Add a neutral runtime graph layer before implementing more model-specific
+runtime paths.
+
+The graph should describe:
+
+- Model family.
+- Stages.
+- Tensors.
+- Memory requirements.
+- KV-cache requirements.
+- Backend target.
+- Execution constraints.
+
+Adapters should translate source artifacts into this graph:
+
+- `CoreMLModelAdapter`: `.mlpackage` plus optional `compiler_metadata.json`.
+- `VLLMEndpointAdapter`: OpenAI-compatible endpoint configuration.
+- `MockModelAdapter`: deterministic tests.
+- `ONNXModelAdapter`: future optional adapter.
+
+Runtime core should not know exact model names such as Qwen, Llama, or
+MobileNet; source format internals; compiler IR; or backend-specific package
+internals.
 
 ## Clarify Runtime Modes
 

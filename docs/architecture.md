@@ -6,7 +6,30 @@ This repository is a heterogeneous inference runtime and benchmarking evidence
 project. It now has two measured backend lanes, Linux vLLM and Apple CoreML,
 plus simulator and policy components that prototype future optimization logic.
 
-The project should be read as a measured-baseline-driven policy system:
+The runtime should be read as a neutral-graph execution system:
+
+```text
+Model Artifact
+  ONNX / .mlpackage / vLLM endpoint / future engine / mock
+        |
+        v
+Model Adapter
+        |
+        v
+Neutral Runtime Graph
+        |
+        v
+Scheduler / Memory Manager / KV Cache / Prefix Cache /
+Speculative Coordinator / Policy
+        |
+        v
+Backend Dispatcher
+        |
+        v
+Backend-specific Executor
+```
+
+It is also a measured-baseline-driven policy system:
 
 ```text
 Measured Baselines
@@ -16,6 +39,9 @@ Capability Layer
         |
         v
 Optimization Policy Engine
+        |
+        v
+Deployment Planner
         |
         +-- Edge Deployment (CoreML)
         +-- Server Runtime (vLLM)
@@ -30,6 +56,13 @@ frameworks.
 
 Some paths run real inference locally. Other paths read existing benchmark
 artifacts or simulate serving behavior. Those boundaries are explicit below.
+
+For the current Apple/CoreML compiler-runtime integration, `.mlpackage` is the
+first-stage executable handoff. ExecutionPlan remains useful as a future richer
+contract, but it is not the CoreML v1 runtime centerpiece. A compiler-produced
+CoreML candidate is a `.mlpackage` with adjacent `compiler_metadata.json`.
+Runtime components consume that package through a model adapter, convert it to
+a neutral graph, benchmark it, and then apply policy over measured evidence.
 
 ## Layered Architecture
 
@@ -63,6 +96,20 @@ artifacts or simulate serving behavior. Those boundaries are explicit below.
                                    |
                                    v
                      +-----------------------------+
+                     |     Deployment Planner      |
+                     +-----------------------------+
+                     | Constraint Solver           |
+                     | Objective Engine            |
+                     | Recommendation Engine       |
+                     +-------------+---------------+
+                                   |
+                                   v
+                     +-----------------------------+
+                     |      Deployment Plan        |
+                     +-------------+---------------+
+                                   |
+                                   v
+                     +-----------------------------+
                      | Runtime / Simulator Layer   |
                      +-----------------------------+
                      | Prefix Cache Simulator      |
@@ -87,6 +134,84 @@ Implemented under `benchmark/` and `scripts/`, with details in
 
 Generated model packages and measured JSON artifacts remain local under ignored
 output directories unless explicitly exported.
+
+### CoreML Compiler/Runtime Contract
+
+The Apple/CoreML path is centered on package execution:
+
+```text
+ONNX / model graph
+        |
+        v
+Compiler static optimization using shared capability profiles
+        |
+        v
+CoreML-compatible rewrite / export directive
+        |
+        v
+.mlpackage candidate + compiler_metadata.json
+        |
+        v
+Runtime CoreMLModelAdapter
+        |
+        v
+Neutral Runtime Graph
+        |
+        v
+CoreML benchmark / CoreMLEdgePolicy / Deployment Planner
+```
+
+The compiler owns theoretical/static optimization:
+
+- ONNX or model graph analysis.
+- Backend support planning.
+- Precision, layout, and compression planning.
+- CoreML-compatible rewrite or export direction.
+- Materializing or directing materialization of `.mlpackage` output.
+- Emitting `compiler_metadata.json` beside the package.
+
+The compiler must not claim measured performance. Compiler metadata is
+artifact-level provenance, not measured evidence.
+
+The runtime owns best dynamic execution:
+
+- Consuming `.mlpackage`, endpoint, future engine, or mock artifacts through
+  model adapters.
+- Converting artifacts into a `NeutralRuntimeGraph`.
+- Handling memory/current conditions and runtime availability.
+- Validating capabilities and looking up measured evidence.
+- Applying `CoreMLEdgePolicy`, server policies, and the Deployment Planner.
+- Choosing a deployment decision without depending on compiler IR.
+
+Current CoreML comparison paths:
+
+```text
+Path A: Direct CoreML baseline
+ONNX / PyTorch
+  -> direct coremltools export
+  -> .mlpackage
+  -> CoreML measured baseline
+
+Path B: Compiler CoreML baseline
+ONNX / model graph
+  -> compiler-produced or compiler-directed .mlpackage
+  -> compiler_metadata.json
+  -> CoreML measured baseline
+
+Path C: Runtime optimized CoreML
+compiler .mlpackage candidates
+  -> runtime policy / planner
+  -> selected compute_unit / compression / input-size bucket
+  -> measured selected result
+```
+
+Path A vs Path B measures whether the compiler-produced package changes
+latency, package size, memory, or drift compared with direct CoreML export.
+Path B vs Path C measures whether runtime dynamic policy selects a better
+deployment configuration than the compiler baseline.
+
+No speedup exists until the relevant paths are benchmarked. ExecutionPlan alone
+is not measured evidence.
 
 ### Capability Layer
 
@@ -126,6 +251,13 @@ backend/kernel capability schemas. This runtime repo should reference or adapt
 those schemas through JSON/artifact boundaries rather than copying compiler
 C++/MLIR implementations into the runtime.
 
+Compiler and runtime must use the same hardware, backend, and kernel capability
+facts. For the first Apple/CoreML stage, profiles are centered on the current
+Mac hardware and available CoreML/MPS/Metal backend/kernel support. If those
+facts change, both sides must be updated together or read from the same shared
+profile source. The compiler and runtime must not drift into separate
+capability truths.
+
 Capability schema is structure. Capability profiles are concrete facts.
 Measured baselines are evidence. Policies consume both profiles and measured
 baseline artifacts. Simulators evaluate ideas. These layers must not be merged.
@@ -143,12 +275,36 @@ metadata. It should make decisions such as:
 - Future capability-driven policies: select quantization or KV-related
   deployment choices only when capabilities and measured evidence support them.
 
-Policy artifacts are deployment decisions derived from evidence. They are not
-new measured baselines unless a benchmark is actually rerun.
+Policy artifacts are evidence-backed selections or candidate rankings. They are
+not deployment plans, and they are not new measured baselines unless a benchmark
+is actually rerun.
 
-Future policy consumers include `CoreMLEdgePolicy`, `QuantizationPolicy`,
-`KVPolicy`, `ServerRuntimePolicy`, and `PDPolicy`. These are future consumers
-only; the architecture layer does not implement them.
+Policies produce evidence-backed candidates and policy selections. They should
+not directly produce final deployment artifacts because final deployment
+recommendations may need to compare multiple runtimes, enforce cross-runtime
+constraints, and choose a user-facing objective.
+
+### Deployment Planner
+
+Implemented under `deployment/planner/`.
+
+The deployment planner is the architecture layer above all optimization
+policies. It consumes capability profiles, measured baselines, and policy
+candidates, then emits a `deployment_plan` artifact.
+
+The planner has three reusable pieces:
+
+- Constraint solver: filters normalized candidates by latency, package size,
+  memory, numerical drift, and throughput constraints without hardcoding CoreML
+  or vLLM.
+- Objective engine: ranks candidates by latency, throughput, memory, package
+  size, or a documented balanced score.
+- Recommendation engine: explains why the selected candidate won or why no
+  candidate was eligible.
+
+The planner does not optimize models, run benchmarks, modify CoreML, modify
+vLLM, implement batching, or implement scheduler internals. It is a deployment
+recommendation layer over measured evidence.
 
 ### Runtime / Simulator Layer
 
@@ -164,6 +320,36 @@ production evidence.
 
 These components can inform policy design, but measured claims must come from
 the measured baseline layer.
+
+### Model Adapter And Neutral Runtime Graph Layer
+
+The core runtime should not directly depend on ONNX, CoreML, TensorRT, PyTorch,
+vLLM, Qwen, Llama, MobileNet, or compiler IR. Format-specific handling belongs
+behind model adapters.
+
+Adapters translate source artifacts into a neutral graph:
+
+- `CoreMLModelAdapter`: consumes `.mlpackage` plus optional
+  `compiler_metadata.json`.
+- `VLLMEndpointAdapter`: consumes OpenAI-compatible endpoint configuration.
+- `MockModelAdapter`: produces deterministic graphs for tests.
+- `ONNXModelAdapter`: future optional adapter for ONNX inspection, not a
+  runtime-core dependency.
+
+A `NeutralRuntimeGraph` should expose neutral concepts:
+
+- `model_family`
+- `stages`
+- `tensors`
+- `memory_requirements`
+- `kv_cache_requirements`
+- `backend_target`
+- `execution_constraints`
+
+Schedulers, memory managers, KV cache, prefix cache, speculative coordination,
+policy, and backend dispatch should consume those neutral concepts. They should
+not inspect CoreML package internals, ONNX graph internals, vLLM internals,
+compiler pass names, or exact model names.
 
 ## Top-Level Modules
 
@@ -208,6 +394,11 @@ Implemented in `deployment/onnx_cv_backend.py`, `deployment/model_registry.py`, 
 - Output is currently reduced to `top1` classification index.
 
 Implemented behavior: real ONNX Runtime session creation, preprocessing, provider fallback, and inference.
+
+Architecture note: this is a legacy format-specific runtime path. Future
+runtime orchestration should move model-format assumptions behind model
+adapters and expose only `NeutralRuntimeGraph` to scheduler, memory, policy,
+and dispatcher components.
 
 ### LLM runtime simulator and artifact generation
 

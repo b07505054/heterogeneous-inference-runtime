@@ -19,6 +19,27 @@ instead of backend implementation.
 The intended architecture is:
 
 ```text
+Model Artifact
+        |
+        v
+Model Adapter
+        |
+        v
+Neutral Runtime Graph
+        |
+        v
+Scheduler / Memory Manager / KV Cache / Prefix Cache / Policy
+        |
+        v
+Backend Dispatcher
+        |
+        v
+Backend-specific Executor
+```
+
+The measured-policy architecture remains:
+
+```text
 Measured Baselines
         |
         v
@@ -35,6 +56,12 @@ Optimization Policy Engine
 The project combines real local inference paths, measured backend clients,
 native/CUDA experiments, optional compiler experiments, artifact-backed
 benchmark adapters, and local simulations for LLM-serving runtime behavior.
+
+For the current Apple/CoreML compiler-runtime path, the executable compiler
+output is a CoreML `.mlpackage` plus adjacent `compiler_metadata.json`, not an
+ExecutionPlan as the primary runtime artifact. ExecutionPlan artifacts remain
+useful for richer future compiler-runtime contracts, but CoreML v1 centers on
+package execution and measured runtime policy.
 
 ## Repository Philosophy
 
@@ -179,6 +206,77 @@ The CoreML lane explicitly does not own:
   reported by reliable runtime tooling.
 
 Treat CoreML as a measured backend. Do not replace CoreML kernels.
+
+Current CoreML compiler/runtime contract:
+
+```text
+ONNX / model graph
+        |
+        v
+Compiler static optimization using shared capability profiles
+        |
+        v
+Compiler materializes or directs materialization of .mlpackage
+        |
+        v
+compiler_metadata.json beside the package
+        |
+        v
+Runtime CoreMLModelAdapter
+        |
+        v
+Neutral Runtime Graph
+        |
+        v
+CoreML benchmark / CoreMLEdgePolicy / Deployment Planner
+```
+
+The compiler owns theoretical and static optimization: graph analysis, backend
+support planning, precision/layout/compression planning, CoreML-compatible
+rewrite or export direction, and package materialization. The compiler must not
+claim measured performance.
+
+The runtime owns best dynamic execution: consuming `.mlpackage` artifacts or
+endpoints through model adapters, converting them into neutral runtime graphs,
+validating capabilities, observing memory/current conditions, looking up
+measured evidence, selecting policies, and producing deployment decisions. The
+core runtime must not depend on compiler IR.
+
+The three CoreML comparison paths are:
+
+- Path A: direct CoreML baseline, `ONNX/PyTorch -> direct coremltools export -> .mlpackage -> measured baseline`.
+- Path B: compiler CoreML baseline, `ONNX/model graph -> compiler-produced .mlpackage + compiler_metadata.json -> measured baseline`.
+- Path C: runtime optimized CoreML, `compiler .mlpackage candidates -> runtime policy/planner -> selected CoreML config -> measured result`.
+
+Do not claim compiler CoreML speedup until Path B is benchmarked against Path A.
+Do not claim runtime policy speedup until Path C is benchmarked against Path B.
+Do not treat ExecutionPlan alone as measured evidence.
+
+## Neutral Runtime Graph Boundary
+
+Runtime orchestration should consume a neutral graph abstraction rather than
+source-format internals. Model adapters translate artifacts into that graph:
+
+- `CoreMLModelAdapter`: `.mlpackage` plus optional `compiler_metadata.json`.
+- `VLLMEndpointAdapter`: OpenAI-compatible endpoint configuration.
+- `MockModelAdapter`: deterministic tests.
+- `ONNXModelAdapter`: future optional adapter, not a runtime-core dependency.
+
+The runtime may know neutral concepts: model family, stages, tensors, memory
+requirements, KV-cache requirements, backend target, and execution constraints.
+It must not know exact model names such as Qwen, Llama, or MobileNet; ONNX,
+CoreML, TensorRT, PyTorch, or vLLM internals; compiler IR; or compiler pass
+names.
+
+## Shared Capability Profile Rule
+
+Compiler and runtime must use the same hardware, backend, and kernel capability
+facts. For the first Apple/CoreML stage, profiles are centered on the current
+Mac hardware and the available CoreML/MPS/Metal backend/kernel support.
+
+If hardware, backend, or kernel facts change, compiler and runtime profiles
+must be updated together or loaded from the same shared profile source. Do not
+allow the compiler and runtime to drift into separate capability truths.
 
 ## Linux vLLM Lane
 
