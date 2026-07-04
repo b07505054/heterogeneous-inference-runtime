@@ -1,0 +1,32 @@
+{
+  "schema_version": "0.1",
+  "capability_type": "backend",
+  "backend_id": "coreml",
+  "backend": "CoreML",
+  "backend_api": "CoreML",
+  "supports": {
+    "precisions": [
+      "fp16"
+    ],
+    "features": [
+      "palettization"
+    ],
+    "compute_units": [
+      "cpu",
+      "cpu_gpu",
+      "all"
+    ]
+  },
+  "does_not_claim": [
+    "exact ANE scheduling",
+    "custom kernel replacement",
+    "paged attention kernel",
+    "vLLM-style batching"
+  ],
+  "evidence": "declared",
+  "source": "capability_profile_database_v1",
+  "notes": [
+    "CoreML compute units and compression are backend capabilities consumed by deployment policy.",
+    "This repository selects among measured CoreML artifacts and does not implement CoreML internals."
+  ]
+}

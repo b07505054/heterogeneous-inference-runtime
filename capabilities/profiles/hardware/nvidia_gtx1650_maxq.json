@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.1",
+  "capability_type": "hardware",
+  "hardware_id": "nvidia_gtx1650_maxq",
+  "vendor": "NVIDIA",
+  "family": "Turing",
+  "model": "GeForce GTX 1650 Max-Q",
+  "components": [
+    "gpu",
+    "cuda"
+  ],
+  "memory": {
+    "vram_mb": 4096
+  },
+  "attributes": {
+    "gpu": true,
+    "cuda": true,
+    "compute_capability": "7.5",
+    "fp16": true,
+    "fp8": false,
+    "nvfp4": false,
+    "mxfp4": false
+  },
+  "evidence": "declared",
+  "source": "capability_profile_database_v1",
+  "notes": [
+    "FP16 supported.",
+    "FP8/NVFP4/MXFP4 not claimed.",
+    "vLLM measured baseline exists but this hardware is memory-constrained."
+  ]
+}

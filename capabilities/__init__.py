@@ -1,8 +1,8 @@
-"""Capability layer schema definitions.
+"""Capability layer schema definitions and profile loading.
 
-This package is intentionally schema-only. Runtime policies may consume these
-types in the future, but importing this package must not change benchmark,
-runtime, or simulator behavior.
+Importing this package must not change benchmark, runtime, or simulator
+behavior. Profiles are explicit facts for policy consumers, not measured
+performance results.
 """
 
 from capabilities.schema import (
@@ -14,6 +14,7 @@ from capabilities.schema import (
     KernelLibraryCapability,
     MeasuredSupport,
 )
+from capabilities.profile_loader import load_profile, load_profiles
 
 __all__ = [
     "BackendCapability",
@@ -23,4 +24,6 @@ __all__ = [
     "KernelAvailability",
     "KernelLibraryCapability",
     "MeasuredSupport",
+    "load_profile",
+    "load_profiles",
 ]

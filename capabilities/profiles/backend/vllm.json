@@ -1,0 +1,30 @@
+{
+  "schema_version": "0.1",
+  "capability_type": "backend",
+  "backend_id": "vllm",
+  "backend": "vLLM",
+  "backend_api": "OpenAI-compatible HTTP API",
+  "supports": {
+    "features": [
+      "OpenAI-compatible serving",
+      "continuous batching",
+      "paged attention"
+    ],
+    "backend_capabilities": [
+      {
+        "name": "prefix caching",
+        "measured": false
+      }
+    ]
+  },
+  "does_not_claim": [
+    "this repo implements vLLM",
+    "this repo modifies vLLM kernels"
+  ],
+  "evidence": "declared",
+  "source": "capability_profile_database_v1",
+  "notes": [
+    "vLLM runtime capabilities are backend facts, not repository implementations.",
+    "Measured server policy must use OpenAI-compatible measured baselines for deployment selection."
+  ]
+}

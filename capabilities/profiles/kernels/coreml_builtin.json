@@ -1,0 +1,57 @@
+{
+  "schema_version": "0.1",
+  "capability_type": "kernels",
+  "profile_id": "coreml_builtin",
+  "backend_id": "coreml",
+  "kernels": [
+    {
+      "kernel_id": "coreml.conv",
+      "operation": "Conv",
+      "availability": "opaque",
+      "library": "CoreML",
+      "support_status": "opaque_builtin",
+      "measured": false,
+      "evidence": "declared"
+    },
+    {
+      "kernel_id": "coreml.matmul",
+      "operation": "MatMul",
+      "availability": "opaque",
+      "library": "CoreML",
+      "support_status": "opaque_builtin",
+      "measured": false,
+      "evidence": "declared"
+    },
+    {
+      "kernel_id": "coreml.softmax",
+      "operation": "Softmax",
+      "availability": "opaque",
+      "library": "CoreML",
+      "support_status": "opaque_builtin",
+      "measured": false,
+      "evidence": "declared"
+    },
+    {
+      "kernel_id": "coreml.attention",
+      "operation": "Attention",
+      "availability": "opaque",
+      "library": "CoreML",
+      "support_status": "opaque_or_unsupported_in_repo_evidence",
+      "measured": false,
+      "evidence": "declared"
+    },
+    {
+      "kernel_id": "coreml.custom_kernel",
+      "operation": "CustomKernel",
+      "availability": "unsupported",
+      "library": "CoreML",
+      "support_status": "unsupported_in_this_project",
+      "measured": false,
+      "evidence": "declared"
+    }
+  ],
+  "notes": [
+    "CoreML kernel implementations are opaque backend capabilities.",
+    "This project does not provide custom CoreML kernel replacement."
+  ]
+}

@@ -21,6 +21,17 @@ Deployment Decision
 Capabilities describe what exists. They do not run benchmarks, select policies,
 or predict performance.
 
+The capability layer has two parts:
+
+- `schema.py`: structural dataclasses for hardware, backend, kernel, measured
+  support, and combined capability profiles.
+- `profiles/`: concrete JSON facts about known hardware, backends, and runtime
+  kernel availability.
+
+`profile_loader.py` validates bundled or external profile JSON and normalizes
+the parts that map to the existing schema classes. Unknown profile types and
+malformed profiles are rejected.
+
 ## Concepts
 
 ### HardwareCapability
@@ -67,9 +78,14 @@ Predictions do not belong in `MeasuredSupport`.
 
 ## Truth Boundary
 
-Measured baselines are evidence. Capabilities describe what exists. Policies
-choose among capabilities. Simulators evaluate ideas. These are separate layers
-and must not be merged.
+Measured baselines are evidence. Capability schema is structure. Capability
+profiles are concrete facts. Policies consume measured baselines plus explicit
+profiles. Simulators evaluate ideas. These are separate layers and must not be
+merged.
+
+The bundled profiles are declarations and artifact-level facts. They do not
+turn backend support into measured performance, and they do not imply that this
+repository implements CoreML, vLLM, CUDA, MPS, or their internals.
 
 Do not claim support for FP8, NVFP4, MXFP4, EAGLE, MTP, SpecForge, LMCache,
 HiCache, or KVBM unless support is measured or explicitly represented as future

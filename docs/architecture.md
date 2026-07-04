@@ -90,12 +90,18 @@ output directories unless explicitly exported.
 
 ### Capability Layer
 
-Implemented as schema-only definitions under `capabilities/`.
+Implemented under `capabilities/` as schema definitions, concrete profile
+data, and profile loading/validation.
 
 The capability layer is the decision boundary between raw measurements and
 policy selection. Policies should never infer hardware or backend support
 directly from benchmark code; they should query capability profiles and
 measured support records.
+
+`capabilities/schema.py` defines the structure. `capabilities/profiles/`
+contains concrete facts for known hardware, backends, and runtime/kernel
+availability. `capabilities/profile_loader.py` validates those JSON profiles
+and normalizes them against the existing schema classes.
 
 The capability layer has four independent concepts:
 
@@ -120,9 +126,9 @@ backend/kernel capability schemas. This runtime repo should reference or adapt
 those schemas through JSON/artifact boundaries rather than copying compiler
 C++/MLIR implementations into the runtime.
 
-Capabilities describe what exists. Measured baselines are evidence. Policies
-choose among capabilities. Simulators evaluate ideas. These are four different
-layers and must not be merged.
+Capability schema is structure. Capability profiles are concrete facts.
+Measured baselines are evidence. Policies consume both profiles and measured
+baseline artifacts. Simulators evaluate ideas. These layers must not be merged.
 
 ### Optimization Policy Engine
 
