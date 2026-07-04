@@ -2,9 +2,162 @@
 
 ## Purpose
 
-This repository is an edge inference runtime and benchmarking evidence project. It compares heterogeneous inference paths for MobileNetV2-style computer vision workloads, includes native CPU/CUDA experiments, and models LLM-serving runtime behavior such as KV-cache pressure, page prefetch, continuous batching, worker routing, and failover.
+This repository is a heterogeneous inference runtime and benchmarking evidence
+project. It now has two measured backend lanes, Linux vLLM and Apple CoreML,
+plus simulator and policy components that prototype future optimization logic.
 
-The project is best understood as a collection of executable runtime components plus artifact generators. Some paths run real inference locally. Other paths read existing benchmark artifacts or simulate serving behavior. Those boundaries are explicit below.
+The project should be read as a measured-baseline-driven policy system:
+
+```text
+Measured Baselines
+        |
+        v
+Capability Layer
+        |
+        v
+Optimization Policy Engine
+        |
+        +-- Edge Deployment (CoreML)
+        +-- Server Runtime (vLLM)
+        +-- Simulator / Policy Evaluation
+```
+
+Measured baseline -> capability layer -> policy -> deployment decision is the
+central design principle. CoreML and vLLM are treated as measured backends. The
+repository optimizes deployment choices on top of them instead of
+reimplementing CoreML kernels, vLLM scheduling internals, or production serving
+frameworks.
+
+Some paths run real inference locally. Other paths read existing benchmark
+artifacts or simulate serving behavior. Those boundaries are explicit below.
+
+## Layered Architecture
+
+```text
+                     +-----------------------------+
+                     |     Measured Baselines      |
+                     +-----------------------------+
+                     | Linux vLLM                  |
+                     | Apple CoreML                |
+                     +-------------+---------------+
+                                   |
+                                   v
+                     +-----------------------------+
+                     |      Capability Layer       |
+                     +-----------------------------+
+                     | Hardware Capability         |
+                     | Backend Capability          |
+                     | Kernel Library Capability   |
+                     | Measured Support            |
+                     +-------------+---------------+
+                                   |
+                                   v
+                     +-----------------------------+
+                     |  Optimization Policy Engine |
+                     +-----------------------------+
+                     | CoreML Edge Policy          |
+                     | Server Runtime Policy       |
+                     | Future Quant Policy         |
+                     | Future KV Policy            |
+                     +-------------+---------------+
+                                   |
+                                   v
+                     +-----------------------------+
+                     | Runtime / Simulator Layer   |
+                     +-----------------------------+
+                     | Prefix Cache Simulator      |
+                     | Speculative Simulator       |
+                     | PD Simulator                |
+                     +-----------------------------+
+```
+
+### Measured Baselines
+
+Implemented under `benchmark/` and `scripts/`, with details in
+`docs/MEASURED_BASELINES.md`.
+
+- Linux/vLLM lane: `scripts/benchmark_openai_compatible_server.py` benchmarks an
+  already running OpenAI-compatible server and records TTFT, TPOT, end-to-end
+  latency, tokens/sec, success/error counts, and server/model metadata.
+- Apple/CoreML lane: `scripts/export_coreml_mobilenetv2.py` and
+  `scripts/benchmark_coreml_cv_baseline.py` measure native CoreML MobileNetV2
+  `.mlpackage` variants against PyTorch CPU and optional PyTorch MPS.
+- Measured artifacts use `artifact_type: "measured_baseline"` and
+  `evidence_type: "measured"`.
+
+Generated model packages and measured JSON artifacts remain local under ignored
+output directories unless explicitly exported.
+
+### Capability Layer
+
+Implemented as schema-only definitions under `capabilities/`.
+
+The capability layer is the decision boundary between raw measurements and
+policy selection. Policies should never infer hardware or backend support
+directly from benchmark code; they should query capability profiles and
+measured support records.
+
+The capability layer has four independent concepts:
+
+- `HardwareCapability`: physical hardware facts only. Examples include Apple
+  M5, Apple GPU, Apple ANE, unified memory, NVIDIA GPU family, CUDA compute
+  capability, VRAM, and CPU details. No benchmark results belong here.
+- `BackendCapability`: runtime/backend support only. Examples include CoreML,
+  Metal, MPS, CUDA, vLLM, ONNX Runtime, and TensorRT. Supported features may be
+  declared here, but measured performance must not be encoded here.
+- `KernelLibraryCapability`: runtime or kernel implementation availability.
+  Examples include MatMul, Conv, Attention, Softmax, RMSNorm, FlashAttention,
+  PagedAttention, PrefixCache, and Speculative. Availability is categorized as
+  `builtin`, `opaque`, `custom`, or `unsupported`. This is runtime/kernel
+  availability, not compiler lowering.
+- `MeasuredSupport`: experimentally verified support facts only. Examples
+  include FP16 benchmark completed, palettization benchmark completed, input
+  size 224 measured, CoreML ComputeUnit ALL measured, vLLM TTFT measured, and
+  concurrency benchmark completed. Predictions do not belong here.
+
+The compiler-side project already contains richer target-profile and
+backend/kernel capability schemas. This runtime repo should reference or adapt
+those schemas through JSON/artifact boundaries rather than copying compiler
+C++/MLIR implementations into the runtime.
+
+Capabilities describe what exists. Measured baselines are evidence. Policies
+choose among capabilities. Simulators evaluate ideas. These are four different
+layers and must not be merged.
+
+### Optimization Policy Engine
+
+The optimization policy engine is the next layer above measured evidence. It
+selects deployment configurations using measured artifacts plus capability
+metadata. It should make decisions such as:
+
+- CoreML edge policy: choose compute unit, input-size bucket, and compression
+  variant subject to latency, package-size, RSS, and numerical-drift constraints.
+- Server runtime policy: choose concurrency/admission/routing behavior for a
+  measured OpenAI-compatible/vLLM server.
+- Future capability-driven policies: select quantization or KV-related
+  deployment choices only when capabilities and measured evidence support them.
+
+Policy artifacts are deployment decisions derived from evidence. They are not
+new measured baselines unless a benchmark is actually rerun.
+
+Future policy consumers include `CoreMLEdgePolicy`, `QuantizationPolicy`,
+`KVPolicy`, `ServerRuntimePolicy`, and `PDPolicy`. These are future consumers
+only; the architecture layer does not implement them.
+
+### Runtime / Simulator Layer
+
+Simulator components remain valuable, but their role is policy prototyping and
+future optimization evaluation. They must not be presented as measured
+production evidence.
+
+- Prefix cache simulator: models prefix reuse, hit/miss behavior, and routing
+  decisions.
+- Speculative simulator: estimates draft/verify policy decisions.
+- PD simulator: models prefill/decode disaggregation, KV transfer, and queueing
+  trade-offs.
+
+These components can inform policy design, but measured claims must come from
+the measured baseline layer.
 
 ## Top-Level Modules
 

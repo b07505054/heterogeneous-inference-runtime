@@ -1,5 +1,32 @@
 # Future Work
 
+## Roadmap
+
+Phase 1 is complete:
+
+- Linux measured baseline for an external OpenAI-compatible vLLM server.
+- Apple CoreML measured baseline for native MobileNetV2 `.mlpackage` variants.
+- Simulator and policy-evaluation components for prefix cache, speculative
+  decoding, prefill/decode planning, and paged-KV behavior.
+
+Phase 2:
+
+- CoreML edge policy that selects among measured compute-unit, input-size, and
+  compression variants.
+- Server runtime policy that uses measured vLLM/OpenAI-compatible artifacts to
+  guide concurrency, admission, and routing decisions.
+
+Phase 3:
+
+- Capability-driven quantization policy.
+- Capability-driven deployment policy that joins hardware capability, backend
+  capability, kernel-library capability, and measured support.
+
+Phase 4:
+
+- Future measured optimizations, added only when the optimization can be
+  benchmarked and exported through the measured baseline schema.
+
 ## Clarify Runtime Modes
 
 - Add a small matrix in the README that labels each path as measured live, artifact-backed, simulated, or optional/hardware-dependent.

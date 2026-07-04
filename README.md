@@ -1,13 +1,105 @@
-# Edge CV Inference Deployment & Profiling Platform
+# Heterogeneous Inference Runtime
 
 [![Agentic Eval CI](https://github.com/b07505054/heterogeneous-inference-runtime/actions/workflows/agentic-eval-ci.yml/badge.svg)](https://github.com/b07505054/heterogeneous-inference-runtime/actions/workflows/agentic-eval-ci.yml)
 
 ## Overview
 
-This project implements an end-to-end edge AI inference deployment, profiling, and runtime benchmarking platform across heterogeneous AI inference backends.
+This project is a heterogeneous inference runtime and benchmarking evidence
+repo. It treats CoreML and vLLM as measured backends, then builds capability
+metadata and optimization-policy decisions on top of those measurements.
+
+The core direction is:
+
+```text
+Measured Baseline
+        |
+        v
+Capability Layer
+        |
+        v
+Optimization Policy
+        |
+        v
+Deployment Decision
+```
+
+The capability layer is first-class under `capabilities/` and separates:
+
+```text
+HardwareCapability
+BackendCapability
+KernelLibraryCapability
+MeasuredSupport
+```
+
+Future policies consume that layer:
+
+```text
+Measured Baselines
+        |
+        v
+Capability Layer
+        |
+        v
+Optimization Policy Engine
+        |
+        +-- Edge Deployment (CoreML)
+        +-- Server Runtime (vLLM)
+        +-- Simulator / Policy Evaluation
+```
+
+The project optimizes deployment decisions over existing runtimes. It does not
+try to replace CoreML kernels, reimplement vLLM internals, or present simulator
+outputs as measured production evidence.
+
+## Architecture Summary
+
+```text
+                     +-----------------------------+
+                     |     Measured Baselines      |
+                     +-----------------------------+
+                     | Linux vLLM                  |
+                     | Apple CoreML                |
+                     +-------------+---------------+
+                                   |
+                                   v
+                     +-----------------------------+
+                     |      Capability Layer       |
+                     +-----------------------------+
+                     | Hardware Capability         |
+                     | Backend Capability          |
+                     | Kernel Library Capability   |
+                     | Measured Support            |
+                     +-------------+---------------+
+                                   |
+                                   v
+                     +-----------------------------+
+                     |  Optimization Policy Engine |
+                     +-----------------------------+
+                     | CoreML Edge Policy          |
+                     | Server Runtime Policy       |
+                     | Future Quant Policy         |
+                     | Future KV Policy            |
+                     +-------------+---------------+
+                                   |
+                                   v
+                     +-----------------------------+
+                     | Runtime / Simulator Layer   |
+                     +-----------------------------+
+                     | Prefix Cache Simulator      |
+                     | Speculative Simulator       |
+                     | PD Simulator                |
+                     +-----------------------------+
+```
+
+Design principle: measured baseline -> policy -> deployment decision, not custom
+backend implementation. In practice, this means measured baseline -> capability
+layer -> policy -> deployment decision.
 
 ## Recent Updates
 
+- Added measured baseline documentation for native CoreML MobileNetV2 and an
+  external OpenAI-compatible vLLM server.
 - Added runtime execution plan IR, compiler runtime adapter, backend
   dispatcher, typed runtime decisions, and execution trace recorder
   instrumentation.
@@ -24,7 +116,8 @@ snapshots or simulator outputs unless a command has just measured them on the
 current machine. Do not treat committed JSON as freshly measured live serving
 results.
 
-The system evaluates real-world deployment trade-offs across:
+The system evaluates deployment trade-offs across measured backends,
+artifact-backed benchmarks, and simulator/policy components:
 
 - PyTorch eager inference
 - ONNX Runtime CPU / CUDA / CoreML execution providers
@@ -107,8 +200,18 @@ palettization sanity check, and an external vLLM/OpenAI-compatible Qwen
 JSON artifacts remain local under ignored output directories unless explicitly
 exported.
 
-The platform simulates a production-style edge computer vision inference system
-similar to modern autonomous robotics and edge AI deployment infrastructure.
+The CoreML lane owns measured Apple edge baselines, compute-unit comparison,
+compression comparison, input-size comparison, and future CoreML edge deployment
+policy. It does not attempt to replace CoreML kernels.
+
+The server lane owns external OpenAI-compatible/vLLM measurements for
+throughput, TTFT, TPOT, concurrency behavior, and future runtime policy. The
+benchmark client does not install, launch, stop, or manage vLLM.
+
+The simulator lane remains useful for policy prototyping and future
+optimization evaluation. Its artifacts should be read as simulator,
+policy-ablation, or invariant-validation evidence, not measured production
+serving results.
 
 ---
 

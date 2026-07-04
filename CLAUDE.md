@@ -1,8 +1,96 @@
 # CLAUDE.md
 
-## Project Handoff Notes
+## Engineering Constitution
 
-This repository is a heterogeneous inference runtime and benchmarking evidence project. It combines real local inference paths, native/CUDA experiments, optional compiler experiments, artifact-backed benchmark adapters, and local simulations for LLM-serving runtime behavior.
+This file is the engineering constitution for this repository. Future work in
+CoreML, vLLM, quantization, KV-cache policy, speculative decoding, and runtime
+policy should follow these rules before implementation details are chosen.
+
+## Project Identity
+
+This repository is not a GPU simulator, not a CoreML runtime implementation,
+and not a vLLM fork.
+
+It is a heterogeneous inference runtime that measures multiple backends and
+builds optimization policies on top of measured evidence. CoreML and vLLM are
+treated as measured backends. The repository focuses on deployment policy
+instead of backend implementation.
+
+The intended architecture is:
+
+```text
+Measured Baselines
+        |
+        v
+Capability Layer
+        |
+        v
+Optimization Policy Engine
+        |
+        +-- Edge Deployment (CoreML)
+        +-- Server Runtime (vLLM)
+        +-- Simulator / Policy Evaluation
+```
+
+The project combines real local inference paths, measured backend clients,
+native/CUDA experiments, optional compiler experiments, artifact-backed
+benchmark adapters, and local simulations for LLM-serving runtime behavior.
+
+## Repository Philosophy
+
+Optimization should always proceed in this order:
+
+```text
+Backend capability
+        |
+        v
+Measured baseline
+        |
+        v
+Capability model
+        |
+        v
+Policy
+        |
+        v
+Deployment decision
+```
+
+Do not start from backend reimplementation. The preferred development order is:
+
+```text
+Measured Baseline
+        |
+        v
+Capability Layer
+        |
+        v
+Policy Engine
+        |
+        v
+Runtime Integration
+        |
+        v
+(Optional) Backend Extension
+```
+
+Backend extension is a last resort, not the default path.
+
+The first-class capability layer lives under `capabilities/` and defines four
+separate concepts:
+
+- `HardwareCapability`: physical hardware facts only.
+- `BackendCapability`: runtime/backend support only.
+- `KernelLibraryCapability`: runtime/kernel availability as `builtin`,
+  `opaque`, `custom`, or `unsupported`.
+- `MeasuredSupport`: experimentally verified support facts only.
+
+Policies must query this layer instead of inferring support directly from
+benchmark scripts. Measured baselines are evidence, capabilities describe what
+exists, policies choose among capabilities, and simulators evaluate ideas.
+Do not merge those layers.
+
+## Truth Boundary
 
 Always distinguish:
 
@@ -10,8 +98,25 @@ Always distinguish:
 - Artifact-backed summaries: several backend adapters read existing CSV/JSON files instead of running benchmarks.
 - Simulations: LLM scheduler, KV cache, page prefetch, distributed routing/failover, and serving-framework comparison artifacts.
 
+Every optimization must declare which evidence level it belongs to:
+
+| Level | Evidence type | Definition | Examples |
+|---|---|---|---|
+| Level 1 | Measured | Real benchmark from an executed command on actual hardware or server runtime. | CoreML measured baseline, vLLM/OpenAI-compatible measured baseline, CUDA RMSNorm benchmark. |
+| Level 2 | Artifact | JSON reports, policy reports, capability tables, or exported summaries. They may be derived from measurements, declarations, or simulations and must state their source. | Measured baseline comparison report, capability profile, compiler serving plan, policy report. |
+| Level 3 | Simulator | Deterministic local model of runtime behavior, cost, queueing, memory pressure, speculative execution, or routing. | Prefix cache simulator, speculative simulator, PD simulator, KV cost model. |
+| Level 4 | Future idea | Planned optimization or design direction that has not been implemented or measured. | Roadmap item, design sketch, future capability-driven optimization. |
+
+Measured evidence must never be mixed with simulator evidence. If a policy uses
+both, the output must clearly state which fields came from measured baselines
+and which fields came from modeled or simulated inputs.
+
 High-value runtime evidence now includes:
 
+- Native CoreML MobileNetV2 measured baselines, including compute-unit,
+  compression, input-size, package-size, latency, RSS, and drift comparisons.
+- External OpenAI-compatible/vLLM measured baselines, including throughput,
+  TTFT, TPOT, concurrency, success/error counts, and server/model metadata.
 - CUDA RMSNorm source and correctness tests when CUDA is available.
 - CUDA/Triton/PyTorch RMSNorm benchmark artifacts and GPU PGO-like kernel-selection reports.
 - Optional Nsight Compute capture artifacts for representative RMSNorm cases.
@@ -22,6 +127,117 @@ High-value runtime evidence now includes:
 - Agentic benchmark evaluation under `agentic_eval/`.
 
 Do not invent benchmark numbers. If a metric is not freshly measured, say whether it is historical, artifact-backed, modeled, simulated, or estimated.
+
+## Capability-First Rule
+
+Before implementing any optimization, answer these questions in order:
+
+1. Can the hardware support it?
+2. Can the backend support it?
+3. Does an existing kernel or runtime feature already provide it?
+4. Can it be measured with the current benchmark framework?
+5. Only then decide whether implementation is necessary.
+
+If capability cannot be established, document the limitation as capability or
+future-work evidence instead of implementing around an assumption.
+
+## Backend-First Rule
+
+Before implementing any feature, ask:
+
+1. Does CoreML already support it?
+2. Does vLLM already support it?
+
+If the answer is yes, do not reimplement it. Instead:
+
+```text
+measure
+  -> compare
+  -> build policy
+  -> document evidence
+```
+
+The repository should optimize use of existing backends before considering
+custom runtime behavior.
+
+## CoreML Lane
+
+The CoreML lane owns:
+
+- Measured baselines.
+- Compute-unit comparison.
+- Compression comparison.
+- Input-size comparison.
+- Deployment policy over measured CoreML variants.
+
+The CoreML lane explicitly does not own:
+
+- CoreML runtime implementation.
+- CoreML scheduler implementation.
+- Custom CoreML kernels.
+- Claims about ANE scheduling or actual ANE use unless separately measured or
+  reported by reliable runtime tooling.
+
+Treat CoreML as a measured backend. Do not replace CoreML kernels.
+
+## Linux vLLM Lane
+
+The Linux server lane owns:
+
+- Throughput.
+- TTFT.
+- TPOT.
+- Concurrency behavior.
+- Batching behavior as observed through measured server runs.
+- Routing policy.
+- Future runtime policy on top of measured vLLM/OpenAI-compatible baselines.
+
+The Linux server lane explicitly does not own:
+
+- vLLM implementation.
+- vLLM kernel development.
+- Replacing vLLM internals.
+
+Treat vLLM as an external measured backend. The repo's OpenAI-compatible
+benchmark client must not install, start, stop, or manage vLLM unless a
+separate operational script is explicitly created and documented as such.
+
+## Simulator Lane
+
+The simulator lane exists for:
+
+- Policy prototyping.
+- Future optimization evaluation.
+- Cost modeling.
+- Ablation studies.
+- Invariant validation.
+
+Simulator artifacts must never be presented as production measured evidence.
+Simulator results can motivate a measured experiment, but the measured claim
+must come from a Level 1 benchmark.
+
+## Future Optimization Workflow
+
+Before implementing any optimization, use this decision tree:
+
+```text
+Can the backend already do this?
+        |
+        +-- YES -> Measure it
+                  -> Build capability model
+                  -> Build deployment policy
+                  -> STOP
+        |
+        +-- NO  -> Can a thin abstraction solve it?
+                  |
+                  +-- YES -> Implement abstraction
+                  |         -> STOP
+                  |
+                  +-- NO  -> Implement runtime optimization only when justified
+```
+
+Runtime optimization requires a written reason that measured baselines,
+capability modeling, and policy selection are insufficient.
 
 ## Development Defaults
 

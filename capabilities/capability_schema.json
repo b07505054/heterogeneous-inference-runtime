@@ -1,0 +1,286 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/heterogeneous-inference-runtime/capability-profile.schema.json",
+  "title": "CapabilityProfile",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "profile_id",
+    "hardware",
+    "backends",
+    "kernels",
+    "measured_support"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "profile_id": {
+      "type": "string"
+    },
+    "hardware": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/hardware_capability"
+      }
+    },
+    "backends": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/backend_capability"
+      }
+    },
+    "kernels": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/kernel_library_capability"
+      }
+    },
+    "measured_support": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/measured_support"
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "evidence": {
+      "enum": [
+        "declared",
+        "measured",
+        "artifact",
+        "simulated",
+        "future"
+      ]
+    },
+    "kernel_availability": {
+      "enum": [
+        "builtin",
+        "opaque",
+        "custom",
+        "unsupported"
+      ]
+    },
+    "hardware_capability": {
+      "type": "object",
+      "required": [
+        "hardware_id",
+        "vendor",
+        "family",
+        "model"
+      ],
+      "properties": {
+        "hardware_id": {
+          "type": "string"
+        },
+        "vendor": {
+          "type": "string"
+        },
+        "family": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "memory": {
+          "type": "object"
+        },
+        "attributes": {
+          "type": "object"
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence"
+        },
+        "source": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "backend_capability": {
+      "type": "object",
+      "required": [
+        "backend_id",
+        "backend_name",
+        "backend_api"
+      ],
+      "properties": {
+        "backend_id": {
+          "type": "string"
+        },
+        "backend_name": {
+          "type": "string"
+        },
+        "backend_api": {
+          "type": "string"
+        },
+        "supported_features": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "supported_precisions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "supported_compute_units": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "unsupported_features": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "fallback_backends": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence"
+        },
+        "source": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "kernel_library_capability": {
+      "type": "object",
+      "required": [
+        "kernel_id",
+        "operation",
+        "backend_id",
+        "availability"
+      ],
+      "properties": {
+        "kernel_id": {
+          "type": "string"
+        },
+        "operation": {
+          "type": "string"
+        },
+        "backend_id": {
+          "type": "string"
+        },
+        "availability": {
+          "$ref": "#/$defs/kernel_availability"
+        },
+        "library": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "supported_precisions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "supported_features": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence"
+        },
+        "source": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "measured_support": {
+      "type": "object",
+      "required": [
+        "measurement_id",
+        "benchmark_target",
+        "measured_artifact_path",
+        "measured_features",
+        "status"
+      ],
+      "properties": {
+        "measurement_id": {
+          "type": "string"
+        },
+        "benchmark_target": {
+          "type": "object"
+        },
+        "measured_artifact_path": {
+          "type": "string"
+        },
+        "measured_features": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "type": "string"
+        },
+        "metrics_available": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
