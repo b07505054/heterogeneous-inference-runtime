@@ -5,6 +5,7 @@ the schema boundary that future source-specific adapters will target.
 """
 
 from deployment.model_adapter.base import ModelAdapter
+from deployment.model_adapter.artifact import ModelArtifact
 from deployment.model_adapter.mock_adapter import MockModelAdapter
 from deployment.model_adapter.neutral_runtime_graph import (
     NeutralBackendTarget,
@@ -15,9 +16,15 @@ from deployment.model_adapter.neutral_runtime_graph import (
     NeutralStage,
     NeutralTensor,
 )
+from deployment.model_adapter.registry import (
+    create_adapter,
+    list_adapters,
+    register_adapter,
+)
 
 __all__ = [
     "ModelAdapter",
+    "ModelArtifact",
     "MockModelAdapter",
     "NeutralBackendTarget",
     "NeutralConstraint",
@@ -26,4 +33,7 @@ __all__ = [
     "NeutralRuntimeGraph",
     "NeutralStage",
     "NeutralTensor",
+    "create_adapter",
+    "list_adapters",
+    "register_adapter",
 ]

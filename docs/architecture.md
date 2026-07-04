@@ -13,6 +13,9 @@ Model Artifact
   ONNX / .mlpackage / vLLM endpoint / future engine / mock
         |
         v
+Adapter Registry
+        |
+        v
 Model Adapter
         |
         v
@@ -328,9 +331,25 @@ vLLM, Qwen, Llama, MobileNet, or compiler IR. Format-specific handling belongs
 behind model adapters.
 
 Implementation status: Step 1 adds the neutral runtime graph schema, base model
-adapter interface, and a test-only mock adapter. It does not add CoreML, vLLM,
-ONNX, TensorRT, PyTorch, or compiler adapters, and it does not change runtime or
-benchmark behavior.
+adapter interface, and a test-only mock adapter. Step 2 adds a neutral
+`ModelArtifact` descriptor and adapter registry/factory with only the `"mock"`
+adapter registered. It does not add CoreML, vLLM, ONNX, TensorRT, PyTorch, or
+compiler adapters, and it does not change runtime or benchmark behavior.
+
+The selection boundary is:
+
+```text
+ModelArtifact(kind, uri, metadata)
+        |
+        v
+Adapter Registry
+        |
+        v
+ModelAdapter
+        |
+        v
+NeutralRuntimeGraph
+```
 
 Adapters translate source artifacts into a neutral graph:
 
