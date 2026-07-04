@@ -333,8 +333,11 @@ behind model adapters.
 Implementation status: Step 1 adds the neutral runtime graph schema, base model
 adapter interface, and a test-only mock adapter. Step 2 adds a neutral
 `ModelArtifact` descriptor and adapter registry/factory with only the `"mock"`
-adapter registered. It does not add CoreML, vLLM, ONNX, TensorRT, PyTorch, or
-compiler adapters, and it does not change runtime or benchmark behavior.
+adapter registered. Step 3 adds the CoreML package metadata contract for
+`.mlpackage` plus adjacent `compiler_metadata.json`; it still does not add
+CoreML execution or register a CoreML adapter. It does not add vLLM, ONNX,
+TensorRT, PyTorch, or compiler adapters, and it does not change runtime or
+benchmark behavior.
 
 The selection boundary is:
 
@@ -359,6 +362,22 @@ Adapters translate source artifacts into a neutral graph:
 - `MockModelAdapter`: produces deterministic graphs for tests.
 - `ONNXModelAdapter`: future optional adapter for ONNX inspection, not a
   runtime-core dependency.
+
+The CoreML adapter contract is:
+
+```text
+.mlpackage directory + compiler_metadata.json
+        |
+        v
+CoreMLModelAdapter later
+        |
+        v
+NeutralRuntimeGraph
+```
+
+For now, only the metadata parser and fixture exist. They validate that the
+package path and metadata file exist and that metadata can map to neutral graph
+fields without requiring ExecutionPlan or compiler IR.
 
 A `NeutralRuntimeGraph` should expose neutral concepts:
 
