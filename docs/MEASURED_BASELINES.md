@@ -22,6 +22,18 @@ Measured baseline JSON files must include:
 The measured baseline scripts live under `scripts/` and use thin helpers from
 `benchmark/`.
 
+Generated model packages and measured result artifacts are local evidence and
+are ignored by git:
+
+```text
+models/coreml/
+results/measured_baselines/
+```
+
+This document may summarize representative local measurements, but the source
+artifacts remain local under `results/measured_baselines/` unless they are
+explicitly exported elsewhere.
+
 ## OpenAI-Compatible Server
 
 `scripts/benchmark_openai_compatible_server.py` is a client-only benchmark for
@@ -55,6 +67,38 @@ PYTHONPATH=$PWD .venv/bin/python scripts/benchmark_openai_compatible_server.py \
 Example deterministic traces are available under `traces/examples/`. These
 files contain `request_id`, `prompt`, `max_tokens`, and monotonic `arrival_ms`
 fields; the benchmark client currently uses the prompt and token limit.
+
+### Current vLLM Linux GPU Baseline
+
+The first external serving baseline was collected against an already running
+OpenAI-compatible vLLM server. This is a hardware-constrained GTX 1650 Max-Q
+measurement, not a general statement about vLLM performance.
+
+Environment:
+
+- Server: external OpenAI-compatible vLLM server.
+- Model: `Qwen/Qwen2.5-0.5B-Instruct`.
+- GPU: NVIDIA GeForce GTX 1650 Max-Q, 4 GB VRAM.
+- vLLM: `0.24.0`.
+- PyTorch: `2.11.0+cu130`.
+- Server settings: `max_model_len=512`, `gpu_memory_utilization=0.70`.
+
+Measured summary:
+
+| Concurrency | TTFT p95 ms | TPOT p95 ms | E2E p95 ms | Tokens/sec | Success | Error |
+|---:|---:|---:|---:|---:|---:|---:|
+| 1 | 150.928 | 12.004 | 902.447 | 71.471 | 28 | 0 |
+| 4 | 322.738 | 175.184 | 11350.372 | 5.714 | 28 | 0 |
+
+Interpretation:
+
+- Concurrency 4 regressed heavily on this 4 GB laptop GPU.
+- Do not present this as evidence that vLLM is generally slow or unsuitable.
+- This result is useful as a measured, hardware-constrained baseline for
+  policy experiments that avoid pathological overload on small GPUs.
+- Observed server warnings included FlashAttention-2 unsupported on this GPU,
+  FlashInfer sampler fallback, Triton attention fallback, and Triton JIT during
+  first inference.
 
 ## Native CoreML CV
 
@@ -141,6 +185,44 @@ Repeat the benchmark with the matching `--coreml-model`, `--input-size`, and
 output path for 256 and 384. Compare steady-state p50/p95 and cold-start
 metrics with `scripts/compare_measured_baselines.py`; only metrics present in
 both artifacts are compared.
+
+### Current CoreML Mac Baseline
+
+The current edge baseline is native CoreML MobileNetV2 exported as FP16
+`.mlpackage` and compared against PyTorch CPU/MPS where available.
+
+Coverage:
+
+- Compute units: `CPU_ONLY`, `CPU_AND_GPU`, and `ALL`.
+- Fixed input-size buckets: 224, 256, and 384.
+- Compression sanity check: FP16 uncompressed vs FP16 palettized at input size
+  224 with `compute_unit=all`.
+
+Palettization summary:
+
+| Model | Package MB | Steady Latency | Drift |
+|---|---:|---|---:|
+| FP16 MobileNetV2 224 | 6.713 | baseline | 0.0 |
+| FP16 palettized MobileNetV2 224 | 3.445 | roughly neutral to slightly regressed | 0.0 |
+
+The palettized package was about 48.7% smaller. This is only a sanity baseline:
+it reports package size, latency, RSS, and numerical drift, but does not claim
+accuracy improvement or guaranteed speedup. Runtime placement is still
+determined by CoreML.
+
+## Next Optimization Plan
+
+Server lane:
+
+- Start policy optimization experiments against the measured vLLM baseline.
+- First candidate: a concurrency/admission policy or request scheduling
+  guardrail that avoids the pathological concurrency-4 degradation observed on
+  the 4 GB GTX 1650 Max-Q.
+
+Edge lane:
+
+- Later, use the CoreML measured baselines to drive an edge optimization policy
+  over compute unit, input size, and compression choices.
 
 ## Simulator Boundary
 

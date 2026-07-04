@@ -100,7 +100,12 @@ not production vLLM, SGLang, or TensorRT-LLM forks.
 Measured baseline clients are documented separately in
 `docs/MEASURED_BASELINES.md`. The OpenAI-compatible server benchmark is
 client-only and does not install, launch, stop, or manage vLLM or any other
-serving process.
+serving process. Current measured baseline notes include native CoreML
+MobileNetV2 FP16 comparisons across compute units and input sizes, an FP16
+palettization sanity check, and an external vLLM/OpenAI-compatible Qwen
+0.5B baseline on a 4 GB GTX 1650 Max-Q. Generated model packages and measured
+JSON artifacts remain local under ignored output directories unless explicitly
+exported.
 
 The platform simulates a production-style edge computer vision inference system
 similar to modern autonomous robotics and edge AI deployment infrastructure.

@@ -8,6 +8,7 @@ from benchmark.measured_baseline_adapter import (
     comparison_to_markdown,
     load_measured_baseline,
 )
+from benchmark.exporters import measured_envelope
 from scripts.compare_measured_baselines import build_parser
 
 
@@ -35,6 +36,46 @@ def test_compare_openai_compatible_server_metrics(tmp_path: Path):
     assert summary["compared_metrics"]["ttft_ms.p95"]["improved"] is True
     assert summary["compared_metrics"]["tokens_per_second"]["improved"] is True
     assert summary["warnings"] == []
+
+
+def test_openai_compatible_script_artifact_validates_as_measured_baseline(tmp_path: Path):
+    payload = measured_envelope(
+        artifact_type="measured_baseline",
+        benchmark_target={
+            "kind": "openai_compatible_server",
+            "base_url": "http://127.0.0.1:8000",
+            "endpoint": "/v1/chat/completions",
+            "model": "test-model",
+            "concurrency": 1,
+            "warmup": 0,
+            "stream": True,
+        },
+        metrics={
+            "ttft_ms": {"p50": 10.0, "p95": 20.0, "p99": 30.0},
+            "tpot_ms": {"p50": 2.0, "p95": 3.0, "p99": 4.0},
+            "e2e_latency_ms": {"p50": 100.0, "p95": 120.0, "p99": 150.0},
+            "tokens_per_second": 10.0,
+            "success_count": 1,
+            "error_count": 0,
+        },
+        notes=[
+            "Generic OpenAI-compatible benchmark client only; it does not install, start, stop, or manage the server.",
+        ],
+        command=["scripts/benchmark_openai_compatible_server.py"],
+        extra={
+            "server_metadata": {"object": "list", "data": []},
+            "request_results": [],
+            "claimed_server": "vllm",
+        },
+    )
+    path = _write_json(tmp_path / "openai_server.json", payload)
+
+    loaded = load_measured_baseline(path)
+
+    assert loaded["artifact_type"] == "measured_baseline"
+    assert loaded["benchmark_target"]["kind"] == "openai_compatible_server"
+    assert loaded["metrics"]["ttft_ms.p95"] == 20.0
+    assert loaded["metrics"]["tokens_per_second"] == 10.0
 
 
 def test_compare_coreml_metrics_package_size_and_drift(tmp_path: Path):

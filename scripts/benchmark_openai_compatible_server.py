@@ -63,7 +63,7 @@ def main() -> None:
         extra["claimed_server"] = args.claimed_server
 
     payload = measured_envelope(
-        artifact_type="openai_compatible_server_baseline",
+        artifact_type="measured_baseline",
         benchmark_target={
             "kind": "openai_compatible_server",
             "base_url": args.base_url,
