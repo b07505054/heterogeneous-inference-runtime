@@ -5,23 +5,18 @@ import argparse
 import sys
 
 
-DEFAULT_OUTPUTS = {
-    ("fp16", "none"): "models/coreml/mobilenet_v2_fp16.mlpackage",
-    ("fp16", "palettize"): "models/coreml/mobilenet_v2_fp16_palettized.mlpackage",
-}
-
-
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Export torchvision MobileNetV2 to native CoreML .mlpackage.")
     parser.add_argument("--precision", choices=["fp16"], default="fp16")
     parser.add_argument("--compression", choices=["none", "palettize"], default="none")
+    parser.add_argument("--input-size", type=_positive_int, default=224)
     parser.add_argument("--output", default=None)
     return parser
 
 
 def main() -> None:
     args = build_parser().parse_args()
-    output = args.output or DEFAULT_OUTPUTS[(args.precision, args.compression)]
+    output = args.output or default_output(args.precision, args.compression, args.input_size)
 
     try:
         import coremltools as ct
@@ -33,7 +28,7 @@ def main() -> None:
 
     torch.manual_seed(0)
     model = models.mobilenet_v2(weights=None).eval()
-    sample = torch.randn(1, 3, 224, 224)
+    sample = torch.randn(1, 3, args.input_size, args.input_size)
     traced = torch.jit.trace(model, sample)
     compute_precision = _coreml_precision(ct, args.precision)
     mlmodel = ct.convert(
@@ -46,6 +41,18 @@ def main() -> None:
         mlmodel = palettize_model(ct, mlmodel)
     mlmodel.save(output)
     print(output)
+
+
+def _positive_int(value: str) -> int:
+    parsed = int(value)
+    if parsed <= 0:
+        raise argparse.ArgumentTypeError("must be a positive integer")
+    return parsed
+
+
+def default_output(precision: str, compression: str, input_size: int) -> str:
+    suffix = "" if compression == "none" else "_palettized"
+    return f"models/coreml/mobilenet_v2_{precision}_{input_size}{suffix}.mlpackage"
 
 
 def _coreml_precision(ct, precision: str):

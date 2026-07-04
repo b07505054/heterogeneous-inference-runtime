@@ -66,7 +66,8 @@ The default export is FP16:
 PYTHONPATH=$PWD .venv/bin/python scripts/export_coreml_mobilenetv2.py \
   --precision fp16 \
   --compression none \
-  --output models/coreml/mobilenet_v2_fp16.mlpackage
+  --input-size 224 \
+  --output models/coreml/mobilenet_v2_fp16_224.mlpackage
 ```
 
 Compressed exports are optional. Palettization uses `coremltools` optimization
@@ -76,7 +77,8 @@ APIs when they are available:
 PYTHONPATH=$PWD .venv/bin/python scripts/export_coreml_mobilenetv2.py \
   --precision fp16 \
   --compression palettize \
-  --output models/coreml/mobilenet_v2_fp16_palettized.mlpackage
+  --input-size 224 \
+  --output models/coreml/mobilenet_v2_fp16_224_palettized.mlpackage
 ```
 
 `scripts/benchmark_coreml_cv_baseline.py` compares the native CoreML package
@@ -99,6 +101,46 @@ The CoreML benchmark accepts `--compute-unit`:
 model, OS, and hardware. The measured artifact records the requested compute
 unit, but actual hardware placement is determined by CoreML. Do not claim ANE
 execution unless it is separately measured or reported by runtime tooling.
+
+To compare fixed image input sizes, export one package per shape and pass the
+same `--input-size` to the benchmark:
+
+```bash
+PYTHONPATH=$PWD .venv/bin/python scripts/export_coreml_mobilenetv2.py \
+  --precision fp16 \
+  --compression none \
+  --input-size 224 \
+  --output models/coreml/mobilenet_v2_fp16_224.mlpackage
+
+PYTHONPATH=$PWD .venv/bin/python scripts/export_coreml_mobilenetv2.py \
+  --precision fp16 \
+  --compression none \
+  --input-size 256 \
+  --output models/coreml/mobilenet_v2_fp16_256.mlpackage
+
+PYTHONPATH=$PWD .venv/bin/python scripts/export_coreml_mobilenetv2.py \
+  --precision fp16 \
+  --compression none \
+  --input-size 384 \
+  --output models/coreml/mobilenet_v2_fp16_384.mlpackage
+```
+
+```bash
+PYTHONPATH=$PWD .venv/bin/python scripts/benchmark_coreml_cv_baseline.py \
+  --coreml-model models/coreml/mobilenet_v2_fp16_224.mlpackage \
+  --input-size 224 \
+  --compute-unit all \
+  --iterations 100 \
+  --warmup 20 \
+  --model-precision fp16 \
+  --model-compression none \
+  --output results/measured_baselines/coreml_cv_fp16_224_all.json
+```
+
+Repeat the benchmark with the matching `--coreml-model`, `--input-size`, and
+output path for 256 and 384. Compare steady-state p50/p95 and cold-start
+metrics with `scripts/compare_measured_baselines.py`; only metrics present in
+both artifacts are compared.
 
 ## Simulator Boundary
 

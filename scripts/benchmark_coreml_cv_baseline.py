@@ -26,6 +26,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--compute-unit", choices=["cpu", "cpu_gpu", "all"], default="all")
     parser.add_argument("--model-precision", choices=["fp16"], default="fp16")
     parser.add_argument("--model-compression", choices=["none", "palettize", "unknown"], default="unknown")
+    parser.add_argument("--input-size", type=_positive_int, default=224)
     parser.add_argument("--output", default="results/measured_baselines/coreml_mobilenetv2_baseline.json")
     return parser
 
@@ -33,14 +34,14 @@ def build_parser() -> argparse.ArgumentParser:
 def main() -> None:
     args = build_parser().parse_args()
 
-    sample_np = np.random.default_rng(0).standard_normal((1, 3, 224, 224)).astype(np.float32)
+    sample_np = np.random.default_rng(0).standard_normal((1, 3, args.input_size, args.input_size)).astype(np.float32)
     metrics = {
-        "model": {
-            "name": "MobileNetV2",
-            "precision": args.model_precision,
-            "compression": args.model_compression,
-            "package_size_mb": package_size_mb(args.mlpackage),
-        },
+        "model": model_metadata(
+            args.mlpackage,
+            precision=args.model_precision,
+            compression=args.model_compression,
+            input_size=args.input_size,
+        ),
         "coreml": {},
         "pytorch_cpu": {},
         "pytorch_mps": {},
@@ -95,6 +96,7 @@ def main() -> None:
             "mlpackage": args.mlpackage,
             "model_precision": args.model_precision,
             "model_compression": args.model_compression,
+            "input_size": args.input_size,
             "comparators": ["pytorch_cpu", "pytorch_mps"],
             "runs": args.runs,
             "warmup": args.warmup,
@@ -107,6 +109,23 @@ def main() -> None:
     )
     write_json(args.output, payload)
     print(args.output)
+
+
+def _positive_int(value: str) -> int:
+    parsed = int(value)
+    if parsed <= 0:
+        raise argparse.ArgumentTypeError("must be a positive integer")
+    return parsed
+
+
+def model_metadata(mlpackage: str | Path, *, precision: str, compression: str, input_size: int) -> dict:
+    return {
+        "name": "MobileNetV2",
+        "precision": precision,
+        "compression": compression,
+        "input_size": input_size,
+        "package_size_mb": package_size_mb(mlpackage),
+    }
 
 
 def _strip_reference(result: dict) -> dict:
