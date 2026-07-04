@@ -85,7 +85,7 @@ def palettize_model(ct, mlmodel):
             file=sys.stderr,
         )
         raise SystemExit(2)
-    config = optimization_config(global_config=op_palettizer_config(mode="kmeans"))
+    config = optimization_config(global_config=op_palettizer_config(mode="uniform", nbits=8))
     return palettize_weights(mlmodel, config)
 
 
