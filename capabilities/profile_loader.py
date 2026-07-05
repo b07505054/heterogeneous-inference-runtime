@@ -15,7 +15,7 @@ from capabilities.schema import (
 )
 
 
-KNOWN_PROFILE_TYPES = {"hardware", "backend", "kernels"}
+KNOWN_PROFILE_TYPES = {"hardware", "platform", "backend", "kernels", "model", "workload"}
 
 
 def load_profile(path: str | Path) -> dict[str, Any]:
@@ -37,7 +37,9 @@ def load_profile(path: str | Path) -> dict[str, Any]:
         return _normalize_hardware(payload, profile_path)
     if profile_type == "backend":
         return _normalize_backend(payload, profile_path)
-    return _normalize_kernels(payload, profile_path)
+    if profile_type == "kernels":
+        return _normalize_kernels(payload, profile_path)
+    return _normalize_generic_profile(payload, profile_path, profile_type)
 
 
 def load_profiles(paths: Iterable[str | Path]) -> list[dict[str, Any]]:
@@ -97,6 +99,7 @@ def _normalize_backend(payload: dict[str, Any], path: Path) -> dict[str, Any]:
         "supports": supports,
         "does_not_claim": _optional_string_list(payload, "does_not_claim"),
         "future_capabilities": _optional_string_list(payload, "future_capabilities"),
+        "supported_kernel_libraries": _optional_string_list(payload, "supported_kernel_libraries"),
         "capability": _jsonable_dataclass(capability),
     }
 
@@ -141,6 +144,16 @@ def _normalize_kernels(payload: dict[str, Any], path: Path) -> dict[str, Any]:
         "notes": _optional_string_list(payload, "notes"),
     }
 
+
+
+def _normalize_generic_profile(payload: dict[str, Any], path: Path, profile_type: str) -> dict[str, Any]:
+    _require_keys(payload, "schema_version")
+    return {
+        "schema_version": _require_string(payload, "schema_version"),
+        "capability_type": profile_type,
+        "source_path": str(path),
+        "profile": payload,
+    }
 
 def _require_keys(payload: dict[str, Any], *keys: str) -> None:
     missing = [key for key in keys if key not in payload]
