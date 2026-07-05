@@ -46,8 +46,10 @@ class ExecutionStageKind(str, Enum):
 class ExecutionPathKind(str, Enum):
     BASELINE_VLLM = "baseline_vllm"
     COMPILER_GUIDED_VLLM = "compiler_guided_vllm"
+    # Future/non-goal for Phase 1. Active Qwen serving materialization is vLLM only.
     PYTORCH_REFERENCE = "pytorch_reference"
     CUSTOM_CUDA_MICROBENCHMARK = "custom_cuda_microbenchmark"
+    # Future/non-goal for Phase 1. Quantized serving requires explicit support.
     QUANTIZED_MODEL = "quantized_model"
     UNSUPPORTED = "unsupported"
 
@@ -56,6 +58,7 @@ class ExecutionMethod(str, Enum):
     SERVING = "serving"
     OPENAI_COMPATIBLE_SERVER = "openai_compatible_server"
     COMPILER_MATERIALIZED_CONFIG = "compiler_materialized_config"
+    # Future/non-goal for Phase 1. Kept as schema vocabulary, not active routing.
     EAGER_REFERENCE = "eager_reference"
     RMSNORM_KERNEL = "rmsnorm_kernel"
     RMSNORM_MICROBENCHMARK = "rmsnorm_microbenchmark"

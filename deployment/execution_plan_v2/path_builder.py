@@ -73,7 +73,7 @@ def build_execution_paths(plan: ExecutionPlanV2, stages: list[ExecutionStage]) -
             continue
         function_plan = function_by_name.get(stage.function_name or "")
         backend = function_plan.backend.selected_backend if function_plan else ""
-        if backend in {"vllm", "cuda_triton"}:
+        if backend == "vllm":
             paths.append(_compiler_guided_vllm_path(plan, stage, backend))
         else:
             paths.append(_unsupported_path(plan, stage, backend))

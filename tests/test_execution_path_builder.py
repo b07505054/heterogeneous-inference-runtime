@@ -32,14 +32,16 @@ def test_compiler_plan_builds_vllm_and_rmsnorm_paths():
     assert rmsnorm.selected_kernel == "fused_rmsnorm_forward"
 
 
-def test_unsupported_backend_builds_unsupported_path():
+def test_cuda_triton_function_backend_builds_unsupported_path():
     plan_payload = _plan()
-    plan_payload["function_plans"][0]["backend"]["selected_backend"] = "openvino"
+    plan_payload["function_plans"][0]["backend"]["selected_backend"] = "cuda_triton"
     plan = parse_execution_plan_v2(plan_payload)
 
     paths = build_execution_paths(plan, build_execution_stages(plan))
 
     assert paths[0].path_kind == ExecutionPathKind.UNSUPPORTED
+    assert paths[0].selected_backend == "cuda_triton"
+    assert paths[0].metadata["reason"] == "unsupported_backend_for_phase1"
 
 
 def _plan() -> dict:
@@ -80,7 +82,7 @@ def _plan() -> dict:
                     "decision_type": "BackendDecision",
                     "scope": "Function",
                     "selected_backend": "vllm",
-                    "fallback_backends": ["pytorch"],
+                    "fallback_backends": ["custom_runtime"],
                 },
                 "per_op_decisions": [
                     {

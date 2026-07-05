@@ -87,7 +87,7 @@ def _plan() -> dict:
                     "decision_type": "BackendDecision",
                     "scope": "Function",
                     "selected_backend": "vllm",
-                    "fallback_backends": ["pytorch"],
+                    "fallback_backends": ["custom_runtime"],
                 },
                 "per_op_decisions": [],
             }
