@@ -10,9 +10,9 @@ from typing import Any
 class ModelArtifact:
     """Descriptor used before selecting a concrete model adapter.
 
-    ``kind`` is an adapter selection key, not a source-format dependency. Future
-    values may include "coreml", "vllm_endpoint", or "onnx" without requiring
-    this descriptor to import those libraries.
+    ``kind`` is an adapter selection key, not a source-format dependency.
+    Future values can be added without requiring this descriptor to import
+    backend libraries.
     """
 
     kind: str

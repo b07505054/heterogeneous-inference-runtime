@@ -5,16 +5,15 @@
 Phase 1 is complete:
 
 - Linux measured baseline for an external OpenAI-compatible vLLM server.
-- Apple CoreML measured baseline for native MobileNetV2 `.mlpackage` variants.
 - Simulator and policy-evaluation components for prefix cache, speculative
   decoding, prefill/decode planning, and paged-KV behavior.
 
 Phase 2:
 
-- CoreML edge policy that selects among measured compute-unit, input-size, and
-  compression variants.
 - Server runtime policy that uses measured vLLM/OpenAI-compatible artifacts to
   guide concurrency, admission, and routing decisions.
+- ExecutionPlan schema for vLLM runtime configuration.
+- Feedback database for measured vLLM runtime metrics.
 
 Phase 3:
 
@@ -23,48 +22,43 @@ Phase 3:
   capability, kernel-library capability, and measured support.
 - Model Adapter and Neutral Runtime Graph architecture, so runtime orchestration
   consumes neutral model-family/stage/tensor/memory/KV/backend-target concepts
-  instead of ONNX, CoreML, TensorRT, PyTorch, vLLM, or model-name internals.
+  instead of ONNX, TensorRT, PyTorch, vLLM, or model-name internals.
 
 Phase 4:
 
 - Future measured optimizations, added only when the optimization can be
   benchmarked and exported through the measured baseline schema.
-- Richer compiler-runtime contracts such as ExecutionPlan-driven execution,
-  after the first CoreML package-centered path is measured and stable.
+- Richer compiler-runtime contracts that keep ExecutionPlan as the main
+  vLLM-facing artifact.
 
-## CoreML Compiler Runtime Integration
+## vLLM Execution Planning
 
-The first Apple/CoreML compiler-runtime milestone should use `.mlpackage` as
-the executable handoff:
+The next compiler-runtime milestone should use ExecutionPlan as the active
+handoff:
 
 ```text
-ONNX / model graph
-  -> compiler static optimization from shared capability profiles
-  -> compiler-produced or compiler-directed .mlpackage
-  -> compiler_metadata.json beside the package
-  -> runtime CoreMLModelAdapter
-  -> NeutralRuntimeGraph
-  -> CoreML benchmark and runtime policy
+Client Requests
+  -> compiler / execution planner
+  -> hardware profile + backend profile + workload facts
+  -> ExecutionPlan
+  -> vLLM runtime config
+  -> measured runtime metrics
+  -> feedback database
 ```
-
-ExecutionPlan artifacts remain useful future contracts, but they are not the
-first-stage CoreML runtime centerpiece.
 
 Required future work:
 
-- Define the CoreML compiler candidate bundle:
-  `model.mlpackage` plus `compiler_metadata.json`.
-- Add a runtime `CoreMLModelAdapter` that validates compiler metadata and
-  produces a neutral runtime graph without depending on compiler IR.
-- Keep direct CoreML baselines, compiler-produced package baselines, and
-  runtime-policy-selected package results as separate measured paths.
-- Ensure compiler and runtime read the same hardware/backend/kernel capability
-  profile source, or update their profile copies together with matching profile
-  IDs and digests.
+- Define the vLLM ExecutionPlan schema for request grouping, batch policy,
+  prefix policy, memory policy, quantization policy, speculative policy, and
+  runtime config.
+- Define the feedback database schema for measured TTFT, TPOT, E2E latency,
+  throughput, success/error counts, and memory pressure.
+- Ensure compiler and runtime read the same NVIDIA/CUDA hardware profile and
+  vLLM backend capability profile, or update their profile copies together with
+  matching profile IDs and digests.
 
-Do not claim compiler CoreML speedup until a compiler-produced `.mlpackage` is
-benchmarked against a direct CoreML export. Do not claim runtime policy speedup
-until the selected runtime configuration is benchmarked.
+Do not claim vLLM speedup until a planned runtime config is benchmarked against
+a comparable measured vLLM baseline.
 
 ## Neutral Runtime Graph
 
@@ -83,9 +77,8 @@ The graph should describe:
 
 Adapters should translate source artifacts into this graph:
 
-- `CoreMLModelAdapter`: `.mlpackage` plus optional `compiler_metadata.json`.
-- `VLLMEndpointAdapter`: OpenAI-compatible endpoint configuration.
 - `MockModelAdapter`: deterministic tests.
+- `VLLMEndpointAdapter`: future OpenAI-compatible endpoint configuration.
 - `ONNXModelAdapter`: future optional adapter.
 
 Runtime core should not know exact model names such as Qwen, Llama, or

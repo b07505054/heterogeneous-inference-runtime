@@ -27,13 +27,12 @@ def test_create_mock_adapter():
 
 
 def test_unknown_adapter_kind_raises_clear_error():
-    with pytest.raises(ValueError, match="unknown model adapter kind 'coreml'"):
-        create_adapter("coreml")
+    with pytest.raises(ValueError, match="unknown model adapter kind 'onnx'"):
+        create_adapter("onnx")
 
 
 def test_registry_does_not_import_source_format_libraries():
     forbidden = {
-        "coremltools",
         "onnx",
         "onnxruntime",
         "tensorrt",

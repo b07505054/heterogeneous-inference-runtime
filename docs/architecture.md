@@ -3,33 +3,43 @@
 ## Purpose
 
 This repository is a heterogeneous inference runtime and benchmarking evidence
-project. It now has two measured backend lanes, Linux vLLM and Apple CoreML,
-plus simulator and policy components that prototype future optimization logic.
+project. The active architecture direction is vLLM execution planning for
+NVIDIA/CUDA GPUs, with simulator and policy components that prototype future
+optimization logic.
 
-The runtime should be read as a neutral-graph execution system:
+The current compiler/runtime architecture should be read as an execution
+planning system:
 
 ```text
-Model Artifact
-  ONNX / .mlpackage / vLLM endpoint / future engine / mock
+Client Requests
         |
         v
-Adapter Registry
+Compiler / Execution Planner
+        ^
+        |
+Hardware Profile + Backend Profile + Workload
         |
         v
-Model Adapter
+Execution Plan
+  - Request Grouping
+  - Batch Policy
+  - Prefix Policy
+  - Memory Policy
+  - Quantization Policy
+  - Speculative Policy
+  - Runtime Config
         |
         v
-Neutral Runtime Graph
+vLLM Backend
         |
         v
-Scheduler / Memory Manager / KV Cache / Prefix Cache /
-Speculative Coordinator / Policy
+NVIDIA GPU
         |
         v
-Backend Dispatcher
+Runtime Metrics
         |
         v
-Backend-specific Executor
+Feedback Database
 ```
 
 It is also a measured-baseline-driven policy system:
@@ -46,26 +56,24 @@ Optimization Policy Engine
         v
 Deployment Planner
         |
-        +-- Edge Deployment (CoreML)
-        +-- Server Runtime (vLLM)
+        +-- vLLM Runtime Config
         +-- Simulator / Policy Evaluation
+        +-- Archived / Deprioritized Backend Lanes
 ```
 
 Measured baseline -> capability layer -> policy -> deployment decision is the
-central design principle. CoreML and vLLM are treated as measured backends. The
-repository optimizes deployment choices on top of them instead of
-reimplementing CoreML kernels, vLLM scheduling internals, or production serving
-frameworks.
+central design principle. vLLM is the first active runtime target. The
+repository optimizes execution plans and runtime configuration on top of vLLM
+instead of reimplementing vLLM scheduling internals, kernels, or production
+serving frameworks.
 
 Some paths run real inference locally. Other paths read existing benchmark
 artifacts or simulate serving behavior. Those boundaries are explicit below.
 
-For the current Apple/CoreML compiler-runtime integration, `.mlpackage` is the
-first-stage executable handoff. ExecutionPlan remains useful as a future richer
-contract, but it is not the CoreML v1 runtime centerpiece. A compiler-produced
-CoreML candidate is a `.mlpackage` with adjacent `compiler_metadata.json`.
-Runtime components consume that package through a model adapter, convert it to
-a neutral graph, benchmark it, and then apply policy over measured evidence.
+ExecutionPlan is now the main compiler/runtime contract. In this repo,
+"compiler" means execution planner: it consumes client requests, hardware and
+backend profiles, workload facts, and measured feedback to produce vLLM runtime
+configuration. It does not mean a model exporter.
 
 ## Layered Architecture
 
@@ -73,8 +81,8 @@ a neutral graph, benchmark it, and then apply policy over measured evidence.
                      +-----------------------------+
                      |     Measured Baselines      |
                      +-----------------------------+
-                     | Linux vLLM                  |
-                     | Apple CoreML                |
+                     | vLLM / OpenAI-compatible    |
+                     | CUDA microbenchmarks        |
                      +-------------+---------------+
                                    |
                                    v
@@ -91,10 +99,10 @@ a neutral graph, benchmark it, and then apply policy over measured evidence.
                      +-----------------------------+
                      |  Optimization Policy Engine |
                      +-----------------------------+
-                     | CoreML Edge Policy          |
                      | Server Runtime Policy       |
                      | Future Quant Policy         |
                      | Future KV Policy            |
+                     | Future Speculative Policy   |
                      +-------------+---------------+
                                    |
                                    v
@@ -129,92 +137,73 @@ Implemented under `benchmark/` and `scripts/`, with details in
 - Linux/vLLM lane: `scripts/benchmark_openai_compatible_server.py` benchmarks an
   already running OpenAI-compatible server and records TTFT, TPOT, end-to-end
   latency, tokens/sec, success/error counts, and server/model metadata.
-- Apple/CoreML lane: `scripts/export_coreml_mobilenetv2.py` and
-  `scripts/benchmark_coreml_cv_baseline.py` measure native CoreML MobileNetV2
-  `.mlpackage` variants against PyTorch CPU and optional PyTorch MPS.
 - Measured artifacts use `artifact_type: "measured_baseline"` and
   `evidence_type: "measured"`.
 
 Generated model packages and measured JSON artifacts remain local under ignored
 output directories unless explicitly exported.
 
-### CoreML Compiler/Runtime Contract
+### vLLM ExecutionPlan Contract
 
-The Apple/CoreML path is centered on package execution:
-
-```text
-ONNX / model graph
-        |
-        v
-Compiler static optimization using shared capability profiles
-        |
-        v
-CoreML-compatible rewrite / export directive
-        |
-        v
-.mlpackage candidate + compiler_metadata.json
-        |
-        v
-Runtime CoreMLModelAdapter
-        |
-        v
-Neutral Runtime Graph
-        |
-        v
-CoreML benchmark / CoreMLEdgePolicy / Deployment Planner
-```
-
-The compiler owns theoretical/static optimization:
-
-- ONNX or model graph analysis.
-- Backend support planning.
-- Precision, layout, and compression planning.
-- CoreML-compatible rewrite or export direction.
-- Materializing or directing materialization of `.mlpackage` output.
-- Emitting `compiler_metadata.json` beside the package.
-
-The compiler must not claim measured performance. Compiler metadata is
-artifact-level provenance, not measured evidence.
-
-The runtime owns best dynamic execution:
-
-- Consuming `.mlpackage`, endpoint, future engine, or mock artifacts through
-  model adapters.
-- Converting artifacts into a `NeutralRuntimeGraph`.
-- Handling memory/current conditions and runtime availability.
-- Validating capabilities and looking up measured evidence.
-- Applying `CoreMLEdgePolicy`, server policies, and the Deployment Planner.
-- Choosing a deployment decision without depending on compiler IR.
-
-Current CoreML comparison paths:
+The active compiler/runtime path is centered on vLLM runtime configuration:
 
 ```text
-Path A: Direct CoreML baseline
-ONNX / PyTorch
-  -> direct coremltools export
-  -> .mlpackage
-  -> CoreML measured baseline
-
-Path B: Compiler CoreML baseline
-ONNX / model graph
-  -> compiler-produced or compiler-directed .mlpackage
-  -> compiler_metadata.json
-  -> CoreML measured baseline
-
-Path C: Runtime optimized CoreML
-compiler .mlpackage candidates
-  -> runtime policy / planner
-  -> selected compute_unit / compression / input-size bucket
-  -> measured selected result
+Client Requests
+        |
+        v
+Compiler / Execution Planner
+        ^
+        |
+Hardware Profile + Backend Profile + Workload
+        |
+        v
+Execution Plan
+  - Request Grouping
+  - Batch Policy
+  - Prefix Policy
+  - Memory Policy
+  - Quantization Policy
+  - Speculative Policy
+  - Runtime Config
+        |
+        v
+vLLM Backend
+        |
+        v
+NVIDIA GPU
+        |
+        v
+Runtime Metrics
+        |
+        v
+Feedback Database
 ```
 
-Path A vs Path B measures whether the compiler-produced package changes
-latency, package size, memory, or drift compared with direct CoreML export.
-Path B vs Path C measures whether runtime dynamic policy selects a better
-deployment configuration than the compiler baseline.
+The compiler owns execution planning:
 
-No speedup exists until the relevant paths are benchmarked. ExecutionPlan alone
-is not measured evidence.
+- Request grouping.
+- Batch policy.
+- Prefix policy.
+- Memory policy.
+- Quantization policy.
+- Speculative policy.
+- Runtime config generation for vLLM.
+- Truth boundaries for any static or modeled decision.
+
+The compiler does not export model packages or claim measured performance. An
+ExecutionPlan is a planning artifact until a vLLM benchmark produces measured
+runtime metrics.
+
+The runtime owns measured execution and feedback:
+
+- Applying or evaluating runtime config against vLLM.
+- Capturing TTFT, TPOT, E2E latency, throughput, success/error counts, and
+  memory pressure.
+- Recording runtime metrics in the feedback database.
+- Feeding measured evidence back into future planning and policy decisions.
+
+No speedup exists until a measured vLLM benchmark compares a baseline config
+against a planned runtime config under comparable workload and hardware.
 
 ### Capability Layer
 
@@ -236,18 +225,19 @@ The capability layer has four independent concepts:
 - `HardwareCapability`: physical hardware facts only. Examples include Apple
   M5, Apple GPU, Apple ANE, unified memory, NVIDIA GPU family, CUDA compute
   capability, VRAM, and CPU details. No benchmark results belong here.
-- `BackendCapability`: runtime/backend support only. Examples include CoreML,
-  Metal, MPS, CUDA, vLLM, ONNX Runtime, and TensorRT. Supported features may be
-  declared here, but measured performance must not be encoded here.
+- `BackendCapability`: runtime/backend support only. The active backend profile
+  is vLLM, with CUDA/GPU capability as the hardware/runtime substrate.
+  Supported features may be declared here, but measured performance must not be
+  encoded here.
 - `KernelLibraryCapability`: runtime or kernel implementation availability.
   Examples include MatMul, Conv, Attention, Softmax, RMSNorm, FlashAttention,
   PagedAttention, PrefixCache, and Speculative. Availability is categorized as
   `builtin`, `opaque`, `custom`, or `unsupported`. This is runtime/kernel
   availability, not compiler lowering.
 - `MeasuredSupport`: experimentally verified support facts only. Examples
-  include FP16 benchmark completed, palettization benchmark completed, input
-  size 224 measured, CoreML ComputeUnit ALL measured, vLLM TTFT measured, and
-  concurrency benchmark completed. Predictions do not belong here.
+  include vLLM TTFT measured, TPOT measured, concurrency benchmark completed,
+  tokens/sec measured, success/error counts recorded, and CUDA microbenchmark
+  evidence. Predictions do not belong here.
 
 The compiler-side project already contains richer target-profile and
 backend/kernel capability schemas. This runtime repo should reference or adapt
@@ -255,11 +245,10 @@ those schemas through JSON/artifact boundaries rather than copying compiler
 C++/MLIR implementations into the runtime.
 
 Compiler and runtime must use the same hardware, backend, and kernel capability
-facts. For the first Apple/CoreML stage, profiles are centered on the current
-Mac hardware and available CoreML/MPS/Metal backend/kernel support. If those
-facts change, both sides must be updated together or read from the same shared
-profile source. The compiler and runtime must not drift into separate
-capability truths.
+facts. For the active vLLM stage, profiles are centered on NVIDIA/CUDA GPU
+hardware and vLLM backend/runtime capability. If those facts change, both sides
+must be updated together or read from the same shared profile source. The
+compiler and runtime must not drift into separate capability truths.
 
 Capability schema is structure. Capability profiles are concrete facts.
 Measured baselines are evidence. Policies consume both profiles and measured
@@ -271,8 +260,6 @@ The optimization policy engine is the next layer above measured evidence. It
 selects deployment configurations using measured artifacts plus capability
 metadata. It should make decisions such as:
 
-- CoreML edge policy: choose compute unit, input-size bucket, and compression
-  variant subject to latency, package-size, RSS, and numerical-drift constraints.
 - Server runtime policy: choose concurrency/admission/routing behavior for a
   measured OpenAI-compatible/vLLM server.
 - Future capability-driven policies: select quantization or KV-related
@@ -297,17 +284,17 @@ candidates, then emits a `deployment_plan` artifact.
 
 The planner has three reusable pieces:
 
-- Constraint solver: filters normalized candidates by latency, package size,
-  memory, numerical drift, and throughput constraints without hardcoding CoreML
-  or vLLM.
+- Constraint solver: filters normalized candidates by latency, memory,
+  throughput, success/error, and workload constraints without hardcoding backend
+  internals.
 - Objective engine: ranks candidates by latency, throughput, memory, package
   size, or a documented balanced score.
 - Recommendation engine: explains why the selected candidate won or why no
   candidate was eligible.
 
-The planner does not optimize models, run benchmarks, modify CoreML, modify
-vLLM, implement batching, or implement scheduler internals. It is a deployment
-recommendation layer over measured evidence.
+The planner does not optimize models, run benchmarks, modify vLLM, implement
+batching, or implement scheduler internals. It is a deployment recommendation
+layer over measured evidence.
 
 ### Runtime / Simulator Layer
 
@@ -326,18 +313,14 @@ the measured baseline layer.
 
 ### Model Adapter And Neutral Runtime Graph Layer
 
-The core runtime should not directly depend on ONNX, CoreML, TensorRT, PyTorch,
-vLLM, Qwen, Llama, MobileNet, or compiler IR. Format-specific handling belongs
-behind model adapters.
+The core runtime should not directly depend on ONNX, TensorRT, PyTorch, vLLM,
+Qwen, Llama, MobileNet, or compiler implementation details. Format-specific
+handling belongs behind model adapters or execution-plan readers.
 
-Implementation status: Step 1 adds the neutral runtime graph schema, base model
-adapter interface, and a test-only mock adapter. Step 2 adds a neutral
-`ModelArtifact` descriptor and adapter registry/factory with only the `"mock"`
-adapter registered. Step 3 adds the CoreML package metadata contract for
-`.mlpackage` plus adjacent `compiler_metadata.json`; it still does not add
-CoreML execution or register a CoreML adapter. It does not add vLLM, ONNX,
-TensorRT, PyTorch, or compiler adapters, and it does not change runtime or
-benchmark behavior.
+Implementation status: the neutral runtime graph schema, base model adapter
+interface, `ModelArtifact` descriptor, adapter registry/factory, and test-only
+mock adapter exist. The registry currently contains only `"mock"`. It does not
+add vLLM, ONNX, TensorRT, PyTorch, or compiler adapters.
 
 The selection boundary is:
 
@@ -356,28 +339,10 @@ NeutralRuntimeGraph
 
 Adapters translate source artifacts into a neutral graph:
 
-- `CoreMLModelAdapter`: consumes `.mlpackage` plus optional
-  `compiler_metadata.json`.
-- `VLLMEndpointAdapter`: consumes OpenAI-compatible endpoint configuration.
 - `MockModelAdapter`: produces deterministic graphs for tests.
+- `VLLMEndpointAdapter`: future OpenAI-compatible endpoint configuration.
 - `ONNXModelAdapter`: future optional adapter for ONNX inspection, not a
   runtime-core dependency.
-
-The CoreML adapter contract is:
-
-```text
-.mlpackage directory + compiler_metadata.json
-        |
-        v
-CoreMLModelAdapter later
-        |
-        v
-NeutralRuntimeGraph
-```
-
-For now, only the metadata parser and fixture exist. They validate that the
-package path and metadata file exist and that metadata can map to neutral graph
-fields without requiring ExecutionPlan or compiler IR.
 
 A `NeutralRuntimeGraph` should expose neutral concepts:
 
@@ -391,8 +356,8 @@ A `NeutralRuntimeGraph` should expose neutral concepts:
 
 Schedulers, memory managers, KV cache, prefix cache, speculative coordination,
 policy, and backend dispatch should consume those neutral concepts. They should
-not inspect CoreML package internals, ONNX graph internals, vLLM internals,
-compiler pass names, or exact model names.
+not inspect ONNX graph internals, vLLM internals, compiler pass names, or exact
+model names.
 
 ## Top-Level Modules
 
