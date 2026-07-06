@@ -112,6 +112,54 @@ class PlanProvenance:
         )
 
 
+# ---------------------------------------------------------------------------
+# DecisionCost — static compiler cost evidence from ServingCostModelPass.
+#
+# All components are relative static penalty scores, NOT measured latency ms.
+# truth_boundary must be read and stored verbatim; it distinguishes static
+# estimates from measured profiling data.
+#
+# Runtime may use total_cost as a scheduling weight but must label it as a
+# static estimate, never as a measured timing value.
+# ---------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class DecisionCost:
+    compute_cost:          int = 0
+    memory_cost:           int = 0
+    dequant_cost:          int = 0
+    requant_cost:          int = 0
+    layout_transform_cost: int = 0
+    cast_cost:             int = 0
+    backend_switch_cost:   int = 0
+    launch_overhead_cost:  int = 0
+    kv_cache_cost:         int = 0
+    transfer_cost:         int = 0
+    unsupported_penalty:   int = 0
+    total_cost:            int = 0
+    cost_model_id:         str = ""
+    truth_boundary:        str = ""   # preserved verbatim from compiler
+
+    @classmethod
+    def from_dict(cls, payload: dict[str, Any]) -> "DecisionCost":
+        return cls(
+            compute_cost=int(payload.get("compute_cost", 0) or 0),
+            memory_cost=int(payload.get("memory_cost", 0) or 0),
+            dequant_cost=int(payload.get("dequant_cost", 0) or 0),
+            requant_cost=int(payload.get("requant_cost", 0) or 0),
+            layout_transform_cost=int(payload.get("layout_transform_cost", 0) or 0),
+            cast_cost=int(payload.get("cast_cost", 0) or 0),
+            backend_switch_cost=int(payload.get("backend_switch_cost", 0) or 0),
+            launch_overhead_cost=int(payload.get("launch_overhead_cost", 0) or 0),
+            kv_cache_cost=int(payload.get("kv_cache_cost", 0) or 0),
+            transfer_cost=int(payload.get("transfer_cost", 0) or 0),
+            unsupported_penalty=int(payload.get("unsupported_penalty", 0) or 0),
+            total_cost=int(payload.get("total_cost", 0) or 0),
+            cost_model_id=str(payload.get("cost_model_id", "")),
+            truth_boundary=str(payload.get("truth_boundary", "")),
+        )
+
+
 @dataclass(frozen=True)
 class BackendDecision:
     decision_type: str
@@ -142,10 +190,16 @@ class KernelDecision:
     lowering_path: str
     kernel_exists: bool
     reason: str | None = None
+    # Parsed from meta.evidence.cost when ServingCostModelPass ran; None otherwise.
+    # cost.total_cost is a static penalty score, NOT measured latency.
+    # cost.truth_boundary is preserved verbatim.
+    cost: DecisionCost | None = None
     raw: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
     def from_dict(cls, payload: dict[str, Any]) -> "KernelDecision":
+        cost_dict = _dict_at(_dict_at(_dict_at(payload, "meta"), "evidence"), "cost")
+        cost = DecisionCost.from_dict(cost_dict) if cost_dict else None
         return cls(
             decision_type=str(payload.get("decision_type", "")),
             scope=str(payload.get("scope", "")),
@@ -154,6 +208,7 @@ class KernelDecision:
             lowering_path=str(payload.get("lowering_path", "")),
             kernel_exists=bool(payload.get("kernel_exists", False)),
             reason=payload.get("reason"),
+            cost=cost,
             raw=dict(payload),
         )
 
@@ -199,18 +254,93 @@ class FunctionPlan:
         )
 
 
+# ---------------------------------------------------------------------------
+# Typed global decision sub-objects.
+#
+# MemoryPlanDecision and ServingPlanDecision replace the previous untyped
+# dict[str, Any] fields in GlobalDecisions. Fields default to 0/False/"" when
+# absent — the compiler builder may not emit all fields in every compilation
+# mode.
+#
+# Key-name notes:
+#   MemoryPlanDecision.kv_layout      ← compiler emits "kv_cache_layout"
+#   MemoryPlanDecision.kv_byte_estimate_mb  ← compiler emits "estimated_kv_peak_mb"
+#   Both aliases are accepted for forward compatibility.
+#
+#   ServingPlanDecision.colocated_cost_estimate_ms is a static formula estimate,
+#   NOT measured runtime latency. It may be used for simulation clock advance
+#   only; it must never appear alongside measured timing fields in RuntimeResult.
+# ---------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class MemoryPlanDecision:
+    memory_budget_fraction: float = 0.0
+    kv_layout: str = ""          # "paged" | "contiguous" | "" if builder hasn't emitted it
+    kv_block_size_tokens: int = 0
+    kv_byte_estimate_mb: float = 0.0   # static formula estimate, not measured allocation
+    truth_boundary: str = ""
+
+    @classmethod
+    def from_dict(cls, payload: dict[str, Any]) -> "MemoryPlanDecision":
+        kv_layout = str(
+            payload.get("kv_cache_layout") or payload.get("kv_layout", "")
+        )
+        kv_byte = float(
+            payload.get("estimated_kv_peak_mb")
+            or payload.get("kv_byte_estimate_mb", 0.0)
+            or 0.0
+        )
+        return cls(
+            memory_budget_fraction=float(payload.get("memory_budget_fraction", 0.0) or 0.0),
+            kv_layout=kv_layout,
+            kv_block_size_tokens=int(payload.get("kv_block_size_tokens", 0) or 0),
+            kv_byte_estimate_mb=kv_byte,
+            truth_boundary=str(payload.get("truth_boundary", "")),
+        )
+
+
+@dataclass(frozen=True)
+class ServingPlanDecision:
+    topology: str = ""             # "colocated" | "prefill_decode_split"
+    replay_eligible: bool = False  # from ServingDecision.replay_eligible
+    colocated_cost_estimate_ms: float = 0.0  # static formula, NOT measured runtime latency
+    prefix_reuse_eligible: bool = False
+    chunked_prefill_eligible: bool = False
+    token_budget_per_step: int = 0
+    parallelism_kind: str = ""     # "none" | "tensor_parallel" | "pipeline_parallel"
+    parallelism_degree: int = 1
+    truth_boundary: str = ""
+
+    @classmethod
+    def from_dict(cls, payload: dict[str, Any]) -> "ServingPlanDecision":
+        return cls(
+            topology=str(payload.get("topology", "")),
+            replay_eligible=bool(payload.get("replay_eligible", False)),
+            colocated_cost_estimate_ms=float(
+                payload.get("colocated_cost_estimate_ms", 0.0) or 0.0
+            ),
+            prefix_reuse_eligible=bool(payload.get("prefix_reuse_eligible", False)),
+            chunked_prefill_eligible=bool(payload.get("chunked_prefill_eligible", False)),
+            token_budget_per_step=int(payload.get("token_budget_per_step", 0) or 0),
+            parallelism_kind=str(payload.get("parallelism_kind", "")),
+            parallelism_degree=int(payload.get("parallelism_degree", 1) or 1),
+            truth_boundary=str(payload.get("truth_boundary", "")),
+        )
+
+
 @dataclass(frozen=True)
 class GlobalDecisions:
+    # quantization stays dict[str, Any] — only the vLLM materializer reads it via dict access.
     quantization: dict[str, Any] = field(default_factory=dict)
-    memory: dict[str, Any] = field(default_factory=dict)
-    serving: dict[str, Any] = field(default_factory=dict)
+    memory: MemoryPlanDecision = field(default_factory=MemoryPlanDecision)
+    serving: ServingPlanDecision = field(default_factory=ServingPlanDecision)
 
     @classmethod
     def from_dict(cls, payload: dict[str, Any]) -> "GlobalDecisions":
         return cls(
             quantization=_dict_at(payload, "quantization"),
-            memory=_dict_at(payload, "memory"),
-            serving=_dict_at(payload, "serving"),
+            memory=MemoryPlanDecision.from_dict(_dict_at(payload, "memory")),
+            serving=ServingPlanDecision.from_dict(_dict_at(payload, "serving")),
         )
 
 
@@ -251,6 +381,9 @@ class ExecutionPlanV2:
         )
 
 
+# ExecutionStage is backend-independent. It describes routing intent only:
+# what to dispatch (function, phase, op) — not how or to which backend.
+# Backend selection belongs to ExecutionPath.
 @dataclass(frozen=True)
 class ExecutionStage:
     stage_id: str

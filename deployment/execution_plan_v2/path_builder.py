@@ -165,22 +165,25 @@ def _unsupported_path(plan: ExecutionPlanV2, stage: ExecutionStage, backend: str
 
 
 def _runtime_config_from_decisions(plan: ExecutionPlanV2) -> dict[str, Any]:
-    quantization = plan.global_decisions.quantization
-    memory = plan.global_decisions.memory
-    serving = plan.global_decisions.serving
-    parallelism_kind = serving.get("parallelism_kind")
-    parallelism_degree = int(serving.get("parallelism_degree", 1) or 1)
+    quantization = plan.global_decisions.quantization  # dict — vLLM materializer reads via .get()
+    memory = plan.global_decisions.memory              # MemoryPlanDecision — typed
+    serving = plan.global_decisions.serving            # ServingPlanDecision — typed
+    model_id = str(
+        plan.model_identity.get("model_id") or plan.model_identity.get("model") or ""
+    )
     return {
         "dtype": quantization.get("dtype", "float16"),
         "quantization": quantization.get("strategy", quantization.get("quantization", "none")),
-        "gpu_memory_utilization": memory.get("memory_budget_fraction"),
-        "block_size": memory.get("kv_block_size_tokens"),
-        "max_num_batched_tokens": serving.get("token_budget_per_step"),
-        "enable_prefix_caching": serving.get("prefix_reuse_eligible"),
-        "enable_chunked_prefill": serving.get("chunked_prefill_eligible"),
-        "tensor_parallel_size": parallelism_degree if parallelism_kind == "tensor_parallel" else 1,
+        "gpu_memory_utilization": memory.memory_budget_fraction or None,
+        "block_size": memory.kv_block_size_tokens or None,
+        "max_num_batched_tokens": serving.token_budget_per_step or None,
+        "enable_prefix_caching": serving.prefix_reuse_eligible,
+        "enable_chunked_prefill": serving.chunked_prefill_eligible,
+        "tensor_parallel_size": (
+            serving.parallelism_degree if serving.parallelism_kind == "tensor_parallel" else 1
+        ),
         "pipeline_parallel_size": 1,
-        "served_model_name": serving.get("served_model_name", "qwen-0.5b-compiler-plan"),
+        "served_model_name": model_id or "qwen-0.5b-compiler-plan",
         "trust_remote_code": bool(plan.model_identity.get("trust_remote_code", False)),
     }
 
