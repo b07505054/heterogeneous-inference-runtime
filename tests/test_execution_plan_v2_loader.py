@@ -25,7 +25,7 @@ def test_loader_accepts_execution_plan_v2(tmp_path: Path):
     assert plan.schema_version == "2.0.0"
     assert plan.plan_id == "qwen-plan"
     assert plan.provenance.capability_bundle.hardware_profile_ref == "hardware/nvidia_gtx1650_maxq.json"
-    assert plan.function_plans[0].backend.selected_backend == "vllm"
+    assert plan.function_plans[0].backend.selected_backend == "cuda_triton"
 
 
 def test_loader_rejects_wrong_schema():
@@ -280,7 +280,7 @@ def _plan() -> dict:
                 "backend": {
                     "decision_type": "BackendDecision",
                     "scope": "Function",
-                    "selected_backend": "vllm",
+                    "selected_backend": "cuda_triton",
                     "fallback_backends": ["custom_runtime"],
                 },
                 "per_op_decisions": [],

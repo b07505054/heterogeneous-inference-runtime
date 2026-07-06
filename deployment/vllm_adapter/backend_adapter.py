@@ -25,8 +25,6 @@ class VLLMBackendAdapter:
             ExecutionPathKind.COMPILER_GUIDED_VLLM,
         }:
             errors.append("path_kind_not_vllm")
-        if path.selected_backend != "vllm":
-            errors.append("selected_backend_not_vllm")
         try:
             capabilities.validate_refs(path.required_capability_refs)
         except ValueError as exc:

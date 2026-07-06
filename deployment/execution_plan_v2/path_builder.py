@@ -15,6 +15,7 @@ from deployment.execution_plan_v2.schema import (
     ExecutionStage,
     ExecutionStageKind,
 )
+from deployment.execution_unit_router import ExecutionUnitRouter
 
 
 def build_baseline_vllm_path(
@@ -72,15 +73,18 @@ def build_execution_paths(plan: ExecutionPlanV2, stages: list[ExecutionStage]) -
             paths.append(_rmsnorm_path(plan, stage))
             continue
         function_plan = function_by_name.get(stage.function_name or "")
-        backend = function_plan.backend.selected_backend if function_plan else ""
-        if backend == "vllm":
-            paths.append(_compiler_guided_vllm_path(plan, stage, backend))
+        execution_unit = function_plan.backend.selected_backend if function_plan else ""
+        adapter_id = ExecutionUnitRouter.serving_adapter_id(execution_unit)
+        if adapter_id == "vllm":
+            paths.append(_compiler_guided_vllm_path(plan, stage, execution_unit))
+        elif adapter_id in ("coreml", "pytorch_reference"):
+            paths.append(_unsupported_path(plan, stage, execution_unit, reason="adapter_not_implemented"))
         else:
-            paths.append(_unsupported_path(plan, stage, backend))
+            paths.append(_unsupported_path(plan, stage, execution_unit, reason="unknown_execution_unit"))
     return paths
 
 
-def _compiler_guided_vllm_path(plan: ExecutionPlanV2, stage: ExecutionStage, backend: str) -> ExecutionPath:
+def _compiler_guided_vllm_path(plan: ExecutionPlanV2, stage: ExecutionStage, execution_unit: str) -> ExecutionPath:
     refs = plan.provenance.capability_bundle.refs()
     global_config = _runtime_config_from_decisions(plan)
     model_id = str(plan.model_identity.get("model_id") or plan.model_identity.get("model") or "")
@@ -92,7 +96,7 @@ def _compiler_guided_vllm_path(plan: ExecutionPlanV2, stage: ExecutionStage, bac
         stage_id=stage.stage_id,
         function_name=stage.function_name,
         serving_phase=stage.serving_phase,
-        selected_backend="vllm",
+        selected_backend=execution_unit,
         execution_method=ExecutionMethod.COMPILER_MATERIALIZED_CONFIG,
         selected_kernel=None,
         kernel_library=None,
@@ -109,7 +113,7 @@ def _compiler_guided_vllm_path(plan: ExecutionPlanV2, stage: ExecutionStage, bac
         },
         output_artifact="results/runtime_paths/qwen_0_5b_compiler_guided_vllm.json",
         truth_boundary=COMPILER_GUIDED_VLLM_TRUTH_BOUNDARY,
-        metadata={"compiler_plan_id": plan.plan_id, "compiler_backend": backend},
+        metadata={"compiler_plan_id": plan.plan_id, "compiler_execution_unit": execution_unit},
     )
 
 
@@ -142,14 +146,19 @@ def _rmsnorm_path(plan: ExecutionPlanV2, stage: ExecutionStage) -> ExecutionPath
     )
 
 
-def _unsupported_path(plan: ExecutionPlanV2, stage: ExecutionStage, backend: str) -> ExecutionPath:
+def _unsupported_path(
+    plan: ExecutionPlanV2,
+    stage: ExecutionStage,
+    execution_unit: str,
+    reason: str = "unsupported_backend_for_phase1",
+) -> ExecutionPath:
     return ExecutionPath(
         path_id=f"{plan.plan_id}:{stage.stage_id}:unsupported",
         path_kind=ExecutionPathKind.UNSUPPORTED,
         stage_id=stage.stage_id,
         function_name=stage.function_name,
         serving_phase=stage.serving_phase,
-        selected_backend=backend,
+        selected_backend=execution_unit,
         execution_method=ExecutionMethod.SERVING,
         selected_kernel=None,
         kernel_library=None,
@@ -160,7 +169,7 @@ def _unsupported_path(plan: ExecutionPlanV2, stage: ExecutionStage, backend: str
         benchmark_config={},
         output_artifact="",
         truth_boundary=EXECUTION_PATH_TRUTH_BOUNDARY,
-        metadata={"reason": "unsupported_backend_for_phase1"},
+        metadata={"reason": reason},
     )
 
 
