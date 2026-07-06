@@ -9,8 +9,7 @@ from deployment.distributed_execution_engine import (
     DistributedRuntimeResult,
     DistributedStageResult,
 )
-from deployment.distributed_runtime_plan import PDSplitPlanner, QueueState
-from deployment.runtime_execution_plan import RuntimeExecutionPlanAdapter
+from deployment.distributed_runtime_plan import PDSplitPlanner, PhaseTimingSpec, QueueState
 from deployment.speculative_decoding import (
     TB_SPECULATIVE_SIMULATION,
     SpeculativeDecodingConfig,
@@ -84,10 +83,27 @@ _DECODE_DICT = {
 }
 
 
+def _dict_to_spec(d: dict) -> PhaseTimingSpec:
+    cs = d["cost_summary"]
+    return PhaseTimingSpec(
+        function_name=d["function_name"],
+        service_ms=float(cs.get("colocated_total_ms", cs.get("pd_split_total_ms", 0.0))),
+        kv_byte_estimate_mb=float(d["kv_plan"]["kv_byte_estimate_mb"]),
+        backend=d["backend_execution_plan"]["primary_backend"],
+        replay_eligible=bool(d["replay_plan"]["replay_eligible"]),
+        cuda_graph_bucket=d["replay_plan"].get("cuda_graph_bucket", ""),
+        replay_truth_boundary=d["replay_plan"].get(
+            "truth_boundary",
+            "static_shape_replay_eligibility_not_cuda_graph_capture",
+        ),
+        target_profile_id=d.get("target_profile_id", ""),
+    )
+
+
 def _make_plan(**kwargs):
-    p = RuntimeExecutionPlanAdapter.from_dict(_PREFILL_DICT)
-    d = RuntimeExecutionPlanAdapter.from_dict(_DECODE_DICT)
-    return PDSplitPlanner.plan([p, d], **kwargs)
+    return PDSplitPlanner.plan(
+        [_dict_to_spec(_PREFILL_DICT), _dict_to_spec(_DECODE_DICT)], **kwargs
+    )
 
 
 def _speculative_config(**overrides):
@@ -331,8 +347,8 @@ def test_ttft_tpot_use_pd_split_when_selected():
         decode_worker_available_at_ms=0.0,
         colocated_worker_available_at_ms=50.0,
     )
-    p = RuntimeExecutionPlanAdapter.from_dict(_PREFILL_DICT)
-    d = RuntimeExecutionPlanAdapter.from_dict(fast_decode)
+    p = _dict_to_spec(_PREFILL_DICT)
+    d = _dict_to_spec(fast_decode)
     plan = PDSplitPlanner.plan(
         [p, d],
         kv_bandwidth_mb_per_ms=10000.0,

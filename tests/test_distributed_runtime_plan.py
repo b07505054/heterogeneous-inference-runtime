@@ -11,11 +11,11 @@ from deployment.distributed_runtime_plan import (
     OptionalReplayStage,
     PDSplitDecisionComparison,
     PDSplitPlanner,
+    PhaseTimingSpec,
     PrefillStage,
     QueueState,
     ServiceTimeModel,
 )
-from deployment.runtime_execution_plan import RuntimeExecutionPlanAdapter
 from deployment.speculative_decoding import (
     BASELINE_DECODE_STAGE_SERVICE_MS,
     SpeculativeDecodingConfig,
@@ -89,10 +89,28 @@ _DECODE_DICT = {
 }
 
 
+def _dict_to_spec(d: dict) -> PhaseTimingSpec:
+    cs = d["cost_summary"]
+    return PhaseTimingSpec(
+        function_name=d["function_name"],
+        service_ms=float(cs.get("colocated_total_ms", cs.get("pd_split_total_ms", 0.0))),
+        kv_byte_estimate_mb=float(d["kv_plan"]["kv_byte_estimate_mb"]),
+        backend=d["backend_execution_plan"]["primary_backend"],
+        replay_eligible=bool(d["replay_plan"]["replay_eligible"]),
+        cuda_graph_bucket=d["replay_plan"].get("cuda_graph_bucket", ""),
+        replay_truth_boundary=d["replay_plan"].get(
+            "truth_boundary",
+            "static_shape_replay_eligibility_not_cuda_graph_capture",
+        ),
+        target_profile_id=d.get("target_profile_id", ""),
+    )
+
+
 def _make_plans(prefill_dict=None, decode_dict=None):
-    p = RuntimeExecutionPlanAdapter.from_dict(prefill_dict or _PREFILL_DICT)
-    d = RuntimeExecutionPlanAdapter.from_dict(decode_dict or _DECODE_DICT)
-    return [p, d]
+    return [
+        _dict_to_spec(prefill_dict or _PREFILL_DICT),
+        _dict_to_spec(decode_dict or _DECODE_DICT),
+    ]
 
 
 def _speculative_config(**overrides):
@@ -755,29 +773,29 @@ def test_total_compiler_cost_excludes_queue_waits():
 # ---------------------------------------------------------------------------
 
 def test_rejects_missing_prefill():
-    decode_only = [RuntimeExecutionPlanAdapter.from_dict(_DECODE_DICT)]
+    decode_only = [_dict_to_spec(_DECODE_DICT)]
     with pytest.raises(ValueError, match="prefill"):
         PDSplitPlanner.plan(decode_only)
 
 
 def test_rejects_missing_decode():
-    prefill_only = [RuntimeExecutionPlanAdapter.from_dict(_PREFILL_DICT)]
+    prefill_only = [_dict_to_spec(_PREFILL_DICT)]
     with pytest.raises(ValueError, match="decode"):
         PDSplitPlanner.plan(prefill_only)
 
 
 def test_rejects_duplicate_prefill():
-    p1 = RuntimeExecutionPlanAdapter.from_dict(_PREFILL_DICT)
-    p2 = RuntimeExecutionPlanAdapter.from_dict(_PREFILL_DICT)
-    d = RuntimeExecutionPlanAdapter.from_dict(_DECODE_DICT)
+    p1 = _dict_to_spec(_PREFILL_DICT)
+    p2 = _dict_to_spec(_PREFILL_DICT)
+    d = _dict_to_spec(_DECODE_DICT)
     with pytest.raises(ValueError, match="prefill"):
         PDSplitPlanner.plan([p1, p2, d])
 
 
 def test_rejects_wrong_function_names():
     wrong = {**_PREFILL_DICT, "function_name": "encode"}
-    p = RuntimeExecutionPlanAdapter.from_dict(wrong)
-    d = RuntimeExecutionPlanAdapter.from_dict(_DECODE_DICT)
+    p = _dict_to_spec(wrong)
+    d = _dict_to_spec(_DECODE_DICT)
     with pytest.raises(ValueError, match="prefill"):
         PDSplitPlanner.plan([p, d])
 
@@ -812,19 +830,19 @@ def test_truth_boundaries_present():
 
 def test_does_not_mutate_runtime_execution_plans():
     plans = _make_plans()
-    pre_prefill_cost = plans[0].scheduling_policy.compiler_cost_ms
-    pre_decode_cost = plans[1].scheduling_policy.compiler_cost_ms
+    pre_prefill_cost = plans[0].service_ms
+    pre_decode_cost = plans[1].service_ms
     pre_prefill_name = plans[0].function_name
     pre_decode_name = plans[1].function_name
-    pre_prefill_kv = plans[0].memory_policy.kv_byte_estimate_mb
+    pre_prefill_kv = plans[0].kv_byte_estimate_mb
 
     PDSplitPlanner.plan(plans)
 
-    assert plans[0].scheduling_policy.compiler_cost_ms == pre_prefill_cost
-    assert plans[1].scheduling_policy.compiler_cost_ms == pre_decode_cost
+    assert plans[0].service_ms == pre_prefill_cost
+    assert plans[1].service_ms == pre_decode_cost
     assert plans[0].function_name == pre_prefill_name
     assert plans[1].function_name == pre_decode_name
-    assert plans[0].memory_policy.kv_byte_estimate_mb == pre_prefill_kv
+    assert plans[0].kv_byte_estimate_mb == pre_prefill_kv
 
 
 def test_result_is_immutable():
@@ -839,8 +857,8 @@ def test_result_is_immutable():
 
 def test_order_independent_prefill_decode():
     # Plans provided decode-first — planner must find them by name.
-    p = RuntimeExecutionPlanAdapter.from_dict(_PREFILL_DICT)
-    d = RuntimeExecutionPlanAdapter.from_dict(_DECODE_DICT)
+    p = _dict_to_spec(_PREFILL_DICT)
+    d = _dict_to_spec(_DECODE_DICT)
     result = PDSplitPlanner.plan([d, p])
     assert result.prefill.compiler_cost_ms == pytest.approx(31.2)
     assert result.decode.compiler_cost_ms == pytest.approx(8.5)

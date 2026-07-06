@@ -6,11 +6,11 @@ import pytest
 
 from deployment.distributed_runtime_plan import (
     PDSplitPlanner,
+    PhaseTimingSpec,
     PrefixCacheAdjustment,
     QueueState,
 )
 from deployment.prefix_cache_simulator import PrefixCacheResult
-from deployment.runtime_execution_plan import RuntimeExecutionPlanAdapter
 
 # ---------------------------------------------------------------------------
 # Shared fixtures
@@ -91,10 +91,25 @@ _HANDOFF_MS = 0.2
 _PD_TTFT_BASELINE = _PREFILL_SERVICE_MS + _KV_TRANSFER_MS + _HANDOFF_MS  # 31.525
 
 
+def _dict_to_spec(d: dict) -> PhaseTimingSpec:
+    cs = d["cost_summary"]
+    return PhaseTimingSpec(
+        function_name=d["function_name"],
+        service_ms=float(cs.get("colocated_total_ms", cs.get("pd_split_total_ms", 0.0))),
+        kv_byte_estimate_mb=float(d["kv_plan"]["kv_byte_estimate_mb"]),
+        backend=d["backend_execution_plan"]["primary_backend"],
+        replay_eligible=bool(d["replay_plan"]["replay_eligible"]),
+        cuda_graph_bucket=d["replay_plan"].get("cuda_graph_bucket", ""),
+        replay_truth_boundary=d["replay_plan"].get(
+            "truth_boundary",
+            "static_shape_replay_eligibility_not_cuda_graph_capture",
+        ),
+        target_profile_id=d.get("target_profile_id", ""),
+    )
+
+
 def _make_plans():
-    p = RuntimeExecutionPlanAdapter.from_dict(_PREFILL_DICT)
-    d = RuntimeExecutionPlanAdapter.from_dict(_DECODE_DICT)
-    return [p, d]
+    return [_dict_to_spec(_PREFILL_DICT), _dict_to_spec(_DECODE_DICT)]
 
 
 def _cache(
@@ -265,12 +280,12 @@ def test_does_not_mutate_inputs():
 
     snapshot_p = (
         plans[0].function_name,
-        plans[0].scheduling_policy.compiler_cost_ms,
-        plans[0].memory_policy.kv_byte_estimate_mb,
+        plans[0].service_ms,
+        plans[0].kv_byte_estimate_mb,
     )
     snapshot_d = (
         plans[1].function_name,
-        plans[1].scheduling_policy.compiler_cost_ms,
+        plans[1].service_ms,
     )
     snapshot_cache = (
         cache_result.hit_type,
@@ -283,12 +298,12 @@ def test_does_not_mutate_inputs():
 
     assert (
         plans[0].function_name,
-        plans[0].scheduling_policy.compiler_cost_ms,
-        plans[0].memory_policy.kv_byte_estimate_mb,
+        plans[0].service_ms,
+        plans[0].kv_byte_estimate_mb,
     ) == snapshot_p
     assert (
         plans[1].function_name,
-        plans[1].scheduling_policy.compiler_cost_ms,
+        plans[1].service_ms,
     ) == snapshot_d
     assert (
         cache_result.hit_type,

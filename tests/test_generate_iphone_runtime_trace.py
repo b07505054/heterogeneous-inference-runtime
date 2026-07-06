@@ -77,92 +77,74 @@ def test_memory_optimized_stays_within_expected_range():
 
 
 # ---------------------------------------------------------------------------
-# _cpu_only_overlay
+# _cpu_only_overlay  (V2 field paths)
 # ---------------------------------------------------------------------------
 
-def test_cpu_only_overlay_sets_primary_backend_cpu():
-    plan = {
-        "function_plans": [
-            {
-                "function_name": "prefill",
-                "backend_execution_plan": {"primary_backend": "coreml", "fallback_chain": ["metal"]},
-                "cost_summary": {"colocated_total_ms": 10.0},
-                "kv_plan": {},
-                "replay_plan": {},
-            }
-        ]
+def _v2_plan(function_name: str, cost_ms: float, kv_layout: str = "paged",
+             replay_eligible: bool = False, backend: str = "coreml_ane") -> dict:
+    """Minimal valid V2 plan dict for overlay tests."""
+    return {
+        "schema": "execution_plan",
+        "schema_version": "2.0.0",
+        "plan_id": function_name,
+        "provenance": {
+            "compiler_tool": "test",
+            "model_spec_ref": "",
+            "capability_bundle": {"hardware_profile_ref": ""},
+            "truth_boundary": "compiler_execution_provider_plan_not_runtime_dispatch",
+        },
+        "model_identity": {},
+        "global_decisions": {
+            "memory": {"kv_cache_layout": kv_layout, "estimated_kv_peak_mb": 0.0},
+            "serving": {
+                "topology": "colocated",
+                "colocated_cost_estimate_ms": cost_ms,
+                "replay_eligible": replay_eligible,
+            },
+        },
+        "function_plans": [{
+            "function_name": function_name,
+            "serving_phase": "decode" if "decode" in function_name else "prefill",
+            "backend": {
+                "selected_backend": backend,
+                "fallback_backends": ["cpu"],
+                "reason": "target_preferred",
+            },
+            "per_op_decisions": [],
+        }],
     }
+
+
+def test_cpu_only_overlay_sets_primary_backend_cpu():
+    plan = _v2_plan("prefill", 10.0, backend="coreml_ane")
     result = gen._cpu_only_overlay(plan)
-    bep = result["function_plans"][0]["backend_execution_plan"]
-    assert bep["primary_backend"] == "cpu"
-    assert bep["fallback_chain"] == ["cpu"]
+    assert result["function_plans"][0]["backend"]["selected_backend"] == "cpu"
+    assert result["function_plans"][0]["backend"]["fallback_backends"] == ["cpu"]
 
 
 def test_cpu_only_overlay_sets_contiguous_kv():
-    plan = {
-        "function_plans": [
-            {
-                "function_name": "decode",
-                "backend_execution_plan": {"primary_backend": "coreml"},
-                "cost_summary": {"colocated_total_ms": 5.0},
-                "kv_plan": {"layout": "paged"},
-                "replay_plan": {},
-            }
-        ]
-    }
+    plan = _v2_plan("decode", 5.0, kv_layout="paged")
     result = gen._cpu_only_overlay(plan)
-    assert result["function_plans"][0]["kv_plan"]["layout"] == "contiguous"
+    assert result["global_decisions"]["memory"]["kv_cache_layout"] == "contiguous"
 
 
 def test_cpu_only_overlay_disables_replay():
-    plan = {
-        "function_plans": [
-            {
-                "function_name": "decode",
-                "backend_execution_plan": {"primary_backend": "coreml"},
-                "cost_summary": {"colocated_total_ms": 5.0},
-                "kv_plan": {},
-                "replay_plan": {"replay_eligible": True, "cuda_graph_bucket": "decode_static"},
-            }
-        ]
-    }
+    plan = _v2_plan("decode", 5.0, replay_eligible=True)
     result = gen._cpu_only_overlay(plan)
-    rp = result["function_plans"][0]["replay_plan"]
-    assert rp["replay_eligible"] is False
-    assert rp["cuda_graph_bucket"] == ""
+    assert result["global_decisions"]["serving"]["replay_eligible"] is False
 
 
 def test_cpu_only_overlay_scales_up_cost():
-    plan = {
-        "function_plans": [
-            {
-                "function_name": "prefill",
-                "backend_execution_plan": {"primary_backend": "coreml"},
-                "cost_summary": {"colocated_total_ms": 10.0},
-                "kv_plan": {},
-                "replay_plan": {},
-            }
-        ]
-    }
+    plan = _v2_plan("prefill", 10.0)
     result = gen._cpu_only_overlay(plan)
-    scaled = result["function_plans"][0]["cost_summary"]["colocated_total_ms"]
+    scaled = result["global_decisions"]["serving"]["colocated_cost_estimate_ms"]
     assert scaled == pytest.approx(55.0)  # 10.0 * 5.5
 
 
 def test_cpu_only_overlay_does_not_mutate_original():
-    plan = {
-        "function_plans": [
-            {
-                "function_name": "prefill",
-                "backend_execution_plan": {"primary_backend": "coreml"},
-                "cost_summary": {"colocated_total_ms": 10.0},
-                "kv_plan": {},
-                "replay_plan": {},
-            }
-        ]
-    }
+    plan = _v2_plan("prefill", 10.0, backend="coreml_ane")
     gen._cpu_only_overlay(plan)
-    assert plan["function_plans"][0]["backend_execution_plan"]["primary_backend"] == "coreml"
+    assert plan["function_plans"][0]["backend"]["selected_backend"] == "coreml_ane"
 
 
 # ---------------------------------------------------------------------------

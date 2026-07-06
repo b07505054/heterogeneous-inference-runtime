@@ -2,9 +2,8 @@
 
 import pytest
 
-from deployment.distributed_runtime_plan import PDSplitPlanner, QueueState, ServiceTimeModel
+from deployment.distributed_runtime_plan import PDSplitPlanner, PhaseTimingSpec, QueueState, ServiceTimeModel
 from deployment.distributed_runtime_trace import build_distributed_runtime_trace
-from deployment.runtime_execution_plan import RuntimeExecutionPlanAdapter
 
 # ---------------------------------------------------------------------------
 # Shared fixtures
@@ -73,10 +72,27 @@ _DECODE_DICT = {
 }
 
 
+def _dict_to_spec(d: dict) -> PhaseTimingSpec:
+    cs = d["cost_summary"]
+    return PhaseTimingSpec(
+        function_name=d["function_name"],
+        service_ms=float(cs.get("colocated_total_ms", cs.get("pd_split_total_ms", 0.0))),
+        kv_byte_estimate_mb=float(d["kv_plan"]["kv_byte_estimate_mb"]),
+        backend=d["backend_execution_plan"]["primary_backend"],
+        replay_eligible=bool(d["replay_plan"]["replay_eligible"]),
+        cuda_graph_bucket=d["replay_plan"].get("cuda_graph_bucket", ""),
+        replay_truth_boundary=d["replay_plan"].get(
+            "truth_boundary",
+            "static_shape_replay_eligibility_not_cuda_graph_capture",
+        ),
+        target_profile_id=d.get("target_profile_id", ""),
+    )
+
+
 def _make_plan(**kwargs):
-    p = RuntimeExecutionPlanAdapter.from_dict(_PREFILL_DICT)
-    d = RuntimeExecutionPlanAdapter.from_dict(_DECODE_DICT)
-    return PDSplitPlanner.plan([p, d], **kwargs)
+    return PDSplitPlanner.plan(
+        [_dict_to_spec(_PREFILL_DICT), _dict_to_spec(_DECODE_DICT)], **kwargs
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -191,8 +207,8 @@ def test_trace_zero_kv_transfer_duration_when_no_kv():
         "layout_reason": "",
         "truth_boundary": "",
     }}
-    p = RuntimeExecutionPlanAdapter.from_dict(no_kv)
-    d = RuntimeExecutionPlanAdapter.from_dict(_DECODE_DICT)
+    p = _dict_to_spec(no_kv)
+    d = _dict_to_spec(_DECODE_DICT)
     plan = PDSplitPlanner.plan([p, d])
     trace = build_distributed_runtime_trace(plan)
     ev = {e["name"]: e for e in trace["events"]}
@@ -460,8 +476,8 @@ def test_trace_reflects_pd_split_selection():
         decode_worker_available_at_ms=0.0,
         colocated_worker_available_at_ms=50.0,   # colocated busy with prior request
     )
-    p = RuntimeExecutionPlanAdapter.from_dict(_PREFILL_DICT)
-    d = RuntimeExecutionPlanAdapter.from_dict(fast_decode)
+    p = _dict_to_spec(_PREFILL_DICT)
+    d = _dict_to_spec(fast_decode)
     plan = PDSplitPlanner.plan(
         [p, d],
         kv_bandwidth_mb_per_ms=10000.0,

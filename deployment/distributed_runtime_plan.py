@@ -1,6 +1,6 @@
 """Distributed runtime planning for prefill/decode disaggregation.
 
-PDSplitPlanner converts a list[RuntimeExecutionPlan] (one prefill + one decode)
+PDSplitPlanner converts a list[PhaseTimingSpec] (one prefill + one decode)
 into a DistributedRuntimePlan that models both colocated and PD-split execution,
 compares them against SLO targets, and selects a policy.
 
@@ -21,7 +21,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
 
-from deployment.runtime_execution_plan import RuntimeExecutionPlan
 from deployment.prefix_cache_simulator import PrefixCacheResult
 from deployment.speculative_decoding import (
     SpeculativeDecodingConfig,
@@ -372,11 +371,34 @@ class DistributedRuntimePlan:
 
 
 # ---------------------------------------------------------------------------
+# Planner input type
+# ---------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class PhaseTimingSpec:
+    """Timing and routing spec for one serving phase (prefill or decode).
+
+    This is the planner's input type — it carries the fields PDSplitPlanner
+    needs from each phase. It is not a compiler/runtime contract; it is an
+    internal planning object.
+    """
+
+    function_name: str
+    service_ms: float
+    kv_byte_estimate_mb: float
+    backend: str
+    replay_eligible: bool
+    cuda_graph_bucket: str
+    replay_truth_boundary: str
+    target_profile_id: str = ""
+
+
+# ---------------------------------------------------------------------------
 # Planner
 # ---------------------------------------------------------------------------
 
 class PDSplitPlanner:
-    """Converts a prefill + decode RuntimeExecutionPlan pair into a DistributedRuntimePlan.
+    """Converts a prefill + decode PhaseTimingSpec pair into a DistributedRuntimePlan.
 
     Compares colocated vs PD-split execution and selects a policy based on
     total cost and SLO constraints for TTFT and TPOT.
@@ -391,7 +413,7 @@ class PDSplitPlanner:
 
     @staticmethod
     def plan(
-        plans: list[RuntimeExecutionPlan],
+        plans: list[PhaseTimingSpec],
         *,
         slo_ttft_ms: float = 200.0,
         slo_tpot_ms: float = 20.0,
@@ -432,8 +454,8 @@ class PDSplitPlanner:
         prefill_plan = _find_plan(plans, "prefill")
         decode_plan = _find_plan(plans, "decode")
 
-        prefill_compiler_cost_ms = prefill_plan.scheduling_policy.compiler_cost_ms
-        decode_compiler_cost_ms = decode_plan.scheduling_policy.compiler_cost_ms
+        prefill_compiler_cost_ms = prefill_plan.service_ms
+        decode_compiler_cost_ms = decode_plan.service_ms
 
         prefill_service_ms = (
             prefill_compiler_cost_ms + service_time_model.prefill_service_adjustment_ms
@@ -455,7 +477,7 @@ class PDSplitPlanner:
             )
 
         # KV transfer: bytes from prefill memory policy; cost from bandwidth model.
-        kv_mb = prefill_plan.memory_policy.kv_byte_estimate_mb
+        kv_mb = prefill_plan.kv_byte_estimate_mb
         kv_bytes = int(kv_mb * 1024 * 1024)
         effective_bandwidth_mb_per_ms = hardware_config.effective_bandwidth_gb_per_s
         kv_transfer_ms = (
@@ -622,7 +644,7 @@ class PDSplitPlanner:
         # ── Stage objects ────────────────────────────────────────────────────
         prefill_stage = PrefillStage(
             worker_id="prefill-worker-0",
-            backend=prefill_plan.backend_policy.primary_backend,
+            backend=prefill_plan.backend,
             compiler_cost_ms=prefill_compiler_cost_ms,
             service_ms=prefill_service_ms,
             queue_wait_ms=queue_wait_prefill_ms,
@@ -642,7 +664,7 @@ class PDSplitPlanner:
         )
         decode_stage = DecodeStage(
             worker_id="decode-worker-0",
-            backend=decode_plan.backend_policy.primary_backend,
+            backend=decode_plan.backend,
             compiler_cost_ms=decode_compiler_cost_ms,
             service_ms=decode_service_ms,
             queue_wait_ms=queue_wait_decode_ms,
@@ -650,9 +672,9 @@ class PDSplitPlanner:
             speculative_decoding=speculative_decision,
         )
         replay_stage = OptionalReplayStage(
-            eligible=decode_plan.replay_policy.eligible,
-            bucket=decode_plan.replay_policy.cuda_graph_bucket,
-            truth_boundary=decode_plan.replay_policy.truth_boundary,
+            eligible=decode_plan.replay_eligible,
+            bucket=decode_plan.cuda_graph_bucket,
+            truth_boundary=decode_plan.replay_truth_boundary,
         )
 
         total_compiler_cost_ms = (
@@ -678,8 +700,8 @@ class PDSplitPlanner:
 
 
 def _find_plan(
-    plans: list[RuntimeExecutionPlan], function_name: str
-) -> RuntimeExecutionPlan:
+    plans: list[PhaseTimingSpec], function_name: str
+) -> PhaseTimingSpec:
     matches = [p for p in plans if p.function_name == function_name]
     if not matches:
         raise ValueError(

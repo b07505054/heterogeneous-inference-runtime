@@ -2,18 +2,17 @@
 """Generate offline iPhone runtime profile trace.
 
 Pipeline:
-  ServingExecutionPlan JSON (or built-in fixture)
-    → CompilerRuntimeAdapter.from_serving_plan()
-    → list[RuntimeExecutionPlan]
-    → ExecutionEngine.execute(plan, recorder)   ×32 requests
-    → ExecutionTraceRecorder
-    → RuntimeProfileTraceBuilder.from_recorder()
-    → RuntimeProfileTrace
-    → iphone_a17pro_runtime_trace.json
+  ServingExecutionPlan JSON (or built-in V2 fixture)
+    -> list of ExecutionPlanV2 dicts (one per serving phase)
+    -> ExecutionEngine.execute(plan, function_name, recorder)  x32 requests
+    -> ExecutionTraceRecorder
+    -> RuntimeProfileTraceBuilder.from_recorder()
+    -> RuntimeProfileTrace
+    -> iphone_a17pro_runtime_trace.json
 
 Two variants are produced in a single artifact:
-  "baseline"  — cpu-only, no compiler optimizations, fixed-batch scheduling
-  "optimized" — compiler-guided backend selection, paged KV, replay eligibility
+  "baseline"  -- cpu-only, no compiler optimizations, fixed-batch scheduling
+  "optimized" -- compiler-guided backend selection, paged KV, replay eligibility
 
 Truth boundary:
   "offline_runtime_simulation_not_iphone_execution"
@@ -30,23 +29,17 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import sys
 from pathlib import Path
 
-# ---------------------------------------------------------------------------
-# Repo-root so relative imports resolve whether the script is run from
-# the repo root or from scripts/.
-# ---------------------------------------------------------------------------
 _REPO_ROOT = Path(__file__).parent.parent.resolve()
 sys.path.insert(0, str(_REPO_ROOT))
 
-from deployment.compiler_runtime_adapter import CompilerRuntimeAdapter
 from deployment.execution_engine import ExecutionEngine
 from deployment.execution_plan_v2.loader import parse_execution_plan_v2
-from deployment.execution_plan_v2.schema import ExecutionPlanV2, FunctionPlan
 from deployment.execution_trace_recorder import ExecutionTraceRecorder
-from deployment.runtime_execution_plan import RuntimeExecutionPlan
 from deployment.runtime_profile_trace import (
     COMPILER_PLAN_SOURCE_ARTIFACT,
     COMPILER_PLAN_SOURCE_FIXTURE,
@@ -73,185 +66,87 @@ _OUTPUT_PATH = _OUTPUT_DIR / "iphone_a17pro_runtime_trace.json"
 _NUM_REQUESTS = 32
 _TRUTH_BOUNDARY = "offline_runtime_simulation_not_iphone_execution"
 
-# Simulated inter-request gaps for each variant.
-# Baseline: wide gap (cpu-only, slow scheduling).
-# Optimized: narrow gap (compiler-guided, faster dispatch).
 _BASELINE_GAP_MS: float = 20.0
 _OPTIMIZED_GAP_MS: float = 2.0
 
 # ---------------------------------------------------------------------------
-# Built-in fixture — used when the compiler iphone plan is not yet generated
-# (i.e., before Compiler Commit 1 runs).
+# Built-in fixture -- V2 schema, one plan dict per serving phase.
+# Used when the compiler iphone plan is not yet generated.
 # ---------------------------------------------------------------------------
 
 _FIXTURE_TARGET_PROFILE_ID = "apple-a17pro-mobile"
 _FIXTURE_MODEL_NAME = "tiny-gpt"
 
-_FIXTURE_OPTIMIZED: dict = {
-    "target_profile_id": _FIXTURE_TARGET_PROFILE_ID,
-    "model_name": _FIXTURE_MODEL_NAME,
-    "function_plans": [
-        {
-            "function_name": "prefill",
-            "execution_mode": "colocated",
-            "cost_summary": {
-                "colocated_total_ms": 8.2,
-                "confidence": "low",
-                "policy": "colocated",
-                "cost_source": "formula_synthetic",
-            },
-            "kv_plan": {
-                "layout": "paged",
-                "kv_byte_estimate_mb": 12.0,
-                "layout_reason": "prefill_paged_kv",
-                "truth_boundary": "static_formula_estimate_not_measured_memory",
-            },
-            "replay_plan": {
-                "replay_eligible": False,
-                "cuda_graph_bucket": "",
-                "override_reason": "dynamic_shape",
-                "truth_boundary": "static_shape_replay_eligibility_not_cuda_graph_capture",
-            },
-            "backend_execution_plan": {
-                "primary_backend": "coreml",
-                "fallback_chain": ["metal", "cpu"],
-                "decision_source": "target_preferred",
-                "required_precision": "fp16",
-                "required_kv_layout": "paged",
-                "requires_replay": False,
-            },
-            "provenance": {
-                "truth_boundary": "compiler_execution_provider_plan_not_runtime_dispatch",
-                "cost_source": "formula_synthetic",
-            },
-            "source_passes": [
-                "serving-phase-analysis",
-                "kv-layout-planning",
-                "replay-eligibility",
-                "execution-provider-planning",
-            ],
+_FIXTURE_PLANS_OPTIMIZED: list[dict] = [
+    {
+        "schema": "execution_plan",
+        "schema_version": "2.0.0",
+        "plan_id": "prefill",
+        "provenance": {
+            "compiler_tool": "fixture",
+            "model_spec_ref": "",
+            "capability_bundle": {"hardware_profile_ref": ""},
+            "truth_boundary": "compiler_execution_provider_plan_not_runtime_dispatch",
         },
-        {
-            "function_name": "decode",
-            "execution_mode": "colocated",
-            "cost_summary": {
-                "colocated_total_ms": 3.6,
-                "confidence": "low",
-                "policy": "colocated",
-                "cost_source": "formula_synthetic",
-            },
-            "kv_plan": {
-                "layout": "paged",
-                "kv_byte_estimate_mb": 6.0,
-                "layout_reason": "decode_paged_kv",
+        "model_identity": {},
+        "global_decisions": {
+            "memory": {
+                "kv_cache_layout": "paged",
+                "estimated_kv_peak_mb": 12.0,
                 "truth_boundary": "static_formula_estimate_not_measured_memory",
             },
-            "replay_plan": {
+            "serving": {
+                "topology": "colocated",
+                "colocated_cost_estimate_ms": 8.2,
+                "replay_eligible": False,
+            },
+        },
+        "function_plans": [{
+            "function_name": "prefill",
+            "serving_phase": "prefill",
+            "backend": {
+                "selected_backend": "coreml_ane",
+                "fallback_backends": ["arm_compute", "cpu"],
+                "reason": "target_preferred",
+            },
+            "per_op_decisions": [],
+        }],
+    },
+    {
+        "schema": "execution_plan",
+        "schema_version": "2.0.0",
+        "plan_id": "decode",
+        "provenance": {
+            "compiler_tool": "fixture",
+            "model_spec_ref": "",
+            "capability_bundle": {"hardware_profile_ref": ""},
+            "truth_boundary": "compiler_execution_provider_plan_not_runtime_dispatch",
+        },
+        "model_identity": {},
+        "global_decisions": {
+            "memory": {
+                "kv_cache_layout": "paged",
+                "estimated_kv_peak_mb": 6.0,
+                "truth_boundary": "static_formula_estimate_not_measured_memory",
+            },
+            "serving": {
+                "topology": "colocated",
+                "colocated_cost_estimate_ms": 3.6,
                 "replay_eligible": True,
-                "cuda_graph_bucket": "decode_static",
-                "override_reason": "",
-                "truth_boundary": "static_shape_replay_eligibility_not_cuda_graph_capture",
             },
-            "backend_execution_plan": {
-                "primary_backend": "coreml",
-                "fallback_chain": ["metal", "cpu"],
-                "decision_source": "target_preferred",
-                "required_precision": "fp16",
-                "required_kv_layout": "paged",
-                "requires_replay": True,
-            },
-            "provenance": {
-                "truth_boundary": "compiler_execution_provider_plan_not_runtime_dispatch",
-                "cost_source": "formula_synthetic",
-            },
-            "source_passes": [
-                "serving-phase-analysis",
-                "kv-layout-planning",
-                "replay-eligibility",
-                "execution-provider-planning",
-            ],
         },
-    ],
-}
-
-# Baseline: cpu-only, no compiler optimizations, contiguous KV, no replay.
-# Higher cost estimates reflect unoptimized CPU execution without hardware dispatch.
-_FIXTURE_BASELINE: dict = {
-    "target_profile_id": _FIXTURE_TARGET_PROFILE_ID,
-    "model_name": _FIXTURE_MODEL_NAME,
-    "function_plans": [
-        {
-            "function_name": "prefill",
-            "execution_mode": "colocated",
-            "cost_summary": {
-                "colocated_total_ms": 48.0,
-                "confidence": "low",
-                "policy": "colocated",
-                "cost_source": "formula_synthetic",
-            },
-            "kv_plan": {
-                "layout": "contiguous",
-                "kv_byte_estimate_mb": 24.0,
-                "layout_reason": "baseline_cpu_contiguous",
-                "truth_boundary": "static_formula_estimate_not_measured_memory",
-            },
-            "replay_plan": {
-                "replay_eligible": False,
-                "cuda_graph_bucket": "",
-                "override_reason": "baseline_no_replay",
-                "truth_boundary": "static_shape_replay_eligibility_not_cuda_graph_capture",
-            },
-            "backend_execution_plan": {
-                "primary_backend": "cpu",
-                "fallback_chain": ["cpu"],
-                "decision_source": "baseline_cpu_fixed",
-                "required_precision": "fp16",
-                "required_kv_layout": "contiguous",
-                "requires_replay": False,
-            },
-            "provenance": {
-                "truth_boundary": "compiler_execution_provider_plan_not_runtime_dispatch",
-                "cost_source": "formula_synthetic",
-            },
-            "source_passes": [],
-        },
-        {
+        "function_plans": [{
             "function_name": "decode",
-            "execution_mode": "colocated",
-            "cost_summary": {
-                "colocated_total_ms": 22.0,
-                "confidence": "low",
-                "policy": "colocated",
-                "cost_source": "formula_synthetic",
+            "serving_phase": "decode",
+            "backend": {
+                "selected_backend": "coreml_ane",
+                "fallback_backends": ["arm_compute", "cpu"],
+                "reason": "target_preferred",
             },
-            "kv_plan": {
-                "layout": "contiguous",
-                "kv_byte_estimate_mb": 10.0,
-                "layout_reason": "baseline_cpu_contiguous",
-                "truth_boundary": "static_formula_estimate_not_measured_memory",
-            },
-            "replay_plan": {
-                "replay_eligible": False,
-                "cuda_graph_bucket": "",
-                "override_reason": "baseline_no_replay",
-                "truth_boundary": "static_shape_replay_eligibility_not_cuda_graph_capture",
-            },
-            "backend_execution_plan": {
-                "primary_backend": "cpu",
-                "fallback_chain": ["cpu"],
-                "decision_source": "baseline_cpu_fixed",
-                "required_precision": "fp16",
-                "required_kv_layout": "contiguous",
-                "requires_replay": False,
-            },
-            "provenance": {
-                "truth_boundary": "compiler_execution_provider_plan_not_runtime_dispatch",
-                "cost_source": "formula_synthetic",
-            },
-            "source_passes": [],
-        },
-    ],
-}
+            "per_op_decisions": [],
+        }],
+    },
+]
 
 
 # ---------------------------------------------------------------------------
@@ -261,97 +156,99 @@ _FIXTURE_BASELINE: dict = {
 def _simulated_queue_depth(req_idx: int, variant: str) -> int:
     """Return a deterministic simulated queue depth for req_idx."""
     if variant == "baseline":
-        # Baseline: high initial pressure, slow drain.
         return max(2, 10 - req_idx // 4)
-    # Optimized: low initial pressure, fast drain.
     return max(1, 3 - req_idx // 12)
 
 
 def _simulated_memory_mb(req_idx: int, variant: str) -> float:
     """Return a deterministic simulated memory footprint for req_idx."""
     if variant == "baseline":
-        # Baseline: contiguous KV — higher resident footprint.
         return 480.0 + (req_idx % 8) * 12.0
-    # Optimized: paged KV — lower, more stable footprint.
     return 140.0 + (req_idx % 4) * 8.0
 
 
 def _cpu_only_overlay(plan_dict: dict) -> dict:
-    """Return a copy of plan_dict with every function plan forced to cpu-only, contiguous KV."""
-    import copy
+    """Return a copy of a V2 plan dict with all function plans forced to cpu-only, contiguous KV.
+
+    Scales colocated_cost_estimate_ms by 5.5 to simulate unoptimized CPU execution.
+    """
     d = copy.deepcopy(plan_dict)
+    gd = d.setdefault("global_decisions", {})
+    mem = gd.setdefault("memory", {})
+    serving = gd.setdefault("serving", {})
+    mem["kv_cache_layout"] = "contiguous"
+    serving["replay_eligible"] = False
+    base_ms = float(serving.get("colocated_cost_estimate_ms", 8.0))
+    serving["colocated_cost_estimate_ms"] = round(base_ms * 5.5, 2)
     for fp in d.get("function_plans", []):
-        bep = fp.setdefault("backend_execution_plan", {})
-        bep["primary_backend"] = "cpu"
-        bep["fallback_chain"] = ["cpu"]
-        bep["decision_source"] = "baseline_cpu_fixed"
-        bep["requires_replay"] = False
-        kv = fp.setdefault("kv_plan", {})
-        kv["layout"] = "contiguous"
-        rp = fp.setdefault("replay_plan", {})
-        rp["replay_eligible"] = False
-        rp["cuda_graph_bucket"] = ""
-        rp["override_reason"] = "baseline_no_replay"
-        # Scale up cost estimates to simulate unoptimized CPU execution:
-        # multiply compiler cost by a fixed factor representing the absence of
-        # hardware-accelerated dispatch.
-        cs = fp.setdefault("cost_summary", {})
-        base_ms = float(cs.get("colocated_total_ms", 8.0))
-        cs["colocated_total_ms"] = round(base_ms * 5.5, 2)
+        backend = fp.setdefault("backend", {})
+        backend["selected_backend"] = "cpu"
+        backend["fallback_backends"] = ["cpu"]
+        backend["reason"] = "baseline_cpu_fixed"
     return d
 
 
-def _v1_plan_to_v2(plan: RuntimeExecutionPlan) -> tuple[ExecutionPlanV2, FunctionPlan]:
-    """Boundary adapter: build a minimal ExecutionPlanV2 from a V1 RuntimeExecutionPlan.
+def _v1_serving_plan_to_v2_plans(v1_dict: dict) -> list[dict]:
+    """Convert a V1 ServingExecutionPlan JSON to a list of V2 execution plan dicts.
 
-    This is a script-level shim so the V1 ServingExecutionPlan fixture format can
-    feed the V2 ExecutionEngine.execute() API without duplicating the pipeline.
+    One V2 plan dict is produced per function_plan entry in the V1 dict.
+    Each carries the per-phase cost, KV layout, replay eligibility, and backend.
     """
-    serving_phase = "decode" if "decode" in plan.function_name.lower() else "prefill"
-    d: dict = {
-        "schema": "execution_plan",
-        "schema_version": "2.0.0",
-        "plan_id": plan.function_name,
-        "provenance": {
-            "compiler_tool": "iphone_trace_script_v1_adapter",
-            "model_spec_ref": "",
-            "capability_bundle": {"hardware_profile_ref": ""},
-            "truth_boundary": plan.compiler_provenance.truth_boundary,
-        },
-        "model_identity": {},
-        "global_decisions": {
-            "memory": {
-                "kv_cache_layout": plan.memory_policy.kv_layout,
-                "estimated_kv_peak_mb": plan.memory_policy.kv_byte_estimate_mb,
-                "truth_boundary": plan.memory_policy.truth_boundary,
+    tb = "compiler_execution_provider_plan_not_runtime_dispatch"
+    result: list[dict] = []
+    for fp in v1_dict.get("function_plans", []):
+        name = fp.get("function_name", "unknown")
+        phase = "decode" if "decode" in name.lower() else "prefill"
+        d: dict = {
+            "schema": "execution_plan",
+            "schema_version": "2.0.0",
+            "plan_id": name,
+            "provenance": {
+                "compiler_tool": "v1_plan_import",
+                "model_spec_ref": "",
+                "capability_bundle": {"hardware_profile_ref": ""},
+                "truth_boundary": fp.get("provenance", {}).get("truth_boundary", tb),
             },
-            "serving": {
-                "topology": plan.execution_policy,
-                "colocated_cost_estimate_ms": plan.scheduling_policy.compiler_cost_ms,
-                "replay_eligible": plan.replay_policy.eligible,
+            "model_identity": {},
+            "global_decisions": {
+                "memory": {
+                    "kv_cache_layout": fp.get("kv_plan", {}).get("layout", "contiguous"),
+                    "estimated_kv_peak_mb": float(
+                        fp.get("kv_plan", {}).get("kv_byte_estimate_mb", 0.0)
+                    ),
+                    "truth_boundary": fp.get("kv_plan", {}).get("truth_boundary", ""),
+                },
+                "serving": {
+                    "topology": fp.get("execution_mode", "colocated"),
+                    "colocated_cost_estimate_ms": float(
+                        fp.get("cost_summary", {}).get("colocated_total_ms", 0.0)
+                    ),
+                    "replay_eligible": bool(
+                        fp.get("replay_plan", {}).get("replay_eligible", False)
+                    ),
+                },
             },
-        },
-        "function_plans": [
-            {
-                "function_name": plan.function_name,
-                "serving_phase": serving_phase,
+            "function_plans": [{
+                "function_name": name,
+                "serving_phase": phase,
                 "backend": {
-                    "decision_type": "BackendDecision",
-                    "scope": "Function",
-                    "selected_backend": plan.backend_policy.primary_backend,
-                    "fallback_backends": list(plan.backend_policy.fallback_chain),
-                    "reason": plan.backend_policy.compiler_decision_source,
+                    "selected_backend": fp.get("backend_execution_plan", {}).get(
+                        "primary_backend", "cpu"
+                    ),
+                    "fallback_backends": list(
+                        fp.get("backend_execution_plan", {}).get("fallback_chain", [])
+                    ),
+                    "reason": fp.get("backend_execution_plan", {}).get("decision_source", ""),
                 },
                 "per_op_decisions": [],
-            }
-        ],
-    }
-    plan_v2 = parse_execution_plan_v2(d)
-    return plan_v2, plan_v2.function_plans[0]
+            }],
+        }
+        result.append(d)
+    return result
 
 
 def _run_variant(
-    serving_plan_dict: dict,
+    plan_dicts: list[dict],
     *,
     variant_id: str,
     runtime_mode: str,
@@ -360,24 +257,22 @@ def _run_variant(
     num_requests: int,
 ) -> TraceVariant:
     """Run num_requests simulated requests and return a TraceVariant."""
-    plans = CompilerRuntimeAdapter.from_serving_plan(serving_plan_dict)
     engine = ExecutionEngine()
     recorder = ExecutionTraceRecorder()
 
     for req_idx in range(num_requests):
         t_start = recorder.current_time_ms()
 
-        for plan in plans:
-            plan_v2, function_plan = _v1_plan_to_v2(plan)
-            engine.execute(plan_v2, function_plan, recorder=recorder)
+        for plan_dict in plan_dicts:
+            plan_v2 = parse_execution_plan_v2(plan_dict)
+            for fp in plan_v2.function_plans:
+                engine.execute(plan_v2, fp.function_name, recorder=recorder)
 
         t_end = recorder.current_time_ms()
         recorder.record_request_latency(t_end - t_start)
 
-        # Inter-request gap (simulates scheduler overhead / arrival spacing).
         recorder.advance_clock(gap_ms)
 
-        # Snapshot after each request for the playback timeseries.
         recorder.record_snapshot(
             queue_depth=_simulated_queue_depth(req_idx, variant_id),
             memory_mb=_simulated_memory_mb(req_idx, variant_id),
@@ -455,34 +350,31 @@ def _generate_trace(
     Does not write output or print anything. Returns the assembled trace.
     Callers (main, tests) handle I/O and printing.
     """
-    optimized_dict: dict
-    baseline_dict: dict
-
     if compiler_plan_path.exists():
         with compiler_plan_path.open(encoding="utf-8") as f:
-            optimized_dict = json.load(f)
+            v1_dict = json.load(f)
+        optimized_plan_dicts = _v1_serving_plan_to_v2_plans(v1_dict)
+        target_profile_id = v1_dict.get("target_profile_id", _FIXTURE_TARGET_PROFILE_ID)
+        model_name = v1_dict.get("model_name", _FIXTURE_MODEL_NAME)
         compiler_plan_ref = str(compiler_plan_path)
         compiler_plan_path_str = str(compiler_plan_path)
         compiler_plan_source = COMPILER_PLAN_SOURCE_ARTIFACT
         do_not_use_for_demo = False
         provenance_notes: list[str] = []
-        baseline_dict = _cpu_only_overlay(optimized_dict)
     else:
-        optimized_dict = _FIXTURE_OPTIMIZED
-        baseline_dict = _FIXTURE_BASELINE
+        optimized_plan_dicts = _FIXTURE_PLANS_OPTIMIZED
+        target_profile_id = _FIXTURE_TARGET_PROFILE_ID
+        model_name = _FIXTURE_MODEL_NAME
         compiler_plan_ref = "fixture:built_in"
         compiler_plan_path_str = str(compiler_plan_path)
         compiler_plan_source = COMPILER_PLAN_SOURCE_FIXTURE
         do_not_use_for_demo = True
         provenance_notes = ["compiler_not_in_pipeline"]
 
-    target_profile_id: str = optimized_dict.get(
-        "target_profile_id", _FIXTURE_TARGET_PROFILE_ID
-    )
-    model_name: str = optimized_dict.get("model_name", _FIXTURE_MODEL_NAME)
+    baseline_plan_dicts = [_cpu_only_overlay(pd) for pd in optimized_plan_dicts]
 
     baseline = _run_variant(
-        baseline_dict,
+        baseline_plan_dicts,
         variant_id="baseline",
         runtime_mode="fcfs_fixed_batch_cpu",
         optimizer_features=[],
@@ -490,7 +382,7 @@ def _generate_trace(
         num_requests=num_requests,
     )
     optimized = _run_variant(
-        optimized_dict,
+        optimized_plan_dicts,
         variant_id="optimized",
         runtime_mode="cost_aware_paged_kv_coreml",
         optimizer_features=[

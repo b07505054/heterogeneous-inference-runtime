@@ -121,7 +121,7 @@ def _prefill() -> tuple[ExecutionPlanV2, FunctionPlan]:
 
 def test_primary_backend_available_selects_primary():
     plan, fp = _decode()
-    result = ExecutionEngine().execute(plan, fp)
+    result = ExecutionEngine().execute(plan, fp.function_name)
     assert result.backend_decision.selected_backend == "coreml_ane"
     assert result.backend_decision.override_reason == ""
     assert result.compiler_vs_runtime_backend == "match"
@@ -130,7 +130,7 @@ def test_primary_backend_available_selects_primary():
 def test_primary_unavailable_selects_first_fallback():
     plan, fp = _decode()
     engine = ExecutionEngine(backend_dispatcher=BackendDispatcher(unavailable={"coreml_ane"}))
-    result = engine.execute(plan, fp)
+    result = engine.execute(plan, fp.function_name)
     assert result.backend_decision.selected_backend == "arm_compute"
     assert result.backend_decision.override_reason == "primary_backend_unavailable"
     assert result.backend_decision.attempted_backends == ["coreml_ane", "arm_compute"]
@@ -142,7 +142,7 @@ def test_all_backends_unavailable_uses_cpu_emergency():
     engine = ExecutionEngine(
         backend_dispatcher=BackendDispatcher(unavailable={"coreml_ane", "arm_compute", "cpu"})
     )
-    result = engine.execute(plan, fp)
+    result = engine.execute(plan, fp.function_name)
     assert result.backend_decision.selected_backend == "cpu"
     assert result.backend_decision.override_reason == "all_backends_unavailable_cpu_emergency"
     assert result.compiler_vs_runtime_backend == "override"
@@ -151,7 +151,7 @@ def test_all_backends_unavailable_uses_cpu_emergency():
 def test_constraint_conflict_uses_constraint_conflict_reason():
     plan, fp = _prefill()
     engine = ExecutionEngine(backend_dispatcher=BackendDispatcher(unavailable={"cpu"}))
-    result = engine.execute(plan, fp)
+    result = engine.execute(plan, fp.function_name)
     assert result.backend_decision.selected_backend == "cpu"
     assert result.backend_decision.override_reason == "constraint_conflict_emergency_cpu"
 
@@ -160,14 +160,14 @@ def test_execution_context_is_mutable_but_plan_is_not_modified():
     plan, fp = _decode()
     original_backend = fp.backend.selected_backend  # "coreml_ane" — frozen
     engine = ExecutionEngine(backend_dispatcher=BackendDispatcher(unavailable={"coreml_ane"}))
-    result = engine.execute(plan, fp)
+    result = engine.execute(plan, fp.function_name)
     assert fp.backend.selected_backend == original_backend   # FunctionPlan is frozen
     assert result.backend_decision.selected_backend == "arm_compute"
 
 
 def test_compiler_summary_echoes_plan_fields():
     plan, fp = _decode()
-    result = ExecutionEngine().execute(plan, fp)
+    result = ExecutionEngine().execute(plan, fp.function_name)
     cs = result.compiler_summary
     assert cs.function_name == fp.function_name
     assert cs.compiler_primary_backend == fp.backend.selected_backend
@@ -181,13 +181,13 @@ def test_compiler_summary_echoes_plan_fields():
 
 def test_runtime_result_truth_boundary():
     plan, fp = _decode()
-    result = ExecutionEngine().execute(plan, fp)
+    result = ExecutionEngine().execute(plan, fp.function_name)
     assert result.runtime_truth_boundary == "runtime_result_not_compiler_plan"
 
 
 def test_runtime_result_has_no_measurement_claims():
     plan, fp = _decode()
-    result = ExecutionEngine().execute(plan, fp)
+    result = ExecutionEngine().execute(plan, fp.function_name)
     assert result.replay_decision.captured is False
     assert result.replay_decision.capture_attempted is False
     assert result.memory_decision.admitted is True
@@ -201,7 +201,7 @@ def test_runtime_result_contains_all_typed_decisions():
     from deployment.runtime_decisions import MemoryDecision, ReplayDecision, SchedulingDecision
 
     plan, fp = _decode()
-    result = ExecutionEngine().execute(plan, fp)
+    result = ExecutionEngine().execute(plan, fp.function_name)
     assert isinstance(result.scheduling_decision, SchedulingDecision)
     assert isinstance(result.memory_decision, MemoryDecision)
     assert isinstance(result.replay_decision, ReplayDecision)
@@ -210,7 +210,7 @@ def test_runtime_result_contains_all_typed_decisions():
 
 def test_decision_trace_lists_all_stages_in_order():
     plan, fp = _decode()
-    result = ExecutionEngine().execute(plan, fp)
+    result = ExecutionEngine().execute(plan, fp.function_name)
     expected = [
         "execution_plan_v2",
         "scheduling_decision_evaluator",
@@ -224,7 +224,7 @@ def test_decision_trace_lists_all_stages_in_order():
 
 def test_backend_runs_after_replay_in_decision_trace():
     plan, fp = _decode()
-    result = ExecutionEngine().execute(plan, fp)
+    result = ExecutionEngine().execute(plan, fp.function_name)
     trace = result.decision_trace
     replay_idx = trace.index("replay_decision_evaluator")
     backend_idx = trace.index("backend_dispatcher")
@@ -238,16 +238,16 @@ def test_backend_runs_after_replay_in_decision_trace():
 def test_recorder_does_not_change_runtime_result():
     """execute() and execute(recorder=...) must return identical RuntimeResult."""
     plan, fp = _decode()
-    result_plain = ExecutionEngine().execute(plan, fp)
-    result_traced = ExecutionEngine().execute(plan, fp, recorder=ExecutionTraceRecorder())
+    result_plain = ExecutionEngine().execute(plan, fp.function_name)
+    result_traced = ExecutionEngine().execute(plan, fp.function_name, recorder=ExecutionTraceRecorder())
     assert result_plain == result_traced
 
 
 def test_recorder_none_is_backward_compatible():
     """Explicitly passing recorder=None must be identical to omitting it."""
     plan, fp = _decode()
-    result_omitted = ExecutionEngine().execute(plan, fp)
-    result_explicit_none = ExecutionEngine().execute(plan, fp, recorder=None)
+    result_omitted = ExecutionEngine().execute(plan, fp.function_name)
+    result_explicit_none = ExecutionEngine().execute(plan, fp.function_name, recorder=None)
     assert result_omitted == result_explicit_none
 
 
@@ -256,7 +256,7 @@ def test_recorder_receives_five_events_per_execute():
     scheduler, memory, replay, backend, compute."""
     plan, fp = _decode()
     rec = ExecutionTraceRecorder()
-    ExecutionEngine().execute(plan, fp, recorder=rec)
+    ExecutionEngine().execute(plan, fp.function_name, recorder=rec)
     assert len(rec.events()) == 5
 
 
@@ -264,7 +264,7 @@ def test_recorder_event_categories_in_pipeline_order():
     """Events must appear in decision-pipeline order."""
     plan, fp = _decode()
     rec = ExecutionTraceRecorder()
-    ExecutionEngine().execute(plan, fp, recorder=rec)
+    ExecutionEngine().execute(plan, fp.function_name, recorder=rec)
     categories = [e.category for e in rec.events()]
     assert categories == ["scheduler", "memory", "replay", "backend", "compute"]
 
@@ -272,7 +272,7 @@ def test_recorder_event_categories_in_pipeline_order():
 def test_recorder_scheduling_event_metadata():
     plan, fp = _decode()
     rec = ExecutionTraceRecorder()
-    ExecutionEngine().execute(plan, fp, recorder=rec)
+    ExecutionEngine().execute(plan, fp.function_name, recorder=rec)
     sched_ev = rec.events()[0]
     assert sched_ev.category == "scheduler"
     assert sched_ev.name == "scheduling_decision"
@@ -286,7 +286,7 @@ def test_recorder_scheduling_event_metadata():
 def test_recorder_memory_event_metadata():
     plan, fp = _decode()
     rec = ExecutionTraceRecorder()
-    ExecutionEngine().execute(plan, fp, recorder=rec)
+    ExecutionEngine().execute(plan, fp.function_name, recorder=rec)
     mem_ev = rec.events()[1]
     assert mem_ev.category == "memory"
     assert mem_ev.name == "memory_decision"
@@ -299,7 +299,7 @@ def test_recorder_memory_event_metadata():
 def test_recorder_replay_event_metadata():
     plan, fp = _decode()
     rec = ExecutionTraceRecorder()
-    ExecutionEngine().execute(plan, fp, recorder=rec)
+    ExecutionEngine().execute(plan, fp.function_name, recorder=rec)
     replay_ev = rec.events()[2]
     assert replay_ev.category == "replay"
     assert replay_ev.name == "replay_decision"
@@ -315,7 +315,7 @@ def test_recorder_replay_event_metadata():
 def test_recorder_backend_event_metadata():
     plan, fp = _decode()
     rec = ExecutionTraceRecorder()
-    ExecutionEngine().execute(plan, fp, recorder=rec)
+    ExecutionEngine().execute(plan, fp.function_name, recorder=rec)
     backend_ev = rec.events()[3]
     assert backend_ev.category == "backend"
     assert backend_ev.name == "backend_dispatch"
@@ -330,7 +330,7 @@ def test_recorder_compute_event_duration_equals_compiler_cost():
     """Compute event duration must equal the compiler's cost estimate."""
     plan, fp = _decode()
     rec = ExecutionTraceRecorder()
-    ExecutionEngine().execute(plan, fp, recorder=rec)
+    ExecutionEngine().execute(plan, fp.function_name, recorder=rec)
     compute_ev = rec.events()[4]
     assert compute_ev.category == "compute"
     assert compute_ev.duration_ms == pytest.approx(
@@ -343,7 +343,7 @@ def test_recorder_compute_event_lane_gpu_for_coreml_ane():
     """coreml_ane backend → compute lane must be 'gpu'."""
     plan, fp = _decode()
     rec = ExecutionTraceRecorder()
-    ExecutionEngine().execute(plan, fp, recorder=rec)
+    ExecutionEngine().execute(plan, fp.function_name, recorder=rec)
     compute_ev = rec.events()[4]
     assert compute_ev.lane == "gpu"
 
@@ -352,7 +352,7 @@ def test_recorder_compute_event_lane_cpu_for_cpu_backend():
     """cpu-only backend → compute lane must be 'cpu'."""
     plan, fp = _prefill()
     rec = ExecutionTraceRecorder()
-    ExecutionEngine().execute(plan, fp, recorder=rec)
+    ExecutionEngine().execute(plan, fp.function_name, recorder=rec)
     compute_ev = rec.events()[4]
     assert compute_ev.category == "compute"
     assert compute_ev.lane == "cpu"
@@ -361,7 +361,7 @@ def test_recorder_compute_event_lane_cpu_for_cpu_backend():
 def test_recorder_compute_event_name_is_function_name():
     plan, fp = _decode()
     rec = ExecutionTraceRecorder()
-    ExecutionEngine().execute(plan, fp, recorder=rec)
+    ExecutionEngine().execute(plan, fp.function_name, recorder=rec)
     compute_ev = rec.events()[4]
     assert compute_ev.name == fp.function_name  # "decode_constrained"
 
@@ -369,7 +369,7 @@ def test_recorder_compute_event_name_is_function_name():
 def test_recorder_compute_event_backend_in_metadata():
     plan, fp = _decode()
     rec = ExecutionTraceRecorder()
-    ExecutionEngine().execute(plan, fp, recorder=rec)
+    ExecutionEngine().execute(plan, fp.function_name, recorder=rec)
     compute_ev = rec.events()[4]
     assert compute_ev.metadata["backend"] == "coreml_ane"
 
@@ -380,8 +380,8 @@ def test_recorder_accumulates_across_multiple_execute_calls():
     plan2, fp2 = _decode()
     rec = ExecutionTraceRecorder()
     engine = ExecutionEngine()
-    engine.execute(plan1, fp1, recorder=rec)
-    engine.execute(plan2, fp2, recorder=rec)
+    engine.execute(plan1, fp1.function_name, recorder=rec)
+    engine.execute(plan2, fp2.function_name, recorder=rec)
     assert len(rec.events()) == 10
 
 
@@ -390,9 +390,9 @@ def test_recorder_clock_advances_across_execute_calls():
     plan, fp = _decode()
     rec = ExecutionTraceRecorder()
     engine = ExecutionEngine()
-    engine.execute(plan, fp, recorder=rec)
+    engine.execute(plan, fp.function_name, recorder=rec)
     time_after_first = rec.current_time_ms()
-    engine.execute(plan, fp, recorder=rec)
+    engine.execute(plan, fp.function_name, recorder=rec)
     time_after_second = rec.current_time_ms()
     assert time_after_second > time_after_first
 
@@ -401,7 +401,7 @@ def test_recorder_event_timestamps_monotonically_non_decreasing():
     """No event may start before the preceding event started."""
     plan, fp = _decode()
     rec = ExecutionTraceRecorder()
-    ExecutionEngine().execute(plan, fp, recorder=rec)
+    ExecutionEngine().execute(plan, fp.function_name, recorder=rec)
     events = rec.events()
     for i in range(1, len(events)):
         assert events[i].start_ms >= events[i - 1].start_ms
@@ -411,6 +411,6 @@ def test_recorder_request_id_matches_function_name():
     """All events for one execute() call carry the function_name as request_id."""
     plan, fp = _decode()
     rec = ExecutionTraceRecorder()
-    ExecutionEngine().execute(plan, fp, recorder=rec)
+    ExecutionEngine().execute(plan, fp.function_name, recorder=rec)
     for ev in rec.events():
         assert ev.request_id == fp.function_name

@@ -5,7 +5,7 @@ or FunctionPlan. It creates an ExecutionContext, calls each evaluator and
 dispatcher in order, and assembles a frozen RuntimeResult.
 
 Pipeline (in execution order):
-  ExecutionPlanV2 + FunctionPlan
+  ExecutionPlanV2 + function_name (string lookup → FunctionPlan)
     → ExecutionContext (mutable scratchpad)
     → SchedulingDecisionEvaluator.evaluate()  → SchedulingDecision
     → MemoryDecisionEvaluator.evaluate()      → MemoryDecision
@@ -51,6 +51,16 @@ _GPU_BACKENDS: frozenset[str] = frozenset({
 })
 
 
+def _find_function_plan(plan: ExecutionPlanV2, function_name: str) -> FunctionPlan:
+    for fp in plan.function_plans:
+        if fp.function_name == function_name:
+            return fp
+    raise KeyError(
+        f"function_name {function_name!r} not found in plan {plan.plan_id!r}; "
+        f"available: {[fp.function_name for fp in plan.function_plans]}"
+    )
+
+
 class ExecutionEngine:
     def __init__(self, backend_dispatcher: BackendDispatcher | None = None) -> None:
         self._dispatcher = backend_dispatcher or BackendDispatcher()
@@ -58,9 +68,10 @@ class ExecutionEngine:
     def execute(
         self,
         plan: ExecutionPlanV2,
-        function_plan: FunctionPlan,
+        function_name: str,
         recorder: ExecutionTraceRecorder | None = None,
     ) -> RuntimeResult:
+        function_plan = _find_function_plan(plan, function_name)
         serving = plan.global_decisions.serving
         memory = plan.global_decisions.memory
         ctx = ExecutionContext(plan=plan, function_plan=function_plan)

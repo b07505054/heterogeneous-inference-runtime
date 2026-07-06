@@ -25,7 +25,7 @@ from deployment.runtime_decisions import MemoryDecision, ReplayDecision, Schedul
 class CompilerSummary:
     """Compiler-produced fields echoed into RuntimeResult for side-by-side comparison.
 
-    These are copied verbatim from RuntimeExecutionPlan at execute() time.
+    These are copied verbatim from ExecutionPlanV2 / FunctionPlan at execute() time.
     They are not runtime decisions — they are the compiler's static plan.
     """
 
@@ -39,7 +39,7 @@ class CompilerSummary:
 
 @dataclass(frozen=True)
 class RuntimeResult:
-    """Frozen execution record for one RuntimeExecutionPlan processed by ExecutionEngine.
+    """Frozen execution record for one FunctionPlan processed by ExecutionEngine.
 
     All four decisions are required and typed. execution_statistics remains
     None until measured throughput/timing sub-components are wired in.
