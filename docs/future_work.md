@@ -7,22 +7,32 @@ Phase 1 is complete:
 - Linux measured baseline for an external OpenAI-compatible vLLM server.
 - Simulator and policy-evaluation components for prefix cache, speculative
   decoding, prefill/decode planning, and paged-KV behavior.
+- Runtime execution plan schema, compiler-runtime adapter, backend dispatcher,
+  typed runtime decisions, and execution trace recorder.
+- vLLM execution-plan validation and materialization helpers under
+  `deployment/vllm_adapter/`.
+- Runtime profile trace generation from compiler artifacts, including committed
+  iPhone A17 Pro and frontend-normalized Qwen trace artifacts.
 
-Phase 2:
+Phase 2 is in progress:
 
 - Server runtime policy that uses measured vLLM/OpenAI-compatible artifacts to
   guide concurrency, admission, and routing decisions.
-- ExecutionPlan schema for vLLM runtime configuration.
-- Feedback database for measured vLLM runtime metrics.
+- A durable feedback database for measured vLLM runtime metrics. Existing
+  measured baselines and trace artifacts are evidence inputs, not a long-lived
+  feedback store.
+- End-to-end evaluation of compiler-materialized vLLM runtime config against a
+  comparable measured baseline.
 
 Phase 3:
 
 - Capability-driven quantization policy.
 - Capability-driven deployment policy that joins hardware capability, backend
   capability, kernel-library capability, and measured support.
-- Model Adapter and Neutral Runtime Graph architecture, so runtime orchestration
-  consumes neutral model-family/stage/tensor/memory/KV/backend-target concepts
-  instead of ONNX, TensorRT, PyTorch, vLLM, or model-name internals.
+- Extend the existing Model Adapter and Neutral Runtime Graph architecture so
+  runtime orchestration can consume more real source artifacts through neutral
+  model-family/stage/tensor/memory/KV/backend-target concepts instead of ONNX,
+  TensorRT, PyTorch, vLLM, or model-name internals.
 
 Phase 4:
 
@@ -33,8 +43,8 @@ Phase 4:
 
 ## vLLM Execution Planning
 
-The next compiler-runtime milestone should use ExecutionPlan as the active
-handoff:
+ExecutionPlan is now the active compiler-runtime handoff. The remaining work is
+to close the loop from planning artifact to measured runtime feedback:
 
 ```text
 Client Requests
@@ -46,24 +56,37 @@ Client Requests
   -> feedback database
 ```
 
+Implemented pieces:
+
+- `deployment/execution_plan/schema.py` defines the runtime-facing
+  ExecutionPlan v2 contract.
+- `deployment/vllm_adapter/plan_schema.py` validates compiler-produced vLLM
+  execution plans and rejects embedded measured-performance claims.
+- `deployment/vllm_adapter/config_materializer.py` materializes vLLM runtime
+  configuration from planning artifacts.
+- Runtime profile traces can be generated from compiler artifacts and are
+  explicitly labeled as offline simulation artifacts unless a benchmark
+  produced measured data.
+
 Required future work:
 
-- Define the vLLM ExecutionPlan schema for request grouping, batch policy,
-  prefix policy, memory policy, quantization policy, speculative policy, and
-  runtime config.
-- Define the feedback database schema for measured TTFT, TPOT, E2E latency,
-  throughput, success/error counts, and memory pressure.
+- Define a durable feedback database schema for measured TTFT, TPOT, E2E
+  latency, throughput, success/error counts, and memory pressure.
 - Ensure compiler and runtime read the same NVIDIA/CUDA hardware profile and
   vLLM backend capability profile, or update their profile copies together with
   matching profile IDs and digests.
+- Benchmark compiler-materialized runtime configs against comparable measured
+  vLLM/OpenAI-compatible baselines before claiming speedup.
 
 Do not claim vLLM speedup until a planned runtime config is benchmarked against
 a comparable measured vLLM baseline.
 
 ## Neutral Runtime Graph
 
-Add a neutral runtime graph layer before implementing more model-specific
-runtime paths.
+The neutral runtime graph layer exists under `deployment/model_adapter/` with a
+test-only `MockModelAdapter`, registry helpers, and pytest coverage. The next
+step is to add real optional source adapters without leaking source-format
+details into the runtime core.
 
 The graph should describe:
 
@@ -77,7 +100,7 @@ The graph should describe:
 
 Adapters should translate source artifacts into this graph:
 
-- `MockModelAdapter`: deterministic tests.
+- `MockModelAdapter`: implemented for deterministic tests.
 - `VLLMEndpointAdapter`: future OpenAI-compatible endpoint configuration.
 - `ONNXModelAdapter`: future optional adapter.
 
@@ -87,7 +110,8 @@ internals.
 
 ## Clarify Runtime Modes
 
-- Add a small matrix in the README that labels each path as measured live, artifact-backed, simulated, or optional/hardware-dependent.
+- Keep the README matrix and high-level docs current so each path is labeled as
+  measured live, artifact-backed, simulated, or optional/hardware-dependent.
 - Add this label to `BenchmarkResult.extra` for every backend adapter.
 - Rename or document artifact-backed adapters so users do not assume they execute live benchmarks.
 
