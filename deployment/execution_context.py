@@ -20,7 +20,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
-from deployment.execution_plan_v2.schema import ExecutionPlanV2, FunctionPlan
+from deployment.execution_plan.schema import ExecutionPlan, FunctionPlan
 
 if TYPE_CHECKING:
     from deployment.backend_dispatcher import BackendDecision
@@ -33,7 +33,7 @@ if TYPE_CHECKING:
 
 @dataclass
 class ExecutionContext:
-    plan: ExecutionPlanV2
+    plan: ExecutionPlan
     function_plan: FunctionPlan
     scheduling_decision: SchedulingDecision | None = None
     memory_decision: MemoryDecision | None = None

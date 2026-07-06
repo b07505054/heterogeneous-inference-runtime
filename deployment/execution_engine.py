@@ -1,11 +1,11 @@
 """ExecutionEngine: runtime orchestrator for compiler-derived execution plans.
 
-ExecutionEngine owns the decision pipeline. It does not mutate ExecutionPlanV2
+ExecutionEngine owns the decision pipeline. It does not mutate ExecutionPlan
 or FunctionPlan. It creates an ExecutionContext, calls each evaluator and
 dispatcher in order, and assembles a frozen RuntimeResult.
 
 Pipeline (in execution order):
-  ExecutionPlanV2 + function_name (string lookup → FunctionPlan)
+  ExecutionPlan + function_name (string lookup → FunctionPlan)
     → ExecutionContext (mutable scratchpad)
     → SchedulingDecisionEvaluator.evaluate()  → SchedulingDecision
     → MemoryDecisionEvaluator.evaluate()      → MemoryDecision
@@ -24,7 +24,7 @@ from __future__ import annotations
 
 from deployment.backend_dispatcher import BackendDecision, BackendDispatcher
 from deployment.execution_context import ExecutionContext
-from deployment.execution_plan_v2.schema import ExecutionPlanV2, FunctionPlan
+from deployment.execution_plan.schema import ExecutionPlan, FunctionPlan
 from deployment.execution_trace_recorder import (
     MEMORY_PHASE_GAP_MS,
     SCHEDULING_PHASE_GAP_MS,
@@ -38,7 +38,7 @@ from deployment.runtime_decisions import (
 from deployment.runtime_result import CompilerSummary, RuntimeResult
 
 _DECISION_TRACE: list[str] = [
-    "execution_plan_v2",
+    "execution_plan",
     "scheduling_decision_evaluator",
     "memory_decision_evaluator",
     "replay_decision_evaluator",
@@ -51,7 +51,7 @@ _GPU_BACKENDS: frozenset[str] = frozenset({
 })
 
 
-def _find_function_plan(plan: ExecutionPlanV2, function_name: str) -> FunctionPlan:
+def _find_function_plan(plan: ExecutionPlan, function_name: str) -> FunctionPlan:
     for fp in plan.function_plans:
         if fp.function_name == function_name:
             return fp
@@ -67,7 +67,7 @@ class ExecutionEngine:
 
     def execute(
         self,
-        plan: ExecutionPlanV2,
+        plan: ExecutionPlan,
         function_name: str,
         recorder: ExecutionTraceRecorder | None = None,
     ) -> RuntimeResult:

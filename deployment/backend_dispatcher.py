@@ -21,7 +21,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from deployment.execution_plan_v2.schema import FunctionPlan
+from deployment.execution_plan.schema import FunctionPlan
 
 
 @dataclass(frozen=True)

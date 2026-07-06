@@ -1,6 +1,6 @@
 """Typed runtime decision records and their evaluators.
 
-Each evaluator accepts typed inputs from ExecutionPlanV2 and produces a frozen
+Each evaluator accepts typed inputs from ExecutionPlan and produces a frozen
 decision record. Evaluators are not planners — they do not allocate memory,
 dispatch to hardware, or capture CUDA graphs. They translate compiler-derived
 plan fields into typed, immutable runtime records for ExecutionEngine to
@@ -23,7 +23,7 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 
-from deployment.execution_plan_v2.schema import FunctionPlan, MemoryPlanDecision, ServingPlanDecision
+from deployment.execution_plan.schema import FunctionPlan, MemoryPlanDecision, ServingPlanDecision
 
 _DEFAULT_KV_MB_PER_PAGE: float = 1.0
 

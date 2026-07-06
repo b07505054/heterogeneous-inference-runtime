@@ -6,10 +6,10 @@ import json
 from pathlib import Path
 from typing import Any
 
-from deployment.execution_plan_v2.schema import ExecutionPlanV2
+from deployment.execution_plan.schema import ExecutionPlan
 
 
-class ExecutionPlanV2Error(ValueError):
+class ExecutionPlanError(ValueError):
     """Raised when an ExecutionPlan v2 artifact is malformed or contaminated."""
 
 
@@ -25,26 +25,26 @@ _MEASURED_FIELDS = {
 }
 
 
-def load_execution_plan_v2(path: str | Path) -> ExecutionPlanV2:
+def load_execution_plan(path: str | Path) -> ExecutionPlan:
     plan_path = Path(path)
     try:
         payload = json.loads(plan_path.read_text(encoding="utf-8"))
     except FileNotFoundError as exc:
-        raise ExecutionPlanV2Error(f"execution plan not found: {plan_path}") from exc
+        raise ExecutionPlanError(f"execution plan not found: {plan_path}") from exc
     except json.JSONDecodeError as exc:
-        raise ExecutionPlanV2Error(f"invalid execution plan JSON: {exc}") from exc
-    return parse_execution_plan_v2(payload)
+        raise ExecutionPlanError(f"invalid execution plan JSON: {exc}") from exc
+    return parse_execution_plan(payload)
 
 
-def parse_execution_plan_v2(payload: dict[str, Any]) -> ExecutionPlanV2:
-    validate_execution_plan_v2(payload)
-    return ExecutionPlanV2.from_dict(payload)
+def parse_execution_plan(payload: dict[str, Any]) -> ExecutionPlan:
+    validate_execution_plan(payload)
+    return ExecutionPlan.from_dict(payload)
 
 
-def validate_execution_plan_v2(payload: dict[str, Any]) -> list[str]:
+def validate_execution_plan(payload: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     if not isinstance(payload, dict):
-        raise ExecutionPlanV2Error("ExecutionPlan v2 must be a JSON object")
+        raise ExecutionPlanError("ExecutionPlan v2 must be a JSON object")
     if payload.get("schema") != "execution_plan":
         errors.append("schema must be execution_plan")
     if payload.get("schema_version") != "2.0.0":
@@ -60,7 +60,7 @@ def validate_execution_plan_v2(payload: dict[str, Any]) -> list[str]:
     if _contains_measured_field(payload):
         errors.append("compiler execution plan must not contain measured runtime fields")
     if errors:
-        raise ExecutionPlanV2Error("; ".join(errors))
+        raise ExecutionPlanError("; ".join(errors))
     return []
 
 

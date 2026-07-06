@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from deployment.execution_plan_v2.schema import ExecutionPath
+from deployment.execution_plan.schema import ExecutionPath
 
 
 def planned_runtime_path_artifact(path: ExecutionPath) -> dict[str, Any]:

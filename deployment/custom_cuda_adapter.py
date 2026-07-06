@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 from deployment.backend_adapter import BackendMaterialization
-from deployment.execution_plan_v2.capability_view import CapabilityValidationView
-from deployment.execution_plan_v2.schema import (
+from deployment.execution_plan.capability_view import CapabilityValidationView
+from deployment.execution_plan.schema import (
     RMSNORM_TRUTH_BOUNDARY,
     ExecutionPath,
     ExecutionPathKind,

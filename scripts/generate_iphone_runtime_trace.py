@@ -3,7 +3,7 @@
 
 Pipeline:
   ServingExecutionPlan JSON (or built-in V2 fixture)
-    -> list of ExecutionPlanV2 dicts (one per serving phase)
+    -> list of ExecutionPlan dicts (one per serving phase)
     -> ExecutionEngine.execute(plan, function_name, recorder)  x32 requests
     -> ExecutionTraceRecorder
     -> RuntimeProfileTraceBuilder.from_recorder()
@@ -38,7 +38,7 @@ _REPO_ROOT = Path(__file__).parent.parent.resolve()
 sys.path.insert(0, str(_REPO_ROOT))
 
 from deployment.execution_engine import ExecutionEngine
-from deployment.execution_plan_v2.loader import parse_execution_plan_v2
+from deployment.execution_plan.loader import parse_execution_plan
 from deployment.execution_trace_recorder import ExecutionTraceRecorder
 from deployment.runtime_profile_trace import (
     COMPILER_PLAN_SOURCE_ARTIFACT,
@@ -264,7 +264,7 @@ def _run_variant(
         t_start = recorder.current_time_ms()
 
         for plan_dict in plan_dicts:
-            plan_v2 = parse_execution_plan_v2(plan_dict)
+            plan_v2 = parse_execution_plan(plan_dict)
             for fp in plan_v2.function_plans:
                 engine.execute(plan_v2, fp.function_name, recorder=recorder)
 

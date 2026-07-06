@@ -1,6 +1,6 @@
 """Map compiler execution-unit vocabulary to runtime adapter IDs.
 
-Compiler ExecutionPlanV2.backend.selected_backend uses execution-unit vocabulary
+Compiler ExecutionPlan.backend.selected_backend uses execution-unit vocabulary
 (cuda_triton, cuda_cublas, cpu, coreml_ane, arm_compute). Runtime adapter IDs
 are internal routing strings used by BackendAdapter implementations (vllm,
 custom_cuda, pytorch_reference, coreml).

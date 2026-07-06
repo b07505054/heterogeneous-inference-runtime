@@ -5,8 +5,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Protocol
 
-from deployment.execution_plan_v2.capability_view import CapabilityValidationView
-from deployment.execution_plan_v2.schema import ExecutionPath
+from deployment.execution_plan.capability_view import CapabilityValidationView
+from deployment.execution_plan.schema import ExecutionPath
 
 
 @dataclass(frozen=True)

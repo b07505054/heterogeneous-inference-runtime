@@ -345,7 +345,7 @@ class GlobalDecisions:
 
 
 @dataclass(frozen=True)
-class ExecutionPlanV2:
+class ExecutionPlan:
     schema: str
     schema_version: str
     plan_id: str
@@ -357,7 +357,7 @@ class ExecutionPlanV2:
     raw: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
-    def from_dict(cls, payload: dict[str, Any]) -> "ExecutionPlanV2":
+    def from_dict(cls, payload: dict[str, Any]) -> "ExecutionPlan":
         return cls(
             schema=str(payload.get("schema", "")),
             schema_version=str(payload.get("schema_version", "")),

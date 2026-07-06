@@ -1,33 +1,33 @@
 """ExecutionPlan v2 runtime IR and builders."""
 
-from deployment.execution_plan_v2.capability_view import (
+from deployment.execution_plan.capability_view import (
     CapabilityValidationError,
     CapabilityValidationView,
 )
-from deployment.execution_plan_v2.loader import (
-    ExecutionPlanV2Error,
-    load_execution_plan_v2,
-    parse_execution_plan_v2,
-    validate_execution_plan_v2,
+from deployment.execution_plan.loader import (
+    ExecutionPlanError,
+    load_execution_plan,
+    parse_execution_plan,
+    validate_execution_plan,
 )
-from deployment.execution_plan_v2.path_builder import (
+from deployment.execution_plan.path_builder import (
     build_baseline_vllm_path,
     build_execution_paths,
 )
-from deployment.execution_plan_v2.schema import (
+from deployment.execution_plan.schema import (
     BackendDecision,
     CapabilityBundleRef,
     ExecutionMethod,
     ExecutionPath,
     ExecutionPathKind,
-    ExecutionPlanV2,
+    ExecutionPlan,
     ExecutionStage,
     ExecutionStageKind,
     FunctionPlan,
     GlobalDecisions,
     KernelDecision,
 )
-from deployment.execution_plan_v2.stage_builder import build_execution_stages
+from deployment.execution_plan.stage_builder import build_execution_stages
 
 __all__ = [
     "BackendDecision",
@@ -37,8 +37,8 @@ __all__ = [
     "ExecutionMethod",
     "ExecutionPath",
     "ExecutionPathKind",
-    "ExecutionPlanV2",
-    "ExecutionPlanV2Error",
+    "ExecutionPlan",
+    "ExecutionPlanError",
     "ExecutionStage",
     "ExecutionStageKind",
     "FunctionPlan",
@@ -47,7 +47,7 @@ __all__ = [
     "build_baseline_vllm_path",
     "build_execution_paths",
     "build_execution_stages",
-    "load_execution_plan_v2",
-    "parse_execution_plan_v2",
-    "validate_execution_plan_v2",
+    "load_execution_plan",
+    "parse_execution_plan",
+    "validate_execution_plan",
 ]

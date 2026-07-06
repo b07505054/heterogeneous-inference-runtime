@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from deployment.execution_plan_v2.schema import (
+from deployment.execution_plan.schema import (
     EXECUTION_STAGE_TRUTH_BOUNDARY,
-    ExecutionPlanV2,
+    ExecutionPlan,
     ExecutionStage,
     ExecutionStageKind,
     FunctionPlan,
@@ -12,7 +12,7 @@ from deployment.execution_plan_v2.schema import (
 )
 
 
-def build_execution_stages(plan: ExecutionPlanV2) -> list[ExecutionStage]:
+def build_execution_stages(plan: ExecutionPlan) -> list[ExecutionStage]:
     stages: list[ExecutionStage] = []
     for function_plan in plan.function_plans:
         stages.append(_stage_from_function(function_plan))

@@ -1,13 +1,13 @@
 from deployment.custom_cuda_adapter import CustomCudaBackendAdapter
-from deployment.execution_plan_v2.capability_view import CapabilityValidationView
-from deployment.execution_plan_v2.loader import parse_execution_plan_v2
-from deployment.execution_plan_v2.path_builder import build_execution_paths
-from deployment.execution_plan_v2.schema import ExecutionPathKind
-from deployment.execution_plan_v2.stage_builder import build_execution_stages
+from deployment.execution_plan.capability_view import CapabilityValidationView
+from deployment.execution_plan.loader import parse_execution_plan
+from deployment.execution_plan.path_builder import build_execution_paths
+from deployment.execution_plan.schema import ExecutionPathKind
+from deployment.execution_plan.stage_builder import build_execution_stages
 
 
 def test_custom_cuda_adapter_materializes_rmsnorm_commands():
-    plan = parse_execution_plan_v2(_plan())
+    plan = parse_execution_plan(_plan())
     paths = build_execution_paths(plan, build_execution_stages(plan))
     path = next(item for item in paths if item.path_kind == ExecutionPathKind.CUSTOM_CUDA_MICROBENCHMARK)
     adapter = CustomCudaBackendAdapter()

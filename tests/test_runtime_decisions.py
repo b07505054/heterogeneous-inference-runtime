@@ -4,7 +4,7 @@ import math
 
 import pytest
 
-from deployment.execution_plan_v2.loader import parse_execution_plan_v2
+from deployment.execution_plan.loader import parse_execution_plan
 from deployment.runtime_decisions import (
     MemoryDecisionEvaluator,
     ReplayDecisionEvaluator,
@@ -124,15 +124,15 @@ _V2_UNKNOWN_LAYOUT: dict = {
 
 
 def _decode_plan():
-    return parse_execution_plan_v2(_V2_DECODE)
+    return parse_execution_plan(_V2_DECODE)
 
 
 def _prefill_plan():
-    return parse_execution_plan_v2(_V2_PREFILL)
+    return parse_execution_plan(_V2_PREFILL)
 
 
 def _unknown_layout_plan():
-    return parse_execution_plan_v2(_V2_UNKNOWN_LAYOUT)
+    return parse_execution_plan(_V2_UNKNOWN_LAYOUT)
 
 
 # ---------------------------------------------------------------------------

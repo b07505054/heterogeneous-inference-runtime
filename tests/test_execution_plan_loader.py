@@ -3,23 +3,23 @@ from pathlib import Path
 
 import pytest
 
-from deployment.execution_plan_v2.loader import (
-    ExecutionPlanV2Error,
-    load_execution_plan_v2,
-    parse_execution_plan_v2,
+from deployment.execution_plan.loader import (
+    ExecutionPlanError,
+    load_execution_plan,
+    parse_execution_plan,
 )
-from deployment.execution_plan_v2.schema import (
+from deployment.execution_plan.schema import (
     DecisionCost,
     MemoryPlanDecision,
     ServingPlanDecision,
 )
 
 
-def test_loader_accepts_execution_plan_v2(tmp_path: Path):
+def test_loader_accepts_execution_plan(tmp_path: Path):
     path = tmp_path / "plan.json"
     path.write_text(json.dumps(_plan()), encoding="utf-8")
 
-    plan = load_execution_plan_v2(path)
+    plan = load_execution_plan(path)
 
     assert plan.schema == "execution_plan"
     assert plan.schema_version == "2.0.0"
@@ -32,24 +32,24 @@ def test_loader_rejects_wrong_schema():
     payload = _plan()
     payload["schema"] = "vllm_execution_plan"
 
-    with pytest.raises(ExecutionPlanV2Error, match="schema must be execution_plan"):
-        parse_execution_plan_v2(payload)
+    with pytest.raises(ExecutionPlanError, match="schema must be execution_plan"):
+        parse_execution_plan(payload)
 
 
 def test_loader_rejects_wrong_schema_version():
     payload = _plan()
     payload["schema_version"] = "1.0.0"
 
-    with pytest.raises(ExecutionPlanV2Error, match="schema_version"):
-        parse_execution_plan_v2(payload)
+    with pytest.raises(ExecutionPlanError, match="schema_version"):
+        parse_execution_plan(payload)
 
 
 def test_loader_rejects_measured_runtime_fields():
     payload = _plan()
     payload["function_plans"][0]["measured_latency_ms"] = 1.0
 
-    with pytest.raises(ExecutionPlanV2Error, match="measured runtime"):
-        parse_execution_plan_v2(payload)
+    with pytest.raises(ExecutionPlanError, match="measured runtime"):
+        parse_execution_plan(payload)
 
 
 # ---------------------------------------------------------------------------
@@ -57,7 +57,7 @@ def test_loader_rejects_measured_runtime_fields():
 # ---------------------------------------------------------------------------
 
 def test_memory_plan_decision_parsed_from_global_decisions():
-    plan = parse_execution_plan_v2(_plan())
+    plan = parse_execution_plan(_plan())
 
     mem = plan.global_decisions.memory
     assert isinstance(mem, MemoryPlanDecision)
@@ -66,7 +66,7 @@ def test_memory_plan_decision_parsed_from_global_decisions():
 
 
 def test_serving_plan_decision_parsed_from_global_decisions():
-    plan = parse_execution_plan_v2(_plan())
+    plan = parse_execution_plan(_plan())
 
     srv = plan.global_decisions.serving
     assert isinstance(srv, ServingPlanDecision)
@@ -80,7 +80,7 @@ def test_serving_plan_decision_parsed_from_global_decisions():
 def test_memory_plan_decision_kv_layout_from_kv_cache_layout_key():
     payload = _plan()
     payload["global_decisions"]["memory"]["kv_cache_layout"] = "paged"
-    plan = parse_execution_plan_v2(payload)
+    plan = parse_execution_plan(payload)
 
     assert plan.global_decisions.memory.kv_layout == "paged"
 
@@ -88,7 +88,7 @@ def test_memory_plan_decision_kv_layout_from_kv_cache_layout_key():
 def test_memory_plan_decision_kv_byte_estimate_from_estimated_kv_peak_mb_key():
     payload = _plan()
     payload["global_decisions"]["memory"]["estimated_kv_peak_mb"] = 6.75
-    plan = parse_execution_plan_v2(payload)
+    plan = parse_execution_plan(payload)
 
     assert plan.global_decisions.memory.kv_byte_estimate_mb == 6.75
 
@@ -96,7 +96,7 @@ def test_memory_plan_decision_kv_byte_estimate_from_estimated_kv_peak_mb_key():
 def test_serving_plan_decision_replay_eligible_parsed():
     payload = _plan()
     payload["global_decisions"]["serving"]["replay_eligible"] = True
-    plan = parse_execution_plan_v2(payload)
+    plan = parse_execution_plan(payload)
 
     assert plan.global_decisions.serving.replay_eligible is True
 
@@ -104,7 +104,7 @@ def test_serving_plan_decision_replay_eligible_parsed():
 def test_serving_plan_decision_colocated_cost_estimate_parsed():
     payload = _plan()
     payload["global_decisions"]["serving"]["colocated_cost_estimate_ms"] = 31.2
-    plan = parse_execution_plan_v2(payload)
+    plan = parse_execution_plan(payload)
 
     assert plan.global_decisions.serving.colocated_cost_estimate_ms == 31.2
 
@@ -112,7 +112,7 @@ def test_serving_plan_decision_colocated_cost_estimate_parsed():
 def test_global_decisions_empty_memory_and_serving_use_defaults():
     payload = _plan()
     payload["global_decisions"] = {}
-    plan = parse_execution_plan_v2(payload)
+    plan = parse_execution_plan(payload)
 
     assert isinstance(plan.global_decisions.memory, MemoryPlanDecision)
     assert isinstance(plan.global_decisions.serving, ServingPlanDecision)
@@ -122,7 +122,7 @@ def test_global_decisions_empty_memory_and_serving_use_defaults():
 
 def test_kernel_decision_cost_parsed_from_meta_evidence():
     payload = _plan_with_kernel_cost()
-    plan = parse_execution_plan_v2(payload)
+    plan = parse_execution_plan(payload)
 
     op = plan.function_plans[0].per_op_decisions[0]
     assert op.kernel is not None
@@ -136,14 +136,14 @@ def test_kernel_decision_cost_parsed_from_meta_evidence():
 
 def test_kernel_decision_cost_truth_boundary_preserved_verbatim():
     payload = _plan_with_kernel_cost()
-    plan = parse_execution_plan_v2(payload)
+    plan = parse_execution_plan(payload)
 
     cost = plan.function_plans[0].per_op_decisions[0].kernel.cost
     assert cost.truth_boundary == "serving_static_cost_model_v1_not_measured_latency"
 
 
 def test_kernel_decision_cost_none_when_meta_evidence_absent():
-    plan = parse_execution_plan_v2(_plan_with_kernel_no_cost())
+    plan = parse_execution_plan(_plan_with_kernel_no_cost())
 
     op = plan.function_plans[0].per_op_decisions[0]
     assert op.kernel is not None
@@ -158,7 +158,7 @@ def test_kernel_decision_cost_backend_fallback_values():
         transfer_cost=5,
         total_cost=27,
     )
-    plan = parse_execution_plan_v2(payload)
+    plan = parse_execution_plan(payload)
 
     cost = plan.function_plans[0].per_op_decisions[0].kernel.cost
     assert cost.backend_switch_cost == 20
@@ -171,8 +171,8 @@ def test_contamination_check_still_rejects_measured_fields():
     payload = _plan()
     payload["function_plans"][0]["measured_latency_ms"] = 1.0
 
-    with pytest.raises(ExecutionPlanV2Error, match="measured runtime"):
-        parse_execution_plan_v2(payload)
+    with pytest.raises(ExecutionPlanError, match="measured runtime"):
+        parse_execution_plan(payload)
 
 
 def _plan_with_kernel_cost(

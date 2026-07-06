@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from deployment.execution_plan_v2.schema import ExecutionPath
+from deployment.execution_plan.schema import ExecutionPath
 from deployment.vllm_adapter.plan_schema import load_vllm_execution_plan, validate_vllm_execution_plan
 
 

@@ -1,11 +1,11 @@
-from deployment.execution_plan_v2.capability_view import CapabilityValidationView
-from deployment.execution_plan_v2.path_builder import (
+from deployment.execution_plan.capability_view import CapabilityValidationView
+from deployment.execution_plan.path_builder import (
     build_baseline_vllm_path,
     build_execution_paths,
 )
-from deployment.execution_plan_v2.loader import parse_execution_plan_v2
-from deployment.execution_plan_v2.schema import ExecutionPathKind
-from deployment.execution_plan_v2.stage_builder import build_execution_stages
+from deployment.execution_plan.loader import parse_execution_plan
+from deployment.execution_plan.schema import ExecutionPathKind
+from deployment.execution_plan.stage_builder import build_execution_stages
 from deployment.vllm_adapter.backend_adapter import VLLMBackendAdapter
 
 
@@ -31,7 +31,7 @@ def test_vllm_adapter_accepts_compiler_guided_path_with_execution_unit_vocab():
     # (e.g. "cuda_triton"), not the runtime product name "vllm". The adapter must
     # accept it based on path_kind alone.
     adapter = VLLMBackendAdapter()
-    plan = parse_execution_plan_v2(_compiler_plan())
+    plan = parse_execution_plan(_compiler_plan())
     stages = build_execution_stages(plan)
     paths = build_execution_paths(plan, stages)
     compiler_path = next(p for p in paths if p.path_kind == ExecutionPathKind.COMPILER_GUIDED_VLLM)

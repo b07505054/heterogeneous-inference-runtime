@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from deployment.execution_plan_v2.schema import CapabilityBundleRef
+from deployment.execution_plan.schema import CapabilityBundleRef
 
 
 DEFAULT_PROFILE_ROOT = Path(__file__).resolve().parents[3] / "ml-platform-capabilities" / "profiles"

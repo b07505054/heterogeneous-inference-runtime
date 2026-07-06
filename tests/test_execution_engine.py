@@ -4,8 +4,8 @@ import pytest
 
 from deployment.backend_dispatcher import BackendDispatcher
 from deployment.execution_engine import ExecutionEngine
-from deployment.execution_plan_v2.loader import parse_execution_plan_v2
-from deployment.execution_plan_v2.schema import ExecutionPlanV2, FunctionPlan
+from deployment.execution_plan.loader import parse_execution_plan
+from deployment.execution_plan.schema import ExecutionPlan, FunctionPlan
 from deployment.execution_trace_recorder import ExecutionTraceRecorder
 
 # ---------------------------------------------------------------------------
@@ -105,13 +105,13 @@ _V2_PREFILL: dict = {
 }
 
 
-def _decode() -> tuple[ExecutionPlanV2, FunctionPlan]:
-    plan = parse_execution_plan_v2(_V2_DECODE)
+def _decode() -> tuple[ExecutionPlan, FunctionPlan]:
+    plan = parse_execution_plan(_V2_DECODE)
     return plan, plan.function_plans[0]
 
 
-def _prefill() -> tuple[ExecutionPlanV2, FunctionPlan]:
-    plan = parse_execution_plan_v2(_V2_PREFILL)
+def _prefill() -> tuple[ExecutionPlan, FunctionPlan]:
+    plan = parse_execution_plan(_V2_PREFILL)
     return plan, plan.function_plans[0]
 
 
@@ -212,7 +212,7 @@ def test_decision_trace_lists_all_stages_in_order():
     plan, fp = _decode()
     result = ExecutionEngine().execute(plan, fp.function_name)
     expected = [
-        "execution_plan_v2",
+        "execution_plan",
         "scheduling_decision_evaluator",
         "memory_decision_evaluator",
         "replay_decision_evaluator",

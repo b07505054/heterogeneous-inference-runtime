@@ -1,10 +1,10 @@
-from deployment.execution_plan_v2.loader import parse_execution_plan_v2
-from deployment.execution_plan_v2.path_builder import (
+from deployment.execution_plan.loader import parse_execution_plan
+from deployment.execution_plan.path_builder import (
     build_baseline_vllm_path,
     build_execution_paths,
 )
-from deployment.execution_plan_v2.schema import ExecutionPathKind
-from deployment.execution_plan_v2.stage_builder import build_execution_stages
+from deployment.execution_plan.schema import ExecutionPathKind
+from deployment.execution_plan.stage_builder import build_execution_stages
 
 
 def test_baseline_request_builds_baseline_vllm_path():
@@ -18,7 +18,7 @@ def test_baseline_request_builds_baseline_vllm_path():
 
 def test_compiler_plan_builds_vllm_and_rmsnorm_paths():
     # Main fixture uses cuda_triton — execution-unit vocabulary from the compiler.
-    plan = parse_execution_plan_v2(_plan())
+    plan = parse_execution_plan(_plan())
     stages = build_execution_stages(plan)
 
     paths = build_execution_paths(plan, stages)
@@ -34,7 +34,7 @@ def test_compiler_plan_builds_vllm_and_rmsnorm_paths():
 
 
 def test_cuda_triton_backend_builds_compiler_guided_vllm_path():
-    plan = parse_execution_plan_v2(_plan())
+    plan = parse_execution_plan(_plan())
     stages = build_execution_stages(plan)
 
     paths = build_execution_paths(plan, stages)
@@ -48,7 +48,7 @@ def test_cuda_triton_backend_builds_compiler_guided_vllm_path():
 def test_cuda_cublas_backend_builds_compiler_guided_vllm_path():
     payload = _plan()
     payload["function_plans"][0]["backend"]["selected_backend"] = "cuda_cublas"
-    plan = parse_execution_plan_v2(payload)
+    plan = parse_execution_plan(payload)
 
     paths = build_execution_paths(plan, build_execution_stages(plan))
 
@@ -60,7 +60,7 @@ def test_cuda_cublas_backend_builds_compiler_guided_vllm_path():
 def test_cpu_backend_builds_unsupported_path_adapter_not_implemented():
     payload = _plan()
     payload["function_plans"][0]["backend"]["selected_backend"] = "cpu"
-    plan = parse_execution_plan_v2(payload)
+    plan = parse_execution_plan(payload)
 
     paths = build_execution_paths(plan, build_execution_stages(plan))
 
@@ -74,7 +74,7 @@ def test_cpu_backend_builds_unsupported_path_adapter_not_implemented():
 def test_coreml_ane_backend_builds_unsupported_path_adapter_not_implemented():
     payload = _plan()
     payload["function_plans"][0]["backend"]["selected_backend"] = "coreml_ane"
-    plan = parse_execution_plan_v2(payload)
+    plan = parse_execution_plan(payload)
 
     paths = build_execution_paths(plan, build_execution_stages(plan))
 
@@ -87,7 +87,7 @@ def test_coreml_ane_backend_builds_unsupported_path_adapter_not_implemented():
 def test_unknown_execution_unit_builds_unsupported_path():
     payload = _plan()
     payload["function_plans"][0]["backend"]["selected_backend"] = "unknown_unit"
-    plan = parse_execution_plan_v2(payload)
+    plan = parse_execution_plan(payload)
 
     paths = build_execution_paths(plan, build_execution_stages(plan))
 
@@ -103,7 +103,7 @@ def test_vllm_product_name_as_execution_unit_is_unknown():
     # It must never silently route to the vLLM adapter.
     payload = _plan()
     payload["function_plans"][0]["backend"]["selected_backend"] = "vllm"
-    plan = parse_execution_plan_v2(payload)
+    plan = parse_execution_plan(payload)
 
     paths = build_execution_paths(plan, build_execution_stages(plan))
 

@@ -4,14 +4,14 @@ from __future__ import annotations
 
 from typing import Any
 
-from deployment.execution_plan_v2.schema import (
+from deployment.execution_plan.schema import (
     COMPILER_GUIDED_VLLM_TRUTH_BOUNDARY,
     EXECUTION_PATH_TRUTH_BOUNDARY,
     RMSNORM_TRUTH_BOUNDARY,
     ExecutionMethod,
     ExecutionPath,
     ExecutionPathKind,
-    ExecutionPlanV2,
+    ExecutionPlan,
     ExecutionStage,
     ExecutionStageKind,
 )
@@ -65,7 +65,7 @@ def build_baseline_vllm_path(
     )
 
 
-def build_execution_paths(plan: ExecutionPlanV2, stages: list[ExecutionStage]) -> list[ExecutionPath]:
+def build_execution_paths(plan: ExecutionPlan, stages: list[ExecutionStage]) -> list[ExecutionPath]:
     paths: list[ExecutionPath] = []
     function_by_name = {fn.function_name: fn for fn in plan.function_plans}
     for stage in stages:
@@ -84,7 +84,7 @@ def build_execution_paths(plan: ExecutionPlanV2, stages: list[ExecutionStage]) -
     return paths
 
 
-def _compiler_guided_vllm_path(plan: ExecutionPlanV2, stage: ExecutionStage, execution_unit: str) -> ExecutionPath:
+def _compiler_guided_vllm_path(plan: ExecutionPlan, stage: ExecutionStage, execution_unit: str) -> ExecutionPath:
     refs = plan.provenance.capability_bundle.refs()
     global_config = _runtime_config_from_decisions(plan)
     model_id = str(plan.model_identity.get("model_id") or plan.model_identity.get("model") or "")
@@ -117,7 +117,7 @@ def _compiler_guided_vllm_path(plan: ExecutionPlanV2, stage: ExecutionStage, exe
     )
 
 
-def _rmsnorm_path(plan: ExecutionPlanV2, stage: ExecutionStage) -> ExecutionPath:
+def _rmsnorm_path(plan: ExecutionPlan, stage: ExecutionStage) -> ExecutionPath:
     kernel = _dict_at(stage.source_compiler_decision, "kernel")
     return ExecutionPath(
         path_id=f"{plan.plan_id}:{stage.stage_id}:custom_cuda",
@@ -147,7 +147,7 @@ def _rmsnorm_path(plan: ExecutionPlanV2, stage: ExecutionStage) -> ExecutionPath
 
 
 def _unsupported_path(
-    plan: ExecutionPlanV2,
+    plan: ExecutionPlan,
     stage: ExecutionStage,
     execution_unit: str,
     reason: str = "unsupported_backend_for_phase1",
@@ -173,7 +173,7 @@ def _unsupported_path(
     )
 
 
-def _runtime_config_from_decisions(plan: ExecutionPlanV2) -> dict[str, Any]:
+def _runtime_config_from_decisions(plan: ExecutionPlan) -> dict[str, Any]:
     quantization = plan.global_decisions.quantization  # dict — vLLM materializer reads via .get()
     memory = plan.global_decisions.memory              # MemoryPlanDecision — typed
     serving = plan.global_decisions.serving            # ServingPlanDecision — typed

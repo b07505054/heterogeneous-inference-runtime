@@ -25,7 +25,7 @@ from deployment.runtime_decisions import MemoryDecision, ReplayDecision, Schedul
 class CompilerSummary:
     """Compiler-produced fields echoed into RuntimeResult for side-by-side comparison.
 
-    These are copied verbatim from ExecutionPlanV2 / FunctionPlan at execute() time.
+    These are copied verbatim from ExecutionPlan / FunctionPlan at execute() time.
     They are not runtime decisions — they are the compiler's static plan.
     """
 

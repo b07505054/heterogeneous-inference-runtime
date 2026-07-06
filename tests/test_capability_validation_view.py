@@ -2,11 +2,11 @@ from pathlib import Path
 
 import pytest
 
-from deployment.execution_plan_v2.capability_view import (
+from deployment.execution_plan.capability_view import (
     CapabilityValidationError,
     CapabilityValidationView,
 )
-from deployment.execution_plan_v2.schema import CapabilityBundleRef
+from deployment.execution_plan.schema import CapabilityBundleRef
 
 
 def test_capability_view_validates_refs_against_ml_platform_capabilities():

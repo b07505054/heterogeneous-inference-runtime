@@ -1,10 +1,10 @@
-from deployment.execution_plan_v2.loader import parse_execution_plan_v2
-from deployment.execution_plan_v2.schema import ExecutionStageKind
-from deployment.execution_plan_v2.stage_builder import build_execution_stages
+from deployment.execution_plan.loader import parse_execution_plan
+from deployment.execution_plan.schema import ExecutionStageKind
+from deployment.execution_plan.stage_builder import build_execution_stages
 
 
 def test_stage_builder_creates_function_and_op_stages():
-    plan = parse_execution_plan_v2(_plan_with_rmsnorm())
+    plan = parse_execution_plan(_plan_with_rmsnorm())
 
     stages = build_execution_stages(plan)
 
