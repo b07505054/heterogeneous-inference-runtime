@@ -160,7 +160,11 @@ High-value runtime evidence now includes:
   and three-trial repeatability artifacts. Compiler-guided no-quant Qwen uses
   original Qwen weights. Differences come from execution/runtime policy, not
   model weight optimization. Do not claim compiler-optimized weights, AWQ, or
-  GPTQ from these artifacts.
+  GPTQ from these artifacts. Materializer path:
+  `ml-graph-compiler-runtime/artifacts/qwen/execution_plan.json` ->
+  `deployment/execution_plan/path_builder.py` ->
+  `deployment/vllm_adapter/config_materializer.py`. A quantized (AWQ/GPTQ)
+  Qwen path is not implemented; see `docs/future_work.md`.
 - CUDA RMSNorm source and correctness tests when CUDA is available.
 - CUDA/Triton/PyTorch RMSNorm benchmark artifacts and GPU PGO-like kernel-selection reports.
 - Optional Nsight Compute capture artifacts for representative RMSNorm cases.

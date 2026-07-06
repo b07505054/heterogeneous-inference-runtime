@@ -104,6 +104,31 @@ results/qwen_no_quant/repeatability_summary.md
 results/qwen_no_quant/failed_default_baseline/
 ```
 
+Per-run evidence (server commands, ready/not-ready status, `nvidia-smi`
+snapshots before/after, and per-workload measured JSON) lives alongside these
+files under `results/qwen_no_quant/` — e.g.
+`baseline_conservative_fixed_command.txt`, `baseline_default_status.txt`
+(`oom`), `compiler_guided_fixed_gpu_ready.txt`, `compiler_guided_fixed_short.json`.
+`baseline_default_server.log` (default vLLM config; not committed — `*.log` is
+gitignored) holds the actual `RuntimeError: Engine core initialization failed`
+traceback backing the OOM claim.
+
+**Materializer code path:** `../ml-graph-compiler-runtime/artifacts/qwen/execution_plan.json`
+(compiler `ExecutionPlan`, quantization `none`/`fp16_fallback`) ->
+`deployment/execution_plan/path_builder.py` (`build_execution_paths`,
+`build_baseline_vllm_path`) -> `deployment/vllm_adapter/config_materializer.py`
+(`materialize_vllm_cli_args_from_path`) -> concrete vLLM CLI args, invoked by
+`scripts/run_qwen_no_quant_benchmark.sh`.
+
+**Future: quantized (AWQ/GPTQ) Qwen — not implemented.** There is no AWQ/GPTQ
+export tool or quantized Qwen artifact in this repo or in
+`ml-graph-compiler-runtime` today. The GTX 1650 Max-Q target profile used above
+declares `supportedQuantModes: ["none"]` (Turing has no native INT4 tensor
+cores), so the compiler cannot yet emit a real quantization decision for this
+hardware. See `ml-graph-compiler-runtime/docs/future_work.md` for the Phase C
+plan (quantized export step, quant-capable target profile, materializer
+`--quantization` flag, repeatability pass).
+
 ### Current vLLM Linux GPU Baseline
 
 The first external serving baseline was collected against an already running

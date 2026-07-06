@@ -21,8 +21,14 @@ Phase 2 is in progress:
 - A durable feedback database for measured vLLM runtime metrics. Existing
   measured baselines and trace artifacts are evidence inputs, not a long-lived
   feedback store.
-- End-to-end evaluation of compiler-materialized vLLM runtime config against a
-  comparable measured baseline.
+- ~~End-to-end evaluation of compiler-materialized vLLM runtime config against
+  a comparable measured baseline.~~ **Done** for the no-quant Qwen 2.5-0.5B /
+  GTX 1650 Max-Q case: see `docs/MEASURED_BASELINES.md` ("No-Quant Qwen
+  Compiler-Guided vLLM Evidence") and `results/qwen_no_quant/`. Result:
+  compiler-guided no-quant matches the manually-tuned conservative baseline
+  within ~1% E2E across three repeatability trials — benchmark noise, not a
+  speedup. Remaining: extend this comparison to a quantized (AWQ/GPTQ) path
+  once one exists (see Phase 3/C below).
 
 Phase 3:
 
@@ -80,6 +86,28 @@ Required future work:
 
 Do not claim vLLM speedup until a planned runtime config is benchmarked against
 a comparable measured vLLM baseline.
+
+### Qwen GTX 1650 Phase C: Quantized (AWQ/GPTQ) — Not Implemented
+
+The no-quant Qwen A/B comparison (above) is complete and measured. A quantized
+Phase C is not implemented anywhere in this repo or in
+`ml-graph-compiler-runtime`. Minimum remaining work, in order:
+
+1. A real AWQ/GPTQ export step in `ml-graph-compiler-runtime` (or a dedicated
+   script here) producing a quantized Qwen weight artifact from the original
+   `Qwen/Qwen2.5-0.5B-Instruct` checkpoint. No such tool exists today — the
+   only AWQ/GPTQ code present on this machine is inside third-party packages
+   (`torchao.prototype.awq`/`gptq`), unused by any project script.
+2. A compiler target profile that declares int4/AWQ backend support.
+   `nvidia_gtx1650_maxq.json` currently declares `supportedQuantModes:
+   ["none"]` (Turing, cc 7.5, no native INT4 tensor cores) and cannot honestly
+   produce an AWQ `QuantizationDecision` as-is.
+3. Extend `deployment/vllm_adapter/config_materializer.py` to emit
+   `--quantization awq|gptq` and point `--model` at the quantized artifact
+   path instead of the HF repo id.
+4. A repeatability benchmark pass for the quantized path mirroring
+   `results/qwen_no_quant/repeatability_summary.md`, with its own measured
+   evidence directory (e.g. `results/qwen_quant/`).
 
 ## Neutral Runtime Graph
 

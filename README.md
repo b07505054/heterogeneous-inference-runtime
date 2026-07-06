@@ -228,6 +228,12 @@ results/qwen_no_quant/repeatability_summary.md
 results/qwen_no_quant/failed_default_baseline/
 ```
 
+Materializer path: `ml-graph-compiler-runtime/artifacts/qwen/execution_plan.json`
+-> `deployment/execution_plan/path_builder.py` ->
+`deployment/vllm_adapter/config_materializer.py` -> vLLM CLI args. A quantized
+(AWQ/GPTQ) Qwen path is not implemented yet; see `docs/future_work.md`
+("Qwen GTX 1650 Phase C").
+
 The simulator lane remains useful for policy prototyping and future
 optimization evaluation. Its artifacts should be read as simulator,
 policy-ablation, or invariant-validation evidence, not measured production
