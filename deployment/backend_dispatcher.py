@@ -1,18 +1,18 @@
-"""BackendDispatcher: selects a runtime backend from a compiler-derived plan.
+"""BackendDispatcher: selects a runtime backend from a FunctionPlan.
 
-BackendDispatcher reads RuntimeExecutionPlan.backend_policy and walks the
-primary backend then fallback chain until it finds an available backend.
-It does NOT mutate RuntimeExecutionPlan. It returns BackendDecision.
+BackendDispatcher reads FunctionPlan.backend and walks the primary backend then
+fallback chain until it finds an available backend. It does NOT mutate
+FunctionPlan. It returns BackendDecision.
 
 Availability is determined by the injectable ``unavailable`` set, not by
 real hardware probing. This makes dispatch deterministic and fully testable.
 
 Decision logic (strict order):
-  1. Try primary_backend; if available → return with override_reason="".
-  2. Walk fallback_chain in order; first available → return with
+  1. Try selected_backend; if available → return with override_reason="".
+  2. Walk fallback_backends in order; first available → return with
      override_reason="primary_backend_unavailable".
   3. All exhausted → emergency cpu fallback, always state="available".
-     override_reason depends on compiler_decision_source:
+     override_reason depends on backend.reason:
        "constraint_conflict"  → "constraint_conflict_emergency_cpu"
        anything else          → "all_backends_unavailable_cpu_emergency"
 """
@@ -21,7 +21,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from deployment.runtime_execution_plan import RuntimeExecutionPlan
+from deployment.execution_plan_v2.schema import FunctionPlan
 
 
 @dataclass(frozen=True)
@@ -31,7 +31,7 @@ class BackendDecision:
     selected_backend: str
     backend_state: str       # "available" | "unavailable" | "thermal_limited" |
                              # "unsupported_precision" | "out_of_memory"
-    override_reason: str     # "" iff selected_backend == primary_backend via step 1
+    override_reason: str     # "" iff selected_backend == primary via step 1
     attempted_backends: list[str]   # ordered audit trail of every backend tried
 
 
@@ -39,10 +39,10 @@ class BackendDispatcher:
     def __init__(self, *, unavailable: set[str] | None = None) -> None:
         self._unavailable: frozenset[str] = frozenset(unavailable or set())
 
-    def dispatch(self, plan: RuntimeExecutionPlan) -> BackendDecision:
-        primary = plan.backend_policy.primary_backend
-        fallback = list(plan.backend_policy.fallback_chain)
-        decision_source = plan.backend_policy.compiler_decision_source
+    def dispatch(self, function_plan: FunctionPlan) -> BackendDecision:
+        primary = function_plan.backend.selected_backend
+        fallback = list(function_plan.backend.fallback_backends)
+        decision_source = function_plan.backend.reason or "compiler_plan"
 
         candidates = [primary] + fallback
         attempted: list[str] = []

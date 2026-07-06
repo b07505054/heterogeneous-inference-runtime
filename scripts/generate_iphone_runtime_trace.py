@@ -43,7 +43,10 @@ sys.path.insert(0, str(_REPO_ROOT))
 
 from deployment.compiler_runtime_adapter import CompilerRuntimeAdapter
 from deployment.execution_engine import ExecutionEngine
+from deployment.execution_plan_v2.loader import parse_execution_plan_v2
+from deployment.execution_plan_v2.schema import ExecutionPlanV2, FunctionPlan
 from deployment.execution_trace_recorder import ExecutionTraceRecorder
+from deployment.runtime_execution_plan import RuntimeExecutionPlan
 from deployment.runtime_profile_trace import (
     COMPILER_PLAN_SOURCE_ARTIFACT,
     COMPILER_PLAN_SOURCE_FIXTURE,
@@ -298,6 +301,55 @@ def _cpu_only_overlay(plan_dict: dict) -> dict:
     return d
 
 
+def _v1_plan_to_v2(plan: RuntimeExecutionPlan) -> tuple[ExecutionPlanV2, FunctionPlan]:
+    """Boundary adapter: build a minimal ExecutionPlanV2 from a V1 RuntimeExecutionPlan.
+
+    This is a script-level shim so the V1 ServingExecutionPlan fixture format can
+    feed the V2 ExecutionEngine.execute() API without duplicating the pipeline.
+    """
+    serving_phase = "decode" if "decode" in plan.function_name.lower() else "prefill"
+    d: dict = {
+        "schema": "execution_plan",
+        "schema_version": "2.0.0",
+        "plan_id": plan.function_name,
+        "provenance": {
+            "compiler_tool": "iphone_trace_script_v1_adapter",
+            "model_spec_ref": "",
+            "capability_bundle": {"hardware_profile_ref": ""},
+            "truth_boundary": plan.compiler_provenance.truth_boundary,
+        },
+        "model_identity": {},
+        "global_decisions": {
+            "memory": {
+                "kv_cache_layout": plan.memory_policy.kv_layout,
+                "estimated_kv_peak_mb": plan.memory_policy.kv_byte_estimate_mb,
+                "truth_boundary": plan.memory_policy.truth_boundary,
+            },
+            "serving": {
+                "topology": plan.execution_policy,
+                "colocated_cost_estimate_ms": plan.scheduling_policy.compiler_cost_ms,
+                "replay_eligible": plan.replay_policy.eligible,
+            },
+        },
+        "function_plans": [
+            {
+                "function_name": plan.function_name,
+                "serving_phase": serving_phase,
+                "backend": {
+                    "decision_type": "BackendDecision",
+                    "scope": "Function",
+                    "selected_backend": plan.backend_policy.primary_backend,
+                    "fallback_backends": list(plan.backend_policy.fallback_chain),
+                    "reason": plan.backend_policy.compiler_decision_source,
+                },
+                "per_op_decisions": [],
+            }
+        ],
+    }
+    plan_v2 = parse_execution_plan_v2(d)
+    return plan_v2, plan_v2.function_plans[0]
+
+
 def _run_variant(
     serving_plan_dict: dict,
     *,
@@ -316,7 +368,8 @@ def _run_variant(
         t_start = recorder.current_time_ms()
 
         for plan in plans:
-            engine.execute(plan, recorder=recorder)
+            plan_v2, function_plan = _v1_plan_to_v2(plan)
+            engine.execute(plan_v2, function_plan, recorder=recorder)
 
         t_end = recorder.current_time_ms()
         recorder.record_request_latency(t_end - t_start)

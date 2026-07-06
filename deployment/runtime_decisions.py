@@ -1,10 +1,10 @@
 """Typed runtime decision records and their evaluators.
 
-Each evaluator reads a RuntimeExecutionPlan and produces a frozen decision
-record. Evaluators are not planners — they do not allocate memory, dispatch
-to hardware, or capture CUDA graphs. They translate compiler-derived plan
-fields into typed, immutable runtime records for ExecutionEngine to assemble
-into RuntimeResult.
+Each evaluator accepts typed inputs from ExecutionPlanV2 and produces a frozen
+decision record. Evaluators are not planners — they do not allocate memory,
+dispatch to hardware, or capture CUDA graphs. They translate compiler-derived
+plan fields into typed, immutable runtime records for ExecutionEngine to
+assemble into RuntimeResult.
 
 Decision pipeline order in ExecutionEngine:
   1. SchedulingDecisionEvaluator  → SchedulingDecision
@@ -14,8 +14,8 @@ Decision pipeline order in ExecutionEngine:
 
 Truth boundaries:
   SchedulingDecision: "compiler_cost_estimate_not_measured_latency"
-  MemoryDecision:     verbatim from memory_policy.truth_boundary
-  ReplayDecision:     verbatim from replay_policy.truth_boundary
+  MemoryDecision:     verbatim from MemoryPlanDecision.truth_boundary
+  ReplayDecision:     "static_shape_replay_eligibility_not_cuda_graph_capture"
 """
 
 from __future__ import annotations
@@ -23,7 +23,7 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 
-from deployment.runtime_execution_plan import RuntimeExecutionPlan
+from deployment.execution_plan_v2.schema import FunctionPlan, MemoryPlanDecision, ServingPlanDecision
 
 _DEFAULT_KV_MB_PER_PAGE: float = 1.0
 
@@ -34,10 +34,11 @@ _DEFAULT_KV_MB_PER_PAGE: float = 1.0
 
 @dataclass(frozen=True)
 class SchedulingDecision:
-    """Typed scheduling record derived from RuntimeExecutionPlan.scheduling_policy.
+    """Typed scheduling record derived from FunctionPlan and ServingPlanDecision.
 
-    All cost and confidence values are compiler estimates, not measured latency.
+    All cost values are compiler estimates, not measured latency.
     truth_boundary = "compiler_cost_estimate_not_measured_latency"
+    priority and confidence are fixed: V2 carries no confidence field.
     """
 
     execution_policy: str
@@ -52,12 +53,13 @@ class SchedulingDecision:
 
 class SchedulingDecisionEvaluator:
     @staticmethod
-    def evaluate(plan: RuntimeExecutionPlan) -> SchedulingDecision:
+    def evaluate(function_plan: FunctionPlan, serving: ServingPlanDecision) -> SchedulingDecision:
+        execution_policy = serving.topology if serving.topology else function_plan.serving_phase
         return SchedulingDecision(
-            execution_policy=plan.execution_policy,
-            priority=plan.scheduling_policy.priority,
-            compiler_cost_ms=plan.scheduling_policy.compiler_cost_ms,
-            confidence=plan.scheduling_policy.confidence,
+            execution_policy=execution_policy,
+            priority="normal",
+            compiler_cost_ms=serving.colocated_cost_estimate_ms,
+            confidence="unknown",
             batch_policy="single_request",
             admitted_to_batch=True,
             reason="compiler_plan_admitted",
@@ -71,13 +73,11 @@ class SchedulingDecisionEvaluator:
 
 @dataclass(frozen=True)
 class MemoryDecision:
-    """Typed memory record derived from RuntimeExecutionPlan.memory_policy.
+    """Typed memory record derived from MemoryPlanDecision.
 
-    admitted is always True in this implementation — no real block pool is
-    connected. rejection_reason is "" when admitted.
-    page_budget_estimate is a formula from the compiler's kv_byte_estimate_mb
-    using DEFAULT_KV_MB_PER_PAGE; it is not a measured allocation.
-    truth_boundary is copied verbatim from memory_policy.truth_boundary.
+    admitted is always True — no real block pool is connected.
+    page_budget_estimate is a formula from kv_byte_estimate_mb; not measured.
+    truth_boundary is copied verbatim from MemoryPlanDecision.truth_boundary.
     """
 
     kv_layout_used: str
@@ -91,9 +91,9 @@ class MemoryDecision:
 
 class MemoryDecisionEvaluator:
     @staticmethod
-    def evaluate(plan: RuntimeExecutionPlan) -> MemoryDecision:
-        kv_layout = plan.memory_policy.kv_layout
-        estimated_mb = plan.memory_policy.kv_byte_estimate_mb
+    def evaluate(memory: MemoryPlanDecision) -> MemoryDecision:
+        kv_layout = memory.kv_layout
+        estimated_mb = memory.kv_byte_estimate_mb
 
         if kv_layout == "paged":
             allocator_kind = "paged"
@@ -111,7 +111,10 @@ class MemoryDecisionEvaluator:
             rejection_reason="",
             allocator_kind=allocator_kind,
             page_budget_estimate=page_budget,
-            truth_boundary=plan.memory_policy.truth_boundary,
+            truth_boundary=(
+                memory.truth_boundary
+                or "static_formula_estimate_not_measured_memory"
+            ),
         )
 
 
@@ -121,12 +124,12 @@ class MemoryDecisionEvaluator:
 
 @dataclass(frozen=True)
 class ReplayDecision:
-    """Typed replay record derived from RuntimeExecutionPlan.replay_policy.
+    """Typed replay record derived from FunctionPlan and ServingPlanDecision.
 
     captured and capture_attempted are always False — no CUDA graph
-    infrastructure exists. truth_boundary is copied verbatim from
-    replay_policy.truth_boundary:
+    infrastructure exists. truth_boundary is hardcoded:
     "static_shape_replay_eligibility_not_cuda_graph_capture"
+    bucket is derived from serving_phase: "decode_static" for decode, "" otherwise.
     """
 
     replay_requested: bool
@@ -140,9 +143,10 @@ class ReplayDecision:
 
 class ReplayDecisionEvaluator:
     @staticmethod
-    def evaluate(plan: RuntimeExecutionPlan) -> ReplayDecision:
-        eligible = plan.replay_policy.eligible
-        requested = eligible and plan.backend_policy.requires_replay
+    def evaluate(function_plan: FunctionPlan, serving: ServingPlanDecision) -> ReplayDecision:
+        eligible = serving.replay_eligible
+        requested = eligible  # V2 has no separate requires_replay; request iff eligible
+        bucket = "decode_static" if function_plan.serving_phase == "decode" else ""
 
         if requested:
             skipped_reason = "capture_not_implemented"
@@ -154,9 +158,9 @@ class ReplayDecisionEvaluator:
         return ReplayDecision(
             replay_requested=requested,
             replay_eligible_from_compiler=eligible,
-            bucket=plan.replay_policy.cuda_graph_bucket,
+            bucket=bucket,
             capture_attempted=False,
             captured=False,
             skipped_reason=skipped_reason,
-            truth_boundary=plan.replay_policy.truth_boundary,
+            truth_boundary="static_shape_replay_eligibility_not_cuda_graph_capture",
         )

@@ -1,11 +1,11 @@
 """ExecutionEngine: runtime orchestrator for compiler-derived execution plans.
 
-ExecutionEngine owns the decision pipeline. It does not mutate
-RuntimeExecutionPlan. It creates an ExecutionContext, calls each evaluator
-and dispatcher in order, and assembles a frozen RuntimeResult.
+ExecutionEngine owns the decision pipeline. It does not mutate ExecutionPlanV2
+or FunctionPlan. It creates an ExecutionContext, calls each evaluator and
+dispatcher in order, and assembles a frozen RuntimeResult.
 
 Pipeline (in execution order):
-  RuntimeExecutionPlan
+  ExecutionPlanV2 + FunctionPlan
     → ExecutionContext (mutable scratchpad)
     → SchedulingDecisionEvaluator.evaluate()  → SchedulingDecision
     → MemoryDecisionEvaluator.evaluate()      → MemoryDecision
@@ -24,6 +24,7 @@ from __future__ import annotations
 
 from deployment.backend_dispatcher import BackendDecision, BackendDispatcher
 from deployment.execution_context import ExecutionContext
+from deployment.execution_plan_v2.schema import ExecutionPlanV2, FunctionPlan
 from deployment.execution_trace_recorder import (
     MEMORY_PHASE_GAP_MS,
     SCHEDULING_PHASE_GAP_MS,
@@ -34,11 +35,10 @@ from deployment.runtime_decisions import (
     ReplayDecisionEvaluator,
     SchedulingDecisionEvaluator,
 )
-from deployment.runtime_execution_plan import RuntimeExecutionPlan
 from deployment.runtime_result import CompilerSummary, RuntimeResult
 
 _DECISION_TRACE: list[str] = [
-    "compiler_runtime_adapter",
+    "execution_plan_v2",
     "scheduling_decision_evaluator",
     "memory_decision_evaluator",
     "replay_decision_evaluator",
@@ -46,7 +46,9 @@ _DECISION_TRACE: list[str] = [
     "execution_engine",
 ]
 
-_GPU_BACKENDS: frozenset[str] = frozenset({"coreml", "metal"})
+_GPU_BACKENDS: frozenset[str] = frozenset({
+    "cuda_triton", "cuda_cublas", "coreml_ane", "arm_compute",
+})
 
 
 class ExecutionEngine:
@@ -55,19 +57,22 @@ class ExecutionEngine:
 
     def execute(
         self,
-        plan: RuntimeExecutionPlan,
+        plan: ExecutionPlanV2,
+        function_plan: FunctionPlan,
         recorder: ExecutionTraceRecorder | None = None,
     ) -> RuntimeResult:
-        ctx = ExecutionContext(plan=plan)
+        serving = plan.global_decisions.serving
+        memory = plan.global_decisions.memory
+        ctx = ExecutionContext(plan=plan, function_plan=function_plan)
 
         # ── Stage 1: Scheduling ──────────────────────────────────────────
         if recorder is not None:
             recorder.begin_stage(
                 "scheduler", "scheduling_decision", "scheduler",
-                request_id=plan.function_name,
+                request_id=function_plan.function_name,
                 truth_boundary="compiler_cost_estimate_not_measured_latency",
             )
-        ctx.scheduling_decision = SchedulingDecisionEvaluator.evaluate(plan)
+        ctx.scheduling_decision = SchedulingDecisionEvaluator.evaluate(function_plan, serving)
         if recorder is not None:
             recorder.end_stage(metadata_update={
                 "priority": ctx.scheduling_decision.priority,
@@ -81,10 +86,13 @@ class ExecutionEngine:
         if recorder is not None:
             recorder.begin_stage(
                 "memory", "memory_decision", "kv_cache",
-                request_id=plan.function_name,
-                truth_boundary=plan.memory_policy.truth_boundary,
+                request_id=function_plan.function_name,
+                truth_boundary=(
+                    memory.truth_boundary
+                    or "static_formula_estimate_not_measured_memory"
+                ),
             )
-        ctx.memory_decision = MemoryDecisionEvaluator.evaluate(plan)
+        ctx.memory_decision = MemoryDecisionEvaluator.evaluate(memory)
         if recorder is not None:
             recorder.end_stage(metadata_update={
                 "kv_layout_used": ctx.memory_decision.kv_layout_used,
@@ -95,11 +103,11 @@ class ExecutionEngine:
             recorder.advance_clock(MEMORY_PHASE_GAP_MS)
 
         # ── Stage 3: Replay (instant — no allocator or hardware involved) ─
-        ctx.replay_decision = ReplayDecisionEvaluator.evaluate(plan)
+        ctx.replay_decision = ReplayDecisionEvaluator.evaluate(function_plan, serving)
         if recorder is not None:
             recorder.instant_event(
                 "replay", "replay_decision", "runtime",
-                request_id=plan.function_name,
+                request_id=function_plan.function_name,
                 metadata={
                     "replay_requested": str(ctx.replay_decision.replay_requested),
                     "eligible": str(ctx.replay_decision.replay_eligible_from_compiler),
@@ -110,11 +118,11 @@ class ExecutionEngine:
             )
 
         # ── Stage 4: Backend dispatch (instant — no compute) ─────────────
-        ctx.backend_decision = self._dispatcher.dispatch(plan)
+        ctx.backend_decision = self._dispatcher.dispatch(function_plan)
         if recorder is not None:
             recorder.instant_event(
                 "backend", "backend_dispatch", "runtime",
-                request_id=plan.function_name,
+                request_id=function_plan.function_name,
                 metadata={
                     "selected_backend": ctx.backend_decision.selected_backend,
                     "override_reason": ctx.backend_decision.override_reason,
@@ -127,12 +135,12 @@ class ExecutionEngine:
         if recorder is not None:
             _lane = "gpu" if ctx.backend_decision.selected_backend in _GPU_BACKENDS else "cpu"
             recorder.begin_stage(
-                "compute", plan.function_name, _lane,
-                request_id=plan.function_name,
+                "compute", function_plan.function_name, _lane,
+                request_id=function_plan.function_name,
                 metadata={"backend": ctx.backend_decision.selected_backend},
                 truth_boundary="compiler_cost_estimate_not_measured_latency",
             )
-            recorder.advance_clock(plan.scheduling_policy.compiler_cost_ms)
+            recorder.advance_clock(serving.colocated_cost_estimate_ms)
 
         assert isinstance(ctx.backend_decision, BackendDecision)
         assert ctx.scheduling_decision is not None
@@ -140,22 +148,22 @@ class ExecutionEngine:
         assert ctx.replay_decision is not None
 
         compiler_summary = CompilerSummary(
-            function_name=plan.function_name,
-            compiler_primary_backend=plan.backend_policy.primary_backend,
-            compiler_decision_source=plan.backend_policy.compiler_decision_source,
-            compiler_cost_ms=plan.scheduling_policy.compiler_cost_ms,
-            compiler_kv_layout=plan.memory_policy.kv_layout,
-            compiler_truth_boundary=plan.compiler_provenance.truth_boundary,
+            function_name=function_plan.function_name,
+            compiler_primary_backend=function_plan.backend.selected_backend,
+            compiler_decision_source=function_plan.backend.reason or "compiler_plan",
+            compiler_cost_ms=serving.colocated_cost_estimate_ms,
+            compiler_kv_layout=memory.kv_layout,
+            compiler_truth_boundary=plan.provenance.truth_boundary,
         )
 
         match_flag = (
             "match"
-            if ctx.backend_decision.selected_backend == plan.backend_policy.primary_backend
+            if ctx.backend_decision.selected_backend == function_plan.backend.selected_backend
             else "override"
         )
 
         result = RuntimeResult(
-            function_name=plan.function_name,
+            function_name=function_plan.function_name,
             compiler_summary=compiler_summary,
             scheduling_decision=ctx.scheduling_decision,
             memory_decision=ctx.memory_decision,

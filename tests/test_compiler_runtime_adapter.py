@@ -3,7 +3,6 @@
 import pytest
 
 from deployment.compiler_runtime_adapter import CompilerRuntimeAdapter
-from deployment.execution_engine import ExecutionEngine
 
 # ---------------------------------------------------------------------------
 # Fixtures
@@ -211,9 +210,3 @@ def test_truth_boundary_preserved():
         )
 
 
-def test_output_feeds_execution_engine():
-    plans = CompilerRuntimeAdapter.from_serving_plan(_FULL_SERVING_PLAN)
-    engine = ExecutionEngine()
-    result = engine.execute(plans[0])
-    assert result.runtime_truth_boundary == "runtime_result_not_compiler_plan"
-    assert result.function_name == "prefill"

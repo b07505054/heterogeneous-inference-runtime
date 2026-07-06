@@ -4,110 +4,135 @@ import math
 
 import pytest
 
+from deployment.execution_plan_v2.loader import parse_execution_plan_v2
 from deployment.runtime_decisions import (
     MemoryDecisionEvaluator,
     ReplayDecisionEvaluator,
     SchedulingDecisionEvaluator,
 )
-from deployment.runtime_execution_plan import RuntimeExecutionPlanAdapter
 
 # ---------------------------------------------------------------------------
-# Fixtures
+# V2 fixtures
 # ---------------------------------------------------------------------------
 
-_DECODE_ELIGIBLE: dict = {
-    "function_name": "decode",
-    "execution_mode": "colocated",
-    "cost_summary": {
-        "colocated_total_ms": 4.8,
-        "pd_split_total_ms": 0.0,
-        "confidence": "low",
-        "policy": "colocated",
-        "cost_source": "formula_synthetic",
-    },
-    "kv_plan": {
-        "layout": "contiguous",
-        "kv_byte_estimate_mb": 6.75,
-        "layout_reason": "",
-        "truth_boundary": "static_formula_estimate_not_measured_memory",
-    },
-    "replay_plan": {
-        "replay_eligible": True,
-        "cuda_graph_bucket": "decode_static",
-        "override_reason": "",
-        "truth_boundary": "static_shape_replay_eligibility_not_cuda_graph_capture",
-    },
-    "backend_execution_plan": {
-        "primary_backend": "coreml",
-        "fallback_chain": ["metal", "cpu"],
-        "decision_source": "target_preferred",
-        "required_precision": "fp16",
-        "required_kv_layout": "contiguous",
-        "requires_replay": True,
-    },
+_V2_DECODE: dict = {
+    "schema": "execution_plan",
+    "schema_version": "2.0.0",
+    "plan_id": "decode-decisions-plan",
     "provenance": {
+        "compiler_tool": "test",
+        "model_spec_ref": "profiles/models/test_model.json",
+        "capability_bundle": {"hardware_profile_ref": "hardware/test_device.json"},
         "truth_boundary": "compiler_execution_provider_plan_not_runtime_dispatch",
-        "cost_source": "formula_synthetic",
     },
-    "source_passes": [
-        "serving-phase-analysis",
-        "kv-layout-planning",
-        "replay-eligibility",
-        "execution-provider-planning",
+    "model_identity": {"model_id": "test-model"},
+    "global_decisions": {
+        "quantization": {"strategy": "none", "dtype": "float16"},
+        "memory": {
+            "kv_cache_layout": "contiguous",
+            "estimated_kv_peak_mb": 6.75,
+            "memory_budget_fraction": 0.75,
+            "truth_boundary": "static_formula_estimate_not_measured_memory",
+        },
+        "serving": {
+            "topology": "colocated",
+            "colocated_cost_estimate_ms": 4.8,
+            "replay_eligible": True,
+            "token_budget_per_step": 2048,
+            "prefix_reuse_eligible": False,
+            "chunked_prefill_eligible": False,
+            "parallelism_kind": "none",
+            "parallelism_degree": 1,
+        },
+    },
+    "function_plans": [
+        {
+            "function_name": "decode",
+            "serving_phase": "decode",
+            "backend": {
+                "decision_type": "BackendDecision",
+                "scope": "Function",
+                "selected_backend": "coreml_ane",
+                "fallback_backends": ["arm_compute", "cpu"],
+                "reason": "target_preferred",
+            },
+            "per_op_decisions": [],
+        }
     ],
 }
 
-_PREFILL_NOT_ELIGIBLE: dict = {
-    "function_name": "prefill",
-    "execution_mode": "colocated",
-    "cost_summary": {
-        "colocated_total_ms": 31.2,
-        "pd_split_total_ms": 0.0,
-        "confidence": "low",
-        "policy": "colocated",
-        "cost_source": "formula_synthetic",
-    },
-    "kv_plan": {
-        "layout": "paged",
-        "kv_byte_estimate_mb": 6.75,
-        "layout_reason": "",
-        "truth_boundary": "static_formula_estimate_not_measured_memory",
-    },
-    "replay_plan": {
-        "replay_eligible": False,
-        "cuda_graph_bucket": "",
-        "override_reason": "",
-        "truth_boundary": "static_shape_replay_eligibility_not_cuda_graph_capture",
-    },
-    "backend_execution_plan": {
-        "primary_backend": "cpu",
-        "fallback_chain": [],
-        "decision_source": "constraint_conflict",
-        "required_precision": "fp16",
-        "required_kv_layout": "paged",
-        "requires_replay": False,
-    },
+# 31.2ms cost, prefill, replay not eligible
+_V2_PREFILL: dict = {
+    "schema": "execution_plan",
+    "schema_version": "2.0.0",
+    "plan_id": "prefill-decisions-plan",
     "provenance": {
+        "compiler_tool": "test",
+        "model_spec_ref": "profiles/models/test_model.json",
+        "capability_bundle": {"hardware_profile_ref": "hardware/test_device.json"},
         "truth_boundary": "compiler_execution_provider_plan_not_runtime_dispatch",
-        "cost_source": "formula_synthetic",
     },
-    "source_passes": [
-        "serving-phase-analysis",
-        "kv-layout-planning",
-        "replay-eligibility",
-        "execution-provider-planning",
+    "model_identity": {"model_id": "test-model"},
+    "global_decisions": {
+        "quantization": {"strategy": "none", "dtype": "float16"},
+        "memory": {
+            "kv_cache_layout": "paged",
+            "estimated_kv_peak_mb": 6.75,
+            "memory_budget_fraction": 0.0,
+            "truth_boundary": "static_formula_estimate_not_measured_memory",
+        },
+        "serving": {
+            "topology": "colocated",
+            "colocated_cost_estimate_ms": 31.2,
+            "replay_eligible": False,
+            "token_budget_per_step": 0,
+            "prefix_reuse_eligible": False,
+            "chunked_prefill_eligible": False,
+            "parallelism_kind": "none",
+            "parallelism_degree": 1,
+        },
+    },
+    "function_plans": [
+        {
+            "function_name": "prefill",
+            "serving_phase": "prefill",
+            "backend": {
+                "decision_type": "BackendDecision",
+                "scope": "Function",
+                "selected_backend": "cpu",
+                "fallback_backends": [],
+                "reason": "constraint_conflict",
+            },
+            "per_op_decisions": [],
+        }
     ],
 }
 
-_UNKNOWN_LAYOUT: dict = {
-    **_PREFILL_NOT_ELIGIBLE,
-    "kv_plan": {
-        "layout": "striped",
-        "kv_byte_estimate_mb": 4.0,
-        "layout_reason": "",
-        "truth_boundary": "static_formula_estimate_not_measured_memory",
+_V2_UNKNOWN_LAYOUT: dict = {
+    **_V2_PREFILL,
+    "plan_id": "unknown-layout-plan",
+    "global_decisions": {
+        **_V2_PREFILL["global_decisions"],
+        "memory": {
+            "kv_cache_layout": "striped",
+            "estimated_kv_peak_mb": 4.0,
+            "memory_budget_fraction": 0.0,
+            "truth_boundary": "static_formula_estimate_not_measured_memory",
+        },
     },
 }
+
+
+def _decode_plan():
+    return parse_execution_plan_v2(_V2_DECODE)
+
+
+def _prefill_plan():
+    return parse_execution_plan_v2(_V2_PREFILL)
+
+
+def _unknown_layout_plan():
+    return parse_execution_plan_v2(_V2_UNKNOWN_LAYOUT)
 
 
 # ---------------------------------------------------------------------------
@@ -115,17 +140,21 @@ _UNKNOWN_LAYOUT: dict = {
 # ---------------------------------------------------------------------------
 
 def test_scheduling_decision_uses_compiler_cost_and_confidence():
-    plan = RuntimeExecutionPlanAdapter.from_dict(_PREFILL_NOT_ELIGIBLE)
-    decision = SchedulingDecisionEvaluator.evaluate(plan)
+    plan = _prefill_plan()
+    fp = plan.function_plans[0]
+    serving = plan.global_decisions.serving
+    decision = SchedulingDecisionEvaluator.evaluate(fp, serving)
     assert decision.compiler_cost_ms == pytest.approx(31.2)
-    assert decision.confidence == "low"
-    assert decision.priority == "conservative"
+    assert decision.confidence == "unknown"
+    assert decision.priority == "normal"
     assert decision.execution_policy == "colocated"
 
 
 def test_scheduling_decision_truth_boundary():
-    plan = RuntimeExecutionPlanAdapter.from_dict(_DECODE_ELIGIBLE)
-    decision = SchedulingDecisionEvaluator.evaluate(plan)
+    plan = _decode_plan()
+    fp = plan.function_plans[0]
+    serving = plan.global_decisions.serving
+    decision = SchedulingDecisionEvaluator.evaluate(fp, serving)
     assert decision.truth_boundary == "compiler_cost_estimate_not_measured_latency"
 
 
@@ -134,8 +163,8 @@ def test_scheduling_decision_truth_boundary():
 # ---------------------------------------------------------------------------
 
 def test_memory_decision_copies_kv_layout():
-    plan = RuntimeExecutionPlanAdapter.from_dict(_DECODE_ELIGIBLE)
-    decision = MemoryDecisionEvaluator.evaluate(plan)
+    plan = _decode_plan()
+    decision = MemoryDecisionEvaluator.evaluate(plan.global_decisions.memory)
     assert decision.kv_layout_used == "contiguous"
     assert decision.estimated_mb_from_compiler == pytest.approx(6.75)
     assert decision.allocator_kind == "contiguous"
@@ -144,15 +173,15 @@ def test_memory_decision_copies_kv_layout():
 
 
 def test_memory_decision_estimates_page_budget():
-    plan = RuntimeExecutionPlanAdapter.from_dict(_DECODE_ELIGIBLE)
-    decision = MemoryDecisionEvaluator.evaluate(plan)
+    plan = _decode_plan()
+    decision = MemoryDecisionEvaluator.evaluate(plan.global_decisions.memory)
     # ceil(6.75 / 1.0) = 7
     assert decision.page_budget_estimate == math.ceil(6.75 / 1.0)
 
 
 def test_memory_decision_truth_boundary_verbatim():
-    plan = RuntimeExecutionPlanAdapter.from_dict(_PREFILL_NOT_ELIGIBLE)
-    decision = MemoryDecisionEvaluator.evaluate(plan)
+    plan = _prefill_plan()
+    decision = MemoryDecisionEvaluator.evaluate(plan.global_decisions.memory)
     assert decision.truth_boundary == "static_formula_estimate_not_measured_memory"
 
 
@@ -161,8 +190,10 @@ def test_memory_decision_truth_boundary_verbatim():
 # ---------------------------------------------------------------------------
 
 def test_replay_decision_does_not_claim_capture():
-    plan = RuntimeExecutionPlanAdapter.from_dict(_DECODE_ELIGIBLE)
-    decision = ReplayDecisionEvaluator.evaluate(plan)
+    plan = _decode_plan()
+    fp = plan.function_plans[0]
+    serving = plan.global_decisions.serving
+    decision = ReplayDecisionEvaluator.evaluate(fp, serving)
     assert decision.replay_eligible_from_compiler is True
     assert decision.replay_requested is True
     assert decision.bucket == "decode_static"
@@ -172,8 +203,10 @@ def test_replay_decision_does_not_claim_capture():
 
 
 def test_replay_decision_not_eligible():
-    plan = RuntimeExecutionPlanAdapter.from_dict(_PREFILL_NOT_ELIGIBLE)
-    decision = ReplayDecisionEvaluator.evaluate(plan)
+    plan = _prefill_plan()
+    fp = plan.function_plans[0]
+    serving = plan.global_decisions.serving
+    decision = ReplayDecisionEvaluator.evaluate(fp, serving)
     assert decision.replay_eligible_from_compiler is False
     assert decision.replay_requested is False
     assert decision.captured is False
@@ -181,8 +214,10 @@ def test_replay_decision_not_eligible():
 
 
 def test_replay_decision_truth_boundary_verbatim():
-    plan = RuntimeExecutionPlanAdapter.from_dict(_DECODE_ELIGIBLE)
-    decision = ReplayDecisionEvaluator.evaluate(plan)
+    plan = _decode_plan()
+    fp = plan.function_plans[0]
+    serving = plan.global_decisions.serving
+    decision = ReplayDecisionEvaluator.evaluate(fp, serving)
     assert decision.truth_boundary == "static_shape_replay_eligibility_not_cuda_graph_capture"
 
 
@@ -191,7 +226,7 @@ def test_replay_decision_truth_boundary_verbatim():
 # ---------------------------------------------------------------------------
 
 def test_unknown_kv_layout_maps_to_unknown_allocator():
-    plan = RuntimeExecutionPlanAdapter.from_dict(_UNKNOWN_LAYOUT)
-    decision = MemoryDecisionEvaluator.evaluate(plan)
+    plan = _unknown_layout_plan()
+    decision = MemoryDecisionEvaluator.evaluate(plan.global_decisions.memory)
     assert decision.kv_layout_used == "striped"
     assert decision.allocator_kind == "unknown"
