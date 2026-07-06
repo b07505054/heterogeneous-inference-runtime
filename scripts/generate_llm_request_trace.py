@@ -53,6 +53,17 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--max-tokens", type=positive_int, default=64)
     parser.add_argument("--arrival-pattern", choices=["uniform", "burst"], default="uniform")
     parser.add_argument("--seed", type=non_negative_int, default=0)
+    parser.add_argument(
+        "--common-prefix",
+        default="",
+        help="Text prepended to every prompt. Exercises prefix-cache hit rate.",
+    )
+    parser.add_argument(
+        "--unique-prompts",
+        type=positive_int,
+        default=None,
+        help="Cap on unique prompts drawn from the prompt set. Fewer = higher cache reuse.",
+    )
     return parser
 
 
@@ -63,17 +74,23 @@ def generate_rows(
     max_tokens: int,
     arrival_pattern: str,
     seed: int,
+    common_prefix: str = "",
+    unique_prompts: int | None = None,
 ) -> list[dict]:
     if prompt_set not in PROMPT_SETS:
         raise ValueError(f"unknown prompt set: {prompt_set}")
     rng = random.Random(seed)
     prompts = PROMPT_SETS[prompt_set]
+    if unique_prompts is not None:
+        prompts = prompts[:unique_prompts] if unique_prompts <= len(prompts) else prompts
     rows = []
     for index in range(num_requests):
+        base_prompt = rng.choice(prompts)
+        prompt = (common_prefix + base_prompt) if common_prefix else base_prompt
         rows.append(
             {
                 "request_id": f"req_{index:04d}",
-                "prompt": rng.choice(prompts),
+                "prompt": prompt,
                 "max_tokens": max_tokens,
                 "arrival_ms": arrival_ms(index, arrival_pattern),
             }
@@ -108,6 +125,8 @@ def main() -> None:
         max_tokens=args.max_tokens,
         arrival_pattern=args.arrival_pattern,
         seed=args.seed,
+        common_prefix=args.common_prefix,
+        unique_prompts=args.unique_prompts,
     )
     write_jsonl(args.output, rows)
     print(args.output)

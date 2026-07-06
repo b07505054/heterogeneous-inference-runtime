@@ -15,6 +15,12 @@ def test_cuda_cublas_routes_to_vllm():
     assert ExecutionUnitRouter.serving_adapter_id("cuda_cublas") == "vllm"
 
 
+def test_cuda_generic_routes_to_vllm():
+    # "cuda" is emitted by qwen-to-serving-mlir when ExecutionProviderPlanningPass
+    # collects pre-existing v1 MLIR attrs rather than selecting from profile.
+    assert ExecutionUnitRouter.serving_adapter_id("cuda") == "vllm"
+
+
 def test_cpu_routes_to_pytorch_reference():
     assert ExecutionUnitRouter.serving_adapter_id("cpu") == "pytorch_reference"
 

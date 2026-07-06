@@ -74,3 +74,157 @@ def test_invalid_cli_args_rejected():
         parser.parse_args(["--arrival-pattern", "invalid"])
     with pytest.raises(SystemExit):
         parser.parse_args(["--num-requests", "0"])
+
+
+# ---------------------------------------------------------------------------
+# --common-prefix
+# ---------------------------------------------------------------------------
+
+def test_common_prefix_prepended_to_every_prompt():
+    prefix = "SYSTEM: You are a helpful assistant.\n\n"
+    rows = generate_rows(
+        num_requests=8,
+        prompt_set="small",
+        max_tokens=64,
+        arrival_pattern="uniform",
+        seed=0,
+        common_prefix=prefix,
+    )
+    for row in rows:
+        assert row["prompt"].startswith(prefix), f"prefix missing: {row['prompt'][:40]!r}"
+
+
+def test_common_prefix_empty_by_default_leaves_prompts_unchanged():
+    rows_no_prefix = generate_rows(
+        num_requests=8,
+        prompt_set="small",
+        max_tokens=64,
+        arrival_pattern="uniform",
+        seed=5,
+    )
+    rows_empty_prefix = generate_rows(
+        num_requests=8,
+        prompt_set="small",
+        max_tokens=64,
+        arrival_pattern="uniform",
+        seed=5,
+        common_prefix="",
+    )
+    assert rows_no_prefix == rows_empty_prefix
+
+
+def test_common_prefix_does_not_change_arrival_or_max_tokens():
+    rows = generate_rows(
+        num_requests=4,
+        prompt_set="mixed",
+        max_tokens=128,
+        arrival_pattern="burst",
+        seed=3,
+        common_prefix="PREFIX ",
+    )
+    for i, row in enumerate(rows):
+        assert row["max_tokens"] == 128
+        assert isinstance(row["arrival_ms"], int)
+
+
+def test_common_prefix_is_deterministic():
+    kwargs = dict(num_requests=6, prompt_set="coding", max_tokens=32, arrival_pattern="uniform", seed=9, common_prefix="TEST ")
+    assert generate_rows(**kwargs) == generate_rows(**kwargs)
+
+
+# ---------------------------------------------------------------------------
+# --unique-prompts
+# ---------------------------------------------------------------------------
+
+def test_unique_prompts_limits_prompt_diversity():
+    rows = generate_rows(
+        num_requests=32,
+        prompt_set="mixed",
+        max_tokens=64,
+        arrival_pattern="uniform",
+        seed=0,
+        unique_prompts=2,
+    )
+    unique = {row["prompt"] for row in rows}
+    assert len(unique) <= 2
+
+
+def test_unique_prompts_none_uses_full_set():
+    rows = generate_rows(
+        num_requests=32,
+        prompt_set="mixed",
+        max_tokens=64,
+        arrival_pattern="uniform",
+        seed=0,
+    )
+    unique = {row["prompt"] for row in rows}
+    assert len(unique) > 2
+
+
+def test_unique_prompts_larger_than_set_uses_full_set():
+    rows = generate_rows(
+        num_requests=16,
+        prompt_set="small",
+        max_tokens=64,
+        arrival_pattern="uniform",
+        seed=0,
+        unique_prompts=100,
+    )
+    # small set has 4 prompts; capping at 100 should still use at most 4
+    unique = {row["prompt"] for row in rows}
+    assert len(unique) <= 4
+
+
+def test_unique_prompts_one_produces_single_prompt_trace():
+    rows = generate_rows(
+        num_requests=8,
+        prompt_set="coding",
+        max_tokens=64,
+        arrival_pattern="uniform",
+        seed=0,
+        unique_prompts=1,
+    )
+    unique = {row["prompt"] for row in rows}
+    assert len(unique) == 1
+
+
+def test_shared_prefix_workload_is_cache_friendly():
+    prefix = "You are an assistant. Answer the following:\n\n"
+    rows = generate_rows(
+        num_requests=32,
+        prompt_set="mixed",
+        max_tokens=64,
+        arrival_pattern="uniform",
+        seed=0,
+        common_prefix=prefix,
+        unique_prompts=4,
+    )
+    assert len(rows) == 32
+    for row in rows:
+        assert row["prompt"].startswith(prefix)
+    unique = {row["prompt"] for row in rows}
+    assert len(unique) <= 4
+
+
+def test_no_shared_prefix_workload_uses_all_mixed_prompts():
+    rows = generate_rows(
+        num_requests=32,
+        prompt_set="mixed",
+        max_tokens=64,
+        arrival_pattern="uniform",
+        seed=0,
+    )
+    unique = {row["prompt"] for row in rows}
+    assert len(unique) >= 4
+
+
+def test_unique_prompts_cli_flag_accepted():
+    parser = build_parser()
+    args = parser.parse_args(["--unique-prompts", "3"])
+    assert args.unique_prompts == 3
+
+
+def test_unique_prompts_zero_rejected():
+    parser = build_parser()
+    with pytest.raises(SystemExit):
+        parser.parse_args(["--unique-prompts", "0"])

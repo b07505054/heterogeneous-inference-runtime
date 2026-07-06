@@ -1,19 +1,24 @@
 """Map compiler execution-unit vocabulary to runtime adapter IDs.
 
 Compiler ExecutionPlan.backend.selected_backend uses execution-unit vocabulary
-(cuda_triton, cuda_cublas, cpu, coreml_ane, arm_compute). Runtime adapter IDs
+(cuda, cuda_triton, cuda_cublas, cpu, coreml_ane, arm_compute). Runtime adapter IDs
 are internal routing strings used by BackendAdapter implementations (vllm,
 custom_cuda, pytorch_reference, coreml).
 
 The compiler never uses runtime product names (vllm, tensorrt, etc.) as
 selected_backend. This module is the single place that translates between
 the two vocabularies.
+
+"cuda" is emitted by qwen-to-serving-mlir as a generic CUDA execution unit when
+the ExecutionProviderPlanningPass collects pre-existing v1 MLIR attrs. It routes
+to vLLM identically to the more specific cuda_triton / cuda_cublas units.
 """
 
 from __future__ import annotations
 
 
 _SERVING_ADAPTER: dict[str, str] = {
+    "cuda":         "vllm",
     "cuda_triton":  "vllm",
     "cuda_cublas":  "vllm",
     "cpu":          "pytorch_reference",
