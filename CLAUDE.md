@@ -155,6 +155,12 @@ High-value runtime evidence now includes:
 
 - External OpenAI-compatible/vLLM measured baselines, including throughput,
   TTFT, TPOT, concurrency, success/error counts, and server/model metadata.
+- No-quant Qwen GTX 1650 Max-Q evidence under `results/qwen_no_quant/`,
+  including default vLLM OOM logs, conservative low-memory vLLM comparisons,
+  and three-trial repeatability artifacts. Compiler-guided no-quant Qwen uses
+  original Qwen weights. Differences come from execution/runtime policy, not
+  model weight optimization. Do not claim compiler-optimized weights, AWQ, or
+  GPTQ from these artifacts.
 - CUDA RMSNorm source and correctness tests when CUDA is available.
 - CUDA/Triton/PyTorch RMSNorm benchmark artifacts and GPU PGO-like kernel-selection reports.
 - Optional Nsight Compute capture artifacts for representative RMSNorm cases.

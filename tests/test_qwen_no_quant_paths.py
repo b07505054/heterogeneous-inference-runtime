@@ -208,6 +208,41 @@ def test_no_quant_materialization_includes_gpu_memory_utilization():
     assert float(mat.command[idx + 1]) == 0.75
 
 
+def test_no_quant_path_uses_backend_neutral_conservative_limits():
+    plan = parse_execution_plan(_no_quant_plan())
+    stages = build_execution_stages(plan)
+    paths = build_execution_paths(plan, stages)
+    vllm_path = next(p for p in paths if p.path_kind == ExecutionPathKind.COMPILER_GUIDED_VLLM)
+
+    assert vllm_path.runtime_config["request_concurrency_budget"] == 4
+    assert vllm_path.runtime_config["token_budget_per_step"] == 2048
+    assert vllm_path.runtime_config["kv_block_size_tokens"] == 16
+    assert vllm_path.runtime_config["sequence_length_budget"] == 2048
+    assert "max_num_seqs" not in vllm_path.runtime_config
+    assert "max_num_batched_tokens" not in vllm_path.runtime_config
+    assert "block_size" not in vllm_path.runtime_config
+    assert "max_model_len" not in vllm_path.runtime_config
+
+
+def test_no_quant_materialization_maps_conservative_limits_to_vllm_flags():
+    plan = parse_execution_plan(_no_quant_plan())
+    stages = build_execution_stages(plan)
+    paths = build_execution_paths(plan, stages)
+    vllm_path = next(p for p in paths if p.path_kind == ExecutionPathKind.COMPILER_GUIDED_VLLM)
+
+    command = VLLMBackendAdapter().materialize(vllm_path).command
+
+    expected = {
+        "--max-num-seqs": "4",
+        "--max-num-batched-tokens": "2048",
+        "--block-size": "16",
+        "--max-model-len": "2048",
+    }
+    for flag, value in expected.items():
+        assert flag in command
+        assert command[command.index(flag) + 1] == value
+
+
 def test_no_quant_benchmark_command_references_benchmark_script():
     plan = parse_execution_plan(_no_quant_plan())
     stages = build_execution_stages(plan)

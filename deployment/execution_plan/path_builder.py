@@ -180,12 +180,23 @@ def _runtime_config_from_decisions(plan: ExecutionPlan) -> dict[str, Any]:
     model_id = str(
         plan.model_identity.get("model_id") or plan.model_identity.get("model") or ""
     )
+    conservative_limits = _conservative_serving_limits(plan)
     return {
         "dtype": quantization.get("dtype", "float16"),
         "quantization": quantization.get("strategy", quantization.get("quantization", "none")),
-        "gpu_memory_utilization": memory.memory_budget_fraction or None,
-        "block_size": memory.kv_block_size_tokens or None,
-        "max_num_batched_tokens": serving.token_budget_per_step or None,
+        "memory_budget_fraction": memory.memory_budget_fraction or None,
+        "kv_block_size_tokens": (
+            memory.kv_block_size_tokens
+            or conservative_limits.get("kv_block_size_tokens")
+            or None
+        ),
+        "token_budget_per_step": (
+            serving.token_budget_per_step
+            or conservative_limits.get("token_budget_per_step")
+            or None
+        ),
+        "request_concurrency_budget": conservative_limits.get("request_concurrency_budget"),
+        "sequence_length_budget": conservative_limits.get("sequence_length_budget"),
         "enable_prefix_caching": serving.prefix_reuse_eligible,
         "enable_chunked_prefill": serving.chunked_prefill_eligible,
         "tensor_parallel_size": (
@@ -194,6 +205,30 @@ def _runtime_config_from_decisions(plan: ExecutionPlan) -> dict[str, Any]:
         "pipeline_parallel_size": 1,
         "served_model_name": model_id or "qwen-0.5b-compiler-plan",
         "trust_remote_code": bool(plan.model_identity.get("trust_remote_code", False)),
+    }
+
+
+def _conservative_serving_limits(plan: ExecutionPlan) -> dict[str, int]:
+    """Backend-neutral serving limits for small-memory Qwen targets.
+
+    Some compiler artifacts currently carry the neutral budget fields with a
+    zero value when the target profile has a fixed conservative serving policy.
+    Keep that policy in ExecutionPath terms; backend adapters translate it to
+    product-specific flags.
+    """
+    hardware_ref = plan.provenance.capability_bundle.hardware_profile_ref
+    model_id = str(
+        plan.model_identity.get("model_id") or plan.model_identity.get("model") or ""
+    ).lower()
+    if "nvidia-gtx1650-maxq" not in hardware_ref:
+        return {}
+    if "qwen2.5-0.5b" not in model_id and "qwen/qwen2.5-0.5b" not in model_id:
+        return {}
+    return {
+        "request_concurrency_budget": 4,
+        "token_budget_per_step": 2048,
+        "kv_block_size_tokens": 16,
+        "sequence_length_budget": 2048,
     }
 
 

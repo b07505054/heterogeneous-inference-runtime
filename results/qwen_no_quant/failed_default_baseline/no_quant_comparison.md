@@ -3,7 +3,7 @@
 **Plan:** `nvidia-gtx1650-maxq_serving_plan`
 **Model:** `qwen2.5-0.5b`
 **Hardware profile:** `nvidia-gtx1650-maxq`
-**Date:** 2026-07-06T19:20:00Z
+**Date:** 2026-07-06T17:52:07Z
 
 ## Truth Boundary
 
@@ -38,7 +38,7 @@ not measured silicon performance.
 
 **Compiler-guided vLLM:**
 ```
-.venv/bin/python -m vllm.entrypoints.openai.api_server --model Qwen/Qwen2.5-0.5B-Instruct --tokenizer Qwen/Qwen2.5-0.5B-Instruct --dtype float16 --max-model-len 2048 --gpu-memory-utilization 0.75 --block-size 16 --max-num-seqs 4 --max-num-batched-tokens 2048 --tensor-parallel-size 1 --pipeline-parallel-size 1 --served-model-name qwen2.5-0.5b
+.venv/bin/python -m vllm.entrypoints.openai.api_server --model Qwen/Qwen2.5-0.5B-Instruct --tokenizer Qwen/Qwen2.5-0.5B-Instruct --dtype float16 --gpu-memory-utilization 0.75 --tensor-parallel-size 1 --pipeline-parallel-size 1 --served-model-name qwen2.5-0.5b
 ```
 
 ## Results

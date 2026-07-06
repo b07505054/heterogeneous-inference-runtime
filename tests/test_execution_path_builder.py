@@ -27,7 +27,7 @@ def test_compiler_plan_builds_vllm_and_rmsnorm_paths():
     assert ExecutionPathKind.COMPILER_GUIDED_VLLM in kinds
     assert ExecutionPathKind.CUSTOM_CUDA_MICROBENCHMARK in kinds
     vllm_path = next(path for path in paths if path.path_kind == ExecutionPathKind.COMPILER_GUIDED_VLLM)
-    assert vllm_path.runtime_config["max_num_batched_tokens"] == 2048
+    assert vllm_path.runtime_config["token_budget_per_step"] == 2048
     assert vllm_path.runtime_config["enable_prefix_caching"] is True
     rmsnorm = next(path for path in paths if path.path_kind == ExecutionPathKind.CUSTOM_CUDA_MICROBENCHMARK)
     assert rmsnorm.selected_kernel == "fused_rmsnorm_forward"

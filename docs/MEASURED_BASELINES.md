@@ -68,6 +68,42 @@ Example deterministic traces are available under `traces/examples/`. These
 files contain `request_id`, `prompt`, `max_tokens`, and monotonic `arrival_ms`
 fields; the benchmark client currently uses the prompt and token limit.
 
+### No-Quant Qwen Compiler-Guided vLLM Evidence
+
+The no-quant Qwen benchmark compares a compiler-guided vLLM runtime policy
+against manually conservative vLLM settings on the same GTX 1650 Max-Q 4 GB
+host. Compiler-guided no-quant Qwen uses original Qwen weights. Differences
+come from execution/runtime policy, not model weight optimization. Do not claim
+compiler-optimized weights. Do not claim AWQ/GPTQ yet.
+
+Default vLLM OOMs on GTX1650 Max-Q 4GB with default greedy startup/warmup. The
+compiler-generated execution plan avoids default vLLM OOM by materializing a
+low-memory policy: `gpu_memory_utilization=0.75`, `max_model_len=2048`,
+`max_num_seqs=4`, `max_num_batched_tokens=2048`, `block_size=16`, fp16 dtype,
+and single tensor/pipeline parallelism.
+
+Compared with manually conservative vLLM config, compiler-guided no-quant
+matches performance within about 1% E2E in 3-trial repeatability:
+
+| Workload | Compiler-guided E2E delta | Interpretation |
+|---|---:|---|
+| `short` | +0.476% | benchmark noise |
+| `shared_prefix` | +0.776% | benchmark noise |
+| `no_shared_prefix` | +1.089% | benchmark noise |
+
+Treat these deltas as benchmark noise, not speedup. The remaining command
+difference is `--served-model-name qwen2.5-0.5b` on the compiler-guided path,
+which changes OpenAI-compatible model routing/name matching while preserving the
+same served model root: `Qwen/Qwen2.5-0.5B-Instruct`.
+
+Artifact paths:
+
+```text
+results/qwen_no_quant/repeatability_raw.json
+results/qwen_no_quant/repeatability_summary.md
+results/qwen_no_quant/failed_default_baseline/
+```
+
 ### Current vLLM Linux GPU Baseline
 
 The first external serving baseline was collected against an already running

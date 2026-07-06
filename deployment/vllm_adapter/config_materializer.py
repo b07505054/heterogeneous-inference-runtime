@@ -53,12 +53,27 @@ def materialize_vllm_cli_args_from_path(path: ExecutionPath) -> dict[str, Any]:
         "tokenizer": tokenizer,
         "dtype": config.get("dtype", "float16"),
         "quantization": config.get("quantization", "none"),
-        "max_model_len": config.get("max_model_len"),
-        "gpu_memory_utilization": config.get("gpu_memory_utilization"),
-        "block_size": config.get("block_size"),
+        "max_model_len": _first_positive_int(
+            config.get("sequence_length_budget"),
+            config.get("max_model_len"),
+        ),
+        "gpu_memory_utilization": _first_positive_float(
+            config.get("memory_budget_fraction"),
+            config.get("gpu_memory_utilization"),
+        ),
+        "block_size": _first_positive_int(
+            config.get("kv_block_size_tokens"),
+            config.get("block_size"),
+        ),
         "swap_space": config.get("swap_space"),
-        "max_num_seqs": config.get("max_num_seqs"),
-        "max_num_batched_tokens": config.get("max_num_batched_tokens"),
+        "max_num_seqs": _first_positive_int(
+            config.get("request_concurrency_budget"),
+            config.get("max_num_seqs"),
+        ),
+        "max_num_batched_tokens": _first_positive_int(
+            config.get("token_budget_per_step"),
+            config.get("max_num_batched_tokens"),
+        ),
         "enable_chunked_prefill": config.get("enable_chunked_prefill"),
         "enable_prefix_caching": config.get("enable_prefix_caching"),
         "tensor_parallel_size": config.get("tensor_parallel_size", 1),
@@ -66,3 +81,25 @@ def materialize_vllm_cli_args_from_path(path: ExecutionPath) -> dict[str, Any]:
         "served_model_name": config.get("served_model_name"),
         "trust_remote_code": bool(config.get("trust_remote_code", False)),
     }
+
+
+def _first_positive_int(*values: Any) -> int | None:
+    for value in values:
+        try:
+            parsed = int(value)
+        except (TypeError, ValueError):
+            continue
+        if parsed > 0:
+            return parsed
+    return None
+
+
+def _first_positive_float(*values: Any) -> float | None:
+    for value in values:
+        try:
+            parsed = float(value)
+        except (TypeError, ValueError):
+            continue
+        if parsed > 0.0:
+            return parsed
+    return None

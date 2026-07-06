@@ -98,6 +98,13 @@ layer -> policy -> deployment decision.
 
 ## Recent Updates
 
+- Recorded the no-quant Qwen GTX 1650 Max-Q vLLM benchmark: default vLLM OOMs
+  on the 4 GB GPU with default greedy startup/warmup, while the
+  compiler-generated execution plan avoids that OOM by materializing a
+  low-memory runtime policy. Compared with a manually conservative vLLM config,
+  compiler-guided no-quant matches performance within about 1% E2E over three
+  repeatability trials: short +0.476%, shared_prefix +0.776%, and
+  no_shared_prefix +1.089%. Treat these deltas as benchmark noise, not speedup.
 - Added measured baseline documentation for native CoreML MobileNetV2 and an
   external OpenAI-compatible vLLM server.
 - Added runtime execution plan IR, compiler runtime adapter, backend
@@ -207,6 +214,19 @@ policy. It does not attempt to replace CoreML kernels.
 The server lane owns external OpenAI-compatible/vLLM measurements for
 throughput, TTFT, TPOT, concurrency behavior, and future runtime policy. The
 benchmark client does not install, launch, stop, or manage vLLM.
+
+No-quant Qwen evidence under `results/qwen_no_quant/` is measured on a GTX 1650
+Max-Q 4 GB host. Compiler-guided no-quant Qwen uses original Qwen weights;
+differences come from execution/runtime policy, not model weight optimization.
+The compiler-generated execution plan materializes low-memory vLLM settings that
+avoid the default vLLM OOM observed on this GPU. It does not claim
+compiler-optimized weights, AWQ, or GPTQ. The repeatability artifacts are:
+
+```text
+results/qwen_no_quant/repeatability_raw.json
+results/qwen_no_quant/repeatability_summary.md
+results/qwen_no_quant/failed_default_baseline/
+```
 
 The simulator lane remains useful for policy prototyping and future
 optimization evaluation. Its artifacts should be read as simulator,

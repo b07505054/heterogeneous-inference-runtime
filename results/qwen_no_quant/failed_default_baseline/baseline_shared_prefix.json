@@ -1,0 +1,283 @@
+{
+  "artifact_type": "measured_baseline",
+  "evidence_type": "measured",
+  "status": "ok",
+  "benchmark_target": {
+    "kind": "openai_compatible_server",
+    "base_url": "http://127.0.0.1:8000",
+    "endpoint": "/v1/chat/completions",
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "concurrency": 1,
+    "warmup": 4,
+    "stream": true
+  },
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "platform": "Linux-7.0.0-27-generic-x86_64-with-glibc2.43",
+    "cpu_count": 8
+  },
+  "software_versions": {
+    "python": "3.12.13",
+    "executable": "/home/allen/Desktop/Project/heterogeneous-inference-runtime/.venv/bin/python"
+  },
+  "command": [
+    "scripts/benchmark_openai_compatible_server.py",
+    "--base-url",
+    "http://127.0.0.1:8000",
+    "--model",
+    "Qwen/Qwen2.5-0.5B-Instruct",
+    "--trace",
+    "/home/allen/Desktop/Project/heterogeneous-inference-runtime/results/qwen_no_quant/traces/shared_prefix.jsonl",
+    "--concurrency",
+    "1",
+    "--warmup",
+    "4",
+    "--claimed-server",
+    "vllm_no_quant_baseline",
+    "--output",
+    "/home/allen/Desktop/Project/heterogeneous-inference-runtime/results/qwen_no_quant/baseline_shared_prefix.json"
+  ],
+  "git_commit": "e30dac0",
+  "git_dirty": true,
+  "timestamp_utc": "2026-07-06T17:49:04Z",
+  "metrics": {
+    "ttft_ms": {
+      "count": 0,
+      "mean": null,
+      "p50": null,
+      "p95": null,
+      "p99": null,
+      "min": null,
+      "max": null
+    },
+    "tpot_ms": {
+      "count": 0,
+      "mean": null,
+      "p50": null,
+      "p95": null,
+      "p99": null,
+      "min": null,
+      "max": null
+    },
+    "e2e_latency_ms": {
+      "count": 0,
+      "mean": null,
+      "p50": null,
+      "p95": null,
+      "p99": null,
+      "min": null,
+      "max": null
+    },
+    "tokens_per_second": null,
+    "success_count": 0,
+    "error_count": 28,
+    "total_output_tokens": 0
+  },
+  "notes": [
+    "Generic OpenAI-compatible benchmark client only; it does not install, start, stop, or manage the server."
+  ],
+  "server_metadata": {
+    "ok": false,
+    "error": "<urlopen error [Errno 111] Connection refused>"
+  },
+  "request_results": [
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.084354,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.07973,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.078206,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.076828,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.077668,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.076611,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.084466,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.078444,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.076177,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.075548,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.074621,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.074619,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.077313,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.073909,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.076212,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.073887,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.075453,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.073147,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.072622,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.073158,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.072962,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.076861,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.075525,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.074305,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.073477,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.078117,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.074696,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 0.072312,
+      "error_type": "URLError",
+      "error": "<urlopen error [Errno 111] Connection refused>"
+    }
+  ],
+  "claimed_server": "vllm_no_quant_baseline"
+}
