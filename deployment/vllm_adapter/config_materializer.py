@@ -44,10 +44,16 @@ def materialize_vllm_cli_args_from_path(path: ExecutionPath) -> dict[str, Any]:
     baseline request. vLLM flags are produced only at this materializer boundary.
     """
     config = path.runtime_config
-    model = config.get("model") or config.get("model_id")
+    # When the compiler plan carries a quantized_model_artifact_ref (forced
+    # AWQ/GPTQ profiles), --model and --tokenizer point at that local
+    # checkpoint directory instead of the original HF repo id -- this is the
+    # only place that distinction is materialized. Absent for every no-quant
+    # plan, so this path is unchanged when quantized_model_artifact_ref is None.
+    artifact_ref = config.get("quantized_model_artifact_ref")
+    model = artifact_ref or config.get("model") or config.get("model_id")
     if not model:
         raise ValueError("ExecutionPath runtime_config must include model")
-    tokenizer = config.get("tokenizer") or model
+    tokenizer = artifact_ref or config.get("tokenizer") or model
     return {
         "model": model,
         "tokenizer": tokenizer,

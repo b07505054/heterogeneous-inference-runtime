@@ -181,9 +181,25 @@ def _runtime_config_from_decisions(plan: ExecutionPlan) -> dict[str, Any]:
         plan.model_identity.get("model_id") or plan.model_identity.get("model") or ""
     )
     conservative_limits = _conservative_serving_limits(plan)
+    # Vocabulary note: quantization.strategy is a schema-level descriptor
+    # ("weight_only_int4", "none", ...); quantization.algorithm names the
+    # method used to produce it ("awq", "gptq", "none"). vLLM's --quantization
+    # flag takes the algorithm name (e.g. "awq"), not the strategy string, so
+    # algorithm takes priority here when present. Absent for every plan
+    # without a forced quantization override, so this is additive: existing
+    # no-quant plans (empty quantization dict) still resolve to "none".
+    algorithm = quantization.get("algorithm")
+    if algorithm and algorithm != "none":
+        quant_flag = algorithm
+    else:
+        quant_flag = quantization.get("strategy", quantization.get("quantization", "none"))
     return {
         "dtype": quantization.get("dtype", "float16"),
-        "quantization": quantization.get("strategy", quantization.get("quantization", "none")),
+        "quantization": quant_flag,
+        # Set only when the compiler plan carries a quantized model artifact
+        # reference (forced-quant profiles today). None for every no-quant
+        # plan -- the vLLM materializer falls back to the HF model id.
+        "quantized_model_artifact_ref": quantization.get("quantized_model_artifact_ref") or None,
         "memory_budget_fraction": memory.memory_budget_fraction or None,
         "kv_block_size_tokens": (
             memory.kv_block_size_tokens
