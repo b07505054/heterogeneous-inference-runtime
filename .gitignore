@@ -100,3 +100,4 @@ build_cpp/
 
 # Nsight Systems profiling reports
 *.nsys-rep
+CLAUDE.md
