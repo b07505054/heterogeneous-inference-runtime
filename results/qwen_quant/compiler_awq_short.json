@@ -1,0 +1,368 @@
+{
+  "artifact_type": "measured_baseline",
+  "evidence_type": "measured",
+  "status": "ok",
+  "benchmark_target": {
+    "kind": "openai_compatible_server",
+    "base_url": "http://127.0.0.1:8000",
+    "endpoint": "/v1/chat/completions",
+    "model": "qwen2.5-0.5b",
+    "concurrency": 1,
+    "warmup": 4,
+    "stream": true
+  },
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "platform": "Linux-7.0.0-27-generic-x86_64-with-glibc2.43",
+    "cpu_count": 8
+  },
+  "software_versions": {
+    "python": "3.12.13",
+    "executable": "/home/allen/Desktop/Project/heterogeneous-inference-runtime/.venv/bin/python"
+  },
+  "command": [
+    "scripts/benchmark_openai_compatible_server.py",
+    "--base-url",
+    "http://127.0.0.1:8000",
+    "--model",
+    "qwen2.5-0.5b",
+    "--trace",
+    "/home/allen/Desktop/Project/heterogeneous-inference-runtime/results/qwen_quant/traces/short.jsonl",
+    "--concurrency",
+    "1",
+    "--warmup",
+    "4",
+    "--claimed-server",
+    "vllm_quant_compiler_awq",
+    "--output",
+    "/home/allen/Desktop/Project/heterogeneous-inference-runtime/results/qwen_quant/compiler_awq_short.json"
+  ],
+  "git_commit": "526d7d7",
+  "git_dirty": true,
+  "timestamp_utc": "2026-07-07T23:24:17Z",
+  "metrics": {
+    "ttft_ms": {
+      "count": 28,
+      "mean": 155.227949,
+      "p50": 156.457209,
+      "p95": 159.430203,
+      "p99": 159.544631,
+      "min": 151.056198,
+      "max": 159.544631
+    },
+    "tpot_ms": {
+      "count": 28,
+      "mean": 12.196534,
+      "p50": 12.181926,
+      "p95": 12.252248,
+      "p99": 12.253728,
+      "min": 12.147109,
+      "max": 12.253728
+    },
+    "e2e_latency_ms": {
+      "count": 28,
+      "mean": 923.609593,
+      "p50": 923.390037,
+      "p95": 926.560531,
+      "p99": 926.602945,
+      "min": 920.413756,
+      "max": 926.602945
+    },
+    "tokens_per_second": 69.293347,
+    "success_count": 28,
+    "error_count": 0,
+    "total_output_tokens": 1792
+  },
+  "notes": [
+    "Generic OpenAI-compatible benchmark client only; it does not install, start, stop, or manage the server."
+  ],
+  "server_metadata": {
+    "ok": true,
+    "response": {
+      "object": "list",
+      "data": [
+        {
+          "id": "qwen2.5-0.5b",
+          "object": "model",
+          "created": 1783466628,
+          "owned_by": "vllm",
+          "root": "Qwen/Qwen2.5-0.5B-Instruct",
+          "parent": null,
+          "max_model_len": 2048,
+          "permission": [
+            {
+              "id": "modelperm-b53f066274d21f03",
+              "object": "model_permission",
+              "created": 1783466628,
+              "allow_create_engine": false,
+              "allow_sampling": true,
+              "allow_logprobs": true,
+              "allow_search_indices": false,
+              "allow_view": true,
+              "allow_fine_tuning": false,
+              "organization": "*",
+              "group": null,
+              "is_blocking": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "request_results": [
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 151.056198,
+      "tpot_ms": 12.212025,
+      "e2e_latency_ms": 920.413756,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 153.691245,
+      "tpot_ms": 12.253728,
+      "e2e_latency_ms": 925.676124,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 151.671143,
+      "tpot_ms": 12.22288,
+      "e2e_latency_ms": 921.712612,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 151.9319,
+      "tpot_ms": 12.231084,
+      "e2e_latency_ms": 922.490185,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 156.457209,
+      "tpot_ms": 12.162556,
+      "e2e_latency_ms": 922.698243,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 157.855464,
+      "tpot_ms": 12.147109,
+      "e2e_latency_ms": 923.123344,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 158.38419,
+      "tpot_ms": 12.163179,
+      "e2e_latency_ms": 924.664441,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 156.48786,
+      "tpot_ms": 12.148017,
+      "e2e_latency_ms": 921.812942,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 158.357429,
+      "tpot_ms": 12.164154,
+      "e2e_latency_ms": 924.699158,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 151.741535,
+      "tpot_ms": 12.237904,
+      "e2e_latency_ms": 922.729513,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 153.892969,
+      "tpot_ms": 12.234254,
+      "e2e_latency_ms": 924.650966,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 152.231443,
+      "tpot_ms": 12.250653,
+      "e2e_latency_ms": 924.022558,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 151.310033,
+      "tpot_ms": 12.236451,
+      "e2e_latency_ms": 922.206476,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 151.188676,
+      "tpot_ms": 12.232184,
+      "e2e_latency_ms": 921.816272,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 156.932095,
+      "tpot_ms": 12.15971,
+      "e2e_latency_ms": 922.993804,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 159.544631,
+      "tpot_ms": 12.164258,
+      "e2e_latency_ms": 925.892873,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 155.404797,
+      "tpot_ms": 12.24124,
+      "e2e_latency_ms": 926.602945,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 159.430203,
+      "tpot_ms": 12.158652,
+      "e2e_latency_ms": 925.425283,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 156.9834,
+      "tpot_ms": 12.181431,
+      "e2e_latency_ms": 924.413528,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 156.438102,
+      "tpot_ms": 12.181926,
+      "e2e_latency_ms": 923.899426,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 152.039724,
+      "tpot_ms": 12.228564,
+      "e2e_latency_ms": 922.439236,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 159.09118,
+      "tpot_ms": 12.161919,
+      "e2e_latency_ms": 925.292106,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 156.891756,
+      "tpot_ms": 12.166639,
+      "e2e_latency_ms": 923.390037,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 157.113754,
+      "tpot_ms": 12.151218,
+      "e2e_latency_ms": 922.640462,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 156.488799,
+      "tpot_ms": 12.160113,
+      "e2e_latency_ms": 922.575946,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 154.668893,
+      "tpot_ms": 12.252248,
+      "e2e_latency_ms": 926.560531,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 156.550436,
+      "tpot_ms": 12.155937,
+      "e2e_latency_ms": 922.374498,
+      "output_tokens": 64,
+      "metadata": {}
+    },
+    {
+      "ok": true,
+      "warmup": false,
+      "ttft_ms": 152.547497,
+      "tpot_ms": 12.242918,
+      "e2e_latency_ms": 923.85134,
+      "output_tokens": 64,
+      "metadata": {}
+    }
+  ],
+  "claimed_server": "vllm_quant_compiler_awq"
+}

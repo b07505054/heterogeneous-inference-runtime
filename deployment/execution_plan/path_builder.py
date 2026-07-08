@@ -25,6 +25,7 @@ def build_baseline_vllm_path(
     output_artifact: str = "results/runtime_paths/qwen_0_5b_baseline_vllm.json",
     concurrency: int = 1,
     warmup: int = 4,
+    served_model_name: str | None = None,
 ) -> ExecutionPath:
     return ExecutionPath(
         path_id="qwen_0_5b_baseline_vllm",
@@ -47,6 +48,7 @@ def build_baseline_vllm_path(
             "tokenizer": model_id,
             "dtype": "float16",
             "quantization": "none",
+            "served_model_name": served_model_name,
             "trust_remote_code": False,
         },
         benchmark_config={

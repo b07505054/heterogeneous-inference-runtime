@@ -264,3 +264,18 @@ def test_baseline_vllm_path_for_no_quant_comparison():
     assert path.path_kind == ExecutionPathKind.BASELINE_VLLM
     assert path.runtime_config["dtype"] == "float16"
     assert path.runtime_config.get("quantization") in ("none", None, "")
+
+
+def test_baseline_vllm_path_can_set_served_model_name():
+    path = build_baseline_vllm_path(
+        model_id="Qwen/Qwen2.5-0.5B-Instruct",
+        served_model_name="qwen2.5-0.5b",
+    )
+    mat = VLLMBackendAdapter().materialize(path)
+
+    assert path.runtime_config["model"] == "Qwen/Qwen2.5-0.5B-Instruct"
+    assert path.runtime_config["served_model_name"] == "qwen2.5-0.5b"
+    assert "--served-model-name" in mat.command
+    assert mat.command[mat.command.index("--served-model-name") + 1] == "qwen2.5-0.5b"
+    assert mat.benchmark_command[mat.benchmark_command.index("--model") + 1] == "qwen2.5-0.5b"
+

@@ -3,7 +3,7 @@
 **Plan (B, no-quant):** `nvidia-gtx1650-maxq_serving_plan`
 **Plan (C, awq):**      `nvidia-gtx1650-maxq-awq-forced-experimental_serving_plan`
 **Hardware profile (C):** `nvidia-gtx1650-maxq-awq-forced-experimental`
-**Date:** 2026-07-07T21:35:48Z
+**Date:** 2026-07-08T03:17:45Z
 
 ## Paths
 
@@ -35,17 +35,17 @@
 
 **A (baseline):**
 ```
-.venv/bin/python -m vllm.entrypoints.openai.api_server --model Qwen/Qwen2.5-0.5B-Instruct --tokenizer Qwen/Qwen2.5-0.5B-Instruct --dtype float16 --tensor-parallel-size 1 --pipeline-parallel-size 1
+.venv/bin/python -m vllm.entrypoints.openai.api_server --model Qwen/Qwen2.5-0.5B-Instruct --tokenizer Qwen/Qwen2.5-0.5B-Instruct --dtype float16 --tensor-parallel-size 1 --pipeline-parallel-size 1 --served-model-name qwen2.5-0.5b --host 127.0.0.1 --port 8000
 ```
 
 **B (compiler no-quant):**
 ```
-.venv/bin/python -m vllm.entrypoints.openai.api_server --model Qwen/Qwen2.5-0.5B-Instruct --tokenizer Qwen/Qwen2.5-0.5B-Instruct --dtype float16 --max-model-len 2048 --gpu-memory-utilization 0.75 --block-size 16 --max-num-seqs 4 --max-num-batched-tokens 2048 --tensor-parallel-size 1 --pipeline-parallel-size 1 --served-model-name qwen2.5-0.5b
+.venv/bin/python -m vllm.entrypoints.openai.api_server --model Qwen/Qwen2.5-0.5B-Instruct --tokenizer Qwen/Qwen2.5-0.5B-Instruct --dtype float16 --max-model-len 2048 --gpu-memory-utilization 0.75 --block-size 16 --max-num-seqs 4 --max-num-batched-tokens 2048 --tensor-parallel-size 1 --pipeline-parallel-size 1 --served-model-name qwen2.5-0.5b --host 127.0.0.1 --port 8001
 ```
 
 **C (compiler awq):**
 ```
-.venv/bin/python -m vllm.entrypoints.openai.api_server --model artifacts/qwen_awq --tokenizer artifacts/qwen_awq --dtype float16 --quantization awq --max-model-len 2048 --gpu-memory-utilization 0.75 --block-size 16 --max-num-seqs 4 --max-num-batched-tokens 2048 --tensor-parallel-size 1 --pipeline-parallel-size 1 --served-model-name qwen2.5-0.5b
+.venv/bin/python -m vllm.entrypoints.openai.api_server --model artifacts/qwen_awq --tokenizer artifacts/qwen_awq --dtype float16 --quantization awq --max-model-len 2048 --gpu-memory-utilization 0.75 --block-size 16 --max-num-seqs 4 --max-num-batched-tokens 2048 --tensor-parallel-size 1 --pipeline-parallel-size 1 --served-model-name qwen2.5-0.5b --host 127.0.0.1 --port 8002
 ```
 
 ## Results
@@ -56,7 +56,7 @@
 | shared_prefix | `baseline_shared_prefix.json` | `compiler_noquant_shared_prefix.json` | `compiler_awq_shared_prefix.json` |
 | no_shared_prefix | `baseline_no_shared_prefix.json` | `compiler_noquant_no_shared_prefix.json` | `compiler_awq_no_shared_prefix.json` |
 
-C's result files are populated only when `/Users/allen/Documents/Codex/project/systems-portfolio/heterogeneous-inference-runtime/../ml-graph-compiler-runtime/artifacts/qwen_awq` exists locally
+C's result files are populated only when `/home/allen/Desktop/Project/heterogeneous-inference-runtime/../ml-graph-compiler-runtime/artifacts/qwen_awq` exists locally
 (see `compiler_awq_status.txt`) -- otherwise C is materialized-only, and
 these paths are pending measurement.
 

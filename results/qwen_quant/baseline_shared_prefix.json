@@ -1,0 +1,312 @@
+{
+  "artifact_type": "measured_baseline",
+  "evidence_type": "measured",
+  "status": "ok",
+  "benchmark_target": {
+    "kind": "openai_compatible_server",
+    "base_url": "http://127.0.0.1:8000",
+    "endpoint": "/v1/chat/completions",
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "concurrency": 1,
+    "warmup": 4,
+    "stream": true
+  },
+  "hardware": {
+    "machine": "x86_64",
+    "processor": "",
+    "platform": "Linux-7.0.0-27-generic-x86_64-with-glibc2.43",
+    "cpu_count": 8
+  },
+  "software_versions": {
+    "python": "3.12.13",
+    "executable": "/home/allen/Desktop/Project/heterogeneous-inference-runtime/.venv/bin/python"
+  },
+  "command": [
+    "scripts/benchmark_openai_compatible_server.py",
+    "--base-url",
+    "http://127.0.0.1:8000",
+    "--model",
+    "Qwen/Qwen2.5-0.5B-Instruct",
+    "--trace",
+    "/home/allen/Desktop/Project/heterogeneous-inference-runtime/results/qwen_quant/traces/shared_prefix.jsonl",
+    "--concurrency",
+    "1",
+    "--warmup",
+    "4",
+    "--claimed-server",
+    "vllm_quant_baseline",
+    "--output",
+    "/home/allen/Desktop/Project/heterogeneous-inference-runtime/results/qwen_quant/baseline_shared_prefix.json"
+  ],
+  "git_commit": "526d7d7",
+  "git_dirty": true,
+  "timestamp_utc": "2026-07-07T23:22:20Z",
+  "metrics": {
+    "ttft_ms": {
+      "count": 0,
+      "mean": null,
+      "p50": null,
+      "p95": null,
+      "p99": null,
+      "min": null,
+      "max": null
+    },
+    "tpot_ms": {
+      "count": 0,
+      "mean": null,
+      "p50": null,
+      "p95": null,
+      "p99": null,
+      "min": null,
+      "max": null
+    },
+    "e2e_latency_ms": {
+      "count": 0,
+      "mean": null,
+      "p50": null,
+      "p95": null,
+      "p99": null,
+      "min": null,
+      "max": null
+    },
+    "tokens_per_second": null,
+    "success_count": 0,
+    "error_count": 28,
+    "total_output_tokens": 0
+  },
+  "notes": [
+    "Generic OpenAI-compatible benchmark client only; it does not install, start, stop, or manage the server."
+  ],
+  "server_metadata": {
+    "ok": true,
+    "response": {
+      "object": "list",
+      "data": [
+        {
+          "id": "qwen2.5-0.5b",
+          "object": "model",
+          "created": 1783466540,
+          "owned_by": "vllm",
+          "root": "Qwen/Qwen2.5-0.5B-Instruct",
+          "parent": null,
+          "max_model_len": 2048,
+          "permission": [
+            {
+              "id": "modelperm-9ab0996e62a632f5",
+              "object": "model_permission",
+              "created": 1783466540,
+              "allow_create_engine": false,
+              "allow_sampling": true,
+              "allow_logprobs": true,
+              "allow_search_indices": false,
+              "allow_view": true,
+              "allow_fine_tuning": false,
+              "organization": "*",
+              "group": null,
+              "is_blocking": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "request_results": [
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.424237,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.308946,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.174582,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.164861,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.227545,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.134024,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.087988,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.071551,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.049172,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.273626,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.66806,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.669755,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.444536,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.272337,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.100941,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.108351,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.228644,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.156996,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.070513,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.02075,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.067898,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.089426,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.68544,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.615301,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 6.76752,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.263979,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.154925,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "ok": false,
+      "warmup": false,
+      "e2e_latency_ms": 1.141674,
+      "error_type": "HTTPError",
+      "error": "HTTP Error 404: Not Found"
+    }
+  ],
+  "claimed_server": "vllm_quant_baseline"
+}

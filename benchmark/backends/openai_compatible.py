@@ -27,7 +27,7 @@ class OpenAICompatibleBackend:
         self.urlopen = urlopen or urllib.request.urlopen
 
     def fetch_model_metadata(self) -> dict:
-        url = self.config.base_url.rstrip("/") + "/v1/models"
+        url = _join_openai_url(self.config.base_url, "/v1/models")
         request = urllib.request.Request(url, method="GET")
         try:
             with self.urlopen(request, timeout=self.config.timeout_s) as response:
@@ -45,7 +45,7 @@ class OpenAICompatibleBackend:
         if "messages" not in payload and "prompt" in payload and "chat/completions" in self.config.endpoint:
             payload["messages"] = [{"role": "user", "content": str(payload.pop("prompt"))}]
 
-        url = self.config.base_url.rstrip("/") + self.config.endpoint
+        url = _join_openai_url(self.config.base_url, self.config.endpoint)
         body = json.dumps(payload).encode("utf-8")
         request = urllib.request.Request(
             url,
@@ -90,6 +90,14 @@ class OpenAICompatibleBackend:
             "metadata": trace_row.get("metadata", {}),
         }
 
+
+
+def _join_openai_url(base_url: str, endpoint: str) -> str:
+    base = base_url.rstrip("/")
+    path = "/" + endpoint.lstrip("/")
+    if base.endswith("/v1") and path.startswith("/v1/"):
+        path = path[len("/v1") :]
+    return base + path
 
 def _error_result(exc: Exception, start: float, end: float, warmup: bool) -> dict:
     return {

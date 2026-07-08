@@ -54,6 +54,11 @@
 #   BASELINE_MODEL          HuggingFace model ID for path A and B's original weights
 #   OUTPUT_DIR              results directory (default: results/qwen_quant)
 #   VLLM_HOST / VLLM_PORT   vLLM server host/port (default: 127.0.0.1 / 8000)
+#   VLLM_HOST_IP            vLLM distributed host IP (default: VLLM_HOST)
+#   VLLM_PORT_A/B/C         per-path vLLM ports (default: VLLM_PORT, +1, +2)
+#   SERVED_MODEL_NAME       served/request model name for all paths
+#   BASELINE_MAX_MODEL_LEN  manual vLLM max-model-len for A (default: 2048)
+#   BASELINE_MAX_NUM_SEQS   manual vLLM max-num-seqs for A (default: 4)
 #   CONCURRENCY             benchmark concurrency (default: 1)
 #   WARMUP                  warmup request count (default: 4)
 #   VLLM_STARTUP_S          seconds to wait for vLLM startup (default: 60)
@@ -70,19 +75,29 @@ COMPILER_PLAN_NOQUANT="${COMPILER_PLAN_NOQUANT:-$REPO_ROOT/../ml-graph-compiler-
 COMPILER_PLAN_AWQ="${COMPILER_PLAN_AWQ:-$REPO_ROOT/../ml-graph-compiler-runtime/artifacts/qwen_awq_plan/execution_plan.json}"
 AWQ_MODEL_DIR="${AWQ_MODEL_DIR:-$REPO_ROOT/../ml-graph-compiler-runtime/artifacts/qwen_awq}"
 BASELINE_MODEL="${BASELINE_MODEL:-Qwen/Qwen2.5-0.5B-Instruct}"
+SERVED_MODEL_NAME="${SERVED_MODEL_NAME:-qwen2.5-0.5b}"
 OUTPUT_DIR="${OUTPUT_DIR:-$REPO_ROOT/results/qwen_quant}"
 VLLM_HOST="${VLLM_HOST:-127.0.0.1}"
+VLLM_HOST_IP="${VLLM_HOST_IP:-$VLLM_HOST}"
 VLLM_PORT="${VLLM_PORT:-8000}"
+VLLM_PORT_A="${VLLM_PORT_A:-$VLLM_PORT}"
+VLLM_PORT_B="${VLLM_PORT_B:-$((VLLM_PORT + 1))}"
+VLLM_PORT_C="${VLLM_PORT_C:-$((VLLM_PORT + 2))}"
+BASELINE_MAX_MODEL_LEN="${BASELINE_MAX_MODEL_LEN:-2048}"
+BASELINE_GPU_MEMORY_UTILIZATION="${BASELINE_GPU_MEMORY_UTILIZATION:-0.75}"
+BASELINE_BLOCK_SIZE="${BASELINE_BLOCK_SIZE:-16}"
+BASELINE_MAX_NUM_SEQS="${BASELINE_MAX_NUM_SEQS:-4}"
+BASELINE_MAX_NUM_BATCHED_TOKENS="${BASELINE_MAX_NUM_BATCHED_TOKENS:-2048}"
 CONCURRENCY="${CONCURRENCY:-1}"
 WARMUP="${WARMUP:-4}"
 VLLM_STARTUP_S="${VLLM_STARTUP_S:-60}"
 DRY_RUN="${DRY_RUN:-0}"
 
 PYTHON="$REPO_ROOT/.venv/bin/python"
-BASE_URL="http://${VLLM_HOST}:${VLLM_PORT}"
 TRACE_DIR="$OUTPUT_DIR/traces"
+PID_DIR="$OUTPUT_DIR/pids"
 
-mkdir -p "$OUTPUT_DIR" "$TRACE_DIR"
+mkdir -p "$OUTPUT_DIR" "$TRACE_DIR" "$PID_DIR"
 
 log() { echo "[quant-benchmark] $*"; }
 
@@ -101,6 +116,10 @@ run_or_print() {
 log "compiler plan (B, no-quant): $COMPILER_PLAN_NOQUANT"
 log "compiler plan (C, awq):      $COMPILER_PLAN_AWQ"
 log "AWQ model artifact (C):      $AWQ_MODEL_DIR"
+log "served/request model name:   $SERVED_MODEL_NAME"
+log "vLLM ports A/B/C:            $VLLM_PORT_A / $VLLM_PORT_B / $VLLM_PORT_C"
+log "vLLM distributed host IP:    $VLLM_HOST_IP"
+log "A manual vLLM limits:        max_model_len=$BASELINE_MAX_MODEL_LEN max_num_seqs=$BASELINE_MAX_NUM_SEQS max_num_batched_tokens=$BASELINE_MAX_NUM_BATCHED_TOKENS"
 
 if [[ ! -f "$COMPILER_PLAN_NOQUANT" ]]; then
     echo "error: B's execution_plan.json not found at: $COMPILER_PLAN_NOQUANT" >&2
@@ -141,7 +160,7 @@ fi
 
 log "materializing runtime config for A / B / C..."
 
-MATERIALIZED="$(COMPILER_PLAN_NOQUANT="$COMPILER_PLAN_NOQUANT" COMPILER_PLAN_AWQ="$COMPILER_PLAN_AWQ" BASELINE_MODEL="$BASELINE_MODEL" BASE_URL="$BASE_URL" $PYTHON - <<'PYEOF'
+MATERIALIZED="$(COMPILER_PLAN_NOQUANT="$COMPILER_PLAN_NOQUANT" COMPILER_PLAN_AWQ="$COMPILER_PLAN_AWQ" AWQ_MODEL_DIR="$AWQ_MODEL_DIR" BASELINE_MODEL="$BASELINE_MODEL" SERVED_MODEL_NAME="$SERVED_MODEL_NAME" BASELINE_MAX_MODEL_LEN="$BASELINE_MAX_MODEL_LEN" BASELINE_GPU_MEMORY_UTILIZATION="$BASELINE_GPU_MEMORY_UTILIZATION" BASELINE_BLOCK_SIZE="$BASELINE_BLOCK_SIZE" BASELINE_MAX_NUM_SEQS="$BASELINE_MAX_NUM_SEQS" BASELINE_MAX_NUM_BATCHED_TOKENS="$BASELINE_MAX_NUM_BATCHED_TOKENS" $PYTHON - <<'PYEOF'
 import sys, json, os
 sys.path.insert(0, ".")
 from dataclasses import replace
@@ -153,6 +172,8 @@ from deployment.execution_plan.schema import ExecutionPathKind
 from deployment.vllm_adapter.backend_adapter import VLLMBackendAdapter
 
 baseline_model = os.environ.get("BASELINE_MODEL", "Qwen/Qwen2.5-0.5B-Instruct")
+served_model_name = os.environ.get("SERVED_MODEL_NAME", "qwen2.5-0.5b")
+awq_model_dir = os.environ.get("AWQ_MODEL_DIR", "artifacts/qwen_awq")
 adapter = VLLMBackendAdapter()
 
 
@@ -172,7 +193,16 @@ out = {}
 baseline_path = build_baseline_vllm_path(
     model_id=baseline_model,
     output_artifact="results/qwen_quant/baseline_{workload}.json",
+    served_model_name=served_model_name,
 )
+baseline_path = replace(baseline_path, runtime_config={
+    **baseline_path.runtime_config,
+    "max_model_len": int(os.environ.get("BASELINE_MAX_MODEL_LEN", "2048")),
+    "gpu_memory_utilization": float(os.environ.get("BASELINE_GPU_MEMORY_UTILIZATION", "0.75")),
+    "block_size": int(os.environ.get("BASELINE_BLOCK_SIZE", "16")),
+    "max_num_seqs": int(os.environ.get("BASELINE_MAX_NUM_SEQS", "4")),
+    "max_num_batched_tokens": int(os.environ.get("BASELINE_MAX_NUM_BATCHED_TOKENS", "2048")),
+})
 baseline_mat = adapter.materialize(baseline_path)
 out["baseline_command"] = list(baseline_mat.command)
 out["baseline_config"] = baseline_mat.config
@@ -185,7 +215,12 @@ plan_b, path_b = first_vllm_path(os.environ["COMPILER_PLAN_NOQUANT"])
 if path_b is None:
     print(json.dumps({"error": "no COMPILER_GUIDED_VLLM path found in B's plan"}))
     sys.exit(1)
-path_b = replace(path_b, runtime_config={**path_b.runtime_config, "model": baseline_model, "tokenizer": baseline_model})
+path_b = replace(path_b, runtime_config={
+    **path_b.runtime_config,
+    "model": baseline_model,
+    "tokenizer": baseline_model,
+    "served_model_name": served_model_name,
+})
 compiler_b_mat = adapter.materialize(path_b)
 out["compiler_noquant_command"] = list(compiler_b_mat.command)
 out["compiler_noquant_config"] = compiler_b_mat.config
@@ -196,6 +231,13 @@ plan_c, path_c = first_vllm_path(os.environ["COMPILER_PLAN_AWQ"])
 if path_c is None:
     print(json.dumps({"error": "no COMPILER_GUIDED_VLLM path found in C's plan"}))
     sys.exit(1)
+path_c = replace(path_c, runtime_config={
+    **path_c.runtime_config,
+    "quantized_model_artifact_ref": awq_model_dir,
+    "model": awq_model_dir,
+    "tokenizer": awq_model_dir,
+    "served_model_name": served_model_name,
+})
 compiler_c_mat = adapter.materialize(path_c)
 out["compiler_awq_command"] = list(compiler_c_mat.command)
 out["compiler_awq_config"] = compiler_c_mat.config
@@ -233,24 +275,28 @@ BASELINE_CMD="$(extract_cmd baseline_command)"
 COMPILER_NOQUANT_CMD="$(extract_cmd compiler_noquant_command)"
 COMPILER_AWQ_CMD="$(extract_cmd compiler_awq_command)"
 
+BASELINE_SERVER_CMD="$BASELINE_CMD --host $VLLM_HOST --port $VLLM_PORT_A"
+COMPILER_NOQUANT_SERVER_CMD="$COMPILER_NOQUANT_CMD --host $VLLM_HOST --port $VLLM_PORT_B"
+COMPILER_AWQ_SERVER_CMD="$COMPILER_AWQ_CMD --host $VLLM_HOST --port $VLLM_PORT_C"
+
 QUANT_STRATEGY_C="$(extract quant_strategy_c)"
 QUANT_ALGORITHM_C="$(extract quant_algorithm_c)"
 QUANT_ARTIFACT_REF_C="$(extract quant_artifact_ref_c)"
 QUANT_TRUTH_BOUNDARY_C="$(extract quant_truth_boundary_c)"
 
-echo "$BASELINE_CMD" > "$OUTPUT_DIR/baseline_command.txt"
-echo "$COMPILER_NOQUANT_CMD" > "$OUTPUT_DIR/compiler_noquant_command.txt"
-echo "$COMPILER_AWQ_CMD" > "$OUTPUT_DIR/compiler_awq_command.txt"
+echo "$BASELINE_SERVER_CMD" > "$OUTPUT_DIR/baseline_command.txt"
+echo "$COMPILER_NOQUANT_SERVER_CMD" > "$OUTPUT_DIR/compiler_noquant_command.txt"
+echo "$COMPILER_AWQ_SERVER_CMD" > "$OUTPUT_DIR/compiler_awq_command.txt"
 
 log ""
 log "A (baseline) server command:"
-log "  $BASELINE_CMD"
+log "  $BASELINE_SERVER_CMD"
 log ""
 log "B (compiler no-quant) server command:"
-log "  $COMPILER_NOQUANT_CMD"
+log "  $COMPILER_NOQUANT_SERVER_CMD"
 log ""
 log "C (compiler awq) server command:"
-log "  $COMPILER_AWQ_CMD"
+log "  $COMPILER_AWQ_SERVER_CMD"
 log ""
 log "C quantization: strategy=$QUANT_STRATEGY_C algorithm=$QUANT_ALGORITHM_C"
 log "C artifact_ref: $QUANT_ARTIFACT_REF_C"
@@ -302,63 +348,221 @@ log "traces written to $TRACE_DIR"
 # ---------------------------------------------------------------------------
 
 _vllm_pid=""
+_vllm_port=""
+
+is_script_vllm_pid() {
+    local pid="$1"
+    [[ -n "$pid" ]] || return 1
+    ps -p "$pid" -o args= 2>/dev/null | grep -q "vllm.entrypoints.openai.api_server"
+}
+
+wait_for_pid_exit() {
+    local pid="$1" label="$2"
+    local waited=0
+    while is_script_vllm_pid "$pid" && (( waited < 30 )); do
+        sleep 1
+        (( waited += 1 ))
+    done
+    if is_script_vllm_pid "$pid"; then
+        log "previous vLLM for $label did not stop after ${waited}s; force-killing pid $pid"
+        kill -9 "$pid" 2>/dev/null || true
+    fi
+}
+
+cleanup_tracked_vllm() {
+    local label="$1"
+    local pid_file="$PID_DIR/${label}.pid"
+    if [[ ! -f "$pid_file" ]]; then
+        return
+    fi
+    local old_pid
+    old_pid="$(cat "$pid_file" 2>/dev/null || true)"
+    if is_script_vllm_pid "$old_pid"; then
+        log "stopping previous tracked vLLM for $label (pid $old_pid)"
+        kill "$old_pid" 2>/dev/null || true
+        wait_for_pid_exit "$old_pid" "$label"
+    fi
+    rm -f "$pid_file"
+}
+
+cleanup_all_tracked_vllm() {
+    cleanup_tracked_vllm "baseline"
+    cleanup_tracked_vllm "compiler_noquant"
+    cleanup_tracked_vllm "compiler_awq"
+}
+
+cleanup_vllm_on_port() {
+    local port="$1"
+    local pid args
+    while read -r pid args; do
+        [[ -n "$pid" ]] || continue
+        [[ "$args" == *"vllm.entrypoints.openai.api_server"* ]] || continue
+        [[ "$args" == *"--port $port"* ]] || continue
+        log "stopping existing vLLM on port $port (pid $pid)"
+        kill "$pid" 2>/dev/null || true
+        wait_for_pid_exit "$pid" "port-$port"
+    done < <(ps -eo pid=,args= 2>/dev/null)
+}
+
+cleanup_all_ports() {
+    cleanup_vllm_on_port "$VLLM_PORT_A"
+    cleanup_vllm_on_port "$VLLM_PORT_B"
+    cleanup_vllm_on_port "$VLLM_PORT_C"
+}
+
+assert_port_free() {
+    local port="$1"
+    "$PYTHON" - "$VLLM_HOST" "$port" <<'PYEOF'
+import socket
+import sys
+
+host, port = sys.argv[1], int(sys.argv[2])
+try:
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        sock.settimeout(0.5)
+        if sock.connect_ex((host, port)) == 0:
+            print(f"port_in_use:{host}:{port}", file=sys.stderr)
+            raise SystemExit(1)
+except PermissionError as exc:
+    print(f"port_check_permission_denied:{host}:{port}:{exc}", file=sys.stderr)
+    raise SystemExit(1)
+PYEOF
+}
+
+models_contain_expected() {
+    local base_url="$1" expected_model="$2"
+    "$PYTHON" - "$base_url" "$expected_model" <<'PYEOF'
+import json
+import sys
+import urllib.request
+
+base_url, expected = sys.argv[1].rstrip("/"), sys.argv[2]
+try:
+    with urllib.request.urlopen(f"{base_url}/v1/models", timeout=2) as response:
+        payload = json.loads(response.read().decode("utf-8"))
+except Exception as exc:
+    print(f"models_unavailable:{exc}", file=sys.stderr)
+    raise SystemExit(1)
+
+ids = [item.get("id") for item in payload.get("data", []) if isinstance(item, dict)]
+if expected not in ids:
+    print(f"expected_model_missing:{expected}; listed={ids}", file=sys.stderr)
+    raise SystemExit(1)
+PYEOF
+}
+
+describe_models_state() {
+    local base_url="$1" expected_model="$2"
+    "$PYTHON" - "$base_url" "$expected_model" <<'PYEOF'
+import json
+import sys
+import urllib.request
+
+base_url, expected = sys.argv[1].rstrip("/"), sys.argv[2]
+try:
+    with urllib.request.urlopen(f"{base_url}/v1/models", timeout=2) as response:
+        payload = json.loads(response.read().decode("utf-8"))
+except Exception as exc:
+    print(f"models_unavailable:{exc}")
+    raise SystemExit(0)
+
+ids = [item.get("id") for item in payload.get("data", []) if isinstance(item, dict)]
+print(f"expected={expected}; listed={ids}")
+PYEOF
+}
 
 start_vllm() {
-    local label="$1" server_cmd="$2"
+    local label="$1" server_cmd="$2" port="$3" expected_model="$4"
+    local base_url="http://${VLLM_HOST}:${port}"
     log "starting vLLM ($label): $server_cmd"
     if [[ "$DRY_RUN" == "1" ]]; then
         log "[DRY_RUN] would start: $server_cmd"
         _vllm_pid=""
         return
     fi
-    eval "$server_cmd" &
+    cleanup_tracked_vllm "$label"
+    cleanup_vllm_on_port "$port"
+    local port_check_output
+    if ! port_check_output="$(assert_port_free "$port" 2>&1)"; then
+        echo "error: cannot start $label on port $port: $port_check_output" >&2
+        echo "  Stop the existing process, choose VLLM_PORT_A/B/C, or run outside a sandbox that blocks local sockets." >&2
+        exit 1
+    fi
+    eval "env -u VLLM_STARTUP_S VLLM_HOST_IP=$(printf '%q' "$VLLM_HOST_IP") $server_cmd" &
     _vllm_pid=$!
-    log "waiting ${VLLM_STARTUP_S}s for server startup (pid $_vllm_pid)..."
+    _vllm_port="$port"
+    echo "$_vllm_pid" > "$PID_DIR/${label}.pid"
+    log "waiting ${VLLM_STARTUP_S}s for $expected_model at $base_url/v1/models (pid $_vllm_pid)..."
     local waited=0
+    local last_models_state=""
     while (( waited < VLLM_STARTUP_S )); do
-        if curl -s --max-time 2 "$BASE_URL/health" >/dev/null 2>&1; then
-            log "server ready"
+        if models_contain_expected "$base_url" "$expected_model" >/dev/null 2>&1; then
+            log "server ready with expected model: $expected_model"
             return
+        fi
+        last_models_state="$(describe_models_state "$base_url" "$expected_model" 2>/dev/null || true)"
+        if ! kill -0 "$_vllm_pid" 2>/dev/null; then
+            echo "error: vLLM process for $label exited before serving $expected_model" >&2
+            echo "  last /v1/models state: $last_models_state" >&2
+            exit 1
         fi
         sleep 5
         (( waited += 5 ))
     done
-    log "warning: server did not respond to /health after ${VLLM_STARTUP_S}s; proceeding anyway"
+    echo "error: $label did not list expected model '$expected_model' at $base_url/v1/models after ${VLLM_STARTUP_S}s" >&2
+    echo "  last /v1/models state: $last_models_state" >&2
+    exit 1
 }
 
 stop_vllm() {
+    local label="${1:-}"
+    local port="${2:-$_vllm_port}"
     if [[ -n "$_vllm_pid" ]]; then
         log "stopping vLLM (pid $_vllm_pid)"
         kill "$_vllm_pid" 2>/dev/null || true
-        wait "$_vllm_pid" 2>/dev/null || true
+        wait "$_vllm_pid" 2>/dev/null || wait_for_pid_exit "$_vllm_pid" "$label"
         _vllm_pid=""
+    fi
+    if [[ -n "$port" ]]; then
+        cleanup_vllm_on_port "$port"
+    fi
+    _vllm_port=""
+    if [[ -n "$label" ]]; then
+        rm -f "$PID_DIR/${label}.pid"
     fi
 }
 
+trap 'stop_vllm >/dev/null 2>&1 || true' EXIT
+if [[ "$DRY_RUN" != "1" ]]; then
+    cleanup_all_tracked_vllm
+    cleanup_all_ports
+fi
+
 run_benchmark_workload() {
-    local label="$1" workload="$2" trace="$3" model_name="$4"
+    local label="$1" workload="$2" trace="$3" model_name="$4" base_url="$5"
     local output="$OUTPUT_DIR/${label}_${workload}.json"
     log "running benchmark: $label / $workload -> $output"
     run_or_print "$PYTHON" scripts/benchmark_openai_compatible_server.py \
-        --base-url "$BASE_URL" --model "$model_name" --trace "$trace" \
+        --base-url "$base_url" --model "$model_name" --trace "$trace" \
         --concurrency "$CONCURRENCY" --warmup "$WARMUP" \
         --claimed-server "vllm_quant_${label}" --output "$output"
 }
 
 run_path() {
-    local label="$1" server_cmd="$2" model_name="$3"
+    local label="$1" server_cmd="$2" model_name="$3" port="$4"
+    local base_url="http://${VLLM_HOST}:${port}"
     log ""
     log "=== $label vLLM path ==="
-    start_vllm "$label" "$server_cmd"
+    start_vllm "$label" "$server_cmd" "$port" "$model_name"
     for workload in short shared_prefix no_shared_prefix; do
         case "$workload" in
             short)            trace="$TRACE_SHORT" ;;
             shared_prefix)    trace="$TRACE_SHARED_PREFIX" ;;
             no_shared_prefix) trace="$TRACE_NO_SHARED_PREFIX" ;;
         esac
-        run_benchmark_workload "$label" "$workload" "$trace" "$model_name"
+        run_benchmark_workload "$label" "$workload" "$trace" "$model_name" "$base_url"
     done
-    stop_vllm
+    stop_vllm "$label" "$port"
 }
 
 BASELINE_MODEL_NAME="$(echo "$MATERIALIZED" | $PYTHON -c "
@@ -382,15 +586,15 @@ print(d['compiler_awq_config'].get('served_model_name') or d['compiler_awq_confi
 # vllm is available, regardless of AWQ artifact state).
 # ---------------------------------------------------------------------------
 
-run_path "baseline" "$BASELINE_CMD" "$BASELINE_MODEL_NAME"
-run_path "compiler_noquant" "$COMPILER_NOQUANT_CMD" "$COMPILER_NOQUANT_MODEL_NAME"
+run_path "baseline" "$BASELINE_SERVER_CMD" "$BASELINE_MODEL_NAME" "$VLLM_PORT_A"
+run_path "compiler_noquant" "$COMPILER_NOQUANT_SERVER_CMD" "$COMPILER_NOQUANT_MODEL_NAME" "$VLLM_PORT_B"
 
 # ---------------------------------------------------------------------------
 # Step 5: run C only if the quantized artifact is actually present locally.
 # ---------------------------------------------------------------------------
 
 if [[ "$AWQ_ARTIFACT_PRESENT" == "1" ]]; then
-    run_path "compiler_awq" "$COMPILER_AWQ_CMD" "$COMPILER_AWQ_MODEL_NAME"
+    run_path "compiler_awq" "$COMPILER_AWQ_SERVER_CMD" "$COMPILER_AWQ_MODEL_NAME" "$VLLM_PORT_C"
     echo "ran: AWQ artifact present at $AWQ_MODEL_DIR" > "$OUTPUT_DIR/compiler_awq_status.txt"
 else
     log ""
@@ -446,17 +650,17 @@ cat > "$COMPARISON_MD" <<MDEOF
 
 **A (baseline):**
 \`\`\`
-$BASELINE_CMD
+$BASELINE_SERVER_CMD
 \`\`\`
 
 **B (compiler no-quant):**
 \`\`\`
-$COMPILER_NOQUANT_CMD
+$COMPILER_NOQUANT_SERVER_CMD
 \`\`\`
 
 **C (compiler awq):**
 \`\`\`
-$COMPILER_AWQ_CMD
+$COMPILER_AWQ_SERVER_CMD
 \`\`\`
 
 ## Results
