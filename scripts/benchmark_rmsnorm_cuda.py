@@ -1,4 +1,5 @@
 import argparse
+import csv
 import json
 import shutil
 import statistics
@@ -9,6 +10,49 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 KERNEL_DIR = ROOT / "cuda_transformer_kernels"
+
+# Block-size policy lab, Phase 1: the launch block size is the ONLY
+# controlled variable. 256 is the original fixed launch configuration and
+# remains the default policy.
+DEFAULT_BLOCK_SIZE = 256
+
+CSV_FIELDS = [
+    "tokens",
+    "hidden",
+    "block_size",
+    "dtype",
+    "custom_median_ms",
+    "custom_p50_ms",
+    "custom_p95_ms",
+    "fallback_median_ms",
+    "fallback_p50_ms",
+    "fallback_p95_ms",
+    "speedup",
+    "correct",
+]
+
+
+def write_csv(path, rows):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=CSV_FIELDS)
+        writer.writeheader()
+        for row in rows:
+            shape = row["shape"]
+            writer.writerow({
+                "tokens": shape["tokens"],
+                "hidden": shape["hidden"],
+                "block_size": row["block_size"],
+                "dtype": shape["dtype"],
+                "custom_median_ms": row["custom_p50_ms"],
+                "custom_p50_ms": row["custom_p50_ms"],
+                "custom_p95_ms": row["custom_p95_ms"],
+                "fallback_median_ms": row["fallback_p50_ms"],
+                "fallback_p50_ms": row["fallback_p50_ms"],
+                "fallback_p95_ms": row["fallback_p95_ms"],
+                "speedup": row["speedup"],
+                "correct": row["correct"],
+            })
 
 
 def write_json(path, payload):
@@ -139,13 +183,18 @@ def summarize_times(times):
 
 
 def representative_row(rows):
-    for row in rows:
+    # The legacy summary stays comparable with pre-sweep artifacts: only the
+    # default block size (the original fixed launch configuration) is
+    # considered representative.
+    default_rows = [row for row in rows if row["block_size"] == DEFAULT_BLOCK_SIZE]
+    candidates = default_rows or rows
+    for row in candidates:
         shape = row["shape"]
         if shape["tokens"] == 16 and shape["hidden"] == 4096 and shape["dtype"] == "float32":
             return row
-    selectable = [row for row in rows if row["selection_ready"]]
+    selectable = [row for row in candidates if row["selection_ready"]]
     return max(selectable, key=lambda row: row["speedup"], default=None) or min(
-        rows,
+        candidates,
         key=lambda row: row["custom_latency_ms"],
     )
 
@@ -172,17 +221,18 @@ def write_markdown_report(path, payload):
         f"- Timed runs: `{config.get('runs')}`",
         f"- Dtype: `{config.get('dtype')}`",
         "",
-        "## Shape Sweep",
+        "## Shape x Block-Size Sweep",
         "",
-        "| Tokens | Hidden | Custom ms | PyTorch ms | Speedup | Custom GB/s | Correct |",
-        "|---:|---:|---:|---:|---:|---:|---:|",
+        "| Tokens | Hidden | Block | Custom ms | PyTorch ms | Speedup | Custom GB/s | Correct |",
+        "|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for row in payload.get("sweep", []):
         shape = row["shape"]
         lines.append(
-            "| {tokens} | {hidden} | {custom} | {fallback} | {speedup} | {bw} | {correct} |".format(
+            "| {tokens} | {hidden} | {block} | {custom} | {fallback} | {speedup} | {bw} | {correct} |".format(
                 tokens=shape["tokens"],
                 hidden=shape["hidden"],
+                block=row["block_size"],
                 custom=row["custom_latency_ms"],
                 fallback=row["fallback_latency_ms"],
                 speedup=row["speedup"],
@@ -268,8 +318,10 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", default="results/cuda_transformer/rmsnorm_benchmark.json")
     parser.add_argument("--report-output", default="results/cuda_transformer/rmsnorm_benchmark_report.md")
+    parser.add_argument("--csv-output", default="results/cuda_transformer/rmsnorm_block_size_sweep.csv")
     parser.add_argument("--tokens", default="1,16,128")
     parser.add_argument("--hidden", default="768,1024,4096,8192")
+    parser.add_argument("--block-sizes", default="64,128,256,512")
     parser.add_argument("--warmup", type=int, default=20)
     parser.add_argument("--runs", type=int, default=100)
     parser.add_argument("--eps", type=float, default=1e-6)
@@ -278,6 +330,7 @@ def main():
 
     output = ROOT / args.output
     report_output = ROOT / args.report_output
+    csv_output = ROOT / args.csv_output
     nsight = nsight_compute_metadata(args.with_nsight)
 
     try:
@@ -306,6 +359,7 @@ def main():
     rows = []
     token_sizes = [int(item) for item in args.tokens.split(",") if item]
     hidden_sizes = [int(item) for item in args.hidden.split(",") if item]
+    block_sizes = [int(item) for item in args.block_sizes.split(",") if item]
 
     for tokens in token_sizes:
         for hidden in hidden_sizes:
@@ -313,60 +367,75 @@ def main():
             weight = torch.randn(hidden, device="cuda", dtype=torch.float32)
 
             torch_out = torch_rmsnorm(torch, x, weight, args.eps)
-            custom_out = extension.fused_rmsnorm_forward(x, weight, args.eps)
             torch.cuda.synchronize()
-            correct = bool(torch.allclose(torch_out, custom_out, rtol=1e-4, atol=1e-4))
 
+            # The PyTorch baseline is block-size independent: measure once
+            # per shape and reuse across block-size rows.
             fallback_times = measure(
                 torch,
                 lambda: torch_rmsnorm(torch, x, weight, args.eps),
                 args.warmup,
                 args.runs,
             )
-            custom_times = measure(
-                torch,
-                lambda: extension.fused_rmsnorm_forward(x, weight, args.eps),
-                args.warmup,
-                args.runs,
-            )
-
             fallback_mean = statistics.mean(fallback_times)
-            custom_mean = statistics.mean(custom_times)
-            perf = rmsnorm_perf_model(tokens, hidden)
-            custom_stats = summarize_times(custom_times)
             fallback_stats = summarize_times(fallback_times)
-            rows.append({
-                "fusion_candidate": "rmsnorm",
-                "shape": {
-                    "tokens": tokens,
-                    "hidden": hidden,
-                    "dtype": "float32",
-                },
-                "custom_kernel": "fused_rmsnorm_cuda",
-                "fallback_kernel": "torch_rmsnorm",
-                "custom_latency_ms": round(custom_mean, 6),
-                "fallback_latency_ms": round(fallback_mean, 6),
-                "custom_p50_ms": custom_stats["p50_ms"],
-                "custom_p95_ms": custom_stats["p95_ms"],
-                "custom_min_ms": custom_stats["min_ms"],
-                "custom_max_ms": custom_stats["max_ms"],
-                "fallback_p50_ms": fallback_stats["p50_ms"],
-                "fallback_p95_ms": fallback_stats["p95_ms"],
-                "fallback_min_ms": fallback_stats["min_ms"],
-                "fallback_max_ms": fallback_stats["max_ms"],
-                "speedup": round(fallback_mean / custom_mean, 4) if custom_mean else None,
-                "bytes_per_token": perf["bytes_per_token"],
-                "bytes_total": perf["bytes_total"],
-                "flops_per_token": perf["flops_per_token"],
-                "flops_total": perf["flops_total"],
-                "arithmetic_intensity_flops_per_byte": round(perf["arithmetic_intensity_flops_per_byte"], 6),
-                "custom_effective_bandwidth_gbps": round(bandwidth_gbps(perf["bytes_total"], custom_mean), 3),
-                "fallback_effective_bandwidth_gbps": round(bandwidth_gbps(perf["bytes_total"], fallback_mean), 3),
-                "roofline_classification": "memory_bound",
-                "nsight_compute": nsight,
-                "correct": correct,
-                "selection_ready": correct and custom_mean < fallback_mean,
-            })
+            perf = rmsnorm_perf_model(tokens, hidden)
+
+            for block_size in block_sizes:
+                custom_out = extension.fused_rmsnorm_forward(
+                    x, weight, args.eps, block_size
+                )
+                torch.cuda.synchronize()
+                correct = bool(
+                    torch.allclose(torch_out, custom_out, rtol=1e-4, atol=1e-4)
+                )
+
+                custom_times = measure(
+                    torch,
+                    lambda: extension.fused_rmsnorm_forward(
+                        x, weight, args.eps, block_size
+                    ),
+                    args.warmup,
+                    args.runs,
+                )
+
+                custom_mean = statistics.mean(custom_times)
+                custom_stats = summarize_times(custom_times)
+                rows.append({
+                    "fusion_candidate": "rmsnorm",
+                    "shape": {
+                        "tokens": tokens,
+                        "hidden": hidden,
+                        "dtype": "float32",
+                    },
+                    "block_size": block_size,
+                    "custom_kernel": "fused_rmsnorm_cuda",
+                    "fallback_kernel": "torch_rmsnorm",
+                    "custom_latency_ms": round(custom_mean, 6),
+                    "fallback_latency_ms": round(fallback_mean, 6),
+                    "custom_median_ms": custom_stats["p50_ms"],
+                    "custom_p50_ms": custom_stats["p50_ms"],
+                    "custom_p95_ms": custom_stats["p95_ms"],
+                    "custom_min_ms": custom_stats["min_ms"],
+                    "custom_max_ms": custom_stats["max_ms"],
+                    "fallback_median_ms": fallback_stats["p50_ms"],
+                    "fallback_p50_ms": fallback_stats["p50_ms"],
+                    "fallback_p95_ms": fallback_stats["p95_ms"],
+                    "fallback_min_ms": fallback_stats["min_ms"],
+                    "fallback_max_ms": fallback_stats["max_ms"],
+                    "speedup": round(fallback_mean / custom_mean, 4) if custom_mean else None,
+                    "bytes_per_token": perf["bytes_per_token"],
+                    "bytes_total": perf["bytes_total"],
+                    "flops_per_token": perf["flops_per_token"],
+                    "flops_total": perf["flops_total"],
+                    "arithmetic_intensity_flops_per_byte": round(perf["arithmetic_intensity_flops_per_byte"], 6),
+                    "custom_effective_bandwidth_gbps": round(bandwidth_gbps(perf["bytes_total"], custom_mean), 3),
+                    "fallback_effective_bandwidth_gbps": round(bandwidth_gbps(perf["bytes_total"], fallback_mean), 3),
+                    "roofline_classification": "memory_bound",
+                    "nsight_compute": nsight,
+                    "correct": correct,
+                    "selection_ready": correct and custom_mean < fallback_mean,
+                })
 
     summary_row = representative_row(rows)
 
@@ -387,6 +456,9 @@ def main():
         "benchmark_config": {
             "tokens": token_sizes,
             "hidden": hidden_sizes,
+            "block_sizes": block_sizes,
+            "default_block_size": DEFAULT_BLOCK_SIZE,
+            "controlled_variable": "block_size_only",
             "warmup": args.warmup,
             "runs": args.runs,
             "eps": args.eps,
@@ -410,6 +482,7 @@ def main():
                 "correct": summary_row["correct"],
                 "selection_ready": summary_row["selection_ready"],
                 "representative_shape": summary_row["shape"],
+                "representative_block_size": summary_row["block_size"],
                 "custom_effective_bandwidth_gbps": summary_row["custom_effective_bandwidth_gbps"],
                 "fallback_effective_bandwidth_gbps": summary_row["fallback_effective_bandwidth_gbps"],
                 "bytes_per_token": summary_row["bytes_per_token"],
@@ -420,6 +493,7 @@ def main():
         "sweep": rows,
     }
     write_json(output, payload)
+    write_csv(csv_output, rows)
     write_markdown_report(report_output, payload)
     print(json.dumps(payload, indent=2))
     return 0

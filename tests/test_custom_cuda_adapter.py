@@ -1,3 +1,5 @@
+import dataclasses
+
 from deployment.custom_cuda_adapter import CustomCudaBackendAdapter
 from deployment.execution_plan.capability_view import CapabilityValidationView
 from deployment.execution_plan.loader import parse_execution_plan
@@ -25,6 +27,39 @@ def test_custom_cuda_adapter_materializes_rmsnorm_commands():
         "scripts/benchmark_rmsnorm_cuda.py",
         "--output",
         "results/runtime_paths/rmsnorm_custom_cuda_microbenchmark.json",
+    )
+    assert "kernel-level evidence only" in materialized.truth_boundary
+    # No kernel policy requested: config carries none — default block-size
+    # behavior (256, the original launch configuration) is preserved.
+    assert "kernel_policy" not in materialized.config
+
+
+def test_custom_cuda_adapter_optional_block_size_policy():
+    plan = parse_execution_plan(_plan())
+    paths = build_execution_paths(plan, build_execution_stages(plan))
+    path = next(item for item in paths if item.path_kind == ExecutionPathKind.CUSTOM_CUDA_MICROBENCHMARK)
+    path = dataclasses.replace(
+        path,
+        benchmark_config={**path.benchmark_config, "rmsnorm_block_size": 128},
+    )
+    adapter = CustomCudaBackendAdapter()
+
+    assert adapter.validate(path, CapabilityValidationView()) == []
+    materialized = adapter.materialize(path)
+
+    assert materialized.benchmark_command == (
+        ".venv-rmsnorm/bin/python",
+        "scripts/benchmark_rmsnorm_cuda.py",
+        "--output",
+        "results/runtime_paths/rmsnorm_custom_cuda_microbenchmark.json",
+        "--block-sizes",
+        "128",
+    )
+    assert materialized.config["kernel_policy"] == {"block_size": 128}
+    # Correctness command and truth boundary are unchanged by the policy.
+    assert materialized.command == (
+        ".venv-rmsnorm/bin/python",
+        "scripts/test_rmsnorm_cuda_correctness.py",
     )
     assert "kernel-level evidence only" in materialized.truth_boundary
 

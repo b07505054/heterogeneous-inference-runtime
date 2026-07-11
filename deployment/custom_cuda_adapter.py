@@ -48,15 +48,27 @@ class CustomCudaBackendAdapter:
             "--output",
             path.output_artifact,
         )
+        config = {
+            "op": "RMSNorm",
+            "selected_kernel": path.selected_kernel,
+            "kernel_library": path.kernel_library,
+            "correctness_command": correctness_command,
+        }
+        # Optional kernel launch policy (block-size policy lab, Phase 1).
+        # Absent -> commands and config are byte-identical to the previous
+        # behavior; the kernel then uses its default block size (256, the
+        # original fixed launch configuration).
+        block_size = path.benchmark_config.get("rmsnorm_block_size")
+        if block_size is not None:
+            benchmark_command = benchmark_command + (
+                "--block-sizes",
+                str(block_size),
+            )
+            config["kernel_policy"] = {"block_size": int(block_size)}
         return BackendMaterialization(
             backend="custom_cuda",
             method=path.execution_method.value,
-            config={
-                "op": "RMSNorm",
-                "selected_kernel": path.selected_kernel,
-                "kernel_library": path.kernel_library,
-                "correctness_command": correctness_command,
-            },
+            config=config,
             command=correctness_command,
             benchmark_command=benchmark_command,
             expected_output_artifact=path.output_artifact,
