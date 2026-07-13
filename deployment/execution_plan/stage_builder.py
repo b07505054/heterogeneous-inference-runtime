@@ -63,6 +63,12 @@ def _kind_from_op(op_type: str) -> ExecutionStageKind:
         return ExecutionStageKind.RMSNORM
     if normalized == "matmul":
         return ExecutionStageKind.MATMUL
+    # Phase P1B: hir.fused_matmul_bias_relu (compiler dialect-qualified name)
+    # is a real, existing HIR op (mlir_passes/include/HIR/IR/HIROps.td:
+    # HIR_FusedMatMulBiasReluOp) -- bucket it into the existing MATMUL stage
+    # kind rather than adding new stage-kind vocabulary for it.
+    if normalized.endswith("fused_matmul_bias_relu"):
+        return ExecutionStageKind.MATMUL
     if normalized == "attention":
         return ExecutionStageKind.ATTENTION
     return ExecutionStageKind.MICROBENCHMARK

@@ -1,0 +1,99 @@
+{
+  "schema": "p1b_raspberry_pi_execution_evidence",
+  "schema_version": 1,
+  "utc_timestamp_start": "2026-07-13T06:17:13.525976+00:00",
+  "target_hostname": "edgeaiplatform",
+  "board_model": "Raspberry Pi 5 Model B Rev 1.1",
+  "architecture": "aarch64",
+  "kernel_version": "6.18.34+rpt-rpi-2712",
+  "python_version": "3.13.5",
+  "compiler_commit": "0ae0d2455e31ae1cc831c7d4155d51a218c27237",
+  "runtime_commit_base": "4776efe9ef2dd62c1a0fa62e0dfb61b9db97dbcc",
+  "runtime_commit_note": "base HEAD; P1B runtime changes (schema.py kernel_selection support, stage_builder.py MATMUL routing, path_builder.py portable CPU kernel path, new portable_cpu_kernel_adapter.py, new native kernel, new tests) are uncommitted working-tree changes as of this run -- not yet committed per explicit instruction to hold the commit until this report is reviewed.",
+  "cpu_governor_per_core": [
+    "ondemand",
+    "ondemand",
+    "ondemand",
+    "ondemand"
+  ],
+  "affinity_controlled": false,
+  "affinity_note": "No CPU affinity/pinning was set for this run (taskset not used); the OS scheduler was free to place/move the process across all 4 cores. This is functional bring-up evidence, not a controlled performance measurement.",
+  "thermal_before": {
+    "temp_c": 44.1,
+    "temp_c_source": "/sys/class/thermal/thermal_zone0/temp",
+    "vcgencmd_measure_temp": "temp=43.9'C",
+    "vcgencmd_get_throttled": "throttled=0x0"
+  },
+  "target_profile_id": "raspberry-pi5-cortex-a76-cpu",
+  "compiler_plan_id": "raspberry-pi5-cortex-a76-cpu_serving_plan",
+  "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn32_bk32",
+  "backend": "cpu",
+  "dtype": "f32",
+  "supported_shape_run": {
+    "m": 128,
+    "n": 128,
+    "k": 128,
+    "candidate_tile_identity": "bm32_bn32_bk32",
+    "thread_count": 1,
+    "process_exit_status": 0,
+    "correctness": {
+      "reference": "independent pure-Python triple-loop matmul+bias+relu, computed in this same script",
+      "max_abs_error": 4.4850953074160316e-05,
+      "max_rel_error": 0.0001889743877400898,
+      "tolerance_atol": 0.001,
+      "tolerance_rtol": 0.001,
+      "passed": true
+    },
+    "raw_latency_samples_ms": [
+      2.05619,
+      2.06763,
+      2.05204,
+      2.06178,
+      2.05189,
+      2.05511,
+      2.05174,
+      2.05545,
+      1.75737,
+      1.62687,
+      1.62447,
+      1.62685,
+      1.62958,
+      1.62493,
+      1.62913,
+      1.62452,
+      1.63548,
+      1.62476,
+      1.62448,
+      1.63358
+    ],
+    "median_latency_ms": 1.63453,
+    "mean_latency_ms": 1.8056925,
+    "min_latency_ms": 1.62447,
+    "max_latency_ms": 2.06763,
+    "stddev_latency_ms": 0.21205330099256203
+  },
+  "unsupported_case_shape_mismatch": {
+    "attempted_shape": {
+      "m": 128,
+      "n": 128,
+      "k_a": 128,
+      "k_b": 129
+    },
+    "rejected": true,
+    "error": "shape mismatch: A is [128,128], B is [129,128] -- inner dimensions 128 != 129 do not agree, refusing to dispatch"
+  },
+  "unsupported_case_dtype": {
+    "attempted_dtype": "fp16",
+    "rejected": true,
+    "error": "op activation_dtype is 'fp16', this kernel only supports 'f32' -- refusing to dispatch"
+  },
+  "thermal_after": {
+    "temp_c": 44.65,
+    "temp_c_source": "/sys/class/thermal/thermal_zone0/temp",
+    "vcgencmd_measure_temp": "temp=45.0'C",
+    "vcgencmd_get_throttled": "throttled=0x0"
+  },
+  "utc_timestamp_end": "2026-07-13T06:17:13.928573+00:00",
+  "truth_boundary": "functional_bring_up_and_correctness_evidence_not_performance_quality_evidence_single_process_no_affinity_control_no_isolation_from_other_system_activity",
+  "process_exit_status": 0
+}

@@ -29,6 +29,13 @@ RMSNORM_TRUTH_BOUNDARY = (
     "Custom CUDA RMSNorm is kernel-level evidence only, not end-to-end Qwen or "
     "vLLM speedup."
 )
+PORTABLE_CPU_KERNEL_TRUTH_BOUNDARY = (
+    "Portable CPU fused MatMul+Bias+ReLU is a real compiler-selected, real "
+    "compiled-kernel dispatch (kernel_selection_contract_v1) -- functional "
+    "bring-up and correctness evidence only, not a performance or "
+    "NEON/SIMD-optimization claim, and not a comparison against any other "
+    "backend."
+)
 
 
 class ExecutionStageKind(str, Enum):
@@ -51,6 +58,11 @@ class ExecutionPathKind(str, Enum):
     CUSTOM_CUDA_MICROBENCHMARK = "custom_cuda_microbenchmark"
     # Future/non-goal for Phase 1. Quantized serving requires explicit support.
     QUANTIZED_MODEL = "quantized_model"
+    # Phase P1B: one compiler-selected, dispatch-validated portable C++ CPU
+    # kernel (kernel_selection_contract_v1), distinct from PYTORCH_REFERENCE
+    # (which is an unimplemented adapter stub) and from CUSTOM_CUDA_MICROBENCHMARK
+    # (GPU-only). See deployment/execution_plan/portable_cpu_kernel_adapter.py.
+    PORTABLE_CPU_KERNEL = "portable_cpu_kernel"
     UNSUPPORTED = "unsupported"
 
 
@@ -62,6 +74,9 @@ class ExecutionMethod(str, Enum):
     EAGER_REFERENCE = "eager_reference"
     RMSNORM_KERNEL = "rmsnorm_kernel"
     RMSNORM_MICROBENCHMARK = "rmsnorm_microbenchmark"
+    # Phase P1B: dispatches native/cpu_kernels/portable_fused_matmul_bias_relu,
+    # a real compiled executable (never PyTorch/ONNXRuntime/NumPy/mock).
+    FUSED_MATMUL_BIAS_RELU_KERNEL = "fused_matmul_bias_relu_kernel"
 
 
 @dataclass(frozen=True)
@@ -213,20 +228,68 @@ class KernelDecision:
         )
 
 
+# ---------------------------------------------------------------------------
+# KernelSelectionDecision — kernel_selection_contract_v1 (KernelSelectionPass).
+#
+# Distinct from KernelDecision above: KernelDecision reflects
+# LoweringDecisionPlanningPass / third-party-LIBRARY coverage (backendCapabilities
+# / kernelLibraries) and is "unsupported" whenever no such library capability is
+# declared. KernelSelectionDecision reflects the separate, concrete
+# RuntimeKernelDescriptor registry (target.runtime_kernels) -- a real,
+# dispatchable runtime kernel contract. The two can and do disagree (e.g.
+# KernelDecision.kernel_exists == False while KernelSelectionDecision.status ==
+# "selected") when a target declares a handwritten runtime kernel without also
+# declaring third-party library coverage. Both are genuine, non-contradictory
+# compiler facts about two different layers -- see ml-graph-compiler-runtime
+# CLAUDE.md "Kernel Selection Framework (kernel_selection_contract_v1)".
+# ---------------------------------------------------------------------------
+@dataclass(frozen=True)
+class KernelSelectionDecision:
+    contract_version: str
+    status: str
+    selected_kernel: str | None = None
+    source: str | None = None
+    rejection_reasons: tuple[str, ...] = ()
+    truth_boundary: str = ""
+    raw: dict[str, Any] = field(default_factory=dict)
+
+    @property
+    def selected(self) -> bool:
+        return self.status == "selected"
+
+    @classmethod
+    def from_dict(cls, payload: dict[str, Any]) -> "KernelSelectionDecision":
+        return cls(
+            contract_version=str(payload.get("contract_version", "")),
+            status=str(payload.get("status", "")),
+            selected_kernel=payload.get("selected_kernel"),
+            source=payload.get("source"),
+            rejection_reasons=tuple(payload.get("rejection_reasons", ())),
+            truth_boundary=str(payload.get("truth_boundary", "")),
+            raw=dict(payload),
+        )
+
+
 @dataclass(frozen=True)
 class OpDecision:
     op_name: str
     op_type: str
     kernel: KernelDecision | None
+    kernel_selection: KernelSelectionDecision | None = None
     raw: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
     def from_dict(cls, payload: dict[str, Any]) -> "OpDecision":
         kernel_payload = _dict_at(payload, "kernel")
+        kernel_selection_payload = _dict_at(payload, "kernel_selection")
         return cls(
             op_name=str(payload.get("op_name", "")),
             op_type=str(payload.get("op_type", "")),
             kernel=KernelDecision.from_dict(kernel_payload) if kernel_payload else None,
+            kernel_selection=(
+                KernelSelectionDecision.from_dict(kernel_selection_payload)
+                if kernel_selection_payload else None
+            ),
             raw=dict(payload),
         )
 

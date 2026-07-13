@@ -7,6 +7,7 @@ from typing import Any
 from deployment.execution_plan.schema import (
     COMPILER_GUIDED_VLLM_TRUTH_BOUNDARY,
     EXECUTION_PATH_TRUTH_BOUNDARY,
+    PORTABLE_CPU_KERNEL_TRUTH_BOUNDARY,
     RMSNORM_TRUTH_BOUNDARY,
     ExecutionMethod,
     ExecutionPath,
@@ -15,6 +16,7 @@ from deployment.execution_plan.schema import (
     ExecutionStage,
     ExecutionStageKind,
 )
+from deployment.execution_plan.portable_cpu_kernel_adapter import EXPECTED_KERNEL_ID
 from deployment.execution_unit_router import ExecutionUnitRouter
 
 
@@ -73,6 +75,9 @@ def build_execution_paths(plan: ExecutionPlan, stages: list[ExecutionStage]) -> 
     for stage in stages:
         if stage.kind == ExecutionStageKind.RMSNORM:
             paths.append(_rmsnorm_path(plan, stage))
+            continue
+        if stage.kind == ExecutionStageKind.MATMUL:
+            paths.append(_portable_cpu_fused_matmul_bias_relu_path(plan, stage))
             continue
         function_plan = function_by_name.get(stage.function_name or "")
         execution_unit = function_plan.backend.selected_backend if function_plan else ""
@@ -145,6 +150,53 @@ def _rmsnorm_path(plan: ExecutionPlan, stage: ExecutionStage) -> ExecutionPath:
         output_artifact="results/runtime_paths/rmsnorm_custom_cuda_microbenchmark.json",
         truth_boundary=RMSNORM_TRUTH_BOUNDARY,
         metadata={"compiler_plan_id": plan.plan_id},
+    )
+
+
+def _portable_cpu_fused_matmul_bias_relu_path(plan: ExecutionPlan, stage: ExecutionStage) -> ExecutionPath:
+    """Phase P1B: the one real, compiler-selected, dispatch-validated CPU
+    kernel path. Mirrors _rmsnorm_path's per-op bypass of the generic
+    function-level vLLM/coreml/pytorch_reference routing above -- this stage
+    kind is a single fused op, not a full-model serving unit.
+
+    Honestly reports UNSUPPORTED (never a fabricated selection) when the
+    compiler's kernel_selection_contract_v1 decision for this op is anything
+    other than status == "selected" with selected_kernel exactly matching
+    the one kernel this repo implements -- e.g. a target profile that does
+    not declare this runtime kernel, or declares a different one.
+    """
+    kernel_selection = _dict_at(stage.source_compiler_decision, "kernel_selection")
+    status = kernel_selection.get("status")
+    selected_kernel = kernel_selection.get("selected_kernel")
+    if status != "selected" or selected_kernel != EXPECTED_KERNEL_ID:
+        return _unsupported_path(
+            plan, stage, "cpu",
+            reason=f"kernel_selection_status_{status or 'absent'}",
+        )
+    return ExecutionPath(
+        path_id=f"{plan.plan_id}:{stage.stage_id}:portable_cpu_kernel",
+        path_kind=ExecutionPathKind.PORTABLE_CPU_KERNEL,
+        stage_id=stage.stage_id,
+        function_name=stage.function_name,
+        serving_phase=stage.serving_phase,
+        selected_backend="cpu",
+        execution_method=ExecutionMethod.FUSED_MATMUL_BIAS_RELU_KERNEL,
+        selected_kernel=selected_kernel,
+        kernel_library=None,
+        fallback_backends=(),
+        source_compiler_decision=stage.source_compiler_decision,
+        required_capability_refs=plan.provenance.capability_bundle.refs(),
+        runtime_config={},
+        benchmark_config={
+            "correctness_script": "scripts/test_portable_cpu_matmul_bias_relu_correctness.py",
+            "benchmark_script": "scripts/benchmark_portable_cpu_matmul_bias_relu.py",
+        },
+        output_artifact="results/runtime_paths/portable_cpu_fused_matmul_bias_relu.json",
+        truth_boundary=PORTABLE_CPU_KERNEL_TRUTH_BOUNDARY,
+        metadata={
+            "compiler_plan_id": plan.plan_id,
+            "kernel_selection_source": kernel_selection.get("source"),
+        },
     )
 
 
