@@ -1,3 +1,9 @@
+DOCUMENT STATUS: HISTORICAL SUPPORTING PLAYBOOK
+
+Superseded for canonical architecture by: ../RUNTIME_CONTRACT.md and ../../ml-graph-compiler-runtime/ARCHITECTURE_PATHS.md.
+
+Truth boundary: This playbook describes deployment/evaluation workflows and must not be read as compiler candidate-selection authority.
+
 # Edge AI Deployment Playbook
 
 ##  Overview

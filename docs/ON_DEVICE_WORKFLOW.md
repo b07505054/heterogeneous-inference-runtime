@@ -1,3 +1,9 @@
+DOCUMENT STATUS: HISTORICAL SUPPORTING WORKFLOW
+
+Superseded for canonical ownership boundaries by: ../RUNTIME_CONTRACT.md.
+
+Truth boundary: This workflow includes benchmark/deployment steps; those are not automatically compiler-selected production candidates.
+
 # On-Device AI Deployment Workflow
 
 ##  Overview

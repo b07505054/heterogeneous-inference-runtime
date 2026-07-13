@@ -2,6 +2,32 @@
 
 [![Agentic Eval CI](https://github.com/b07505054/heterogeneous-inference-runtime/actions/workflows/agentic-eval-ci.yml/badge.svg)](https://github.com/b07505054/heterogeneous-inference-runtime/actions/workflows/agentic-eval-ci.yml)
 
+
+## Runtime Contract Boundary (Phase D0)
+
+Last verified: 2026-07-13\nSource host: GPU Linux /home/allen/Desktop/Project/heterogeneous-inference-runtime\nVerified runtime HEAD: f4cc98bc93e1e8e5ecea32ffb0779b0a5c801097 (main, ahead 1 of origin/main)\nCanonical architecture host: /home/allen/Desktop/Project/ml-graph-compiler-runtime\n
+
+This repository owns runtime validation and exact dispatch for compiler-produced contracts. It does not own global implementation candidate search or compiler policy.
+
+Canonical architecture documents live in the compiler repository:
+
+- `../ml-graph-compiler-runtime/ARCHITECTURE_CONSTITUTION.md`
+- `../ml-graph-compiler-runtime/CURRENT_STATE.md`
+- `../ml-graph-compiler-runtime/ARCHITECTURE_PATHS.md`
+
+Runtime responsibilities:
+
+- parse and validate the current serialized Execution Contract (`ExecutionPlan`)
+- resolve declared artifacts
+- dispatch the exact compiler-selected backend/kernel/runtime path
+- report execution provenance and telemetry
+- fail explicitly when the contract cannot be honored
+- use fallback only when explicitly permitted by the compiler contract
+
+Runtime must not perform compiler candidate search, online benchmarking for implementation selection, silent kernel substitution, silent backend changes, silent precision changes, or hidden fallback.
+
+Real strict paths today include the portable CPU fused MatMul + Bias + ReLU adapter and the vLLM config materializer. Standalone benchmark backends and simulations are evaluation paths unless a compiler contract explicitly selects them.
+
 ## Overview
 
 This project is a heterogeneous inference runtime and benchmarking evidence

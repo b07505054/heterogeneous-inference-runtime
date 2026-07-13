@@ -1,3 +1,9 @@
+DOCUMENT STATUS: HISTORICAL EVALUATION ANALYSIS
+
+Superseded for current project status by: ../../ml-graph-compiler-runtime/PROJECT_STATUS_2026.md.
+
+Truth boundary: Comparison paths are evaluation artifacts unless explicitly selected by compiler ExecutionPlan. ExecuTorch comparison is not fully integrated.
+
 # Runtime Comparison Analysis
 
 ## Overview

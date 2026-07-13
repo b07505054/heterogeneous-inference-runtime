@@ -1,3 +1,9 @@
+DOCUMENT STATUS: HISTORICAL SUPPORTING DESIGN NOTE
+
+Superseded for canonical architecture by: ../RUNTIME_CONTRACT.md and ../../ml-graph-compiler-runtime/ARCHITECTURE_CONSTITUTION.md.
+
+Truth boundary: This document is runtime/system design background, not the current compiler architecture constitution.
+
 # Edge AI System Design (Runtime, Deployment, and Performance Engineering)
 
 ##  Overview
