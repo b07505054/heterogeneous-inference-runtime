@@ -1,0 +1,19 @@
+{
+  "schema": "e1_executorch_export_report",
+  "mode": "portable",
+  "shape": {
+    "m": 8,
+    "n": 8,
+    "k": 8
+  },
+  "dtype": "float32",
+  "semantic": "Y = ReLU(A @ B + bias)",
+  "pte_path": "artifacts/pte/fused_matmul_bias_relu_8x8x8_portable.pte",
+  "pte_sha256": "0b2f7a2b6492b2de5b3cf3ddf0ff482ec3f5f7ddd7b2148051c0ad45c2d86246",
+  "pte_bytes": 1496,
+  "exported_graph": "GraphModule()\n\n\n\ndef forward(self, a, b, bias):\n    matmul = torch.ops.aten.matmul.default(a, b);  a = b = None\n    add = torch.ops.aten.add.Tensor(matmul, bias);  matmul = bias = None\n    relu = torch.ops.aten.relu.default(add);  add = None\n    return (relu,)\n    \n# To see more debug info, please use `graph_module.print_readable()`",
+  "edge_graph": "GraphModule()\n\n\n\ndef forward(self, a, b, bias):\n    aten_mm_default = executorch_exir_dialects_edge__ops_aten_mm_default(a, b);  a = b = None\n    aten_add_tensor = executorch_exir_dialects_edge__ops_aten_add_Tensor(aten_mm_default, bias);  aten_mm_default = bias = None\n    aten_relu_default = executorch_exir_dialects_edge__ops_aten_relu_default(aten_add_tensor);  aten_add_tensor = None\n    return (aten_relu_default,)\n    \n# To see more debug info, please use `graph_module.print_readable()`",
+  "delegate_call_count": 0,
+  "classification": "PORTABLE_ONLY",
+  "truth_boundary": "Delegate partition presence is verified from edge graph; internal XNNPACK fusion is not proven by this export script."
+}

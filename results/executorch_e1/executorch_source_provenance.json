@@ -1,0 +1,8 @@
+{
+  "repo": "https://github.com/pytorch/executorch.git",
+  "tag": "v1.3.1",
+  "commit": "e2f18eb23c45bd22ca332b0b8b49a81de304b472",
+  "status_short": "",
+  "remote_origin": "https://github.com/pytorch/executorch.git",
+  "recorded_at_utc": "2026-07-13T22:02:59Z"
+}

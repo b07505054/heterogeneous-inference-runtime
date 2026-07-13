@@ -1,0 +1,290 @@
+[
+  {
+    "correct": true,
+    "expected_value": 9.0,
+    "expected_values": 64,
+    "first_run_ms": 0.030296,
+    "inf_count": 0,
+    "iterations": 15,
+    "max_abs_error": 0.0,
+    "max_rel_error": 0.0,
+    "mean_abs_error": 0.0,
+    "mode": "default",
+    "nan_count": 0,
+    "output_bytes": 256,
+    "output_values": 64,
+    "shape": "8x8x8",
+    "temp_c_log": [
+      51.0,
+      51.0
+    ],
+    "threadpool_log": [
+      "Resetting threadpool with num threads = 4",
+      "Resetting threadpool to 4 threads."
+    ],
+    "throttle_log": [
+      "throttled=0x0",
+      "throttled=0x0"
+    ],
+    "warm_mean_ms": 0.0010814000000000002,
+    "warm_median_ms": 0.001075,
+    "warm_p95_ms": 0.001092,
+    "warmup_excluded": 5
+  },
+  {
+    "correct": true,
+    "expected_value": 9.0,
+    "expected_values": 64,
+    "first_run_ms": 0.020037,
+    "inf_count": 0,
+    "iterations": 15,
+    "max_abs_error": 0.0,
+    "max_rel_error": 0.0,
+    "mean_abs_error": 0.0,
+    "mode": "t1",
+    "nan_count": 0,
+    "output_bytes": 256,
+    "output_values": 64,
+    "shape": "8x8x8",
+    "temp_c_log": [
+      51.0,
+      51.0
+    ],
+    "threadpool_log": [
+      "Resetting threadpool with num threads = 1",
+      "Resetting threadpool to 1 threads."
+    ],
+    "throttle_log": [
+      "throttled=0x0",
+      "throttled=0x0"
+    ],
+    "warm_mean_ms": 0.0010538000000000001,
+    "warm_median_ms": 0.001056,
+    "warm_p95_ms": 0.001074,
+    "warmup_excluded": 5
+  },
+  {
+    "correct": true,
+    "expected_value": 9.0,
+    "expected_values": 64,
+    "first_run_ms": 0.019334,
+    "inf_count": 0,
+    "iterations": 15,
+    "max_abs_error": 0.0,
+    "max_rel_error": 0.0,
+    "mean_abs_error": 0.0,
+    "mode": "t4",
+    "nan_count": 0,
+    "output_bytes": 256,
+    "output_values": 64,
+    "shape": "8x8x8",
+    "temp_c_log": [
+      51.0,
+      50.5
+    ],
+    "threadpool_log": [
+      "Resetting threadpool with num threads = 4",
+      "Resetting threadpool to 4 threads."
+    ],
+    "throttle_log": [
+      "throttled=0x0",
+      "throttled=0x0"
+    ],
+    "warm_mean_ms": 0.0010462,
+    "warm_median_ms": 0.001046,
+    "warm_p95_ms": 0.001056,
+    "warmup_excluded": 5
+  },
+  {
+    "correct": true,
+    "expected_value": 65.0,
+    "expected_values": 4096,
+    "first_run_ms": 0.045648,
+    "inf_count": 0,
+    "iterations": 15,
+    "max_abs_error": 0.0,
+    "max_rel_error": 0.0,
+    "mean_abs_error": 0.0,
+    "mode": "default",
+    "nan_count": 0,
+    "output_bytes": 16384,
+    "output_values": 4096,
+    "shape": "64x64x64",
+    "temp_c_log": [
+      51.0,
+      51.0
+    ],
+    "threadpool_log": [
+      "Resetting threadpool with num threads = 4",
+      "Resetting threadpool to 4 threads."
+    ],
+    "throttle_log": [
+      "throttled=0x0",
+      "throttled=0x0"
+    ],
+    "warm_mean_ms": 0.0208811,
+    "warm_median_ms": 0.0208885,
+    "warm_p95_ms": 0.020926,
+    "warmup_excluded": 5
+  },
+  {
+    "correct": true,
+    "expected_value": 65.0,
+    "expected_values": 4096,
+    "first_run_ms": 0.045908,
+    "inf_count": 0,
+    "iterations": 15,
+    "max_abs_error": 0.0,
+    "max_rel_error": 0.0,
+    "mean_abs_error": 0.0,
+    "mode": "t1",
+    "nan_count": 0,
+    "output_bytes": 16384,
+    "output_values": 4096,
+    "shape": "64x64x64",
+    "temp_c_log": [
+      49.9,
+      51.0
+    ],
+    "threadpool_log": [
+      "Resetting threadpool with num threads = 1",
+      "Resetting threadpool to 1 threads."
+    ],
+    "throttle_log": [
+      "throttled=0x0",
+      "throttled=0x0"
+    ],
+    "warm_mean_ms": 0.0209224,
+    "warm_median_ms": 0.020916999999999998,
+    "warm_p95_ms": 0.020963,
+    "warmup_excluded": 5
+  },
+  {
+    "correct": true,
+    "expected_value": 65.0,
+    "expected_values": 4096,
+    "first_run_ms": 0.046389,
+    "inf_count": 0,
+    "iterations": 15,
+    "max_abs_error": 0.0,
+    "max_rel_error": 0.0,
+    "mean_abs_error": 0.0,
+    "mode": "t4",
+    "nan_count": 0,
+    "output_bytes": 16384,
+    "output_values": 4096,
+    "shape": "64x64x64",
+    "temp_c_log": [
+      51.0,
+      49.9
+    ],
+    "threadpool_log": [
+      "Resetting threadpool with num threads = 4",
+      "Resetting threadpool to 4 threads."
+    ],
+    "throttle_log": [
+      "throttled=0x0",
+      "throttled=0x0"
+    ],
+    "warm_mean_ms": 0.020888999999999998,
+    "warm_median_ms": 0.020908,
+    "warm_p95_ms": 0.020945,
+    "warmup_excluded": 5
+  },
+  {
+    "correct": true,
+    "expected_value": 257.0,
+    "expected_values": 65536,
+    "first_run_ms": 1.269111,
+    "inf_count": 0,
+    "iterations": 15,
+    "max_abs_error": 0.0,
+    "max_rel_error": 0.0,
+    "mean_abs_error": 0.0,
+    "mode": "default",
+    "nan_count": 0,
+    "output_bytes": 262144,
+    "output_values": 65536,
+    "shape": "256x256x256",
+    "temp_c_log": [
+      51.0,
+      51.0
+    ],
+    "threadpool_log": [
+      "Resetting threadpool with num threads = 4",
+      "Resetting threadpool to 4 threads."
+    ],
+    "throttle_log": [
+      "throttled=0x0",
+      "throttled=0x0"
+    ],
+    "warm_mean_ms": 1.1330301,
+    "warm_median_ms": 1.1250465,
+    "warm_p95_ms": 1.216816,
+    "warmup_excluded": 5
+  },
+  {
+    "correct": true,
+    "expected_value": 257.0,
+    "expected_values": 65536,
+    "first_run_ms": 1.24763,
+    "inf_count": 0,
+    "iterations": 15,
+    "max_abs_error": 0.0,
+    "max_rel_error": 0.0,
+    "mean_abs_error": 0.0,
+    "mode": "t1",
+    "nan_count": 0,
+    "output_bytes": 262144,
+    "output_values": 65536,
+    "shape": "256x256x256",
+    "temp_c_log": [
+      51.0,
+      49.9
+    ],
+    "threadpool_log": [
+      "Resetting threadpool with num threads = 1",
+      "Resetting threadpool to 1 threads."
+    ],
+    "throttle_log": [
+      "throttled=0x0",
+      "throttled=0x0"
+    ],
+    "warm_mean_ms": 1.1422672,
+    "warm_median_ms": 1.1335745,
+    "warm_p95_ms": 1.174223,
+    "warmup_excluded": 5
+  },
+  {
+    "correct": true,
+    "expected_value": 257.0,
+    "expected_values": 65536,
+    "first_run_ms": 1.296575,
+    "inf_count": 0,
+    "iterations": 15,
+    "max_abs_error": 0.0,
+    "max_rel_error": 0.0,
+    "mean_abs_error": 0.0,
+    "mode": "t4",
+    "nan_count": 0,
+    "output_bytes": 262144,
+    "output_values": 65536,
+    "shape": "256x256x256",
+    "temp_c_log": [
+      51.0,
+      51.6
+    ],
+    "threadpool_log": [
+      "Resetting threadpool with num threads = 4",
+      "Resetting threadpool to 4 threads."
+    ],
+    "throttle_log": [
+      "throttled=0x0",
+      "throttled=0x0"
+    ],
+    "warm_mean_ms": 1.125804,
+    "warm_median_ms": 1.1221670000000001,
+    "warm_p95_ms": 1.187241,
+    "warmup_excluded": 5
+  }
+]

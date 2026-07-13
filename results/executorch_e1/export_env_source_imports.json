@@ -1,0 +1,17 @@
+{
+  "torchao": {
+    "found": true,
+    "origin": "/home/allen/executorch_e1/export_venv/lib/python3.12/site-packages/torchao/__init__.py",
+    "import_ok": true
+  },
+  "executorch.exir": {
+    "found": true,
+    "origin": "/home/allen/executorch_e1/src/executorch/exir/__init__.py",
+    "import_ok": true
+  },
+  "executorch.backends.xnnpack.partition.xnnpack_partitioner": {
+    "found": true,
+    "origin": "/home/allen/executorch_e1/src/executorch/backends/xnnpack/partition/xnnpack_partitioner.py",
+    "import_ok": true
+  }
+}
