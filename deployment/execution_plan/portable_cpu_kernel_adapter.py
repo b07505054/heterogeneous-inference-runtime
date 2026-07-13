@@ -1,16 +1,24 @@
-"""Phase P1B/P1C: the one CPU ExecutionPlan-driven kernel adapter.
+"""Phase P1B/P1C/P1D: the one CPU ExecutionPlan-driven kernel adapter.
 
 Dispatches a compiler-selected, real, compiled native kernel from a small,
-frozen candidate family (Phase P1C), all sharing one contract:
+frozen candidate family (Phase P1C), plus (Phase P1D) a SEPARATE
+thread-decomposition schedule decision for that same kernel:
 
     backend:  cpu
     op:       fused_matmul_bias_relu (hir.fused_matmul_bias_relu)
     dtype:    f32
-    threads:  1
 
-    kernel_id in KNOWN_KERNEL_IDS (see below) -- candidates differ only in
-    (block_m, block_n, block_k); P1B's bm32_bn32_bk32 remains one of them,
-    unchanged, for backward compatibility.
+    kernel_id in KNOWN_KERNEL_IDS (see below) -- identifies WHICH tile
+    candidate runs (block_m, block_n, block_k).
+
+    thread_count/partition_axis/partition_strategy (Phase P1D,
+    thread_schedule_contract_v1) -- a SEPARATE decision identifying HOW
+    MANY threads and what output partitioning that already-selected kernel
+    uses. Absent op_decision["thread_schedule"] (every P1B/P1C plan) is the
+    documented backward-compatible default: thread_count=1,
+    partition_axis="none", partition_strategy="serial" -- exactly
+    reproducing pre-P1D behavior, never silently upgraded to parallel
+    execution.
 
 This module is the last real gate before execution. It reads a per-op
 decision straight out of a real compiler-generated ExecutionPlan v2 JSON
@@ -18,10 +26,13 @@ decision straight out of a real compiler-generated ExecutionPlan v2 JSON
 ml-graph-compiler-runtime), validates it against this exact contract, and --
 only if every condition holds -- invokes the compiled native executable
 (native/cpu_kernels/portable_fused_matmul_bias_relu) with the caller's real
-input tensors and the compiler's exact selected candidate ID. It never falls
-back to PyTorch, ONNX Runtime, NumPy, or a mock/simulated result: any
-mismatch (backend, kernel id, dtype, rank, shape) raises
-PortableCpuKernelError instead.
+input tensors, the compiler's exact selected candidate ID, and the exact
+requested thread schedule. It never falls back to PyTorch, ONNX Runtime,
+NumPy, or a mock/simulated result: any mismatch (backend, kernel id, dtype,
+rank, shape, thread schedule) raises PortableCpuKernelError instead. The
+native kernel's own self-reported thread_count/partition_axis/
+partition_strategy is cross-checked against what was requested, exactly
+like the existing kernel_id self-report check.
 
 Truth boundary: real subprocess execution of a real compiled kernel against
 real caller-supplied tensors. Latency samples are real wall-clock
@@ -66,6 +77,19 @@ EXPECTED_BACKEND = "cpu"
 EXPECTED_OP_TYPE_SUFFIX = "fused_matmul_bias_relu"
 EXPECTED_DTYPE = "f32"
 
+# Phase P1D thread-decomposition contract (thread_schedule_contract_v1) --
+# must match native/cpu_kernels/portable_fused_matmul_bias_relu.cpp's
+# validation exactly (cross-checked by tests/test_p1d_thread_schedule_contract.py).
+KNOWN_THREAD_COUNTS = frozenset({1, 2, 4})
+KNOWN_PARTITION_AXES_MULTI_THREAD = frozenset({"m", "n"})
+# The documented backward-compatible default for every P1B/P1C plan, which
+# never carries a "thread_schedule" block at all.
+DEFAULT_THREAD_SCHEDULE = {
+    "thread_count": 1,
+    "partition_axis": "none",
+    "partition_strategy": "serial",
+}
+
 ADAPTER_TRUTH_BOUNDARY = (
     "portable_cpu_kernel_adapter_real_subprocess_execution_of_real_compiled_kernel_"
     "on_real_caller_supplied_tensors_not_a_performance_comparison"
@@ -108,6 +132,8 @@ class PortableCpuKernelResult:
     block_n: int
     block_k: int
     thread_count: int
+    partition_axis: str
+    partition_strategy: str
     output: Tensor
     samples_ms: tuple[float, ...]
     median_latency_ms: float
@@ -161,6 +187,64 @@ def _validate_op_decision(op_decision: dict[str, Any]) -> dict[str, Any]:
             )
 
     return kernel_selection
+
+
+def _validate_thread_schedule(op_decision: dict[str, Any]) -> dict[str, Any]:
+    """Resolve and validate the thread-decomposition schedule for this op
+    decision (Phase P1D, thread_schedule_contract_v1). Absent
+    op_decision["thread_schedule"] -- every P1B/P1C plan -- resolves to the
+    documented backward-compatible default (1 thread, serial), never
+    silently upgraded to parallel execution. Present but malformed/invalid
+    schedules raise PortableCpuKernelError; the Runtime never reinterprets
+    or downgrades a requested thread count."""
+
+    raw = op_decision.get("thread_schedule")
+    if raw is None:
+        return dict(DEFAULT_THREAD_SCHEDULE)
+    if not isinstance(raw, dict):
+        raise PortableCpuKernelError(
+            "op decision has a malformed thread_schedule block (not an object) -- "
+            "refusing to dispatch"
+        )
+    status = raw.get("status")
+    if status != "selected":
+        raise PortableCpuKernelError(
+            f"thread_schedule.status is '{status}', not 'selected' -- compiler did not "
+            "select a dispatchable thread schedule for this op; refusing to dispatch"
+        )
+    thread_count = raw.get("thread_count")
+    partition_axis = raw.get("partition_axis")
+    partition_strategy = raw.get("partition_strategy")
+    if thread_count not in KNOWN_THREAD_COUNTS:
+        raise PortableCpuKernelError(
+            f"thread_schedule.thread_count is '{thread_count}', which is not one of "
+            f"this adapter's known thread counts ({sorted(KNOWN_THREAD_COUNTS)}) -- "
+            "refusing to silently clamp or round"
+        )
+    if thread_count == 1:
+        if partition_axis != "none" or partition_strategy != "serial":
+            raise PortableCpuKernelError(
+                f"thread_count=1 requires partition_axis='none' and "
+                f"partition_strategy='serial', got partition_axis='{partition_axis}' "
+                f"partition_strategy='{partition_strategy}' -- refusing to silently "
+                "reinterpret"
+            )
+    else:
+        if partition_axis not in KNOWN_PARTITION_AXES_MULTI_THREAD:
+            raise PortableCpuKernelError(
+                f"thread_count>1 requires an explicit partition_axis of 'm' or 'n', "
+                f"got '{partition_axis}' -- refusing to silently downgrade to serial"
+            )
+        if partition_strategy != "contiguous_chunks":
+            raise PortableCpuKernelError(
+                f"thread_count>1 requires partition_strategy='contiguous_chunks', "
+                f"got '{partition_strategy}'"
+            )
+    return {
+        "thread_count": thread_count,
+        "partition_axis": partition_axis,
+        "partition_strategy": partition_strategy,
+    }
 
 
 def _validate_backend(backend: str) -> None:
@@ -251,6 +335,7 @@ def dispatch_fused_matmul_bias_relu(
     _validate_backend(backend)
     kernel_selection = _validate_op_decision(op_decision)
     selected_kernel_id = kernel_selection["selected_kernel"]
+    thread_schedule = _validate_thread_schedule(op_decision)
     m, n, k = _validate_tensors(a, b, bias)
 
     if not kernel_executable.exists():
@@ -277,6 +362,9 @@ def dispatch_fused_matmul_bias_relu(
                 "--a", str(a_path), "--b", str(b_path), "--bias", str(bias_path),
                 "--out", str(out_path),
                 "--kernel-id", selected_kernel_id,
+                "--thread-count", str(thread_schedule["thread_count"]),
+                "--partition-axis", str(thread_schedule["partition_axis"]),
+                "--partition-strategy", str(thread_schedule["partition_strategy"]),
                 "--repeats", str(repeats),
             ],
             capture_output=True, text=True, check=False,
@@ -308,6 +396,24 @@ def dispatch_fused_matmul_bias_relu(
             "a mismatched dispatch"
         )
 
+    # Phase P1D: the native kernel self-reports its actual thread schedule;
+    # cross-check it against what was requested, exactly like the kernel_id
+    # self-report check above. A mismatch here would mean the kernel
+    # silently ran a different schedule than the compiler's plan said --
+    # never trusted, always a hard failure.
+    reported_thread_count = kernel_stdout.get("thread_count")
+    reported_partition_axis = kernel_stdout.get("partition_axis")
+    reported_partition_strategy = kernel_stdout.get("partition_strategy")
+    if (reported_thread_count != thread_schedule["thread_count"] or
+            reported_partition_axis != thread_schedule["partition_axis"] or
+            reported_partition_strategy != thread_schedule["partition_strategy"]):
+        raise PortableCpuKernelError(
+            f"kernel executable reported thread schedule "
+            f"(thread_count={reported_thread_count}, partition_axis={reported_partition_axis!r}, "
+            f"partition_strategy={reported_partition_strategy!r}), which does not match the "
+            f"requested schedule {thread_schedule} -- refusing to trust a mismatched dispatch"
+        )
+
     return PortableCpuKernelResult(
         kernel_id=selected_kernel_id,
         backend=EXPECTED_BACKEND,
@@ -316,7 +422,9 @@ def dispatch_fused_matmul_bias_relu(
         block_m=int(kernel_stdout.get("block_m", 0)),
         block_n=int(kernel_stdout.get("block_n", 0)),
         block_k=int(kernel_stdout.get("block_k", 0)),
-        thread_count=int(kernel_stdout.get("thread_count", 0)),
+        thread_count=int(reported_thread_count),
+        partition_axis=str(reported_partition_axis),
+        partition_strategy=str(reported_partition_strategy),
         output=Tensor(shape=(m, n), data=output_values),
         samples_ms=samples_ms,
         median_latency_ms=statistics.median(samples_ms),

@@ -1,0 +1,556 @@
+{
+  "schema": "p1d_oracle_stability_analysis",
+  "margin_threshold": 0.05,
+  "all_timed_correct": true,
+  "correctness_only_all_pass": true,
+  "per_workload": [
+    {
+      "workload_id": "cal_tiny_16",
+      "category": "tiny",
+      "split": "calibration",
+      "m": 16,
+      "n": 16,
+      "k": 16,
+      "session_winners": [
+        "A_serial_1thread",
+        "A_serial_1thread",
+        "A_serial_1thread"
+      ],
+      "session_margins_pct": [
+        85.657,
+        85.87,
+        85.648
+      ],
+      "session_speedup_over_serial": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "session_second_best": [
+        "B_splitM_2thread",
+        "B_splitM_2thread",
+        "D_splitN_2thread"
+      ],
+      "classification": "STABLE_WINNER"
+    },
+    {
+      "workload_id": "cal_small_square_64",
+      "category": "small_square",
+      "split": "calibration",
+      "m": 64,
+      "n": 64,
+      "k": 64,
+      "session_winners": [
+        "C_splitM_4thread",
+        "C_splitM_4thread",
+        "C_splitM_4thread"
+      ],
+      "session_margins_pct": [
+        7.331,
+        10.265,
+        8.742
+      ],
+      "session_speedup_over_serial": [
+        2.182,
+        2.201,
+        2.114
+      ],
+      "session_second_best": [
+        "E_splitN_4thread",
+        "E_splitN_4thread",
+        "E_splitN_4thread"
+      ],
+      "classification": "STABLE_WINNER"
+    },
+    {
+      "workload_id": "cal_medium_square_192",
+      "category": "medium_square",
+      "split": "calibration",
+      "m": 192,
+      "n": 192,
+      "k": 192,
+      "session_winners": [
+        "C_splitM_4thread",
+        "C_splitM_4thread",
+        "C_splitM_4thread"
+      ],
+      "session_margins_pct": [
+        1.084,
+        1.73,
+        2.032
+      ],
+      "session_speedup_over_serial": [
+        3.839,
+        3.85,
+        3.858
+      ],
+      "session_second_best": [
+        "E_splitN_4thread",
+        "E_splitN_4thread",
+        "E_splitN_4thread"
+      ],
+      "classification": "NEAR_TIE_STABLE_DIRECTION"
+    },
+    {
+      "workload_id": "cal_skinny_m_32x512x64",
+      "category": "skinny_m_wide_n",
+      "split": "calibration",
+      "m": 32,
+      "n": 512,
+      "k": 64,
+      "session_winners": [
+        "E_splitN_4thread",
+        "C_splitM_4thread",
+        "E_splitN_4thread"
+      ],
+      "session_margins_pct": [
+        0.281,
+        3.644,
+        0.115
+      ],
+      "session_speedup_over_serial": [
+        3.269,
+        3.283,
+        3.294
+      ],
+      "session_second_best": [
+        "C_splitM_4thread",
+        "E_splitN_4thread",
+        "C_splitM_4thread"
+      ],
+      "classification": "CROSS_SESSION_CONFLICT"
+    },
+    {
+      "workload_id": "cal_wide_m_512x32x64",
+      "category": "wide_m_skinny_n",
+      "split": "calibration",
+      "m": 512,
+      "n": 32,
+      "k": 64,
+      "session_winners": [
+        "C_splitM_4thread",
+        "C_splitM_4thread",
+        "C_splitM_4thread"
+      ],
+      "session_margins_pct": [
+        6.071,
+        9.584,
+        6.573
+      ],
+      "session_speedup_over_serial": [
+        3.152,
+        3.268,
+        3.156
+      ],
+      "session_second_best": [
+        "E_splitN_4thread",
+        "E_splitN_4thread",
+        "E_splitN_4thread"
+      ],
+      "classification": "STABLE_WINNER"
+    },
+    {
+      "workload_id": "cal_small_k_256x256x16",
+      "category": "small_k",
+      "split": "calibration",
+      "m": 256,
+      "n": 256,
+      "k": 16,
+      "session_winners": [
+        "C_splitM_4thread",
+        "C_splitM_4thread",
+        "C_splitM_4thread"
+      ],
+      "session_margins_pct": [
+        2.235,
+        4.69,
+        44.098
+      ],
+      "session_speedup_over_serial": [
+        3.313,
+        3.333,
+        3.328
+      ],
+      "session_second_best": [
+        "E_splitN_4thread",
+        "E_splitN_4thread",
+        "D_splitN_2thread"
+      ],
+      "classification": "NEAR_TIE_STABLE_DIRECTION"
+    },
+    {
+      "workload_id": "cal_large_k_64x64x1024",
+      "category": "large_k",
+      "split": "calibration",
+      "m": 64,
+      "n": 64,
+      "k": 1024,
+      "session_winners": [
+        "C_splitM_4thread",
+        "C_splitM_4thread",
+        "C_splitM_4thread"
+      ],
+      "session_margins_pct": [
+        5.67,
+        6.304,
+        6.452
+      ],
+      "session_speedup_over_serial": [
+        3.74,
+        3.755,
+        3.743
+      ],
+      "session_second_best": [
+        "E_splitN_4thread",
+        "E_splitN_4thread",
+        "E_splitN_4thread"
+      ],
+      "classification": "STABLE_WINNER"
+    },
+    {
+      "workload_id": "cal_nondivisible_m_137",
+      "category": "nondivisible_m",
+      "split": "calibration",
+      "m": 137,
+      "n": 128,
+      "k": 64,
+      "session_winners": [
+        "C_splitM_4thread",
+        "C_splitM_4thread",
+        "E_splitN_4thread"
+      ],
+      "session_margins_pct": [
+        4.625,
+        4.602,
+        2.007
+      ],
+      "session_speedup_over_serial": [
+        3.387,
+        3.369,
+        3.242
+      ],
+      "session_second_best": [
+        "E_splitN_4thread",
+        "E_splitN_4thread",
+        "C_splitM_4thread"
+      ],
+      "classification": "CROSS_SESSION_CONFLICT"
+    },
+    {
+      "workload_id": "eval_tiny_8",
+      "category": "tiny",
+      "split": "held_out",
+      "m": 8,
+      "n": 8,
+      "k": 8,
+      "session_winners": [
+        "A_serial_1thread",
+        "A_serial_1thread",
+        "A_serial_1thread"
+      ],
+      "session_margins_pct": [
+        96.883,
+        96.368,
+        96.365
+      ],
+      "session_speedup_over_serial": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "session_second_best": [
+        "D_splitN_2thread",
+        "D_splitN_2thread",
+        "D_splitN_2thread"
+      ],
+      "classification": "STABLE_WINNER"
+    },
+    {
+      "workload_id": "eval_small_square_80",
+      "category": "small_square",
+      "split": "held_out",
+      "m": 80,
+      "n": 80,
+      "k": 80,
+      "session_winners": [
+        "C_splitM_4thread",
+        "C_splitM_4thread",
+        "C_splitM_4thread"
+      ],
+      "session_margins_pct": [
+        3.661,
+        4.342,
+        0.63
+      ],
+      "session_speedup_over_serial": [
+        2.764,
+        2.772,
+        2.602
+      ],
+      "session_second_best": [
+        "E_splitN_4thread",
+        "E_splitN_4thread",
+        "E_splitN_4thread"
+      ],
+      "classification": "NEAR_TIE_STABLE_DIRECTION"
+    },
+    {
+      "workload_id": "eval_medium_square_256",
+      "category": "medium_square",
+      "split": "held_out",
+      "m": 256,
+      "n": 256,
+      "k": 256,
+      "session_winners": [
+        "C_splitM_4thread",
+        "C_splitM_4thread",
+        "C_splitM_4thread"
+      ],
+      "session_margins_pct": [
+        1.592,
+        1.427,
+        1.562
+      ],
+      "session_speedup_over_serial": [
+        3.934,
+        3.923,
+        3.926
+      ],
+      "session_second_best": [
+        "E_splitN_4thread",
+        "E_splitN_4thread",
+        "E_splitN_4thread"
+      ],
+      "classification": "NEAR_TIE_STABLE_DIRECTION"
+    },
+    {
+      "workload_id": "eval_large_square_384",
+      "category": "large_square",
+      "split": "held_out",
+      "m": 384,
+      "n": 384,
+      "k": 384,
+      "session_winners": [
+        "C_splitM_4thread",
+        "C_splitM_4thread",
+        "C_splitM_4thread"
+      ],
+      "session_margins_pct": [
+        0.636,
+        0.687,
+        0.592
+      ],
+      "session_speedup_over_serial": [
+        3.968,
+        3.973,
+        3.969
+      ],
+      "session_second_best": [
+        "E_splitN_4thread",
+        "E_splitN_4thread",
+        "E_splitN_4thread"
+      ],
+      "classification": "NEAR_TIE_STABLE_DIRECTION"
+    },
+    {
+      "workload_id": "eval_skinny_m_48x384x96",
+      "category": "skinny_m_wide_n",
+      "split": "held_out",
+      "m": 48,
+      "n": 384,
+      "k": 96,
+      "session_winners": [
+        "C_splitM_4thread",
+        "C_splitM_4thread",
+        "E_splitN_4thread"
+      ],
+      "session_margins_pct": [
+        2.161,
+        2.265,
+        1.353
+      ],
+      "session_speedup_over_serial": [
+        3.54,
+        3.524,
+        3.495
+      ],
+      "session_second_best": [
+        "E_splitN_4thread",
+        "E_splitN_4thread",
+        "C_splitM_4thread"
+      ],
+      "classification": "CROSS_SESSION_CONFLICT"
+    },
+    {
+      "workload_id": "eval_wide_m_384x48x96",
+      "category": "wide_m_skinny_n",
+      "split": "held_out",
+      "m": 384,
+      "n": 48,
+      "k": 96,
+      "session_winners": [
+        "C_splitM_4thread",
+        "C_splitM_4thread",
+        "C_splitM_4thread"
+      ],
+      "session_margins_pct": [
+        8.038,
+        10.103,
+        7.563
+      ],
+      "session_speedup_over_serial": [
+        3.55,
+        3.548,
+        3.486
+      ],
+      "session_second_best": [
+        "E_splitN_4thread",
+        "E_splitN_4thread",
+        "E_splitN_4thread"
+      ],
+      "classification": "STABLE_WINNER"
+    },
+    {
+      "workload_id": "eval_small_k_320x320x24",
+      "category": "small_k",
+      "split": "held_out",
+      "m": 320,
+      "n": 320,
+      "k": 24,
+      "session_winners": [
+        "C_splitM_4thread",
+        "C_splitM_4thread",
+        "C_splitM_4thread"
+      ],
+      "session_margins_pct": [
+        0.116,
+        1.252,
+        1.57
+      ],
+      "session_speedup_over_serial": [
+        3.651,
+        3.644,
+        3.738
+      ],
+      "session_second_best": [
+        "E_splitN_4thread",
+        "E_splitN_4thread",
+        "E_splitN_4thread"
+      ],
+      "classification": "NEAR_TIE_STABLE_DIRECTION"
+    },
+    {
+      "workload_id": "eval_large_k_96x96x768",
+      "category": "large_k",
+      "split": "held_out",
+      "m": 96,
+      "n": 96,
+      "k": 768,
+      "session_winners": [
+        "C_splitM_4thread",
+        "C_splitM_4thread",
+        "C_splitM_4thread"
+      ],
+      "session_margins_pct": [
+        4.087,
+        4.677,
+        4.132
+      ],
+      "session_speedup_over_serial": [
+        3.817,
+        3.845,
+        3.816
+      ],
+      "session_second_best": [
+        "E_splitN_4thread",
+        "E_splitN_4thread",
+        "E_splitN_4thread"
+      ],
+      "classification": "NEAR_TIE_STABLE_DIRECTION"
+    },
+    {
+      "workload_id": "eval_nondivisible_n_151",
+      "category": "nondivisible_n",
+      "split": "held_out",
+      "m": 128,
+      "n": 151,
+      "k": 64,
+      "session_winners": [
+        "C_splitM_4thread",
+        "E_splitN_4thread",
+        "E_splitN_4thread"
+      ],
+      "session_margins_pct": [
+        0.765,
+        0.522,
+        2.288
+      ],
+      "session_speedup_over_serial": [
+        3.35,
+        3.414,
+        3.381
+      ],
+      "session_second_best": [
+        "E_splitN_4thread",
+        "C_splitM_4thread",
+        "C_splitM_4thread"
+      ],
+      "classification": "CROSS_SESSION_CONFLICT"
+    },
+    {
+      "workload_id": "eval_p1c_continuity_128",
+      "category": "medium_square",
+      "split": "held_out",
+      "m": 128,
+      "n": 128,
+      "k": 128,
+      "session_winners": [
+        "C_splitM_4thread",
+        "C_splitM_4thread",
+        "C_splitM_4thread"
+      ],
+      "session_margins_pct": [
+        3.724,
+        2.368,
+        1.775
+      ],
+      "session_speedup_over_serial": [
+        3.601,
+        3.529,
+        3.537
+      ],
+      "session_second_best": [
+        "E_splitN_4thread",
+        "E_splitN_4thread",
+        "E_splitN_4thread"
+      ],
+      "classification": "NEAR_TIE_STABLE_DIRECTION"
+    }
+  ],
+  "candidate_raw_wins": {
+    "A_serial_1thread": 6,
+    "C_splitM_4thread": 42,
+    "E_splitN_4thread": 6
+  },
+  "candidate_stable_wins": {
+    "A_serial_1thread": 2,
+    "C_splitM_4thread": 4
+  },
+  "average_parallel_efficiency": {
+    "A_serial_1thread": 1.0,
+    "B_splitM_2thread": 0.8335573089949551,
+    "C_splitM_4thread": 0.7644336356172968,
+    "D_splitN_2thread": 0.8275086862428532,
+    "E_splitN_4thread": 0.7339808076795373
+  },
+  "summary": {
+    "total_workloads": 18,
+    "stable_winner_count": 6,
+    "near_tie_count": 8,
+    "cross_session_conflict_count": 4,
+    "distinct_stable_winner_candidates": [
+      "A_serial_1thread",
+      "C_splitM_4thread"
+    ]
+  }
+}

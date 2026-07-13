@@ -1,0 +1,33 @@
+{
+  "schema": "p1d_raspberry_pi_thread_workload_manifest",
+  "schema_version": 1,
+  "seed_policy": "each workload's tensors are generated with random.Random(seed) where seed is that workload's own 'seed' field below",
+  "note": "Calibration workloads exist for completeness of the split (Part 8) even though Part 7 concluded no policy fitting is warranted (Option C: simple static baseline). Held-out workloads are the sole basis for all regret evaluation in Part 11. Correctness-only workloads are never timed for the oracle/regret analysis.",
+  "workloads": [
+    {"workload_id": "cal_tiny_16",             "split": "calibration", "category": "tiny",             "m": 16,  "n": 16,  "k": 16,  "seed": 40001},
+    {"workload_id": "cal_small_square_64",     "split": "calibration", "category": "small_square",     "m": 64,  "n": 64,  "k": 64,  "seed": 40002},
+    {"workload_id": "cal_medium_square_192",   "split": "calibration", "category": "medium_square",    "m": 192, "n": 192, "k": 192, "seed": 40003},
+    {"workload_id": "cal_skinny_m_32x512x64",  "split": "calibration", "category": "skinny_m_wide_n",  "m": 32,  "n": 512, "k": 64,  "seed": 40004},
+    {"workload_id": "cal_wide_m_512x32x64",    "split": "calibration", "category": "wide_m_skinny_n",  "m": 512, "n": 32,  "k": 64,  "seed": 40005},
+    {"workload_id": "cal_small_k_256x256x16",  "split": "calibration", "category": "small_k",          "m": 256, "n": 256, "k": 16,  "seed": 40006},
+    {"workload_id": "cal_large_k_64x64x1024",  "split": "calibration", "category": "large_k",          "m": 64,  "n": 64,  "k": 1024,"seed": 40007},
+    {"workload_id": "cal_nondivisible_m_137",  "split": "calibration", "category": "nondivisible_m",   "m": 137, "n": 128, "k": 64,  "seed": 40008},
+
+    {"workload_id": "eval_tiny_8",              "split": "held_out", "category": "tiny",            "m": 8,   "n": 8,   "k": 8,   "seed": 50001},
+    {"workload_id": "eval_small_square_80",     "split": "held_out", "category": "small_square",    "m": 80,  "n": 80,  "k": 80,  "seed": 50002},
+    {"workload_id": "eval_medium_square_256",   "split": "held_out", "category": "medium_square",   "m": 256, "n": 256, "k": 256, "seed": 50003},
+    {"workload_id": "eval_large_square_384",    "split": "held_out", "category": "large_square",    "m": 384, "n": 384, "k": 384, "seed": 50004},
+    {"workload_id": "eval_skinny_m_48x384x96",  "split": "held_out", "category": "skinny_m_wide_n", "m": 48,  "n": 384, "k": 96,  "seed": 50005},
+    {"workload_id": "eval_wide_m_384x48x96",    "split": "held_out", "category": "wide_m_skinny_n", "m": 384, "n": 48,  "k": 96,  "seed": 50006},
+    {"workload_id": "eval_small_k_320x320x24",  "split": "held_out", "category": "small_k",         "m": 320, "n": 320, "k": 24,  "seed": 50007},
+    {"workload_id": "eval_large_k_96x96x768",   "split": "held_out", "category": "large_k",         "m": 96,  "n": 96,  "k": 768, "seed": 50008},
+    {"workload_id": "eval_nondivisible_n_151",  "split": "held_out", "category": "nondivisible_n",  "m": 128, "n": 151, "k": 64,  "seed": 50009},
+    {"workload_id": "eval_p1c_continuity_128",  "split": "held_out", "category": "medium_square",   "m": 128, "n": 128, "k": 128, "seed": 50010},
+
+    {"workload_id": "cx_m_less_than_threads_2",  "split": "correctness_only", "category": "m_lt_threads",  "m": 2,  "n": 64, "k": 32, "seed": 60001},
+    {"workload_id": "cx_n_less_than_threads_3",  "split": "correctness_only", "category": "n_lt_threads",  "m": 64, "n": 3,  "k": 32, "seed": 60002},
+    {"workload_id": "cx_m_less_than_threads_1",  "split": "correctness_only", "category": "m_lt_threads",  "m": 1,  "n": 32, "k": 16, "seed": 60003},
+    {"workload_id": "cx_tail_prime_127x131x97",  "split": "correctness_only", "category": "tail_prime",    "m": 127,"n": 131,"k": 97, "seed": 60004},
+    {"workload_id": "cx_tiny_1x1x1",             "split": "correctness_only", "category": "tiny",          "m": 1,  "n": 1,  "k": 1,  "seed": 60005}
+  ]
+}
