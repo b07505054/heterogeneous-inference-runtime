@@ -1,0 +1,19 @@
+{
+  "schema": "e1_executorch_export_report",
+  "mode": "xnnpack",
+  "shape": {
+    "m": 137,
+    "n": 128,
+    "k": 64
+  },
+  "dtype": "float32",
+  "semantic": "Y = ReLU(A @ B + bias)",
+  "pte_path": "/home/allen/executorch_e2/artifacts/pte/fused_matmul_bias_relu_137x128x64_xnnpack.pte",
+  "pte_sha256": "f153881a212e307d9160475c55337f54774acecf9ee44624f139f8fe84d457a4",
+  "pte_bytes": 1872,
+  "exported_graph": "GraphModule()\n\n\n\ndef forward(self, a, b, bias):\n    matmul = torch.ops.aten.matmul.default(a, b);  a = b = None\n    add = torch.ops.aten.add.Tensor(matmul, bias);  matmul = bias = None\n    relu = torch.ops.aten.relu.default(add);  add = None\n    return (relu,)\n    \n# To see more debug info, please use `graph_module.print_readable()`",
+  "edge_graph": "GraphModule(\n  (lowered_module_0): LoweredBackendModule()\n)\n\n\n\ndef forward(self, a, b, bias):\n    aten_mm_default = executorch_exir_dialects_edge__ops_aten_mm_default(a, b);  a = b = None\n    lowered_module_0 = self.lowered_module_0\n    executorch_call_delegate = torch.ops.higher_order.executorch_call_delegate(lowered_module_0, aten_mm_default, bias);  lowered_module_0 = aten_mm_default = bias = None\n    getitem = executorch_call_delegate[0];  executorch_call_delegate = None\n    return (getitem,)\n    \n# To see more debug info, please use `graph_module.print_readable()`",
+  "delegate_call_count": 4,
+  "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+  "truth_boundary": "Delegate partition presence is verified from edge graph; internal XNNPACK fusion is not proven by this export script."
+}

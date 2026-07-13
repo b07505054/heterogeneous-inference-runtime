@@ -1,0 +1,725 @@
+{
+  "analysis_formulas": {
+    "cross_system": "latency ratios and win/tie/loss only; no cross-system regret",
+    "per_workload_latency": "median of per-session warm medians",
+    "project_regret_percent": "(P_POLICY - min(P_SERIAL,P_4T))/min(P_SERIAL,P_4T)*100",
+    "speedup": "denominator latency / numerator latency",
+    "tie_threshold_percent": 5.0
+  },
+  "claim_boundaries": [
+    "Raspberry Pi 5 only",
+    "FP32 fused MatMul + Bias + ReLU only",
+    "frozen workload suite only",
+    "implementation outcome comparison, not pure scheduling comparison",
+    "no general ExecuTorch superiority/inferiority claim"
+  ],
+  "comparison_id": "E2_RPI5_FP32_FUSED_MATMUL_BIAS_RELU_2026_07_13",
+  "correctness": {
+    "abs_tolerance": 0.001,
+    "nan_inf_rule": "no NaN or Inf expected; mismatch fails",
+    "rel_tolerance": 0.0001
+  },
+  "created_utc": "2026-07-13T23:40:57.815615+00:00",
+  "executorch": {
+    "commit": "e2f18eb23c45bd22ca332b0b8b49a81de304b472",
+    "graph_classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+    "runner_sha256": "eb3068fb1742e4172a459f9f4c5aebd2dd9dd43151e214ff1402ea925d4e2809",
+    "tag": "v1.3.1",
+    "xnnpack_commit": "1adaa7c709d4839d29e1f219cb962b01c9e6a905"
+  },
+  "input_generation": {
+    "algorithm": "python random.Random(seed).uniform(-3, 3), tensors generated in order A, B, bias and serialized little-endian float32",
+    "distribution": "uniform[-3,3]",
+    "dtype": "fp32",
+    "layout": "contiguous row-major"
+  },
+  "manifest_sha256": "468d0ce47ddd4b702746fb056521148588bfa193c923af801a5fb9a97a53e620",
+  "modes": {
+    "executorch": [
+      "ET-DEFAULT",
+      "ET-1T-REQUESTED",
+      "ET-4T-REQUESTED"
+    ],
+    "project": [
+      "P-SERIAL",
+      "P-4T",
+      "P-POLICY"
+    ]
+  },
+  "pi_environment": {
+    "affinity": "0-3",
+    "arch": "aarch64",
+    "cpu": "Cortex-A76 four cores",
+    "governor": "performance",
+    "hardware": "Raspberry Pi 5 Model B Rev 1.1",
+    "hostname": "edgeaiplatform",
+    "os": "Debian 13"
+  },
+  "project": {
+    "capabilities_commit": "aac593da0bdde7a95c38c03920fc4d00b73011db",
+    "compiler_commit": "b67cd644568e7f53a64370f926e241e4e42ebe10",
+    "dtype": "fp32",
+    "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+    "metric": "matmul_mnk",
+    "policy_id": "p1d1_raspberry_pi_mnk_threshold_thread_policy",
+    "policy_version": "1",
+    "runtime_commit": "1ab411fab87f43da8c3f4540b4540534c9dbbf2b",
+    "threshold": 262144,
+    "tile": {
+      "BK": 32,
+      "BM": 32,
+      "BN": 128
+    }
+  },
+  "protocol": {
+    "rotated_execution_order_rule": "session 0 listed order, session 1 reversed, session 2 deterministic shuffle seed 90210",
+    "session_count": 3,
+    "timed_repeat_count": 20,
+    "total_invocations_per_mode_session": 25,
+    "warmup_count": 5
+  },
+  "rss_methodology": "external /proc sampler records VmRSS/status where process lifetime permits; final E2 uses available process RSS observations and discloses unresolved gaps",
+  "schema": "e2_raspberry_pi5_project_vs_executorch_xnnpack_manifest",
+  "schema_version": 1,
+  "semantic": "Y = ReLU(A @ B + bias)",
+  "semantic_contract_version": "fp32_matmul_bias_relu_v1",
+  "thread_observation": "runner requested thread logs plus /proc task observation where practical; requested configurations are not assumed to prove active worker utilization",
+  "timing_boundaries": {
+    "cold_first_inference": "first method/kernel invocation after load and input preparation",
+    "end_to_end_invocation": "not equivalent with current unmodified runners; reported as unavailable for formal comparison",
+    "load_time": "program or artifact load reported separately where runner exposes it",
+    "warm_execution": "per-invocation method/kernel execution after first five warmups; excludes process startup, artifact load, input generation, reference computation, correctness, and result serialization"
+  },
+  "workloads": [
+    {
+      "category": "tiny",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_16x16x16_xnnpack.pte",
+        "sha256": "c36d06ca924f91b49d1ac66b20cbe340ccb808fe0c65aeacea0fc01d39bb3614"
+      },
+      "input_hashes": {
+        "a": "e0a083509f292d1cdc529e48857a24598788cf0359cf982900c1d4cd782d5316",
+        "b": "3d447faf8bc0633b37a04661434ff90b0f7a5b93df4da312f3c623daf8055ab1",
+        "bias": "3160093c02becbc2e081f89a0e0d66a8de133c810bee34923a5378500142d765",
+        "reference": "f752fd7b7f8690a9295c7ccb7e42351db7bc7e603cec5b279dd900574fe2628b"
+      },
+      "input_sizes_bytes": {
+        "a": 1024,
+        "b": 1024,
+        "bias": 64,
+        "reference": 1024
+      },
+      "k": 16,
+      "m": 16,
+      "mnk": 4096,
+      "n": 16,
+      "project_policy_selection": {
+        "boundary": "< threshold serial; >= threshold 4-thread split-M",
+        "metric": "matmul_mnk",
+        "mode": "P-SERIAL",
+        "threshold": 262144
+      },
+      "seed": 40001,
+      "split": "calibration",
+      "workload_id": "cal_tiny_16"
+    },
+    {
+      "category": "small_square",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_64x64x64_xnnpack.pte",
+        "sha256": "0e080a8e3943dd2d2a100add24abb0d43a8d569d97ab31d214a3cf3ff60230bb"
+      },
+      "input_hashes": {
+        "a": "fc7be9c442848ca49b628b276f55ce4353c7e39d533f01f7665476d7c0487aab",
+        "b": "b9b46678d38cc10f9fdb062751edeea971eb659153da30720159261704933291",
+        "bias": "ddba4efd071718d0268d326aad648809d972ca66bdd8a723c46245de0d3bfaff",
+        "reference": "e7ef33fee540bf21c3239247f5447d516afd618120b2c7681fd9ad5961c5876c"
+      },
+      "input_sizes_bytes": {
+        "a": 16384,
+        "b": 16384,
+        "bias": 256,
+        "reference": 16384
+      },
+      "k": 64,
+      "m": 64,
+      "mnk": 262144,
+      "n": 64,
+      "project_policy_selection": {
+        "boundary": "< threshold serial; >= threshold 4-thread split-M",
+        "metric": "matmul_mnk",
+        "mode": "P-4T",
+        "threshold": 262144
+      },
+      "seed": 40002,
+      "split": "calibration",
+      "workload_id": "cal_small_square_64"
+    },
+    {
+      "category": "medium_square",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_192x192x192_xnnpack.pte",
+        "sha256": "42f9a7b437050d93e63a9bfdebdc249dbe896232333485d9f094f8eb7a69c300"
+      },
+      "input_hashes": {
+        "a": "fa9331dc007d06024b883bd0fa64bdda6e52256be82a92463fa96565130a812e",
+        "b": "5c60fd27ede992024359efe92655e5437a184d3b7e716a6a1f07d613c2be9d68",
+        "bias": "043110bf1e731cb19fd16156f803a249d59a75df6543752e3cd5a0948df086f8",
+        "reference": "730ed2a15f9258339e217168d0477cda804cac8465ded1d2e53ce9d0011be236"
+      },
+      "input_sizes_bytes": {
+        "a": 147456,
+        "b": 147456,
+        "bias": 768,
+        "reference": 147456
+      },
+      "k": 192,
+      "m": 192,
+      "mnk": 7077888,
+      "n": 192,
+      "project_policy_selection": {
+        "boundary": "< threshold serial; >= threshold 4-thread split-M",
+        "metric": "matmul_mnk",
+        "mode": "P-4T",
+        "threshold": 262144
+      },
+      "seed": 40003,
+      "split": "calibration",
+      "workload_id": "cal_medium_square_192"
+    },
+    {
+      "category": "skinny_m_wide_n",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_32x512x64_xnnpack.pte",
+        "sha256": "297de52fc267a4d0427594795554c2859d94e6a61559fb344e4f98619d9310a5"
+      },
+      "input_hashes": {
+        "a": "6da9d372778eae43fc6d512f84900bf574552521d91f16ede4aa84b69ca43136",
+        "b": "85895386ac53e644059546971d842cd99432dc86bf9a6c21111f46f80eee57d8",
+        "bias": "99b3df1847c10da76904043cbea60820d3942192aa6f69f1806f3eba0ffecd27",
+        "reference": "77b80595d46545e30778672afe4f2e2cef6114cac19a1cd8a46387bf0514b829"
+      },
+      "input_sizes_bytes": {
+        "a": 8192,
+        "b": 131072,
+        "bias": 2048,
+        "reference": 65536
+      },
+      "k": 64,
+      "m": 32,
+      "mnk": 1048576,
+      "n": 512,
+      "project_policy_selection": {
+        "boundary": "< threshold serial; >= threshold 4-thread split-M",
+        "metric": "matmul_mnk",
+        "mode": "P-4T",
+        "threshold": 262144
+      },
+      "seed": 40004,
+      "split": "calibration",
+      "workload_id": "cal_skinny_m_32x512x64"
+    },
+    {
+      "category": "wide_m_skinny_n",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_512x32x64_xnnpack.pte",
+        "sha256": "467c72eb237ce6310608e78fbcf3c48d5d1c1831d0603963486a24dd7ba6c44a"
+      },
+      "input_hashes": {
+        "a": "02923d55634aa28d046662e5cef4cd781a3cdcef101126cf55f29b42ca6b210b",
+        "b": "17c8188884e874143f082e45932792fcf42f513cb37e38b017556284dc9149c2",
+        "bias": "b991007ff150a3bc520cb43091fd9f79e185c125966b3eb1bc0185e200a25634",
+        "reference": "b44242dcad2b5c3d01cd17b4852722cd01f599b0026c2c07381af1ba67aba3e0"
+      },
+      "input_sizes_bytes": {
+        "a": 131072,
+        "b": 8192,
+        "bias": 128,
+        "reference": 65536
+      },
+      "k": 64,
+      "m": 512,
+      "mnk": 1048576,
+      "n": 32,
+      "project_policy_selection": {
+        "boundary": "< threshold serial; >= threshold 4-thread split-M",
+        "metric": "matmul_mnk",
+        "mode": "P-4T",
+        "threshold": 262144
+      },
+      "seed": 40005,
+      "split": "calibration",
+      "workload_id": "cal_wide_m_512x32x64"
+    },
+    {
+      "category": "small_k",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_256x256x16_xnnpack.pte",
+        "sha256": "469a70245cd846ae74eb6aaf4ee2e542a57eb9c1077b890a8592989fa28121e5"
+      },
+      "input_hashes": {
+        "a": "cacc5f5c77cbd91ab2c5329ce7eccf4d6aaad7bdbd56846fe8de3c890c81d6b4",
+        "b": "dd137761249a861fc05baef1713eaf388115e9a547c0dfe2b959b286ab9307ae",
+        "bias": "4b746507fc5c0a35f90cb156c106a5b8a77bce5d478c19a03c1ef0ea6cc6caf4",
+        "reference": "fcb0c5b37c9027732305e0f433de640c026cf835573221efa18de617aaeb804d"
+      },
+      "input_sizes_bytes": {
+        "a": 16384,
+        "b": 16384,
+        "bias": 1024,
+        "reference": 262144
+      },
+      "k": 16,
+      "m": 256,
+      "mnk": 1048576,
+      "n": 256,
+      "project_policy_selection": {
+        "boundary": "< threshold serial; >= threshold 4-thread split-M",
+        "metric": "matmul_mnk",
+        "mode": "P-4T",
+        "threshold": 262144
+      },
+      "seed": 40006,
+      "split": "calibration",
+      "workload_id": "cal_small_k_256x256x16"
+    },
+    {
+      "category": "large_k",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_64x64x1024_xnnpack.pte",
+        "sha256": "af60cb152ec77a69dfff05473507627339c3310ee14047c1fb82b006389fc017"
+      },
+      "input_hashes": {
+        "a": "b85736df932ea14776a359ac8cd874e07b78840fca2441b508118ecbddcf60cd",
+        "b": "a0134da589db0725f1e11f808bc7d5354060f99a01357c20a86dc66e6a2dba46",
+        "bias": "3fa31aadc5ccb1a82e683a12079af125407a90d32c52931ddfa23bab7b587705",
+        "reference": "1a3476fbb0c63f41c1fd3806b920932d9666e51174d16073101107eb06f37a9b"
+      },
+      "input_sizes_bytes": {
+        "a": 262144,
+        "b": 262144,
+        "bias": 256,
+        "reference": 16384
+      },
+      "k": 1024,
+      "m": 64,
+      "mnk": 4194304,
+      "n": 64,
+      "project_policy_selection": {
+        "boundary": "< threshold serial; >= threshold 4-thread split-M",
+        "metric": "matmul_mnk",
+        "mode": "P-4T",
+        "threshold": 262144
+      },
+      "seed": 40007,
+      "split": "calibration",
+      "workload_id": "cal_large_k_64x64x1024"
+    },
+    {
+      "category": "nondivisible_m",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_137x128x64_xnnpack.pte",
+        "sha256": "f153881a212e307d9160475c55337f54774acecf9ee44624f139f8fe84d457a4"
+      },
+      "input_hashes": {
+        "a": "bd204df1a5e76c6dc8a942275023965d84436a3a6a94466c9a351d12885b87e5",
+        "b": "710471101640831d3a6beb22146a2d2bee86bfab6046aa99af2750367a71a929",
+        "bias": "8d15149abb4bbb74857354e6cb6956f6808edc768adac7702c35af14b06b838f",
+        "reference": "5ae06363fe72f4a23c28d92801ec07432316903c059cb146390da88bd3182721"
+      },
+      "input_sizes_bytes": {
+        "a": 35072,
+        "b": 32768,
+        "bias": 512,
+        "reference": 70144
+      },
+      "k": 64,
+      "m": 137,
+      "mnk": 1122304,
+      "n": 128,
+      "project_policy_selection": {
+        "boundary": "< threshold serial; >= threshold 4-thread split-M",
+        "metric": "matmul_mnk",
+        "mode": "P-4T",
+        "threshold": 262144
+      },
+      "seed": 40008,
+      "split": "calibration",
+      "workload_id": "cal_nondivisible_m_137"
+    },
+    {
+      "category": "tiny",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_8x8x8_xnnpack.pte",
+        "sha256": "0a4c4cbfa3812dbce9d31ab41d637e412ec9c5230dffb4c1221770c17bf8aff1"
+      },
+      "input_hashes": {
+        "a": "38127f7fbde8d6c4bfd6978f4873fa674185d10a7f06500975cf5e9d98b8b657",
+        "b": "b934239ccc1d369ac5a8214487097c7f7024ba14160ef008c190ca32a45d974e",
+        "bias": "8c6fb7007afe128af93c62c1a9678a242aa14221a9cc622852d40d0ced99f0fa",
+        "reference": "d66843d0359c786b1b4d58ab639fb9f266f06f5beaae880b5782c19303d54fb3"
+      },
+      "input_sizes_bytes": {
+        "a": 256,
+        "b": 256,
+        "bias": 32,
+        "reference": 256
+      },
+      "k": 8,
+      "m": 8,
+      "mnk": 512,
+      "n": 8,
+      "project_policy_selection": {
+        "boundary": "< threshold serial; >= threshold 4-thread split-M",
+        "metric": "matmul_mnk",
+        "mode": "P-SERIAL",
+        "threshold": 262144
+      },
+      "seed": 50001,
+      "split": "held_out",
+      "workload_id": "eval_tiny_8"
+    },
+    {
+      "category": "small_square",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_80x80x80_xnnpack.pte",
+        "sha256": "13fa875add430b3987403c0ea5ca725ac3f2ba2edbfa495968deac7c11872e02"
+      },
+      "input_hashes": {
+        "a": "f98e1e326e47b9303dc95e4d8ae343cb13d915c3e780073caf7f14f452f76656",
+        "b": "53e7a6301bed44ce2bf97499db07313e2e77e82635f7f80e90b9bdd64d248848",
+        "bias": "4f2b5d549a843dca848ecf8dbea85f1d1beec1fc8f06149f30cc94781ae7bef2",
+        "reference": "0a16ef07646a08c1c199c1bbee145fe1c8695465cf7f879ab0a9f68c496109a9"
+      },
+      "input_sizes_bytes": {
+        "a": 25600,
+        "b": 25600,
+        "bias": 320,
+        "reference": 25600
+      },
+      "k": 80,
+      "m": 80,
+      "mnk": 512000,
+      "n": 80,
+      "project_policy_selection": {
+        "boundary": "< threshold serial; >= threshold 4-thread split-M",
+        "metric": "matmul_mnk",
+        "mode": "P-4T",
+        "threshold": 262144
+      },
+      "seed": 50002,
+      "split": "held_out",
+      "workload_id": "eval_small_square_80"
+    },
+    {
+      "category": "medium_square",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_256x256x256_xnnpack.pte",
+        "sha256": "98ca7e01d3e6070d857c0589dcbbf926035bddb4415f808846a3e4b5b8488285"
+      },
+      "input_hashes": {
+        "a": "0594a1d7b9f4e4ca74ceff93facd8c2581c28b675f68684b98fc0bc260285e49",
+        "b": "0b1582ef461f626b14bc844045fdd8928e5d83ccc57dd2ad57baef6774690f9b",
+        "bias": "3d5056230173cb08de520eb604063e3143cfa47f0d646bdfd6fb32212df9baba",
+        "reference": "476e0784870af4c47f8e5280055d4ca9bfc805080ce07a56935220cef816fe83"
+      },
+      "input_sizes_bytes": {
+        "a": 262144,
+        "b": 262144,
+        "bias": 1024,
+        "reference": 262144
+      },
+      "k": 256,
+      "m": 256,
+      "mnk": 16777216,
+      "n": 256,
+      "project_policy_selection": {
+        "boundary": "< threshold serial; >= threshold 4-thread split-M",
+        "metric": "matmul_mnk",
+        "mode": "P-4T",
+        "threshold": 262144
+      },
+      "seed": 50003,
+      "split": "held_out",
+      "workload_id": "eval_medium_square_256"
+    },
+    {
+      "category": "large_square",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_384x384x384_xnnpack.pte",
+        "sha256": "930802c7cfeb4276518c4ca97b65e7f3067edc7ab6c3c1e635e6385a64d9bc25"
+      },
+      "input_hashes": {
+        "a": "4bb773aac5259932e6f4fe0efb862b047e51b67dfd55636d085d99701b6ffe02",
+        "b": "2f5e55b02af85141222b2dc065c8022b2103bcbf29895e46a40641055a1c45a7",
+        "bias": "2d71de20f6b292c0b1489853b403d8a8b5bdd435e3747c410125f670a12efdfa",
+        "reference": "d707f1d148a0e2ef177714e97c6acc2df5e425fc4b980fce710d2936d5b06d8b"
+      },
+      "input_sizes_bytes": {
+        "a": 589824,
+        "b": 589824,
+        "bias": 1536,
+        "reference": 589824
+      },
+      "k": 384,
+      "m": 384,
+      "mnk": 56623104,
+      "n": 384,
+      "project_policy_selection": {
+        "boundary": "< threshold serial; >= threshold 4-thread split-M",
+        "metric": "matmul_mnk",
+        "mode": "P-4T",
+        "threshold": 262144
+      },
+      "seed": 50004,
+      "split": "held_out",
+      "workload_id": "eval_large_square_384"
+    },
+    {
+      "category": "skinny_m_wide_n",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_48x384x96_xnnpack.pte",
+        "sha256": "5feb9872e5133dc1691af73e8854889c817c2caf35917708135d55fc6b4469b3"
+      },
+      "input_hashes": {
+        "a": "777785243494db2b842ecdf8811f79f4b0cdda9fdf55645f53b649d9d832976a",
+        "b": "93ebaa2c1a97a73702f1fe92310f92b8b69db443a4de96b0baaa5984e18d4b45",
+        "bias": "46af921fcd365258a0f6166fd49e059265411c8ca23c33042fb499fd0350f942",
+        "reference": "7ebe2eb5098bd9b962122b5ed26795bdad476d71567ef4d38cf978fe3af47922"
+      },
+      "input_sizes_bytes": {
+        "a": 18432,
+        "b": 147456,
+        "bias": 1536,
+        "reference": 73728
+      },
+      "k": 96,
+      "m": 48,
+      "mnk": 1769472,
+      "n": 384,
+      "project_policy_selection": {
+        "boundary": "< threshold serial; >= threshold 4-thread split-M",
+        "metric": "matmul_mnk",
+        "mode": "P-4T",
+        "threshold": 262144
+      },
+      "seed": 50005,
+      "split": "held_out",
+      "workload_id": "eval_skinny_m_48x384x96"
+    },
+    {
+      "category": "wide_m_skinny_n",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_384x48x96_xnnpack.pte",
+        "sha256": "0969c717f5242b2d953c9f6002e0cbf665aebf0c8049ee2dace1480f986c0e30"
+      },
+      "input_hashes": {
+        "a": "0f93d3c62510e8d5cef0ea1d7943d39475a5d26c944a852ae5ba0287bf3a14c4",
+        "b": "5831122aef4206ac469bd254c5ac3623241fa96b79febd6c32a9c6dbd49f5f7b",
+        "bias": "fb2411b1ae54ea48ae925f22c5bbc4164f8029664bc77efe1fadd84f79222251",
+        "reference": "f562d2fe9af9314bcb9943c69cb17fb8dc20f89f4267deba7740ea32aedbbff8"
+      },
+      "input_sizes_bytes": {
+        "a": 147456,
+        "b": 18432,
+        "bias": 192,
+        "reference": 73728
+      },
+      "k": 96,
+      "m": 384,
+      "mnk": 1769472,
+      "n": 48,
+      "project_policy_selection": {
+        "boundary": "< threshold serial; >= threshold 4-thread split-M",
+        "metric": "matmul_mnk",
+        "mode": "P-4T",
+        "threshold": 262144
+      },
+      "seed": 50006,
+      "split": "held_out",
+      "workload_id": "eval_wide_m_384x48x96"
+    },
+    {
+      "category": "small_k",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_320x320x24_xnnpack.pte",
+        "sha256": "6127fc19d4b924f81c0b513b74b66cf767ed5fddc8a71c275f4eddd297114990"
+      },
+      "input_hashes": {
+        "a": "2298343f5be8c68166ad9899f4679dc21eb0643e5bd013925ad3e2b303f179f5",
+        "b": "7c1bdb219782f17e1fff3e841f9cd20c816c3191bacc4b378fb1a460cb17634a",
+        "bias": "ad39e3979c1151c53e4b58b1fa219851999ce3085d8c0b825b8cf34507bbef7f",
+        "reference": "4d6873868c5b96067abce1c55f4938e40b2464a767a0b0807806423f56dd87b7"
+      },
+      "input_sizes_bytes": {
+        "a": 30720,
+        "b": 30720,
+        "bias": 1280,
+        "reference": 409600
+      },
+      "k": 24,
+      "m": 320,
+      "mnk": 2457600,
+      "n": 320,
+      "project_policy_selection": {
+        "boundary": "< threshold serial; >= threshold 4-thread split-M",
+        "metric": "matmul_mnk",
+        "mode": "P-4T",
+        "threshold": 262144
+      },
+      "seed": 50007,
+      "split": "held_out",
+      "workload_id": "eval_small_k_320x320x24"
+    },
+    {
+      "category": "large_k",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_96x96x768_xnnpack.pte",
+        "sha256": "1e7e0f229b44742c3cb1873ec850b1996fa4b5233172a6a82c4790946d13766f"
+      },
+      "input_hashes": {
+        "a": "8e6b5b824cf2b24f655c8199f88545782f2829ac7b2dc61b8e41a84a30f8d465",
+        "b": "76f3b40373f9e95340add361ef0b49381e6d31b8dfc07ececa0673d49f7f7897",
+        "bias": "bb1a8decd7fbf0c2a7aa3474192c017f4808a3bfa7c0e7a3dd59b7a35a5a02ce",
+        "reference": "619068693f6d4d8e09a7ae88fd36c7294c7deb501e09af5170d76bcf3b487b23"
+      },
+      "input_sizes_bytes": {
+        "a": 294912,
+        "b": 294912,
+        "bias": 384,
+        "reference": 36864
+      },
+      "k": 768,
+      "m": 96,
+      "mnk": 7077888,
+      "n": 96,
+      "project_policy_selection": {
+        "boundary": "< threshold serial; >= threshold 4-thread split-M",
+        "metric": "matmul_mnk",
+        "mode": "P-4T",
+        "threshold": 262144
+      },
+      "seed": 50008,
+      "split": "held_out",
+      "workload_id": "eval_large_k_96x96x768"
+    },
+    {
+      "category": "nondivisible_n",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_128x151x64_xnnpack.pte",
+        "sha256": "e21c5b470486a31fb298f5817bde5c79a8de7d364474b245e4971605f7d40b0d"
+      },
+      "input_hashes": {
+        "a": "409f340473bf8772121b50f03d3a25cba19a30ea7f3fab62b33d6e9b6bc56cd4",
+        "b": "0a159458b15f8196aecf6e8cf1d73414d0e4e898504a0d489d667dea2a72ecaa",
+        "bias": "54579501871f1ba8882b332ffbcbd1df7e5f7658e06ffcc91ecf12ef0e690b59",
+        "reference": "9aa661046187af4f132d64a60d3a62970a34412b1d3f904fbca065437c930f66"
+      },
+      "input_sizes_bytes": {
+        "a": 32768,
+        "b": 38656,
+        "bias": 604,
+        "reference": 77312
+      },
+      "k": 64,
+      "m": 128,
+      "mnk": 1236992,
+      "n": 151,
+      "project_policy_selection": {
+        "boundary": "< threshold serial; >= threshold 4-thread split-M",
+        "metric": "matmul_mnk",
+        "mode": "P-4T",
+        "threshold": 262144
+      },
+      "seed": 50009,
+      "split": "held_out",
+      "workload_id": "eval_nondivisible_n_151"
+    },
+    {
+      "category": "medium_square",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_128x128x128_xnnpack.pte",
+        "sha256": "da675c4483cc48388897271be5372c7f0c53b050f35930ee583dcc6155755e89"
+      },
+      "input_hashes": {
+        "a": "87b9111b8fbf8c0a3be4ddbd41ec68ea580c56923929660e31a7b59b8382dc78",
+        "b": "f9cad63ca23ebc365bc5b34239bc71ff4d01a8b6ca6792e718a95c1ff30bae14",
+        "bias": "3031e0ecf9a21aa6b440cf078afdf78d40b3cc8c33a247f7b2e00452d622ffbc",
+        "reference": "b468689790f5f484c0216c6b9ecee35b2cc7a311136a21050d71fc70a2befba5"
+      },
+      "input_sizes_bytes": {
+        "a": 65536,
+        "b": 65536,
+        "bias": 512,
+        "reference": 65536
+      },
+      "k": 128,
+      "m": 128,
+      "mnk": 2097152,
+      "n": 128,
+      "project_policy_selection": {
+        "boundary": "< threshold serial; >= threshold 4-thread split-M",
+        "metric": "matmul_mnk",
+        "mode": "P-4T",
+        "threshold": 262144
+      },
+      "seed": 50010,
+      "split": "held_out",
+      "workload_id": "eval_p1c_continuity_128"
+    }
+  ]
+}

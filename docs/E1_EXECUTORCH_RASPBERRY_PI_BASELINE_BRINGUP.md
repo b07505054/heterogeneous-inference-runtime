@@ -153,3 +153,7 @@ Raw parsed smoke data is retained in `results/executorch_e1/e1_xnnpack_smoke_sum
 `READY_FOR_EXECUTORCH_FIXED_CONFIGURATION_BASELINE`
 
 ExecuTorch v1.3.1 with XNNPACK is now built and smoke-validated on Raspberry Pi 5 for the target FP32 fused-region workload. E2 should not proceed as a scheduling-policy comparison until thread observability is strengthened and the formal comparison manifest is frozen.
+
+## E2 Follow-Up
+
+E2 formal evaluation is documented in `docs/E2_EXECUTORCH_CONTROLLED_HEAD_TO_HEAD.md`. E1 remains a smoke bring-up result and must not be treated as formal comparison evidence.

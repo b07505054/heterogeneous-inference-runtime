@@ -1,0 +1,1305 @@
+{
+  "actual_records": 324,
+  "correctness_failures": 288,
+  "expected_records": 324,
+  "manifest_sha256": "468d0ce47ddd4b702746fb056521148588bfa193c923af801a5fb9a97a53e620",
+  "per_workload": [
+    {
+      "category": "tiny",
+      "et_best_requested_mode": "ET-4T-REQUESTED",
+      "et_default_regret_vs_requested_percent": 0.6271777003484246,
+      "et_default_vs_p_policy_speedup": 2.7825484764542936,
+      "k": 16,
+      "m": 16,
+      "mnk": 4096,
+      "modes": {
+        "ET-1T-REQUESTED": {
+          "mean_session_median_ms": 0.0014936666666666666,
+          "median_of_session_medians_ms": 0.001518,
+          "session_medians_ms": [
+            0.001426,
+            0.001537,
+            0.001518
+          ]
+        },
+        "ET-4T-REQUESTED": {
+          "mean_session_median_ms": 0.0014349999999999999,
+          "median_of_session_medians_ms": 0.001435,
+          "session_medians_ms": [
+            0.001444,
+            0.001435,
+            0.001426
+          ]
+        },
+        "ET-DEFAULT": {
+          "mean_session_median_ms": 0.0014626666666666666,
+          "median_of_session_medians_ms": 0.001444,
+          "session_medians_ms": [
+            0.001518,
+            0.001444,
+            0.001426
+          ]
+        },
+        "P-4T": {
+          "mean_session_median_ms": 0.04325616666666667,
+          "median_of_session_medians_ms": 0.0429725,
+          "session_medians_ms": [
+            0.0428515,
+            0.0439445,
+            0.0429725
+          ]
+        },
+        "P-POLICY": {
+          "mean_session_median_ms": 0.0040121666666666665,
+          "median_of_session_medians_ms": 0.004018,
+          "session_medians_ms": [
+            0.0040184999999999995,
+            0.004,
+            0.004018
+          ]
+        },
+        "P-SERIAL": {
+          "mean_session_median_ms": 0.003994,
+          "median_of_session_medians_ms": 0.003982,
+          "session_medians_ms": [
+            0.003981,
+            0.004019,
+            0.003982
+          ]
+        }
+      },
+      "n": 16,
+      "p_policy_vs_et_default_speedup": 0.3593827775012444,
+      "practical_result": "executorch_faster",
+      "project_oracle_mode": "P-SERIAL",
+      "project_policy_regret_percent": 0.9040683073832138,
+      "workload_id": "cal_tiny_16"
+    },
+    {
+      "category": "small_square",
+      "et_best_requested_mode": "ET-1T-REQUESTED",
+      "et_default_regret_vs_requested_percent": 0.8919984612425544,
+      "et_default_vs_p_policy_speedup": 4.3556943021232986,
+      "k": 64,
+      "m": 64,
+      "mnk": 262144,
+      "modes": {
+        "ET-1T-REQUESTED": {
+          "mean_session_median_ms": 0.020765333333333334,
+          "median_of_session_medians_ms": 0.020796,
+          "session_medians_ms": [
+            0.020704,
+            0.020796,
+            0.020796
+          ]
+        },
+        "ET-4T-REQUESTED": {
+          "mean_session_median_ms": 0.020864333333333332,
+          "median_of_session_medians_ms": 0.020852,
+          "session_medians_ms": [
+            0.020926,
+            0.020815,
+            0.020852
+          ]
+        },
+        "ET-DEFAULT": {
+          "mean_session_median_ms": 0.020975499999999998,
+          "median_of_session_medians_ms": 0.0209815,
+          "session_medians_ms": [
+            0.0209815,
+            0.020852,
+            0.021093
+          ]
+        },
+        "P-4T": {
+          "mean_session_median_ms": 0.09146283333333334,
+          "median_of_session_medians_ms": 0.09178700000000001,
+          "session_medians_ms": [
+            0.09178700000000001,
+            0.0899905,
+            0.092611
+          ]
+        },
+        "P-POLICY": {
+          "mean_session_median_ms": 0.102904,
+          "median_of_session_medians_ms": 0.091389,
+          "session_medians_ms": [
+            0.09013850000000001,
+            0.12718449999999998,
+            0.091389
+          ]
+        },
+        "P-SERIAL": {
+          "mean_session_median_ms": 0.20023100000000002,
+          "median_of_session_medians_ms": 0.200231,
+          "session_medians_ms": [
+            0.200222,
+            0.200231,
+            0.20024
+          ]
+        }
+      },
+      "n": 64,
+      "p_policy_vs_et_default_speedup": 0.22958452330149143,
+      "practical_result": "executorch_faster",
+      "project_oracle_mode": "P-4T",
+      "project_policy_regret_percent": -0.4336126030919514,
+      "workload_id": "cal_small_square_64"
+    },
+    {
+      "category": "medium_square",
+      "et_best_requested_mode": "ET-1T-REQUESTED",
+      "et_default_regret_vs_requested_percent": 0.9116205114615145,
+      "et_default_vs_p_policy_speedup": 2.774555731303545,
+      "k": 192,
+      "m": 192,
+      "mnk": 7077888,
+      "modes": {
+        "ET-1T-REQUESTED": {
+          "mean_session_median_ms": 0.49081100000000005,
+          "median_of_session_medians_ms": 0.49055499999999996,
+          "session_medians_ms": [
+            0.4886285,
+            0.49055499999999996,
+            0.4932495
+          ]
+        },
+        "ET-4T-REQUESTED": {
+          "mean_session_median_ms": 0.4939375,
+          "median_of_session_medians_ms": 0.49399000000000004,
+          "session_medians_ms": [
+            0.49399000000000004,
+            0.493462,
+            0.4943605
+          ]
+        },
+        "ET-DEFAULT": {
+          "mean_session_median_ms": 0.49473666666666666,
+          "median_of_session_medians_ms": 0.495027,
+          "session_medians_ms": [
+            0.4936565,
+            0.495027,
+            0.4955265
+          ]
+        },
+        "P-4T": {
+          "mean_session_median_ms": 1.37092,
+          "median_of_session_medians_ms": 1.370905,
+          "session_medians_ms": [
+            1.370275,
+            1.370905,
+            1.37158
+          ]
+        },
+        "P-POLICY": {
+          "mean_session_median_ms": 1.3729416666666667,
+          "median_of_session_medians_ms": 1.37348,
+          "session_medians_ms": [
+            1.37348,
+            1.371525,
+            1.3738199999999998
+          ]
+        },
+        "P-SERIAL": {
+          "mean_session_median_ms": 5.286015,
+          "median_of_session_medians_ms": 5.2855550000000004,
+          "session_medians_ms": [
+            5.2855550000000004,
+            5.285035,
+            5.287455
+          ]
+        }
+      },
+      "n": 192,
+      "p_policy_vs_et_default_speedup": 0.36041806214870253,
+      "practical_result": "executorch_faster",
+      "project_oracle_mode": "P-4T",
+      "project_policy_regret_percent": 0.18783212549374273,
+      "workload_id": "cal_medium_square_192"
+    },
+    {
+      "category": "skinny_m_wide_n",
+      "et_best_requested_mode": "ET-1T-REQUESTED",
+      "et_default_regret_vs_requested_percent": 6.3750728579755265,
+      "et_default_vs_p_policy_speedup": 2.753082121412753,
+      "k": 64,
+      "m": 32,
+      "mnk": 1048576,
+      "modes": {
+        "ET-1T-REQUESTED": {
+          "mean_session_median_ms": 0.0824935,
+          "median_of_session_medians_ms": 0.082352,
+          "session_medians_ms": [
+            0.0822865,
+            0.082842,
+            0.082352
+          ]
+        },
+        "ET-4T-REQUESTED": {
+          "mean_session_median_ms": 0.08834850000000001,
+          "median_of_session_medians_ms": 0.088231,
+          "session_medians_ms": [
+            0.087953,
+            0.08886150000000001,
+            0.088231
+          ]
+        },
+        "ET-DEFAULT": {
+          "mean_session_median_ms": 0.08755533333333333,
+          "median_of_session_medians_ms": 0.087602,
+          "session_medians_ms": [
+            0.0880365,
+            0.087602,
+            0.08702750000000001
+          ]
+        },
+        "P-4T": {
+          "mean_session_median_ms": 0.2460338333333333,
+          "median_of_session_medians_ms": 0.24297200000000002,
+          "session_medians_ms": [
+            0.2542685,
+            0.240861,
+            0.24297200000000002
+          ]
+        },
+        "P-POLICY": {
+          "mean_session_median_ms": 0.241274,
+          "median_of_session_medians_ms": 0.2411755,
+          "session_medians_ms": [
+            0.2426565,
+            0.23999,
+            0.2411755
+          ]
+        },
+        "P-SERIAL": {
+          "mean_session_median_ms": 0.7933318333333333,
+          "median_of_session_medians_ms": 0.793304,
+          "session_medians_ms": [
+            0.793295,
+            0.7933965000000001,
+            0.793304
+          ]
+        }
+      },
+      "n": 512,
+      "p_policy_vs_et_default_speedup": 0.36322926665436583,
+      "practical_result": "executorch_faster",
+      "project_oracle_mode": "P-4T",
+      "project_policy_regret_percent": -0.739385608218245,
+      "workload_id": "cal_skinny_m_32x512x64"
+    },
+    {
+      "category": "wide_m_skinny_n",
+      "et_best_requested_mode": "ET-1T-REQUESTED",
+      "et_default_regret_vs_requested_percent": 0.7006835649268582,
+      "et_default_vs_p_policy_speedup": 2.8946908724273563,
+      "k": 64,
+      "m": 512,
+      "mnk": 1048576,
+      "modes": {
+        "ET-1T-REQUESTED": {
+          "mean_session_median_ms": 0.08472166666666665,
+          "median_of_session_medians_ms": 0.084703,
+          "session_medians_ms": [
+            0.0848145,
+            0.084703,
+            0.0846475
+          ]
+        },
+        "ET-4T-REQUESTED": {
+          "mean_session_median_ms": 0.085682,
+          "median_of_session_medians_ms": 0.08574999999999999,
+          "session_medians_ms": [
+            0.08574999999999999,
+            0.0859815,
+            0.0853145
+          ]
+        },
+        "ET-DEFAULT": {
+          "mean_session_median_ms": 0.0852715,
+          "median_of_session_medians_ms": 0.0852965,
+          "session_medians_ms": [
+            0.0859625,
+            0.0845555,
+            0.0852965
+          ]
+        },
+        "P-4T": {
+          "mean_session_median_ms": 0.24663516666666666,
+          "median_of_session_medians_ms": 0.24668449999999997,
+          "session_medians_ms": [
+            0.24586,
+            0.24668449999999997,
+            0.247361
+          ]
+        },
+        "P-POLICY": {
+          "mean_session_median_ms": 0.24677416666666666,
+          "median_of_session_medians_ms": 0.246907,
+          "session_medians_ms": [
+            0.246907,
+            0.247212,
+            0.2462035
+          ]
+        },
+        "P-SERIAL": {
+          "mean_session_median_ms": 0.8187881666666668,
+          "median_of_session_medians_ms": 0.8187854999999999,
+          "session_medians_ms": [
+            0.8189420000000001,
+            0.8187854999999999,
+            0.8186370000000001
+          ]
+        }
+      },
+      "n": 32,
+      "p_policy_vs_et_default_speedup": 0.3454600315098397,
+      "practical_result": "executorch_faster",
+      "project_oracle_mode": "P-4T",
+      "project_policy_regret_percent": 0.09019618176254056,
+      "workload_id": "cal_wide_m_512x32x64"
+    },
+    {
+      "category": "small_k",
+      "et_best_requested_mode": "ET-1T-REQUESTED",
+      "et_default_regret_vs_requested_percent": 2.5622906086238366,
+      "et_default_vs_p_policy_speedup": 2.114678365971294,
+      "k": 16,
+      "m": 256,
+      "mnk": 1048576,
+      "modes": {
+        "ET-1T-REQUESTED": {
+          "mean_session_median_ms": 0.11728683333333334,
+          "median_of_session_medians_ms": 0.1174535,
+          "session_medians_ms": [
+            0.119176,
+            0.1174535,
+            0.115231
+          ]
+        },
+        "ET-4T-REQUESTED": {
+          "mean_session_median_ms": 0.1208145,
+          "median_of_session_medians_ms": 0.122009,
+          "session_medians_ms": [
+            0.122083,
+            0.122009,
+            0.1183515
+          ]
+        },
+        "ET-DEFAULT": {
+          "mean_session_median_ms": 0.12045966666666667,
+          "median_of_session_medians_ms": 0.120463,
+          "session_medians_ms": [
+            0.120231,
+            0.120685,
+            0.120463
+          ]
+        },
+        "P-4T": {
+          "mean_session_median_ms": 0.2541196666666667,
+          "median_of_session_medians_ms": 0.2542585,
+          "session_medians_ms": [
+            0.254518,
+            0.2535825,
+            0.2542585
+          ]
+        },
+        "P-POLICY": {
+          "mean_session_median_ms": 0.32001183333333333,
+          "median_of_session_medians_ms": 0.25474050000000004,
+          "session_medians_ms": [
+            0.25342549999999997,
+            0.25474050000000004,
+            0.45186950000000004
+          ]
+        },
+        "P-SERIAL": {
+          "mean_session_median_ms": 0.8454335,
+          "median_of_session_medians_ms": 0.8454335,
+          "session_medians_ms": [
+            0.8454335,
+            0.8453595,
+            0.8455075
+          ]
+        }
+      },
+      "n": 256,
+      "p_policy_vs_et_default_speedup": 0.4728851517524696,
+      "practical_result": "executorch_faster",
+      "project_oracle_mode": "P-4T",
+      "project_policy_regret_percent": 0.1895708501387517,
+      "workload_id": "cal_small_k_256x256x16"
+    },
+    {
+      "category": "large_k",
+      "et_best_requested_mode": "ET-1T-REQUESTED",
+      "et_default_regret_vs_requested_percent": 1.1795214849838314,
+      "et_default_vs_p_policy_speedup": 2.779432802463441,
+      "k": 1024,
+      "m": 64,
+      "mnk": 4194304,
+      "modes": {
+        "ET-1T-REQUESTED": {
+          "mean_session_median_ms": 0.29661033333333336,
+          "median_of_session_medians_ms": 0.2967305,
+          "session_medians_ms": [
+            0.2967305,
+            0.298212,
+            0.2948885
+          ]
+        },
+        "ET-4T-REQUESTED": {
+          "mean_session_median_ms": 0.29845316666666666,
+          "median_of_session_medians_ms": 0.297703,
+          "session_medians_ms": [
+            0.295777,
+            0.30187949999999997,
+            0.297703
+          ]
+        },
+        "ET-DEFAULT": {
+          "mean_session_median_ms": 0.2986566666666666,
+          "median_of_session_medians_ms": 0.30023049999999996,
+          "session_medians_ms": [
+            0.30023049999999996,
+            0.295286,
+            0.3004535
+          ]
+        },
+        "P-4T": {
+          "mean_session_median_ms": 0.8303903333333333,
+          "median_of_session_medians_ms": 0.830489,
+          "session_medians_ms": [
+            0.8316835,
+            0.830489,
+            0.8289985
+          ]
+        },
+        "P-POLICY": {
+          "mean_session_median_ms": 0.8342668333333334,
+          "median_of_session_medians_ms": 0.8344705,
+          "session_medians_ms": [
+            0.8344705,
+            0.8354985,
+            0.8328315
+          ]
+        },
+        "P-SERIAL": {
+          "mean_session_median_ms": 3.1402366666666666,
+          "median_of_session_medians_ms": 3.14002,
+          "session_medians_ms": [
+            3.13918,
+            3.14002,
+            3.1415100000000002
+          ]
+        }
+      },
+      "n": 64,
+      "p_policy_vs_et_default_speedup": 0.3597856365204042,
+      "practical_result": "executorch_faster",
+      "project_oracle_mode": "P-4T",
+      "project_policy_regret_percent": 0.47941634386487614,
+      "workload_id": "cal_large_k_64x64x1024"
+    },
+    {
+      "category": "nondivisible_m",
+      "et_best_requested_mode": "ET-1T-REQUESTED",
+      "et_default_regret_vs_requested_percent": 8.031901840490793,
+      "et_default_vs_p_policy_speedup": 2.8395213865479403,
+      "k": 64,
+      "m": 137,
+      "mnk": 1122304,
+      "modes": {
+        "ET-1T-REQUESTED": {
+          "mean_session_median_ms": 0.08156166666666666,
+          "median_of_session_medians_ms": 0.0815,
+          "session_medians_ms": [
+            0.08169399999999999,
+            0.08149100000000001,
+            0.0815
+          ]
+        },
+        "ET-4T-REQUESTED": {
+          "mean_session_median_ms": 0.087364,
+          "median_of_session_medians_ms": 0.0874255,
+          "session_medians_ms": [
+            0.087148,
+            0.0875185,
+            0.0874255
+          ]
+        },
+        "ET-DEFAULT": {
+          "mean_session_median_ms": 0.08795033333333334,
+          "median_of_session_medians_ms": 0.088046,
+          "session_medians_ms": [
+            0.088046,
+            0.08752750000000001,
+            0.0882775
+          ]
+        },
+        "P-4T": {
+          "mean_session_median_ms": 0.2506913333333333,
+          "median_of_session_medians_ms": 0.250518,
+          "session_medians_ms": [
+            0.2518335,
+            0.250518,
+            0.24972250000000001
+          ]
+        },
+        "P-POLICY": {
+          "mean_session_median_ms": 0.24996549999999998,
+          "median_of_session_medians_ms": 0.25000849999999997,
+          "session_medians_ms": [
+            0.2500275,
+            0.25000849999999997,
+            0.24986049999999999
+          ]
+        },
+        "P-SERIAL": {
+          "mean_session_median_ms": 0.8469490000000001,
+          "median_of_session_medians_ms": 0.846943,
+          "session_medians_ms": [
+            0.8469245000000001,
+            0.846943,
+            0.8469795
+          ]
+        }
+      },
+      "n": 128,
+      "p_policy_vs_et_default_speedup": 0.35217202615111093,
+      "practical_result": "executorch_faster",
+      "project_oracle_mode": "P-4T",
+      "project_policy_regret_percent": -0.20337859954177007,
+      "workload_id": "cal_nondivisible_m_137"
+    },
+    {
+      "category": "tiny",
+      "et_best_requested_mode": "ET-4T-REQUESTED",
+      "et_default_regret_vs_requested_percent": 9.735449735449732,
+      "et_default_vs_p_policy_speedup": 0.9103182256509161,
+      "k": 8,
+      "m": 8,
+      "mnk": 512,
+      "modes": {
+        "ET-1T-REQUESTED": {
+          "mean_session_median_ms": 0.0010216666666666666,
+          "median_of_session_medians_ms": 0.0010279999999999998,
+          "session_medians_ms": [
+            0.001,
+            0.0010279999999999998,
+            0.001037
+          ]
+        },
+        "ET-4T-REQUESTED": {
+          "mean_session_median_ms": 0.0009753333333333333,
+          "median_of_session_medians_ms": 0.000945,
+          "session_medians_ms": [
+            0.000945,
+            0.001037,
+            0.000944
+          ]
+        },
+        "ET-DEFAULT": {
+          "mean_session_median_ms": 0.0010121666666666666,
+          "median_of_session_medians_ms": 0.001037,
+          "session_medians_ms": [
+            0.0009534999999999999,
+            0.001046,
+            0.001037
+          ]
+        },
+        "P-4T": {
+          "mean_session_median_ms": 0.042487833333333336,
+          "median_of_session_medians_ms": 0.0426115,
+          "session_medians_ms": [
+            0.041120500000000004,
+            0.0437315,
+            0.0426115
+          ]
+        },
+        "P-POLICY": {
+          "mean_session_median_ms": 0.0009441666666666666,
+          "median_of_session_medians_ms": 0.000944,
+          "session_medians_ms": [
+            0.0009445,
+            0.000944,
+            0.000944
+          ]
+        },
+        "P-SERIAL": {
+          "mean_session_median_ms": 0.000932,
+          "median_of_session_medians_ms": 0.000926,
+          "session_medians_ms": [
+            0.000944,
+            0.000926,
+            0.000926
+          ]
+        }
+      },
+      "n": 8,
+      "p_policy_vs_et_default_speedup": 1.0985169491525424,
+      "practical_result": "project_faster",
+      "project_oracle_mode": "P-SERIAL",
+      "project_policy_regret_percent": 1.943844492440605,
+      "workload_id": "eval_tiny_8"
+    },
+    {
+      "category": "small_square",
+      "et_best_requested_mode": "ET-1T-REQUESTED",
+      "et_default_regret_vs_requested_percent": 6.477269704466256,
+      "et_default_vs_p_policy_speedup": 3.431160687518737,
+      "k": 80,
+      "m": 80,
+      "mnk": 512000,
+      "modes": {
+        "ET-1T-REQUESTED": {
+          "mean_session_median_ms": 0.037614166666666664,
+          "median_of_session_medians_ms": 0.037593,
+          "session_medians_ms": [
+            0.0377035,
+            0.037593,
+            0.037545999999999996
+          ]
+        },
+        "ET-4T-REQUESTED": {
+          "mean_session_median_ms": 0.03957433333333333,
+          "median_of_session_medians_ms": 0.039593,
+          "session_medians_ms": [
+            0.039796,
+            0.039334,
+            0.039593
+          ]
+        },
+        "ET-DEFAULT": {
+          "mean_session_median_ms": 0.03983333333333333,
+          "median_of_session_medians_ms": 0.040028,
+          "session_medians_ms": [
+            0.040028,
+            0.039398,
+            0.040074
+          ]
+        },
+        "P-4T": {
+          "mean_session_median_ms": 0.138898,
+          "median_of_session_medians_ms": 0.13881500000000002,
+          "session_medians_ms": [
+            0.13881500000000002,
+            0.1380925,
+            0.1397865
+          ]
+        },
+        "P-POLICY": {
+          "mean_session_median_ms": 0.13777466666666668,
+          "median_of_session_medians_ms": 0.1373425,
+          "session_medians_ms": [
+            0.1373425,
+            0.13712950000000002,
+            0.138852
+          ]
+        },
+        "P-SERIAL": {
+          "mean_session_median_ms": 0.3878726666666667,
+          "median_of_session_medians_ms": 0.387888,
+          "session_medians_ms": [
+            0.387842,
+            0.387888,
+            0.387888
+          ]
+        }
+      },
+      "n": 80,
+      "p_policy_vs_et_default_speedup": 0.29144656606658537,
+      "practical_result": "executorch_faster",
+      "project_oracle_mode": "P-4T",
+      "project_policy_regret_percent": -1.0607643266217737,
+      "workload_id": "eval_small_square_80"
+    },
+    {
+      "category": "medium_square",
+      "et_best_requested_mode": "ET-1T-REQUESTED",
+      "et_default_regret_vs_requested_percent": 1.1084537613778547,
+      "et_default_vs_p_policy_speedup": 2.7778487056346255,
+      "k": 256,
+      "m": 256,
+      "mnk": 16777216,
+      "modes": {
+        "ET-1T-REQUESTED": {
+          "mean_session_median_ms": 1.1301461666666668,
+          "median_of_session_medians_ms": 1.131035,
+          "session_medians_ms": [
+            1.131035,
+            1.126257,
+            1.1331465
+          ]
+        },
+        "ET-4T-REQUESTED": {
+          "mean_session_median_ms": 1.1389483333333332,
+          "median_of_session_medians_ms": 1.1398584999999999,
+          "session_medians_ms": [
+            1.1405625000000001,
+            1.1398584999999999,
+            1.1364239999999999
+          ]
+        },
+        "ET-DEFAULT": {
+          "mean_session_median_ms": 1.1423466666666666,
+          "median_of_session_medians_ms": 1.143572,
+          "session_medians_ms": [
+            1.143572,
+            1.139748,
+            1.14372
+          ]
+        },
+        "P-4T": {
+          "mean_session_median_ms": 3.1814466666666665,
+          "median_of_session_medians_ms": 3.180115,
+          "session_medians_ms": [
+            3.178175,
+            3.18605,
+            3.180115
+          ]
+        },
+        "P-POLICY": {
+          "mean_session_median_ms": 3.1754933333333333,
+          "median_of_session_medians_ms": 3.17667,
+          "session_medians_ms": [
+            3.172955,
+            3.1768549999999998,
+            3.17667
+          ]
+        },
+        "P-SERIAL": {
+          "mean_session_median_ms": 12.483383333333334,
+          "median_of_session_medians_ms": 12.48285,
+          "session_medians_ms": [
+            12.485,
+            12.4823,
+            12.48285
+          ]
+        }
+      },
+      "n": 256,
+      "p_policy_vs_et_default_speedup": 0.3599908079844617,
+      "practical_result": "executorch_faster",
+      "project_oracle_mode": "P-4T",
+      "project_policy_regret_percent": -0.1083294157601124,
+      "workload_id": "eval_medium_square_256"
+    },
+    {
+      "category": "large_square",
+      "et_best_requested_mode": "ET-1T-REQUESTED",
+      "et_default_regret_vs_requested_percent": 2.020289015952772,
+      "et_default_vs_p_policy_speedup": 2.683690955020961,
+      "k": 384,
+      "m": 384,
+      "mnk": 56623104,
+      "modes": {
+        "ET-1T-REQUESTED": {
+          "mean_session_median_ms": 3.868853833333333,
+          "median_of_session_medians_ms": 3.872243,
+          "session_medians_ms": [
+            3.8517055,
+            3.882613,
+            3.872243
+          ]
+        },
+        "ET-4T-REQUESTED": {
+          "mean_session_median_ms": 3.9476926666666667,
+          "median_of_session_medians_ms": 3.94802,
+          "session_medians_ms": [
+            3.949223,
+            3.94802,
+            3.9458349999999998
+          ]
+        },
+        "ET-DEFAULT": {
+          "mean_session_median_ms": 3.957334833333333,
+          "median_of_session_medians_ms": 3.9504735,
+          "session_medians_ms": [
+            3.9489644999999998,
+            3.9504735,
+            3.9725665
+          ]
+        },
+        "P-4T": {
+          "mean_session_median_ms": 10.60505,
+          "median_of_session_medians_ms": 10.59855,
+          "session_medians_ms": [
+            10.59815,
+            10.59855,
+            10.61845
+          ]
+        },
+        "P-POLICY": {
+          "mean_session_median_ms": 10.6001,
+          "median_of_session_medians_ms": 10.601849999999999,
+          "session_medians_ms": [
+            10.60605,
+            10.592400000000001,
+            10.601849999999999
+          ]
+        },
+        "P-SERIAL": {
+          "mean_session_median_ms": 42.42416666666667,
+          "median_of_session_medians_ms": 42.42205,
+          "session_medians_ms": [
+            42.43935,
+            42.42205,
+            42.411100000000005
+          ]
+        }
+      },
+      "n": 384,
+      "p_policy_vs_et_default_speedup": 0.3726211463093706,
+      "practical_result": "executorch_faster",
+      "project_oracle_mode": "P-4T",
+      "project_policy_regret_percent": 0.031136334687286608,
+      "workload_id": "eval_large_square_384"
+    },
+    {
+      "category": "skinny_m_wide_n",
+      "et_best_requested_mode": "ET-1T-REQUESTED",
+      "et_default_regret_vs_requested_percent": 4.633256058402576,
+      "et_default_vs_p_policy_speedup": 2.5881679034771747,
+      "k": 96,
+      "m": 48,
+      "mnk": 1769472,
+      "modes": {
+        "ET-1T-REQUESTED": {
+          "mean_session_median_ms": 0.13904916666666667,
+          "median_of_session_medians_ms": 0.138898,
+          "session_medians_ms": [
+            0.138898,
+            0.1396105,
+            0.138639
+          ]
+        },
+        "ET-4T-REQUESTED": {
+          "mean_session_median_ms": 0.14659533333333333,
+          "median_of_session_medians_ms": 0.14623049999999999,
+          "session_medians_ms": [
+            0.1484355,
+            0.14623049999999999,
+            0.14512
+          ]
+        },
+        "ET-DEFAULT": {
+          "mean_session_median_ms": 0.14503383333333333,
+          "median_of_session_medians_ms": 0.1453335,
+          "session_medians_ms": [
+            0.145407,
+            0.14436100000000002,
+            0.1453335
+          ]
+        },
+        "P-4T": {
+          "mean_session_median_ms": 0.3751073333333333,
+          "median_of_session_medians_ms": 0.375258,
+          "session_medians_ms": [
+            0.3758145,
+            0.3742495,
+            0.375258
+          ]
+        },
+        "P-POLICY": {
+          "mean_session_median_ms": 0.37549633333333327,
+          "median_of_session_medians_ms": 0.37614749999999997,
+          "session_medians_ms": [
+            0.37614749999999997,
+            0.3741565,
+            0.376185
+          ]
+        },
+        "P-SERIAL": {
+          "mean_session_median_ms": 1.3260616666666667,
+          "median_of_session_medians_ms": 1.3257750000000001,
+          "session_medians_ms": [
+            1.3266550000000001,
+            1.325755,
+            1.3257750000000001
+          ]
+        }
+      },
+      "n": 384,
+      "p_policy_vs_et_default_speedup": 0.3863736964887445,
+      "practical_result": "executorch_faster",
+      "project_oracle_mode": "P-4T",
+      "project_policy_regret_percent": 0.2370369185999999,
+      "workload_id": "eval_skinny_m_48x384x96"
+    },
+    {
+      "category": "wide_m_skinny_n",
+      "et_best_requested_mode": "ET-1T-REQUESTED",
+      "et_default_regret_vs_requested_percent": 5.558377066756953,
+      "et_default_vs_p_policy_speedup": 2.554758499946541,
+      "k": 96,
+      "m": 384,
+      "mnk": 1769472,
+      "modes": {
+        "ET-1T-REQUESTED": {
+          "mean_session_median_ms": 0.14207033333333333,
+          "median_of_session_medians_ms": 0.141768,
+          "session_medians_ms": [
+            0.14164749999999998,
+            0.1427955,
+            0.141768
+          ]
+        },
+        "ET-4T-REQUESTED": {
+          "mean_session_median_ms": 0.14936116666666668,
+          "median_of_session_medians_ms": 0.1493795,
+          "session_medians_ms": [
+            0.1488335,
+            0.14987050000000002,
+            0.1493795
+          ]
+        },
+        "ET-DEFAULT": {
+          "mean_session_median_ms": 0.14959533333333333,
+          "median_of_session_medians_ms": 0.149648,
+          "session_medians_ms": [
+            0.149648,
+            0.150611,
+            0.14852700000000002
+          ]
+        },
+        "P-4T": {
+          "mean_session_median_ms": 0.38996533333333333,
+          "median_of_session_medians_ms": 0.381388,
+          "session_medians_ms": [
+            0.381092,
+            0.407416,
+            0.381388
+          ]
+        },
+        "P-POLICY": {
+          "mean_session_median_ms": 0.3817618333333333,
+          "median_of_session_medians_ms": 0.3823145,
+          "session_medians_ms": [
+            0.3823145,
+            0.38292550000000003,
+            0.3800455
+          ]
+        },
+        "P-SERIAL": {
+          "mean_session_median_ms": 1.3511300000000002,
+          "median_of_session_medians_ms": 1.35114,
+          "session_medians_ms": [
+            1.351305,
+            1.3509449999999998,
+            1.35114
+          ]
+        }
+      },
+      "n": 48,
+      "p_policy_vs_et_default_speedup": 0.3914264303341882,
+      "practical_result": "executorch_faster",
+      "project_oracle_mode": "P-4T",
+      "project_policy_regret_percent": 0.24292846130449744,
+      "workload_id": "eval_wide_m_384x48x96"
+    },
+    {
+      "category": "small_k",
+      "et_best_requested_mode": "ET-1T-REQUESTED",
+      "et_default_regret_vs_requested_percent": 2.9168293966820125,
+      "et_default_vs_p_policy_speedup": 2.1730484459752097,
+      "k": 24,
+      "m": 320,
+      "mnk": 2457600,
+      "modes": {
+        "ET-1T-REQUESTED": {
+          "mean_session_median_ms": 0.23570933333333333,
+          "median_of_session_medians_ms": 0.235564,
+          "session_medians_ms": [
+            0.2369165,
+            0.235564,
+            0.2346475
+          ]
+        },
+        "ET-4T-REQUESTED": {
+          "mean_session_median_ms": 0.24129583333333335,
+          "median_of_session_medians_ms": 0.242009,
+          "session_medians_ms": [
+            0.2362125,
+            0.242009,
+            0.245666
+          ]
+        },
+        "ET-DEFAULT": {
+          "mean_session_median_ms": 0.24168783333333335,
+          "median_of_session_medians_ms": 0.242435,
+          "session_medians_ms": [
+            0.247666,
+            0.23496250000000002,
+            0.242435
+          ]
+        },
+        "P-4T": {
+          "mean_session_median_ms": 0.527141,
+          "median_of_session_medians_ms": 0.5268325,
+          "session_medians_ms": [
+            0.5268325,
+            0.5252950000000001,
+            0.5292954999999999
+          ]
+        },
+        "P-POLICY": {
+          "mean_session_median_ms": 0.5266226666666667,
+          "median_of_session_medians_ms": 0.526823,
+          "session_medians_ms": [
+            0.5259715,
+            0.526823,
+            0.5270735
+          ]
+        },
+        "P-SERIAL": {
+          "mean_session_median_ms": 1.9299433333333333,
+          "median_of_session_medians_ms": 1.93015,
+          "session_medians_ms": [
+            1.93026,
+            1.92942,
+            1.93015
+          ]
+        }
+      },
+      "n": 320,
+      "p_policy_vs_et_default_speedup": 0.4601830216220628,
+      "practical_result": "executorch_faster",
+      "project_oracle_mode": "P-4T",
+      "project_policy_regret_percent": -0.0018032296792615532,
+      "workload_id": "eval_small_k_320x320x24"
+    },
+    {
+      "category": "large_k",
+      "et_best_requested_mode": "ET-1T-REQUESTED",
+      "et_default_regret_vs_requested_percent": 1.517230364933833,
+      "et_default_vs_p_policy_speedup": 2.78889187413869,
+      "k": 768,
+      "m": 96,
+      "mnk": 7077888,
+      "modes": {
+        "ET-1T-REQUESTED": {
+          "mean_session_median_ms": 0.4812273333333333,
+          "median_of_session_medians_ms": 0.4821285,
+          "session_medians_ms": [
+            0.478175,
+            0.4821285,
+            0.4833785
+          ]
+        },
+        "ET-4T-REQUESTED": {
+          "mean_session_median_ms": 0.4860363333333333,
+          "median_of_session_medians_ms": 0.484592,
+          "session_medians_ms": [
+            0.4892955,
+            0.48422149999999997,
+            0.484592
+          ]
+        },
+        "ET-DEFAULT": {
+          "mean_session_median_ms": 0.48731383333333333,
+          "median_of_session_medians_ms": 0.48944350000000003,
+          "session_medians_ms": [
+            0.48052700000000004,
+            0.491971,
+            0.48944350000000003
+          ]
+        },
+        "P-4T": {
+          "mean_session_median_ms": 1.3668083333333334,
+          "median_of_session_medians_ms": 1.36707,
+          "session_medians_ms": [
+            1.366265,
+            1.36707,
+            1.3670900000000001
+          ]
+        },
+        "P-POLICY": {
+          "mean_session_median_ms": 1.3655083333333333,
+          "median_of_session_medians_ms": 1.365005,
+          "session_medians_ms": [
+            1.365005,
+            1.3647550000000002,
+            1.366765
+          ]
+        },
+        "P-SERIAL": {
+          "mean_session_median_ms": 5.261255,
+          "median_of_session_medians_ms": 5.261455,
+          "session_medians_ms": [
+            5.26172,
+            5.261455,
+            5.2605900000000005
+          ]
+        }
+      },
+      "n": 96,
+      "p_policy_vs_et_default_speedup": 0.35856535324046435,
+      "practical_result": "executorch_faster",
+      "project_oracle_mode": "P-4T",
+      "project_policy_regret_percent": -0.15105298192484537,
+      "workload_id": "eval_large_k_96x96x768"
+    },
+    {
+      "category": "nondivisible_n",
+      "et_best_requested_mode": "ET-1T-REQUESTED",
+      "et_default_regret_vs_requested_percent": 5.075323373735481,
+      "et_default_vs_p_policy_speedup": 2.7492958166291603,
+      "k": 64,
+      "m": 128,
+      "mnk": 1236992,
+      "modes": {
+        "ET-1T-REQUESTED": {
+          "mean_session_median_ms": 0.09562016666666667,
+          "median_of_session_medians_ms": 0.095787,
+          "session_medians_ms": [
+            0.095787,
+            0.095083,
+            0.0959905
+          ]
+        },
+        "ET-4T-REQUESTED": {
+          "mean_session_median_ms": 0.100074,
+          "median_of_session_medians_ms": 0.0997865,
+          "session_medians_ms": [
+            0.09975049999999999,
+            0.0997865,
+            0.100685
+          ]
+        },
+        "ET-DEFAULT": {
+          "mean_session_median_ms": 0.100611,
+          "median_of_session_medians_ms": 0.1006485,
+          "session_medians_ms": [
+            0.1006485,
+            0.1008515,
+            0.100333
+          ]
+        },
+        "P-4T": {
+          "mean_session_median_ms": 0.27716583333333333,
+          "median_of_session_medians_ms": 0.2775175,
+          "session_medians_ms": [
+            0.277555,
+            0.27642500000000003,
+            0.2775175
+          ]
+        },
+        "P-POLICY": {
+          "mean_session_median_ms": 0.27679566666666666,
+          "median_of_session_medians_ms": 0.27671250000000003,
+          "session_medians_ms": [
+            0.27671250000000003,
+            0.2765455,
+            0.277129
+          ]
+        },
+        "P-SERIAL": {
+          "mean_session_median_ms": 0.9407578333333334,
+          "median_of_session_medians_ms": 0.940758,
+          "session_medians_ms": [
+            0.940758,
+            0.940795,
+            0.9407205000000001
+          ]
+        }
+      },
+      "n": 151,
+      "p_policy_vs_et_default_speedup": 0.3637295026426345,
+      "practical_result": "executorch_faster",
+      "project_oracle_mode": "P-4T",
+      "project_policy_regret_percent": -0.2900717972740259,
+      "workload_id": "eval_nondivisible_n_151"
+    },
+    {
+      "category": "medium_square",
+      "et_best_requested_mode": "ET-1T-REQUESTED",
+      "et_default_regret_vs_requested_percent": 4.61170420175153,
+      "et_default_vs_p_policy_speedup": 2.928433989825215,
+      "k": 128,
+      "m": 128,
+      "mnk": 2097152,
+      "modes": {
+        "ET-1T-REQUESTED": {
+          "mean_session_median_ms": 0.14224066666666665,
+          "median_of_session_medians_ms": 0.1423335,
+          "session_medians_ms": [
+            0.14262,
+            0.1423335,
+            0.1417685
+          ]
+        },
+        "ET-4T-REQUESTED": {
+          "mean_session_median_ms": 0.147691,
+          "median_of_session_medians_ms": 0.147638,
+          "session_medians_ms": [
+            0.147638,
+            0.146907,
+            0.148528
+          ]
+        },
+        "ET-DEFAULT": {
+          "mean_session_median_ms": 0.14894700000000002,
+          "median_of_session_medians_ms": 0.14889750000000002,
+          "session_medians_ms": [
+            0.14889750000000002,
+            0.14967550000000002,
+            0.148268
+          ]
+        },
+        "P-4T": {
+          "mean_session_median_ms": 0.4335271666666667,
+          "median_of_session_medians_ms": 0.4333145,
+          "session_medians_ms": [
+            0.4333145,
+            0.4342125,
+            0.4330545
+          ]
+        },
+        "P-POLICY": {
+          "mean_session_median_ms": 0.44389733333333337,
+          "median_of_session_medians_ms": 0.43603650000000005,
+          "session_medians_ms": [
+            0.433999,
+            0.4616565,
+            0.43603650000000005
+          ]
+        },
+        "P-SERIAL": {
+          "mean_session_median_ms": 1.5654283333333332,
+          "median_of_session_medians_ms": 1.5652,
+          "session_medians_ms": [
+            1.5651,
+            1.565985,
+            1.5652
+          ]
+        }
+      },
+      "n": 128,
+      "p_policy_vs_et_default_speedup": 0.34147944036795086,
+      "practical_result": "executorch_faster",
+      "project_oracle_mode": "P-4T",
+      "project_policy_regret_percent": 0.6281811478729786,
+      "workload_id": "eval_p1c_continuity_128"
+    }
+  ],
+  "practical_p_policy_vs_et_default": {
+    "best_project_speedup_vs_et_default": 1.0985169491525424,
+    "geomean_speedup_project_policy_vs_et_default": 0.3818301405286423,
+    "median_speedup": 0.3602044350665821,
+    "win_tie_loss": {
+      "executorch_faster": 17,
+      "project_faster": 1,
+      "tie": 0
+    },
+    "worst_project_slowdown_vs_et_default": 4.355694302123299
+  },
+  "project_decision_quality": {
+    "exact_match_rate": 0.4444444444444444,
+    "max_regret_percent": 1.943844492440605,
+    "mean_regret_percent": 0.10810070007980596,
+    "median_regret_percent": 0.06066625822491358
+  },
+  "schema": "e2_analysis",
+  "verdict": "MIXED_RESULTS_NO_SINGLE_WINNER_ON_RASPBERRY_PI5_FP32_FUSED_MATMUL_BIAS_RELU_ONLY"
+}
