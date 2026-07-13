@@ -1,0 +1,430 @@
+{
+  "schema": "p1c_oracle_stability_analysis",
+  "margin_threshold": 0.05,
+  "all_timed_correct": true,
+  "correctness_only_all_pass": true,
+  "per_workload": [
+    {
+      "workload_id": "cal_small_square_64",
+      "category": "small_square",
+      "split": "calibration",
+      "m": 64,
+      "n": 64,
+      "k": 64,
+      "session_winners": [
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk64",
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk64",
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk128"
+      ],
+      "session_margins_pct": [
+        0.01,
+        0.01,
+        0.02
+      ],
+      "session_second_best": [
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk128",
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk128",
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk64"
+      ],
+      "classification": "CROSS_SESSION_CONFLICT"
+    },
+    {
+      "workload_id": "cal_small_square_96",
+      "category": "small_square",
+      "split": "calibration",
+      "m": 96,
+      "n": 96,
+      "k": 96,
+      "session_winners": [
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32"
+      ],
+      "session_margins_pct": [
+        0.11,
+        0.12,
+        0.11
+      ],
+      "session_second_best": [
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32"
+      ],
+      "classification": "NEAR_TIE_STABLE_DIRECTION"
+    },
+    {
+      "workload_id": "cal_medium_square_192",
+      "category": "medium_square",
+      "split": "calibration",
+      "m": 192,
+      "n": 192,
+      "k": 192,
+      "session_winners": [
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32"
+      ],
+      "session_margins_pct": [
+        0.11,
+        0.09,
+        0.02
+      ],
+      "session_second_best": [
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32"
+      ],
+      "classification": "NEAR_TIE_STABLE_DIRECTION"
+    },
+    {
+      "workload_id": "cal_skinny_m_384x64x64",
+      "category": "skinny_m",
+      "split": "calibration",
+      "m": 384,
+      "n": 64,
+      "k": 64,
+      "session_winners": [
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk128",
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk64",
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk128"
+      ],
+      "session_margins_pct": [
+        0.04,
+        0.05,
+        0.01
+      ],
+      "session_second_best": [
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk64",
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk128",
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk64"
+      ],
+      "classification": "CROSS_SESSION_CONFLICT"
+    },
+    {
+      "workload_id": "cal_skinny_n_64x384x64",
+      "category": "skinny_n",
+      "split": "calibration",
+      "m": 64,
+      "n": 384,
+      "k": 64,
+      "session_winners": [
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32"
+      ],
+      "session_margins_pct": [
+        0.11,
+        0.11,
+        0.07
+      ],
+      "session_second_best": [
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32"
+      ],
+      "classification": "CROSS_SESSION_CONFLICT"
+    },
+    {
+      "workload_id": "cal_small_k_256x256x32",
+      "category": "small_k",
+      "split": "calibration",
+      "m": 256,
+      "n": 256,
+      "k": 32,
+      "session_winners": [
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32"
+      ],
+      "session_margins_pct": [
+        0.13,
+        0.02,
+        0.03
+      ],
+      "session_second_best": [
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32"
+      ],
+      "classification": "CROSS_SESSION_CONFLICT"
+    },
+    {
+      "workload_id": "cal_large_k_64x64x512",
+      "category": "large_k",
+      "split": "calibration",
+      "m": 64,
+      "n": 64,
+      "k": 512,
+      "session_winners": [
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk128",
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk64",
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk64"
+      ],
+      "session_margins_pct": [
+        0.05,
+        0.04,
+        0.13
+      ],
+      "session_second_best": [
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk64",
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk128",
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk128"
+      ],
+      "classification": "CROSS_SESSION_CONFLICT"
+    },
+    {
+      "workload_id": "cal_tail_100x100x100",
+      "category": "tail",
+      "split": "calibration",
+      "m": 100,
+      "n": 100,
+      "k": 100,
+      "session_winners": [
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32"
+      ],
+      "session_margins_pct": [
+        0.1,
+        0.08,
+        0.09
+      ],
+      "session_second_best": [
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32"
+      ],
+      "classification": "NEAR_TIE_STABLE_DIRECTION"
+    },
+    {
+      "workload_id": "eval_small_square_80",
+      "category": "small_square",
+      "split": "held_out",
+      "m": 80,
+      "n": 80,
+      "k": 80,
+      "session_winners": [
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32"
+      ],
+      "session_margins_pct": [
+        0.27,
+        0.25,
+        0.26
+      ],
+      "session_second_best": [
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32"
+      ],
+      "classification": "NEAR_TIE_STABLE_DIRECTION"
+    },
+    {
+      "workload_id": "eval_medium_square_256",
+      "category": "medium_square",
+      "split": "held_out",
+      "m": 256,
+      "n": 256,
+      "k": 256,
+      "session_winners": [
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32"
+      ],
+      "session_margins_pct": [
+        0.12,
+        0.07,
+        0.06
+      ],
+      "session_second_best": [
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32"
+      ],
+      "classification": "NEAR_TIE_STABLE_DIRECTION"
+    },
+    {
+      "workload_id": "eval_large_square_384",
+      "category": "large_square",
+      "split": "held_out",
+      "m": 384,
+      "n": 384,
+      "k": 384,
+      "session_winners": [
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32"
+      ],
+      "session_margins_pct": [
+        0.02,
+        0.01,
+        0.15
+      ],
+      "session_second_best": [
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32"
+      ],
+      "classification": "CROSS_SESSION_CONFLICT"
+    },
+    {
+      "workload_id": "eval_p1b_continuity_128",
+      "category": "medium_square",
+      "split": "held_out",
+      "m": 128,
+      "n": 128,
+      "k": 128,
+      "session_winners": [
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32"
+      ],
+      "session_margins_pct": [
+        0.14,
+        0.11,
+        0.13
+      ],
+      "session_second_best": [
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32"
+      ],
+      "classification": "NEAR_TIE_STABLE_DIRECTION"
+    },
+    {
+      "workload_id": "eval_skinny_m_512x48x96",
+      "category": "skinny_m",
+      "split": "held_out",
+      "m": 512,
+      "n": 48,
+      "k": 96,
+      "session_winners": [
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk128",
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk128",
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk128"
+      ],
+      "session_margins_pct": [
+        0.21,
+        0.18,
+        0.18
+      ],
+      "session_second_best": [
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk64",
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk64",
+        "portable_fused_matmul_bias_relu_bm48_bn48_bk48"
+      ],
+      "classification": "NEAR_TIE_STABLE_DIRECTION"
+    },
+    {
+      "workload_id": "eval_skinny_n_48x512x96",
+      "category": "skinny_n",
+      "split": "held_out",
+      "m": 48,
+      "n": 512,
+      "k": 96,
+      "session_winners": [
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32"
+      ],
+      "session_margins_pct": [
+        0.17,
+        0.06,
+        0.37
+      ],
+      "session_second_best": [
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm64_bn64_bk128"
+      ],
+      "classification": "NEAR_TIE_STABLE_DIRECTION"
+    },
+    {
+      "workload_id": "eval_small_k_320x320x48",
+      "category": "small_k",
+      "split": "held_out",
+      "m": 320,
+      "n": 320,
+      "k": 48,
+      "session_winners": [
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32"
+      ],
+      "session_margins_pct": [
+        0.02,
+        0.15,
+        0.01
+      ],
+      "session_second_best": [
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32"
+      ],
+      "classification": "CROSS_SESSION_CONFLICT"
+    },
+    {
+      "workload_id": "eval_large_k_96x96x384",
+      "category": "large_k",
+      "split": "held_out",
+      "m": 96,
+      "n": 96,
+      "k": 384,
+      "session_winners": [
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32"
+      ],
+      "session_margins_pct": [
+        0.05,
+        0.03,
+        0.04
+      ],
+      "session_second_best": [
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32"
+      ],
+      "classification": "CROSS_SESSION_CONFLICT"
+    },
+    {
+      "workload_id": "eval_tail_137x89x113",
+      "category": "tail",
+      "split": "held_out",
+      "m": 137,
+      "n": 89,
+      "k": 113,
+      "session_winners": [
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32"
+      ],
+      "session_margins_pct": [
+        0.08,
+        0.07,
+        0.11
+      ],
+      "session_second_best": [
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+        "portable_fused_matmul_bias_relu_bm128_bn128_bk32"
+      ],
+      "classification": "NEAR_TIE_STABLE_DIRECTION"
+    }
+  ],
+  "candidate_raw_wins": {
+    "portable_fused_matmul_bias_relu_bm64_bn64_bk64": 5,
+    "portable_fused_matmul_bias_relu_bm64_bn64_bk128": 7,
+    "portable_fused_matmul_bias_relu_bm32_bn128_bk32": 32,
+    "portable_fused_matmul_bias_relu_bm128_bn128_bk32": 7
+  },
+  "candidate_stable_wins": {},
+  "summary": {
+    "total_workloads": 17,
+    "stable_winner_count": 0,
+    "near_tie_count": 9,
+    "cross_session_conflict_count": 8,
+    "distinct_stable_winner_candidates": []
+  }
+}

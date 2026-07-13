@@ -102,7 +102,7 @@ def test_unknown_kernel_id_rejected():
     op_decision = _valid_op_decision()
     op_decision["kernel_selection"]["selected_kernel"] = "some_other_kernel_id"
     a, b, bias = _random_tensors(4, 4, 4, seed=3)
-    with pytest.raises(PortableCpuKernelError, match="only implements"):
+    with pytest.raises(PortableCpuKernelError, match="not one of this adapter's known candidates"):
         dispatch_fused_matmul_bias_relu(op_decision=op_decision, backend="cpu", a=a, b=b, bias=bias)
 
 

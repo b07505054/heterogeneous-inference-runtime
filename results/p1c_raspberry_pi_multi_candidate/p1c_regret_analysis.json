@@ -1,0 +1,283 @@
+{
+  "schema": "p1c_policy_regret_analysis",
+  "held_out_workload_count": 9,
+  "n_workload_session_combos": 27,
+  "overall_mean_of_medians_ms": {
+    "portable_fused_matmul_bias_relu_bm32_bn32_bk32": 4.905066294117647,
+    "portable_fused_matmul_bias_relu_bm48_bn48_bk48": 4.8024361176470585,
+    "portable_fused_matmul_bias_relu_bm64_bn64_bk64": 4.763467843137255,
+    "portable_fused_matmul_bias_relu_bm128_bn128_bk32": 4.714657176470588,
+    "portable_fused_matmul_bias_relu_bm128_bn32_bk32": 4.891919745098039,
+    "portable_fused_matmul_bias_relu_bm32_bn128_bk32": 4.714003215686274,
+    "portable_fused_matmul_bias_relu_bm32_bn32_bk128": 4.8672123725490195,
+    "portable_fused_matmul_bias_relu_bm64_bn64_bk128": 4.773418568627451
+  },
+  "policy_summary": {
+    "always_bm32_bn32_bk32 (current live compiler selection)": {
+      "mean_regret_pct": 3.888954732976107,
+      "median_regret_pct": 3.8485556907705165,
+      "p95_regret_pct": 4.510787387930567,
+      "max_regret_pct": 4.5281281300288185,
+      "exact_match_rate": 0.0
+    },
+    "always_bm32_bn128_bk32 (global best by raw wins)": {
+      "mean_regret_pct": 0.07778901446165787,
+      "median_regret_pct": 0.0,
+      "p95_regret_pct": 0.5819970399385683,
+      "max_regret_pct": 0.6952749117000837,
+      "exact_match_rate": 0.7037037037037037
+    },
+    "oracle (per-workload-session best, upper bound)": {
+      "mean_regret_pct": 0.0,
+      "median_regret_pct": 0.0,
+      "p95_regret_pct": 0.0,
+      "max_regret_pct": 0.0,
+      "exact_match_rate": 1.0
+    }
+  },
+  "per_workload_session_rows": [
+    {
+      "workload_id": "eval_large_k_96x96x384",
+      "session": 0,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+      "oracle_ms": 2.63607,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 3.64,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.0,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_large_k_96x96x384",
+      "session": 1,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+      "oracle_ms": 2.63619,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 4.362,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.028,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_large_k_96x96x384",
+      "session": 2,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+      "oracle_ms": 2.63559,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 3.688,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.0,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_large_square_384",
+      "session": 0,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+      "oracle_ms": 42.1114,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 4.437,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.0,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_large_square_384",
+      "session": 1,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+      "oracle_ms": 42.1322,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 4.528,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.006,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_large_square_384",
+      "session": 2,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+      "oracle_ms": 42.1279,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 4.511,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.148,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_medium_square_256",
+      "session": 0,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+      "oracle_ms": 12.4887,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 3.88,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.0,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_medium_square_256",
+      "session": 1,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+      "oracle_ms": 12.4904,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 3.849,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.0,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_medium_square_256",
+      "session": 2,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+      "oracle_ms": 12.4959,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 4.013,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.0,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_p1b_continuity_128",
+      "session": 0,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+      "oracle_ms": 1.56776,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 3.686,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.0,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_p1b_continuity_128",
+      "session": 1,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+      "oracle_ms": 1.56789,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 3.736,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.0,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_p1b_continuity_128",
+      "session": 2,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+      "oracle_ms": 1.5678,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 3.696,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.0,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_skinny_m_512x48x96",
+      "session": 0,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm64_bn64_bk128",
+      "oracle_ms": 1.79726,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 3.968,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.582,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_skinny_m_512x48x96",
+      "session": 1,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm64_bn64_bk128",
+      "oracle_ms": 1.79813,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 3.853,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.485,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_skinny_m_512x48x96",
+      "session": 2,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm64_bn64_bk128",
+      "oracle_ms": 1.79785,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 3.955,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.695,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_skinny_n_48x512x96",
+      "session": 0,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+      "oracle_ms": 1.77948,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 4.074,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.0,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_skinny_n_48x512x96",
+      "session": 1,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+      "oracle_ms": 1.78122,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 3.811,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.0,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_skinny_n_48x512x96",
+      "session": 2,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+      "oracle_ms": 1.78083,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 3.673,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.0,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_small_k_320x320x48",
+      "session": 0,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+      "oracle_ms": 3.76313,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 3.66,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.0,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_small_k_320x320x48",
+      "session": 1,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+      "oracle_ms": 3.76382,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 3.586,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.146,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_small_k_320x320x48",
+      "session": 2,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+      "oracle_ms": 3.76391,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 3.684,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.01,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_small_square_80",
+      "session": 0,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+      "oracle_ms": 0.388759,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 4.035,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.0,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_small_square_80",
+      "session": 1,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+      "oracle_ms": 0.388833,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 3.972,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.0,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_small_square_80",
+      "session": 2,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+      "oracle_ms": 0.38876,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 3.992,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.0,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_tail_137x89x113",
+      "session": 0,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+      "oracle_ms": 1.03806,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 3.582,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.0,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_tail_137x89x113",
+      "session": 1,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+      "oracle_ms": 1.03822,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 3.557,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.0,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    },
+    {
+      "workload_id": "eval_tail_137x89x113",
+      "session": 2,
+      "oracle_winner": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+      "oracle_ms": 1.0382,
+      "always_bm32_bn32_bk32 (current live compiler selection)": 3.575,
+      "always_bm32_bn128_bk32 (global best by raw wins)": 0.0,
+      "oracle (per-workload-session best, upper bound)": 0.0
+    }
+  ]
+}

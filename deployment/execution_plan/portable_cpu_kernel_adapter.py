@@ -1,10 +1,16 @@
-"""Phase P1B: the one CPU ExecutionPlan-driven kernel adapter.
+"""Phase P1B/P1C: the one CPU ExecutionPlan-driven kernel adapter.
 
-Dispatches exactly one compiler-selected, real, compiled native kernel:
+Dispatches a compiler-selected, real, compiled native kernel from a small,
+frozen candidate family (Phase P1C), all sharing one contract:
 
-    backend:    cpu
-    kernel_id:  portable_fused_matmul_bias_relu_bm32_bn32_bk32
-    op:         fused_matmul_bias_relu (hir.fused_matmul_bias_relu)
+    backend:  cpu
+    op:       fused_matmul_bias_relu (hir.fused_matmul_bias_relu)
+    dtype:    f32
+    threads:  1
+
+    kernel_id in KNOWN_KERNEL_IDS (see below) -- candidates differ only in
+    (block_m, block_n, block_k); P1B's bm32_bn32_bk32 remains one of them,
+    unchanged, for backward compatibility.
 
 This module is the last real gate before execution. It reads a per-op
 decision straight out of a real compiler-generated ExecutionPlan v2 JSON
@@ -12,9 +18,10 @@ decision straight out of a real compiler-generated ExecutionPlan v2 JSON
 ml-graph-compiler-runtime), validates it against this exact contract, and --
 only if every condition holds -- invokes the compiled native executable
 (native/cpu_kernels/portable_fused_matmul_bias_relu) with the caller's real
-input tensors. It never falls back to PyTorch, ONNX Runtime, NumPy, or a
-mock/simulated result: any mismatch (backend, kernel id, dtype, rank, shape)
-raises PortableCpuKernelError instead.
+input tensors and the compiler's exact selected candidate ID. It never falls
+back to PyTorch, ONNX Runtime, NumPy, or a mock/simulated result: any
+mismatch (backend, kernel id, dtype, rank, shape) raises
+PortableCpuKernelError instead.
 
 Truth boundary: real subprocess execution of a real compiled kernel against
 real caller-supplied tensors. Latency samples are real wall-clock
@@ -38,6 +45,22 @@ DEFAULT_KERNEL_EXECUTABLE = (
     REPO_ROOT / "native" / "cpu_kernels" / "portable_fused_matmul_bias_relu"
 )
 
+# Phase P1C frozen candidate table -- must match native/cpu_kernels/
+# portable_fused_matmul_bias_relu.cpp's kCandidates exactly (cross-checked by
+# tests/test_p1c_multi_candidate_contract.py). bm32_bn32_bk32 is the original
+# P1B kernel, unchanged, kept for backward compatibility.
+KNOWN_KERNEL_IDS = frozenset({
+    "portable_fused_matmul_bias_relu_bm32_bn32_bk32",
+    "portable_fused_matmul_bias_relu_bm48_bn48_bk48",
+    "portable_fused_matmul_bias_relu_bm64_bn64_bk64",
+    "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+    "portable_fused_matmul_bias_relu_bm128_bn32_bk32",
+    "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+    "portable_fused_matmul_bias_relu_bm32_bn32_bk128",
+    "portable_fused_matmul_bias_relu_bm64_bn64_bk128",
+})
+# Kept for P1B backward compatibility (existing callers/tests referencing a
+# single default candidate name).
 EXPECTED_KERNEL_ID = "portable_fused_matmul_bias_relu_bm32_bn32_bk32"
 EXPECTED_BACKEND = "cpu"
 EXPECTED_OP_TYPE_SUFFIX = "fused_matmul_bias_relu"
@@ -121,10 +144,11 @@ def _validate_op_decision(op_decision: dict[str, Any]) -> dict[str, Any]:
         )
 
     selected_kernel = kernel_selection.get("selected_kernel")
-    if selected_kernel != EXPECTED_KERNEL_ID:
+    if selected_kernel not in KNOWN_KERNEL_IDS:
         raise PortableCpuKernelError(
-            f"kernel_selection.selected_kernel is '{selected_kernel}', this adapter only "
-            f"implements '{EXPECTED_KERNEL_ID}' -- refusing to silently substitute"
+            f"kernel_selection.selected_kernel is '{selected_kernel}', which is not one of "
+            f"this adapter's known candidates ({sorted(KNOWN_KERNEL_IDS)}) -- refusing to "
+            "silently substitute"
         )
 
     quantization = op_decision.get("quantization")
@@ -226,6 +250,7 @@ def dispatch_fused_matmul_bias_relu(
 
     _validate_backend(backend)
     kernel_selection = _validate_op_decision(op_decision)
+    selected_kernel_id = kernel_selection["selected_kernel"]
     m, n, k = _validate_tensors(a, b, bias)
 
     if not kernel_executable.exists():
@@ -251,7 +276,7 @@ def dispatch_fused_matmul_bias_relu(
                 "--m", str(m), "--n", str(n), "--k", str(k),
                 "--a", str(a_path), "--b", str(b_path), "--bias", str(bias_path),
                 "--out", str(out_path),
-                "--kernel-id", EXPECTED_KERNEL_ID,
+                "--kernel-id", selected_kernel_id,
                 "--repeats", str(repeats),
             ],
             capture_output=True, text=True, check=False,
@@ -275,8 +300,16 @@ def dispatch_fused_matmul_bias_relu(
     if not samples_ms:
         raise PortableCpuKernelError("kernel executable reported zero latency samples")
 
+    reported_kernel_id = kernel_stdout.get("kernel_id")
+    if reported_kernel_id != selected_kernel_id:
+        raise PortableCpuKernelError(
+            f"kernel executable reported kernel_id '{reported_kernel_id}', which does not "
+            f"match the requested candidate '{selected_kernel_id}' -- refusing to trust "
+            "a mismatched dispatch"
+        )
+
     return PortableCpuKernelResult(
-        kernel_id=EXPECTED_KERNEL_ID,
+        kernel_id=selected_kernel_id,
         backend=EXPECTED_BACKEND,
         dtype=EXPECTED_DTYPE,
         m=m, n=n, k=k,

@@ -122,7 +122,7 @@ def test_3_runtime_rejects_deliberately_altered_kernel_id(fresh_execution_plan):
     a = Tensor(shape=(4, 4), data=[1.0] * 16)
     b = Tensor(shape=(4, 4), data=[1.0] * 16)
     bias = Tensor(shape=(4,), data=[0.0] * 4)
-    with pytest.raises(PortableCpuKernelError, match="only implements"):
+    with pytest.raises(PortableCpuKernelError, match="not one of this adapter's known candidates"):
         dispatch_fused_matmul_bias_relu(op_decision=op_decision, backend="cpu", a=a, b=b, bias=bias)
 
 
