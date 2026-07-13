@@ -10,8 +10,9 @@ fixture, not string grep):
   3. This runtime rejects a deliberately altered kernel ID.
   4. This runtime rejects a mismatched target_profile_id.
   5. Tensor shape/dtype semantics agree across both repositories (the same
-     M=N=K=128, dtype f32, tile bm32_bn32_bk32 values the compiler declared
-     are the exact values the runtime dispatch is exercised with).
+     M=N=K=128, dtype f32 values the compiler declared are the exact values
+     the runtime dispatch is exercised with; the specific default tile
+     identity is CURRENT_DEFAULT_KERNEL_ID below, updated in Phase P1C.1).
 
 Skips (does not fail) when the sibling ml-graph-compiler-runtime checkout,
 its built compile-for-target binary, or this runtime's compiled native
@@ -30,7 +31,6 @@ import pytest
 
 from deployment.execution_plan.loader import load_execution_plan
 from deployment.execution_plan.portable_cpu_kernel_adapter import (
-    EXPECTED_KERNEL_ID,
     PortableCpuKernelError,
     Tensor,
     dispatch_fused_matmul_bias_relu,
@@ -39,6 +39,14 @@ from deployment.execution_plan.portable_cpu_kernel_adapter import (
 RUNTIME_REPO_ROOT = Path(__file__).resolve().parents[1]
 COMPILER_REPO_ROOT = RUNTIME_REPO_ROOT.parent / "ml-graph-compiler-runtime"
 COMPILE_FOR_TARGET = COMPILER_REPO_ROOT / "build-mlir" / "compile-for-target"
+
+# Phase P1C.1: the Raspberry Pi profile's declared DEFAULT candidate changed
+# from bm32_bn32_bk32 (EXPECTED_KERNEL_ID, kept in the adapter for P1B
+# backward-compat naming) to bm32_bn128_bk32 -- an evidence-backed low-regret
+# static default (see DOC/result/P1C1_*.md), not a dynamic selector. Both
+# candidates remain declared and dispatchable; only which one is FIRST in
+# kernel_selection_contract_v1's declaration-order-wins matching changed.
+CURRENT_DEFAULT_KERNEL_ID = "portable_fused_matmul_bias_relu_bm32_bn128_bk32"
 PI_PROFILE = COMPILER_REPO_ROOT / "configs" / "target_profiles" / "raspberry_pi5_cortex_a76_cpu.json"
 P1B_MLIR = COMPILER_REPO_ROOT / "mlir" / "p1b_fused_matmul_bias_relu_cpu.mlir"
 KERNEL_EXECUTABLE = RUNTIME_REPO_ROOT / "native" / "cpu_kernels" / "portable_fused_matmul_bias_relu"
@@ -85,7 +93,7 @@ def test_1_compiler_emits_exact_backend_kernel_contract(fresh_execution_plan):
     op_decision = _fused_matmul_bias_relu_op_decision(fresh_execution_plan)
     kernel_selection = op_decision["kernel_selection"]
     assert kernel_selection["status"] == "selected"
-    assert kernel_selection["selected_kernel"] == EXPECTED_KERNEL_ID
+    assert kernel_selection["selected_kernel"] == CURRENT_DEFAULT_KERNEL_ID
     assert kernel_selection["contract_version"] == "kernel_selection_contract_v1"
     assert fresh_execution_plan.provenance.capability_bundle.hardware_profile_ref == (
         "raspberry-pi5-cortex-a76-cpu"
@@ -109,7 +117,7 @@ def test_2_runtime_accepts_the_real_contract_and_dispatches(fresh_execution_plan
         expected_target_profile_id="raspberry-pi5-cortex-a76-cpu",
         repeats=3,
     )
-    assert result.kernel_id == EXPECTED_KERNEL_ID
+    assert result.kernel_id == CURRENT_DEFAULT_KERNEL_ID
     assert result.process_exit_status == 0
     assert len(result.output.data) == m * n
     assert all(v >= 0.0 for v in result.output.data)  # ReLU
@@ -143,10 +151,12 @@ def test_4_runtime_rejects_mismatched_target_profile_id(fresh_execution_plan):
 def test_5_tensor_shape_and_dtype_semantics_agree_across_repos(fresh_execution_plan):
     op_decision = _fused_matmul_bias_relu_op_decision(fresh_execution_plan)
 
-    # Compiler-side declared contract (from the real target profile JSON).
+    # Compiler-side declared contract (from the real target profile JSON) --
+    # checked against whatever the compiler actually currently selects by
+    # default (CURRENT_DEFAULT_KERNEL_ID), not a hardcoded assumption.
     profile = json.loads(PI_PROFILE.read_text())
     declared = next(
-        k for k in profile["runtimeKernels"] if k["kernelId"] == EXPECTED_KERNEL_ID
+        k for k in profile["runtimeKernels"] if k["kernelId"] == CURRENT_DEFAULT_KERNEL_ID
     )
     assert declared["opName"] == "fused_matmul_bias_relu"
     assert declared["backend"] == "cpu"
@@ -157,13 +167,13 @@ def test_5_tensor_shape_and_dtype_semantics_agree_across_repos(fresh_execution_p
     assert op_decision["op_type"] == "hir.fused_matmul_bias_relu"
 
     # Runtime-side kernel executable reports the same tile identity embedded
-    # in EXPECTED_KERNEL_ID ("..._bm32_bn32_bk32").
+    # in CURRENT_DEFAULT_KERNEL_ID ("..._bm32_bn128_bk32").
     a = Tensor(shape=(128, 128), data=[0.1] * (128 * 128))
     b = Tensor(shape=(128, 128), data=[0.1] * (128 * 128))
     bias = Tensor(shape=(128,), data=[0.0] * 128)
     result = dispatch_fused_matmul_bias_relu(
         op_decision=op_decision, backend="cpu", a=a, b=b, bias=bias, repeats=1,
     )
-    assert (result.block_m, result.block_n, result.block_k) == (32, 32, 32)
+    assert (result.block_m, result.block_n, result.block_k) == (32, 128, 32)
     assert result.dtype == "f32"
     assert (result.m, result.n, result.k) == (128, 128, 128)

@@ -8,8 +8,9 @@ target-profile JSON (not string grep alone):
      declaration (set equality -- no "internal-only" candidates exist here).
   3. Unknown candidate IDs reject.
   4. Invalid shape/candidate combinations reject, for a non-baseline P1C candidate.
-  5. The compiler-selected candidate (bm32_bn32_bk32, per the P1C audit finding
-     that live selection is shape-independent) executes correctly.
+  5. The compiler-selected candidate (bm32_bn128_bk32 as of Phase P1C.1's
+     evidence-backed low-regret default change; selection remains
+     shape-independent, per the P1C audit finding) executes correctly.
   6. A deliberately altered real ExecutionPlan (selected_kernel mutated to a
      fabricated string) fails.
   7. P1B single-kernel behavior remains backward-compatible.
@@ -113,8 +114,11 @@ def test_4_invalid_shape_rejected_for_non_baseline_candidate(fresh_execution_pla
 def test_5_compiler_selected_candidate_executes_correctly(fresh_execution_plan):
     op_decision = _fused_matmul_bias_relu_op_decision(fresh_execution_plan)
     assert op_decision["kernel_selection"]["selected_kernel"] == (
-        "portable_fused_matmul_bias_relu_bm32_bn32_bk32"
-    ), "P1C audit finding: live selection is shape-independent, always the P1B baseline candidate"
+        "portable_fused_matmul_bias_relu_bm32_bn128_bk32"
+    ), (
+        "P1C audit finding: live selection is shape-independent, always the declared "
+        "default (bm32_bn128_bk32 as of Phase P1C.1's evidence-backed low-regret change)"
+    )
     rng = random.Random(4242)
     m, n, k = 128, 128, 128
     a = Tensor(shape=(m, k), data=[rng.uniform(-2, 2) for _ in range(m * k)])
@@ -138,12 +142,20 @@ def test_6_deliberately_altered_real_execution_plan_fails(fresh_execution_plan):
 
 def test_7_p1b_single_kernel_behavior_remains_backward_compatible(fresh_execution_plan):
     """Exact P1B contract (backend=cpu, kernel_id=bm32_bn32_bk32, dtype=f32) must
-    still dispatch exactly as it did before the P1C candidate family existed."""
-    op_decision = _fused_matmul_bias_relu_op_decision(fresh_execution_plan)
+    still dispatch exactly as it did before the P1C candidate family existed --
+    checked here by EXPLICITLY requesting bm32_bn32_bk32 (independent of
+    whatever the compiler currently declares as its default, which changed to
+    bm32_bn128_bk32 in Phase P1C.1). This proves the original P1B candidate
+    remains a real, still-dispatchable member of the family, not that it is
+    still the default."""
+    op_decision = dict(_fused_matmul_bias_relu_op_decision(fresh_execution_plan))
+    op_decision["kernel_selection"] = dict(op_decision["kernel_selection"])
+    op_decision["kernel_selection"]["selected_kernel"] = "portable_fused_matmul_bias_relu_bm32_bn32_bk32"
     rng = random.Random(99)
     a = Tensor(shape=(16, 16), data=[rng.uniform(-2, 2) for _ in range(256)])
     b = Tensor(shape=(16, 16), data=[rng.uniform(-2, 2) for _ in range(256)])
     bias = Tensor(shape=(16,), data=[rng.uniform(-2, 2) for _ in range(16)])
     result = dispatch_fused_matmul_bias_relu(op_decision=op_decision, backend="cpu", a=a, b=b, bias=bias, repeats=1)
     assert result.kernel_id == "portable_fused_matmul_bias_relu_bm32_bn32_bk32"
+    assert (result.block_m, result.block_n, result.block_k) == (32, 32, 32)
     assert result.block_m == 32 and result.block_n == 32 and result.block_k == 32
