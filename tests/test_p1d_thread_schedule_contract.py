@@ -86,10 +86,14 @@ def test_1_compiler_serializes_thread_fields(fresh_execution_plan):
     assert "thread_schedule" in op
     ts = op["thread_schedule"]
     assert ts["status"] == "selected"
-    assert ts["thread_count"] == 1
-    assert ts["partition_axis"] == "none"
-    assert ts["partition_strategy"] == "serial"
+    assert ts["thread_count"] == 4
+    assert ts["partition_axis"] == "m"
+    assert ts["partition_strategy"] == "contiguous_chunks"
     assert ts["contract_version"] == "thread_schedule_contract_v1"
+    assert ts["policy_metric"] == "matmul_mnk"
+    assert ts["policy_metric_value"] == 128 * 128 * 128
+    assert ts["policy_threshold"] == 262144
+    assert ts["policy_selection_reason"] == "metric_at_or_above_threshold_select_parallel"
     assert "truth_boundary" in ts
 
 
@@ -97,9 +101,9 @@ def test_2_runtime_parses_thread_fields_and_dispatches(fresh_execution_plan):
     op = _fused_op_decision(fresh_execution_plan)
     a, b, bias = _random_tensors(64, 64, 64, seed=1)
     result = dispatch_fused_matmul_bias_relu(op_decision=op, backend="cpu", a=a, b=b, bias=bias, repeats=1)
-    assert result.thread_count == 1
-    assert result.partition_axis == "none"
-    assert result.partition_strategy == "serial"
+    assert result.thread_count == 4
+    assert result.partition_axis == "m"
+    assert result.partition_strategy == "contiguous_chunks"
 
 
 def test_3_old_plan_without_thread_schedule_defaults_to_one_thread_serial():
