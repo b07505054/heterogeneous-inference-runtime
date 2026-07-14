@@ -1,0 +1,84 @@
+{
+  "comparison_verdict": "PROJECT_POLICY_FASTER_WITH_SAME_XNNPACK_STACK",
+  "correctness_failures": 0,
+  "incomplete_timing_records": 0,
+  "per_workload": [
+    {
+      "default_over_project_ratio": 1.0,
+      "executorch_default_ms": 0.0009445,
+      "project_static_x1_ms": 0.0009445,
+      "result": "tie",
+      "workload_id": "eval_tiny_8"
+    },
+    {
+      "default_over_project_ratio": 1.0800578187990661,
+      "executorch_default_ms": 0.040722499999999995,
+      "project_static_x1_ms": 0.037704,
+      "result": "project_policy_faster",
+      "workload_id": "eval_small_square_80"
+    },
+    {
+      "default_over_project_ratio": 0.996018608494581,
+      "executorch_default_ms": 1.1233815,
+      "project_static_x1_ms": 1.127872,
+      "result": "tie",
+      "workload_id": "eval_medium_square_256"
+    },
+    {
+      "default_over_project_ratio": 1.006508284723219,
+      "executorch_default_ms": 3.9234785,
+      "project_static_x1_ms": 3.8981085,
+      "result": "tie",
+      "workload_id": "eval_large_square_384"
+    },
+    {
+      "default_over_project_ratio": 1.0352571644526207,
+      "executorch_default_ms": 0.1451855,
+      "project_static_x1_ms": 0.140241,
+      "result": "tie",
+      "workload_id": "eval_skinny_m_48x384x96"
+    },
+    {
+      "default_over_project_ratio": 1.068471140773699,
+      "executorch_default_ms": 0.1512875,
+      "project_static_x1_ms": 0.1415925,
+      "result": "project_policy_faster",
+      "workload_id": "eval_wide_m_384x48x96"
+    },
+    {
+      "default_over_project_ratio": 1.021262055616787,
+      "executorch_default_ms": 0.245084,
+      "project_static_x1_ms": 0.23998150000000001,
+      "result": "tie",
+      "workload_id": "eval_small_k_320x320x24"
+    },
+    {
+      "default_over_project_ratio": 1.0221272026937829,
+      "executorch_default_ms": 0.489325,
+      "project_static_x1_ms": 0.478732,
+      "result": "tie",
+      "workload_id": "eval_large_k_96x96x768"
+    },
+    {
+      "default_over_project_ratio": 1.0431145833333333,
+      "executorch_default_ms": 0.100139,
+      "project_static_x1_ms": 0.096,
+      "result": "tie",
+      "workload_id": "eval_nondivisible_n_151"
+    },
+    {
+      "default_over_project_ratio": 1.0475057875876068,
+      "executorch_default_ms": 0.1486395,
+      "project_static_x1_ms": 0.14189849999999998,
+      "result": "tie",
+      "workload_id": "eval_p1c_continuity_128"
+    }
+  ],
+  "records": 60,
+  "schema": "e3_formal_same_stack_analysis",
+  "win_tie_loss": {
+    "executorch_default_faster": 0,
+    "project_policy_faster": 2,
+    "tie": 8
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "bad_submodule_markers": [],
+  "dirty_status": [],
+  "executorch_commit": "e2f18eb23c45bd22ca332b0b8b49a81de304b472",
+  "expected_executorch_commit": "e2f18eb23c45bd22ca332b0b8b49a81de304b472",
+  "expected_tag": "v1.3.1",
+  "expected_xnnpack_commit": "1adaa7c709d4839d29e1f219cb962b01c9e6a905",
+  "failures": [],
+  "passed": true,
+  "schema": "e3_executorch_source_validation",
+  "source": "/home/allen/executorch_e3_src/src",
+  "submodule_count": 31,
+  "xnnpack_commit": "1adaa7c709d4839d29e1f219cb962b01c9e6a905"
+}
