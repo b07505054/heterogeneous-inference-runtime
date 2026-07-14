@@ -2,7 +2,7 @@
 
 Last verified: 2026-07-14.
 
-Runtime HEAD: `53c80e2c11101ec7b8db2e73f978e220c054d9a1`.
+Runtime source/evidence HEAD before documentation refresh: `6767bd74276c4c9427827a4ceeb2f77210e5c6b9`.
 Canonical architecture host: `../ml-graph-compiler-runtime`.
 
 The Runtime validates and executes exact compiler contracts. The current production serialized contract is `ExecutionPlan`; E3 also uses an additive evaluation contract named `executorch_xnnpack_runner_contract` for same-stack comparison.
