@@ -1,5 +1,8 @@
 # Multi-Runtime Comparison (Edge AI Inference Systems)
 
+> S1 status note: latency values in this historical document are placeholders/non-measurements unless backed by a committed result artifact explicitly referenced in the current canonical docs.
+
+
 ##  Overview
 
 This document compares multiple inference runtimes used in modern edge AI deployment workflows.
@@ -180,16 +183,16 @@ C++ Execution
 
 | Runtime | Approximate Latency |
 |---|---|
-| ONNX Runtime | ~5 ms |
-| ExecuTorch Python | ~6 ms |
-| ExecuTorch C++ (1 thread) | ~14 ms |
-| ExecuTorch C++ (4 threads) | ~5.7 ms |
+| ONNX Runtime | historical placeholder, not measured evidence |
+| ExecuTorch Python | historical placeholder, not measured evidence |
+| ExecuTorch C++ (1 thread) | historical placeholder, not measured evidence |
+| ExecuTorch C++ (4 threads) | historical placeholder, not measured evidence |
 
 ---
 
 ## Key Observation
 
-ExecuTorch C++ achieves latency comparable to ONNX Runtime when:
+Historical placeholder text suggested ExecuTorch C++ comparability, but this document does not contain measured evidence. Current measured ExecuTorch/XNNPACK claims live under  and E1/E2/E2.1/E3 docs. Conditions discussed here were:
 - Multi-threading is enabled
 - XNNPACK backend is properly registered
 - Runtime overhead is minimized

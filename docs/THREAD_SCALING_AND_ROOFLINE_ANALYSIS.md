@@ -1,5 +1,8 @@
 # Thread Scaling and Roofline-Style Analysis (Edge AI Runtime Systems)
 
+> S1 status note: latency values in this historical document are placeholders/non-measurements unless backed by a committed result artifact explicitly referenced in the current canonical docs.
+
+
 ##  Overview
 
 This document analyzes thread scaling behavior and runtime saturation characteristics observed during edge inference benchmarking.
@@ -82,8 +85,8 @@ Observed latency:
 |---|---|
 | 1 | ~14 ms |
 | 2 | ~8 ms |
-| 4 | ~5.7 ms |
-| 8 | ~5.8 ms |
+| 4 | placeholder historical value, not measured evidence |
+| 8 | placeholder historical value, not measured evidence |
 
 ---
 

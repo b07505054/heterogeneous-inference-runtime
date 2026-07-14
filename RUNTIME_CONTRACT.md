@@ -1,16 +1,19 @@
 # Runtime Contract
 
-Last verified: 2026-07-13\nSource host: GPU Linux /home/allen/Desktop/Project/heterogeneous-inference-runtime\nVerified runtime HEAD: f4cc98bc93e1e8e5ecea32ffb0779b0a5c801097 (main, ahead 1 of origin/main)\nCanonical architecture host: /home/allen/Desktop/Project/ml-graph-compiler-runtime\n
+Last verified: 2026-07-14.
 
-The Runtime validates and executes exact compiler contracts. The current serialized contract is `ExecutionPlan`; documentation may call the broader concept an Execution Contract, but this phase does not rename production schemas.
+Runtime HEAD: `53c80e2c11101ec7b8db2e73f978e220c054d9a1`.
+Canonical architecture host: `../ml-graph-compiler-runtime`.
+
+The Runtime validates and executes exact compiler contracts. The current production serialized contract is `ExecutionPlan`; E3 also uses an additive evaluation contract named `executorch_xnnpack_runner_contract` for same-stack comparison.
 
 ## Owns
 
-- ExecutionPlan parsing and validation.
+- ExecutionPlan or evaluation-contract parsing and validation.
 - Artifact resolution.
-- Exact backend/kernel/runtime dispatch.
+- Exact backend/kernel/runtime dispatch requested by the compiler contract.
 - Memory/resource execution.
-- Execution provenance and telemetry.
+- Execution provenance, output artifacts, timing samples, and telemetry.
 - Explicit failure and compiler-authorized fallback.
 
 ## Does Not Own
@@ -18,14 +21,15 @@ The Runtime validates and executes exact compiler contracts. The current seriali
 - Global implementation selection.
 - Candidate generation.
 - Compiler legality analysis.
-- Online benchmarking for selection.
+- Online benchmarking for implementation selection.
 - Silent backend, kernel, precision, layout, artifact, or thread-schedule substitution.
 
-## Current Strict Examples
+## Canonical Examples
 
-- `deployment/execution_plan/portable_cpu_kernel_adapter.py`: validates compiler-selected CPU kernel ID, target profile, tensor contract, and thread schedule before launching the native portable C++ kernel.
-- vLLM materialization path: materializes compiler-plan-derived serving configuration, including AWQ quantization when the plan selects that deployment path.
+- Portable CPU adapter: validates compiler-selected CPU kernel ID, target profile, tensor contract, and thread schedule before launching the native portable C++ kernel.
+- E3 XNNPACK adapter: validates runner hash, `.pte` hash, ExecuTorch/XNNPACK provenance, requested threads, backend, and runner self-report before accepting timing.
+- vLLM materialization: materializes compiler-plan-derived serving configuration, including AWQ when the plan selects that deployment path. This is an executable parallel path, not proof of canonical quantization policy.
 
-## Boundary With Evaluation Paths
+## Evaluation Boundary
 
-Benchmark scripts, comparison backends, and simulated distributed runtime artifacts are evidence/evaluation mechanisms unless an ExecutionPlan explicitly selects them as runtime contracts. They should not be documented as compiler-owned implementation policy.
+Benchmark scripts and comparison harnesses are evidence mechanisms. A comparison claiming compiler-selected behavior must invoke the live Compiler and consume its emitted decision artifact. E2.1 did not meet that standard; E3 does.

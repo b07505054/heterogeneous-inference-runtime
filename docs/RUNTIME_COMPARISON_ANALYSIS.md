@@ -1,5 +1,8 @@
 DOCUMENT STATUS: HISTORICAL EVALUATION ANALYSIS
 
+> S1 status note: latency values in this historical document are placeholders/non-measurements unless backed by a committed result artifact explicitly referenced in the current canonical docs.
+
+
 Superseded for current project status by: ../../ml-graph-compiler-runtime/PROJECT_STATUS_2026.md.
 
 Truth boundary: Comparison paths are evaluation artifacts unless explicitly selected by compiler ExecutionPlan. ExecuTorch comparison is not fully integrated.
@@ -29,10 +32,10 @@ The goal is to evaluate edge inference deployment trade-offs across different ru
 
 | Runtime | Backend | Avg Latency |
 |---|---|---:|
-| ONNX Runtime | CPU EP | ~5.00 ms |
-| ExecuTorch Python | Portable / XNNPACK | ~6.00 ms |
-| ExecuTorch C++ | XNNPACK, 4 threads | ~5.70 ms |
-| TFLite | XNNPACK CPU delegate | ~9.69 ms |
+| ONNX Runtime | CPU EP | historical placeholder, not measured evidence |
+| ExecuTorch Python | Portable / XNNPACK | historical placeholder, not measured evidence |
+| ExecuTorch C++ | XNNPACK, 4 threads | historical placeholder, not measured evidence |
+| TFLite | XNNPACK CPU delegate | historical placeholder, not measured evidence |
 
 ---
 
@@ -48,7 +51,7 @@ This suggests that ONNX Runtime remains a strong optimized CPU inference baselin
 
 ### 2. ExecuTorch C++ reached comparable performance
 
-ExecuTorch C++ achieved ~5.7 ms latency with XNNPACK and 4 CPU threads.
+The earlier  ExecuTorch C++ value in this document is a historical placeholder/non-measurement and must not be cited as measured evidence.
 
 This is close to ONNX Runtime and demonstrates that ExecuTorch can be competitive when:
 
@@ -60,7 +63,7 @@ This is close to ONNX Runtime and demonstrates that ExecuTorch can be competitiv
 
 ### 3. ExecuTorch Python showed modest overhead
 
-ExecuTorch Python achieved ~6 ms latency.
+The earlier  ExecuTorch Python value is also historical placeholder prose, not current measured evidence.
 
 Compared with ExecuTorch C++, the gap is relatively small, but still suggests Python binding/runtime overhead.
 

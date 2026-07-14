@@ -1,5 +1,8 @@
 # Runtime Failure Analysis (Edge AI Deployment)
 
+> S1 status note: latency values in this historical document are placeholders/non-measurements unless backed by a committed result artifact explicitly referenced in the current canonical docs.
+
+
 ## Overview
 
 This document analyzes runtime failures, deployment issues, and debugging scenarios encountered during development of the edge inference pipeline.
@@ -137,8 +140,8 @@ Thread scaling results:
 |---|---|
 | 1 | ~14 ms |
 | 2 | ~8 ms |
-| 4 | ~5.7 ms |
-| 8 | ~5.8 ms |
+| 4 | placeholder historical value, not measured evidence |
+| 8 | placeholder historical value, not measured evidence |
 
 ---
 

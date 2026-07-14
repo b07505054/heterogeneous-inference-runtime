@@ -1,5 +1,8 @@
 # Runtime Architecture Analysis (ExecuTorch + ONNX Runtime)
 
+> S1 status note: latency values in this historical document are placeholders/non-measurements unless backed by a committed result artifact explicitly referenced in the current canonical docs.
+
+
 ##  Overview
 
 This document analyzes the runtime architecture and execution flow of the edge inference pipeline implemented in this project.
@@ -159,8 +162,8 @@ Observed behavior:
 |---|---|
 | 1 | ~14 ms |
 | 2 | ~8 ms |
-| 4 | ~5.7 ms |
-| 8 | ~5.8 ms |
+| 4 | placeholder historical value, not measured evidence |
+| 8 | placeholder historical value, not measured evidence |
 
 Key observations:
 - Near-linear speedup up to 4 threads
@@ -243,8 +246,8 @@ This project compares:
 | ExecuTorch Python | Lightweight runtime integration |
 | ExecuTorch C++ | Production-oriented deployment runtime |
 
-Observed result:
-- ExecuTorch C++ achieves latency comparable to ONNX Runtime when properly parallelized
+Historical note:
+- Earlier ExecuTorch C++ latency values in this document are placeholders/non-measurements and must not be cited as measured evidence.
 
 ---
 

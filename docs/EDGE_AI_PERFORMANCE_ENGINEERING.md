@@ -1,5 +1,8 @@
 # Edge AI Performance Engineering
 
+> S1 status note: this is a historical supporting document. Current ExecuTorch/XNNPACK measurements and comparison classifications live in E1/E2/E2.1/E3 docs and result artifacts.
+
+
 ##  Overview
 
 This document analyzes the performance engineering methodology used in this project for evaluating edge AI inference systems.
@@ -152,10 +155,7 @@ This enables:
 
 ## Observed Behavior
 
-ExecuTorch C++ achieved:
-- Competitive latency
-- Strong multi-thread scaling
-- Lightweight deployment characteristics
+Historical placeholder note: this document does not contain current measured ExecuTorch C++ evidence. Use E1/E2/E2.1/E3 artifacts for measured ExecuTorch/XNNPACK claims. Earlier qualitative bullets are retained only as non-canonical historical framing.
 
 ---
 
