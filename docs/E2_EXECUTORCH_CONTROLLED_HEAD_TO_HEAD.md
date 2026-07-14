@@ -188,3 +188,7 @@ Some computed regret values are slightly negative at the workload level because 
 - Export reports: `results/executorch_e2/export_reports/`
 
 Large generated `.pte` files, ExecuTorch source, build trees, runner binaries, and virtual environments are not committed.
+
+## E2.1 Follow-Up
+
+E2 remains historically invalid. E2.1 repairs the floating-point correctness predicate and reruns a fresh preregistered comparison in `docs/E2_1_EXECUTORCH_CORRECTNESS_REPAIRED_COMPARISON.md`.

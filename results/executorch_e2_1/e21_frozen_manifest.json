@@ -1,0 +1,583 @@
+{
+  "analysis_formulas": {
+    "cross_system": "latency ratios, not regret",
+    "per_workload_latency": "median of session medians",
+    "tie_threshold_percent": 5.0
+  },
+  "claim_boundaries": [
+    "Raspberry Pi 5 only",
+    "FP32 MatMul+Bias+ReLU only",
+    "frozen suite only",
+    "not general superiority"
+  ],
+  "comparison_id": "E2_1_RPI5_FP32_FUSED_MATMUL_BIAS_RELU_2026_07_13",
+  "correctness_predicate": {
+    "atol": 0.001,
+    "derivation": "Mixed allclose rule avoids independent relative-error amplification near zero while retaining 1e-3 absolute ceiling observed sufficient for FP32 matmul reduction differences in E2 diagnostics; negative controls reject semantic corruptions.",
+    "form": "abs(actual - expected) <= atol + rtol * abs(expected)",
+    "rtol": 0.0001
+  },
+  "created_utc": "2026-07-13T23:59:18.850089+00:00",
+  "executorch": {
+    "commit": "e2f18eb23c45bd22ca332b0b8b49a81de304b472",
+    "runner_sha256": "eb3068fb1742e4172a459f9f4c5aebd2dd9dd43151e214ff1402ea925d4e2809",
+    "tag": "v1.3.1",
+    "xnnpack_commit": "1adaa7c709d4839d29e1f219cb962b01c9e6a905"
+  },
+  "input_generation": {
+    "algorithm": "python random.Random(seed).uniform(-3,3); E2.1 seed = P1D seed + 210000; A,B,bias serialized little-endian fp32"
+  },
+  "manifest_sha256": "91403dc26fe0a472db7a81457f976757acce9147e15e5fd888369d103449e82d",
+  "modes": {
+    "executorch": [
+      "ET-DEFAULT",
+      "ET-1T-REQUESTED",
+      "ET-4T-REQUESTED"
+    ],
+    "project": [
+      "P-SERIAL",
+      "P-4T",
+      "P-POLICY"
+    ]
+  },
+  "negative_control_reference": {
+    "all_rejected": true,
+    "predicate": "abs(actual-expected) <= 0.001 + 0.0001*abs(expected)",
+    "schema": "e2_1_negative_controls",
+    "tests_passed_field_means_wrong_output_accepted": {
+      "injected_inf": false,
+      "injected_nan": false,
+      "near_zero_plus_2e_3": false,
+      "one_element_plus_1e_2": false,
+      "systematic_scale_1_percent": false,
+      "transposed_output": false,
+      "without_relu": false,
+      "wrong_bias_zero_bias": false,
+      "wrong_seed": false
+    }
+  },
+  "parent_historical_experiment_id": "E2_RPI5_FP32_FUSED_MATMUL_BIAS_RELU_2026_07_13",
+  "parent_verdict": "COMPARISON_INVALID_CORRECTNESS_ON_RASPBERRY_PI5_FP32_FUSED_MATMUL_BIAS_RELU_ONLY",
+  "project": {
+    "compiler_commit": "b67cd644568e7f53a64370f926e241e4e42ebe10",
+    "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+    "runtime_commit": "f0a0dab34d80776973377c5d864a30f156f55b11",
+    "threshold": 262144
+  },
+  "protocol": {
+    "affinity": "0-3",
+    "governor": "performance",
+    "session_count": 3,
+    "timed_repeat_count": 20,
+    "total_invocations_per_mode_session": 25,
+    "warmup_count": 5
+  },
+  "schema": "e2_1_manifest",
+  "schema_version": 1,
+  "workloads": [
+    {
+      "category": "tiny",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_16x16x16_xnnpack.pte",
+        "sha256": "c36d06ca924f91b49d1ac66b20cbe340ccb808fe0c65aeacea0fc01d39bb3614"
+      },
+      "input_hashes": {
+        "a": "6a04bce30ad7a481057b6c4fb2f1c84ffb72a6cfe2d5eb6876b8ccffab55e324",
+        "b": "7b1c3d80ef14762c4bb270a401f887c0253563699b1fb948da566fc52dcaa7b5",
+        "bias": "e2b254a69189fd6973a658cc2373398534e960d3b814fce61016a5b6bb79a14f",
+        "reference_fp32": "9ca46664e2ad0764f570cf8fbe3f208311746962173aba739b0ef68310b43fa8",
+        "reference_fp64": "fec9fd29d5e04053feb5dac89219a39e51d1af197322e1f572edba2d23ff81f0"
+      },
+      "k": 16,
+      "m": 16,
+      "mnk": 4096,
+      "n": 16,
+      "original_seed": 40001,
+      "project_policy_selection": {
+        "mode": "P-SERIAL"
+      },
+      "seed": 250001,
+      "split": "calibration",
+      "workload_id": "cal_tiny_16"
+    },
+    {
+      "category": "small_square",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_64x64x64_xnnpack.pte",
+        "sha256": "0e080a8e3943dd2d2a100add24abb0d43a8d569d97ab31d214a3cf3ff60230bb"
+      },
+      "input_hashes": {
+        "a": "0dfc270b4cdf17bc4e462c176fd40fde9a1eb0c900658bccbc2a385611ce366a",
+        "b": "7b75fc060f1324d79dabeddcfb1e333a44e360197da9cdd195a25e257fb184c2",
+        "bias": "c59e63d581ee1c7f95dc70940c35c1c8a816c9e8eae93d6dbca113668c3d16f7",
+        "reference_fp32": "c0a1f9f99c43a14d6deae0159e6c7c7defc8577e2adbcbe31c473d152df15dda",
+        "reference_fp64": "e58959b719d74845a7f2044422ef57a0786a7bea238750598eec9f9c0a18d33a"
+      },
+      "k": 64,
+      "m": 64,
+      "mnk": 262144,
+      "n": 64,
+      "original_seed": 40002,
+      "project_policy_selection": {
+        "mode": "P-4T"
+      },
+      "seed": 250002,
+      "split": "calibration",
+      "workload_id": "cal_small_square_64"
+    },
+    {
+      "category": "medium_square",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_192x192x192_xnnpack.pte",
+        "sha256": "42f9a7b437050d93e63a9bfdebdc249dbe896232333485d9f094f8eb7a69c300"
+      },
+      "input_hashes": {
+        "a": "08d6f065d59677f7552f9dcf00bd8a1125e97e6fe73eaddb2fab63d7f5e34f01",
+        "b": "45c10039c05a096d9a6344ae8996068ae3409c3d9b6451f847d3b9aef688d8e7",
+        "bias": "c5e8772c294ee7e3ed387f0bf865428f9fc3e8c83b3923a458fba1282fd2ede1",
+        "reference_fp32": "ef9d223b59d218ee3d7f709d4cc48194224aca6827bd7c88a814860f42ebacef",
+        "reference_fp64": "2302d96ba07f6273116eba1f974e10d2332935e7145aaf35d01ae594cd97f2b3"
+      },
+      "k": 192,
+      "m": 192,
+      "mnk": 7077888,
+      "n": 192,
+      "original_seed": 40003,
+      "project_policy_selection": {
+        "mode": "P-4T"
+      },
+      "seed": 250003,
+      "split": "calibration",
+      "workload_id": "cal_medium_square_192"
+    },
+    {
+      "category": "skinny_m_wide_n",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_32x512x64_xnnpack.pte",
+        "sha256": "297de52fc267a4d0427594795554c2859d94e6a61559fb344e4f98619d9310a5"
+      },
+      "input_hashes": {
+        "a": "2f08803483fc8ec4c419994f3202904c4ca8f76e97adf24624b1476e3174bb19",
+        "b": "db6fa2b1c93f11279a06137607b1b058a76d5d991fc5260bce09634aacb33548",
+        "bias": "5bf5eb20e916de3caa706c3ebc772497e6d49a0784b1bbd8485eceb4b3272bb8",
+        "reference_fp32": "41b2f26d84a297fe7256ce02390ea617ffeb11328db1edd55749cdd6fb6f2c63",
+        "reference_fp64": "5a6ccdece898f607e8fbcc3d6deaca73b04d82fe21542d3218e6b2e640706d2d"
+      },
+      "k": 64,
+      "m": 32,
+      "mnk": 1048576,
+      "n": 512,
+      "original_seed": 40004,
+      "project_policy_selection": {
+        "mode": "P-4T"
+      },
+      "seed": 250004,
+      "split": "calibration",
+      "workload_id": "cal_skinny_m_32x512x64"
+    },
+    {
+      "category": "wide_m_skinny_n",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_512x32x64_xnnpack.pte",
+        "sha256": "467c72eb237ce6310608e78fbcf3c48d5d1c1831d0603963486a24dd7ba6c44a"
+      },
+      "input_hashes": {
+        "a": "e7ff02bf430c20758b43735c2a3c8228f856af31773b2adc187424af75c184e3",
+        "b": "f86d02481c4a21a06bac18ab6e57a84fd786e78696ea52f3cf9d6c688120b9c2",
+        "bias": "ae9b627d257afbda92bc184d741d965a639a07e923655fb31faa82a9ac4739f0",
+        "reference_fp32": "668c03a1a492884034f3c3047b5d794544ffbd5680c2fae92df74836f9e73891",
+        "reference_fp64": "7dc5c1e85d04973dfc8db166edeed8ce4180d3b322e4edb1dac548d5847a8378"
+      },
+      "k": 64,
+      "m": 512,
+      "mnk": 1048576,
+      "n": 32,
+      "original_seed": 40005,
+      "project_policy_selection": {
+        "mode": "P-4T"
+      },
+      "seed": 250005,
+      "split": "calibration",
+      "workload_id": "cal_wide_m_512x32x64"
+    },
+    {
+      "category": "small_k",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_256x256x16_xnnpack.pte",
+        "sha256": "469a70245cd846ae74eb6aaf4ee2e542a57eb9c1077b890a8592989fa28121e5"
+      },
+      "input_hashes": {
+        "a": "a568363c0e4764a46775e8856ace4a086d80dc488ce539de5fb7ac4bad807cab",
+        "b": "3377899ee09f7fe8ae321158894f085903b13af38daf81b69486b5294c675618",
+        "bias": "f86a1ab1a402d64c04c4aed751223f57fcf91c3672367c2b991d42b97de9f80d",
+        "reference_fp32": "477991dd795681cfc6c234e20aa6409f43d892f329c9f6eb5c1043db188cd884",
+        "reference_fp64": "1e6af2bbc63144204e5900407669ef2baf404418117fb4df1eb2d797e2a74d1d"
+      },
+      "k": 16,
+      "m": 256,
+      "mnk": 1048576,
+      "n": 256,
+      "original_seed": 40006,
+      "project_policy_selection": {
+        "mode": "P-4T"
+      },
+      "seed": 250006,
+      "split": "calibration",
+      "workload_id": "cal_small_k_256x256x16"
+    },
+    {
+      "category": "large_k",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_64x64x1024_xnnpack.pte",
+        "sha256": "af60cb152ec77a69dfff05473507627339c3310ee14047c1fb82b006389fc017"
+      },
+      "input_hashes": {
+        "a": "a185a9616444a4a57de51e3b2c6159940cb74a027e3da7d47273c7374e9bc7b9",
+        "b": "cb296e7c788838e0aaa3a48ccdee0774ea79290901a24dc9c004876fa48dec8d",
+        "bias": "0135f2bc0e222c4d4439a3766a2d356fe59bb83a74e595a2899b5565bdfc4bcf",
+        "reference_fp32": "9920c56bc4a2494187de14d20595444af2965864191be03809ec0ca9da788925",
+        "reference_fp64": "7eba4e3192a80b6e047cba952b8a29685db1e68ee9c2c003dcaf8ba307f5e824"
+      },
+      "k": 1024,
+      "m": 64,
+      "mnk": 4194304,
+      "n": 64,
+      "original_seed": 40007,
+      "project_policy_selection": {
+        "mode": "P-4T"
+      },
+      "seed": 250007,
+      "split": "calibration",
+      "workload_id": "cal_large_k_64x64x1024"
+    },
+    {
+      "category": "nondivisible_m",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_137x128x64_xnnpack.pte",
+        "sha256": "f153881a212e307d9160475c55337f54774acecf9ee44624f139f8fe84d457a4"
+      },
+      "input_hashes": {
+        "a": "ffe47bca44b48b58e994a3d2df8f46a718afd4874f63dad76a022de76d758a4c",
+        "b": "21fed8e5580e00a393cb8cb67cc09185a0281868b5d763428104df203a069d75",
+        "bias": "6e7d69cde2baa7cbee336927b335078eebb6da8018c909ce1aa73086a5498843",
+        "reference_fp32": "2c8495a1fa90df4c572c09fa980cf3464f7b327fe4f207a08d31edad995dea60",
+        "reference_fp64": "bd69a870f68db8a399ba3d1ef8dcbb94d8c92c0d03582351e6113e4dabadf7c8"
+      },
+      "k": 64,
+      "m": 137,
+      "mnk": 1122304,
+      "n": 128,
+      "original_seed": 40008,
+      "project_policy_selection": {
+        "mode": "P-4T"
+      },
+      "seed": 250008,
+      "split": "calibration",
+      "workload_id": "cal_nondivisible_m_137"
+    },
+    {
+      "category": "tiny",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_8x8x8_xnnpack.pte",
+        "sha256": "0a4c4cbfa3812dbce9d31ab41d637e412ec9c5230dffb4c1221770c17bf8aff1"
+      },
+      "input_hashes": {
+        "a": "75dce7a2185f31d30ea0dd72c0defbf99d1357f5672317ee428c34622937688c",
+        "b": "57f428b38ad58118c6fc0a09ef3d279d029dc03e14f7248817f698b1c8bf0af1",
+        "bias": "61ad8f564e3d581ba0613ca30570a66bd2e8c71bab1340706505ac2ddb3d14fa",
+        "reference_fp32": "08ec481b0df3649fef2e5e1272825329b94fa03d8bd433e46e5970fe1878f701",
+        "reference_fp64": "0b5b1fa29d1ae456529870894c65f983af12e8b3cf2c65e0d8d7fd1a5fbff85c"
+      },
+      "k": 8,
+      "m": 8,
+      "mnk": 512,
+      "n": 8,
+      "original_seed": 50001,
+      "project_policy_selection": {
+        "mode": "P-SERIAL"
+      },
+      "seed": 260001,
+      "split": "held_out",
+      "workload_id": "eval_tiny_8"
+    },
+    {
+      "category": "small_square",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_80x80x80_xnnpack.pte",
+        "sha256": "13fa875add430b3987403c0ea5ca725ac3f2ba2edbfa495968deac7c11872e02"
+      },
+      "input_hashes": {
+        "a": "3f064ddc18490cd6b90757af55adaa9e295634b55f4e2192538bf43db423beb3",
+        "b": "587a9047933c74979237ab2c0c99572d2926e0aa3a99c403b6d1b395da9932bf",
+        "bias": "70ad2b94a728a58eab8201be58fa050a075c7440449ae799193444bdedcd8622",
+        "reference_fp32": "85457f2754e0fa8af04680c337e93d07ec15355e4acb7e17c5081bd9d13bc695",
+        "reference_fp64": "73b4dca1dd85c4077452017d05465a1d582e868755bd6163061b42985977adb3"
+      },
+      "k": 80,
+      "m": 80,
+      "mnk": 512000,
+      "n": 80,
+      "original_seed": 50002,
+      "project_policy_selection": {
+        "mode": "P-4T"
+      },
+      "seed": 260002,
+      "split": "held_out",
+      "workload_id": "eval_small_square_80"
+    },
+    {
+      "category": "medium_square",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_256x256x256_xnnpack.pte",
+        "sha256": "98ca7e01d3e6070d857c0589dcbbf926035bddb4415f808846a3e4b5b8488285"
+      },
+      "input_hashes": {
+        "a": "daab04f67e41de6ab245ee3799b38b09442124fd327997a3b6db60620d1f89b0",
+        "b": "9a2bc3ba1d803693548bbc70ad4f9c6dba982c3ffc44c41a0d3e59ac154dfac3",
+        "bias": "853a4e108f7ad6ac377bb7d97e9460a176538967066a949137aed1db257aa2d1",
+        "reference_fp32": "a8e78a8d1760f8c87df7bed79090e96be2a0497a5588d518e9df85576b69bac9",
+        "reference_fp64": "965a707f77da999a1d3f28a1b8b87e3993ec2d285944715117129ae4e14b866b"
+      },
+      "k": 256,
+      "m": 256,
+      "mnk": 16777216,
+      "n": 256,
+      "original_seed": 50003,
+      "project_policy_selection": {
+        "mode": "P-4T"
+      },
+      "seed": 260003,
+      "split": "held_out",
+      "workload_id": "eval_medium_square_256"
+    },
+    {
+      "category": "large_square",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_384x384x384_xnnpack.pte",
+        "sha256": "930802c7cfeb4276518c4ca97b65e7f3067edc7ab6c3c1e635e6385a64d9bc25"
+      },
+      "input_hashes": {
+        "a": "dca51c48cef9ff474c19541c4dcb8de50542ca7930cff19536cf1c0cf9fa9c80",
+        "b": "9b0fc0114c4c0481fa36cff65f6edb1099610ba82d81f1e41ecd9ef7a3876271",
+        "bias": "00ea40e153e6a89694f4e867ca4c1c37f42ade4322f85a5ce627de9bb50c569d",
+        "reference_fp32": "9ed7bb61552217e6474c8f8a606514f3187a12a959324747bdfe2a7d5239bf7f",
+        "reference_fp64": "2c516cd993d4ebc0514b1227fb0804dd70c8c26686d7a668ee15e4b6c175ddd3"
+      },
+      "k": 384,
+      "m": 384,
+      "mnk": 56623104,
+      "n": 384,
+      "original_seed": 50004,
+      "project_policy_selection": {
+        "mode": "P-4T"
+      },
+      "seed": 260004,
+      "split": "held_out",
+      "workload_id": "eval_large_square_384"
+    },
+    {
+      "category": "skinny_m_wide_n",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_48x384x96_xnnpack.pte",
+        "sha256": "5feb9872e5133dc1691af73e8854889c817c2caf35917708135d55fc6b4469b3"
+      },
+      "input_hashes": {
+        "a": "cbf3f5e9e31ddf1c1ba7dbc4f9475d819a09141abcf5190243d7c76b908d57b7",
+        "b": "2ba23cb180764ce39922117eca0bfd1dd0923ee7a1dbc0f4b2291a5920c2b892",
+        "bias": "562d611f23c7e5e2ddb8c60802989999009b49a19631c8a5ca898ebf29187435",
+        "reference_fp32": "b58b99afcf6ec3526b6ff42389c1ecc691b0550e993581d8bc589eefc46e9ad3",
+        "reference_fp64": "ae4ffa7730adbdea6ad7355bc3846749a9ac48797d84681fb983564fdc1247bb"
+      },
+      "k": 96,
+      "m": 48,
+      "mnk": 1769472,
+      "n": 384,
+      "original_seed": 50005,
+      "project_policy_selection": {
+        "mode": "P-4T"
+      },
+      "seed": 260005,
+      "split": "held_out",
+      "workload_id": "eval_skinny_m_48x384x96"
+    },
+    {
+      "category": "wide_m_skinny_n",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_384x48x96_xnnpack.pte",
+        "sha256": "0969c717f5242b2d953c9f6002e0cbf665aebf0c8049ee2dace1480f986c0e30"
+      },
+      "input_hashes": {
+        "a": "77ad5595ec1c71b2511a2b4365ba36d44464b24b016b64d8584b32a8727a6bb0",
+        "b": "c9e17cc0ccaddef64ff469a846fddbdff19dc85d21caf3ce92aa1c0fb335ce75",
+        "bias": "2e3d1c8998498015d9433472b5906698421f5a50d1536df8c940f137836beb47",
+        "reference_fp32": "7685f3a4e0ae4840b53274290c16dc66b9bd4da6b413eb674083ebf23220376a",
+        "reference_fp64": "0a23ddd582be34a860fd0e4dd4e0adb01d22e1a61589dc306e90642478db0d27"
+      },
+      "k": 96,
+      "m": 384,
+      "mnk": 1769472,
+      "n": 48,
+      "original_seed": 50006,
+      "project_policy_selection": {
+        "mode": "P-4T"
+      },
+      "seed": 260006,
+      "split": "held_out",
+      "workload_id": "eval_wide_m_384x48x96"
+    },
+    {
+      "category": "small_k",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_320x320x24_xnnpack.pte",
+        "sha256": "6127fc19d4b924f81c0b513b74b66cf767ed5fddc8a71c275f4eddd297114990"
+      },
+      "input_hashes": {
+        "a": "9c22f1d7bbadb891ffccecab85c40a5fd26dabac59330590824bb7acb4744ddf",
+        "b": "8e0281697c0b8c378c63ef7db97fc0aa42d7ded4c36a8f1ab087148d584a321c",
+        "bias": "a811387d9cc7a311cbb938f35834925614b5021160611852bb7e7027bf1c4abd",
+        "reference_fp32": "a07466077cb57fa214b893b757cbd23c094b2109f58e41c27a78fc6ba91ea9b6",
+        "reference_fp64": "9993d61cc0ac282fe3d9c10c51f6faee1a43a47744858c311d4c10d334e91a67"
+      },
+      "k": 24,
+      "m": 320,
+      "mnk": 2457600,
+      "n": 320,
+      "original_seed": 50007,
+      "project_policy_selection": {
+        "mode": "P-4T"
+      },
+      "seed": 260007,
+      "split": "held_out",
+      "workload_id": "eval_small_k_320x320x24"
+    },
+    {
+      "category": "large_k",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_96x96x768_xnnpack.pte",
+        "sha256": "1e7e0f229b44742c3cb1873ec850b1996fa4b5233172a6a82c4790946d13766f"
+      },
+      "input_hashes": {
+        "a": "9843764218ac1fed733f5e832eb62f4557cc5450d0a5da33723ec5f5e1bc31e5",
+        "b": "71c8c1439cab2e7b5867b9c8cbb5e5673115d99216cc666f2f261f7331208a34",
+        "bias": "583b92baf80660d030107798d815dc9756d575e4aee31841310de0531fdafcf8",
+        "reference_fp32": "fe572c854c5c653225ca8948e7a7ffc2195724263d5cc0a28fb0111c8c0916c6",
+        "reference_fp64": "260e7b29478d8fe175ffadb3f05ecebddb16f8badc5b614a81012937a02c0f2f"
+      },
+      "k": 768,
+      "m": 96,
+      "mnk": 7077888,
+      "n": 96,
+      "original_seed": 50008,
+      "project_policy_selection": {
+        "mode": "P-4T"
+      },
+      "seed": 260008,
+      "split": "held_out",
+      "workload_id": "eval_large_k_96x96x768"
+    },
+    {
+      "category": "nondivisible_n",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_128x151x64_xnnpack.pte",
+        "sha256": "e21c5b470486a31fb298f5817bde5c79a8de7d364474b245e4971605f7d40b0d"
+      },
+      "input_hashes": {
+        "a": "98256690b52d606145ff0cb897ee12d6d7bc6d1b74a1a9dd7c6a922bfd1e29b1",
+        "b": "1aeff286f9cf8ee7848fc79dae5f620df19df836b941e7c6c4f5709b10fac324",
+        "bias": "089994a64af532a8ad755c5dbc0069662b0752c382849014e59fe075d00a08cf",
+        "reference_fp32": "b68b241360c06819057a97a863f56af68132a5ee7dd9f72dd8663e631967b08d",
+        "reference_fp64": "2a80a078f62c4a6c8f9cf702a9cd4e38ce6a4c6b2857d241dc896f2b1975f1ec"
+      },
+      "k": 64,
+      "m": 128,
+      "mnk": 1236992,
+      "n": 151,
+      "original_seed": 50009,
+      "project_policy_selection": {
+        "mode": "P-4T"
+      },
+      "seed": 260009,
+      "split": "held_out",
+      "workload_id": "eval_nondivisible_n_151"
+    },
+    {
+      "category": "medium_square",
+      "executorch_xnnpack_pte": {
+        "bytes": 1872,
+        "classification": "FULL_REGION_DELEGATED_FUSION_UNKNOWN",
+        "delegate_call_count": 4,
+        "filename": "fused_matmul_bias_relu_128x128x128_xnnpack.pte",
+        "sha256": "da675c4483cc48388897271be5372c7f0c53b050f35930ee583dcc6155755e89"
+      },
+      "input_hashes": {
+        "a": "dea29af6a869ea519484720ffbae657cbd98af3189d1e459ef64674dbeebfd82",
+        "b": "788d2b3b15a2eb1e660a34465ae710bb4b5595b4a59a074bc92926f6bfab13e9",
+        "bias": "ad4b23c4bcfbd13325b86f0b7eeefe9f0867133af536d99fe2a0aa2a9aa2e99f",
+        "reference_fp32": "bc1ba8d7740c6cc8585c0beadc93916a01d02c8e7d793efd3bae0c2e438d1ebb",
+        "reference_fp64": "fdd06e70de4e9863df6d0e1e44df4f1151814e41b4df4ef4f9f4efab3c70462f"
+      },
+      "k": 128,
+      "m": 128,
+      "mnk": 2097152,
+      "n": 128,
+      "original_seed": 50010,
+      "project_policy_selection": {
+        "mode": "P-4T"
+      },
+      "seed": 260010,
+      "split": "held_out",
+      "workload_id": "eval_p1c_continuity_128"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "all_rejected": true,
+  "predicate": "abs(actual-expected) <= 0.001 + 0.0001*abs(expected)",
+  "schema": "e2_1_negative_controls",
+  "tests_passed_field_means_wrong_output_accepted": {
+    "injected_inf": false,
+    "injected_nan": false,
+    "near_zero_plus_2e_3": false,
+    "one_element_plus_1e_2": false,
+    "systematic_scale_1_percent": false,
+    "transposed_output": false,
+    "without_relu": false,
+    "wrong_bias_zero_bias": false,
+    "wrong_seed": false
+  }
+}

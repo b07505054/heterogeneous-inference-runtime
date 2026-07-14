@@ -1,0 +1,36 @@
+{
+  "aggregate_limitation": "E2 raw records retained aggregate max/mean errors, not per-output index/value; E2.1 therefore does not rewrite E2 and uses aggregate forensics plus fresh per-output validation.",
+  "e2_failed_records": 288,
+  "e2_records": 324,
+  "failures_by_mode": {
+    "ET-1T-REQUESTED": 48,
+    "ET-4T-REQUESTED": 48,
+    "ET-DEFAULT": 48,
+    "P-4T": 48,
+    "P-POLICY": 48,
+    "P-SERIAL": 48
+  },
+  "failures_by_workload": {
+    "cal_large_k_64x64x1024": 18,
+    "cal_medium_square_192": 18,
+    "cal_nondivisible_m_137": 18,
+    "cal_skinny_m_32x512x64": 18,
+    "cal_small_k_256x256x16": 18,
+    "cal_small_square_64": 18,
+    "cal_wide_m_512x32x64": 18,
+    "eval_large_k_96x96x768": 18,
+    "eval_large_square_384": 18,
+    "eval_medium_square_256": 18,
+    "eval_nondivisible_n_151": 18,
+    "eval_p1c_continuity_128": 18,
+    "eval_skinny_m_48x384x96": 18,
+    "eval_small_k_320x320x24": 18,
+    "eval_small_square_80": 18,
+    "eval_wide_m_384x48x96": 18
+  },
+  "failures_with_abs_within_new_atol_and_rel_over_old_gate": 288,
+  "hypothesis": "Most E2 failures are consistent with independent relative-error amplification because absolute errors are small while relative errors exceed the frozen independent gate.",
+  "max_abs_error": 0.00030517578125,
+  "max_rel_error": 0.020180140430738364,
+  "schema": "e2_1_e2_failure_forensics"
+}
