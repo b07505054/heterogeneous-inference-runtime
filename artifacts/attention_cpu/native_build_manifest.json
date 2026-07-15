@@ -1,0 +1,14 @@
+{
+  "artifact_sha256": "09c0bdc6be517e23fb388630b35155cc34dea1d489af85403072d3f495150e7c",
+  "artifact_version": "hir.cpu_attention.v1",
+  "compiler_version": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "flags": [
+    "-O3",
+    "-std=c++17",
+    "-fPIC",
+    "-shared"
+  ],
+  "schema_version": "attention_native_build.v1",
+  "source": "native/cpu_kernels/attention_fp32.cpp",
+  "source_sha256": "09b4ca209e9bf4bd71bc4965d7d83c5a6a637ebed48055a6fed295ad47fdccff"
+}

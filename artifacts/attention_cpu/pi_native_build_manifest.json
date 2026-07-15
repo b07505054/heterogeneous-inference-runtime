@@ -1,0 +1,14 @@
+{
+  "artifact_sha256": "beaae1e1e873eef567726a9e12b4610077df7aca770bf3d2017b1267bf3785c3",
+  "artifact_version": "hir.cpu_attention.v1",
+  "compiler_version": "g++ (Debian 14.2.0-19) 14.2.0",
+  "flags": [
+    "-O3",
+    "-std=c++17",
+    "-fPIC",
+    "-shared"
+  ],
+  "schema_version": "attention_native_build.v1",
+  "source": "native/cpu_kernels/attention_fp32.cpp",
+  "source_sha256": "09b4ca209e9bf4bd71bc4965d7d83c5a6a637ebed48055a6fed295ad47fdccff"
+}

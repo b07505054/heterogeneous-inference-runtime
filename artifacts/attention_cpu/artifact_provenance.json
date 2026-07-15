@@ -1,0 +1,23 @@
+{
+  "artifact_sha256": "09c0bdc6be517e23fb388630b35155cc34dea1d489af85403072d3f495150e7c",
+  "build_command": [
+    "g++",
+    "-O3",
+    "-std=c++17",
+    "-fPIC",
+    "-shared",
+    "/home/allen/Desktop/Project/heterogeneous-inference-runtime/native/cpu_kernels/attention_fp32.cpp",
+    "-o",
+    "/tmp/attention_cpu_build/libattention_fp32.so"
+  ],
+  "build_ms": 282.84147405065596,
+  "compiler_version": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "host": {
+    "machine": "x86_64",
+    "platform": "Linux-7.0.0-27-generic-x86_64-with-glibc2.43"
+  },
+  "runner_sha256": "da5b4c52e307cc4ba59e5909b414c98fb8e17e914315cca265477f6e7df6ae81",
+  "schema_version": "attention_cpu_evaluation.v1",
+  "source_sha256": "09b4ca209e9bf4bd71bc4965d7d83c5a6a637ebed48055a6fed295ad47fdccff",
+  "truth_boundary": "operator_level_fp32_cpu_attention_not_full_model_serving"
+}

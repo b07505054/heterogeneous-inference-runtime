@@ -79,6 +79,9 @@ def build_execution_paths(plan: ExecutionPlan, stages: list[ExecutionStage]) -> 
         if stage.kind == ExecutionStageKind.MATMUL:
             paths.append(_portable_cpu_fused_matmul_bias_relu_path(plan, stage))
             continue
+        if stage.kind == ExecutionStageKind.ATTENTION and isinstance(stage.source_compiler_decision.get("attention_execution"), dict):
+            paths.append(_portable_cpu_attention_path(plan, stage))
+            continue
         function_plan = function_by_name.get(stage.function_name or "")
         execution_unit = function_plan.backend.selected_backend if function_plan else ""
         adapter_id = ExecutionUnitRouter.serving_adapter_id(execution_unit)
@@ -206,6 +209,22 @@ def _portable_cpu_fused_matmul_bias_relu_path(plan: ExecutionPlan, stage: Execut
             "quantization_contract": quantization,
             "memory_placement_contract": memory_placement,
         },
+    )
+
+def _portable_cpu_attention_path(plan: ExecutionPlan, stage: ExecutionStage) -> ExecutionPath:
+    contract = _dict_at(stage.source_compiler_decision, "attention_execution")
+    return ExecutionPath(
+        path_id=f"{plan.plan_id}:{stage.stage_id}:portable_cpu_attention",
+        path_kind=ExecutionPathKind.PORTABLE_CPU_KERNEL,
+        stage_id=stage.stage_id, function_name=stage.function_name,
+        serving_phase=stage.serving_phase, selected_backend="portable_cpu",
+        execution_method=ExecutionMethod.CPU_ATTENTION_KERNEL,
+        selected_kernel=contract.get("kernel_id"), kernel_library=contract.get("artifact_ref"),
+        fallback_backends=(), source_compiler_decision=stage.source_compiler_decision,
+        required_capability_refs=plan.provenance.capability_bundle.refs(),
+        runtime_config={"attention_execution": contract}, benchmark_config={}, output_artifact="",
+        truth_boundary=str(contract.get("truth_boundary", "")),
+        metadata={"runtime_no_redecision": True, "compiler_plan_id": plan.plan_id},
     )
 
 

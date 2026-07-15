@@ -1,0 +1,135 @@
+[
+  {
+    "already_loaded_invocation": {
+      "coefficient_of_variation": 0.011514666547686887,
+      "mean_ms": 0.02977352026694765,
+      "median_ms": 0.029709665492797892,
+      "minimum_ms": 0.029604998417198658,
+      "p90_ms": 0.02983333736968537,
+      "p95_ms": 0.029950664611533284,
+      "p99_ms": 0.03135799973582228,
+      "sample_count": 100,
+      "stddev_ms": 0.00034283215782469965
+    },
+    "artifact_load_ms": 0.5060370021965355,
+    "checksum": 0.390655517578125,
+    "first_inference_ms": 0.12085199705325067,
+    "inner_invocations": 3,
+    "warmups": 10,
+    "workload_id": "prefill_b1_h2_q16_c16_d32"
+  },
+  {
+    "already_loaded_invocation": {
+      "coefficient_of_variation": 0.0027865556537002415,
+      "mean_ms": 0.45670987698637566,
+      "median_ms": 0.4562375009603178,
+      "minimum_ms": 0.45588866729910177,
+      "p90_ms": 0.4573699940616886,
+      "p95_ms": 0.45770966486694914,
+      "p99_ms": 0.4625799968683471,
+      "sample_count": 100,
+      "stddev_ms": 0.001272647489817127
+    },
+    "artifact_load_ms": 0.2912410127464682,
+    "checksum": -2.21868896484375,
+    "first_inference_ms": 0.5537960096262395,
+    "inner_invocations": 3,
+    "warmups": 10,
+    "workload_id": "prefill_b1_h4_q64_c64_d32"
+  },
+  {
+    "already_loaded_invocation": {
+      "coefficient_of_variation": 0.0012530893591333639,
+      "mean_ms": 3.414804913045373,
+      "median_ms": 3.4134368324885145,
+      "minimum_ms": 3.409640669512252,
+      "p90_ms": 3.4187206668624035,
+      "p95_ms": 3.420634331026425,
+      "p99_ms": 3.4264986655519656,
+      "sample_count": 100,
+      "stddev_ms": 0.004279055700053489
+    },
+    "artifact_load_ms": 0.4655919910874218,
+    "checksum": 1.171966552734375,
+    "first_inference_ms": 3.5645170137286186,
+    "inner_invocations": 3,
+    "warmups": 10,
+    "workload_id": "prefill_b1_h4_q128_c128_d64"
+  },
+  {
+    "already_loaded_invocation": {
+      "coefficient_of_variation": 0.02150308133768105,
+      "mean_ms": 0.015486553214335192,
+      "median_ms": 0.01543833059258759,
+      "minimum_ms": 0.015351669086764256,
+      "p90_ms": 0.015500001609325409,
+      "p95_ms": 0.015579998337974152,
+      "p99_ms": 0.015994000326221187,
+      "sample_count": 100,
+      "stddev_ms": 0.0003330086134081755
+    },
+    "artifact_load_ms": 0.41096299537457526,
+    "checksum": -1.6258717775344849,
+    "first_inference_ms": 0.029852002626284957,
+    "inner_invocations": 3,
+    "warmups": 10,
+    "workload_id": "decode_b1_h2_q1_c16_d32"
+  },
+  {
+    "already_loaded_invocation": {
+      "coefficient_of_variation": 0.008824617609331157,
+      "mean_ms": 0.027805986270929374,
+      "median_ms": 0.027753165340982378,
+      "minimum_ms": 0.027642003260552883,
+      "p90_ms": 0.027845662164812286,
+      "p95_ms": 0.027907333181550104,
+      "p99_ms": 0.028938336375479896,
+      "sample_count": 100,
+      "stddev_ms": 0.00024537719609126374
+    },
+    "artifact_load_ms": 0.3552040143404156,
+    "checksum": 0.5743851810693741,
+    "first_inference_ms": 0.041610997868701816,
+    "inner_invocations": 3,
+    "warmups": 10,
+    "workload_id": "decode_b1_h4_q1_c64_d32"
+  },
+  {
+    "already_loaded_invocation": {
+      "coefficient_of_variation": 0.004880213568458025,
+      "mean_ms": 0.06936076291215916,
+      "median_ms": 0.06927466408039133,
+      "minimum_ms": 0.06908000796101987,
+      "p90_ms": 0.06938900332897902,
+      "p95_ms": 0.06997532909736037,
+      "p99_ms": 0.07081499400859077,
+      "sample_count": 100,
+      "stddev_ms": 0.0003384953362825193
+    },
+    "artifact_load_ms": 0.3807230095844716,
+    "checksum": -1.3748958706855774,
+    "first_inference_ms": 0.14114801888354123,
+    "inner_invocations": 3,
+    "warmups": 10,
+    "workload_id": "decode_b1_h4_q1_c128_d64"
+  },
+  {
+    "already_loaded_invocation": {
+      "coefficient_of_variation": 0.0031286470338383705,
+      "mean_ms": 0.36009219028831774,
+      "median_ms": 0.3596786700654775,
+      "minimum_ms": 0.35893833652759594,
+      "p90_ms": 0.36129000363871455,
+      "p95_ms": 0.361759002165248,
+      "p99_ms": 0.36393799625026685,
+      "sample_count": 100,
+      "stddev_ms": 0.0011266013630539073
+    },
+    "artifact_load_ms": 0.4768699873238802,
+    "checksum": 1.2949737310409546,
+    "first_inference_ms": 0.5019630189053714,
+    "inner_invocations": 3,
+    "warmups": 10,
+    "workload_id": "decode_b1_h4_q1_c512_d64"
+  }
+]

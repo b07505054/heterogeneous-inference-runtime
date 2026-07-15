@@ -1,0 +1,30 @@
+[
+  {
+    "artifact_load_count": 1,
+    "buffer_allocation_count": 2,
+    "checksum": -2.9804531420813873,
+    "decode_invocation_count": 0,
+    "function": "attention_prefill",
+    "host": "aarch64",
+    "kernel_id": "cpu_attention_prefill_fp32",
+    "phase": "prefill",
+    "prefill_invocation_count": 1,
+    "runtime_no_redecision": true,
+    "runtime_reselection_count": 0,
+    "worker_start_count": 1
+  },
+  {
+    "artifact_load_count": 1,
+    "buffer_allocation_count": 2,
+    "checksum": -0.19827833212912083,
+    "decode_invocation_count": 1,
+    "function": "attention_decode",
+    "host": "aarch64",
+    "kernel_id": "cpu_attention_decode_fp32",
+    "phase": "decode",
+    "prefill_invocation_count": 0,
+    "runtime_no_redecision": true,
+    "runtime_reselection_count": 0,
+    "worker_start_count": 1
+  }
+]

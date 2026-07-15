@@ -69,6 +69,6 @@ def _kind_from_op(op_type: str) -> ExecutionStageKind:
     # kind rather than adding new stage-kind vocabulary for it.
     if normalized.endswith("fused_matmul_bias_relu"):
         return ExecutionStageKind.MATMUL
-    if normalized == "attention":
+    if normalized == "attention" or normalized.endswith("cpu_attention"):
         return ExecutionStageKind.ATTENTION
     return ExecutionStageKind.MICROBENCHMARK

@@ -1,0 +1,93 @@
+[
+  {
+    "artifact_load_count": 1,
+    "buffer_allocation_count": 2,
+    "decode_invocation_count": 0,
+    "host": "aarch64",
+    "kernel_id": "cpu_attention_prefill_fp32",
+    "phase": "prefill",
+    "prefill_invocation_count": 311,
+    "runtime_no_redecision": true,
+    "runtime_reselection_count": 0,
+    "worker_start_count": 1,
+    "workload_id": "prefill_b1_h2_q16_c16_d32"
+  },
+  {
+    "artifact_load_count": 1,
+    "buffer_allocation_count": 2,
+    "decode_invocation_count": 0,
+    "host": "aarch64",
+    "kernel_id": "cpu_attention_prefill_fp32",
+    "phase": "prefill",
+    "prefill_invocation_count": 311,
+    "runtime_no_redecision": true,
+    "runtime_reselection_count": 0,
+    "worker_start_count": 1,
+    "workload_id": "prefill_b1_h4_q64_c64_d32"
+  },
+  {
+    "artifact_load_count": 1,
+    "buffer_allocation_count": 2,
+    "decode_invocation_count": 0,
+    "host": "aarch64",
+    "kernel_id": "cpu_attention_prefill_fp32",
+    "phase": "prefill",
+    "prefill_invocation_count": 311,
+    "runtime_no_redecision": true,
+    "runtime_reselection_count": 0,
+    "worker_start_count": 1,
+    "workload_id": "prefill_b1_h4_q128_c128_d64"
+  },
+  {
+    "artifact_load_count": 1,
+    "buffer_allocation_count": 2,
+    "decode_invocation_count": 311,
+    "host": "aarch64",
+    "kernel_id": "cpu_attention_decode_fp32",
+    "phase": "decode",
+    "prefill_invocation_count": 0,
+    "runtime_no_redecision": true,
+    "runtime_reselection_count": 0,
+    "worker_start_count": 1,
+    "workload_id": "decode_b1_h2_q1_c16_d32"
+  },
+  {
+    "artifact_load_count": 1,
+    "buffer_allocation_count": 2,
+    "decode_invocation_count": 311,
+    "host": "aarch64",
+    "kernel_id": "cpu_attention_decode_fp32",
+    "phase": "decode",
+    "prefill_invocation_count": 0,
+    "runtime_no_redecision": true,
+    "runtime_reselection_count": 0,
+    "worker_start_count": 1,
+    "workload_id": "decode_b1_h4_q1_c64_d32"
+  },
+  {
+    "artifact_load_count": 1,
+    "buffer_allocation_count": 2,
+    "decode_invocation_count": 311,
+    "host": "aarch64",
+    "kernel_id": "cpu_attention_decode_fp32",
+    "phase": "decode",
+    "prefill_invocation_count": 0,
+    "runtime_no_redecision": true,
+    "runtime_reselection_count": 0,
+    "worker_start_count": 1,
+    "workload_id": "decode_b1_h4_q1_c128_d64"
+  },
+  {
+    "artifact_load_count": 1,
+    "buffer_allocation_count": 2,
+    "decode_invocation_count": 311,
+    "host": "aarch64",
+    "kernel_id": "cpu_attention_decode_fp32",
+    "phase": "decode",
+    "prefill_invocation_count": 0,
+    "runtime_no_redecision": true,
+    "runtime_reselection_count": 0,
+    "worker_start_count": 1,
+    "workload_id": "decode_b1_h4_q1_c512_d64"
+  }
+]

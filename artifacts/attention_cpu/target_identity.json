@@ -1,0 +1,7 @@
+{
+  "machine": "x86_64",
+  "platform": "Linux-7.0.0-27-generic-x86_64-with-glibc2.43",
+  "required_isa": "scalar_fp32",
+  "schema_version": "attention_target.v1",
+  "thread_count": 1
+}

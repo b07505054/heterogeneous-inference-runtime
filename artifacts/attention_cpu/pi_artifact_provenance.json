@@ -1,0 +1,23 @@
+{
+  "artifact_sha256": "beaae1e1e873eef567726a9e12b4610077df7aca770bf3d2017b1267bf3785c3",
+  "build_command": [
+    "g++",
+    "-O3",
+    "-std=c++17",
+    "-fPIC",
+    "-shared",
+    "/home/allen/attention_cpu_operator_validation/native/cpu_kernels/attention_fp32.cpp",
+    "-o",
+    "build/libattention_fp32.so"
+  ],
+  "build_ms": 291.89198501990177,
+  "compiler_version": "g++ (Debian 14.2.0-19) 14.2.0",
+  "host": {
+    "machine": "aarch64",
+    "platform": "Linux-6.18.34+rpt-rpi-2712-aarch64-with-glibc2.41"
+  },
+  "runner_sha256": "da5b4c52e307cc4ba59e5909b414c98fb8e17e914315cca265477f6e7df6ae81",
+  "schema_version": "attention_cpu_evaluation.v1",
+  "source_sha256": "09b4ca209e9bf4bd71bc4965d7d83c5a6a637ebed48055a6fed295ad47fdccff",
+  "truth_boundary": "operator_level_fp32_cpu_attention_not_full_model_serving"
+}

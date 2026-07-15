@@ -1,0 +1,611 @@
+{
+  "function_plans": [
+    {
+      "backend": {
+        "decision_id": "bd_collected_attention_prefill",
+        "decision_type": "BackendDecision",
+        "fallback_backends": [],
+        "scope": "Function",
+        "selected_backend": "portable_cpu",
+        "source_pass": "deterministic_phase_policy",
+        "truth_boundary": "decision_collected_from_v1_mlir_attrs_evidence_not_tracked"
+      },
+      "function_name": "attention_prefill",
+      "per_op_decisions": [
+        {
+          "kernel_selection": {
+            "contract_version": "kernel_selection_contract_v1",
+            "status": "rejected_no_kernel_for_op",
+            "truth_boundary": "kernel_selection_static_descriptor_match_not_runtime_execution"
+          },
+          "layout": {
+            "decision_id": "ld_collected_op_0",
+            "decision_type": "LayoutDecision",
+            "op_type": "llm.q_proj",
+            "reason": "backend_preference",
+            "required_input_layout": "NCHW",
+            "requires_layout_transform": true,
+            "scope": "PerOp",
+            "selected_layout": "unknown",
+            "source_pass": "layout-planning",
+            "truth_boundary": "layout_planning_static_cost_model_not_measured_kernel_performance"
+          },
+          "memory_placement": {
+            "additional_double_buffer_bytes": 0,
+            "buffer_placements": [
+              {
+                "alignment": 64,
+                "buffer_id": "input_tile",
+                "byte_count": 256,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "input"
+              },
+              {
+                "alignment": 64,
+                "buffer_id": "weight_tile",
+                "byte_count": 256,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "weight"
+              },
+              {
+                "alignment": 64,
+                "buffer_id": "output_tile",
+                "byte_count": 256,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "output"
+              },
+              {
+                "alignment": 64,
+                "buffer_id": "scratch",
+                "byte_count": 0,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "scratch"
+              }
+            ],
+            "compute_dependency_ids": [],
+            "compute_unit": "cpu",
+            "input_tile_bytes": 256,
+            "output_tile_bytes": 256,
+            "padding_bytes": 0,
+            "scratch_bytes": 0,
+            "selected_memory_space": "cpu_visible_host_memory",
+            "single_buffer_bytes": 768,
+            "status": "selected",
+            "total_required_local_memory_bytes": 768,
+            "transfer_operations": [],
+            "truth_boundary": "memory_placement_static_compiler_contract_not_runtime_allocation",
+            "weight_tile_bytes": 256
+          },
+          "op_name": "op_0",
+          "op_type": "llm.q_proj",
+          "tile_plan": {
+            "deferred_reason": "local_memory_bytes_not_declared_in_target_profile",
+            "rejected_tile_count": 0,
+            "status": "deferred_missing_memory_hierarchy",
+            "truth_boundary": "tile_planning_static_local_memory_model_not_measured_not_codegen"
+          }
+        },
+        {
+          "kernel_selection": {
+            "contract_version": "kernel_selection_contract_v1",
+            "status": "rejected_no_kernel_for_op",
+            "truth_boundary": "kernel_selection_static_descriptor_match_not_runtime_execution"
+          },
+          "layout": {
+            "decision_id": "ld_collected_op_1",
+            "decision_type": "LayoutDecision",
+            "op_type": "llm.k_proj",
+            "reason": "backend_preference",
+            "required_input_layout": "unknown",
+            "requires_layout_transform": false,
+            "scope": "PerOp",
+            "selected_layout": "unknown",
+            "source_pass": "layout-planning",
+            "truth_boundary": "layout_planning_static_cost_model_not_measured_kernel_performance"
+          },
+          "memory_placement": {
+            "additional_double_buffer_bytes": 0,
+            "buffer_placements": [
+              {
+                "alignment": 64,
+                "buffer_id": "input_tile",
+                "byte_count": 256,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "input"
+              },
+              {
+                "alignment": 64,
+                "buffer_id": "weight_tile",
+                "byte_count": 256,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "weight"
+              },
+              {
+                "alignment": 64,
+                "buffer_id": "output_tile",
+                "byte_count": 256,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "output"
+              },
+              {
+                "alignment": 64,
+                "buffer_id": "scratch",
+                "byte_count": 0,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "scratch"
+              }
+            ],
+            "compute_dependency_ids": [],
+            "compute_unit": "cpu",
+            "input_tile_bytes": 256,
+            "output_tile_bytes": 256,
+            "padding_bytes": 0,
+            "scratch_bytes": 0,
+            "selected_memory_space": "cpu_visible_host_memory",
+            "single_buffer_bytes": 768,
+            "status": "selected",
+            "total_required_local_memory_bytes": 768,
+            "transfer_operations": [],
+            "truth_boundary": "memory_placement_static_compiler_contract_not_runtime_allocation",
+            "weight_tile_bytes": 256
+          },
+          "op_name": "op_1",
+          "op_type": "llm.k_proj",
+          "tile_plan": {
+            "deferred_reason": "local_memory_bytes_not_declared_in_target_profile",
+            "rejected_tile_count": 0,
+            "status": "deferred_missing_memory_hierarchy",
+            "truth_boundary": "tile_planning_static_local_memory_model_not_measured_not_codegen"
+          }
+        },
+        {
+          "kernel_selection": {
+            "contract_version": "kernel_selection_contract_v1",
+            "status": "rejected_no_kernel_for_op",
+            "truth_boundary": "kernel_selection_static_descriptor_match_not_runtime_execution"
+          },
+          "layout": {
+            "decision_id": "ld_collected_op_2",
+            "decision_type": "LayoutDecision",
+            "op_type": "llm.v_proj",
+            "reason": "backend_preference",
+            "required_input_layout": "unknown",
+            "requires_layout_transform": false,
+            "scope": "PerOp",
+            "selected_layout": "unknown",
+            "source_pass": "layout-planning",
+            "truth_boundary": "layout_planning_static_cost_model_not_measured_kernel_performance"
+          },
+          "memory_placement": {
+            "additional_double_buffer_bytes": 0,
+            "buffer_placements": [
+              {
+                "alignment": 64,
+                "buffer_id": "input_tile",
+                "byte_count": 256,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "input"
+              },
+              {
+                "alignment": 64,
+                "buffer_id": "weight_tile",
+                "byte_count": 256,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "weight"
+              },
+              {
+                "alignment": 64,
+                "buffer_id": "output_tile",
+                "byte_count": 256,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "output"
+              },
+              {
+                "alignment": 64,
+                "buffer_id": "scratch",
+                "byte_count": 0,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "scratch"
+              }
+            ],
+            "compute_dependency_ids": [],
+            "compute_unit": "cpu",
+            "input_tile_bytes": 256,
+            "output_tile_bytes": 256,
+            "padding_bytes": 0,
+            "scratch_bytes": 0,
+            "selected_memory_space": "cpu_visible_host_memory",
+            "single_buffer_bytes": 768,
+            "status": "selected",
+            "total_required_local_memory_bytes": 768,
+            "transfer_operations": [],
+            "truth_boundary": "memory_placement_static_compiler_contract_not_runtime_allocation",
+            "weight_tile_bytes": 256
+          },
+          "op_name": "op_2",
+          "op_type": "llm.v_proj",
+          "tile_plan": {
+            "deferred_reason": "local_memory_bytes_not_declared_in_target_profile",
+            "rejected_tile_count": 0,
+            "status": "deferred_missing_memory_hierarchy",
+            "truth_boundary": "tile_planning_static_local_memory_model_not_measured_not_codegen"
+          }
+        },
+        {
+          "attention_execution": {
+            "alignment_bytes": 4,
+            "artifact_ref": "libattention_fp32.so",
+            "artifact_sha256": "09c0bdc6be517e23fb388630b35155cc34dea1d489af85403072d3f495150e7c",
+            "artifact_version": "hir.cpu_attention.v1",
+            "backend": "portable_cpu",
+            "batch": 1,
+            "candidate_id": "cpu_attention_prefill_fp32",
+            "causal": true,
+            "context_length": 4,
+            "dtype": "fp32",
+            "entry_point": "hir_cpu_attention_prefill_fp32",
+            "execution_unit": "portable_cpu_attention",
+            "fallback_identity": "unsupported_attention_explicit_failure",
+            "head_dim": 8,
+            "input_layout": "bhsd_contiguous",
+            "kernel_id": "cpu_attention_prefill_fp32",
+            "num_kv_heads": 2,
+            "num_query_heads": 2,
+            "output_layout": "bhsd_contiguous",
+            "phase": "prefill",
+            "query_length": 4,
+            "required_isa": "scalar_fp32",
+            "runtime_no_redecision": true,
+            "truth_boundary": "real_operator_level_fp32_cpu_attention_not_full_model_or_kv_lifetime",
+            "workspace_bytes": 16
+          },
+          "kernel_selection": {
+            "contract_version": "kernel_selection_contract_v1",
+            "status": "rejected_no_kernel_for_op",
+            "truth_boundary": "kernel_selection_static_descriptor_match_not_runtime_execution"
+          },
+          "layout": {
+            "decision_id": "ld_collected_op_3",
+            "decision_type": "LayoutDecision",
+            "op_type": "hir.cpu_attention",
+            "reason": "backend_preference",
+            "required_input_layout": "unknown",
+            "requires_layout_transform": false,
+            "scope": "PerOp",
+            "selected_layout": "unknown",
+            "source_pass": "layout-planning",
+            "truth_boundary": "layout_planning_static_cost_model_not_measured_kernel_performance"
+          },
+          "op_name": "op_3",
+          "op_type": "hir.cpu_attention"
+        }
+      ],
+      "serving_phase": "prefill"
+    },
+    {
+      "backend": {
+        "decision_id": "bd_collected_attention_decode",
+        "decision_type": "BackendDecision",
+        "fallback_backends": [],
+        "scope": "Function",
+        "selected_backend": "portable_cpu",
+        "source_pass": "deterministic_phase_policy",
+        "truth_boundary": "decision_collected_from_v1_mlir_attrs_evidence_not_tracked"
+      },
+      "function_name": "attention_decode",
+      "per_op_decisions": [
+        {
+          "kernel_selection": {
+            "contract_version": "kernel_selection_contract_v1",
+            "status": "rejected_no_kernel_for_op",
+            "truth_boundary": "kernel_selection_static_descriptor_match_not_runtime_execution"
+          },
+          "layout": {
+            "decision_id": "ld_collected_op_0",
+            "decision_type": "LayoutDecision",
+            "op_type": "llm.q_proj",
+            "reason": "backend_preference",
+            "required_input_layout": "NCHW",
+            "requires_layout_transform": true,
+            "scope": "PerOp",
+            "selected_layout": "unknown",
+            "source_pass": "layout-planning",
+            "truth_boundary": "layout_planning_static_cost_model_not_measured_kernel_performance"
+          },
+          "memory_placement": {
+            "additional_double_buffer_bytes": 0,
+            "buffer_placements": [
+              {
+                "alignment": 64,
+                "buffer_id": "input_tile",
+                "byte_count": 64,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "input"
+              },
+              {
+                "alignment": 64,
+                "buffer_id": "weight_tile",
+                "byte_count": 256,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "weight"
+              },
+              {
+                "alignment": 64,
+                "buffer_id": "output_tile",
+                "byte_count": 64,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "output"
+              },
+              {
+                "alignment": 64,
+                "buffer_id": "scratch",
+                "byte_count": 0,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "scratch"
+              }
+            ],
+            "compute_dependency_ids": [],
+            "compute_unit": "cpu",
+            "input_tile_bytes": 64,
+            "output_tile_bytes": 64,
+            "padding_bytes": 0,
+            "scratch_bytes": 0,
+            "selected_memory_space": "cpu_visible_host_memory",
+            "single_buffer_bytes": 384,
+            "status": "selected",
+            "total_required_local_memory_bytes": 384,
+            "transfer_operations": [],
+            "truth_boundary": "memory_placement_static_compiler_contract_not_runtime_allocation",
+            "weight_tile_bytes": 256
+          },
+          "op_name": "op_0",
+          "op_type": "llm.q_proj",
+          "tile_plan": {
+            "deferred_reason": "local_memory_bytes_not_declared_in_target_profile",
+            "rejected_tile_count": 0,
+            "status": "deferred_missing_memory_hierarchy",
+            "truth_boundary": "tile_planning_static_local_memory_model_not_measured_not_codegen"
+          }
+        },
+        {
+          "kernel_selection": {
+            "contract_version": "kernel_selection_contract_v1",
+            "status": "rejected_no_kernel_for_op",
+            "truth_boundary": "kernel_selection_static_descriptor_match_not_runtime_execution"
+          },
+          "layout": {
+            "decision_id": "ld_collected_op_1",
+            "decision_type": "LayoutDecision",
+            "op_type": "llm.k_proj",
+            "reason": "backend_preference",
+            "required_input_layout": "unknown",
+            "requires_layout_transform": false,
+            "scope": "PerOp",
+            "selected_layout": "unknown",
+            "source_pass": "layout-planning",
+            "truth_boundary": "layout_planning_static_cost_model_not_measured_kernel_performance"
+          },
+          "memory_placement": {
+            "additional_double_buffer_bytes": 0,
+            "buffer_placements": [
+              {
+                "alignment": 64,
+                "buffer_id": "input_tile",
+                "byte_count": 448,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "input"
+              },
+              {
+                "alignment": 64,
+                "buffer_id": "weight_tile",
+                "byte_count": 256,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "weight"
+              },
+              {
+                "alignment": 64,
+                "buffer_id": "output_tile",
+                "byte_count": 448,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "output"
+              },
+              {
+                "alignment": 64,
+                "buffer_id": "scratch",
+                "byte_count": 0,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "scratch"
+              }
+            ],
+            "compute_dependency_ids": [],
+            "compute_unit": "cpu",
+            "input_tile_bytes": 448,
+            "output_tile_bytes": 448,
+            "padding_bytes": 0,
+            "scratch_bytes": 0,
+            "selected_memory_space": "cpu_visible_host_memory",
+            "single_buffer_bytes": 1152,
+            "status": "selected",
+            "total_required_local_memory_bytes": 1152,
+            "transfer_operations": [],
+            "truth_boundary": "memory_placement_static_compiler_contract_not_runtime_allocation",
+            "weight_tile_bytes": 256
+          },
+          "op_name": "op_1",
+          "op_type": "llm.k_proj",
+          "tile_plan": {
+            "deferred_reason": "local_memory_bytes_not_declared_in_target_profile",
+            "rejected_tile_count": 0,
+            "status": "deferred_missing_memory_hierarchy",
+            "truth_boundary": "tile_planning_static_local_memory_model_not_measured_not_codegen"
+          }
+        },
+        {
+          "kernel_selection": {
+            "contract_version": "kernel_selection_contract_v1",
+            "status": "rejected_no_kernel_for_op",
+            "truth_boundary": "kernel_selection_static_descriptor_match_not_runtime_execution"
+          },
+          "layout": {
+            "decision_id": "ld_collected_op_2",
+            "decision_type": "LayoutDecision",
+            "op_type": "llm.v_proj",
+            "reason": "backend_preference",
+            "required_input_layout": "unknown",
+            "requires_layout_transform": false,
+            "scope": "PerOp",
+            "selected_layout": "unknown",
+            "source_pass": "layout-planning",
+            "truth_boundary": "layout_planning_static_cost_model_not_measured_kernel_performance"
+          },
+          "memory_placement": {
+            "additional_double_buffer_bytes": 0,
+            "buffer_placements": [
+              {
+                "alignment": 64,
+                "buffer_id": "input_tile",
+                "byte_count": 448,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "input"
+              },
+              {
+                "alignment": 64,
+                "buffer_id": "weight_tile",
+                "byte_count": 256,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "weight"
+              },
+              {
+                "alignment": 64,
+                "buffer_id": "output_tile",
+                "byte_count": 448,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "output"
+              },
+              {
+                "alignment": 64,
+                "buffer_id": "scratch",
+                "byte_count": 0,
+                "memory_space": "cpu_visible_host_memory",
+                "role": "scratch"
+              }
+            ],
+            "compute_dependency_ids": [],
+            "compute_unit": "cpu",
+            "input_tile_bytes": 448,
+            "output_tile_bytes": 448,
+            "padding_bytes": 0,
+            "scratch_bytes": 0,
+            "selected_memory_space": "cpu_visible_host_memory",
+            "single_buffer_bytes": 1152,
+            "status": "selected",
+            "total_required_local_memory_bytes": 1152,
+            "transfer_operations": [],
+            "truth_boundary": "memory_placement_static_compiler_contract_not_runtime_allocation",
+            "weight_tile_bytes": 256
+          },
+          "op_name": "op_2",
+          "op_type": "llm.v_proj",
+          "tile_plan": {
+            "deferred_reason": "local_memory_bytes_not_declared_in_target_profile",
+            "rejected_tile_count": 0,
+            "status": "deferred_missing_memory_hierarchy",
+            "truth_boundary": "tile_planning_static_local_memory_model_not_measured_not_codegen"
+          }
+        },
+        {
+          "attention_execution": {
+            "alignment_bytes": 4,
+            "artifact_ref": "libattention_fp32.so",
+            "artifact_sha256": "09c0bdc6be517e23fb388630b35155cc34dea1d489af85403072d3f495150e7c",
+            "artifact_version": "hir.cpu_attention.v1",
+            "backend": "portable_cpu",
+            "batch": 1,
+            "candidate_id": "cpu_attention_decode_fp32",
+            "causal": true,
+            "context_length": 7,
+            "dtype": "fp32",
+            "entry_point": "hir_cpu_attention_decode_fp32",
+            "execution_unit": "portable_cpu_attention",
+            "fallback_identity": "unsupported_attention_explicit_failure",
+            "head_dim": 8,
+            "input_layout": "bhsd_contiguous",
+            "kernel_id": "cpu_attention_decode_fp32",
+            "num_kv_heads": 2,
+            "num_query_heads": 2,
+            "output_layout": "bhsd_contiguous",
+            "phase": "decode",
+            "query_length": 1,
+            "required_isa": "scalar_fp32",
+            "runtime_no_redecision": true,
+            "truth_boundary": "real_operator_level_fp32_cpu_attention_not_full_model_or_kv_lifetime",
+            "workspace_bytes": 28
+          },
+          "kernel_selection": {
+            "contract_version": "kernel_selection_contract_v1",
+            "status": "rejected_no_kernel_for_op",
+            "truth_boundary": "kernel_selection_static_descriptor_match_not_runtime_execution"
+          },
+          "layout": {
+            "decision_id": "ld_collected_op_3",
+            "decision_type": "LayoutDecision",
+            "op_type": "hir.cpu_attention",
+            "reason": "backend_preference",
+            "required_input_layout": "unknown",
+            "requires_layout_transform": false,
+            "scope": "PerOp",
+            "selected_layout": "unknown",
+            "source_pass": "layout-planning",
+            "truth_boundary": "layout_planning_static_cost_model_not_measured_kernel_performance"
+          },
+          "op_name": "op_3",
+          "op_type": "hir.cpu_attention"
+        }
+      ],
+      "serving_phase": "decode"
+    }
+  ],
+  "global_decisions": {
+    "serving": {
+      "chunked_prefill_eligible": false,
+      "colocated_cost_estimate_ms": 0.40000000000000002,
+      "decision_id": "sd_collected_attention_prefill",
+      "decision_type": "ServingDecision",
+      "parallelism_degree": 1,
+      "pd_split_cost_estimate_ms": 2.3520101725260414,
+      "prefix_reuse_eligible": false,
+      "replay_eligible": false,
+      "scope": "Global",
+      "source_pass": "serving-phase-analysis",
+      "token_budget_per_step": 0,
+      "topology": "colocated",
+      "truth_boundary": "estimated_cost_not_measured_latency"
+    }
+  },
+  "model_identity": {
+    "hidden_size": 16,
+    "model_family": "",
+    "model_id": "",
+    "num_attention_heads": 2,
+    "num_kv_heads": 2,
+    "num_layers": 1,
+    "truth_boundary": "decision_collected_from_v1_mlir_attrs_evidence_not_tracked"
+  },
+  "plan_id": "apple-a17pro-mobile_serving_plan",
+  "provenance": {
+    "capability_bundle": {
+      "backend_profile_refs": [
+        "coreml",
+        "gpu",
+        "cpu"
+      ],
+      "hardware_profile_ref": "apple-a17pro-mobile",
+      "kernel_profile_refs": []
+    },
+    "compiler_tool": "compile-for-target",
+    "model_spec_ref": "",
+    "truth_boundary": "execution_planning_declared_profiles_not_measured_runtime"
+  },
+  "schema": "execution_plan",
+  "schema_version": "2.0.0"
+}

@@ -77,6 +77,7 @@ class ExecutionMethod(str, Enum):
     # Phase P1B: dispatches native/cpu_kernels/portable_fused_matmul_bias_relu,
     # a real compiled executable (never PyTorch/ONNXRuntime/NumPy/mock).
     FUSED_MATMUL_BIAS_RELU_KERNEL = "fused_matmul_bias_relu_kernel"
+    CPU_ATTENTION_KERNEL = "cpu_attention_kernel"
 
 
 @dataclass(frozen=True)

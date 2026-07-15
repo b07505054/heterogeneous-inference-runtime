@@ -125,6 +125,18 @@ layer -> policy -> deployment decision.
 
 ## Recent Updates
 
+### Operator-level FP32 CPU attention
+
+The runtime has a persistent, fail-closed runner for the exact
+compiler-selected `cpu_attention_prefill_fp32` and
+`cpu_attention_decode_fp32` contracts. It loads a native shared artifact once,
+validates phase, entry point, FP32 BHSD-contiguous shapes, causal semantics,
+workspace, artifact version and SHA256, then executes real scaled dot-product
+attention without implementation reselection. The scope is static causal MHA
+with externally supplied contiguous K/V history; it is not full-model
+inference, KV-cache allocation/lifetime, paged attention, continuous batching,
+FlashAttention, GQA/MQA, GPU attention, or production serving.
+
 - Completed the Slice 3A-3G fused Linear + Bias + ReLU quantization milestone:
   compiler-owned calibration and packed weights, materialized integer IR,
   canonical custom ExecutionPlan execution, fair XNNPACK comparison, and

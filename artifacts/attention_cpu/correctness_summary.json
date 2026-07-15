@@ -1,0 +1,65 @@
+[
+  {
+    "cosine_similarity": 0.999999999999996,
+    "inf_count": 0,
+    "max_absolute_error": 1.5111926354727245e-07,
+    "mean_absolute_error": 1.9957417743351696e-08,
+    "nan_count": 0,
+    "relative_l2_error": 8.963335188801844e-08,
+    "workload_id": "prefill_b1_h2_q16_c16_d32"
+  },
+  {
+    "cosine_similarity": 0.9999999999999921,
+    "inf_count": 0,
+    "max_absolute_error": 1.8217336683612473e-07,
+    "mean_absolute_error": 2.5229716922800075e-08,
+    "nan_count": 0,
+    "relative_l2_error": 1.256927576035152e-07,
+    "workload_id": "prefill_b1_h4_q64_c64_d32"
+  },
+  {
+    "cosine_similarity": 0.9999999999999849,
+    "inf_count": 0,
+    "max_absolute_error": 4.031676751892199e-07,
+    "mean_absolute_error": 4.395293227233651e-08,
+    "nan_count": 0,
+    "relative_l2_error": 1.7346928715477347e-07,
+    "workload_id": "prefill_b1_h4_q128_c128_d64"
+  },
+  {
+    "cosine_similarity": 0.9999999999999963,
+    "inf_count": 0,
+    "max_absolute_error": 8.240635129830309e-08,
+    "mean_absolute_error": 2.0338255824246072e-08,
+    "nan_count": 0,
+    "relative_l2_error": 8.885308422574703e-08,
+    "workload_id": "decode_b1_h2_q1_c16_d32"
+  },
+  {
+    "cosine_similarity": 0.9999999999999869,
+    "inf_count": 0,
+    "max_absolute_error": 1.9659494432389124e-07,
+    "mean_absolute_error": 3.530500171636979e-08,
+    "nan_count": 0,
+    "relative_l2_error": 1.849536992656075e-07,
+    "workload_id": "decode_b1_h4_q1_c64_d32"
+  },
+  {
+    "cosine_similarity": 0.9999999999999744,
+    "inf_count": 0,
+    "max_absolute_error": 2.801959265719134e-07,
+    "mean_absolute_error": 6.434479609227644e-08,
+    "nan_count": 0,
+    "relative_l2_error": 2.442618411616438e-07,
+    "workload_id": "decode_b1_h4_q1_c128_d64"
+  },
+  {
+    "cosine_similarity": 0.9999999999998984,
+    "inf_count": 0,
+    "max_absolute_error": 5.61778161378701e-07,
+    "mean_absolute_error": 1.1479303671370476e-07,
+    "nan_count": 0,
+    "relative_l2_error": 4.508517434130287e-07,
+    "workload_id": "decode_b1_h4_q1_c512_d64"
+  }
+]
