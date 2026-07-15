@@ -1,0 +1,17 @@
+{
+  "host": {
+    "compiler": "g++ 15.2.0",
+    "original_contiguous_v_loop": "missed: not suitable for strided load",
+    "page_major_inner_dimension": "vectorized using 16 byte vectors",
+    "reordered_contiguous_v_loop": "vectorized using 16 and 8 byte vectors"
+  },
+  "raspberry_pi": {
+    "compiler": "g++ 14.2.0",
+    "explicit_simd": false,
+    "reordered_contiguous_v_loop": "vectorized using 16 byte vectors"
+  },
+  "raw_reports": [
+    "/tmp/contiguous-loop-order-host/vectorization.txt",
+    "/tmp/contiguous_loop_order_pi_vectorization.txt"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "binary_sha256": "cba7993f9f3e2ba322ddcea0ae5c277eaa191b34224087b4ee1eb53414c169e9",
+  "build_command": [
+    "g++",
+    "-O3",
+    "-std=c++17",
+    "-fPIC",
+    "-shared",
+    "-fopt-info-vec-optimized=/tmp/contiguous-loop-order-host/vectorization.txt",
+    "-fopt-info-vec-missed=/tmp/contiguous-loop-order-host/vectorization.txt",
+    "/home/allen/Desktop/Project/heterogeneous-inference-runtime/native/cpu_kernels/attention_fp32.cpp",
+    "-o",
+    "/tmp/contiguous-loop-order-host/libattention_fp32.so"
+  ],
+  "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "platform": "Linux-7.0.0-27-generic-x86_64-with-glibc2.43",
+  "runner_sha256": "5670a92e24cee5cf5b2dd8d015cee3aa72aaf15aa307d27e6bb3995bb261a4ae",
+  "source_sha256": "c0f0eca108bfe5246f4d8e02a606e448c3e34e269a03fcbf58ac0d61cbe815fd",
+  "target_id": "host-i5-10210u",
+  "vectorization_report_sha256": "879fe5d125268c4a049770c8fdd3a67e69b405fb5d34fa01743d986aa0c40a9c"
+}

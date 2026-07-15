@@ -1,0 +1,182 @@
+[
+  {
+    "candidate": "original_contiguous",
+    "native_entry_point": "hir_cpu_attention_decode_contiguous_kv_fp32",
+    "output_consumed": true,
+    "runtime_kernel_reselection_count": 0,
+    "runtime_layout_reselection_count": 0,
+    "temporary_full_history_materialization_count": 0,
+    "workload_id": "O1"
+  },
+  {
+    "candidate": "reordered_contiguous",
+    "native_entry_point": "hir_cpu_attention_decode_contiguous_kv_reordered_fp32",
+    "output_consumed": true,
+    "runtime_kernel_reselection_count": 0,
+    "runtime_layout_reselection_count": 0,
+    "temporary_full_history_materialization_count": 0,
+    "workload_id": "O1"
+  },
+  {
+    "candidate": "token_major",
+    "native_entry_point": "hir_cpu_attention_decode_paged_kv_fp32",
+    "output_consumed": true,
+    "runtime_kernel_reselection_count": 0,
+    "runtime_layout_reselection_count": 0,
+    "temporary_full_history_materialization_count": 0,
+    "workload_id": "O1"
+  },
+  {
+    "candidate": "page_major",
+    "native_entry_point": "hir_cpu_attention_decode_paged_kv_page_major_fp32",
+    "output_consumed": true,
+    "runtime_kernel_reselection_count": 0,
+    "runtime_layout_reselection_count": 0,
+    "temporary_full_history_materialization_count": 0,
+    "workload_id": "O1"
+  },
+  {
+    "candidate": "original_contiguous",
+    "native_entry_point": "hir_cpu_attention_decode_contiguous_kv_fp32",
+    "output_consumed": true,
+    "runtime_kernel_reselection_count": 0,
+    "runtime_layout_reselection_count": 0,
+    "temporary_full_history_materialization_count": 0,
+    "workload_id": "O2"
+  },
+  {
+    "candidate": "reordered_contiguous",
+    "native_entry_point": "hir_cpu_attention_decode_contiguous_kv_reordered_fp32",
+    "output_consumed": true,
+    "runtime_kernel_reselection_count": 0,
+    "runtime_layout_reselection_count": 0,
+    "temporary_full_history_materialization_count": 0,
+    "workload_id": "O2"
+  },
+  {
+    "candidate": "token_major",
+    "native_entry_point": "hir_cpu_attention_decode_paged_kv_fp32",
+    "output_consumed": true,
+    "runtime_kernel_reselection_count": 0,
+    "runtime_layout_reselection_count": 0,
+    "temporary_full_history_materialization_count": 0,
+    "workload_id": "O2"
+  },
+  {
+    "candidate": "page_major",
+    "native_entry_point": "hir_cpu_attention_decode_paged_kv_page_major_fp32",
+    "output_consumed": true,
+    "runtime_kernel_reselection_count": 0,
+    "runtime_layout_reselection_count": 0,
+    "temporary_full_history_materialization_count": 0,
+    "workload_id": "O2"
+  },
+  {
+    "candidate": "original_contiguous",
+    "native_entry_point": "hir_cpu_attention_decode_contiguous_kv_fp32",
+    "output_consumed": true,
+    "runtime_kernel_reselection_count": 0,
+    "runtime_layout_reselection_count": 0,
+    "temporary_full_history_materialization_count": 0,
+    "workload_id": "O3"
+  },
+  {
+    "candidate": "reordered_contiguous",
+    "native_entry_point": "hir_cpu_attention_decode_contiguous_kv_reordered_fp32",
+    "output_consumed": true,
+    "runtime_kernel_reselection_count": 0,
+    "runtime_layout_reselection_count": 0,
+    "temporary_full_history_materialization_count": 0,
+    "workload_id": "O3"
+  },
+  {
+    "candidate": "token_major",
+    "native_entry_point": "hir_cpu_attention_decode_paged_kv_fp32",
+    "output_consumed": true,
+    "runtime_kernel_reselection_count": 0,
+    "runtime_layout_reselection_count": 0,
+    "temporary_full_history_materialization_count": 0,
+    "workload_id": "O3"
+  },
+  {
+    "candidate": "page_major",
+    "native_entry_point": "hir_cpu_attention_decode_paged_kv_page_major_fp32",
+    "output_consumed": true,
+    "runtime_kernel_reselection_count": 0,
+    "runtime_layout_reselection_count": 0,
+    "temporary_full_history_materialization_count": 0,
+    "workload_id": "O3"
+  },
+  {
+    "candidate": "original_contiguous",
+    "native_entry_point": "hir_cpu_attention_decode_contiguous_kv_fp32",
+    "output_consumed": true,
+    "runtime_kernel_reselection_count": 0,
+    "runtime_layout_reselection_count": 0,
+    "temporary_full_history_materialization_count": 0,
+    "workload_id": "O4"
+  },
+  {
+    "candidate": "reordered_contiguous",
+    "native_entry_point": "hir_cpu_attention_decode_contiguous_kv_reordered_fp32",
+    "output_consumed": true,
+    "runtime_kernel_reselection_count": 0,
+    "runtime_layout_reselection_count": 0,
+    "temporary_full_history_materialization_count": 0,
+    "workload_id": "O4"
+  },
+  {
+    "candidate": "token_major",
+    "native_entry_point": "hir_cpu_attention_decode_paged_kv_fp32",
+    "output_consumed": true,
+    "runtime_kernel_reselection_count": 0,
+    "runtime_layout_reselection_count": 0,
+    "temporary_full_history_materialization_count": 0,
+    "workload_id": "O4"
+  },
+  {
+    "candidate": "page_major",
+    "native_entry_point": "hir_cpu_attention_decode_paged_kv_page_major_fp32",
+    "output_consumed": true,
+    "runtime_kernel_reselection_count": 0,
+    "runtime_layout_reselection_count": 0,
+    "temporary_full_history_materialization_count": 0,
+    "workload_id": "O4"
+  },
+  {
+    "candidate": "original_contiguous",
+    "native_entry_point": "hir_cpu_attention_decode_contiguous_kv_fp32",
+    "output_consumed": true,
+    "runtime_kernel_reselection_count": 0,
+    "runtime_layout_reselection_count": 0,
+    "temporary_full_history_materialization_count": 0,
+    "workload_id": "O5"
+  },
+  {
+    "candidate": "reordered_contiguous",
+    "native_entry_point": "hir_cpu_attention_decode_contiguous_kv_reordered_fp32",
+    "output_consumed": true,
+    "runtime_kernel_reselection_count": 0,
+    "runtime_layout_reselection_count": 0,
+    "temporary_full_history_materialization_count": 0,
+    "workload_id": "O5"
+  },
+  {
+    "candidate": "token_major",
+    "native_entry_point": "hir_cpu_attention_decode_paged_kv_fp32",
+    "output_consumed": true,
+    "runtime_kernel_reselection_count": 0,
+    "runtime_layout_reselection_count": 0,
+    "temporary_full_history_materialization_count": 0,
+    "workload_id": "O5"
+  },
+  {
+    "candidate": "page_major",
+    "native_entry_point": "hir_cpu_attention_decode_paged_kv_page_major_fp32",
+    "output_consumed": true,
+    "runtime_kernel_reselection_count": 0,
+    "runtime_layout_reselection_count": 0,
+    "temporary_full_history_materialization_count": 0,
+    "workload_id": "O5"
+  }
+]

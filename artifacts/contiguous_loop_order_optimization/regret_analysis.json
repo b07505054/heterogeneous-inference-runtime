@@ -1,0 +1,272 @@
+[
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "latency",
+    "objective_score_regret": 0.0,
+    "target_id": "host",
+    "workload_id": "O1"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "memory_efficiency",
+    "objective_score_regret": 0.0,
+    "target_id": "host",
+    "workload_id": "O1"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "balanced",
+    "objective_score_regret": 0.0,
+    "target_id": "host",
+    "workload_id": "O1"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "latency",
+    "objective_score_regret": 0.0,
+    "target_id": "host",
+    "workload_id": "O2"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "memory_efficiency",
+    "objective_score_regret": 0.0,
+    "target_id": "host",
+    "workload_id": "O2"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "balanced",
+    "objective_score_regret": 0.0,
+    "target_id": "host",
+    "workload_id": "O2"
+  },
+  {
+    "compiler_selected_candidate": "cpu_paged_kv_fp32_page_major_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "latency",
+    "objective_score_regret": 0.0,
+    "target_id": "host",
+    "workload_id": "O3"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "memory_efficiency",
+    "objective_score_regret": 0.0,
+    "target_id": "host",
+    "workload_id": "O3"
+  },
+  {
+    "compiler_selected_candidate": "cpu_paged_kv_fp32_page_major_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "balanced",
+    "objective_score_regret": 0.0,
+    "target_id": "host",
+    "workload_id": "O3"
+  },
+  {
+    "compiler_selected_candidate": "cpu_paged_kv_fp32_page_major_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "latency",
+    "objective_score_regret": 0.0,
+    "target_id": "host",
+    "workload_id": "O4"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "memory_efficiency",
+    "objective_score_regret": 0.0,
+    "target_id": "host",
+    "workload_id": "O4"
+  },
+  {
+    "compiler_selected_candidate": "cpu_paged_kv_fp32_page_major_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "balanced",
+    "objective_score_regret": 0.0,
+    "target_id": "host",
+    "workload_id": "O4"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "latency",
+    "objective_score_regret": 0.0,
+    "target_id": "host",
+    "workload_id": "O5"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "memory_efficiency",
+    "objective_score_regret": 0.0,
+    "target_id": "host",
+    "workload_id": "O5"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "balanced",
+    "objective_score_regret": 0.0,
+    "target_id": "host",
+    "workload_id": "O5"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "latency",
+    "objective_score_regret": 0.0,
+    "target_id": "raspberry_pi",
+    "workload_id": "O1"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "memory_efficiency",
+    "objective_score_regret": 0.0,
+    "target_id": "raspberry_pi",
+    "workload_id": "O1"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "balanced",
+    "objective_score_regret": 0.0,
+    "target_id": "raspberry_pi",
+    "workload_id": "O1"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "latency",
+    "objective_score_regret": 0.0,
+    "target_id": "raspberry_pi",
+    "workload_id": "O2"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "memory_efficiency",
+    "objective_score_regret": 0.0,
+    "target_id": "raspberry_pi",
+    "workload_id": "O2"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "balanced",
+    "objective_score_regret": 0.0,
+    "target_id": "raspberry_pi",
+    "workload_id": "O2"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "latency",
+    "objective_score_regret": 0.0,
+    "target_id": "raspberry_pi",
+    "workload_id": "O3"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "memory_efficiency",
+    "objective_score_regret": 0.0,
+    "target_id": "raspberry_pi",
+    "workload_id": "O3"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "balanced",
+    "objective_score_regret": 0.0,
+    "target_id": "raspberry_pi",
+    "workload_id": "O3"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "latency",
+    "objective_score_regret": 0.0,
+    "target_id": "raspberry_pi",
+    "workload_id": "O4"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "memory_efficiency",
+    "objective_score_regret": 0.0,
+    "target_id": "raspberry_pi",
+    "workload_id": "O4"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "balanced",
+    "objective_score_regret": 0.0,
+    "target_id": "raspberry_pi",
+    "workload_id": "O4"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "latency",
+    "objective_score_regret": 0.0,
+    "target_id": "raspberry_pi",
+    "workload_id": "O5"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "memory_efficiency",
+    "objective_score_regret": 0.0,
+    "target_id": "raspberry_pi",
+    "workload_id": "O5"
+  },
+  {
+    "compiler_selected_candidate": "cpu_contiguous_kv_fp32_reordered_v1",
+    "latency_regret_ms": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "balanced",
+    "objective_score_regret": 0.0,
+    "target_id": "raspberry_pi",
+    "workload_id": "O5"
+  }
+]

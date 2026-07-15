@@ -1,0 +1,21 @@
+{
+  "available": false,
+  "error": "perf_event_paranoid=4; perf stat: No supported events found",
+  "events": {
+    "L1-dcache-load-misses": "not_available",
+    "L1-dcache-loads": "not_available",
+    "LLC-load-misses": "not_available",
+    "LLC-loads": "not_available",
+    "branch-misses": "not_available",
+    "branches": "not_available",
+    "cache-misses": "not_available",
+    "cache-references": "not_available",
+    "context-switches": "not_available",
+    "cpu-migrations": "not_available",
+    "cycles": "not_available",
+    "instructions": "not_available",
+    "page-faults": "not_available",
+    "task-clock": "not_available"
+  },
+  "perf_version": "7.0.6"
+}

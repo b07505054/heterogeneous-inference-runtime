@@ -1,0 +1,21 @@
+{
+  "binary_sha256": "9cf38e9bfac5cd21cbad89ad31ff40571bbad9e1a6d797928c6f3002b6c16203",
+  "build_command": [
+    "g++",
+    "-O3",
+    "-std=c++17",
+    "-fPIC",
+    "-shared",
+    "-fopt-info-vec-optimized=/tmp/paged-kv-validation-host/vectorization.txt",
+    "-fopt-info-vec-missed=/tmp/paged-kv-validation-host/vectorization.txt",
+    "/home/allen/Desktop/Project/heterogeneous-inference-runtime/native/cpu_kernels/attention_fp32.cpp",
+    "-o",
+    "/tmp/paged-kv-validation-host/libattention_fp32.so"
+  ],
+  "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "platform": "Linux-7.0.0-27-generic-x86_64-with-glibc2.43",
+  "runner_sha256": "7ff70d858895235911c0c51e369f65c052afcf5af0c14b06419b8b74270b897a",
+  "source_sha256": "2894b9e1100cfbc8a611eac4782ee8b56fd303f04f4b279c72583d880848ba7a",
+  "target_id": "host-i5-10210u",
+  "vectorization_report_sha256": "a9ad67bf5b0ff4749cf375d547387cdff01df34bbdd39c5e104a4f73a51e62ef"
+}

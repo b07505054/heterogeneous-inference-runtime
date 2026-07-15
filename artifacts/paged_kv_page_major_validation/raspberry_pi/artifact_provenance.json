@@ -1,0 +1,21 @@
+{
+  "binary_sha256": "43eeb32a1d31f04ce0c724065573e21ee125f27264c58f8d1a33f99c3630333b",
+  "build_command": [
+    "g++",
+    "-O3",
+    "-std=c++17",
+    "-fPIC",
+    "-shared",
+    "-fopt-info-vec-optimized=build/vectorization.txt",
+    "-fopt-info-vec-missed=build/vectorization.txt",
+    "/home/allen/paged_kv_page_major_validation/native/cpu_kernels/attention_fp32.cpp",
+    "-o",
+    "build/libattention_fp32.so"
+  ],
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "platform": "Linux-6.18.34+rpt-rpi-2712-aarch64-with-glibc2.41",
+  "runner_sha256": "7ff70d858895235911c0c51e369f65c052afcf5af0c14b06419b8b74270b897a",
+  "source_sha256": "2894b9e1100cfbc8a611eac4782ee8b56fd303f04f4b279c72583d880848ba7a",
+  "target_id": "raspberry-pi5-cortex-a76",
+  "vectorization_report_sha256": "60d8f62a18036f67eb13dd8f2ddc9cdc5a36b1531096336de1fd790cc7d589e8"
+}

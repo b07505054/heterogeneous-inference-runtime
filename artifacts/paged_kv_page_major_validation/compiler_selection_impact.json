@@ -1,0 +1,72 @@
+[
+  {
+    "experimental_control_excluded": true,
+    "p95_ms": 0.006557126530612244,
+    "production_winner": "page_major",
+    "target": "host",
+    "workload": "O1"
+  },
+  {
+    "experimental_control_excluded": true,
+    "p95_ms": 0.021989645161290323,
+    "production_winner": "page_major",
+    "target": "host",
+    "workload": "O2"
+  },
+  {
+    "experimental_control_excluded": true,
+    "p95_ms": 0.073926625,
+    "production_winner": "page_major",
+    "target": "host",
+    "workload": "O3"
+  },
+  {
+    "experimental_control_excluded": true,
+    "p95_ms": 0.1551685,
+    "production_winner": "page_major",
+    "target": "host",
+    "workload": "O4"
+  },
+  {
+    "experimental_control_excluded": true,
+    "p95_ms": 0.1621965,
+    "production_winner": "page_major",
+    "target": "host",
+    "workload": "O5"
+  },
+  {
+    "experimental_control_excluded": true,
+    "p95_ms": 0.007945563265306122,
+    "production_winner": "contiguous",
+    "target": "raspberry_pi",
+    "workload": "O1"
+  },
+  {
+    "experimental_control_excluded": true,
+    "p95_ms": 0.02620458064516129,
+    "production_winner": "page_major",
+    "target": "raspberry_pi",
+    "workload": "O2"
+  },
+  {
+    "experimental_control_excluded": true,
+    "p95_ms": 0.081188875,
+    "production_winner": "page_major",
+    "target": "raspberry_pi",
+    "workload": "O3"
+  },
+  {
+    "experimental_control_excluded": true,
+    "p95_ms": 0.1988265,
+    "production_winner": "page_major",
+    "target": "raspberry_pi",
+    "workload": "O4"
+  },
+  {
+    "experimental_control_excluded": true,
+    "p95_ms": 0.1673035,
+    "production_winner": "page_major",
+    "target": "raspberry_pi",
+    "workload": "O5"
+  }
+]

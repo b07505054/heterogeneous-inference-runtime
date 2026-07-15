@@ -1,0 +1,20 @@
+{
+  "balanced": {
+    "fragmentation_weight": 0.1,
+    "latency_weight": 0.6,
+    "max_latency_regression": 1.0,
+    "memory_weight": 0.3
+  },
+  "latency": {
+    "fragmentation_weight": 0.0,
+    "latency_weight": 1.0,
+    "max_latency_regression": 0.0,
+    "memory_weight": 0.0
+  },
+  "memory_efficiency": {
+    "fragmentation_weight": 1.0,
+    "latency_weight": 0.0,
+    "max_latency_regression": 0.25,
+    "memory_weight": 1.0
+  }
+}

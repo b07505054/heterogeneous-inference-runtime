@@ -1,0 +1,8 @@
+{
+  "compiler_report": "/tmp/paged-kv-validation-host/vectorization.txt",
+  "conclusion": "page-major is auto-vectorized where original contiguous V is not, but matched reordered contiguous is also vectorized; page-major received no unique flag advantage",
+  "contiguous": "QK loops vectorized; strided V reduction missed as not suitable for strided load",
+  "page_major": "inner head-dimension loops vectorized; page/control-flow loops missed",
+  "reordered_control": "inner head-dimension QK and V loops vectorized; alias-versioned",
+  "token_major": "limited vectorization; control flow and paged address helper inhibit hot loops"
+}

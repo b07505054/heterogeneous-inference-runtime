@@ -1,0 +1,222 @@
+[
+  {
+    "candidate": "contiguous",
+    "checksum": -0.7289960253983736,
+    "inf_count": 0,
+    "matches_contiguous_max_abs": 0.0,
+    "max_absolute_error": 1.0772209679821287e-07,
+    "mean_absolute_error": 2.7457314090071055e-08,
+    "nan_count": 0,
+    "valid_tokens": 32,
+    "workload_id": "O1"
+  },
+  {
+    "candidate": "reordered_control",
+    "checksum": -0.7289960253983736,
+    "inf_count": 0,
+    "matches_contiguous_max_abs": 0.0,
+    "max_absolute_error": 1.0772209679821287e-07,
+    "mean_absolute_error": 2.7457314090071055e-08,
+    "nan_count": 0,
+    "valid_tokens": 32,
+    "workload_id": "O1"
+  },
+  {
+    "candidate": "token_major",
+    "checksum": -0.7289960253983736,
+    "inf_count": 0,
+    "matches_contiguous_max_abs": 0.0,
+    "max_absolute_error": 1.0772209679821287e-07,
+    "mean_absolute_error": 2.7457314090071055e-08,
+    "nan_count": 0,
+    "valid_tokens": 32,
+    "workload_id": "O1"
+  },
+  {
+    "candidate": "page_major",
+    "checksum": -0.7289960253983736,
+    "inf_count": 0,
+    "matches_contiguous_max_abs": 0.0,
+    "max_absolute_error": 1.0772209679821287e-07,
+    "mean_absolute_error": 2.7457314090071055e-08,
+    "nan_count": 0,
+    "valid_tokens": 32,
+    "workload_id": "O1"
+  },
+  {
+    "candidate": "contiguous",
+    "checksum": -0.45647912099957466,
+    "inf_count": 0,
+    "matches_contiguous_max_abs": 0.0,
+    "max_absolute_error": 2.4862548669846163e-07,
+    "mean_absolute_error": 6.508354185749373e-08,
+    "nan_count": 0,
+    "valid_tokens": 128,
+    "workload_id": "O2"
+  },
+  {
+    "candidate": "reordered_control",
+    "checksum": -0.45647912099957466,
+    "inf_count": 0,
+    "matches_contiguous_max_abs": 0.0,
+    "max_absolute_error": 2.4862548669846163e-07,
+    "mean_absolute_error": 6.508354185749373e-08,
+    "nan_count": 0,
+    "valid_tokens": 128,
+    "workload_id": "O2"
+  },
+  {
+    "candidate": "token_major",
+    "checksum": -0.45647912099957466,
+    "inf_count": 0,
+    "matches_contiguous_max_abs": 0.0,
+    "max_absolute_error": 2.4862548669846163e-07,
+    "mean_absolute_error": 6.508354185749373e-08,
+    "nan_count": 0,
+    "valid_tokens": 128,
+    "workload_id": "O2"
+  },
+  {
+    "candidate": "page_major",
+    "checksum": -0.45647912099957466,
+    "inf_count": 0,
+    "matches_contiguous_max_abs": 0.0,
+    "max_absolute_error": 2.4862548669846163e-07,
+    "mean_absolute_error": 6.508354185749373e-08,
+    "nan_count": 0,
+    "valid_tokens": 128,
+    "workload_id": "O2"
+  },
+  {
+    "candidate": "contiguous",
+    "checksum": 0.1559562194161117,
+    "inf_count": 0,
+    "matches_contiguous_max_abs": 0.0,
+    "max_absolute_error": 3.466235051208244e-07,
+    "mean_absolute_error": 7.017372677360574e-08,
+    "nan_count": 0,
+    "valid_tokens": 256,
+    "workload_id": "O3"
+  },
+  {
+    "candidate": "reordered_control",
+    "checksum": 0.1559562194161117,
+    "inf_count": 0,
+    "matches_contiguous_max_abs": 0.0,
+    "max_absolute_error": 3.466235051208244e-07,
+    "mean_absolute_error": 7.017372677360574e-08,
+    "nan_count": 0,
+    "valid_tokens": 256,
+    "workload_id": "O3"
+  },
+  {
+    "candidate": "token_major",
+    "checksum": 0.1559562194161117,
+    "inf_count": 0,
+    "matches_contiguous_max_abs": 0.0,
+    "max_absolute_error": 3.466235051208244e-07,
+    "mean_absolute_error": 7.017372677360574e-08,
+    "nan_count": 0,
+    "valid_tokens": 256,
+    "workload_id": "O3"
+  },
+  {
+    "candidate": "page_major",
+    "checksum": 0.1559562194161117,
+    "inf_count": 0,
+    "matches_contiguous_max_abs": 0.0,
+    "max_absolute_error": 3.466235051208244e-07,
+    "mean_absolute_error": 7.017372677360574e-08,
+    "nan_count": 0,
+    "valid_tokens": 256,
+    "workload_id": "O3"
+  },
+  {
+    "candidate": "contiguous",
+    "checksum": 0.360217974986881,
+    "inf_count": 0,
+    "matches_contiguous_max_abs": 0.0,
+    "max_absolute_error": 5.191039995633417e-07,
+    "mean_absolute_error": 1.0310619357874186e-07,
+    "nan_count": 0,
+    "valid_tokens": 512,
+    "workload_id": "O4"
+  },
+  {
+    "candidate": "reordered_control",
+    "checksum": 0.360217974986881,
+    "inf_count": 0,
+    "matches_contiguous_max_abs": 0.0,
+    "max_absolute_error": 5.191039995633417e-07,
+    "mean_absolute_error": 1.0310619357874186e-07,
+    "nan_count": 0,
+    "valid_tokens": 512,
+    "workload_id": "O4"
+  },
+  {
+    "candidate": "token_major",
+    "checksum": 0.360217974986881,
+    "inf_count": 0,
+    "matches_contiguous_max_abs": 0.0,
+    "max_absolute_error": 5.191039995633417e-07,
+    "mean_absolute_error": 1.0310619357874186e-07,
+    "nan_count": 0,
+    "valid_tokens": 512,
+    "workload_id": "O4"
+  },
+  {
+    "candidate": "page_major",
+    "checksum": 0.360217974986881,
+    "inf_count": 0,
+    "matches_contiguous_max_abs": 0.0,
+    "max_absolute_error": 5.191039995633417e-07,
+    "mean_absolute_error": 1.0310619357874186e-07,
+    "nan_count": 0,
+    "valid_tokens": 512,
+    "workload_id": "O4"
+  },
+  {
+    "candidate": "contiguous",
+    "checksum": 0.527477511233883,
+    "inf_count": 0,
+    "matches_contiguous_max_abs": 0.0,
+    "max_absolute_error": 5.23628652715491e-07,
+    "mean_absolute_error": 1.1864946129173696e-07,
+    "nan_count": 0,
+    "valid_tokens": 512,
+    "workload_id": "O5"
+  },
+  {
+    "candidate": "reordered_control",
+    "checksum": 0.527477511233883,
+    "inf_count": 0,
+    "matches_contiguous_max_abs": 0.0,
+    "max_absolute_error": 5.23628652715491e-07,
+    "mean_absolute_error": 1.1864946129173696e-07,
+    "nan_count": 0,
+    "valid_tokens": 512,
+    "workload_id": "O5"
+  },
+  {
+    "candidate": "token_major",
+    "checksum": 0.527477511233883,
+    "inf_count": 0,
+    "matches_contiguous_max_abs": 0.0,
+    "max_absolute_error": 5.23628652715491e-07,
+    "mean_absolute_error": 1.1864946129173696e-07,
+    "nan_count": 0,
+    "valid_tokens": 512,
+    "workload_id": "O5"
+  },
+  {
+    "candidate": "page_major",
+    "checksum": 0.527477511233883,
+    "inf_count": 0,
+    "matches_contiguous_max_abs": 0.0,
+    "max_absolute_error": 5.23628652715491e-07,
+    "mean_absolute_error": 1.1864946129173696e-07,
+    "nan_count": 0,
+    "valid_tokens": 512,
+    "workload_id": "O5"
+  }
+]

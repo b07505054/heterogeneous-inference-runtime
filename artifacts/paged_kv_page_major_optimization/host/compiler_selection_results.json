@@ -1,0 +1,167 @@
+[
+  {
+    "objective": "latency",
+    "objective_score_regret": 0.0,
+    "selected_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "selected_kernel_id": "cpu_attention_decode_fp32",
+    "selected_p95_ms": 0.0121330376714468,
+    "selected_strategy": "contiguous_direct",
+    "selection_reason": "exact_target_workload_measured_decode_p95_with_equal_memory_for_paged_candidates",
+    "target_id": "host-x86_64",
+    "workload_id": "O1"
+  },
+  {
+    "objective": "memory_efficiency",
+    "objective_score_regret": 0.0,
+    "selected_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "selected_kernel_id": "cpu_attention_decode_fp32",
+    "selected_p95_ms": 0.0121330376714468,
+    "selected_strategy": "contiguous_direct",
+    "selection_reason": "exact_target_workload_measured_decode_p95_with_equal_memory_for_paged_candidates",
+    "target_id": "host-x86_64",
+    "workload_id": "O1"
+  },
+  {
+    "objective": "balanced",
+    "objective_score_regret": 0.0,
+    "selected_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "selected_kernel_id": "cpu_attention_decode_fp32",
+    "selected_p95_ms": 0.0121330376714468,
+    "selected_strategy": "contiguous_direct",
+    "selection_reason": "exact_target_workload_measured_decode_p95_with_equal_memory_for_paged_candidates",
+    "target_id": "host-x86_64",
+    "workload_id": "O1"
+  },
+  {
+    "objective": "latency",
+    "objective_score_regret": 0.0,
+    "selected_candidate_id": "cpu_paged_kv_fp32_page_major_v1",
+    "selected_kernel_id": "cpu_attention_decode_paged_kv_page_major_fp32",
+    "selected_p95_ms": 0.035049859434366226,
+    "selected_strategy": "page_major_cached_page_base",
+    "selection_reason": "exact_target_workload_measured_decode_p95_with_equal_memory_for_paged_candidates",
+    "target_id": "host-x86_64",
+    "workload_id": "O2"
+  },
+  {
+    "objective": "memory_efficiency",
+    "objective_score_regret": 0.0,
+    "selected_candidate_id": "cpu_paged_kv_fp32_page_major_v1",
+    "selected_kernel_id": "cpu_attention_decode_paged_kv_page_major_fp32",
+    "selected_p95_ms": 0.035049859434366226,
+    "selected_strategy": "page_major_cached_page_base",
+    "selection_reason": "exact_target_workload_measured_decode_p95_with_equal_memory_for_paged_candidates",
+    "target_id": "host-x86_64",
+    "workload_id": "O2"
+  },
+  {
+    "objective": "balanced",
+    "objective_score_regret": 0.0,
+    "selected_candidate_id": "cpu_paged_kv_fp32_page_major_v1",
+    "selected_kernel_id": "cpu_attention_decode_paged_kv_page_major_fp32",
+    "selected_p95_ms": 0.035049859434366226,
+    "selected_strategy": "page_major_cached_page_base",
+    "selection_reason": "exact_target_workload_measured_decode_p95_with_equal_memory_for_paged_candidates",
+    "target_id": "host-x86_64",
+    "workload_id": "O2"
+  },
+  {
+    "objective": "latency",
+    "objective_score_regret": 0.0,
+    "selected_candidate_id": "cpu_paged_kv_fp32_page_major_v1",
+    "selected_kernel_id": "cpu_attention_decode_paged_kv_page_major_fp32",
+    "selected_p95_ms": 0.08537201210856438,
+    "selected_strategy": "page_major_cached_page_base",
+    "selection_reason": "exact_target_workload_measured_decode_p95_with_equal_memory_for_paged_candidates",
+    "target_id": "host-x86_64",
+    "workload_id": "O3"
+  },
+  {
+    "objective": "memory_efficiency",
+    "objective_score_regret": 0.0,
+    "selected_candidate_id": "cpu_paged_kv_fp32_page_major_v1",
+    "selected_kernel_id": "cpu_attention_decode_paged_kv_page_major_fp32",
+    "selected_p95_ms": 0.08537201210856438,
+    "selected_strategy": "page_major_cached_page_base",
+    "selection_reason": "exact_target_workload_measured_decode_p95_with_equal_memory_for_paged_candidates",
+    "target_id": "host-x86_64",
+    "workload_id": "O3"
+  },
+  {
+    "objective": "balanced",
+    "objective_score_regret": 0.0,
+    "selected_candidate_id": "cpu_paged_kv_fp32_page_major_v1",
+    "selected_kernel_id": "cpu_attention_decode_paged_kv_page_major_fp32",
+    "selected_p95_ms": 0.08537201210856438,
+    "selected_strategy": "page_major_cached_page_base",
+    "selection_reason": "exact_target_workload_measured_decode_p95_with_equal_memory_for_paged_candidates",
+    "target_id": "host-x86_64",
+    "workload_id": "O3"
+  },
+  {
+    "objective": "latency",
+    "objective_score_regret": 0.0,
+    "selected_candidate_id": "cpu_paged_kv_fp32_page_major_v1",
+    "selected_kernel_id": "cpu_attention_decode_paged_kv_page_major_fp32",
+    "selected_p95_ms": 0.23064715787768364,
+    "selected_strategy": "page_major_cached_page_base",
+    "selection_reason": "exact_target_workload_measured_decode_p95_with_equal_memory_for_paged_candidates",
+    "target_id": "host-x86_64",
+    "workload_id": "O4"
+  },
+  {
+    "objective": "memory_efficiency",
+    "objective_score_regret": 0.0,
+    "selected_candidate_id": "cpu_paged_kv_fp32_page_major_v1",
+    "selected_kernel_id": "cpu_attention_decode_paged_kv_page_major_fp32",
+    "selected_p95_ms": 0.23064715787768364,
+    "selected_strategy": "page_major_cached_page_base",
+    "selection_reason": "exact_target_workload_measured_decode_p95_with_equal_memory_for_paged_candidates",
+    "target_id": "host-x86_64",
+    "workload_id": "O4"
+  },
+  {
+    "objective": "balanced",
+    "objective_score_regret": 0.0,
+    "selected_candidate_id": "cpu_paged_kv_fp32_page_major_v1",
+    "selected_kernel_id": "cpu_attention_decode_paged_kv_page_major_fp32",
+    "selected_p95_ms": 0.23064715787768364,
+    "selected_strategy": "page_major_cached_page_base",
+    "selection_reason": "exact_target_workload_measured_decode_p95_with_equal_memory_for_paged_candidates",
+    "target_id": "host-x86_64",
+    "workload_id": "O4"
+  },
+  {
+    "objective": "latency",
+    "objective_score_regret": 0.0,
+    "selected_candidate_id": "cpu_paged_kv_fp32_page_major_v1",
+    "selected_kernel_id": "cpu_attention_decode_paged_kv_page_major_fp32",
+    "selected_p95_ms": 0.15029101632535458,
+    "selected_strategy": "page_major_cached_page_base",
+    "selection_reason": "exact_target_workload_measured_decode_p95_with_equal_memory_for_paged_candidates",
+    "target_id": "host-x86_64",
+    "workload_id": "O5"
+  },
+  {
+    "objective": "memory_efficiency",
+    "objective_score_regret": 0.0,
+    "selected_candidate_id": "cpu_paged_kv_fp32_page_major_v1",
+    "selected_kernel_id": "cpu_attention_decode_paged_kv_page_major_fp32",
+    "selected_p95_ms": 0.15029101632535458,
+    "selected_strategy": "page_major_cached_page_base",
+    "selection_reason": "exact_target_workload_measured_decode_p95_with_equal_memory_for_paged_candidates",
+    "target_id": "host-x86_64",
+    "workload_id": "O5"
+  },
+  {
+    "objective": "balanced",
+    "objective_score_regret": 0.0,
+    "selected_candidate_id": "cpu_paged_kv_fp32_page_major_v1",
+    "selected_kernel_id": "cpu_attention_decode_paged_kv_page_major_fp32",
+    "selected_p95_ms": 0.15029101632535458,
+    "selected_strategy": "page_major_cached_page_base",
+    "selection_reason": "exact_target_workload_measured_decode_p95_with_equal_memory_for_paged_candidates",
+    "target_id": "host-x86_64",
+    "workload_id": "O5"
+  }
+]

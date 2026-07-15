@@ -1,0 +1,44 @@
+{
+  "architecture": "aarch64",
+  "benchmark_process_threads": 1,
+  "captured_at_epoch": 1784138022.5420363,
+  "cpu_count": 4,
+  "frequencies": {
+    "cpu0": {
+      "current_khz": "2400000",
+      "max_khz": "2400000"
+    },
+    "cpu1": {
+      "current_khz": "2400000",
+      "max_khz": "2400000"
+    },
+    "cpu2": {
+      "current_khz": "2400000",
+      "max_khz": "2400000"
+    },
+    "cpu3": {
+      "current_khz": "2400000",
+      "max_khz": "2400000"
+    }
+  },
+  "governors": {
+    "cpu0": "performance",
+    "cpu1": "performance",
+    "cpu2": "performance",
+    "cpu3": "performance"
+  },
+  "gxx_version": "g++ (Debian 14.2.0-19) 14.2.0",
+  "hostname": "edgeaiplatform",
+  "lscpu": "Architecture:                            aarch64\nCPU op-mode(s):                          32-bit, 64-bit\nByte Order:                              Little Endian\nCPU(s):                                  4\nOn-line CPU(s) list:                     0-3\nVendor ID:                               ARM\nModel name:                              Cortex-A76\nModel:                                   1\nThread(s) per core:                      1\nCore(s) per cluster:                     4\nSocket(s):                               -\nCluster(s):                              1\nStepping:                                r4p1\nFrequency boost:                         disabled\nCPU(s) scaling MHz:                      100%\nCPU max MHz:                             2400.0000\nCPU min MHz:                             1500.0000\nBogoMIPS:                                108.00\nFlags:                                   fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm lrcpc dcpop asimddp\nL1d cache:                               256 KiB (4 instances)\nL1i cache:                               256 KiB (4 instances)\nL2 cache:                                2 MiB (4 instances)\nL3 cache:                                2 MiB (1 instance)\nNUMA node(s):                            8\nNUMA node0 CPU(s):                       0-3\nNUMA node1 CPU(s):                       0-3\nNUMA node2 CPU(s):                       0-3\nNUMA node3 CPU(s):                       0-3\nNUMA node4 CPU(s):                       0-3\nNUMA node5 CPU(s):                       0-3\nNUMA node6 CPU(s):                       0-3\nNUMA node7 CPU(s):                       0-3\nVulnerability Gather data sampling:      Not affected\nVulnerability Ghostwrite:                Not affected\nVulnerability Indirect target selection: Not affected\nVulnerability Itlb multihit:             Not affected\nVulnerability L1tf:                      Not affected\nVulnerability Mds:                       Not affected\nVulnerability Meltdown:                  Not affected\nVulnerability Mmio stale data:           Not affected\nVulnerability Old microcode:             Not affected\nVulnerability Reg file data sampling:    Not affected\nVulnerability Retbleed:                  Not affected\nVulnerability Spec rstack overflow:      Not affected\nVulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:                Mitigation; __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; CSV2, BHB\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Not affected\nVulnerability Tsx async abort:           Not affected\nVulnerability Vmscape:                   Not affected",
+  "native_compile_flags": [
+    "-O3",
+    "-std=c++17",
+    "-fPIC",
+    "-shared"
+  ],
+  "platform": "Linux-6.18.34+rpt-rpi-2712-aarch64-with-glibc2.41",
+  "temperature_millicelsius": {
+    "thermal_zone0": "49050"
+  },
+  "throttling_status": "throttled=0x0"
+}

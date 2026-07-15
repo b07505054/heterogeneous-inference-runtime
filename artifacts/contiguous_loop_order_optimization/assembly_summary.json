@@ -1,0 +1,43 @@
+{
+  "host": {
+    "original_contiguous": {
+      "function_size_bytes": 1724,
+      "hot_loop_calls": 0,
+      "idiv_count": 0,
+      "static_instruction_count": 431
+    },
+    "page_major": {
+      "function_size_bytes": 2149,
+      "hot_loop_calls": 0,
+      "idiv_count": 0,
+      "static_instruction_count": 526
+    },
+    "reordered_contiguous": {
+      "function_size_bytes": 1736,
+      "hot_loop_calls": 0,
+      "idiv_count": 0,
+      "static_instruction_count": 430
+    }
+  },
+  "note": "hot_loop_calls counts exclude exp calls outside QK/V inner arithmetic loops",
+  "raspberry_pi": {
+    "original_contiguous": {
+      "function_size_bytes": 1052,
+      "hot_loop_calls": 0,
+      "idiv_count": 0,
+      "static_instruction_count": 263
+    },
+    "page_major": {
+      "function_size_bytes": 1636,
+      "hot_loop_calls": 0,
+      "idiv_count": 0,
+      "static_instruction_count": 409
+    },
+    "reordered_contiguous": {
+      "function_size_bytes": 1432,
+      "hot_loop_calls": 0,
+      "idiv_count": 0,
+      "static_instruction_count": 358
+    }
+  }
+}

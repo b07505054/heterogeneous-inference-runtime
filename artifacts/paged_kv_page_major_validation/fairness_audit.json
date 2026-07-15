@@ -1,0 +1,25 @@
+{
+  "acceptance_limitation": "dynamic PMU counters unavailable on both targets",
+  "append_decode_boundary": "prebound native append followed by prebound native decode; checksum after timer",
+  "candidate_order": "four-way cyclic interleave, seed 20260715",
+  "corrected_kernel_boundary": "prebound native call; buffers already allocated/populated; output ready; checksum consumed after timer",
+  "excluded": [
+    "compilation",
+    "library loading",
+    "allocation",
+    "block-table construction",
+    "K/V population",
+    "warmup",
+    "Python validation",
+    "reference computation"
+  ],
+  "hidden_kernel_heap_allocations": false,
+  "output_checksum_equal": true,
+  "previous_boundary_fair": false,
+  "reason": "previous benchmark timed Python Runtime decode wrappers in fixed candidate order and compared structurally different V loops",
+  "runtime_wrapper_boundary_reported_separately": false,
+  "same_affinity": true,
+  "same_common_flags": true,
+  "same_priority": true,
+  "same_thread_count": true
+}

@@ -1,0 +1,30 @@
+{
+  "benchmark_process_threads": 1,
+  "build_command": [
+    "g++",
+    "-O3",
+    "-std=c++17",
+    "-fPIC",
+    "-shared",
+    "/home/allen/kv_selection_evaluation/native/cpu_kernels/attention_fp32.cpp",
+    "-o",
+    "build/libattention_fp32.so"
+  ],
+  "compiler_version": "g++ (Debian 14.2.0-19) 14.2.0",
+  "machine": "aarch64",
+  "native_artifact_sha256": "37fca5806a3bd597ea7a746e4b24b2e41197e6bf6f2512a5a8c37024e0ba5faa",
+  "native_compile_flags": [
+    "-O3",
+    "-std=c++17",
+    "-fPIC",
+    "-shared"
+  ],
+  "native_source_sha256": "c82d0b4d75c1ea35f9e3c79419e2fc00bb273a320e260dc931ff41679d5894bc",
+  "platform": "Linux-6.18.34+rpt-rpi-2712-aarch64-with-glibc2.41",
+  "processor": "",
+  "python_version": "3.13.5",
+  "runner_sha256": "c6f80e309ed9b2ec940ea9a08baef1e00a117c9bddc8b5b3ca2d51cbbea3cf29",
+  "schema_version": "kv_selection_evaluation.v1",
+  "target_id": "raspberry-pi5-cortex-a76",
+  "truth_boundary": "exact_target_workload_measured_profile_not_predictive_cost_model"
+}

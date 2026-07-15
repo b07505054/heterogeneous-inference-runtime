@@ -1,0 +1,26 @@
+{
+  "affinity_core": 0,
+  "append_decode_samples": 100,
+  "append_decode_warmups": 20,
+  "boundary": "one prebound native ctypes entry point; buffers populated; output ready; checksum after timed region",
+  "candidate_order": "cyclic interleave",
+  "common_flags": [
+    "-O3",
+    "-std=c++17",
+    "-fPIC",
+    "-shared"
+  ],
+  "heap_allocation_inside_kernel": {
+    "original_contiguous": false,
+    "page_major": false,
+    "reordered_contiguous": false,
+    "token_major": false
+  },
+  "order_seed": 20260715,
+  "priority": 0,
+  "python_output_copy_inside_timing": false,
+  "samples": 500,
+  "thread_count": 1,
+  "validation_outside_timing": true,
+  "warmups": 20
+}

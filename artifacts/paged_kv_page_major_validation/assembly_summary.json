@@ -1,0 +1,39 @@
+{
+  "binary": "/tmp/paged-kv-validation-host/libattention_fp32.so",
+  "functions": {
+    "contiguous": {
+      "bytes": 1724,
+      "calls": 3,
+      "divide_instructions": 4,
+      "idiv": 0,
+      "static_instructions": 431,
+      "xmm_ymm_operand_lines": 88
+    },
+    "page_major": {
+      "bytes": 2165,
+      "calls": 3,
+      "divide_instructions": 3,
+      "idiv": 0,
+      "static_instructions": 528,
+      "xmm_ymm_operand_lines": 73
+    },
+    "reordered_control": {
+      "bytes": 1736,
+      "calls": 4,
+      "divide_instructions": 3,
+      "idiv": 0,
+      "static_instructions": 431,
+      "xmm_ymm_operand_lines": 76
+    },
+    "token_major": {
+      "bytes": 1225,
+      "calls": 2,
+      "divide_instructions": 4,
+      "idiv": 2,
+      "static_instructions": 319,
+      "xmm_ymm_operand_lines": 43
+    }
+  },
+  "note": "static disassembly counts are not retired-instruction counts",
+  "raw_dump": "/tmp/attention_disassembly.txt"
+}

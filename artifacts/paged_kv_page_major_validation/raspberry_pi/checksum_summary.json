@@ -1,0 +1,52 @@
+[
+  {
+    "checksums": {
+      "contiguous": -0.7289960253983736,
+      "page_major": -0.7289960253983736,
+      "reordered_control": -0.7289960253983736,
+      "token_major": -0.7289960253983736
+    },
+    "max_checksum_difference": 0.0,
+    "workload_id": "O1"
+  },
+  {
+    "checksums": {
+      "contiguous": -0.45647912099957466,
+      "page_major": -0.45647912099957466,
+      "reordered_control": -0.45647912099957466,
+      "token_major": -0.45647912099957466
+    },
+    "max_checksum_difference": 0.0,
+    "workload_id": "O2"
+  },
+  {
+    "checksums": {
+      "contiguous": 0.1559562194161117,
+      "page_major": 0.1559562194161117,
+      "reordered_control": 0.1559562194161117,
+      "token_major": 0.1559562194161117
+    },
+    "max_checksum_difference": 0.0,
+    "workload_id": "O3"
+  },
+  {
+    "checksums": {
+      "contiguous": 0.360217974986881,
+      "page_major": 0.360217974986881,
+      "reordered_control": 0.360217974986881,
+      "token_major": 0.360217974986881
+    },
+    "max_checksum_difference": 0.0,
+    "workload_id": "O4"
+  },
+  {
+    "checksums": {
+      "contiguous": 0.527477511233883,
+      "page_major": 0.527477511233883,
+      "reordered_control": 0.527477511233883,
+      "token_major": 0.527477511233883
+    },
+    "max_checksum_difference": 0.0,
+    "workload_id": "O5"
+  }
+]

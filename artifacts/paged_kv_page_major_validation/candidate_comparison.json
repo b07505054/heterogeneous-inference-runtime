@@ -1,0 +1,732 @@
+[
+  {
+    "analytical_flops": 8192,
+    "append_decode_p95_ms": {
+      "contiguous": 0.013277,
+      "page_major": 0.015473,
+      "reordered_control": 0.011442,
+      "token_major": 0.040617
+    },
+    "loop_reordering_control_vs_original_contiguous_percent": 21.186367089189506,
+    "operation_level": {
+      "contiguous": {
+        "analytical_flops": 8192,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.006778616326530612
+      },
+      "page_major": {
+        "analytical_flops": 8192,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.006557126530612244
+      },
+      "reordered_control": {
+        "analytical_flops": 8192,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.00559354693877551
+      },
+      "token_major": {
+        "analytical_flops": 8192,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.027101302040816327
+      }
+    },
+    "output_elements": 64,
+    "p95_ms": {
+      "contiguous": 0.006778616326530612,
+      "page_major": 0.006557126530612244,
+      "reordered_control": 0.00559354693877551,
+      "token_major": 0.027101302040816327
+    },
+    "page_major_latency_reduction_vs_original_contiguous_percent": 3.267477981479583,
+    "page_major_speedup_vs_original_contiguous_percent": 3.3778484353524707,
+    "paged_overhead_vs_matched_control_percent": 17.226629227995225,
+    "target": "host",
+    "token_to_page_major_speedup_percent": 313.310646276119,
+    "workload": "O1"
+  },
+  {
+    "analytical_flops": 65536,
+    "append_decode_p95_ms": {
+      "contiguous": 0.03542,
+      "page_major": 0.025273,
+      "reordered_control": 0.023721,
+      "token_major": 0.192757
+    },
+    "loop_reordering_control_vs_original_contiguous_percent": 58.22332968745245,
+    "operation_level": {
+      "contiguous": {
+        "analytical_flops": 65536,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.03187174193548387
+      },
+      "page_major": {
+        "analytical_flops": 65536,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.021989645161290323
+      },
+      "reordered_control": {
+        "analytical_flops": 65536,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.02014351612903226
+      },
+      "token_major": {
+        "analytical_flops": 65536,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.19073029032258065
+      }
+    },
+    "output_elements": 128,
+    "p95_ms": {
+      "contiguous": 0.03187174193548387,
+      "page_major": 0.021989645161290323,
+      "reordered_control": 0.02014351612903226,
+      "token_major": 0.19073029032258065
+    },
+    "page_major_latency_reduction_vs_original_contiguous_percent": 31.005825769414507,
+    "page_major_speedup_vs_original_contiguous_percent": 44.93977370580582,
+    "paged_overhead_vs_matched_control_percent": 9.164879757994647,
+    "target": "host",
+    "token_to_page_major_speedup_percent": 767.3641112605786,
+    "workload": "O2"
+  },
+  {
+    "analytical_flops": 262144,
+    "append_decode_p95_ms": {
+      "contiguous": 0.13691,
+      "page_major": 0.092811,
+      "reordered_control": 0.087579,
+      "token_major": 0.783527
+    },
+    "loop_reordering_control_vs_original_contiguous_percent": 77.12953626767462,
+    "operation_level": {
+      "contiguous": {
+        "analytical_flops": 262144,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.1231885
+      },
+      "page_major": {
+        "analytical_flops": 262144,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.073926625
+      },
+      "reordered_control": {
+        "analytical_flops": 262144,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.069547125
+      },
+      "token_major": {
+        "analytical_flops": 262144,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.727222
+      }
+    },
+    "output_elements": 256,
+    "p95_ms": {
+      "contiguous": 0.1231885,
+      "page_major": 0.073926625,
+      "reordered_control": 0.069547125,
+      "token_major": 0.727222
+    },
+    "page_major_latency_reduction_vs_original_contiguous_percent": 39.98902089074874,
+    "page_major_speedup_vs_original_contiguous_percent": 66.63617472054217,
+    "paged_overhead_vs_matched_control_percent": 6.2971690059078655,
+    "target": "host",
+    "token_to_page_major_speedup_percent": 883.7078319211788,
+    "workload": "O3"
+  },
+  {
+    "analytical_flops": 524288,
+    "append_decode_p95_ms": {
+      "contiguous": 0.301084,
+      "page_major": 0.196733,
+      "reordered_control": 0.164106,
+      "token_major": 1.597073
+    },
+    "loop_reordering_control_vs_original_contiguous_percent": 93.01359674851253,
+    "operation_level": {
+      "contiguous": {
+        "analytical_flops": 524288,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.27638775
+      },
+      "page_major": {
+        "analytical_flops": 524288,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.1551685
+      },
+      "reordered_control": {
+        "analytical_flops": 524288,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.143196
+      },
+      "token_major": {
+        "analytical_flops": 524288,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 1.51246
+      }
+    },
+    "output_elements": 256,
+    "p95_ms": {
+      "contiguous": 0.27638775,
+      "page_major": 0.1551685,
+      "reordered_control": 0.143196,
+      "token_major": 1.51246
+    },
+    "page_major_latency_reduction_vs_original_contiguous_percent": 43.85840182859045,
+    "page_major_speedup_vs_original_contiguous_percent": 78.12104260851913,
+    "paged_overhead_vs_matched_control_percent": 8.360917902734721,
+    "target": "host",
+    "token_to_page_major_speedup_percent": 874.7210290748445,
+    "workload": "O4"
+  },
+  {
+    "analytical_flops": 524288,
+    "append_decode_p95_ms": {
+      "contiguous": 0.271977,
+      "page_major": 0.173986,
+      "reordered_control": 0.145389,
+      "token_major": 1.50199
+    },
+    "loop_reordering_control_vs_original_contiguous_percent": 91.08847785993066,
+    "operation_level": {
+      "contiguous": {
+        "analytical_flops": 524288,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.26083625
+      },
+      "page_major": {
+        "analytical_flops": 524288,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.1621965
+      },
+      "reordered_control": {
+        "analytical_flops": 524288,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.13650025
+      },
+      "token_major": {
+        "analytical_flops": 524288,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 1.47170775
+      }
+    },
+    "output_elements": 256,
+    "p95_ms": {
+      "contiguous": 0.26083625,
+      "page_major": 0.1621965,
+      "reordered_control": 0.13650025,
+      "token_major": 1.47170775
+    },
+    "page_major_latency_reduction_vs_original_contiguous_percent": 37.81673367869688,
+    "page_major_speedup_vs_original_contiguous_percent": 60.81496826380348,
+    "paged_overhead_vs_matched_control_percent": 18.825057096965025,
+    "target": "host",
+    "token_to_page_major_speedup_percent": 807.3609788127363,
+    "workload": "O5"
+  },
+  {
+    "analytical_flops": 8192,
+    "append_decode_p95_ms": {
+      "contiguous": 0.011999,
+      "page_major": 0.012889,
+      "reordered_control": 0.010796,
+      "token_major": 0.022518
+    },
+    "loop_reordering_control_vs_original_contiguous_percent": 17.916044022341882,
+    "operation_level": {
+      "contiguous": {
+        "analytical_flops": 8192,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.007945563265306122
+      },
+      "page_major": {
+        "analytical_flops": 8192,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.00803604081632653
+      },
+      "reordered_control": {
+        "analytical_flops": 8192,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.006738322448979592
+      },
+      "token_major": {
+        "analytical_flops": 8192,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.017655277551020407
+      }
+    },
+    "output_elements": 64,
+    "p95_ms": {
+      "contiguous": 0.007945563265306122,
+      "page_major": 0.00803604081632653,
+      "reordered_control": 0.006738322448979592,
+      "token_major": 0.017655277551020407
+    },
+    "page_major_latency_reduction_vs_original_contiguous_percent": -1.1387178982700252,
+    "page_major_speedup_vs_original_contiguous_percent": -1.1258971064032952,
+    "paged_overhead_vs_matched_control_percent": 19.258775120556248,
+    "target": "raspberry_pi",
+    "token_to_page_major_speedup_percent": 119.70119309437584,
+    "workload": "O1"
+  },
+  {
+    "analytical_flops": 65536,
+    "append_decode_p95_ms": {
+      "contiguous": 0.038499,
+      "page_major": 0.031351,
+      "reordered_control": 0.028315,
+      "token_major": 0.111962
+    },
+    "loop_reordering_control_vs_original_contiguous_percent": 41.32730116415313,
+    "operation_level": {
+      "contiguous": {
+        "analytical_flops": 65536,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.03392912903225807
+      },
+      "page_major": {
+        "analytical_flops": 65536,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.02620458064516129
+      },
+      "reordered_control": {
+        "analytical_flops": 65536,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.024007483870967742
+      },
+      "token_major": {
+        "analytical_flops": 65536,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.10673654838709677
+      }
+    },
+    "output_elements": 128,
+    "p95_ms": {
+      "contiguous": 0.03392912903225807,
+      "page_major": 0.02620458064516129,
+      "reordered_control": 0.024007483870967742,
+      "token_major": 0.10673654838709677
+    },
+    "page_major_latency_reduction_vs_original_contiguous_percent": 22.766715820357998,
+    "page_major_speedup_vs_original_contiguous_percent": 29.477855386032005,
+    "paged_overhead_vs_matched_control_percent": 9.151716131528875,
+    "target": "raspberry_pi",
+    "token_to_page_major_speedup_percent": 307.32019272670874,
+    "workload": "O2"
+  },
+  {
+    "analytical_flops": 262144,
+    "append_decode_p95_ms": {
+      "contiguous": 0.135609,
+      "page_major": 0.092721,
+      "reordered_control": 0.081629,
+      "token_major": 0.425866
+    },
+    "loop_reordering_control_vs_original_contiguous_percent": 61.58802747116854,
+    "operation_level": {
+      "contiguous": {
+        "analytical_flops": 262144,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.123318125
+      },
+      "page_major": {
+        "analytical_flops": 262144,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.081188875
+      },
+      "reordered_control": {
+        "analytical_flops": 262144,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.076316375
+      },
+      "token_major": {
+        "analytical_flops": 262144,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.4065395
+      }
+    },
+    "output_elements": 256,
+    "p95_ms": {
+      "contiguous": 0.123318125,
+      "page_major": 0.081188875,
+      "reordered_control": 0.076316375,
+      "token_major": 0.4065395
+    },
+    "page_major_latency_reduction_vs_original_contiguous_percent": 34.16306402647624,
+    "page_major_speedup_vs_original_contiguous_percent": 51.8904221791471,
+    "paged_overhead_vs_matched_control_percent": 6.384606187073194,
+    "target": "raspberry_pi",
+    "token_to_page_major_speedup_percent": 400.7330129897723,
+    "workload": "O3"
+  },
+  {
+    "analytical_flops": 524288,
+    "append_decode_p95_ms": {
+      "contiguous": 0.3817,
+      "page_major": 0.242127,
+      "reordered_control": 0.159257,
+      "token_major": 0.941008
+    },
+    "loop_reordering_control_vs_original_contiguous_percent": 141.64940404501846,
+    "operation_level": {
+      "contiguous": {
+        "analytical_flops": 524288,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.36366725
+      },
+      "page_major": {
+        "analytical_flops": 524288,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.1988265
+      },
+      "reordered_control": {
+        "analytical_flops": 524288,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.15049375
+      },
+      "token_major": {
+        "analytical_flops": 524288,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.87858275
+      }
+    },
+    "output_elements": 256,
+    "p95_ms": {
+      "contiguous": 0.36366725,
+      "page_major": 0.1988265,
+      "reordered_control": 0.15049375,
+      "token_major": 0.87858275
+    },
+    "page_major_latency_reduction_vs_original_contiguous_percent": 45.32735625767786,
+    "page_major_speedup_vs_original_contiguous_percent": 82.9068308298944,
+    "paged_overhead_vs_matched_control_percent": 32.11611777897752,
+    "target": "raspberry_pi",
+    "token_to_page_major_speedup_percent": 341.88413013355864,
+    "workload": "O4"
+  },
+  {
+    "analytical_flops": 524288,
+    "append_decode_p95_ms": {
+      "contiguous": 0.386774,
+      "page_major": 0.196776,
+      "reordered_control": 0.157943,
+      "token_major": 0.869083
+    },
+    "loop_reordering_control_vs_original_contiguous_percent": 140.6669736804917,
+    "operation_level": {
+      "contiguous": {
+        "analytical_flops": 524288,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.36189875
+      },
+      "page_major": {
+        "analytical_flops": 524288,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.1673035
+      },
+      "reordered_control": {
+        "analytical_flops": 524288,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.15037325
+      },
+      "token_major": {
+        "analytical_flops": 524288,
+        "branch_miss_rate": "not_available",
+        "cycles_per_invocation": "not_available",
+        "cycles_per_output_element": "not_available",
+        "instructions_per_cycle": "not_available",
+        "instructions_per_invocation": "not_available",
+        "instructions_per_token": "not_available",
+        "l1_miss_rate": "not_available",
+        "llc_miss_rate": "not_available",
+        "p95_ms": 0.832764
+      }
+    },
+    "output_elements": 256,
+    "p95_ms": {
+      "contiguous": 0.36189875,
+      "page_major": 0.1673035,
+      "reordered_control": 0.15037325,
+      "token_major": 0.832764
+    },
+    "page_major_latency_reduction_vs_original_contiguous_percent": 53.77063336085024,
+    "page_major_speedup_vs_original_contiguous_percent": 116.31271910031771,
+    "paged_overhead_vs_matched_control_percent": 11.25881764210055,
+    "target": "raspberry_pi",
+    "token_to_page_major_speedup_percent": 397.75647251850677,
+    "workload": "O5"
+  }
+]

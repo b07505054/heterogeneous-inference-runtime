@@ -1,0 +1,19 @@
+{
+  "build_command": [
+    "g++",
+    "-O3",
+    "-std=c++17",
+    "-fPIC",
+    "-shared",
+    "/home/allen/paged_kv_page_major_optimization/native/cpu_kernels/attention_fp32.cpp",
+    "-o",
+    "build/libattention_fp32.so"
+  ],
+  "machine": "aarch64",
+  "native_artifact_sha256": "6f072cf532a2518de22d5f14880f1901e5d7b662966da4da1d0e89a5e7985eb9",
+  "native_source_sha256": "fb7456555d7385d6cdbec0be313b5888afb9213d6337331bc021bd7e3395bab1",
+  "platform": "Linux-6.18.34+rpt-rpi-2712-aarch64-with-glibc2.41",
+  "runner_sha256": "6ca09cab05642a803bdf748eb10893fb4dabb003c2585a7952e4310060fa4e21",
+  "target_id": "raspberry-pi5-cortex-a76",
+  "truth_boundary": "real_single_request_scalar_fp32_cpu_exact_profile_measurement"
+}

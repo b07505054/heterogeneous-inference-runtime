@@ -1,0 +1,164 @@
+[
+  {
+    "absolute_latency_regret_ms": 0.0,
+    "fragmentation_regret": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "latency",
+    "objective_score_regret": 0.0,
+    "relative_latency_regret": 0.0,
+    "workload_id": "W1"
+  },
+  {
+    "absolute_latency_regret_ms": 0.0,
+    "fragmentation_regret": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "memory_efficiency",
+    "objective_score_regret": 0.0,
+    "relative_latency_regret": 0.0,
+    "workload_id": "W1"
+  },
+  {
+    "absolute_latency_regret_ms": 0.0,
+    "fragmentation_regret": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "balanced",
+    "objective_score_regret": 0.0,
+    "relative_latency_regret": 0.0,
+    "workload_id": "W1"
+  },
+  {
+    "absolute_latency_regret_ms": 0.0,
+    "fragmentation_regret": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "latency",
+    "objective_score_regret": 0.0,
+    "relative_latency_regret": 0.0,
+    "workload_id": "W2"
+  },
+  {
+    "absolute_latency_regret_ms": 0.0,
+    "fragmentation_regret": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "memory_efficiency",
+    "objective_score_regret": 0.0,
+    "relative_latency_regret": 0.0,
+    "workload_id": "W2"
+  },
+  {
+    "absolute_latency_regret_ms": 0.0,
+    "fragmentation_regret": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "balanced",
+    "objective_score_regret": 0.0,
+    "relative_latency_regret": 0.0,
+    "workload_id": "W2"
+  },
+  {
+    "absolute_latency_regret_ms": 0.0,
+    "fragmentation_regret": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "latency",
+    "objective_score_regret": 0.0,
+    "relative_latency_regret": 0.0,
+    "workload_id": "W3"
+  },
+  {
+    "absolute_latency_regret_ms": 0.0,
+    "fragmentation_regret": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "memory_efficiency",
+    "objective_score_regret": 0.0,
+    "relative_latency_regret": 0.0,
+    "workload_id": "W3"
+  },
+  {
+    "absolute_latency_regret_ms": 0.0,
+    "fragmentation_regret": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "balanced",
+    "objective_score_regret": 0.0,
+    "relative_latency_regret": 0.0,
+    "workload_id": "W3"
+  },
+  {
+    "absolute_latency_regret_ms": 0.0,
+    "fragmentation_regret": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "latency",
+    "objective_score_regret": 0.0,
+    "relative_latency_regret": 0.0,
+    "workload_id": "W5"
+  },
+  {
+    "absolute_latency_regret_ms": 0.0,
+    "fragmentation_regret": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "memory_efficiency",
+    "objective_score_regret": 0.0,
+    "relative_latency_regret": 0.0,
+    "workload_id": "W5"
+  },
+  {
+    "absolute_latency_regret_ms": 0.0,
+    "fragmentation_regret": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "balanced",
+    "objective_score_regret": 0.0,
+    "relative_latency_regret": 0.0,
+    "workload_id": "W5"
+  },
+  {
+    "absolute_latency_regret_ms": 0.0,
+    "fragmentation_regret": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "latency",
+    "objective_score_regret": 0.0,
+    "relative_latency_regret": 0.0,
+    "workload_id": "W6"
+  },
+  {
+    "absolute_latency_regret_ms": 0.0,
+    "fragmentation_regret": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "memory_efficiency",
+    "objective_score_regret": 0.0,
+    "relative_latency_regret": 0.0,
+    "workload_id": "W6"
+  },
+  {
+    "absolute_latency_regret_ms": 0.0,
+    "fragmentation_regret": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "balanced",
+    "objective_score_regret": 0.0,
+    "relative_latency_regret": 0.0,
+    "workload_id": "W6"
+  },
+  {
+    "absolute_latency_regret_ms": 0.0,
+    "fragmentation_regret": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "latency",
+    "objective_score_regret": 0.0,
+    "relative_latency_regret": 0.0,
+    "workload_id": "W8"
+  },
+  {
+    "absolute_latency_regret_ms": 0.0,
+    "fragmentation_regret": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "memory_efficiency",
+    "objective_score_regret": 0.0,
+    "relative_latency_regret": 0.0,
+    "workload_id": "W8"
+  },
+  {
+    "absolute_latency_regret_ms": 0.0,
+    "fragmentation_regret": 0.0,
+    "memory_regret_bytes": 0,
+    "objective": "balanced",
+    "objective_score_regret": 0.0,
+    "relative_latency_regret": 0.0,
+    "workload_id": "W8"
+  }
+]

@@ -1,0 +1,530 @@
+[
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W1",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "latency",
+    "objective_score": 1.0,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 0.0,
+      "latency_weight": 1.0,
+      "max_latency_regression": 0.0,
+      "memory_weight": 0.0
+    },
+    "workload_id": "W1"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W1",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "memory_efficiency",
+    "objective_score": 1.0,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 1.0,
+      "latency_weight": 0.0,
+      "max_latency_regression": 0.25,
+      "memory_weight": 1.0
+    },
+    "workload_id": "W1"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W1",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "balanced",
+    "objective_score": 0.8999999999999999,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 0.1,
+      "latency_weight": 0.6,
+      "max_latency_regression": 1.0,
+      "memory_weight": 0.3
+    },
+    "workload_id": "W1"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W2",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "latency",
+    "objective_score": 1.0,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 0.0,
+      "latency_weight": 1.0,
+      "max_latency_regression": 0.0,
+      "memory_weight": 0.0
+    },
+    "workload_id": "W2"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W2",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "memory_efficiency",
+    "objective_score": 1.0,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 1.0,
+      "latency_weight": 0.0,
+      "max_latency_regression": 0.25,
+      "memory_weight": 1.0
+    },
+    "workload_id": "W2"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W2",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "balanced",
+    "objective_score": 0.8999999999999999,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 0.1,
+      "latency_weight": 0.6,
+      "max_latency_regression": 1.0,
+      "memory_weight": 0.3
+    },
+    "workload_id": "W2"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W3",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "latency",
+    "objective_score": 1.0,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 0.0,
+      "latency_weight": 1.0,
+      "max_latency_regression": 0.0,
+      "memory_weight": 0.0
+    },
+    "workload_id": "W3"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W3",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "memory_efficiency",
+    "objective_score": 1.0,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 1.0,
+      "latency_weight": 0.0,
+      "max_latency_regression": 0.25,
+      "memory_weight": 1.0
+    },
+    "workload_id": "W3"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W3",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "balanced",
+    "objective_score": 0.8999999999999999,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 0.1,
+      "latency_weight": 0.6,
+      "max_latency_regression": 1.0,
+      "memory_weight": 0.3
+    },
+    "workload_id": "W3"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W4",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "latency",
+    "objective_score": 1.0,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 0.0,
+      "latency_weight": 1.0,
+      "max_latency_regression": 0.0,
+      "memory_weight": 0.0
+    },
+    "workload_id": "W4"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W4",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "memory_efficiency",
+    "objective_score": 1.0,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 1.0,
+      "latency_weight": 0.0,
+      "max_latency_regression": 0.25,
+      "memory_weight": 1.0
+    },
+    "workload_id": "W4"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W4",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "balanced",
+    "objective_score": 0.8999999999999999,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 0.1,
+      "latency_weight": 0.6,
+      "max_latency_regression": 1.0,
+      "memory_weight": 0.3
+    },
+    "workload_id": "W4"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W5",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "latency",
+    "objective_score": 1.0,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 0.0,
+      "latency_weight": 1.0,
+      "max_latency_regression": 0.0,
+      "memory_weight": 0.0
+    },
+    "workload_id": "W5"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W5",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "memory_efficiency",
+    "objective_score": 1.0,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 1.0,
+      "latency_weight": 0.0,
+      "max_latency_regression": 0.25,
+      "memory_weight": 1.0
+    },
+    "workload_id": "W5"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W5",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "balanced",
+    "objective_score": 0.8999999999999999,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 0.1,
+      "latency_weight": 0.6,
+      "max_latency_regression": 1.0,
+      "memory_weight": 0.3
+    },
+    "workload_id": "W5"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W6",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "latency",
+    "objective_score": 1.0,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 0.0,
+      "latency_weight": 1.0,
+      "max_latency_regression": 0.0,
+      "memory_weight": 0.0
+    },
+    "workload_id": "W6"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W6",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "memory_efficiency",
+    "objective_score": 1.0,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 1.0,
+      "latency_weight": 0.0,
+      "max_latency_regression": 0.25,
+      "memory_weight": 1.0
+    },
+    "workload_id": "W6"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W6",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "balanced",
+    "objective_score": 0.8999999999999999,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 0.1,
+      "latency_weight": 0.6,
+      "max_latency_regression": 1.0,
+      "memory_weight": 0.3
+    },
+    "workload_id": "W6"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W7",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "latency",
+    "objective_score": 1.0,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 0.0,
+      "latency_weight": 1.0,
+      "max_latency_regression": 0.0,
+      "memory_weight": 0.0
+    },
+    "workload_id": "W7"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W7",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "memory_efficiency",
+    "objective_score": 1.0,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 1.0,
+      "latency_weight": 0.0,
+      "max_latency_regression": 0.25,
+      "memory_weight": 1.0
+    },
+    "workload_id": "W7"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W7",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "balanced",
+    "objective_score": 0.8999999999999999,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 0.1,
+      "latency_weight": 0.6,
+      "max_latency_regression": 1.0,
+      "memory_weight": 0.3
+    },
+    "workload_id": "W7"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W8",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "latency",
+    "objective_score": 1.0,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 0.0,
+      "latency_weight": 1.0,
+      "max_latency_regression": 0.0,
+      "memory_weight": 0.0
+    },
+    "workload_id": "W8"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W8",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "memory_efficiency",
+    "objective_score": 1.0,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 1.0,
+      "latency_weight": 0.0,
+      "max_latency_regression": 0.25,
+      "memory_weight": 1.0
+    },
+    "workload_id": "W8"
+  },
+  {
+    "candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "evidence_identity": [
+      "host-x86_64",
+      "W8",
+      "cpu_contiguous_kv_fp32_v1",
+      null
+    ],
+    "objective": "balanced",
+    "objective_score": 0.8999999999999999,
+    "oracle_candidate_id": "cpu_contiguous_kv_fp32_v1",
+    "oracle_page_tokens": null,
+    "page_tokens": null,
+    "selection_reason": "exact_target_workload_measured_profile_minimum_objective_score",
+    "weights": {
+      "fragmentation_weight": 0.1,
+      "latency_weight": 0.6,
+      "max_latency_regression": 1.0,
+      "memory_weight": 0.3
+    },
+    "workload_id": "W8"
+  }
+]

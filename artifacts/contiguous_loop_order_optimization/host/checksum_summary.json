@@ -1,0 +1,52 @@
+[
+  {
+    "checksums": {
+      "original_contiguous": -0.7289966456592083,
+      "page_major": -0.7289966456592083,
+      "reordered_contiguous": -0.7289966456592083,
+      "token_major": -0.7289966456592083
+    },
+    "max_checksum_difference": 0.0,
+    "workload_id": "O1"
+  },
+  {
+    "checksums": {
+      "original_contiguous": -0.45647868514060974,
+      "page_major": -0.45647868514060974,
+      "reordered_contiguous": -0.45647868514060974,
+      "token_major": -0.45647868514060974
+    },
+    "max_checksum_difference": 0.0,
+    "workload_id": "O2"
+  },
+  {
+    "checksums": {
+      "original_contiguous": 0.15595625108107924,
+      "page_major": 0.15595625108107924,
+      "reordered_contiguous": 0.15595625108107924,
+      "token_major": 0.15595625108107924
+    },
+    "max_checksum_difference": 0.0,
+    "workload_id": "O3"
+  },
+  {
+    "checksums": {
+      "original_contiguous": 0.3602180443704128,
+      "page_major": 0.3602180443704128,
+      "reordered_contiguous": 0.3602180443704128,
+      "token_major": 0.3602180443704128
+    },
+    "max_checksum_difference": 0.0,
+    "workload_id": "O4"
+  },
+  {
+    "checksums": {
+      "original_contiguous": 0.5274775537836831,
+      "page_major": 0.5274775537836831,
+      "reordered_contiguous": 0.5274775537836831,
+      "token_major": 0.5274775537836831
+    },
+    "max_checksum_difference": 0.0,
+    "workload_id": "O5"
+  }
+]
