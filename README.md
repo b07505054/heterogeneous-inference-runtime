@@ -129,6 +129,10 @@ layer -> policy -> deployment decision.
   compiler-owned calibration and packed weights, materialized integer IR,
   canonical custom ExecutionPlan execution, fair XNNPACK comparison, and
   evidence-backed complete-candidate routing on Raspberry Pi 5.
+- Replaced manual Slice 3 complete-candidate construction with Cartesian
+  dimension generation, dependency pruning, independent legality, and an
+  explicit visualization-friendly candidate graph. Ranking remains downstream;
+  no predictive cost model is implemented.
 - Recorded the no-quant Qwen GTX 1650 Max-Q vLLM benchmark: default vLLM OOMs
   on the 4 GB GPU with default greedy startup/warmup, while the
   compiler-generated execution plan avoids that OOM by materializing a

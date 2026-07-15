@@ -6,10 +6,13 @@ does not extract full-model weights.
 """
 from __future__ import annotations
 
+import hashlib
+import itertools
 import json
 import platform
 import subprocess
 from dataclasses import dataclass, asdict
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -74,6 +77,151 @@ class CompleteCandidate:
     thread_count: int = 1
     quantization_scheme: str = "none"
     artifact_kind: str = "native_binary"
+    tile_id: str = "untiled"
+    memory_placement: str = "cpu_visible_host_memory"
+    execution_strategy: str = "native_fused_call"
+    measurement_evidence_kind: str = "steady_state_invoke"
+    generation_provenance: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
+class CandidateDimension:
+    name: str
+    values: tuple[str | int, ...]
+    identity: str
+    legality_constraints: tuple[str, ...] = ()
+    dependency_rules: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
+class CandidateGraphNode:
+    node_id: str
+    dimensions: dict[str, str | int]
+    candidate: CompleteCandidate | None
+    generation_status: str
+    rejection_reasons: tuple[str, ...]
+    provenance: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class CandidateGraph:
+    schema_version: str
+    dimensions: tuple[CandidateDimension, ...]
+    nodes: tuple[CandidateGraphNode, ...]
+
+    @property
+    def accepted_candidates(self) -> tuple[CompleteCandidate, ...]:
+        return tuple(n.candidate for n in self.nodes if n.candidate is not None)
+
+    def to_visualization_dict(self) -> dict[str, Any]:
+        return {
+            "schema_version": self.schema_version,
+            "dimensions": [asdict(d) for d in self.dimensions],
+            "summary": {
+                "combination_count": len(self.nodes),
+                "accepted_count": len(self.accepted_candidates),
+                "rejected_count": len(self.nodes) - len(self.accepted_candidates),
+            },
+            "nodes": [
+                {
+                    "node_id": n.node_id,
+                    "dimensions": n.dimensions,
+                    "generation_status": n.generation_status,
+                    "candidate_id": n.candidate.candidate_id if n.candidate else None,
+                    "rejection_reasons": list(n.rejection_reasons),
+                    "provenance": list(n.provenance),
+                }
+                for n in self.nodes
+            ],
+        }
+
+
+GENERATION_REJECTION_REASONS = frozenset({
+    "backend_runtime_mismatch", "backend_delegate_mismatch",
+    "precision_quantization_mismatch", "kernel_precision_mismatch",
+    "layout_kernel_mismatch", "packing_layout_mismatch",
+    "target_kernel_mismatch", "artifact_runtime_mismatch",
+    "thread_execution_mismatch", "memory_execution_mismatch",
+})
+
+
+class CandidateGenerator:
+    """Generate complete candidates; never evaluate cost or select a winner."""
+
+    def discover_dimensions(self) -> tuple[CandidateDimension, ...]:
+        return (
+            CandidateDimension("backend", ("portable_cpu", "executorch_xnnpack"), "backend.v1", ("backend_registered",), ("root_dimension",)),
+            CandidateDimension("runtime", ("native", "executorch"), "runtime.v1", ("runtime_packaged",), ("backend_runtime",)),
+            CandidateDimension("delegate", ("none", "xnnpack"), "delegate.v1", ("delegate_available",), ("backend_delegate",)),
+            CandidateDimension("precision", ("fp32", SCHEME, "int8"), "precision.v1", ("precision_supported",), ("backend_precision",)),
+            CandidateDimension("quantization_scheme", ("none", SCHEME, "pt2e_per_tensor_affine_per_channel_symmetric_axis0"), "quantization.v1", ("quantization_supported",), ("precision_quantization",)),
+            CandidateDimension("kernel", (FP32_KERNEL_ID, INT8_KERNEL_ID, PACKED_INT8_KERNEL_ID, "xnnpack_delegate_linear_bias_relu", "xnnpack_delegate_quantized_linear_bias_relu"), "kernel.v1", ("kernel_available",), ("kernel_precision",)),
+            CandidateDimension("layout", ("row_major_kx_n", PACKED_B_TRANSPOSE_LAYOUT, "embedded_pte"), "layout.v1", ("layout_supported",), ("layout_kernel",)),
+            CandidateDimension("packing", ("none", PACKED_B_TRANSPOSE_SCHEME), "packing.v1", ("packed_artifact_available",), ("packing_layout",)),
+            CandidateDimension("tile", ("untiled",), "tile.v1", ("tile_supported",), ("kernel_tile",)),
+            CandidateDimension("thread_count", (1, 4), "thread.v1", ("target_thread_budget",), ("thread_execution",)),
+            CandidateDimension("memory_placement", ("cpu_visible_host_memory", "runtime_managed"), "memory.v1", ("memory_space_available",), ("memory_execution",)),
+            CandidateDimension("target_isa", ("generic_aarch64", "cortex_a76_dotprod", "aarch64"), "target_isa.v1", ("isa_supported",), ("target_kernel",)),
+            CandidateDimension("artifact_kind", ("native_binary", "pte"), "artifact.v1", ("artifact_identity_valid",), ("artifact_runtime",)),
+            CandidateDimension("execution_strategy", ("native_fused_call", "xnnpack_delegate_region"), "execution.v1", ("execution_strategy_supported",), ("thread_execution",)),
+            CandidateDimension("measurement_evidence", ("steady_state_invoke",), "measurement.v1", ("measurement_identity_valid",), ("candidate_measurement",)),
+        )
+
+    @staticmethod
+    def _node_id(values: dict[str, str | int]) -> str:
+        encoded = json.dumps(values, sort_keys=True, separators=(",", ":")).encode()
+        return "candidate-combination-" + hashlib.sha256(encoded).hexdigest()[:20]
+
+    @staticmethod
+    def _dependency_reasons(v: dict[str, str | int]) -> tuple[str, ...]:
+        portable = v["backend"] == "portable_cpu"
+        reasons: list[str] = []
+        if (portable and v["runtime"] != "native") or (not portable and v["runtime"] != "executorch"): reasons.append("backend_runtime_mismatch")
+        if (portable and v["delegate"] != "none") or (not portable and v["delegate"] != "xnnpack"): reasons.append("backend_delegate_mismatch")
+        expected_q = {"fp32": "none", SCHEME: SCHEME, "int8": "pt2e_per_tensor_affine_per_channel_symmetric_axis0"}.get(v["precision"])
+        if v["quantization_scheme"] != expected_q: reasons.append("precision_quantization_mismatch")
+        expected_kernel = {
+            ("portable_cpu", "fp32"): {FP32_KERNEL_ID},
+            ("portable_cpu", SCHEME): {INT8_KERNEL_ID, PACKED_INT8_KERNEL_ID},
+            ("executorch_xnnpack", "fp32"): {"xnnpack_delegate_linear_bias_relu"},
+            ("executorch_xnnpack", "int8"): {"xnnpack_delegate_quantized_linear_bias_relu"},
+        }.get((v["backend"], v["precision"]), set())
+        if v["kernel"] not in expected_kernel: reasons.append("kernel_precision_mismatch")
+        expected_layout = "embedded_pte" if not portable else (PACKED_B_TRANSPOSE_LAYOUT if v["kernel"] == PACKED_INT8_KERNEL_ID else "row_major_kx_n")
+        if v["layout"] != expected_layout: reasons.append("layout_kernel_mismatch")
+        expected_packing = PACKED_B_TRANSPOSE_SCHEME if v["layout"] == PACKED_B_TRANSPOSE_LAYOUT else "none"
+        if v["packing"] != expected_packing: reasons.append("packing_layout_mismatch")
+        expected_target = "aarch64" if not portable else ("cortex_a76_dotprod" if v["kernel"] == PACKED_INT8_KERNEL_ID and v["target_isa"] == "cortex_a76_dotprod" else "generic_aarch64")
+        if v["target_isa"] != expected_target: reasons.append("target_kernel_mismatch")
+        if v["artifact_kind"] != ("native_binary" if portable else "pte"): reasons.append("artifact_runtime_mismatch")
+        if portable and v["thread_count"] != 1: reasons.append("thread_execution_mismatch")
+        if not portable and v["precision"] == "fp32" and v["thread_count"] != 1: reasons.append("thread_execution_mismatch")
+        if v["execution_strategy"] != ("native_fused_call" if portable else "xnnpack_delegate_region"): reasons.append("thread_execution_mismatch")
+        if v["memory_placement"] != ("cpu_visible_host_memory" if portable else "runtime_managed"): reasons.append("memory_execution_mismatch")
+        return tuple(sorted(set(reasons)))
+
+    @staticmethod
+    def _candidate_id(v: dict[str, str | int]) -> str:
+        if v["backend"] == "portable_cpu":
+            return f"slice3c:portable_cpu:{v['precision']}:{v['layout']}:{v['target_isa']}"
+        return f"slice3g:executorch_xnnpack:{v['precision']}:{v['quantization_scheme']}:t{v['thread_count']}:aarch64"
+
+    def generate(self) -> CandidateGraph:
+        dimensions = self.discover_dimensions()
+        nodes: list[CandidateGraphNode] = []
+        provenance = ("candidate_generator.cartesian_product.v1", "dimension_catalog.slice3_complete_implementations.v1")
+        for values in itertools.product(*(d.values for d in dimensions)):
+            v = dict(zip((d.name for d in dimensions), values))
+            reasons = self._dependency_reasons(v)
+            candidate = None
+            if not reasons:
+                kernel = str(v["kernel"]);target = str(v["target_isa"])
+                required_isa = ("asimd", "asimddp") if target == "cortex_a76_dotprod" else ()
+                flags = ("-O3", "-mcpu=cortex-a76") if target == "cortex_a76_dotprod" else (("-O2",) if v["backend"] == "portable_cpu" else ())
+                capability = {FP32_KERNEL_ID:"quant_kernel.none",INT8_KERNEL_ID:KERNEL_CAPABILITY,PACKED_INT8_KERNEL_ID:PACKED_INT8_KERNEL_CAPABILITY}.get(kernel,"runtime.executorch.xnnpack")
+                candidate = CompleteCandidate(self._candidate_id(v),str(v["backend"]),str(v["precision"]),kernel,str(v["layout"]),"" if v["packing"] == "none" else str(v["packing"]),target,required_isa,flags,capability,str(v["runtime"]),str(v["delegate"]),int(v["thread_count"]),str(v["quantization_scheme"]),str(v["artifact_kind"]),str(v["tile"]),str(v["memory_placement"]),str(v["execution_strategy"]),str(v["measurement_evidence"]),provenance)
+            nodes.append(CandidateGraphNode(self._node_id(v),v,candidate,"accepted" if candidate else "rejected_by_dependency_rules",reasons,provenance))
+        return CandidateGraph("slice3.candidate_graph.v1",dimensions,tuple(nodes))
 
 
 def load_codegen_capabilities(profile: dict[str, Any]) -> CodegenCapabilities:
@@ -96,16 +244,13 @@ def load_codegen_capabilities(profile: dict[str, Any]) -> CodegenCapabilities:
     )
 
 
+@lru_cache(maxsize=1)
+def generate_candidate_graph() -> CandidateGraph:
+    return CandidateGenerator().generate()
+
+
 def enumerate_complete_candidates() -> list[CompleteCandidate]:
-    return [
-        CompleteCandidate(FP32_CANDIDATE_ID, "portable_cpu", "fp32", FP32_KERNEL_ID, "row_major_kx_n", "", "generic_aarch64", (), ("-O2",), "quant_kernel.none"),
-        CompleteCandidate(INT8_ROW_MAJOR_CANDIDATE_ID, "portable_cpu", SCHEME, INT8_KERNEL_ID, "row_major_kx_n", "", "generic_aarch64", (), ("-O2",), KERNEL_CAPABILITY),
-        CompleteCandidate(INT8_PACKED_GENERIC_CANDIDATE_ID, "portable_cpu", SCHEME, PACKED_INT8_KERNEL_ID, PACKED_B_TRANSPOSE_LAYOUT, PACKED_B_TRANSPOSE_SCHEME, "generic_aarch64", (), ("-O2",), PACKED_INT8_KERNEL_CAPABILITY),
-        CompleteCandidate(INT8_PACKED_A76_DOTPROD_CANDIDATE_ID, "portable_cpu", SCHEME, PACKED_INT8_KERNEL_ID, PACKED_B_TRANSPOSE_LAYOUT, PACKED_B_TRANSPOSE_SCHEME, "cortex_a76_dotprod", ("asimd", "asimddp"), ("-O3", "-mcpu=cortex-a76"), PACKED_INT8_KERNEL_CAPABILITY),
-        CompleteCandidate(EXECUTORCH_XNNPACK_FP32_T1_CANDIDATE_ID, "executorch_xnnpack", "fp32", "xnnpack_delegate_linear_bias_relu", "embedded_pte", "", "aarch64", (), (), "runtime.executorch.xnnpack", "executorch", "xnnpack", 1, "none", "pte"),
-        CompleteCandidate(EXECUTORCH_XNNPACK_INT8_T1_CANDIDATE_ID, "executorch_xnnpack", "int8", "xnnpack_delegate_quantized_linear_bias_relu", "embedded_pte", "", "aarch64", (), (), "runtime.executorch.xnnpack", "executorch", "xnnpack", 1, "pt2e_per_tensor_affine_per_channel_symmetric_axis0", "pte"),
-        CompleteCandidate(EXECUTORCH_XNNPACK_INT8_T4_CANDIDATE_ID, "executorch_xnnpack", "int8", "xnnpack_delegate_quantized_linear_bias_relu", "embedded_pte", "", "aarch64", (), (), "runtime.executorch.xnnpack", "executorch", "xnnpack", 4, "pt2e_per_tensor_affine_per_channel_symmetric_axis0", "pte"),
-    ]
+    return list(generate_candidate_graph().accepted_candidates)
 
 
 def candidate_legality(candidate: CompleteCandidate, caps: CodegenCapabilities, *, has_calibration_artifact: bool,

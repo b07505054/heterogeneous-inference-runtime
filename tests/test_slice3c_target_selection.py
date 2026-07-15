@@ -12,16 +12,81 @@ from deployment.execution_plan.int8_quantization import (
     create_calibration_artifact,
 )
 from deployment.execution_plan.slice3c_target_selection import (
+    CandidateGenerator,
+    GENERATION_REJECTION_REASONS,
+    EXECUTORCH_XNNPACK_INT8_T1_CANDIDATE_ID,
+    EXECUTORCH_XNNPACK_INT8_T4_CANDIDATE_ID,
     FP32_CANDIDATE_ID,
     INT8_PACKED_A76_DOTPROD_CANDIDATE_ID,
     INT8_PACKED_GENERIC_CANDIDATE_ID,
     candidate_legality,
     create_build_manifest,
     enumerate_complete_candidates,
+    generate_candidate_graph,
     load_codegen_capabilities,
     select_candidate,
     validate_measurement,
 )
+
+
+def test_candidate_generator_cartesian_expansion_and_no_ranking():
+    graph = generate_candidate_graph()
+    expected = 1
+    for dimension in graph.dimensions:
+        expected *= len(dimension.values)
+    assert len(graph.nodes) == expected
+    assert len(graph.accepted_candidates) == 7
+    assert not hasattr(CandidateGenerator, "rank")
+    assert not hasattr(CandidateGenerator, "select")
+
+
+def test_candidate_graph_records_pruned_combinations_and_stable_reasons():
+    graph = generate_candidate_graph()
+    rejected = [node for node in graph.nodes if node.candidate is None]
+    assert rejected
+    assert all(node.rejection_reasons for node in rejected)
+    assert {reason for node in rejected for reason in node.rejection_reasons} <= GENERATION_REJECTION_REASONS
+    view = graph.to_visualization_dict()
+    assert view["summary"] == {
+        "combination_count": len(graph.nodes),
+        "accepted_count": 7,
+        "rejected_count": len(graph.nodes) - 7,
+    }
+
+
+def test_generation_identity_is_stable_and_dimension_sensitive():
+    first = generate_candidate_graph()
+    second = CandidateGenerator().generate()
+    assert [c.candidate_id for c in first.accepted_candidates] == [c.candidate_id for c in second.accepted_candidates]
+    ids = {c.candidate_id for c in first.accepted_candidates}
+    assert len(ids) == 7
+    assert EXECUTORCH_XNNPACK_INT8_T1_CANDIDATE_ID in ids
+    assert EXECUTORCH_XNNPACK_INT8_T4_CANDIDATE_ID in ids
+
+
+def test_dimensions_have_identity_constraints_and_dependency_rules():
+    dimensions = CandidateGenerator().discover_dimensions()
+    assert {d.name for d in dimensions} == {
+        "backend", "runtime", "delegate", "precision", "quantization_scheme",
+        "kernel", "layout", "packing", "tile", "thread_count",
+        "memory_placement", "target_isa", "artifact_kind",
+        "execution_strategy", "measurement_evidence",
+    }
+    assert all(d.identity for d in dimensions)
+    assert all(d.values for d in dimensions)
+    assert any(d.legality_constraints for d in dimensions)
+    assert any(d.dependency_rules for d in dimensions)
+
+
+def test_generation_and_target_legality_are_independent():
+    candidates = enumerate_complete_candidates()
+    a76 = next(c for c in candidates if c.candidate_id == INT8_PACKED_A76_DOTPROD_CANDIDATE_ID)
+    generic = load_codegen_capabilities(_profile(isaFeatures=["asimd"], supportsInt8DotProduct=False, microarchitecture="generic"))
+    assert a76 in candidates
+    assert "missing_microarchitecture_capability" in candidate_legality(
+        a76, generic, has_calibration_artifact=True, has_packed_artifact=True,
+        build_tool_flags=generic.supported_compiler_target_flags,
+    )
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PROFILE = REPO_ROOT / "configs/target_profiles/raspberry_pi5_cortex_a76_cpu.json"

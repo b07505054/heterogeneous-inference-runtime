@@ -21,6 +21,22 @@ Compiler complete-candidate generation and legality
   -> measured output
 ```
 
+Complete candidates are no longer listed by hand. The compiler-owned generator
+discovers dimension values, expands their Cartesian product, prunes structurally
+impossible combinations, and emits an explicit candidate graph. Target and
+artifact legality is a separate step:
+
+```text
+Generate Candidates
+  -> Legality
+  -> Candidate Pool
+  -> Cost Model (future)
+  -> Selection
+```
+
+The generator does not rank candidates or consume latency. Existing measured
+selection remains downstream and unchanged.
+
 The compiler owns selection and artifact identity. The runtime owns validation,
 routing, and execution. Runtime does not change backend, precision, thread
 count, or artifacts; it does not repack or requantize.
