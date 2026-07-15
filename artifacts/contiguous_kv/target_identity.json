@@ -1,0 +1,5 @@
+{
+  "architecture": "x86_64",
+  "execution": "single_process_single_thread_scalar_fp32",
+  "schema_version": "contiguous_kv_target.v1"
+}

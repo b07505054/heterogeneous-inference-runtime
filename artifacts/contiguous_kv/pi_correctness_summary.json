@@ -1,0 +1,42 @@
+[
+  {
+    "cache_content_tolerance": 0.0,
+    "case": "A",
+    "cosine_similarity": 0.9999999999999943,
+    "inf_count": 0,
+    "max_absolute_error": 1.308861674598205e-07,
+    "mean_absolute_error": 2.218048706222084e-08,
+    "nan_count": 0,
+    "relative_l2": 1.0773058660081568e-07
+  },
+  {
+    "cache_content_tolerance": 0.0,
+    "case": "B",
+    "cosine_similarity": 0.9999999999999853,
+    "inf_count": 0,
+    "max_absolute_error": 2.5942683867796745e-07,
+    "mean_absolute_error": 3.1041818571738725e-08,
+    "nan_count": 0,
+    "relative_l2": 1.7161417910154642e-07
+  },
+  {
+    "cache_content_tolerance": 0.0,
+    "case": "C",
+    "cosine_similarity": 0.9999999999999728,
+    "inf_count": 0,
+    "max_absolute_error": 4.5840792400886343e-07,
+    "mean_absolute_error": 5.460756815911412e-08,
+    "nan_count": 0,
+    "relative_l2": 2.32937449623145e-07
+  },
+  {
+    "cache_content_tolerance": 0.0,
+    "case": "D",
+    "cosine_similarity": 0.999999999999947,
+    "inf_count": 0,
+    "max_absolute_error": 6.788895143272633e-07,
+    "mean_absolute_error": 7.084690702758959e-08,
+    "nan_count": 0,
+    "relative_l2": 3.255626942032325e-07
+  }
+]

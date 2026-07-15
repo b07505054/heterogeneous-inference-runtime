@@ -1,0 +1,19 @@
+{
+  "artifact_load_count": 1,
+  "cache_allocation_count": 1,
+  "cache_create_count": 1,
+  "cache_read_count": 2,
+  "cache_release_count": 0,
+  "cache_reset_count": 0,
+  "checksum": -0.35242491983808577,
+  "decode_append_count": 1,
+  "decode_attention_invocation_count": 1,
+  "prefill_attention_invocation_count": 1,
+  "prefill_write_count": 1,
+  "runtime_kernel_reselection_count": 0,
+  "runtime_layout_reselection_count": 0,
+  "runtime_no_kernel_redecision": true,
+  "runtime_no_layout_redecision": true,
+  "state": "READY",
+  "valid_tokens": 5
+}

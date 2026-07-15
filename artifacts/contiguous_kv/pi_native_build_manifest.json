@@ -1,0 +1,7 @@
+{
+  "abi_version": "hir.contiguous_kv.v1",
+  "artifact_sha256": "67334828b53b6ce784dd281499a09254023ee7f82f04a89ca80cdde471ea1c03",
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "compiler_flags": ["-O3", "-std=c++17", "-fPIC", "-shared"],
+  "source_sha256": "4e5a5a5f1eb24343a303cbcee74a1654b60be59ef8cdcaeaf5bf1e502525ac32"
+}

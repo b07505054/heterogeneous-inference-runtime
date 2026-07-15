@@ -1,0 +1,7 @@
+{
+  "abi_version": "hir.contiguous_kv.v1",
+  "artifact_sha256": "91dce7988ef230895b98c7d545206607d245a9c38589d8d59b281d0db7a1604e",
+  "compiler_flags": ["-O3", "-std=c++17", "-fPIC", "-shared"],
+  "source": "native/cpu_kernels/attention_fp32.cpp",
+  "source_sha256": "4e5a5a5f1eb24343a303cbcee74a1654b60be59ef8cdcaeaf5bf1e502525ac32"
+}

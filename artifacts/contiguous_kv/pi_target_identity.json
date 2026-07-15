@@ -1,0 +1,11 @@
+{
+  "architecture": "aarch64",
+  "cpu": "Cortex-A76",
+  "execution": "single_process_single_thread_scalar_fp32",
+  "frequency_hz": 2400000000,
+  "governor": "performance",
+  "kernel": "Linux 6.18.34+rpt-rpi-2712",
+  "schema_version": "contiguous_kv_target.v1",
+  "temperature_c_before": 47.7,
+  "throttled": "0x0"
+}

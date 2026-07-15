@@ -1,0 +1,19 @@
+{
+  "artifact_sha256": "91dce7988ef230895b98c7d545206607d245a9c38589d8d59b281d0db7a1604e",
+  "build_command": [
+    "g++",
+    "-O3",
+    "-std=c++17",
+    "-fPIC",
+    "-shared",
+    "/home/allen/Desktop/Project/heterogeneous-inference-runtime/native/cpu_kernels/attention_fp32.cpp",
+    "-o",
+    "/tmp/contiguous_kv_build/libattention_fp32.so"
+  ],
+  "build_ms": 464.98751314356923,
+  "host": "Linux-7.0.0-27-generic-x86_64-with-glibc2.43",
+  "runner_sha256": "52dd20f6906f2cdc045751bcfc6a6ff2c52e6c1fdf02aeeb5f7919c2dcad4ce5",
+  "schema_version": "contiguous_kv_evaluation.v1",
+  "source_sha256": "4e5a5a5f1eb24343a303cbcee74a1654b60be59ef8cdcaeaf5bf1e502525ac32",
+  "truth_boundary": "operator_level_runtime_owned_contiguous_fp32_kv"
+}

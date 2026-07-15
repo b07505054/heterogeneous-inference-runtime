@@ -132,10 +132,13 @@ compiler-selected `cpu_attention_prefill_fp32` and
 `cpu_attention_decode_fp32` contracts. It loads a native shared artifact once,
 validates phase, entry point, FP32 BHSD-contiguous shapes, causal semantics,
 workspace, artifact version and SHA256, then executes real scaled dot-product
-attention without implementation reselection. The scope is static causal MHA
-with externally supplied contiguous K/V history; it is not full-model
-inference, KV-cache allocation/lifetime, paged attention, continuous batching,
-FlashAttention, GQA/MQA, GPU attention, or production serving.
+attention without implementation reselection. Its compiler-defined contiguous
+FP32 KV contract fixes `[batch, heads, capacity, head_dim]`, strides, capacity,
+byte sizes, and ABI entry points. Runtime allocates once, writes prefill K/V,
+appends the current token before decode attention, and tracks the live valid
+prefix without layout or kernel reselection. It is not full-model inference,
+paged attention, block allocation, eviction, prefix caching, continuous
+batching, FlashAttention, GQA/MQA, GPU attention, or production serving.
 
 - Completed the Slice 3A-3G fused Linear + Bias + ReLU quantization milestone:
   compiler-owned calibration and packed weights, materialized integer IR,
