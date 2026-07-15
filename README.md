@@ -127,18 +127,44 @@ layer -> policy -> deployment decision.
 
 ### Operator-level FP32 CPU attention
 
-The runtime has a persistent, fail-closed runner for the exact
-compiler-selected `cpu_attention_prefill_fp32` and
-`cpu_attention_decode_fp32` contracts. It loads a native shared artifact once,
-validates phase, entry point, FP32 BHSD-contiguous shapes, causal semantics,
-workspace, artifact version and SHA256, then executes real scaled dot-product
-attention without implementation reselection. Its compiler-defined contiguous
-FP32 KV contract fixes `[batch, heads, capacity, head_dim]`, strides, capacity,
-byte sizes, and ABI entry points. Runtime allocates once, writes prefill K/V,
-appends the current token before decode attention, and tracks the live valid
-prefix without layout or kernel reselection. It is not full-model inference,
-paged attention, block allocation, eviction, prefix caching, continuous
-batching, FlashAttention, GQA/MQA, GPU attention, or production serving.
+The runtime has a persistent, fail-closed runner for exact compiler-selected
+FP32 CPU attention and KV contracts. It validates the native artifact version
+and SHA256, candidate, kernel, entry point, strategy, layout, shapes, workspace,
+and causal semantics before executing. Contiguous KV uses runtime-owned
+`[batch, heads, capacity, head_dim]` storage with real prefill writes, decode
+appends, and valid-prefix reads. Paged KV uses real separate FP32 physical K/V
+page pools, an int32 block table, cross-page writes, and native decode without
+temporary contiguous-history materialization.
+
+| Candidate or symbol | Status | Purpose |
+|---|---|---|
+| `cpu_contiguous_kv_fp32_reordered_v1` (`token_major_contiguous_v_accumulation`) | **PRODUCTION** | Preferred compiler-selectable contiguous implementation. |
+| `cpu_paged_kv_fp32_page_major_v1` (`page_major_cached_page_base`) | **PRODUCTION** | Preferred compiler-selectable paged implementation. |
+| `cpu_contiguous_kv_fp32_v1` (`dimension_major_strided_v_accumulation`) | **HISTORICAL_EXECUTABLE_BASELINE** | Regression, ablation, selection validation, and artifact reproduction. |
+| `cpu_paged_kv_fp32_v1` / artifact identity `cpu_paged_kv_fp32_token_major_v1` (`token_major_block_translation`) | **HISTORICAL_EXECUTABLE_BASELINE** | Historical comparison and block-translation ablation. |
+| `hir_cpu_attention_decode_contiguous_kv_reordered_control_fp32` | **BENCHMARK_COMPATIBILITY_ONLY** | Forwarding alias; compiler plans never select it. |
+
+Compiler owns candidate generation, legality, implementation identity,
+layout/ABI contracts, exact measured-profile selection, and ExecutionPlan
+export. Runtime owns allocation/lifetime, live KV state, page ownership,
+fail-closed validation, and execution of the exact selected entry point:
+
+```text
+Compiler-selected candidate == Runtime-executed candidate
+runtime_kernel_reselection_count == 0
+runtime_layout_reselection_count == 0
+temporary_full_history_materialization_count == 0
+```
+
+This is real single-request operator-level CPU execution, not full-model LLM
+inference or production serving. Full-model/general Transformer import,
+continuous batching, multi-request scheduling, shared-prefix pages,
+copy-on-write, eviction, swapping, GPU/CUDA attention, FlashAttention, vLLM
+PagedAttention, GQA/MQA, KV quantization, distributed KV, explicit SIMD/NEON/
+AVX2, and predictive cost models remain unsupported. The vLLM adapter/config
+materializer, scheduler/prefix-cache/distributed simulations, and formula-based
+admission analysis are metadata, configuration, or simulation paths—not native
+serving execution.
 
 - Completed the Slice 3A-3G fused Linear + Bias + ReLU quantization milestone:
   compiler-owned calibration and packed weights, materialized integer IR,

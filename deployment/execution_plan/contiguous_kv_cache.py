@@ -56,11 +56,19 @@ class ContiguousKVAttentionSession:
         self._append=self._lib.hir_contiguous_kv_append; self._append.restype=_Status; self._append.argtypes=[P,S,P,S,P,S,P,S,I,I,I,I,I]
         self._reset=self._lib.hir_contiguous_kv_reset; self._reset.restype=_Status; self._reset.argtypes=[P,S,P,S,I,I,I,I]
         self._prefill=self._lib.hir_cpu_attention_prefill_fp32; self._prefill.restype=_Status; self._prefill.argtypes=[P,S,P,S,P,S,P,S,P,S,I,I,I,I,I]
-        self._decode=self._lib.hir_cpu_attention_decode_contiguous_kv_fp32; self._decode.restype=_Status; self._decode.argtypes=[P,S,P,S,P,S,P,S,P,S,I,I,I,I,I]
+        entry=self.attention["decode"]["entry_point"]
+        self._decode=getattr(self._lib,entry); self._decode.restype=_Status; self._decode.argtypes=[P,S,P,S,P,S,P,S,P,S,I,I,I,I,I]
+        self._executed_entry_point=entry
 
     def _validate_contracts(self,root:Path):
         k=self.kv
-        required={"kv_candidate_id":"cpu_contiguous_kv_fp32_v1","kv_dtype":"fp32","kv_layout":"bhcd_contiguous","kv_artifact_version":KV_VERSION,"create_entry_point":"hir_contiguous_kv_initialize","prefill_write_entry_point":"hir_contiguous_kv_prefill_write","decode_append_entry_point":"hir_contiguous_kv_append","view_binding":"direct_contiguous_pointer_valid_prefix","reset_entry_point":"hir_contiguous_kv_reset","compatible_prefill_kernel_id":"cpu_attention_prefill_fp32","compatible_decode_kernel_id":"cpu_attention_decode_fp32"}
+        variants={
+            "cpu_contiguous_kv_fp32_v1":("cpu_attention_decode_fp32","hir_cpu_attention_decode_contiguous_kv_fp32","dimension_major_strided_v_accumulation"),
+            "cpu_contiguous_kv_fp32_reordered_v1":("cpu_attention_decode_contiguous_kv_reordered_fp32","hir_cpu_attention_decode_contiguous_kv_reordered_fp32","token_major_contiguous_v_accumulation"),
+        }
+        if k.get("kv_candidate_id") not in variants: raise AttentionContractError("kv_contract_mismatch:kv_candidate_id")
+        decode_kernel,decode_entry,strategy=variants[k["kv_candidate_id"]]
+        required={"kv_dtype":"fp32","kv_layout":"bhcd_contiguous","kv_artifact_version":KV_VERSION,"create_entry_point":"hir_contiguous_kv_initialize","prefill_write_entry_point":"hir_contiguous_kv_prefill_write","decode_append_entry_point":"hir_contiguous_kv_append","view_binding":"direct_contiguous_pointer_valid_prefix","reset_entry_point":"hir_contiguous_kv_reset","compatible_prefill_kernel_id":"cpu_attention_prefill_fp32","compatible_decode_kernel_id":decode_kernel,"attention_entry_point":decode_entry,"implementation_strategy":strategy}
         for name,value in required.items():
             if k.get(name)!=value: raise AttentionContractError(f"kv_contract_mismatch:{name}")
         b,h,c,d=(k.get(x) for x in ("batch","num_kv_heads","capacity_tokens","head_dim")); elements=_product([b,h,c,d]); bpt=_product([b,h,d,8])
@@ -71,9 +79,10 @@ class ContiguousKVAttentionSession:
         path=root/k.get("kv_artifact_ref","")
         if not path.is_file(): raise AttentionContractError("missing_kv_artifact")
         if _sha(path)!=k.get("kv_artifact_sha256"): raise AttentionContractError("kv_artifact_hash_mismatch")
-        for phase,kernel in (("prefill","cpu_attention_prefill_fp32"),("decode","cpu_attention_decode_fp32")):
+        for phase,kernel in (("prefill","cpu_attention_prefill_fp32"),("decode",decode_kernel)):
             a=self.attention.get(phase,{})
-            if a.get("kernel_id")!=kernel or a.get("dtype")!="fp32" or a.get("input_layout")!="bhsd_contiguous" or a.get("runtime_no_redecision") is not True: raise AttentionContractError("attention_kv_kernel_incompatible")
+            expected_entry="hir_cpu_attention_prefill_fp32" if phase=="prefill" else decode_entry
+            if a.get("kernel_id")!=kernel or a.get("entry_point")!=expected_entry or a.get("implementation_strategy")!=("prefill_contiguous" if phase=="prefill" else strategy) or a.get("dtype")!="fp32" or a.get("input_layout")!="bhsd_contiguous" or a.get("runtime_no_redecision") is not True: raise AttentionContractError("attention_kv_kernel_incompatible")
 
     def _cache_args(self):
         k=self.kv
@@ -135,4 +144,4 @@ class ContiguousKVAttentionSession:
     def release(self):
         if self.state=="RELEASED": raise AttentionContractError("double_release")
         self.k_cache=array("f");self.v_cache=array("f");self._workspace=array("f");self._output=array("f");self.valid_tokens=0;self.state="RELEASED";self.counters.cache_release_count+=1
-    def trace(self): return {**asdict(self.counters),"valid_tokens":self.valid_tokens,"state":self.state,"runtime_no_layout_redecision":self.counters.runtime_layout_reselection_count==0,"runtime_no_kernel_redecision":self.counters.runtime_kernel_reselection_count==0}
+    def trace(self): return {**asdict(self.counters),"valid_tokens":self.valid_tokens,"state":self.state,"compiler_selected_candidate":self.kv["kv_candidate_id"],"runtime_executed_candidate":self.kv["kv_candidate_id"],"compiler_selected_kernel":self.attention["decode"]["kernel_id"],"runtime_executed_kernel":self.attention["decode"]["kernel_id"],"compiler_selected_entry_point":self.attention["decode"]["entry_point"],"runtime_executed_entry_point":self._executed_entry_point,"compiler_selected_strategy":self.kv["implementation_strategy"],"runtime_executed_strategy":self.kv["implementation_strategy"],"temporary_full_history_materialization_count":0,"runtime_no_layout_redecision":self.counters.runtime_layout_reselection_count==0,"runtime_no_kernel_redecision":self.counters.runtime_kernel_reselection_count==0}
