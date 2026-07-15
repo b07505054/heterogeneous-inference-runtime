@@ -29,7 +29,56 @@ COMPILER_PROFILE_PATH = (
 )
 
 
-def _valid_op_decision() -> dict:
+def _memory_placement(m: int, n: int, k: int) -> dict:
+    return {
+        "status": "selected",
+        "compute_unit": "cpu",
+        "selected_memory_space": "cpu_visible_host_memory",
+        "input_tile_bytes": m * k * 4,
+        "weight_tile_bytes": k * n * 4,
+        "output_tile_bytes": m * n * 4,
+        "scratch_bytes": 0,
+        "padding_bytes": 0,
+        "single_buffer_bytes": (m * k * 4) + (k * n * 4) + (m * n * 4),
+        "additional_double_buffer_bytes": 0,
+        "total_required_local_memory_bytes": (m * k * 4) + (k * n * 4) + (m * n * 4),
+        "buffer_placements": [
+            {
+                "buffer_id": "input_tile",
+                "role": "input",
+                "memory_space": "cpu_visible_host_memory",
+                "byte_count": m * k * 4,
+                "alignment": 64,
+            },
+            {
+                "buffer_id": "weight_tile",
+                "role": "weight",
+                "memory_space": "cpu_visible_host_memory",
+                "byte_count": k * n * 4,
+                "alignment": 64,
+            },
+            {
+                "buffer_id": "output_tile",
+                "role": "output",
+                "memory_space": "cpu_visible_host_memory",
+                "byte_count": m * n * 4,
+                "alignment": 64,
+            },
+            {
+                "buffer_id": "scratch",
+                "role": "scratch",
+                "memory_space": "cpu_visible_host_memory",
+                "byte_count": 0,
+                "alignment": 64,
+            },
+        ],
+        "transfer_operations": [],
+        "compute_dependency_ids": [],
+        "truth_boundary": "memory_placement_static_compiler_contract_not_runtime_allocation",
+    }
+
+
+def _valid_op_decision(m: int = 4, n: int = 4, k: int = 4) -> dict:
     return {
         "op_name": "op_2",
         "op_type": "hir.fused_matmul_bias_relu",
@@ -39,7 +88,22 @@ def _valid_op_decision() -> dict:
             "selected_kernel": EXPECTED_KERNEL_ID,
             "source": "handwritten_runtime",
         },
-        "quantization": {"activation_dtype": "f32"},
+        "quantization": {
+            "selected_candidate_id": (
+                "fused_matmul_bias_relu:scope=operator:backend=cpu:"
+                "quantization_configuration:contract=execution_plan_quantization_contract_v1:"
+                "dtype=fp32:quant=fp32_baseline:act=fp32:weight=fp32:acc=fp32:out=fp32"
+            ),
+            "scheme": "fp32_baseline",
+            "activation_dtype": "fp32",
+            "weight_dtype": "fp32",
+            "accumulation_dtype": "fp32",
+            "output_dtype": "fp32",
+            "required_kernel_capability": "quant_kernel.none",
+            "requires_calibration": False,
+            "calibration_available": False,
+        },
+        "memory_placement": _memory_placement(m, n, k),
     }
 
 
@@ -74,7 +138,7 @@ requires_kernel_binary = pytest.mark.skipif(
 def test_accepted_valid_plan_dispatches_and_returns_real_output():
     a, b, bias = _random_tensors(32, 32, 32, seed=1)
     result = dispatch_fused_matmul_bias_relu(
-        op_decision=_valid_op_decision(), backend="cpu", a=a, b=b, bias=bias, repeats=2,
+        op_decision=_valid_op_decision(32, 32, 32), backend="cpu", a=a, b=b, bias=bias, repeats=2,
     )
     assert result.kernel_id == EXPECTED_KERNEL_ID
     assert result.backend == "cpu"
@@ -91,7 +155,7 @@ def test_accepted_valid_plan_dispatches_and_returns_real_output():
 def test_output_correctness_against_pure_python_reference():
     a, b, bias = _random_tensors(37, 41, 29, seed=2)  # deliberately not tile-aligned
     result = dispatch_fused_matmul_bias_relu(
-        op_decision=_valid_op_decision(), backend="cpu", a=a, b=b, bias=bias, repeats=1,
+        op_decision=_valid_op_decision(37, 41, 29), backend="cpu", a=a, b=b, bias=bias, repeats=1,
     )
     expected = _reference_matmul_bias_relu(a, b, bias)
     max_abs_error = max(abs(got - exp) for got, exp in zip(result.output.data, expected))
@@ -118,9 +182,88 @@ def test_unsupported_dtype_rejected():
     op_decision = _valid_op_decision()
     op_decision["quantization"]["activation_dtype"] = "fp16"
     a, b, bias = _random_tensors(4, 4, 4, seed=5)
-    with pytest.raises(PortableCpuKernelError, match="only supports 'f32'"):
+    with pytest.raises(PortableCpuKernelError, match="only supports fp32/f32"):
         dispatch_fused_matmul_bias_relu(op_decision=op_decision, backend="cpu", a=a, b=b, bias=bias)
 
+
+def test_missing_memory_placement_rejected_before_runtime_invents_it():
+    op_decision = _valid_op_decision()
+    del op_decision["memory_placement"]
+    a, b, bias = _random_tensors(4, 4, 4, seed=13)
+    with pytest.raises(PortableCpuKernelError, match="no memory_placement block"):
+        dispatch_fused_matmul_bias_relu(op_decision=op_decision, backend="cpu", a=a, b=b, bias=bias)
+
+
+def test_device_memory_placement_rejected_for_portable_cpu():
+    op_decision = _valid_op_decision()
+    op_decision["memory_placement"]["selected_memory_space"] = "local_sram"
+    for item in op_decision["memory_placement"]["buffer_placements"]:
+        item["memory_space"] = "local_sram"
+    a, b, bias = _random_tensors(4, 4, 4, seed=14)
+    with pytest.raises(PortableCpuKernelError, match="not CPU-visible host memory"):
+        dispatch_fused_matmul_bias_relu(op_decision=op_decision, backend="cpu", a=a, b=b, bias=bias)
+
+
+def test_unnecessary_transfer_operations_rejected_for_portable_cpu():
+    op_decision = _valid_op_decision()
+    op_decision["memory_placement"]["transfer_operations"] = [{
+        "transfer_id": "transfer_input_to_local",
+        "source_buffer": "input",
+        "destination_buffer": "input_tile",
+        "source_memory_space": "host",
+        "destination_memory_space": "local_sram",
+        "byte_count": 64,
+        "alignment": 64,
+        "mode": "synchronous",
+        "dependency_ids": [],
+        "completion_token": "input_ready",
+    }]
+    a, b, bias = _random_tensors(4, 4, 4, seed=15)
+    with pytest.raises(PortableCpuKernelError, match="contains transfer_operations"):
+        dispatch_fused_matmul_bias_relu(op_decision=op_decision, backend="cpu", a=a, b=b, bias=bias)
+
+
+def test_memory_byte_count_mismatch_rejected():
+    op_decision = _valid_op_decision()
+    op_decision["memory_placement"]["buffer_placements"][0]["byte_count"] += 4
+    a, b, bias = _random_tensors(4, 4, 4, seed=16)
+    with pytest.raises(PortableCpuKernelError, match="byte_count"):
+        dispatch_fused_matmul_bias_relu(op_decision=op_decision, backend="cpu", a=a, b=b, bias=bias)
+
+
+
+
+def test_runtime_rejects_non_fp32_quantization_scheme_without_searching():
+    op_decision = _valid_op_decision()
+    op_decision["quantization"]["selected_candidate_id"] = "matmul:quant=int8_static"
+    op_decision["quantization"]["scheme"] = "int8_static"
+    op_decision["quantization"]["activation_dtype"] = "int8"
+    op_decision["quantization"]["weight_dtype"] = "int8"
+    op_decision["quantization"]["accumulation_dtype"] = "int32"
+    op_decision["quantization"]["required_kernel_capability"] = "quant_kernel.int8_static"
+    a, b, bias = _random_tensors(4, 4, 4, seed=10)
+    with pytest.raises(PortableCpuKernelError, match="will not switch precision or fall back|does not identify the fp32_baseline"):
+        dispatch_fused_matmul_bias_relu(op_decision=op_decision, backend="cpu", a=a, b=b, bias=bias)
+
+
+def test_runtime_rejects_empty_selected_quantization_candidate():
+    op_decision = _valid_op_decision()
+    op_decision["quantization"]["selected_candidate_id"] = ""
+    a, b, bias = _random_tensors(4, 4, 4, seed=11)
+    with pytest.raises(PortableCpuKernelError, match="selected_candidate_id is empty"):
+        dispatch_fused_matmul_bias_relu(op_decision=op_decision, backend="cpu", a=a, b=b, bias=bias)
+
+
+def test_legacy_fp32_quantization_contract_still_accepted_by_validator():
+    op_decision = _valid_op_decision()
+    op_decision["quantization"] = {"activation_dtype": "f32"}
+    a, b, bias = _random_tensors(4, 4, 4, seed=12)
+    # Missing kernel executable is acceptable here; the contract validator runs
+    # before process launch and must not reject the legacy FP32 shape.
+    try:
+        dispatch_fused_matmul_bias_relu(op_decision=op_decision, backend="cpu", a=a, b=b, bias=bias)
+    except PortableCpuKernelError as exc:
+        assert "kernel executable not found" in str(exc) or "No such file" in str(exc)
 
 def test_mismatched_target_profile_id_rejected():
     a, b, bias = _random_tensors(4, 4, 4, seed=8)

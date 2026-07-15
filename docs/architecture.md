@@ -10,6 +10,21 @@ optimization logic.
 The current compiler/runtime architecture should be read as an execution
 planning system:
 
+For the validated Slice 3 fused operator, the concrete boundary is:
+
+```text
+Compiler complete-candidate generation and legality
+  -> quantized HIR materialization
+  -> exact ExecutionPlan and artifact identities
+  -> Runtime validation and routing (no re-selection)
+  -> selected portable kernel or ExecuTorch/XNNPACK delegate
+  -> measured output
+```
+
+The compiler owns selection and artifact identity. The runtime owns validation,
+routing, and execution. Runtime does not change backend, precision, thread
+count, or artifacts; it does not repack or requantize.
+
 ```text
 Client Requests
         |
@@ -100,7 +115,7 @@ configuration. It does not mean a model exporter.
                      |  Optimization Policy Engine |
                      +-----------------------------+
                      | Server Runtime Policy       |
-                     | Future Quant Policy         |
+                     | Complete Candidate Policy  |
                      | Future KV Policy            |
                      | Future Speculative Policy   |
                      +-------------+---------------+

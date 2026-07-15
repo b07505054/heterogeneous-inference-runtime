@@ -34,6 +34,29 @@ This document may summarize representative local measurements, but the source
 artifacts remain local under `results/measured_baselines/` unless they are
 explicitly exported elsewhere.
 
+## Raspberry Pi Fused Quantization Candidate Baseline
+
+Slices 3F and 3G validate `ReLU(Linear(input, weight, bias))` with shared FP32
+tensors and calibration inputs. The primary boundary is already-loaded custom
+ExecutionPlan invocation versus already-loaded ExecuTorch `Method::execute`;
+process startup, plan/program loading, calibration, packing, and building are
+excluded. Slice 3F used five randomized sessions. Slice 3G reused that evidence
+only after hash/identity validation and ran a 10-warmup, 100-sample integration
+sanity check on the same Raspberry Pi.
+
+| Shape | Default selected candidate | Slice 3G Pi median ms | Cosine | Relative L2 |
+|---|---|---:|---:|---:|
+| `37x41x29` | XNNPACK INT8 1T | 0.003556 | 0.99997465 | 0.0071350 |
+| `64x64x64` | XNNPACK INT8 4T | 0.0087315 | 0.99997473 | 0.0071127 |
+| `128x128x128` | XNNPACK INT8 4T | 0.0222685 | 0.99997171 | 0.0075227 |
+| `256x256x256` | XNNPACK INT8 4T | 0.100509 | 0.99997195 | 0.0074905 |
+
+All correctness gates pass. Selection agreement with the constrained measured
+oracle is 4/4 and normalized regret is 0.0 for every shape. A one-thread budget
+selects XNNPACK INT8 1T for all shapes; an unavailable ExecuTorch package or a
+tight deployment-size budget selects the packed custom INT8 candidate. These
+are operator-level results, not full-model accuracy or performance.
+
 ## OpenAI-Compatible Server
 
 `scripts/benchmark_openai_compatible_server.py` is a client-only benchmark for

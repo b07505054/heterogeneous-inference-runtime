@@ -16,7 +16,7 @@ from deployment.execution_plan.schema import (
     ExecutionStage,
     ExecutionStageKind,
 )
-from deployment.execution_plan.portable_cpu_kernel_adapter import EXPECTED_KERNEL_ID
+from deployment.execution_plan.portable_cpu_kernel_adapter import ALL_KNOWN_KERNEL_IDS, KNOWN_KERNEL_IDS
 from deployment.execution_unit_router import ExecutionUnitRouter
 
 
@@ -168,11 +168,18 @@ def _portable_cpu_fused_matmul_bias_relu_path(plan: ExecutionPlan, stage: Execut
     kernel_selection = _dict_at(stage.source_compiler_decision, "kernel_selection")
     status = kernel_selection.get("status")
     selected_kernel = kernel_selection.get("selected_kernel")
-    if status != "selected" or selected_kernel != EXPECTED_KERNEL_ID:
+    if status != "selected" or selected_kernel not in ALL_KNOWN_KERNEL_IDS:
         return _unsupported_path(
             plan, stage, "cpu",
             reason=f"kernel_selection_status_{status or 'absent'}",
         )
+    quantization = _dict_at(stage.source_compiler_decision, "quantization")
+    memory_placement = _dict_at(stage.source_compiler_decision, "memory_placement")
+    runtime_config = {}
+    if quantization:
+        runtime_config["quantization_contract"] = quantization
+    if memory_placement:
+        runtime_config["memory_placement_contract"] = memory_placement
     return ExecutionPath(
         path_id=f"{plan.plan_id}:{stage.stage_id}:portable_cpu_kernel",
         path_kind=ExecutionPathKind.PORTABLE_CPU_KERNEL,
@@ -186,7 +193,7 @@ def _portable_cpu_fused_matmul_bias_relu_path(plan: ExecutionPlan, stage: Execut
         fallback_backends=(),
         source_compiler_decision=stage.source_compiler_decision,
         required_capability_refs=plan.provenance.capability_bundle.refs(),
-        runtime_config={},
+        runtime_config=runtime_config,
         benchmark_config={
             "correctness_script": "scripts/test_portable_cpu_matmul_bias_relu_correctness.py",
             "benchmark_script": "scripts/benchmark_portable_cpu_matmul_bias_relu.py",
@@ -196,6 +203,8 @@ def _portable_cpu_fused_matmul_bias_relu_path(plan: ExecutionPlan, stage: Execut
         metadata={
             "compiler_plan_id": plan.plan_id,
             "kernel_selection_source": kernel_selection.get("source"),
+            "quantization_contract": quantization,
+            "memory_placement_contract": memory_placement,
         },
     )
 

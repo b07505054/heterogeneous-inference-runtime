@@ -5,7 +5,8 @@
 
 ## Runtime Contract Boundary (Phase D0)
 
-Last verified: 2026-07-13\nSource host: GPU Linux /home/allen/Desktop/Project/heterogeneous-inference-runtime\nVerified runtime HEAD: f4cc98bc93e1e8e5ecea32ffb0779b0a5c801097 (main, ahead 1 of origin/main)\nCanonical architecture host: /home/allen/Desktop/Project/ml-graph-compiler-runtime\n
+Last verified: 2026-07-14.
+Canonical architecture repository: `../ml-graph-compiler-runtime`.
 
 This repository owns runtime validation and exact dispatch for compiler-produced contracts. It does not own global implementation candidate search or compiler policy.
 
@@ -104,7 +105,7 @@ outputs as measured production evidence.
                      +-----------------------------+
                      | CoreML Edge Policy          |
                      | Server Runtime Policy       |
-                     | Future Quant Policy         |
+                     | Complete Candidate Policy  |
                      | Future KV Policy            |
                      +-------------+---------------+
                                    |
@@ -124,6 +125,10 @@ layer -> policy -> deployment decision.
 
 ## Recent Updates
 
+- Completed the Slice 3A-3G fused Linear + Bias + ReLU quantization milestone:
+  compiler-owned calibration and packed weights, materialized integer IR,
+  canonical custom ExecutionPlan execution, fair XNNPACK comparison, and
+  evidence-backed complete-candidate routing on Raspberry Pi 5.
 - Recorded the no-quant Qwen GTX 1650 Max-Q vLLM benchmark: default vLLM OOMs
   on the 4 GB GPU with default greedy startup/warmup, while the
   compiler-generated execution plan avoids that OOM by materializing a
@@ -482,13 +487,18 @@ This architecture simulates production-style asynchronous edge inference deploym
 | TensorRT FP32 | 1.68 | 1.72 | 1.73 | 596.7 |
 | ONNX Runtime Optimized FP32 CUDA | 2.78 | 2.83 | 2.85 | 360.3 |
 | ONNX Runtime FP32 CUDA | 2.98 | 3.41 | 3.42 | 335.0 |
-| ExecuTorch XNNPACK | 1.49 | 1.55 | 1.66 | 669.1 |
 | Thread Scaling 8T | 4.46 | N/A | N/A | 224.3 |
 | Thread Scaling 4T | 4.52 | N/A | N/A | 221.4 |
 | Thread Scaling 2T | 5.53 | N/A | N/A | 181.0 |
 | Native C++ Runtime | 9.25 | N/A | N/A | 108.1 |
 | PyTorch FP32 CPU | 16.88 | 17.08 | 17.68 | 59.3 |
 | ONNX Runtime INT8 CPU | 30.36 | 33.78 | 35.26 | 32.9 |
+
+The historical table above covers heterogeneous, non-comparable workloads and
+must not be used as a cross-runtime ranking. The current controlled
+ExecuTorch/XNNPACK fused-operator measurements are in the dedicated
+`ExecuTorch Integration` section and `docs/MEASURED_BASELINES.md`; their
+boundary and shapes differ from the rows above.
 
 ---
 
@@ -730,21 +740,28 @@ This enables reproducible runtime analysis and deployment reporting.
 
 This project includes ExecuTorch runtime integration using the XNNPACK delegate.
 
-### Features
+### Validated fused-operator path
 
-- Exported PyTorch model to ExecuTorch `.pte`
-- Integrated ExecuTorch Python runtime
-- Benchmarked edge-oriented inference performance
-- Evaluated latency and throughput against other runtimes
+The Slice 3E-3G path uses ExecuTorch v1.3.1 with an XNNPACK delegated `.pte`
+and a long-lived C++ `Method::execute` runner. The comparison boundary is
+aligned with the already-loaded canonical custom ExecutionPlan runner: input
+binding, execution, and output availability, excluding process and model load.
 
-### Result
+Complete candidate selection considers portable CPU FP32, portable packed INT8,
+XNNPACK FP32 1T, XNNPACK INT8 1T, and XNNPACK INT8 4T. Runner, `.pte`, workload,
+delegation proof, quantization, target, thread count, correctness, and measured
+evidence are validated before a candidate is legal.
 
-ExecuTorch XNNPACK achieved:
+| Shape | Selected | Pi integration median ms | Cosine | Relative L2 |
+|---|---|---:|---:|---:|
+| `37x41x29` | XNNPACK INT8 1T | 0.003556 | 0.99997465 | 0.0071350 |
+| `64x64x64` | XNNPACK INT8 4T | 0.0087315 | 0.99997473 | 0.0071127 |
+| `128x128x128` | XNNPACK INT8 4T | 0.0222685 | 0.99997171 | 0.0075227 |
+| `256x256x256` | XNNPACK INT8 4T | 0.100509 | 0.99997195 | 0.0074905 |
 
-- 1.49 ms average latency
-- 669.1 QPS throughput
-
-This demonstrates efficient edge-oriented inference execution for mobile and constrained-device environments.
+Selection agreement is 4/4 and normalized regret is 0.0 against the
+constraint-matched measured oracle. These are Raspberry Pi fused-operator
+results, not full-model performance.
 
 ---
 

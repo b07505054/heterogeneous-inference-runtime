@@ -32,7 +32,8 @@ Phase 2 is in progress:
 
 Phase 3:
 
-- Capability-driven quantization policy.
+- Extend the completed fused-operator capability-driven quantization policy to
+  full models and graph-wide mixed precision.
 - Capability-driven deployment policy that joins hardware capability, backend
   capability, kernel-library capability, and measured support.
 - Extend the existing Model Adapter and Neutral Runtime Graph architecture so

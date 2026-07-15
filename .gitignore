@@ -60,6 +60,8 @@ onnxruntime_profile__*.json
 # benchmark outputs
 models/coreml/
 results/measured_baselines/
+results/slice3a_int8_host/
+results/slice3b_packed_weight_host/
 results/*.png
 results/*.csv
 results/*.json
@@ -90,6 +92,11 @@ results/*.json
 
 # misc
 dog.jpg
+
+# locally built Slice 3 native kernels (sources remain tracked)
+native/cpu_kernels/portable_fused_matmul_bias_relu
+native/cpu_kernels/portable_fused_matmul_bias_relu_int8
+native/cpu_kernels/portable_fused_matmul_bias_relu_int8_packed_b
 
 executorch_build/
 build_cpp/

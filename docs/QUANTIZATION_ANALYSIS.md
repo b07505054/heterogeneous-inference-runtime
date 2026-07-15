@@ -31,6 +31,12 @@ Quantization does not always improve runtime performance
 
 This project investigates that behavior experimentally.
 
+The historical MobileNet/ONNX analysis below remains useful as a negative
+dynamic-quantization case. It is no longer the repository's complete INT8
+status: Slices 3A-3G add a static fused Linear + Bias + ReLU path with compiler
+calibration, packed weights, integer IR/kernel execution, and Raspberry Pi
+measurement.
+
 ---
 
 # 2. Compared Models
@@ -230,15 +236,26 @@ Deployment performance depends on:
 
 ---
 
-# 10. Future Extensions
+# 10. Current Static INT8 Result And Future Extensions
+
+For the canonical Raspberry Pi fused operator, the compiler now generates
+complete implementation candidates, filters them using target/runtime
+capabilities, materializes Q/DQ integer IR, exports an exact ExecutionPlan, and
+routes either the selected packed custom kernel or an identity-validated
+ExecuTorch/XNNPACK program. The runtime performs no backend/precision
+re-selection, repacking, or re-quantization.
+
+The four canonical selections agree with the constrained measured oracle
+(4/4), with normalized regret 0.0. All selected XNNPACK INT8 outputs pass
+cosine `>= 0.99` and relative L2 `<= 0.05`.
 
 Potential future work:
-- Static INT8 quantization
 - FP16 benchmarking
 - Quantization-aware training
-- Per-channel quantization
-- Hardware accelerator benchmarking
-- Mobile-device quantization profiling
+- Full-model calibration and graph-wide mixed precision
+- INT4, AWQ, and GPTQ integration
+- Predictive cost modeling
+- NPU and DMA-aware execution
 
 ---
 

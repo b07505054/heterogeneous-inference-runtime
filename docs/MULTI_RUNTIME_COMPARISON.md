@@ -192,7 +192,13 @@ C++ Execution
 
 ## Key Observation
 
-Historical placeholder text suggested ExecuTorch C++ comparability, but this document does not contain measured evidence. Current measured ExecuTorch/XNNPACK claims live under  and E1/E2/E2.1/E3 docs. Conditions discussed here were:
+Historical placeholder text suggested ExecuTorch C++ comparability. Current
+measured ExecuTorch/XNNPACK evidence includes E1/E2/E2.1/E3 and the Slice
+3E-3G fused-operator study summarized in `docs/MEASURED_BASELINES.md`.
+Slice 3F aligns the already-loaded custom ExecutionPlan and ExecuTorch
+`Method::execute` boundaries; Slice 3G makes the validated FP32/INT8 1T/4T
+variants legal complete candidates and achieves 4/4 oracle agreement with
+zero normalized regret. Conditions discussed here were:
 - Multi-threading is enabled
 - XNNPACK backend is properly registered
 - Runtime overhead is minimized

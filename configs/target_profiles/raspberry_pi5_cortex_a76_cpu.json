@@ -1,0 +1,228 @@
+{
+  "profileId": "raspberry-pi5-cortex-a76-cpu",
+  "configuredComputeUnits": "CPU",
+  "staticShapeSupport": true,
+  "supportedPrecisions": [
+    "fp32",
+    "fp16"
+  ],
+  "truthBoundary": "raspberry_pi5_live_hardware_evidence_cpu_only_no_verified_gpu_or_npu_kernel_library_declared_not_measured_performance",
+  "hardwareExecutionProfile": {
+    "physicalComputeUnits": 4
+  },
+  "executorchRuntimeCapabilities": {
+    "schemaVersion": "slice3g.executorch_runtime_capabilities.v1",
+    "supportsExecuTorchRuntime": true,
+    "supportsXNNPACKDelegate": true,
+    "availableRuntimeArtifacts": ["executorch_xnnpack_runner"],
+    "maximumRuntimeThreads": 4,
+    "supportedExecuTorchCandidateVariants": [
+      "slice3g:executorch_xnnpack:fp32:none:t1:aarch64",
+      "slice3g:executorch_xnnpack:int8:pt2e_per_tensor_affine_per_channel_symmetric_axis0:t1:aarch64",
+      "slice3g:executorch_xnnpack:int8:pt2e_per_tensor_affine_per_channel_symmetric_axis0:t4:aarch64"
+    ],
+    "truthBoundary": "packaged ExecuTorch v1.3.1 XNNPACK runner and 1T/4T candidate variants validated on Raspberry Pi 5 in Slice 3F"
+  },
+  "cpuCodegenCapabilities": {
+    "schemaVersion": "slice3c.cpu_codegen_capabilities.v1",
+    "architecture": "aarch64",
+    "microarchitecture": "cortex-a76",
+    "isaFeatures": [
+      "asimd",
+      "asimddp"
+    ],
+    "vectorWidthBits": 128,
+    "supportsInt8DotProduct": true,
+    "supportedCompilerTargetFlags": [
+      "-O2",
+      "-O3",
+      "-mcpu=cortex-a76"
+    ],
+    "supportedKernelCapabilities": [
+      "quant_kernel.none",
+      "quant_kernel.int8_static_symmetric",
+      "quant_kernel.int8_static_symmetric.packed_b_transposed"
+      ,"runtime.executorch.xnnpack"
+    ],
+    "truthBoundary": "observed_on_raspberry_pi_5_via_lscpu_proc_cpuinfo_gcc_build_and_objdump_sdot_presence_slice3b1"
+  },
+  "threadSchedulePolicy": {
+    "path": "../thread_schedule_policies/raspberry_pi5_cortex_a76_p1d1_thread_policy.json",
+    "expectedPolicyId": "raspberry_pi5_fused_matmul_bias_relu_thread_schedule_p1d1",
+    "expectedEvidenceSha256": "sha256:92aba0b1dd80846b469c870b921293c9c63054c84fa43bb9bdcf2afc4b6fa375"
+  },
+  "runtimeKernels": [
+    {
+      "kernelId": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+      "opName": "fused_matmul_bias_relu",
+      "backend": "cpu",
+      "supportedDtypes": [
+        "f32"
+      ],
+      "supportedQuantModes": [
+        "none"
+      ],
+      "supportedLayouts": [],
+      "supportedTileShapes": [],
+      "requiresStaticShape": true,
+      "requiresLocalMemoryBytes": 0,
+      "source": "handwritten_runtime",
+      "implementationRef": "heterogeneous-inference-runtime: native/cpu_kernels/portable_fused_matmul_bias_relu.cpp (candidate bm32_bn128_bk32, N-dominant rectangular)",
+      "truthBoundary": "p1c1_low_regret_static_default_selected_via_calibration_only_offline_analysis_dispatch_validated_on_raspberry_pi_see_doc_p1c1_report_not_a_shape_aware_decision_not_a_universal_optimum",
+      "threadSchedules": [
+        {
+          "threadCount": 1,
+          "partitionAxis": "none",
+          "partitionStrategy": "serial"
+        },
+        {
+          "threadCount": 2,
+          "partitionAxis": "m",
+          "partitionStrategy": "contiguous_chunks"
+        },
+        {
+          "threadCount": 4,
+          "partitionAxis": "m",
+          "partitionStrategy": "contiguous_chunks"
+        },
+        {
+          "threadCount": 2,
+          "partitionAxis": "n",
+          "partitionStrategy": "contiguous_chunks"
+        },
+        {
+          "threadCount": 4,
+          "partitionAxis": "n",
+          "partitionStrategy": "contiguous_chunks"
+        }
+      ]
+    },
+    {
+      "kernelId": "portable_fused_matmul_bias_relu_bm32_bn32_bk32",
+      "opName": "fused_matmul_bias_relu",
+      "backend": "cpu",
+      "supportedDtypes": [
+        "f32"
+      ],
+      "supportedQuantModes": [
+        "none"
+      ],
+      "supportedLayouts": [],
+      "supportedTileShapes": [],
+      "requiresStaticShape": true,
+      "requiresLocalMemoryBytes": 0,
+      "source": "handwritten_runtime",
+      "implementationRef": "heterogeneous-inference-runtime: native/cpu_kernels/portable_fused_matmul_bias_relu.cpp (candidate bm32_bn32_bk32) + deployment/execution_plan/path_builder.py:_portable_cpu_fused_matmul_bias_relu_path",
+      "truthBoundary": "handwritten_kernel_source_in_sibling_repo_dispatch_validated_on_raspberry_pi_not_benchmarked_for_performance_no_longer_the_default_as_of_p1c1_see_doc_p1c1_report"
+    },
+    {
+      "kernelId": "portable_fused_matmul_bias_relu_bm48_bn48_bk48",
+      "opName": "fused_matmul_bias_relu",
+      "backend": "cpu",
+      "supportedDtypes": [
+        "f32"
+      ],
+      "supportedQuantModes": [
+        "none"
+      ],
+      "supportedLayouts": [],
+      "supportedTileShapes": [],
+      "requiresStaticShape": true,
+      "requiresLocalMemoryBytes": 0,
+      "source": "handwritten_runtime",
+      "implementationRef": "heterogeneous-inference-runtime: native/cpu_kernels/portable_fused_matmul_bias_relu.cpp (candidate bm48_bn48_bk48)",
+      "truthBoundary": "p1c_candidate_larger_square_tile_dispatch_validated_on_raspberry_pi_not_benchmarked_for_performance_in_this_declaration"
+    },
+    {
+      "kernelId": "portable_fused_matmul_bias_relu_bm64_bn64_bk64",
+      "opName": "fused_matmul_bias_relu",
+      "backend": "cpu",
+      "supportedDtypes": [
+        "f32"
+      ],
+      "supportedQuantModes": [
+        "none"
+      ],
+      "supportedLayouts": [],
+      "supportedTileShapes": [],
+      "requiresStaticShape": true,
+      "requiresLocalMemoryBytes": 0,
+      "source": "handwritten_runtime",
+      "implementationRef": "heterogeneous-inference-runtime: native/cpu_kernels/portable_fused_matmul_bias_relu.cpp (candidate bm64_bn64_bk64)",
+      "truthBoundary": "p1c_candidate_near_l1d_working_set_boundary_dispatch_validated_on_raspberry_pi_not_benchmarked_for_performance_in_this_declaration"
+    },
+    {
+      "kernelId": "portable_fused_matmul_bias_relu_bm128_bn128_bk32",
+      "opName": "fused_matmul_bias_relu",
+      "backend": "cpu",
+      "supportedDtypes": [
+        "f32"
+      ],
+      "supportedQuantModes": [
+        "none"
+      ],
+      "supportedLayouts": [],
+      "supportedTileShapes": [],
+      "requiresStaticShape": true,
+      "requiresLocalMemoryBytes": 0,
+      "source": "handwritten_runtime",
+      "implementationRef": "heterogeneous-inference-runtime: native/cpu_kernels/portable_fused_matmul_bias_relu.cpp (candidate bm128_bn128_bk32)",
+      "truthBoundary": "p1c_candidate_exceeds_l1d_fits_l2_wide_dispatch_validated_on_raspberry_pi_not_benchmarked_for_performance_in_this_declaration"
+    },
+    {
+      "kernelId": "portable_fused_matmul_bias_relu_bm128_bn32_bk32",
+      "opName": "fused_matmul_bias_relu",
+      "backend": "cpu",
+      "supportedDtypes": [
+        "f32"
+      ],
+      "supportedQuantModes": [
+        "none"
+      ],
+      "supportedLayouts": [],
+      "supportedTileShapes": [],
+      "requiresStaticShape": true,
+      "requiresLocalMemoryBytes": 0,
+      "source": "handwritten_runtime",
+      "implementationRef": "heterogeneous-inference-runtime: native/cpu_kernels/portable_fused_matmul_bias_relu.cpp (candidate bm128_bn32_bk32, M-dominant rectangular)",
+      "truthBoundary": "p1c_candidate_m_dominant_rectangular_dispatch_validated_on_raspberry_pi_not_benchmarked_for_performance_in_this_declaration"
+    },
+    {
+      "kernelId": "portable_fused_matmul_bias_relu_bm32_bn32_bk128",
+      "opName": "fused_matmul_bias_relu",
+      "backend": "cpu",
+      "supportedDtypes": [
+        "f32"
+      ],
+      "supportedQuantModes": [
+        "none"
+      ],
+      "supportedLayouts": [],
+      "supportedTileShapes": [],
+      "requiresStaticShape": true,
+      "requiresLocalMemoryBytes": 0,
+      "source": "handwritten_runtime",
+      "implementationRef": "heterogeneous-inference-runtime: native/cpu_kernels/portable_fused_matmul_bias_relu.cpp (candidate bm32_bn32_bk128, BLOCK_K variation)",
+      "truthBoundary": "p1c_candidate_block_k_variation_dispatch_validated_on_raspberry_pi_not_benchmarked_for_performance_in_this_declaration"
+    },
+    {
+      "kernelId": "portable_fused_matmul_bias_relu_bm64_bn64_bk128",
+      "opName": "fused_matmul_bias_relu",
+      "backend": "cpu",
+      "supportedDtypes": [
+        "f32"
+      ],
+      "supportedQuantModes": [
+        "none"
+      ],
+      "supportedLayouts": [],
+      "supportedTileShapes": [],
+      "requiresStaticShape": true,
+      "requiresLocalMemoryBytes": 0,
+      "source": "handwritten_runtime",
+      "implementationRef": "heterogeneous-inference-runtime: native/cpu_kernels/portable_fused_matmul_bias_relu.cpp (candidate bm64_bn64_bk128, exceeds L1D fits L2, deep K)",
+      "truthBoundary": "p1c_candidate_exceeds_l1d_fits_l2_deep_k_dispatch_validated_on_raspberry_pi_not_benchmarked_for_performance_in_this_declaration"
+    }
+  ],
+  "runtimeKernelsNote": "kernel_selection_contract_v1 registry, extended in Phase P1C from the single P1B baseline candidate to a frozen 8-candidate tile/schedule family for the same fused_matmul_bias_relu op (identical semantics, dtype f32, backend cpu, one thread, same compiler flags -- only block_m/block_n/block_k differ; see DOC/result/P1C_*.md for the full working-set-vs-Cortex-A76-cache rationale). IMPORTANT, VERIFIED ARCHITECTURAL LIMITATION (audited in Phase P1C, not fabricated, re-confirmed unchanged in P1C.1): KernelSelectionPass matches candidates on (op_name, backend, dtype, quant_mode, layout, tile-plan, local-memory) and picks the FIRST full match in declaration order, short-circuiting the search -- it has NO signal that varies with an op's concrete (M,N,K) shape, so it cannot and does not perform shape-aware or cache-aware candidate selection today. Declaring a supportedTileShapes constraint per candidate would not fix this: TilePlanningPass never produces a tile plan on this profile (staticCostProfile.localMemoryBytes is deliberately undeclared, per the P1A decision that this Cortex-A76's hardware-managed cache is not a software-managed scratchpad), so every candidate's tile-shape check would defer (deferred_missing_tile_plan) rather than select. Consequently, declaration ORDER is the only lever this compiler has for choosing a default on this profile. PHASE P1C.1 CHANGE: bm32_bn128_bk32 is now declared FIRST (previously bm32_bn32_bk32). This is an evidence-backed LOW-REGRET STATIC DEFAULT change, not a dynamic or shape-aware selector: P1C's Raspberry Pi measurement (432/432 correct, 3 independent performance-governor-pinned sessions, 19 held-out+calibration timed workloads) found bm32_bn128_bk32 has the lowest mean-of-medians latency and the most raw wins both across the full dataset AND when the ranking is restricted to calibration-only workloads (13/24 wins, re-verified in the P1C.1 leakage review -- the choice does not depend on held-out labels), and achieves 0.078% mean regret against the measured oracle on held-out workloads (vs 3.889% mean regret for the previous bm32_bn32_bk32 default) -- see DOC/result/P1C1_*.md. Zero of 17 measured workloads met the pre-registered stable-winner bar (same winner in all 3 sessions with >=5% margin): this remains an aggregate low-regret static preference, not a demonstrated per-shape decision boundary, and not a claim of universal optimality for every possible shape. For ANY workload shape, this profile's live compiler selection is, and will remain, bm32_bn128_bk32 -- the other 7 candidates (including the former default, bm32_bn32_bk32) stay declared so Runtime can still recognize and dispatch them by exact ID, and so future oracle/regret work can still invoke them directly, the same methodology Phase 1/R1's CPU schedule-discovery tool used, independent of live compiler selection. The schema/pass also cannot retain 'candidates considered but not selected' when a match succeeds (the match loop breaks on the first full match), so only the winning descriptor's identity is ever exported in kernel_selection.* -- documented here rather than fabricated. ml-platform-capabilities is not consulted by this declaration (existing architectural bypass predating P1B, unchanged here)."
+}
