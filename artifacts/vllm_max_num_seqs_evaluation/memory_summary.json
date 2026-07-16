@@ -1,0 +1,122 @@
+[
+  {
+    "after_shutdown_gpu_memory_mib": 0,
+    "candidate_id": "vllm_max_num_seqs_1",
+    "idle_gpu_memory_mib": 0,
+    "model_loaded_gpu_memory_mib": 2902,
+    "peak_gpu_memory_mib": 2902,
+    "workload_id": "S1"
+  },
+  {
+    "after_shutdown_gpu_memory_mib": 0,
+    "candidate_id": "vllm_max_num_seqs_2",
+    "idle_gpu_memory_mib": 0,
+    "model_loaded_gpu_memory_mib": 2862,
+    "peak_gpu_memory_mib": 2862,
+    "workload_id": "S1"
+  },
+  {
+    "after_shutdown_gpu_memory_mib": 0,
+    "candidate_id": "vllm_max_num_seqs_4",
+    "idle_gpu_memory_mib": 0,
+    "model_loaded_gpu_memory_mib": 2892,
+    "peak_gpu_memory_mib": 2892,
+    "workload_id": "S1"
+  },
+  {
+    "after_shutdown_gpu_memory_mib": 0,
+    "candidate_id": "vllm_max_num_seqs_8",
+    "idle_gpu_memory_mib": 0,
+    "model_loaded_gpu_memory_mib": 2906,
+    "peak_gpu_memory_mib": 2906,
+    "workload_id": "S1"
+  },
+  {
+    "after_shutdown_gpu_memory_mib": 0,
+    "candidate_id": "vllm_max_num_seqs_default",
+    "idle_gpu_memory_mib": 0,
+    "model_loaded_gpu_memory_mib": 3126,
+    "peak_gpu_memory_mib": 3126,
+    "workload_id": "S1"
+  },
+  {
+    "after_shutdown_gpu_memory_mib": 0,
+    "candidate_id": "vllm_max_num_seqs_1",
+    "idle_gpu_memory_mib": 0,
+    "model_loaded_gpu_memory_mib": 2902,
+    "peak_gpu_memory_mib": 2902,
+    "workload_id": "S2"
+  },
+  {
+    "after_shutdown_gpu_memory_mib": 0,
+    "candidate_id": "vllm_max_num_seqs_2",
+    "idle_gpu_memory_mib": 0,
+    "model_loaded_gpu_memory_mib": 2862,
+    "peak_gpu_memory_mib": 2862,
+    "workload_id": "S2"
+  },
+  {
+    "after_shutdown_gpu_memory_mib": 0,
+    "candidate_id": "vllm_max_num_seqs_4",
+    "idle_gpu_memory_mib": 0,
+    "model_loaded_gpu_memory_mib": 2894,
+    "peak_gpu_memory_mib": 2894,
+    "workload_id": "S2"
+  },
+  {
+    "after_shutdown_gpu_memory_mib": 0,
+    "candidate_id": "vllm_max_num_seqs_8",
+    "idle_gpu_memory_mib": 0,
+    "model_loaded_gpu_memory_mib": 2906,
+    "peak_gpu_memory_mib": 2906,
+    "workload_id": "S2"
+  },
+  {
+    "after_shutdown_gpu_memory_mib": 0,
+    "candidate_id": "vllm_max_num_seqs_default",
+    "idle_gpu_memory_mib": 0,
+    "model_loaded_gpu_memory_mib": 3106,
+    "peak_gpu_memory_mib": 3106,
+    "workload_id": "S2"
+  },
+  {
+    "after_shutdown_gpu_memory_mib": 0,
+    "candidate_id": "vllm_max_num_seqs_1",
+    "idle_gpu_memory_mib": 0,
+    "model_loaded_gpu_memory_mib": 2902,
+    "peak_gpu_memory_mib": 2902,
+    "workload_id": "S3"
+  },
+  {
+    "after_shutdown_gpu_memory_mib": 0,
+    "candidate_id": "vllm_max_num_seqs_2",
+    "idle_gpu_memory_mib": 0,
+    "model_loaded_gpu_memory_mib": 2862,
+    "peak_gpu_memory_mib": 2862,
+    "workload_id": "S3"
+  },
+  {
+    "after_shutdown_gpu_memory_mib": 0,
+    "candidate_id": "vllm_max_num_seqs_4",
+    "idle_gpu_memory_mib": 0,
+    "model_loaded_gpu_memory_mib": 2894,
+    "peak_gpu_memory_mib": 2894,
+    "workload_id": "S3"
+  },
+  {
+    "after_shutdown_gpu_memory_mib": 0,
+    "candidate_id": "vllm_max_num_seqs_8",
+    "idle_gpu_memory_mib": 0,
+    "model_loaded_gpu_memory_mib": 2928,
+    "peak_gpu_memory_mib": 2928,
+    "workload_id": "S3"
+  },
+  {
+    "after_shutdown_gpu_memory_mib": 0,
+    "candidate_id": "vllm_max_num_seqs_default",
+    "idle_gpu_memory_mib": 0,
+    "model_loaded_gpu_memory_mib": 3106,
+    "peak_gpu_memory_mib": 3106,
+    "workload_id": "S3"
+  }
+]

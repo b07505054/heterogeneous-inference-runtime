@@ -1,0 +1,1675 @@
+{
+  "source_sha256": "0fbca26193b346db7d387d94389f21b1f043a99f70ed68a8eb0c8cd741680f17",
+  "workloads": [
+    {
+      "arrival_schedule": "closed_loop_immediate_submission",
+      "concurrency": 4,
+      "measured_requests": 50,
+      "requests": [
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S2-R000",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "33a546571a08e57f7d0d98091e48e4a4b1cd715ab287f663076284ad448d03ee"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S2-R001",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "6d755c15529ac9cf0be8941a9be79a07aa62b504b072ee1ed41a42abf223439b"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S2-R002",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "54b031bd0174c7fd6a1b8d92db27840009f614d14e5f20c10f4ff3e1e8469924"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S2-R003",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "5112d84bac59a7a1b1aef1ec9d1172d4a49341323d2ace80f94bb27bd24d780f"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S2-R004",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "7feba8addbb810b7de121223f78deb7ee010daca7e91a12b874cbf9382f33af9"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S2-R005",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "d788b3616a28ca6a6f1a768d013c6f3e667377d2be5ebce52275ff9b29894e0f"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S2-R006",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "22bed1f0556c91efd4311f8a88573a6dee7c9f28262bfd6b8e0f497bb2605164"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S2-R007",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "a7b5855e055d9d1194154b4da977469214597b7cdb82e0fbd3ee6a51980aa003"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S2-R008",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "72cc49f2e9c8eb5ab0fb6354b7a3c25975847db49461b97c679ff61186d7d707"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S2-R009",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "4d6b8437e67368c1502639df3c4273ce6681cdba2591e7a91318120d6a615129"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S2-R010",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "3ef1e193a5ac71574581b11798410a727a82a277206f10122d4db5e217181315"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S2-R011",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "c89ff5b17eeadf9ad33102139e7a6062c6877844a0613b07b84512fd1ad02b96"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S2-R012",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "3fad914b44b6018a3e5062349cd9d42c6f3d250165333a8c45c2aa78be19f944"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S2-R013",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "7f6a5e960c0d251d0d81e37885a17116558313477e22b8e2c6c83f84b16c5387"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S2-R014",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "2035bf209b306c536561de87467a9d8f2bd4e7a0173d9fd7e455907f757fbc63"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S2-R015",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "0867e7771547b3e5f730d1af2aaa26d34a66209f3428a81619ba08cd054e4d61"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S2-R016",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "f532f5a4c3aad3dc085c654cf305ac77abde87e1d6260a6503b6f3179cf73d20"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S2-R017",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "f25b715db2f292ab225b2c4c556538edef650a66e236480c796f7f243eb115da"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S2-R018",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "842aa745e0273e2c2b832479b15de61b153fc2213cb93a94a72d2e77e7089888"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S2-R019",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "f1bf973c141fdaa70d6be5a59466f81ef143bc8df977ce668d64d95be3528f7c"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S2-R020",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "7430c0083091afc637e2d69fd4faf141b36753926b4505d26119f0eb715d62a7"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S2-R021",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "788d83cff7c6adcaf39ae6bfeb788154e4fba1aaef10f4a8521746aa66e8edca"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S2-R022",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "c94018d46db80fc0aa4f26797a7b2becfdd459915a08cab57151309c59efd7a5"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S2-R023",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "60d6b1bcee1a9af32cff08c20f4fe13a90151897f47da937148b7821791ebc73"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S2-R024",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "ed9f459eec2cc142ebccea1d4cc89495234c3d93d79ecad32528f2acf5019e09"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S2-R025",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "80cb14373770ef0527ef45fddbfcb33f0bd395fe8db9742ecc5f936b3b826bdf"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S2-R026",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "22653d57ae7f288419c67c5059f542bc2d16a41d241351c85d669fc55f6baf30"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S2-R027",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "6ddb56c3fc3f7e7e62982329b67c44613368c6647a3e06ef5ac8b1754ab36b6f"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S2-R028",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "d986f62a257d45d3645277ab6a37d0dc0c42a4e5d7c6ffb959180d3d758ace01"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S2-R029",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "df051ce06256e94bd25de18f4edb77aa167e0482139dec384caafb7aae6504f2"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S2-R030",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "af481158c16832cc404751e6a669bc5b2be3180c01106914478592ca5bdcfea9"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S2-R031",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "92528ac14dd01534c53fdec547c36e77f6051d9d4794fed897f37193ec8a23a0"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S2-R032",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "e302d5b44d419934e0eb924858da8d754d9485ca57ab316499dab4c791079e49"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S2-R033",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "f7d5107cac24bda03ee6db06bf70718e34409eed426f82971c8ffbe784ca3744"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S2-R034",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "da8ecf6b0c79bba3ea1175554af5ab3f4ec1ecfc85f1e6d895c14e5621f4f3c4"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S2-R035",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "64778396386114c3f4af68b25817b71add4c83be599aba9899d9ed9863c0d61a"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S2-R036",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "244dc9dc1277eefb5badb280aedf78b897fdcba93255632384be9c2f1988a9ef"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S2-R037",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "6547b5d5cf4b96a8ebba27ce2b7c41fc734c6200d1beee34043e72020cb1dd73"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S2-R038",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "6fd893110275b211afb566fa4c145fe237f887b91f8ebac0b141fa2ed132f289"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S2-R039",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "438e2afb7cf2ec3765e5a9b5049236c4f00249d3b73f5fb35837340fac68be7a"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S2-R040",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "c20890260dee54efc97ee53e886f3eae7cb3419c614e67d9dcb2e4c0672b9df0"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S2-R041",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "11d8e41fa9af1e4807ac45bb06863c6f2f1d2385c35573ec07268c5bf74d020d"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S2-R042",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "b01b048475138239c4dff2a1d352c1407a1e74b946f93035ec40e230e76dd20e"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S2-R043",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "dfb3f6a52b6afac5e6e16fca6bcbaca4be7815856cea55e326d853668eff580d"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S2-R044",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "2b5cd7cb27d74284849c222d2f31de440c96f2271e5f556453e05f10eb87b233"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S2-R045",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "598737aed99ffb4663552c3d91262ed1ddc6c65bf8db19ecab022ff86a255001"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S2-R046",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "35588da6b3de7ed85ac551c3385ab1510f547c904d4789a97cfa627bc0de0e59"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S2-R047",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "4e5009a244cc930ffc02fa9677e940f883a55944f8c1035d5b44f700d8c5ad70"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S2-R048",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "05ed173582d85859499d4ef7a5316f9d1b1420961cc454820f82e2c83884e7e8"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S2-R049",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "586ccbda45a5f4e361b12852e20de3f28b2d428883ac3e70482e87717a9e5c27"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S2-R050",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "c8760a0cfd370d6fbf1b3dd00b01773a2955685acd87e67b995f6ebff325ad6b"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S2-R051",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "5763e5a5936a4ab102926987cb836d97a875208fb2a8c1f9cd8d86cb2da8779f"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S2-R052",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "d897393c7da4271e46e425d2b9bf10c285f6e915253b4ea5dcca8a61a4a46ea6"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S2-R053",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "708faa3315920c9f4d2a587c09f9895e8a9d098b1ac6e3fffffd4978f321d0f7"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 24,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S2-R054",
+            "requested_output_token_count": 24,
+            "seed": 20260715,
+            "sha256": "d91d901ca9b255e3df1e5afa4f9e5c48833a7ca2ee75bdfc9f5e5cf27a3b641c"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        }
+      ],
+      "sha256": "9b41541b0d6af00a09ac18c9749430f46c6c54b0e17c1d8ba2cd88abb364b8de",
+      "warmup_requests": 5,
+      "workload_id": "S2"
+    },
+    {
+      "arrival_schedule": "closed_loop_immediate_submission",
+      "concurrency": 8,
+      "measured_requests": 50,
+      "requests": [
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S3-R000",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "6ea7daffb726c66a6a68532b83b577df7863ae509058b404f28a36056d7bc416"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S3-R001",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "d167fca073932189b08da63c83d450b7437c89b973e524220598c39f912a4eff"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S3-R002",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "9b50952ae8f04f1422e98a1516f244bc1151b58d0a7915a8f7694458345b5568"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S3-R003",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "1146713deb4128781490e6b1985ec5b4086e46870b03d1d28095dcb3763ce86c"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S3-R004",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "6481d65695e6621ee4ff662706598a1e01e1127274c71a09289ef183af576938"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S3-R005",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "6fb2b603697f071cf74b4ea6a12d6f0d8a5e7b29576c277c6aa97944b859a78e"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S3-R006",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "2f0bfd17cdc65507f3626b39caed30d4b9b8495c5fbb37b4441d5ee2840fa8f4"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S3-R007",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "ed2421ae5e95006db218a756d04d7ffdefdf995b411014e548494325ba11d795"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S3-R008",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "c98e30d6c047822be78e3383619ead395a4ca5bc95aaa1b3a21e01d6f51b0d3e"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S3-R009",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "7a89bb1493aa204a6600f9e33e91466d30a33649bbc9fdbb2edba7a6c2b3228c"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S3-R010",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "af0f23cce73bf948f5c1ce53786483321f23a19917d6ef52fa5a4104be451f43"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S3-R011",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "6b56b0e33d359003c59d6429ae62f9fd4602955e528dce13360842f9235707fc"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S3-R012",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "d3789b623038649dafe8f14f74a0139139bf5b0ad7eb78c8091efd383d269b69"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S3-R013",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "5a35bd76d90e25e0ebe5a76a7f6b52df2976f09ff4216039677ab584a3e4cc50"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S3-R014",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "f5eb4735efe5997239a3828d1e856270eee975a6f12e61c371be26544305e249"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S3-R015",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "b0115ae515586124ddd97e4ec64c9e2b056012baed3231fb55339d256d3d22b2"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S3-R016",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "6ee3914b2f9419142cec496db9c21f51e3b2bc4a2c594095f29cd0c934c97a7c"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S3-R017",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "bd3eab3877def2b392355ab918965315b74b3ce06fd7deb704a1d3093aee390a"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S3-R018",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "132c2e03d091018a2e6beaa28d8f6ca03614d29a034ca9ecdff6ffc92b45966b"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S3-R019",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "69caee940baeaf3862cbc34d38e5c1a1daefee214c9d2773c290a39e384ebdbb"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S3-R020",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "f3f28c8f8677bf9fb57feb4b83a93a3c0ce79076fca8e97d883e689a9191e5c2"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S3-R021",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "717d417aa91a5044dece2c1cc3fa2d62996d34c39f7cc0a459b9ef44d215f0de"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S3-R022",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "7d749902e081f1e57ceb7bf16180a2e9a250bb12784640aead33f751dac52a5b"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S3-R023",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "ec37e9264c96f48c1009a7734510160d2aba09c6796e5f9ef090e268ce5e9241"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S3-R024",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "62e826dc6a084753f5788557a6bba94a874dbd380797da53586725e5d425eac9"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S3-R025",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "c505b8420fd0bc13c44b1c4218c1973e63a3eb292b65c80a74439aaab01351da"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S3-R026",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "6468993dd3eed085ddbef7e5674cdebc9c061425c47cc5243eef68d00fb6c0e4"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S3-R027",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "39f1d7cc8a321f69f6d8139af91a4bacfbf1771939bce0fcf3482e3152d71088"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S3-R028",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "013b64e77514c33744ad0558135db05d4bf4799313ba169cc1ede155b93a4f27"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S3-R029",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "187f63e658e47aeb97a03867d0bf88a1bf25a9e1dae8ace1f2b2ea9566638f9e"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S3-R030",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "926594e7fd3b66cf6f72db24789a5488dad877cee6cfb48a0c61fb1806efcd1e"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S3-R031",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "1f6afc99f5ba7b9e92fca890491583ae1466e22dbce8c854a5f3b1827e85d5f3"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S3-R032",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "b4d78ed8272a0c6ffdd37ea880adec76fae7d8fb940868e0247ef96dba400a3b"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S3-R033",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "ca7cf770a0bc52b41f1e58169ffe9f8c0d7d262da088ec4b77f061db883724be"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S3-R034",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "3eaeb333a39a6b9f50b24a1ac35d88fcba7a6bcac7f62fa071059c2c856e34e9"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S3-R035",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "c477e5e4f71493d5f46f4909ee923d95c1c7c5d1c3f10fd57c32b55f71ec2ced"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S3-R036",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "0e18885357f01b71306dce4e3f817692e37622439f7a119d86f746e311aeb618"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S3-R037",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "4b8085536636a93ebdd1389c16bf6bb82f8978bcc3641bf5320c44964198e2f9"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S3-R038",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "698bfca6ae9dd93ac62ee03541d476b459e4e517cf45708cff5b652c34dfd9da"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S3-R039",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "4a4295ed8f018489707f3af27b9f6476d201de91b848caf2b4a7a41d7c98e7d0"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S3-R040",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "99d1eb45f3875976be53f28f4de6dffce6e6603d3aff770f2b9cd3ccd26350c8"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S3-R041",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "03cdbc0300512ae7271702c07115f313c29583f97e2f243f4d30473b1538302a"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S3-R042",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "a0fa825b637ed3220378207600ef2326144609aa55bc1f819b048ecd995f3741"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S3-R043",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "483f8da9f40663f09f20b331650fe82ed2a9f81ed8364a472fed35f67fd4cddb"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S3-R044",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "d3fe93cf7644fe27ee8ae49d3a2e2cf0050bcf1d66c0a2f43dedc3bd745003b4"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S3-R045",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "18c0d2fbe4a05e5a1eecefcfa47e2e083badd64f29e3c82da0057653bdf6fad9"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S3-R046",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "65f6573db5065ea8cd46ad9e3b5c839ba593ad534c9fdc08fdfcf50414e8cc2c"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S3-R047",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "7425b8e85412e194a835402017e622094e0bf30d629e6e6d8e28ce945f77d5f2"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S3-R048",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "a46cd7482ec5383ace3dd93856c83cb1775a15473f88d1ee2f6ae82c371c941b"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S3-R049",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "933e88a5e4cc6fd8ba49b3bdd329da0b547046ef7202edf275a9a97c62c19eab"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S3-R050",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "6864a795002170ec2430c67f321cb2c9a39113759decd8dff699dea1d7d600cc"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 17,
+            "request_id": "S3-R051",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "96d04c387f25556b60f9a49b9b0661e072b3ad11e0a2427221fde07ad21a0900"
+          },
+          "prompt": "Summarize why deterministic request traces are useful when comparing server configurations across repeated sessions.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 27,
+            "request_id": "S3-R052",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "f5aa19b9daf0f40a490aef51f13cc048ceaf41bfa999b0d0b2d67f74d2c247ac"
+          },
+          "prompt": "A service receives requests from several users at once. Explain in three concise sentences how batching can improve throughput and also increase queueing latency.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 21,
+            "request_id": "S3-R053",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "a2e69aaae50627c4e3a05a73cb23432cfbd89bb90ecaa34c90744560b76ce474"
+          },
+          "prompt": "Compare a contiguous array with a paged representation. Give two advantages and two disadvantages, using plain language.",
+          "seed": 20260715,
+          "temperature": 0.0
+        },
+        {
+          "max_tokens": 32,
+          "metadata": {
+            "arrival_offset_ms": 0,
+            "priority": 0,
+            "prompt_token_count": 22,
+            "request_id": "S3-R054",
+            "requested_output_token_count": 32,
+            "seed": 20260715,
+            "sha256": "3bb85a653152de7a15a03bf53d4791461c678c9eea52b53de20a4c2063d46185"
+          },
+          "prompt": "Describe how to validate a performance benchmark so that setup, warmup, and measured work are not accidentally mixed.",
+          "seed": 20260715,
+          "temperature": 0.0
+        }
+      ],
+      "sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62",
+      "warmup_requests": 5,
+      "workload_id": "S3"
+    }
+  ]
+}

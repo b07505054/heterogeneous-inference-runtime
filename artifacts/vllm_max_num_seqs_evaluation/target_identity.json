@@ -1,0 +1,6 @@
+{
+  "gpu_csv": "NVIDIA GeForce GTX 1650 with Max-Q Design, GPU-5d6b9a94-86b8-b7e3-9579-49e1925841d0, 4096, 595.71.05, 7.5",
+  "hostname": "allen-ZenBook-UX534FTC-UX534FT",
+  "kernel": "Linux-7.0.0-27-generic-x86_64-with-glibc2.43",
+  "target_identity": "NVIDIA GeForce GTX 1650 with Max-Q Design"
+}

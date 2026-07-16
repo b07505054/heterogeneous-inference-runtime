@@ -1,0 +1,167 @@
+[
+  {
+    "candidate_id": "vllm_max_num_seqs_1",
+    "classification": "VALID",
+    "failure_count": 0,
+    "http_server_error_count": 0,
+    "oom_count": 0,
+    "request_count": 150,
+    "success_count": 150,
+    "timeout_count": 0,
+    "workload_id": "S1"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_2",
+    "classification": "VALID",
+    "failure_count": 0,
+    "http_server_error_count": 0,
+    "oom_count": 0,
+    "request_count": 150,
+    "success_count": 150,
+    "timeout_count": 0,
+    "workload_id": "S1"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_4",
+    "classification": "VALID",
+    "failure_count": 0,
+    "http_server_error_count": 0,
+    "oom_count": 0,
+    "request_count": 150,
+    "success_count": 150,
+    "timeout_count": 0,
+    "workload_id": "S1"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_8",
+    "classification": "VALID",
+    "failure_count": 0,
+    "http_server_error_count": 0,
+    "oom_count": 0,
+    "request_count": 150,
+    "success_count": 150,
+    "timeout_count": 0,
+    "workload_id": "S1"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_default",
+    "classification": "VALID",
+    "failure_count": 0,
+    "http_server_error_count": 0,
+    "oom_count": 0,
+    "request_count": 150,
+    "success_count": 150,
+    "timeout_count": 0,
+    "workload_id": "S1"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_1",
+    "classification": "VALID",
+    "failure_count": 0,
+    "http_server_error_count": 0,
+    "oom_count": 0,
+    "request_count": 150,
+    "success_count": 150,
+    "timeout_count": 0,
+    "workload_id": "S2"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_2",
+    "classification": "VALID",
+    "failure_count": 0,
+    "http_server_error_count": 0,
+    "oom_count": 0,
+    "request_count": 150,
+    "success_count": 150,
+    "timeout_count": 0,
+    "workload_id": "S2"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_4",
+    "classification": "VALID",
+    "failure_count": 0,
+    "http_server_error_count": 0,
+    "oom_count": 0,
+    "request_count": 150,
+    "success_count": 150,
+    "timeout_count": 0,
+    "workload_id": "S2"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_8",
+    "classification": "VALID",
+    "failure_count": 0,
+    "http_server_error_count": 0,
+    "oom_count": 0,
+    "request_count": 150,
+    "success_count": 150,
+    "timeout_count": 0,
+    "workload_id": "S2"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_default",
+    "classification": "VALID",
+    "failure_count": 0,
+    "http_server_error_count": 0,
+    "oom_count": 0,
+    "request_count": 150,
+    "success_count": 150,
+    "timeout_count": 0,
+    "workload_id": "S2"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_1",
+    "classification": "VALID",
+    "failure_count": 0,
+    "http_server_error_count": 0,
+    "oom_count": 0,
+    "request_count": 150,
+    "success_count": 150,
+    "timeout_count": 0,
+    "workload_id": "S3"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_2",
+    "classification": "VALID",
+    "failure_count": 0,
+    "http_server_error_count": 0,
+    "oom_count": 0,
+    "request_count": 150,
+    "success_count": 150,
+    "timeout_count": 0,
+    "workload_id": "S3"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_4",
+    "classification": "VALID",
+    "failure_count": 0,
+    "http_server_error_count": 0,
+    "oom_count": 0,
+    "request_count": 150,
+    "success_count": 150,
+    "timeout_count": 0,
+    "workload_id": "S3"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_8",
+    "classification": "VALID",
+    "failure_count": 0,
+    "http_server_error_count": 0,
+    "oom_count": 0,
+    "request_count": 150,
+    "success_count": 150,
+    "timeout_count": 0,
+    "workload_id": "S3"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_default",
+    "classification": "VALID",
+    "failure_count": 0,
+    "http_server_error_count": 0,
+    "oom_count": 0,
+    "request_count": 150,
+    "success_count": 150,
+    "timeout_count": 0,
+    "workload_id": "S3"
+  }
+]

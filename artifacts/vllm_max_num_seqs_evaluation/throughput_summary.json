@@ -1,0 +1,92 @@
+[
+  {
+    "candidate_id": "vllm_max_num_seqs_1",
+    "output_token_throughput": 49.811313,
+    "request_throughput": 3.113207,
+    "workload_id": "S1"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_2",
+    "output_token_throughput": 49.672522,
+    "request_throughput": 3.104533,
+    "workload_id": "S1"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_4",
+    "output_token_throughput": 50.006748,
+    "request_throughput": 3.125422,
+    "workload_id": "S1"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_8",
+    "output_token_throughput": 49.767009,
+    "request_throughput": 3.110438,
+    "workload_id": "S1"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_default",
+    "output_token_throughput": 49.297917,
+    "request_throughput": 3.08112,
+    "workload_id": "S1"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_1",
+    "output_token_throughput": 57.739338,
+    "request_throughput": 2.405806,
+    "workload_id": "S2"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_2",
+    "output_token_throughput": 11.807839,
+    "request_throughput": 0.491993,
+    "workload_id": "S2"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_4",
+    "output_token_throughput": 20.476386,
+    "request_throughput": 0.853183,
+    "workload_id": "S2"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_8",
+    "output_token_throughput": 20.457355,
+    "request_throughput": 0.85239,
+    "workload_id": "S2"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_default",
+    "output_token_throughput": 20.418469,
+    "request_throughput": 0.85077,
+    "workload_id": "S2"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_1",
+    "output_token_throughput": 62.785642,
+    "request_throughput": 1.962051,
+    "workload_id": "S3"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_2",
+    "output_token_throughput": 11.777128,
+    "request_throughput": 0.368035,
+    "workload_id": "S3"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_4",
+    "output_token_throughput": 20.933956,
+    "request_throughput": 0.654186,
+    "workload_id": "S3"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_8",
+    "output_token_throughput": 37.34995,
+    "request_throughput": 1.167186,
+    "workload_id": "S3"
+  },
+  {
+    "candidate_id": "vllm_max_num_seqs_default",
+    "output_token_throughput": 36.492536,
+    "request_throughput": 1.140392,
+    "workload_id": "S3"
+  }
+]

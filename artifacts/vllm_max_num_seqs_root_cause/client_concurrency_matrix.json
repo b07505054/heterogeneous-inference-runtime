@@ -1,0 +1,5402 @@
+[
+  {
+    "actual_average_in_flight": 0.9998220168728937,
+    "actual_maximum_in_flight": 1,
+    "classification": "VALID",
+    "client_concurrency": 1,
+    "e2e_ms": {
+      "count": 50,
+      "max": 519.098786,
+      "mean": 514.891976,
+      "min": 509.691171,
+      "p50": 514.740334,
+      "p95": 518.270164,
+      "p99": 519.098786
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 99.0,
+        "mean": 98.966292,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2907.0,
+        "mean": 2907.0,
+        "minimum": 2907.0
+      },
+      "power_watts": {
+        "maximum": 39.78,
+        "mean": 33.00427,
+        "minimum": 26.25
+      },
+      "sample_count": 89,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1264.044944,
+        "minimum": 1005.0
+      },
+      "temperature_c": {
+        "maximum": 77.0,
+        "mean": 75.179775,
+        "minimum": 73.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 1,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 62.13403840962882,
+    "request_count": 50,
+    "request_throughput": 1.9416887003009007,
+    "session": 0,
+    "startup_seconds": 39.021098849130794,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 11.665054,
+      "mean": 11.605703,
+      "min": 11.5296,
+      "p50": 11.603369,
+      "p95": 11.659381,
+      "p99": 11.665054
+    },
+    "trace_wall_seconds": 25.750780746806413,
+    "ttft_ms": {
+      "count": 50,
+      "max": 157.482114,
+      "mean": 155.115185,
+      "min": 151.881147,
+      "p50": 155.13207,
+      "p95": 156.992904,
+      "p99": 157.482114
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1748.0,
+        "mean": 958.977528,
+        "minimum": 165.0,
+        "sample_count": 89
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784194801.9331179,
+        "mean": 1784181021.831994,
+        "minimum": 1784167182.9331179,
+        "sample_count": 89
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 1.0,
+        "mean": 0.685393,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "num_requests_waiting": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1541.47191,
+        "minimum": 309.0,
+        "sample_count": 89
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 1.9796743215508383,
+    "actual_maximum_in_flight": 2,
+    "classification": "VALID",
+    "client_concurrency": 2,
+    "e2e_ms": {
+      "count": 50,
+      "max": 1032.815312,
+      "mean": 1013.950146,
+      "min": 508.974903,
+      "p50": 1025.099796,
+      "p95": 1031.524772,
+      "p99": 1032.815312
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 99.0,
+        "mean": 99.0,
+        "minimum": 99.0
+      },
+      "memory_used_mib": {
+        "maximum": 2907.0,
+        "mean": 2907.0,
+        "minimum": 2907.0
+      },
+      "power_watts": {
+        "maximum": 39.37,
+        "mean": 32.635506,
+        "minimum": 26.35
+      },
+      "sample_count": 89,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1270.786517,
+        "minimum": 990.0
+      },
+      "temperature_c": {
+        "maximum": 76.0,
+        "mean": 74.41573,
+        "minimum": 71.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 1,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 62.47462475006865,
+    "request_count": 50,
+    "request_throughput": 1.9523320234396453,
+    "session": 0,
+    "startup_seconds": 41.024679076857865,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 11.800546,
+      "mean": 11.585308,
+      "min": 11.46223,
+      "p50": 11.585558,
+      "p95": 11.656845,
+      "p99": 11.800546
+    },
+    "trace_wall_seconds": 25.610397923970595,
+    "ttft_ms": {
+      "count": 50,
+      "max": 674.665168,
+      "mean": 654.805593,
+      "min": 152.510029,
+      "p50": 665.741594,
+      "p95": 671.139596,
+      "p99": 674.665168
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1745.0,
+        "mean": 953.58427,
+        "minimum": 160.0,
+        "sample_count": 89
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784195479.2935028,
+        "mean": 1784181652.664289,
+        "minimum": 1784167782.2935028,
+        "sample_count": 89
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 1.0,
+        "mean": 0.955056,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "num_requests_waiting": {
+        "maximum": 2.0,
+        "mean": 1.393258,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1532.516854,
+        "minimum": 259.0,
+        "sample_count": 89
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 2.939559223154442,
+    "actual_maximum_in_flight": 3,
+    "classification": "VALID",
+    "client_concurrency": 3,
+    "e2e_ms": {
+      "count": 50,
+      "max": 1547.229034,
+      "mean": 1508.058343,
+      "min": 510.728466,
+      "p50": 1539.694017,
+      "p95": 1546.096509,
+      "p99": 1547.229034
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 99.0,
+        "mean": 98.955056,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2907.0,
+        "mean": 2907.0,
+        "minimum": 2907.0
+      },
+      "power_watts": {
+        "maximum": 39.59,
+        "mean": 32.678427,
+        "minimum": 26.19
+      },
+      "sample_count": 89,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1268.426966,
+        "minimum": 1005.0
+      },
+      "temperature_c": {
+        "maximum": 77.0,
+        "mean": 74.977528,
+        "minimum": 72.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 1,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 62.371941615600576,
+    "request_count": 50,
+    "request_throughput": 1.949123175487518,
+    "session": 0,
+    "startup_seconds": 40.02264009718783,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 11.656821,
+      "mean": 11.595345,
+      "min": 11.511379,
+      "p50": 11.597508,
+      "p95": 11.651189,
+      "p99": 11.656821
+    },
+    "trace_wall_seconds": 25.652560407062992,
+    "ttft_ms": {
+      "count": 50,
+      "max": 1187.408627,
+      "mean": 1148.602635,
+      "min": 153.336364,
+      "p50": 1179.555095,
+      "p95": 1185.5077,
+      "p99": 1187.408627
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1739.0,
+        "mean": 950.235955,
+        "minimum": 160.0,
+        "sample_count": 89
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784194994.9916503,
+        "mean": 1784181206.002886,
+        "minimum": 1784167393.9916503,
+        "sample_count": 89
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 1.0,
+        "mean": 0.966292,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "num_requests_waiting": {
+        "maximum": 4.0,
+        "mean": 3.303371,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1527.325843,
+        "minimum": 259.0,
+        "sample_count": 89
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 3.879201525319834,
+    "actual_maximum_in_flight": 4,
+    "classification": "VALID",
+    "client_concurrency": 4,
+    "e2e_ms": {
+      "count": 50,
+      "max": 2058.663292,
+      "mean": 1986.288569,
+      "min": 509.032241,
+      "p50": 2050.325512,
+      "p95": 2057.824969,
+      "p99": 2058.663292
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 99.0,
+        "mean": 99.0,
+        "minimum": 99.0
+      },
+      "memory_used_mib": {
+        "maximum": 2907.0,
+        "mean": 2907.0,
+        "minimum": 2907.0
+      },
+      "power_watts": {
+        "maximum": 40.07,
+        "mean": 32.951798,
+        "minimum": 26.13
+      },
+      "sample_count": 89,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1272.977528,
+        "minimum": 1005.0
+      },
+      "temperature_c": {
+        "maximum": 76.0,
+        "mean": 74.41573,
+        "minimum": 72.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 1,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 62.49191545245815,
+    "request_count": 50,
+    "request_throughput": 1.9528723578893172,
+    "session": 0,
+    "startup_seconds": 40.024514051154256,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 11.650609,
+      "mean": 11.574106,
+      "min": 11.483705,
+      "p50": 11.581691,
+      "p95": 11.631591,
+      "p99": 11.650609
+    },
+    "trace_wall_seconds": 25.603311859071255,
+    "ttft_ms": {
+      "count": 50,
+      "max": 1698.965695,
+      "mean": 1627.491293,
+      "min": 152.596967,
+      "p50": 1691.088031,
+      "p95": 1698.348727,
+      "p99": 1698.965695
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1753.0,
+        "mean": 959.359551,
+        "minimum": 160.0,
+        "sample_count": 89
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784197356.1051934,
+        "mean": 1784183502.711935,
+        "minimum": 1784169531.1051934,
+        "sample_count": 89
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 1.0,
+        "mean": 0.932584,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "num_requests_waiting": {
+        "maximum": 6.0,
+        "mean": 5.213483,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1542.11236,
+        "minimum": 259.0,
+        "sample_count": 89
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 5.69772010646056,
+    "actual_maximum_in_flight": 6,
+    "classification": "VALID",
+    "client_concurrency": 6,
+    "e2e_ms": {
+      "count": 50,
+      "max": 3086.058944,
+      "mean": 2912.75193,
+      "min": 509.504346,
+      "p50": 3067.054661,
+      "p95": 3084.851691,
+      "p99": 3086.058944
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 99.0,
+        "mean": 98.954545,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2907.0,
+        "mean": 2907.0,
+        "minimum": 2907.0
+      },
+      "power_watts": {
+        "maximum": 39.98,
+        "mean": 32.853068,
+        "minimum": 26.33
+      },
+      "sample_count": 88,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1276.534091,
+        "minimum": 1020.0
+      },
+      "temperature_c": {
+        "maximum": 76.0,
+        "mean": 73.886364,
+        "minimum": 71.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 1,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 62.59224542214284,
+    "request_count": 50,
+    "request_throughput": 1.9560076694419637,
+    "session": 0,
+    "startup_seconds": 40.02348631690256,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 11.719988,
+      "mean": 11.561829,
+      "min": 11.454927,
+      "p50": 11.562574,
+      "p95": 11.637659,
+      "p99": 11.719988
+    },
+    "trace_wall_seconds": 25.562271958915517,
+    "ttft_ms": {
+      "count": 50,
+      "max": 2726.008629,
+      "mean": 2554.335239,
+      "min": 154.401597,
+      "p50": 2708.614859,
+      "p95": 2724.601383,
+      "p99": 2726.008629
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1746.0,
+        "mean": 962.443182,
+        "minimum": 173.0,
+        "sample_count": 88
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784197313.5050156,
+        "mean": 1784183625.470925,
+        "minimum": 1784169854.5050156,
+        "sample_count": 88
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 1.0,
+        "mean": 0.965909,
+        "minimum": 0.0,
+        "sample_count": 88
+      },
+      "num_requests_waiting": {
+        "maximum": 10.0,
+        "mean": 8.863636,
+        "minimum": 0.0,
+        "sample_count": 88
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1546.465909,
+        "minimum": 309.0,
+        "sample_count": 88
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 0.9998265784087037,
+    "actual_maximum_in_flight": 1,
+    "classification": "VALID",
+    "client_concurrency": 1,
+    "e2e_ms": {
+      "count": 50,
+      "max": 522.39236,
+      "mean": 514.769618,
+      "min": 508.928109,
+      "p50": 515.055957,
+      "p95": 519.046372,
+      "p99": 522.39236
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 99.0,
+        "mean": 98.955056,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2867.0,
+        "mean": 2867.0,
+        "minimum": 2867.0
+      },
+      "power_watts": {
+        "maximum": 40.03,
+        "mean": 32.576854,
+        "minimum": 26.18
+      },
+      "sample_count": 89,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1270.449438,
+        "minimum": 1005.0
+      },
+      "temperature_c": {
+        "maximum": 77.0,
+        "mean": 74.977528,
+        "minimum": 72.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 2,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 62.14853319398485,
+    "request_count": 50,
+    "request_throughput": 1.9421416623120267,
+    "session": 0,
+    "startup_seconds": 43.02513951109722,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 11.807286,
+      "mean": 11.609566,
+      "min": 11.495102,
+      "p50": 11.602121,
+      "p95": 11.67896,
+      "p99": 11.807286
+    },
+    "trace_wall_seconds": 25.74477494112216,
+    "ttft_ms": {
+      "count": 50,
+      "max": 157.388288,
+      "mean": 154.873061,
+      "min": 152.093037,
+      "p50": 155.005423,
+      "p95": 157.001642,
+      "p99": 157.388288
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1755.0,
+        "mean": 963.47191,
+        "minimum": 173.0,
+        "sample_count": 89
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784196253.228177,
+        "mean": 1784182439.509076,
+        "minimum": 1784168650.228177,
+        "sample_count": 89
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 1.0,
+        "mean": 0.685393,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "num_requests_waiting": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1548.483146,
+        "minimum": 309.0,
+        "sample_count": 89
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 1.9998944071404003,
+    "actual_maximum_in_flight": 2,
+    "classification": "VALID",
+    "client_concurrency": 2,
+    "e2e_ms": {
+      "count": 50,
+      "max": 5478.952055,
+      "mean": 5452.85173,
+      "min": 5428.36159,
+      "p50": 5450.237794,
+      "p95": 5478.131372,
+      "p99": 5478.952055
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.983471,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2867.0,
+        "mean": 2867.0,
+        "minimum": 2867.0
+      },
+      "power_watts": {
+        "maximum": 36.45,
+        "mean": 34.544174,
+        "minimum": 29.94
+      },
+      "sample_count": 484,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1804.741736,
+        "minimum": 1455.0
+      },
+      "temperature_c": {
+        "maximum": 81.0,
+        "mean": 79.458678,
+        "minimum": 73.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 2,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 11.73623007410522,
+    "request_count": 50,
+    "request_throughput": 0.36675718981578814,
+    "session": 0,
+    "startup_seconds": 41.025190204847604,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 171.66321,
+      "mean": 168.180878,
+      "min": 164.952079,
+      "p50": 166.186639,
+      "p95": 171.612748,
+      "p99": 171.66321
+    },
+    "trace_wall_seconds": 136.32997903903015,
+    "ttft_ms": {
+      "count": 50,
+      "max": 327.243049,
+      "mean": 239.244515,
+      "min": 148.808878,
+      "p50": 167.288817,
+      "p95": 326.445089,
+      "p99": 327.243049
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1755.0,
+        "mean": 958.431818,
+        "minimum": 160.0,
+        "sample_count": 484
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784183547.1512709,
+        "mean": 1784175844.967386,
+        "minimum": 1784168033.1512709,
+        "sample_count": 484
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 2.0,
+        "mean": 1.97314,
+        "minimum": 0.0,
+        "sample_count": 484
+      },
+      "num_requests_waiting": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "sample_count": 484
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1574.260331,
+        "minimum": 259.0,
+        "sample_count": 484
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 2.9598017915390478,
+    "actual_maximum_in_flight": 3,
+    "classification": "VALID",
+    "client_concurrency": 3,
+    "e2e_ms": {
+      "count": 50,
+      "max": 10924.61208,
+      "mean": 8067.573248,
+      "min": 5431.223083,
+      "p50": 5489.201277,
+      "p95": 10923.889305,
+      "p99": 10924.61208
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.981405,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2867.0,
+        "mean": 2867.0,
+        "minimum": 2867.0
+      },
+      "power_watts": {
+        "maximum": 37.71,
+        "mean": 34.448636,
+        "minimum": 30.12
+      },
+      "sample_count": 484,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1804.400826,
+        "minimum": 1410.0
+      },
+      "temperature_c": {
+        "maximum": 81.0,
+        "mean": 79.169421,
+        "minimum": 72.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 2,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 11.739870372788221,
+    "request_count": 50,
+    "request_throughput": 0.3668709491496319,
+    "session": 0,
+    "startup_seconds": 40.02921495796181,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 171.565511,
+      "mean": 168.346029,
+      "min": 165.219269,
+      "p50": 166.305835,
+      "p95": 171.487164,
+      "p99": 171.565511
+    },
+    "trace_wall_seconds": 136.28770584287122,
+    "ttft_ms": {
+      "count": 50,
+      "max": 5608.920252,
+      "mean": 2848.846334,
+      "min": 166.390438,
+      "p50": 334.100074,
+      "p95": 5607.075395,
+      "p99": 5608.920252
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 959.427686,
+        "minimum": 161.0,
+        "sample_count": 484
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784183382.3396678,
+        "mean": 1784175673.829337,
+        "minimum": 1784167914.3396678,
+        "sample_count": 484
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 2.0,
+        "mean": 1.975207,
+        "minimum": 1.0,
+        "sample_count": 484
+      },
+      "num_requests_waiting": {
+        "maximum": 2.0,
+        "mean": 1.818182,
+        "minimum": 0.0,
+        "sample_count": 484
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1575.842975,
+        "minimum": 309.0,
+        "sample_count": 484
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 3.919673851823351,
+    "actual_maximum_in_flight": 4,
+    "classification": "VALID",
+    "client_concurrency": 4,
+    "e2e_ms": {
+      "count": 50,
+      "max": 10921.518779,
+      "mean": 10668.680502,
+      "min": 5432.139837,
+      "p50": 10875.583377,
+      "p95": 10920.80997,
+      "p99": 10921.518779
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.983402,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2867.0,
+        "mean": 2867.0,
+        "minimum": 2867.0
+      },
+      "power_watts": {
+        "maximum": 36.33,
+        "mean": 34.41917,
+        "minimum": 29.25
+      },
+      "sample_count": 482,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1807.842324,
+        "minimum": 1500.0
+      },
+      "temperature_c": {
+        "maximum": 81.0,
+        "mean": 78.778008,
+        "minimum": 73.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 2,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 11.756673627935506,
+    "request_count": 50,
+    "request_throughput": 0.36739605087298455,
+    "session": 0,
+    "startup_seconds": 41.022436171071604,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 171.195365,
+      "mean": 168.11943,
+      "min": 165.202897,
+      "p50": 166.0625,
+      "p95": 171.179095,
+      "p99": 171.195365
+    },
+    "trace_wall_seconds": 136.0929162988905,
+    "ttft_ms": {
+      "count": 50,
+      "max": 5778.350671,
+      "mean": 5456.978177,
+      "min": 166.315285,
+      "p50": 5613.753642,
+      "p95": 5773.993029,
+      "p99": 5778.350671
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 958.516598,
+        "minimum": 161.0,
+        "sample_count": 482
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784184772.3089533,
+        "mean": 1784177054.686547,
+        "minimum": 1784169304.3089533,
+        "sample_count": 482
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 2.0,
+        "mean": 1.973029,
+        "minimum": 1.0,
+        "sample_count": 482
+      },
+      "num_requests_waiting": {
+        "maximum": 4.0,
+        "mean": 3.73029,
+        "minimum": 0.0,
+        "sample_count": 482
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1574.136929,
+        "minimum": 309.0,
+        "sample_count": 482
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 5.758890424575458,
+    "actual_maximum_in_flight": 6,
+    "classification": "VALID",
+    "client_concurrency": 6,
+    "e2e_ms": {
+      "count": 50,
+      "max": 16407.805021,
+      "mean": 15687.492356,
+      "min": 5431.682106,
+      "p50": 16319.73447,
+      "p95": 16404.942167,
+      "p99": 16407.805021
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.987603,
+        "minimum": 99.0
+      },
+      "memory_used_mib": {
+        "maximum": 2867.0,
+        "mean": 2867.0,
+        "minimum": 2867.0
+      },
+      "power_watts": {
+        "maximum": 36.07,
+        "mean": 34.287169,
+        "minimum": 29.51
+      },
+      "sample_count": 484,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1805.17562,
+        "minimum": 1410.0
+      },
+      "temperature_c": {
+        "maximum": 81.0,
+        "mean": 78.714876,
+        "minimum": 71.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 2,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 11.74706287749361,
+    "request_count": 50,
+    "request_throughput": 0.3670957149216753,
+    "session": 0,
+    "startup_seconds": 40.02328142593615,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 171.476996,
+      "mean": 168.245693,
+      "min": 165.213311,
+      "p50": 166.244125,
+      "p95": 171.458654,
+      "p99": 171.476996
+    },
+    "trace_wall_seconds": 136.20425945497118,
+    "ttft_ms": {
+      "count": 50,
+      "max": 11252.920055,
+      "mean": 10471.875879,
+      "min": 168.733373,
+      "p50": 11089.347682,
+      "p95": 11250.708087,
+      "p99": 11252.920055
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1755.0,
+        "mean": 958.607438,
+        "minimum": 161.0,
+        "sample_count": 484
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784185183.5171857,
+        "mean": 1784177483.004789,
+        "minimum": 1784169731.5171857,
+        "sample_count": 484
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 2.0,
+        "mean": 1.975207,
+        "minimum": 1.0,
+        "sample_count": 484
+      },
+      "num_requests_waiting": {
+        "maximum": 8.0,
+        "mean": 7.429752,
+        "minimum": 0.0,
+        "sample_count": 484
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1574.504132,
+        "minimum": 309.0,
+        "sample_count": 484
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 0.9998234529084289,
+    "actual_maximum_in_flight": 1,
+    "classification": "VALID",
+    "client_concurrency": 1,
+    "e2e_ms": {
+      "count": 50,
+      "max": 518.137885,
+      "mean": 514.503075,
+      "min": 509.76497,
+      "p50": 514.79957,
+      "p95": 518.048814,
+      "p99": 518.137885
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 99.0,
+        "mean": 99.0,
+        "minimum": 99.0
+      },
+      "memory_used_mib": {
+        "maximum": 2887.0,
+        "mean": 2887.0,
+        "minimum": 2887.0
+      },
+      "power_watts": {
+        "maximum": 40.09,
+        "mean": 32.992584,
+        "minimum": 26.29
+      },
+      "sample_count": 89,
+      "sm_clock_mhz": {
+        "maximum": 1800.0,
+        "mean": 1270.617978,
+        "minimum": 1020.0
+      },
+      "temperature_c": {
+        "maximum": 77.0,
+        "mean": 74.876404,
+        "minimum": 72.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 3,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 62.18141970465676,
+    "request_count": 50,
+    "request_throughput": 1.9431693657705238,
+    "session": 0,
+    "startup_seconds": 42.026034193113446,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 11.696398,
+      "mean": 11.606764,
+      "min": 11.516225,
+      "p50": 11.611058,
+      "p95": 11.663544,
+      "p99": 11.696398
+    },
+    "trace_wall_seconds": 25.731159043964,
+    "ttft_ms": {
+      "count": 50,
+      "max": 156.919208,
+      "mean": 154.693399,
+      "min": 151.915953,
+      "p50": 154.884905,
+      "p95": 156.598444,
+      "p99": 156.919208
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1746.0,
+        "mean": 960.0,
+        "minimum": 169.0,
+        "sample_count": 89
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784196321.2044725,
+        "mean": 1784182591.092113,
+        "minimum": 1784168798.2044725,
+        "sample_count": 89
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 1.0,
+        "mean": 0.674157,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "num_requests_waiting": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1543.235955,
+        "minimum": 309.0,
+        "sample_count": 89
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 1.9998946607600068,
+    "actual_maximum_in_flight": 2,
+    "classification": "VALID",
+    "client_concurrency": 2,
+    "e2e_ms": {
+      "count": 50,
+      "max": 5477.576693,
+      "mean": 5448.177365,
+      "min": 5427.346448,
+      "p50": 5438.630496,
+      "p95": 5475.057887,
+      "p99": 5477.576693
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.979296,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2887.0,
+        "mean": 2887.0,
+        "minimum": 2887.0
+      },
+      "power_watts": {
+        "maximum": 37.05,
+        "mean": 34.404037,
+        "minimum": 30.77
+      },
+      "sample_count": 483,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1804.720497,
+        "minimum": 1365.0
+      },
+      "temperature_c": {
+        "maximum": 81.0,
+        "mean": 78.859213,
+        "minimum": 72.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 3,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 11.746295316190123,
+    "request_count": 50,
+    "request_throughput": 0.36707172863094134,
+    "session": 0,
+    "startup_seconds": 39.02371496683918,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 171.625084,
+      "mean": 168.071729,
+      "min": 164.975077,
+      "p50": 166.144198,
+      "p95": 171.558544,
+      "p99": 171.625084
+    },
+    "trace_wall_seconds": 136.21315971808508,
+    "ttft_ms": {
+      "count": 50,
+      "max": 328.435916,
+      "mean": 237.953765,
+      "min": 148.211448,
+      "p50": 165.263488,
+      "p95": 325.385708,
+      "p99": 328.435916
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 957.658385,
+        "minimum": 160.0,
+        "sample_count": 483
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784183061.3161674,
+        "mean": 1784175335.403124,
+        "minimum": 1784167531.3161674,
+        "sample_count": 483
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 2.0,
+        "mean": 1.962733,
+        "minimum": 0.0,
+        "sample_count": 483
+      },
+      "num_requests_waiting": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "sample_count": 483
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1572.799172,
+        "minimum": 259.0,
+        "sample_count": 483
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 2.9437891651385066,
+    "actual_maximum_in_flight": 3,
+    "classification": "VALID",
+    "client_concurrency": 3,
+    "e2e_ms": {
+      "count": 50,
+      "max": 5748.494186,
+      "mean": 5721.879578,
+      "min": 5448.755776,
+      "p50": 5733.811231,
+      "p95": 5748.22664,
+      "p99": 5748.494186
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.976812,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2887.0,
+        "mean": 2887.0,
+        "minimum": 2887.0
+      },
+      "power_watts": {
+        "maximum": 35.79,
+        "mean": 34.464783,
+        "minimum": 28.91
+      },
+      "sample_count": 345,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1809.130435,
+        "minimum": 1680.0
+      },
+      "temperature_c": {
+        "maximum": 80.0,
+        "mean": 78.576812,
+        "minimum": 72.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 3,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 16.46308674587282,
+    "request_count": 50,
+    "request_throughput": 0.5144714608085256,
+    "session": 0,
+    "startup_seconds": 40.02522671408951,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 175.509465,
+      "mean": 172.034992,
+      "min": 165.570764,
+      "p50": 171.115205,
+      "p95": 175.466498,
+      "p99": 175.509465
+    },
+    "trace_wall_seconds": 97.18712078104727,
+    "ttft_ms": {
+      "count": 50,
+      "max": 450.657228,
+      "mean": 388.794838,
+      "min": 168.205307,
+      "p50": 436.134391,
+      "p95": 442.77841,
+      "p99": 450.657228
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 968.171014,
+        "minimum": 160.0,
+        "sample_count": 345
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784180308.8382869,
+        "mean": 1784174458.878867,
+        "minimum": 1784168466.8382869,
+        "sample_count": 345
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 3.0,
+        "mean": 2.869565,
+        "minimum": 0.0,
+        "sample_count": 345
+      },
+      "num_requests_waiting": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "sample_count": 345
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1609.44058,
+        "minimum": 259.0,
+        "sample_count": 345
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 3.8871901119691024,
+    "actual_maximum_in_flight": 4,
+    "classification": "VALID",
+    "client_concurrency": 4,
+    "e2e_ms": {
+      "count": 50,
+      "max": 11156.112727,
+      "mean": 7466.330743,
+      "min": 5565.204791,
+      "p50": 5842.974178,
+      "p95": 11008.983443,
+      "p99": 11156.112727
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.979532,
+        "minimum": 99.0
+      },
+      "memory_used_mib": {
+        "maximum": 2887.0,
+        "mean": 2887.0,
+        "minimum": 2887.0
+      },
+      "power_watts": {
+        "maximum": 35.54,
+        "mean": 34.570292,
+        "minimum": 29.52
+      },
+      "sample_count": 342,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1806.622807,
+        "minimum": 1755.0
+      },
+      "temperature_c": {
+        "maximum": 81.0,
+        "mean": 79.27193,
+        "minimum": 73.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 3,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 16.659855146233966,
+    "request_count": 50,
+    "request_throughput": 0.5206204733198114,
+    "session": 0,
+    "startup_seconds": 41.026754481950775,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 174.102397,
+      "mean": 171.139552,
+      "min": 165.981442,
+      "p50": 171.229244,
+      "p95": 171.932414,
+      "p99": 174.102397
+    },
+    "trace_wall_seconds": 96.03925039898604,
+    "ttft_ms": {
+      "count": 50,
+      "max": 5865.827558,
+      "mean": 2161.004644,
+      "min": 168.030491,
+      "p50": 525.569868,
+      "p95": 5679.536419,
+      "p99": 5865.827558
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1760.0,
+        "mean": 971.283626,
+        "minimum": 160.0,
+        "sample_count": 342
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784180824.076534,
+        "mean": 1784174983.295832,
+        "minimum": 1784168980.076534,
+        "sample_count": 342
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 3.0,
+        "mean": 2.839181,
+        "minimum": 0.0,
+        "sample_count": 342
+      },
+      "num_requests_waiting": {
+        "maximum": 2.0,
+        "mean": 1.725146,
+        "minimum": 0.0,
+        "sample_count": 342
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1614.181287,
+        "minimum": 259.0,
+        "sample_count": 342
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 5.7142879681934025,
+    "actual_maximum_in_flight": 6,
+    "classification": "VALID",
+    "client_concurrency": 6,
+    "e2e_ms": {
+      "count": 50,
+      "max": 11473.772499,
+      "mean": 11086.020194,
+      "min": 5565.677026,
+      "p50": 11438.084527,
+      "p95": 11473.156198,
+      "p99": 11473.772499
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.982558,
+        "minimum": 99.0
+      },
+      "memory_used_mib": {
+        "maximum": 2887.0,
+        "mean": 2887.0,
+        "minimum": 2887.0
+      },
+      "power_watts": {
+        "maximum": 35.39,
+        "mean": 34.361512,
+        "minimum": 32.74
+      },
+      "sample_count": 344,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1811.991279,
+        "minimum": 1695.0
+      },
+      "temperature_c": {
+        "maximum": 81.0,
+        "mean": 78.0,
+        "minimum": 73.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 3,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 16.494119935976222,
+    "request_count": 50,
+    "request_throughput": 0.515441247999257,
+    "session": 0,
+    "startup_seconds": 40.023354566888884,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 175.430513,
+      "mean": 171.814988,
+      "min": 165.605291,
+      "p50": 170.558699,
+      "p95": 174.995439,
+      "p99": 175.430513
+    },
+    "trace_wall_seconds": 97.00426613911986,
+    "ttft_ms": {
+      "count": 50,
+      "max": 6168.664748,
+      "mean": 5759.755576,
+      "min": 168.19091,
+      "p50": 6146.328603,
+      "p95": 6166.453136,
+      "p99": 6168.664748
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 971.125,
+        "minimum": 161.0,
+        "sample_count": 344
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784178618.2727811,
+        "mean": 1784172790.345456,
+        "minimum": 1784166838.2727811,
+        "sample_count": 344
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 3.0,
+        "mean": 2.875,
+        "minimum": 1.0,
+        "sample_count": 344
+      },
+      "num_requests_waiting": {
+        "maximum": 6.0,
+        "mean": 5.331395,
+        "minimum": 0.0,
+        "sample_count": 344
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1614.412791,
+        "minimum": 309.0,
+        "sample_count": 344
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 0.9998197030864305,
+    "actual_maximum_in_flight": 1,
+    "classification": "VALID",
+    "client_concurrency": 1,
+    "e2e_ms": {
+      "count": 50,
+      "max": 519.529171,
+      "mean": 515.407885,
+      "min": 510.329493,
+      "p50": 515.478498,
+      "p95": 518.934029,
+      "p99": 519.529171
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 99.0,
+        "mean": 98.955056,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2897.0,
+        "mean": 2897.0,
+        "minimum": 2897.0
+      },
+      "power_watts": {
+        "maximum": 39.73,
+        "mean": 32.69809,
+        "minimum": 26.17
+      },
+      "sample_count": 89,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1263.876404,
+        "minimum": 975.0
+      },
+      "temperature_c": {
+        "maximum": 78.0,
+        "mean": 75.617978,
+        "minimum": 73.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 4,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 62.07203002780282,
+    "request_count": 50,
+    "request_throughput": 1.939750938368838,
+    "session": 0,
+    "startup_seconds": 42.026293666800484,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 11.726686,
+      "mean": 11.617076,
+      "min": 11.531334,
+      "p50": 11.626397,
+      "p95": 11.677745,
+      "p99": 11.726686
+    },
+    "trace_wall_seconds": 25.77650512289256,
+    "ttft_ms": {
+      "count": 50,
+      "max": 157.464899,
+      "mean": 155.27854,
+      "min": 152.54532,
+      "p50": 155.091118,
+      "p95": 157.219518,
+      "p99": 157.464899
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1758.0,
+        "mean": 965.550562,
+        "minimum": 174.0,
+        "sample_count": 89
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784195617.9320674,
+        "mean": 1784181792.033191,
+        "minimum": 1784167982.9320674,
+        "sample_count": 89
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 1.0,
+        "mean": 0.685393,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "num_requests_waiting": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1551.269663,
+        "minimum": 309.0,
+        "sample_count": 89
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 1.9998954323224982,
+    "actual_maximum_in_flight": 2,
+    "classification": "VALID",
+    "client_concurrency": 2,
+    "e2e_ms": {
+      "count": 50,
+      "max": 5468.840931,
+      "mean": 5451.002819,
+      "min": 5429.93188,
+      "p50": 5452.883035,
+      "p95": 5466.69714,
+      "p99": 5468.840931
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.989648,
+        "minimum": 99.0
+      },
+      "memory_used_mib": {
+        "maximum": 2897.0,
+        "mean": 2897.0,
+        "minimum": 2897.0
+      },
+      "power_watts": {
+        "maximum": 37.17,
+        "mean": 34.490269,
+        "minimum": 29.77
+      },
+      "sample_count": 483,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1806.459627,
+        "minimum": 1530.0
+      },
+      "temperature_c": {
+        "maximum": 81.0,
+        "mean": 79.242236,
+        "minimum": 74.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 4,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 11.740221781120635,
+    "request_count": 50,
+    "request_throughput": 0.36688193066001984,
+    "session": 0,
+    "startup_seconds": 42.02701239613816,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 171.354828,
+      "mean": 168.134488,
+      "min": 165.027125,
+      "p50": 165.900611,
+      "p95": 171.272986,
+      "p99": 171.354828
+    },
+    "trace_wall_seconds": 136.2836264790967,
+    "ttft_ms": {
+      "count": 50,
+      "max": 329.990196,
+      "mean": 238.833692,
+      "min": 149.477642,
+      "p50": 167.093053,
+      "p95": 326.668294,
+      "p99": 329.990196
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 959.084886,
+        "minimum": 161.0,
+        "sample_count": 483
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784183744.5799344,
+        "mean": 1784176032.755918,
+        "minimum": 1784168276.5799344,
+        "sample_count": 483
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 2.0,
+        "mean": 1.968944,
+        "minimum": 0.0,
+        "sample_count": 483
+      },
+      "num_requests_waiting": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "sample_count": 483
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1575.302277,
+        "minimum": 309.0,
+        "sample_count": 483
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 2.9437473758280754,
+    "actual_maximum_in_flight": 3,
+    "classification": "VALID",
+    "client_concurrency": 3,
+    "e2e_ms": {
+      "count": 50,
+      "max": 5750.414151,
+      "mean": 5721.177159,
+      "min": 5451.848971,
+      "p50": 5729.163186,
+      "p95": 5750.393516,
+      "p99": 5750.414151
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.973913,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2899.0,
+        "mean": 2898.994203,
+        "minimum": 2897.0
+      },
+      "power_watts": {
+        "maximum": 35.69,
+        "mean": 34.566203,
+        "minimum": 32.66
+      },
+      "sample_count": 345,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1809.73913,
+        "minimum": 1650.0
+      },
+      "temperature_c": {
+        "maximum": 80.0,
+        "mean": 78.942029,
+        "minimum": 73.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 4,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 16.464861713800577,
+    "request_count": 50,
+    "request_throughput": 0.514526928556268,
+    "session": 0,
+    "startup_seconds": 40.02305198297836,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 175.555773,
+      "mean": 171.996694,
+      "min": 165.646884,
+      "p50": 171.034864,
+      "p95": 175.503508,
+      "p99": 175.555773
+    },
+    "trace_wall_seconds": 97.1766436798498,
+    "ttft_ms": {
+      "count": 50,
+      "max": 450.824966,
+      "mean": 389.279653,
+      "min": 166.883707,
+      "p50": 437.5092,
+      "p95": 442.581571,
+      "p99": 450.824966
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 969.414493,
+        "minimum": 160.0,
+        "sample_count": 345
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784178759.3882928,
+        "mean": 1784172918.124525,
+        "minimum": 1784166917.3882928,
+        "sample_count": 345
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 3.0,
+        "mean": 2.857971,
+        "minimum": 0.0,
+        "sample_count": 345
+      },
+      "num_requests_waiting": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "sample_count": 345
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1610.791304,
+        "minimum": 259.0,
+        "sample_count": 345
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 3.8576304588948624,
+    "actual_maximum_in_flight": 4,
+    "classification": "VALID",
+    "client_concurrency": 4,
+    "e2e_ms": {
+      "count": 50,
+      "max": 5962.930521,
+      "mean": 5918.698454,
+      "min": 5453.718908,
+      "p50": 5936.722859,
+      "p95": 5957.353062,
+      "p99": 5962.930521
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.977941,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2899.0,
+        "mean": 2899.0,
+        "minimum": 2899.0
+      },
+      "power_watts": {
+        "maximum": 35.82,
+        "mean": 34.546544,
+        "minimum": 32.88
+      },
+      "sample_count": 272,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1808.492647,
+        "minimum": 1740.0
+      },
+      "temperature_c": {
+        "maximum": 81.0,
+        "mean": 78.669118,
+        "minimum": 73.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 4,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 20.85623010114753,
+    "request_count": 50,
+    "request_throughput": 0.6517571906608604,
+    "session": 0,
+    "startup_seconds": 42.02420318988152,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 182.417835,
+      "mean": 173.434342,
+      "min": 165.708961,
+      "p50": 171.294421,
+      "p95": 182.157549,
+      "p99": 182.417835
+    },
+    "trace_wall_seconds": 76.71568601997569,
+    "ttft_ms": {
+      "count": 50,
+      "max": 649.89566,
+      "mean": 542.23386,
+      "min": 167.780398,
+      "p50": 635.73001,
+      "p95": 649.112017,
+      "p99": 649.89566
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1755.0,
+        "mean": 978.452206,
+        "minimum": 161.0,
+        "sample_count": 272
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784177267.0854027,
+        "mean": 1784172390.092756,
+        "minimum": 1784167335.0854027,
+        "sample_count": 272
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 4.0,
+        "mean": 3.757353,
+        "minimum": 0.0,
+        "sample_count": 272
+      },
+      "num_requests_waiting": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "sample_count": 272
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1647.257353,
+        "minimum": 309.0,
+        "sample_count": 272
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 5.707373300008592,
+    "actual_maximum_in_flight": 6,
+    "classification": "VALID",
+    "client_concurrency": 6,
+    "e2e_ms": {
+      "count": 50,
+      "max": 11655.145564,
+      "mean": 8535.141748,
+      "min": 5767.29667,
+      "p50": 5943.520273,
+      "p95": 11479.267956,
+      "p99": 11655.145564
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.977358,
+        "minimum": 99.0
+      },
+      "memory_used_mib": {
+        "maximum": 2899.0,
+        "mean": 2898.992453,
+        "minimum": 2897.0
+      },
+      "power_watts": {
+        "maximum": 35.51,
+        "mean": 34.18966,
+        "minimum": 27.76
+      },
+      "sample_count": 265,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1813.358491,
+        "minimum": 1770.0
+      },
+      "temperature_c": {
+        "maximum": 79.0,
+        "mean": 77.256604,
+        "minimum": 72.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 4,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 21.39760944058283,
+    "request_count": 50,
+    "request_throughput": 0.6686752950182134,
+    "session": 0,
+    "startup_seconds": 41.0227676469367,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 180.520165,
+      "mean": 171.726736,
+      "min": 165.06934,
+      "p50": 170.779454,
+      "p95": 174.940641,
+      "p99": 180.520165
+    },
+    "trace_wall_seconds": 74.77470810199156,
+    "ttft_ms": {
+      "count": 50,
+      "max": 6364.136356,
+      "mean": 3211.612919,
+      "min": 171.171541,
+      "p50": 649.154182,
+      "p95": 6068.754968,
+      "p99": 6364.136356
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1755.0,
+        "mean": 979.8,
+        "minimum": 160.0,
+        "sample_count": 265
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784178651.1904483,
+        "mean": 1784173795.654599,
+        "minimum": 1784168679.1904483,
+        "sample_count": 265
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 4.0,
+        "mean": 3.701887,
+        "minimum": 0.0,
+        "sample_count": 265
+      },
+      "num_requests_waiting": {
+        "maximum": 4.0,
+        "mean": 3.426415,
+        "minimum": 0.0,
+        "sample_count": 265
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1649.313208,
+        "minimum": 259.0,
+        "sample_count": 265
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 0.9998265670061836,
+    "actual_maximum_in_flight": 1,
+    "classification": "VALID",
+    "client_concurrency": 1,
+    "e2e_ms": {
+      "count": 50,
+      "max": 517.124805,
+      "mean": 513.739873,
+      "min": 508.320361,
+      "p50": 514.302671,
+      "p95": 516.743291,
+      "p99": 517.124805
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 99.0,
+        "mean": 99.0,
+        "minimum": 99.0
+      },
+      "memory_used_mib": {
+        "maximum": 2911.0,
+        "mean": 2911.0,
+        "minimum": 2911.0
+      },
+      "power_watts": {
+        "maximum": 39.97,
+        "mean": 32.865281,
+        "minimum": 26.32
+      },
+      "sample_count": 89,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1278.202247,
+        "minimum": 990.0
+      },
+      "temperature_c": {
+        "maximum": 77.0,
+        "mean": 74.741573,
+        "minimum": 72.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 8,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 62.274183554884694,
+    "request_count": 50,
+    "request_throughput": 1.9460682360901467,
+    "session": 0,
+    "startup_seconds": 40.02428113599308,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 11.651076,
+      "mean": 11.589799,
+      "min": 11.513549,
+      "p50": 11.595511,
+      "p95": 11.6436,
+      "p99": 11.651076
+    },
+    "trace_wall_seconds": 25.69282981590368,
+    "ttft_ms": {
+      "count": 50,
+      "max": 156.468789,
+      "mean": 154.456111,
+      "min": 151.272638,
+      "p50": 154.69603,
+      "p95": 155.769933,
+      "p99": 156.468789
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1751.0,
+        "mean": 961.314607,
+        "minimum": 169.0,
+        "sample_count": 89
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784195256.0188317,
+        "mean": 1784181468.457034,
+        "minimum": 1784167653.0188317,
+        "sample_count": 89
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 1.0,
+        "mean": 0.674157,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "num_requests_waiting": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1544.88764,
+        "minimum": 309.0,
+        "sample_count": 89
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 1.9998937382157298,
+    "actual_maximum_in_flight": 2,
+    "classification": "VALID",
+    "client_concurrency": 2,
+    "e2e_ms": {
+      "count": 50,
+      "max": 5475.394988,
+      "mean": 5450.455414,
+      "min": 5427.79388,
+      "p50": 5454.554592,
+      "p95": 5468.076846,
+      "p99": 5475.394988
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.987578,
+        "minimum": 99.0
+      },
+      "memory_used_mib": {
+        "maximum": 2911.0,
+        "mean": 2911.0,
+        "minimum": 2911.0
+      },
+      "power_watts": {
+        "maximum": 37.07,
+        "mean": 34.490021,
+        "minimum": 29.52
+      },
+      "sample_count": 483,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1805.869565,
+        "minimum": 1545.0
+      },
+      "temperature_c": {
+        "maximum": 81.0,
+        "mean": 79.213251,
+        "minimum": 72.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 8,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 11.741375934653924,
+    "request_count": 50,
+    "request_throughput": 0.3669179979579351,
+    "session": 0,
+    "startup_seconds": 42.02396895713173,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 171.550159,
+      "mean": 168.113741,
+      "min": 164.883369,
+      "p50": 165.925037,
+      "p95": 171.274658,
+      "p99": 171.550159
+    },
+    "trace_wall_seconds": 136.27023007394746,
+    "ttft_ms": {
+      "count": 50,
+      "max": 326.825435,
+      "mean": 238.929443,
+      "min": 148.254605,
+      "p50": 164.392988,
+      "p95": 326.278086,
+      "p99": 326.825435
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1755.0,
+        "mean": 957.521739,
+        "minimum": 161.0,
+        "sample_count": 483
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784184313.3133316,
+        "mean": 1784176602.276065,
+        "minimum": 1784168862.3133316,
+        "sample_count": 483
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 2.0,
+        "mean": 1.973085,
+        "minimum": 0.0,
+        "sample_count": 483
+      },
+      "num_requests_waiting": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "sample_count": 483
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1572.801242,
+        "minimum": 310.0,
+        "sample_count": 483
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 2.943714932377967,
+    "actual_maximum_in_flight": 3,
+    "classification": "VALID",
+    "client_concurrency": 3,
+    "e2e_ms": {
+      "count": 50,
+      "max": 5747.339984,
+      "mean": 5715.939523,
+      "min": 5452.25214,
+      "p50": 5722.638853,
+      "p95": 5747.268543,
+      "p99": 5747.339984
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.982558,
+        "minimum": 99.0
+      },
+      "memory_used_mib": {
+        "maximum": 2911.0,
+        "mean": 2911.0,
+        "minimum": 2911.0
+      },
+      "power_watts": {
+        "maximum": 35.8,
+        "mean": 34.396366,
+        "minimum": 28.53
+      },
+      "sample_count": 344,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1811.337209,
+        "minimum": 1710.0
+      },
+      "temperature_c": {
+        "maximum": 81.0,
+        "mean": 77.97093,
+        "minimum": 71.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 8,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 16.479347671918507,
+    "request_count": 50,
+    "request_throughput": 0.5149796147474534,
+    "session": 0,
+    "startup_seconds": 45.02619187394157,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 175.504258,
+      "mean": 171.869834,
+      "min": 165.702204,
+      "p50": 170.615982,
+      "p95": 175.18459,
+      "p99": 175.504258
+    },
+    "trace_wall_seconds": 97.0912218040321,
+    "ttft_ms": {
+      "count": 50,
+      "max": 449.459265,
+      "mean": 387.974669,
+      "min": 166.295022,
+      "p50": 435.336874,
+      "p95": 440.874517,
+      "p99": 449.459265
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1755.0,
+        "mean": 967.386628,
+        "minimum": 160.0,
+        "sample_count": 344
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784178956.9611018,
+        "mean": 1784173117.036683,
+        "minimum": 1784167130.9611018,
+        "sample_count": 344
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 3.0,
+        "mean": 2.860465,
+        "minimum": 0.0,
+        "sample_count": 344
+      },
+      "num_requests_waiting": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "sample_count": 344
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1608.218023,
+        "minimum": 259.0,
+        "sample_count": 344
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 3.8577723072106878,
+    "actual_maximum_in_flight": 4,
+    "classification": "VALID",
+    "client_concurrency": 4,
+    "e2e_ms": {
+      "count": 50,
+      "max": 5945.989341,
+      "mean": 5909.121986,
+      "min": 5439.184336,
+      "p50": 5925.656782,
+      "p95": 5945.283005,
+      "p99": 5945.989341
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.977941,
+        "minimum": 99.0
+      },
+      "memory_used_mib": {
+        "maximum": 2911.0,
+        "mean": 2911.0,
+        "minimum": 2911.0
+      },
+      "power_watts": {
+        "maximum": 35.42,
+        "mean": 34.530625,
+        "minimum": 31.23
+      },
+      "sample_count": 272,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1812.683824,
+        "minimum": 1755.0
+      },
+      "temperature_c": {
+        "maximum": 80.0,
+        "mean": 78.433824,
+        "minimum": 73.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 8,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 20.890796296144988,
+    "request_count": 50,
+    "request_throughput": 0.6528373842545309,
+    "session": 0,
+    "startup_seconds": 41.02313194004819,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 181.860842,
+      "mean": 173.159386,
+      "min": 165.271691,
+      "p50": 170.692884,
+      "p95": 181.533897,
+      "p99": 181.860842
+    },
+    "trace_wall_seconds": 76.58875120501034,
+    "ttft_ms": {
+      "count": 50,
+      "max": 649.269714,
+      "mean": 541.181021,
+      "min": 169.124335,
+      "p50": 633.321333,
+      "p95": 648.821287,
+      "p99": 649.269714
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 978.886029,
+        "minimum": 160.0,
+        "sample_count": 272
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784179131.395395,
+        "mean": 1784174239.601277,
+        "minimum": 1784169121.395395,
+        "sample_count": 272
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 4.0,
+        "mean": 3.731618,
+        "minimum": 0.0,
+        "sample_count": 272
+      },
+      "num_requests_waiting": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "sample_count": 272
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1646.132353,
+        "minimum": 259.0,
+        "sample_count": 272
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 5.598812576363345,
+    "actual_maximum_in_flight": 6,
+    "classification": "VALID",
+    "client_concurrency": 6,
+    "e2e_ms": {
+      "count": 50,
+      "max": 6210.637075,
+      "mean": 6073.165459,
+      "min": 5435.935722,
+      "p50": 6019.207577,
+      "p95": 6210.073311,
+      "p99": 6210.637075
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.958763,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2911.0,
+        "mean": 2911.0,
+        "minimum": 2911.0
+      },
+      "power_watts": {
+        "maximum": 35.29,
+        "mean": 34.381392,
+        "minimum": 32.61
+      },
+      "sample_count": 194,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1811.21134,
+        "minimum": 1590.0
+      },
+      "temperature_c": {
+        "maximum": 80.0,
+        "mean": 77.21134,
+        "minimum": 71.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 8,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 29.499741784138934,
+    "request_count": 50,
+    "request_throughput": 0.9218669307543417,
+    "session": 0,
+    "startup_seconds": 52.032012191135436,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 190.438656,
+      "mean": 173.610147,
+      "min": 165.220828,
+      "p50": 171.136543,
+      "p95": 189.597616,
+      "p99": 190.438656
+    },
+    "trace_wall_seconds": 54.23776288307272,
+    "ttft_ms": {
+      "count": 50,
+      "max": 885.943829,
+      "mean": 691.250907,
+      "min": 167.746559,
+      "p50": 701.418892,
+      "p95": 885.345388,
+      "p99": 885.943829
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 998.840206,
+        "minimum": 160.0,
+        "sample_count": 194
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784177619.127577,
+        "mean": 1784173724.766752,
+        "minimum": 1784169433.127577,
+        "sample_count": 194
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 6.0,
+        "mean": 5.453608,
+        "minimum": 0.0,
+        "sample_count": 194
+      },
+      "num_requests_waiting": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "sample_count": 194
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1717.118557,
+        "minimum": 259.0,
+        "sample_count": 194
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.436580404988072,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 4114.889584,
+      "mean": 3802.703362,
+      "min": 510.55946,
+      "p50": 4085.238202,
+      "p95": 4114.454123,
+      "p99": 4114.889584
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 99.0,
+        "mean": 98.966292,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2907.0,
+        "mean": 2907.0,
+        "minimum": 2907.0
+      },
+      "power_watts": {
+        "maximum": 39.54,
+        "mean": 32.955618,
+        "minimum": 26.08
+      },
+      "sample_count": 89,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1269.438202,
+        "minimum": 990.0
+      },
+      "temperature_c": {
+        "maximum": 77.0,
+        "mean": 74.213483,
+        "minimum": 71.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 1,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 62.57513721603609,
+    "request_count": 50,
+    "request_throughput": 1.9554730380011278,
+    "session": 0,
+    "startup_seconds": 42.02327472018078,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 11.636836,
+      "mean": 11.567834,
+      "min": 11.47745,
+      "p50": 11.569048,
+      "p95": 11.635565,
+      "p99": 11.636836
+    },
+    "trace_wall_seconds": 25.56926075089723,
+    "ttft_ms": {
+      "count": 50,
+      "max": 3755.220401,
+      "mean": 3444.100518,
+      "min": 154.390772,
+      "p50": 3726.841489,
+      "p95": 3754.30797,
+      "p99": 3755.220401
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1758.0,
+        "mean": 963.719101,
+        "minimum": 168.0,
+        "sample_count": 89
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784189964.6762388,
+        "mean": 1784176107.170621,
+        "minimum": 1784162234.6762388,
+        "sample_count": 89
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 1.0,
+        "mean": 0.966292,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "num_requests_waiting": {
+        "maximum": 14.0,
+        "mean": 12.337079,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1548.786517,
+        "minimum": 310.0,
+        "sample_count": 89
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.436711809416501,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 4121.141482,
+      "mean": 3813.429113,
+      "min": 512.426429,
+      "p50": 4100.468788,
+      "p95": 4119.740267,
+      "p99": 4121.141482
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 99.0,
+        "mean": 98.966292,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2907.0,
+        "mean": 2907.0,
+        "minimum": 2907.0
+      },
+      "power_watts": {
+        "maximum": 39.54,
+        "mean": 32.687303,
+        "minimum": 26.09
+      },
+      "sample_count": 89,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1272.134831,
+        "minimum": 1020.0
+      },
+      "temperature_c": {
+        "maximum": 77.0,
+        "mean": 74.764045,
+        "minimum": 72.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 1,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 62.400020291173725,
+    "request_count": 50,
+    "request_throughput": 1.950000634099179,
+    "session": 1,
+    "startup_seconds": 39.03714038711041,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 11.631381,
+      "mean": 11.583456,
+      "min": 11.500187,
+      "p50": 11.595238,
+      "p95": 11.629988,
+      "p99": 11.631381
+    },
+    "trace_wall_seconds": 25.64101730310358,
+    "ttft_ms": {
+      "count": 50,
+      "max": 3761.001012,
+      "mean": 3454.341971,
+      "min": 155.677148,
+      "p50": 3741.955015,
+      "p95": 3759.517068,
+      "p99": 3761.001012
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1751.0,
+        "mean": 959.134831,
+        "minimum": 162.0,
+        "sample_count": 89
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784190961.291382,
+        "mean": 1784177136.167787,
+        "minimum": 1784163246.291382,
+        "sample_count": 89
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 1.0,
+        "mean": 0.94382,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "num_requests_waiting": {
+        "maximum": 14.0,
+        "mean": 12.426966,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1541.977528,
+        "minimum": 309.0,
+        "sample_count": 89
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.436182896169012,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 4135.726435,
+      "mean": 3822.299604,
+      "min": 511.549066,
+      "p50": 4107.964709,
+      "p95": 4134.123934,
+      "p99": 4135.726435
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.0,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2907.0,
+        "mean": 2907.0,
+        "minimum": 2907.0
+      },
+      "power_watts": {
+        "maximum": 39.67,
+        "mean": 32.833371,
+        "minimum": 26.34
+      },
+      "sample_count": 89,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1252.58427,
+        "minimum": 960.0
+      },
+      "temperature_c": {
+        "maximum": 78.0,
+        "mean": 75.382022,
+        "minimum": 73.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 1,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 62.251600066418916,
+    "request_count": 50,
+    "request_throughput": 1.9453625020755911,
+    "session": 2,
+    "startup_seconds": 42.02740428899415,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 11.698412,
+      "mean": 11.608583,
+      "min": 11.508009,
+      "p50": 11.609836,
+      "p95": 11.675732,
+      "p99": 11.698412
+    },
+    "trace_wall_seconds": 25.70215060003102,
+    "ttft_ms": {
+      "count": 50,
+      "max": 3774.242215,
+      "mean": 3462.433535,
+      "min": 154.693491,
+      "p50": 3748.128432,
+      "p95": 3772.409883,
+      "p99": 3774.242215
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1742.0,
+        "mean": 954.685393,
+        "minimum": 160.0,
+        "sample_count": 89
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784192002.9265358,
+        "mean": 1784178243.578221,
+        "minimum": 1784164353.9265358,
+        "sample_count": 89
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 1.0,
+        "mean": 0.955056,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "num_requests_waiting": {
+        "maximum": 14.0,
+        "mean": 12.292135,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1534.359551,
+        "minimum": 259.0,
+        "sample_count": 89
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.435308027475262,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 4124.859053,
+      "mean": 3808.214351,
+      "min": 511.164091,
+      "p50": 4093.334498,
+      "p95": 4122.588223,
+      "p99": 4124.859053
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 99.0,
+        "mean": 98.954545,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2907.0,
+        "mean": 2907.0,
+        "minimum": 2907.0
+      },
+      "power_watts": {
+        "maximum": 40.04,
+        "mean": 32.793523,
+        "minimum": 26.3
+      },
+      "sample_count": 88,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1279.431818,
+        "minimum": 1005.0
+      },
+      "temperature_c": {
+        "maximum": 77.0,
+        "mean": 74.443182,
+        "minimum": 71.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 1,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 62.473092411483705,
+    "request_count": 50,
+    "request_throughput": 1.9522841378588658,
+    "session": 3,
+    "startup_seconds": 40.02247752714902,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 11.677305,
+      "mean": 11.582121,
+      "min": 11.460105,
+      "p50": 11.583963,
+      "p95": 11.655557,
+      "p99": 11.677305
+    },
+    "trace_wall_seconds": 25.611026095226407,
+    "ttft_ms": {
+      "count": 50,
+      "max": 3764.287227,
+      "mean": 3449.168596,
+      "min": 154.913465,
+      "p50": 3734.231634,
+      "p95": 3761.494102,
+      "p99": 3764.287227
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1746.0,
+        "mean": 960.511364,
+        "minimum": 174.0,
+        "sample_count": 88
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784192964.2172837,
+        "mean": 1784179243.012738,
+        "minimum": 1784165521.2172837,
+        "sample_count": 88
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 1.0,
+        "mean": 0.954545,
+        "minimum": 0.0,
+        "sample_count": 88
+      },
+      "num_requests_waiting": {
+        "maximum": 14.0,
+        "mean": 12.409091,
+        "minimum": 0.0,
+        "sample_count": 88
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1544.022727,
+        "minimum": 309.0,
+        "sample_count": 88
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.436669414531518,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 4123.82981,
+      "mean": 3817.512419,
+      "min": 513.273963,
+      "p50": 4106.04122,
+      "p95": 4123.114425,
+      "p99": 4123.82981
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 99.0,
+        "mean": 98.955056,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2907.0,
+        "mean": 2907.0,
+        "minimum": 2907.0
+      },
+      "power_watts": {
+        "maximum": 39.96,
+        "mean": 32.805169,
+        "minimum": 26.47
+      },
+      "sample_count": 89,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1270.955056,
+        "minimum": 1005.0
+      },
+      "temperature_c": {
+        "maximum": 77.0,
+        "mean": 75.134831,
+        "minimum": 73.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 1,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 62.333030043849014,
+    "request_count": 50,
+    "request_throughput": 1.9479071888702817,
+    "session": 4,
+    "startup_seconds": 39.024503481108695,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 11.705657,
+      "mean": 11.599216,
+      "min": 11.484099,
+      "p50": 11.598612,
+      "p95": 11.668042,
+      "p99": 11.705657
+    },
+    "trace_wall_seconds": 25.66857409104705,
+    "ttft_ms": {
+      "count": 50,
+      "max": 3762.383102,
+      "mean": 3457.936718,
+      "min": 155.660667,
+      "p50": 3746.631679,
+      "p95": 3762.328149,
+      "p99": 3762.383102
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1760.0,
+        "mean": 962.426966,
+        "minimum": 168.0,
+        "sample_count": 89
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784194376.2463825,
+        "mean": 1784180463.527281,
+        "minimum": 1784166613.2463825,
+        "sample_count": 89
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 1.0,
+        "mean": 0.955056,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "num_requests_waiting": {
+        "maximum": 14.0,
+        "mean": 12.314607,
+        "minimum": 0.0,
+        "sample_count": 89
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1546.022472,
+        "minimum": 309.0,
+        "sample_count": 89
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.51853658682253,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 21796.763025,
+      "mean": 20435.93105,
+      "min": 5432.743872,
+      "p50": 21732.46716,
+      "p95": 21788.844388,
+      "p99": 21796.763025
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.987603,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2867.0,
+        "mean": 2867.0,
+        "minimum": 2867.0
+      },
+      "power_watts": {
+        "maximum": 37.31,
+        "mean": 34.186818,
+        "minimum": 30.79
+      },
+      "sample_count": 484,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1809.297521,
+        "minimum": 1530.0
+      },
+      "temperature_c": {
+        "maximum": 80.0,
+        "mean": 77.733471,
+        "minimum": 71.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 2,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 11.772859183927594,
+    "request_count": 50,
+    "request_throughput": 0.3679018494977373,
+    "session": 0,
+    "startup_seconds": 41.023816663073376,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 170.99388,
+      "mean": 167.918889,
+      "min": 165.23175,
+      "p50": 165.77837,
+      "p95": 170.796921,
+      "p99": 170.99388
+    },
+    "trace_wall_seconds": 135.90581310819834,
+    "ttft_ms": {
+      "count": 50,
+      "max": 16656.326102,
+      "mean": 15230.445503,
+      "min": 167.667811,
+      "p50": 16474.312287,
+      "p95": 16643.734867,
+      "p99": 16656.326102
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 958.413223,
+        "minimum": 161.0,
+        "sample_count": 484
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784177266.0562403,
+        "mean": 1784169547.035579,
+        "minimum": 1784161798.0562403,
+        "sample_count": 484
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 2.0,
+        "mean": 1.966942,
+        "minimum": 1.0,
+        "sample_count": 484
+      },
+      "num_requests_waiting": {
+        "maximum": 12.0,
+        "mean": 10.946281,
+        "minimum": 0.0,
+        "sample_count": 484
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1573.595041,
+        "minimum": 309.0,
+        "sample_count": 484
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.518137088207537,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 21842.876089,
+      "mean": 20460.680676,
+      "min": 5433.668587,
+      "p50": 21732.973967,
+      "p95": 21842.427917,
+      "p99": 21842.876089
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.983437,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2867.0,
+        "mean": 2867.0,
+        "minimum": 2867.0
+      },
+      "power_watts": {
+        "maximum": 37.54,
+        "mean": 34.350414,
+        "minimum": 30.88
+      },
+      "sample_count": 483,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1806.677019,
+        "minimum": 1470.0
+      },
+      "temperature_c": {
+        "maximum": 81.0,
+        "mean": 78.503106,
+        "minimum": 72.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 2,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 11.758032007029628,
+    "request_count": 50,
+    "request_throughput": 0.3674385002196759,
+    "session": 1,
+    "startup_seconds": 40.02195450104773,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 171.278059,
+      "mean": 168.122127,
+      "min": 165.220607,
+      "p50": 166.111969,
+      "p95": 171.270275,
+      "p99": 171.278059
+    },
+    "trace_wall_seconds": 136.0771937891841,
+    "ttft_ms": {
+      "count": 50,
+      "max": 16696.054336,
+      "mean": 15248.894728,
+      "min": 169.129585,
+      "p50": 16532.681209,
+      "p95": 16693.732242,
+      "p99": 16696.054336
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1755.0,
+        "mean": 959.20911,
+        "minimum": 161.0,
+        "sample_count": 483
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784178383.7084603,
+        "mean": 1784170689.010738,
+        "minimum": 1784162931.7084603,
+        "sample_count": 483
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 2.0,
+        "mean": 1.973085,
+        "minimum": 1.0,
+        "sample_count": 483
+      },
+      "num_requests_waiting": {
+        "maximum": 12.0,
+        "mean": 10.94824,
+        "minimum": 0.0,
+        "sample_count": 483
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1575.407867,
+        "minimum": 309.0,
+        "sample_count": 483
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.515573647443648,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 21970.343543,
+      "mean": 20469.88982,
+      "min": 5433.892571,
+      "p50": 21737.84943,
+      "p95": 21939.380115,
+      "p99": 21970.343543
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.985507,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2867.0,
+        "mean": 2867.0,
+        "minimum": 2867.0
+      },
+      "power_watts": {
+        "maximum": 37.17,
+        "mean": 34.471822,
+        "minimum": 31.69
+      },
+      "sample_count": 483,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1806.304348,
+        "minimum": 1500.0
+      },
+      "temperature_c": {
+        "maximum": 81.0,
+        "mean": 78.913043,
+        "minimum": 73.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 2,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 11.74872532223012,
+    "request_count": 50,
+    "request_throughput": 0.36714766631969126,
+    "session": 2,
+    "startup_seconds": 40.02350809192285,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 172.42943,
+      "mean": 168.238542,
+      "min": 165.2407,
+      "p50": 167.00295,
+      "p95": 172.151656,
+      "p99": 172.42943
+    },
+    "trace_wall_seconds": 136.1849865510594,
+    "ttft_ms": {
+      "count": 50,
+      "max": 16787.362199,
+      "mean": 15254.495023,
+      "min": 169.231869,
+      "p50": 16528.308533,
+      "p95": 16721.293098,
+      "p99": 16787.362199
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 960.004141,
+        "minimum": 161.0,
+        "sample_count": 483
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784179702.4716787,
+        "mean": 1784171999.297766,
+        "minimum": 1784164234.4716787,
+        "sample_count": 483
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 2.0,
+        "mean": 1.971014,
+        "minimum": 1.0,
+        "sample_count": 483
+      },
+      "num_requests_waiting": {
+        "maximum": 12.0,
+        "mean": 10.939959,
+        "minimum": 0.0,
+        "sample_count": 483
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1576.478261,
+        "minimum": 309.0,
+        "sample_count": 483
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.517309790275127,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 21880.937457,
+      "mean": 20462.148691,
+      "min": 5432.640606,
+      "p50": 21738.675543,
+      "p95": 21874.265091,
+      "p99": 21880.937457
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.985537,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2867.0,
+        "mean": 2867.0,
+        "minimum": 2867.0
+      },
+      "power_watts": {
+        "maximum": 37.58,
+        "mean": 34.343099,
+        "minimum": 30.2
+      },
+      "sample_count": 484,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1805.88843,
+        "minimum": 1395.0
+      },
+      "temperature_c": {
+        "maximum": 81.0,
+        "mean": 78.483471,
+        "minimum": 71.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 2,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 11.755895581573325,
+    "request_count": 50,
+    "request_throughput": 0.3673717369241664,
+    "session": 3,
+    "startup_seconds": 40.02444575401023,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 171.550951,
+      "mean": 168.130459,
+      "min": 165.221447,
+      "p50": 166.30177,
+      "p95": 171.458396,
+      "p99": 171.550951
+    },
+    "trace_wall_seconds": 136.10192340495996,
+    "ttft_ms": {
+      "count": 50,
+      "max": 16724.883625,
+      "mean": 15250.104473,
+      "min": 170.582728,
+      "p50": 16530.597988,
+      "p95": 16707.094023,
+      "p99": 16724.883625
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 958.820248,
+        "minimum": 160.0,
+        "sample_count": 484
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784180850.1610065,
+        "mean": 1784173135.594891,
+        "minimum": 1784165320.1610065,
+        "sample_count": 484
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 2.0,
+        "mean": 1.969008,
+        "minimum": 0.0,
+        "sample_count": 484
+      },
+      "num_requests_waiting": {
+        "maximum": 12.0,
+        "mean": 10.917355,
+        "minimum": 0.0,
+        "sample_count": 484
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1574.731405,
+        "minimum": 259.0,
+        "sample_count": 484
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.518252528481232,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 21856.728648,
+      "mean": 20481.423263,
+      "min": 5431.894219,
+      "p50": 21780.366793,
+      "p95": 21851.186673,
+      "p99": 21856.728648
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.985507,
+        "minimum": 99.0
+      },
+      "memory_used_mib": {
+        "maximum": 2867.0,
+        "mean": 2867.0,
+        "minimum": 2867.0
+      },
+      "power_watts": {
+        "maximum": 37.28,
+        "mean": 34.465714,
+        "minimum": 26.75
+      },
+      "sample_count": 483,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1804.534161,
+        "minimum": 1410.0
+      },
+      "temperature_c": {
+        "maximum": 81.0,
+        "mean": 79.169772,
+        "minimum": 72.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 2,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 11.746303794543229,
+    "request_count": 50,
+    "request_throughput": 0.3670719935794759,
+    "session": 4,
+    "startup_seconds": 41.02314087818377,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 171.40188,
+      "mean": 168.252901,
+      "min": 165.190855,
+      "p50": 166.310844,
+      "p95": 171.340881,
+      "p99": 171.40188
+    },
+    "trace_wall_seconds": 136.21306140092202,
+    "ttft_ms": {
+      "count": 50,
+      "max": 16706.027692,
+      "mean": 15265.583318,
+      "min": 167.941606,
+      "p50": 16540.173869,
+      "p95": 16700.557299,
+      "p99": 16706.027692
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 958.768116,
+        "minimum": 161.0,
+        "sample_count": 483
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784182038.251105,
+        "mean": 1784174323.284231,
+        "minimum": 1784166570.251105,
+        "sample_count": 483
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 2.0,
+        "mean": 1.968944,
+        "minimum": 1.0,
+        "sample_count": 483
+      },
+      "num_requests_waiting": {
+        "maximum": 12.0,
+        "mean": 10.939959,
+        "minimum": 0.0,
+        "sample_count": 483
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1574.730849,
+        "minimum": 309.0,
+        "sample_count": 483
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.4817989644898555,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 17240.58167,
+      "mean": 14527.481864,
+      "min": 5566.746541,
+      "p50": 16981.505618,
+      "p95": 17213.438107,
+      "p99": 17240.58167
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.973988,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2887.0,
+        "mean": 2887.0,
+        "minimum": 2887.0
+      },
+      "power_watts": {
+        "maximum": 35.45,
+        "mean": 34.354249,
+        "minimum": 27.13
+      },
+      "sample_count": 346,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1810.578035,
+        "minimum": 1725.0
+      },
+      "temperature_c": {
+        "maximum": 80.0,
+        "mean": 78.118497,
+        "minimum": 72.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 3,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 16.480017665050095,
+    "request_count": 50,
+    "request_throughput": 0.5150005520328155,
+    "session": 0,
+    "startup_seconds": 42.02414547582157,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 175.66041,
+      "mean": 171.959767,
+      "min": 165.734181,
+      "p50": 170.81673,
+      "p95": 175.469782,
+      "p99": 175.66041
+    },
+    "trace_wall_seconds": 97.08727457211353,
+    "ttft_ms": {
+      "count": 50,
+      "max": 11929.679132,
+      "mean": 9196.729079,
+      "min": 169.783286,
+      "p50": 11572.112959,
+      "p95": 11906.530667,
+      "p99": 11929.679132
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 970.297688,
+        "minimum": 160.0,
+        "sample_count": 346
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784173759.5622761,
+        "mean": 1784167924.995802,
+        "minimum": 1784161917.5622761,
+        "sample_count": 346
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 3.0,
+        "mean": 2.858382,
+        "minimum": 0.0,
+        "sample_count": 346
+      },
+      "num_requests_waiting": {
+        "maximum": 10.0,
+        "mean": 8.83237,
+        "minimum": 0.0,
+        "sample_count": 346
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1612.419075,
+        "minimum": 259.0,
+        "sample_count": 346
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.478963738249654,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 17394.12916,
+      "mean": 14570.466239,
+      "min": 5568.047099,
+      "p50": 16998.897164,
+      "p95": 17299.026153,
+      "p99": 17394.12916
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.976879,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2887.0,
+        "mean": 2887.0,
+        "minimum": 2887.0
+      },
+      "power_watts": {
+        "maximum": 35.46,
+        "mean": 34.550983,
+        "minimum": 30.68
+      },
+      "sample_count": 346,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1804.075145,
+        "minimum": 1665.0
+      },
+      "temperature_c": {
+        "maximum": 82.0,
+        "mean": 79.33526,
+        "minimum": 73.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 3,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 16.425156463631144,
+    "request_count": 50,
+    "request_throughput": 0.5132861394884732,
+    "session": 1,
+    "startup_seconds": 40.01976313907653,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 177.186782,
+      "mean": 172.49927,
+      "min": 167.202864,
+      "p50": 171.448085,
+      "p95": 177.135638,
+      "p99": 177.186782
+    },
+    "trace_wall_seconds": 97.41155303712003,
+    "ttft_ms": {
+      "count": 50,
+      "max": 12036.891432,
+      "mean": 9222.988868,
+      "min": 171.336879,
+      "p50": 11582.451989,
+      "p95": 11944.514977,
+      "p99": 12036.891432
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 971.913295,
+        "minimum": 160.0,
+        "sample_count": 346
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784175079.2248204,
+        "mean": 1784169256.785514,
+        "minimum": 1784163237.2248204,
+        "sample_count": 346
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 3.0,
+        "mean": 2.861272,
+        "minimum": 0.0,
+        "sample_count": 346
+      },
+      "num_requests_waiting": {
+        "maximum": 10.0,
+        "mean": 8.849711,
+        "minimum": 0.0,
+        "sample_count": 346
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1615.33526,
+        "minimum": 259.0,
+        "sample_count": 346
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.479468003216987,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 17359.576997,
+      "mean": 14557.179082,
+      "min": 5567.886652,
+      "p50": 16989.01373,
+      "p95": 17276.973536,
+      "p99": 17359.576997
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.97971,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2887.0,
+        "mean": 2887.0,
+        "minimum": 2887.0
+      },
+      "power_watts": {
+        "maximum": 35.72,
+        "mean": 34.478493,
+        "minimum": 32.41
+      },
+      "sample_count": 345,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1805.956522,
+        "minimum": 1710.0
+      },
+      "temperature_c": {
+        "maximum": 81.0,
+        "mean": 78.837681,
+        "minimum": 73.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 3,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 16.44126627129642,
+    "request_count": 50,
+    "request_throughput": 0.5137895709780131,
+    "session": 2,
+    "startup_seconds": 41.02349364105612,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 176.994763,
+      "mean": 172.33817,
+      "min": 166.6916,
+      "p50": 171.33195,
+      "p95": 176.610612,
+      "p99": 176.994763
+    },
+    "trace_wall_seconds": 97.31610531685874,
+    "ttft_ms": {
+      "count": 50,
+      "max": 12008.384409,
+      "mean": 9214.695809,
+      "min": 169.580894,
+      "p50": 11571.773756,
+      "p95": 11935.513249,
+      "p99": 12008.384409
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 973.113043,
+        "minimum": 161.0,
+        "sample_count": 345
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784175753.389097,
+        "mean": 1784169939.968807,
+        "minimum": 1784163974.389097,
+        "sample_count": 345
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 3.0,
+        "mean": 2.875362,
+        "minimum": 1.0,
+        "sample_count": 345
+      },
+      "num_requests_waiting": {
+        "maximum": 10.0,
+        "mean": 8.846377,
+        "minimum": 0.0,
+        "sample_count": 345
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1617.385507,
+        "minimum": 310.0,
+        "sample_count": 345
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.482125855598187,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 17249.395468,
+      "mean": 14540.825664,
+      "min": 5569.284186,
+      "p50": 16988.557002,
+      "p95": 17232.707346,
+      "p99": 17249.395468
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.973913,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2887.0,
+        "mean": 2887.0,
+        "minimum": 2887.0
+      },
+      "power_watts": {
+        "maximum": 35.59,
+        "mean": 34.548319,
+        "minimum": 32.79
+      },
+      "sample_count": 345,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1808.478261,
+        "minimum": 1650.0
+      },
+      "temperature_c": {
+        "maximum": 81.0,
+        "mean": 78.878261,
+        "minimum": 73.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 3,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 16.465608621337346,
+    "request_count": 50,
+    "request_throughput": 0.514550269416792,
+    "session": 3,
+    "startup_seconds": 41.02052618493326,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 175.689998,
+      "mean": 172.082019,
+      "min": 165.7502,
+      "p50": 171.076029,
+      "p95": 175.631434,
+      "p99": 175.689998
+    },
+    "trace_wall_seconds": 97.17223558481783,
+    "ttft_ms": {
+      "count": 50,
+      "max": 11937.128672,
+      "mean": 9206.283072,
+      "min": 173.942074,
+      "p50": 11580.347447,
+      "p95": 11922.286578,
+      "p99": 11937.128672
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 970.023188,
+        "minimum": 160.0,
+        "sample_count": 345
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784177342.9487343,
+        "mean": 1784171506.412502,
+        "minimum": 1784165500.9487343,
+        "sample_count": 345
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 3.0,
+        "mean": 2.855072,
+        "minimum": 0.0,
+        "sample_count": 345
+      },
+      "num_requests_waiting": {
+        "maximum": 10.0,
+        "mean": 8.857971,
+        "minimum": 0.0,
+        "sample_count": 345
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1612.043478,
+        "minimum": 259.0,
+        "sample_count": 345
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.482421983518594,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 17222.322095,
+      "mean": 14521.235675,
+      "min": 5566.662534,
+      "p50": 16983.53998,
+      "p95": 17196.511274,
+      "p99": 17222.322095
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.973837,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2887.0,
+        "mean": 2887.0,
+        "minimum": 2887.0
+      },
+      "power_watts": {
+        "maximum": 35.43,
+        "mean": 34.441483,
+        "minimum": 32.53
+      },
+      "sample_count": 344,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1811.293605,
+        "minimum": 1680.0
+      },
+      "temperature_c": {
+        "maximum": 80.0,
+        "mean": 78.497093,
+        "minimum": 73.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 3,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 16.488482459849028,
+    "request_count": 50,
+    "request_throughput": 0.5152650768702821,
+    "session": 4,
+    "startup_seconds": 41.025859335204586,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 175.47139,
+      "mean": 171.862668,
+      "min": 165.404295,
+      "p50": 170.58037,
+      "p95": 175.359213,
+      "p99": 175.47139
+    },
+    "trace_wall_seconds": 97.03743227408268,
+    "ttft_ms": {
+      "count": 50,
+      "max": 11919.904422,
+      "mean": 9193.492957,
+      "min": 168.34528,
+      "p50": 11568.914797,
+      "p95": 11895.031159,
+      "p99": 11919.904422
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1755.0,
+        "mean": 969.758721,
+        "minimum": 161.0,
+        "sample_count": 344
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784178004.4711547,
+        "mean": 1784172181.540922,
+        "minimum": 1784166241.4711547,
+        "sample_count": 344
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 3.0,
+        "mean": 2.872093,
+        "minimum": 1.0,
+        "sample_count": 344
+      },
+      "num_requests_waiting": {
+        "maximum": 10.0,
+        "mean": 8.866279,
+        "minimum": 0.0,
+        "sample_count": 344
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1611.337209,
+        "minimum": 310.0,
+        "sample_count": 344
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.416789036483739,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 11851.331505,
+      "mean": 11341.41008,
+      "min": 5767.886877,
+      "p50": 11833.961855,
+      "p95": 11850.995928,
+      "p99": 11851.331505
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.966912,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2899.0,
+        "mean": 2899.0,
+        "minimum": 2899.0
+      },
+      "power_watts": {
+        "maximum": 37.04,
+        "mean": 33.916949,
+        "minimum": 31.99
+      },
+      "sample_count": 272,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1813.235294,
+        "minimum": 1590.0
+      },
+      "temperature_c": {
+        "maximum": 79.0,
+        "mean": 76.444853,
+        "minimum": 70.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 4,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 20.926131766533402,
+    "request_count": 50,
+    "request_throughput": 0.6539416177041688,
+    "session": 0,
+    "startup_seconds": 43.0265760878101,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 181.357795,
+      "mean": 173.023755,
+      "min": 165.074127,
+      "p50": 170.623728,
+      "p95": 181.200357,
+      "p99": 181.357795
+    },
+    "trace_wall_seconds": 76.45942488801666,
+    "ttft_ms": {
+      "count": 50,
+      "max": 6563.24881,
+      "mean": 5977.673678,
+      "min": 167.697344,
+      "p50": 6543.453249,
+      "p95": 6562.469511,
+      "p99": 6563.24881
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1760.0,
+        "mean": 980.525735,
+        "minimum": 161.0,
+        "sample_count": 272
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784172174.138241,
+        "mean": 1784167262.873535,
+        "minimum": 1784162194.138241,
+        "sample_count": 272
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 4.0,
+        "mean": 3.731618,
+        "minimum": 0.0,
+        "sample_count": 272
+      },
+      "num_requests_waiting": {
+        "maximum": 8.0,
+        "mean": 6.720588,
+        "minimum": 0.0,
+        "sample_count": 272
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1650.808824,
+        "minimum": 309.0,
+        "sample_count": 272
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.415064047478614,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 11898.310631,
+      "mean": 11359.01896,
+      "min": 5770.454587,
+      "p50": 11843.019276,
+      "p95": 11897.949314,
+      "p99": 11898.310631
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.966912,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2899.0,
+        "mean": 2899.0,
+        "minimum": 2899.0
+      },
+      "power_watts": {
+        "maximum": 35.48,
+        "mean": 34.437794,
+        "minimum": 32.78
+      },
+      "sample_count": 272,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1810.091912,
+        "minimum": 1725.0
+      },
+      "temperature_c": {
+        "maximum": 80.0,
+        "mean": 78.169118,
+        "minimum": 73.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 4,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 20.888800099992416,
+    "request_count": 50,
+    "request_throughput": 0.652775003124763,
+    "session": 1,
+    "startup_seconds": 40.03061305102892,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 182.109146,
+      "mean": 173.264761,
+      "min": 165.802786,
+      "p50": 170.742737,
+      "p95": 181.746379,
+      "p99": 182.109146
+    },
+    "trace_wall_seconds": 76.59607025492005,
+    "ttft_ms": {
+      "count": 50,
+      "max": 6584.630736,
+      "mean": 5987.811358,
+      "min": 170.364745,
+      "p50": 6548.742484,
+      "p95": 6584.433528,
+      "p99": 6584.630736
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 981.591912,
+        "minimum": 161.0,
+        "sample_count": 272
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784173059.3198602,
+        "mean": 1784168187.716919,
+        "minimum": 1784163111.3198602,
+        "sample_count": 272
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 4.0,
+        "mean": 3.790441,
+        "minimum": 1.0,
+        "sample_count": 272
+      },
+      "num_requests_waiting": {
+        "maximum": 8.0,
+        "mean": 6.683824,
+        "minimum": 0.0,
+        "sample_count": 272
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1653.783088,
+        "minimum": 309.0,
+        "sample_count": 272
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.413662457583649,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 11890.040549,
+      "mean": 11363.124861,
+      "min": 5771.629477,
+      "p50": 11844.693011,
+      "p95": 11889.399575,
+      "p99": 11890.040549
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.974265,
+        "minimum": 99.0
+      },
+      "memory_used_mib": {
+        "maximum": 2899.0,
+        "mean": 2899.0,
+        "minimum": 2899.0
+      },
+      "power_watts": {
+        "maximum": 35.52,
+        "mean": 34.562941,
+        "minimum": 27.41
+      },
+      "sample_count": 272,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1810.202206,
+        "minimum": 1755.0
+      },
+      "temperature_c": {
+        "maximum": 81.0,
+        "mean": 78.698529,
+        "minimum": 74.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 4,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 20.8773389131187,
+    "request_count": 50,
+    "request_throughput": 0.6524168410349593,
+    "session": 2,
+    "startup_seconds": 40.027519719908014,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 182.069489,
+      "mean": 173.325598,
+      "min": 166.46822,
+      "p50": 170.786814,
+      "p95": 181.888488,
+      "p99": 182.069489
+    },
+    "trace_wall_seconds": 76.63811976509169,
+    "ttft_ms": {
+      "count": 50,
+      "max": 6580.788968,
+      "mean": 5990.031327,
+      "min": 171.018726,
+      "p50": 6550.108165,
+      "p95": 6580.325167,
+      "p99": 6580.788968
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 979.669118,
+        "minimum": 161.0,
+        "sample_count": 272
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784174063.2476165,
+        "mean": 1784169178.633646,
+        "minimum": 1784164116.2476165,
+        "sample_count": 272
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 4.0,
+        "mean": 3.757353,
+        "minimum": 1.0,
+        "sample_count": 272
+      },
+      "num_requests_waiting": {
+        "maximum": 8.0,
+        "mean": 6.75,
+        "minimum": 0.0,
+        "sample_count": 272
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1649.882353,
+        "minimum": 310.0,
+        "sample_count": 272
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.416701726749839,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 11864.765387,
+      "mean": 11351.260144,
+      "min": 5771.099959,
+      "p50": 11843.349143,
+      "p95": 11864.246314,
+      "p99": 11864.765387
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.970696,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2899.0,
+        "mean": 2898.992674,
+        "minimum": 2897.0
+      },
+      "power_watts": {
+        "maximum": 35.54,
+        "mean": 34.474652,
+        "minimum": 28.25
+      },
+      "sample_count": 273,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1811.538462,
+        "minimum": 1590.0
+      },
+      "temperature_c": {
+        "maximum": 80.0,
+        "mean": 78.032967,
+        "minimum": 72.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 4,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 20.907716700963313,
+    "request_count": 50,
+    "request_throughput": 0.6533661469051035,
+    "session": 3,
+    "startup_seconds": 41.0200355341658,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 181.615348,
+      "mean": 173.128972,
+      "min": 165.108829,
+      "p50": 170.666779,
+      "p95": 181.406332,
+      "p99": 181.615348
+    },
+    "trace_wall_seconds": 76.52676869905554,
+    "ttft_ms": {
+      "count": 50,
+      "max": 6566.345205,
+      "mean": 5984.262015,
+      "min": 169.529652,
+      "p50": 6549.659373,
+      "p95": 6565.989392,
+      "p99": 6566.345205
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 978.333333,
+        "minimum": 160.0,
+        "sample_count": 273
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784175051.0277033,
+        "mean": 1784170158.690707,
+        "minimum": 1784165041.0277033,
+        "sample_count": 273
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 4.0,
+        "mean": 3.750916,
+        "minimum": 0.0,
+        "sample_count": 273
+      },
+      "num_requests_waiting": {
+        "maximum": 8.0,
+        "mean": 6.717949,
+        "minimum": 0.0,
+        "sample_count": 273
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1647.941392,
+        "minimum": 259.0,
+        "sample_count": 273
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.415065844325183,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 11906.198612,
+      "mean": 11365.708836,
+      "min": 5770.624586,
+      "p50": 11847.938627,
+      "p95": 11905.612454,
+      "p99": 11906.198612
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.970696,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2899.0,
+        "mean": 2898.992674,
+        "minimum": 2897.0
+      },
+      "power_watts": {
+        "maximum": 35.52,
+        "mean": 34.417473,
+        "minimum": 28.1
+      },
+      "sample_count": 273,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1809.725275,
+        "minimum": 1695.0
+      },
+      "temperature_c": {
+        "maximum": 81.0,
+        "mean": 78.673993,
+        "minimum": 73.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 4,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 20.876460123932695,
+    "request_count": 50,
+    "request_throughput": 0.6523893788728967,
+    "session": 4,
+    "startup_seconds": 41.0240309019573,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 182.287469,
+      "mean": 173.361732,
+      "min": 165.847289,
+      "p50": 170.918389,
+      "p95": 182.008531,
+      "p99": 182.287469
+    },
+    "trace_wall_seconds": 76.64134582690895,
+    "ttft_ms": {
+      "count": 50,
+      "max": 6585.821514,
+      "mean": 5991.495145,
+      "min": 170.719186,
+      "p50": 6549.264213,
+      "p95": 6585.37348,
+      "p99": 6585.821514
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 979.490842,
+        "minimum": 160.0,
+        "sample_count": 273
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784176329.4356918,
+        "mean": 1784171443.138988,
+        "minimum": 1784166319.4356918,
+        "sample_count": 273
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 4.0,
+        "mean": 3.747253,
+        "minimum": 0.0,
+        "sample_count": 273
+      },
+      "num_requests_waiting": {
+        "maximum": 8.0,
+        "mean": 6.666667,
+        "minimum": 0.0,
+        "sample_count": 273
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1648.864469,
+        "minimum": 259.0,
+        "sample_count": 273
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.2401025980619,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 6259.599259,
+      "mean": 6210.708481,
+      "min": 5429.069317,
+      "p50": 6240.959265,
+      "p95": 6259.195873,
+      "p99": 6259.599259
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.947712,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2933.0,
+        "mean": 2933.0,
+        "minimum": 2933.0
+      },
+      "power_watts": {
+        "maximum": 35.45,
+        "mean": 33.913137,
+        "minimum": 32.71
+      },
+      "sample_count": 153,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1814.509804,
+        "minimum": 1770.0
+      },
+      "temperature_c": {
+        "maximum": 78.0,
+        "mean": 75.424837,
+        "minimum": 71.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 8,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 37.30228358687932,
+    "request_count": 50,
+    "request_throughput": 1.1656963620899787,
+    "session": 0,
+    "startup_seconds": 41.02396604698151,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 191.494608,
+      "mean": 173.690145,
+      "min": 165.053327,
+      "p50": 171.451457,
+      "p95": 191.454982,
+      "p99": 191.494608
+    },
+    "trace_wall_seconds": 42.892816368024796,
+    "ttft_ms": {
+      "count": 50,
+      "max": 945.461432,
+      "mean": 826.31398,
+      "min": 170.326099,
+      "p50": 925.448683,
+      "p95": 944.507865,
+      "p99": 945.461432
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 1017.084967,
+        "minimum": 161.0,
+        "sample_count": 153
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784168929.425023,
+        "mean": 1784165566.170121,
+        "minimum": 1784161712.425023,
+        "sample_count": 153
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 8.0,
+        "mean": 7.091503,
+        "minimum": 0.0,
+        "sample_count": 153
+      },
+      "num_requests_waiting": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "sample_count": 153
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1779.379085,
+        "minimum": 310.0,
+        "sample_count": 153
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.240860696733537,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 6263.550031,
+      "mean": 6217.409732,
+      "min": 5429.344307,
+      "p50": 6246.823586,
+      "p95": 6263.174337,
+      "p99": 6263.550031
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.947712,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2933.0,
+        "mean": 2932.856209,
+        "minimum": 2911.0
+      },
+      "power_watts": {
+        "maximum": 35.52,
+        "mean": 34.301111,
+        "minimum": 32.81
+      },
+      "sample_count": 153,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1811.764706,
+        "minimum": 1680.0
+      },
+      "temperature_c": {
+        "maximum": 78.0,
+        "mean": 76.764706,
+        "minimum": 72.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 8,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 37.26603828377077,
+    "request_count": 50,
+    "request_throughput": 1.1645636963678365,
+    "session": 1,
+    "startup_seconds": 41.02236525318585,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 191.912612,
+      "mean": 173.802847,
+      "min": 165.039067,
+      "p50": 171.529952,
+      "p95": 191.648478,
+      "p99": 191.912612
+    },
+    "trace_wall_seconds": 42.934534328989685,
+    "ttft_ms": {
+      "count": 50,
+      "max": 945.790911,
+      "mean": 829.521475,
+      "min": 171.694909,
+      "p50": 929.426206,
+      "p95": 945.581569,
+      "p99": 945.790911
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 1012.535948,
+        "minimum": 160.0,
+        "sample_count": 153
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784170063.193068,
+        "mean": 1784166678.088493,
+        "minimum": 1784162783.193068,
+        "sample_count": 153
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 8.0,
+        "mean": 7.078431,
+        "minimum": 0.0,
+        "sample_count": 153
+      },
+      "num_requests_waiting": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "sample_count": 153
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1770.738562,
+        "minimum": 259.0,
+        "sample_count": 153
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.24037377645485,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 6262.454064,
+      "mean": 6213.498535,
+      "min": 5429.453607,
+      "p50": 6243.660256,
+      "p95": 6261.75577,
+      "p99": 6262.454064
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.960784,
+        "minimum": 99.0
+      },
+      "memory_used_mib": {
+        "maximum": 2933.0,
+        "mean": 2932.856209,
+        "minimum": 2911.0
+      },
+      "power_watts": {
+        "maximum": 35.55,
+        "mean": 34.259804,
+        "minimum": 32.51
+      },
+      "sample_count": 153,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1810.980392,
+        "minimum": 1365.0
+      },
+      "temperature_c": {
+        "maximum": 79.0,
+        "mean": 76.562092,
+        "minimum": 72.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 8,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 37.28694320883906,
+    "request_count": 50,
+    "request_throughput": 1.1652169752762207,
+    "session": 2,
+    "startup_seconds": 41.022680772002786,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 191.645473,
+      "mean": 173.719212,
+      "min": 165.05957,
+      "p50": 171.470613,
+      "p95": 191.528959,
+      "p99": 191.645473
+    },
+    "trace_wall_seconds": 42.91046308190562,
+    "ttft_ms": {
+      "count": 50,
+      "max": 946.473215,
+      "mean": 828.202953,
+      "min": 171.576045,
+      "p50": 927.75569,
+      "p95": 945.873918,
+      "p99": 946.473215
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 1011.660131,
+        "minimum": 160.0,
+        "sample_count": 153
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784171704.3440926,
+        "mean": 1784168316.625138,
+        "minimum": 1784164424.3440926,
+        "sample_count": 153
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 8.0,
+        "mean": 7.084967,
+        "minimum": 0.0,
+        "sample_count": 153
+      },
+      "num_requests_waiting": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "sample_count": 153
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1770.738562,
+        "minimum": 259.0,
+        "sample_count": 153
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.240680840556031,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 6260.723287,
+      "mean": 6215.137244,
+      "min": 5428.502332,
+      "p50": 6245.825957,
+      "p95": 6260.185228,
+      "p99": 6260.723287
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.947712,
+        "minimum": 98.0
+      },
+      "memory_used_mib": {
+        "maximum": 2933.0,
+        "mean": 2932.856209,
+        "minimum": 2911.0
+      },
+      "power_watts": {
+        "maximum": 35.27,
+        "mean": 34.255425,
+        "minimum": 32.77
+      },
+      "sample_count": 153,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1812.156863,
+        "minimum": 1650.0
+      },
+      "temperature_c": {
+        "maximum": 79.0,
+        "mean": 76.830065,
+        "minimum": 72.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 8,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 37.278725720653256,
+    "request_count": 50,
+    "request_throughput": 1.1649601787704142,
+    "session": 3,
+    "startup_seconds": 43.022482871077955,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 191.974124,
+      "mean": 173.747767,
+      "min": 165.022424,
+      "p50": 171.468563,
+      "p95": 191.604798,
+      "p99": 191.974124
+    },
+    "trace_wall_seconds": 42.91992199490778,
+    "ttft_ms": {
+      "count": 50,
+      "max": 945.653591,
+      "mean": 828.956482,
+      "min": 171.836828,
+      "p50": 929.907321,
+      "p95": 945.433176,
+      "p99": 945.653591
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 1011.751634,
+        "minimum": 160.0,
+        "sample_count": 153
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784172445.532448,
+        "mean": 1784169057.9965,
+        "minimum": 1784165165.532448,
+        "sample_count": 153
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 8.0,
+        "mean": 7.084967,
+        "minimum": 0.0,
+        "sample_count": 153
+      },
+      "num_requests_waiting": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "sample_count": 153
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1770.738562,
+        "minimum": 259.0,
+        "sample_count": 153
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  },
+  {
+    "actual_average_in_flight": 7.240531453037173,
+    "actual_maximum_in_flight": 8,
+    "classification": "VALID",
+    "client_concurrency": 8,
+    "e2e_ms": {
+      "count": 50,
+      "max": 6271.9587,
+      "mean": 6220.75238,
+      "min": 5434.850027,
+      "p50": 6246.667292,
+      "p95": 6271.499628,
+      "p99": 6271.9587
+    },
+    "failure_count": 0,
+    "gpu": {
+      "gpu_utilization_percent": {
+        "maximum": 100.0,
+        "mean": 99.954248,
+        "minimum": 99.0
+      },
+      "memory_used_mib": {
+        "maximum": 2933.0,
+        "mean": 2932.856209,
+        "minimum": 2911.0
+      },
+      "power_watts": {
+        "maximum": 35.48,
+        "mean": 34.418039,
+        "minimum": 26.56
+      },
+      "sample_count": 153,
+      "sm_clock_mhz": {
+        "maximum": 1815.0,
+        "mean": 1811.372549,
+        "minimum": 1725.0
+      },
+      "temperature_c": {
+        "maximum": 80.0,
+        "mean": 77.48366,
+        "minimum": 73.0
+      },
+      "zero_gpu_utilization_fraction": 0.0
+    },
+    "max_num_seqs": 8,
+    "mode": "runtime_equivalent",
+    "output_token_throughput": 37.24426077527667,
+    "request_count": 50,
+    "request_throughput": 1.163883149227396,
+    "session": 4,
+    "startup_seconds": 41.023232660023496,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 192.370645,
+      "mean": 173.88693,
+      "min": 165.172533,
+      "p50": 171.477788,
+      "p95": 191.619388,
+      "p99": 192.370645
+    },
+    "trace_wall_seconds": 42.95963906100951,
+    "ttft_ms": {
+      "count": 50,
+      "max": 945.865961,
+      "mean": 830.257543,
+      "min": 172.104523,
+      "p50": 930.01021,
+      "p95": 945.377589,
+      "p99": 945.865961
+    },
+    "vllm_metrics": {
+      "generation_tokens_total": {
+        "maximum": 1757.0,
+        "mean": 1013.816993,
+        "minimum": 160.0,
+        "sample_count": 153
+      },
+      "gpu_cache_usage_perc": "not_available",
+      "iteration_tokens_total": {
+        "maximum": 1784173970.155278,
+        "mean": 1784170591.122598,
+        "minimum": 1784166690.155278,
+        "sample_count": 153
+      },
+      "kv_cache_usage_perc": "not_available",
+      "num_requests_running": {
+        "maximum": 8.0,
+        "mean": 7.084967,
+        "minimum": 0.0,
+        "sample_count": 153
+      },
+      "num_requests_waiting": {
+        "maximum": 0.0,
+        "mean": 0.0,
+        "minimum": 0.0,
+        "sample_count": 153
+      },
+      "prompt_tokens_total": {
+        "maximum": 2796.0,
+        "mean": 1773.392157,
+        "minimum": 259.0,
+        "sample_count": 153
+      }
+    },
+    "workload_id": "S3",
+    "workload_sha256": "00f8f6e944942622ec076b8af78f39a38f14cf6e68cf0bbb99bbca6cae409a62"
+  }
+]

@@ -1,0 +1,100 @@
+{
+  "definitions": {
+    "memory_regret_mib": "selected_peak_memory - lowest_legal_peak_memory",
+    "objective_score_regret": "selected_objective_score - oracle_objective_score",
+    "relative_throughput_regret": "best_legal_output_throughput / selected_output_throughput - 1",
+    "relative_ttft_regret": "selected_ttft_p95 / best_legal_ttft_p95 - 1"
+  },
+  "rows": [
+    {
+      "absolute_tpot_regret_ms": 0.006492,
+      "absolute_ttft_regret_ms": 0.0,
+      "memory_regret_mib": 44,
+      "objective": "latency",
+      "objective_score_regret": 0.0,
+      "relative_throughput_regret": 0.004817227,
+      "relative_ttft_regret": 0.0,
+      "workload_id": "S1"
+    },
+    {
+      "absolute_tpot_regret_ms": 0.005242,
+      "absolute_ttft_regret_ms": 0.560318,
+      "memory_regret_mib": 30,
+      "objective": "throughput",
+      "objective_score_regret": 0.0,
+      "relative_throughput_regret": 0.0,
+      "relative_ttft_regret": 0.003666686,
+      "workload_id": "S1"
+    },
+    {
+      "absolute_tpot_regret_ms": 0.005242,
+      "absolute_ttft_regret_ms": 0.560318,
+      "memory_regret_mib": 30,
+      "objective": "balanced",
+      "objective_score_regret": 0.0,
+      "relative_throughput_regret": 0.0,
+      "relative_ttft_regret": 0.003666686,
+      "workload_id": "S1"
+    },
+    {
+      "absolute_tpot_regret_ms": 173.266923,
+      "absolute_ttft_regret_ms": 0.0,
+      "memory_regret_mib": 44,
+      "objective": "latency",
+      "objective_score_regret": 0.0,
+      "relative_throughput_regret": 1.822424404,
+      "relative_ttft_regret": 0.0,
+      "workload_id": "S2"
+    },
+    {
+      "absolute_tpot_regret_ms": 0.0,
+      "absolute_ttft_regret_ms": 775.078877,
+      "memory_regret_mib": 40,
+      "objective": "throughput",
+      "objective_score_regret": 0.0,
+      "relative_throughput_regret": 0.0,
+      "relative_ttft_regret": 1.22380859,
+      "workload_id": "S2"
+    },
+    {
+      "absolute_tpot_regret_ms": 0.0,
+      "absolute_ttft_regret_ms": 775.078877,
+      "memory_regret_mib": 40,
+      "objective": "balanced",
+      "objective_score_regret": 0.0,
+      "relative_throughput_regret": 0.0,
+      "relative_ttft_regret": 1.22380859,
+      "workload_id": "S2"
+    },
+    {
+      "absolute_tpot_regret_ms": 179.881052,
+      "absolute_ttft_regret_ms": 0.0,
+      "memory_regret_mib": 66,
+      "objective": "latency",
+      "objective_score_regret": 0.0,
+      "relative_throughput_regret": 0.681010068,
+      "relative_ttft_regret": 0.0,
+      "workload_id": "S3"
+    },
+    {
+      "absolute_tpot_regret_ms": 0.0,
+      "absolute_ttft_regret_ms": 2803.467523,
+      "memory_regret_mib": 40,
+      "objective": "throughput",
+      "objective_score_regret": 0.0,
+      "relative_throughput_regret": 0.0,
+      "relative_ttft_regret": 2.987746705,
+      "workload_id": "S3"
+    },
+    {
+      "absolute_tpot_regret_ms": 0.0,
+      "absolute_ttft_regret_ms": 2803.467523,
+      "memory_regret_mib": 40,
+      "objective": "balanced",
+      "objective_score_regret": 0.0,
+      "relative_throughput_regret": 0.0,
+      "relative_ttft_regret": 2.987746705,
+      "workload_id": "S3"
+    }
+  ]
+}

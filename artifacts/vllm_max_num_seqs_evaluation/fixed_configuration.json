@@ -1,0 +1,16 @@
+{
+  "block_size": 16,
+  "dtype": "float16",
+  "enable_chunked_prefill": false,
+  "enable_prefix_caching": false,
+  "gpu_memory_utilization": 0.75,
+  "max_model_len": 2048,
+  "max_num_batched_tokens": 2048,
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "pipeline_parallel_size": 1,
+  "quantization": "none",
+  "scheduler_policy": "vllm_default_fixed_by_installed_version",
+  "served_model_name": "qwen2.5-0.5b",
+  "tensor_parallel_size": 1,
+  "tokenizer": "Qwen/Qwen2.5-0.5B-Instruct"
+}

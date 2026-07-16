@@ -1,0 +1,92 @@
+[
+  {
+    "actual_average_in_flight": 3.919521223973987,
+    "actual_maximum_in_flight": 4,
+    "classification": "VALID",
+    "client_concurrency": 4,
+    "e2e_ms": {
+      "count": 50,
+      "max": 8193.026245,
+      "mean": 7995.137093,
+      "min": 4071.72308,
+      "p50": 8147.832665,
+      "p95": 8192.079148,
+      "p99": 8193.026245
+    },
+    "failure_count": 0,
+    "max_num_seqs": 2,
+    "mode": "direct_control",
+    "output_token_throughput": 11.765527407421718,
+    "request_count": 50,
+    "request_throughput": 0.4902303086425716,
+    "session": 0,
+    "startup_seconds": 40.02229766687378,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 171.408744,
+      "mean": 167.299087,
+      "min": 163.516247,
+      "p50": 164.45332,
+      "p95": 171.388119,
+      "p99": 171.408744
+    },
+    "trace_wall_seconds": 101.99287787498906,
+    "ttft_ms": {
+      "count": 50,
+      "max": 4411.466458,
+      "mean": 4147.258095,
+      "min": 169.874302,
+      "p50": 4250.438441,
+      "p95": 4407.324983,
+      "p99": 4411.466458
+    },
+    "workload_id": "S2",
+    "workload_sha256": "9b41541b0d6af00a09ac18c9749430f46c6c54b0e17c1d8ba2cd88abb364b8de"
+  },
+  {
+    "actual_average_in_flight": 3.861291499719355,
+    "actual_maximum_in_flight": 4,
+    "classification": "VALID",
+    "client_concurrency": 4,
+    "e2e_ms": {
+      "count": 50,
+      "max": 4571.95216,
+      "mean": 4538.178923,
+      "min": 4068.315399,
+      "p50": 4556.794814,
+      "p95": 4571.7096,
+      "p99": 4571.95216
+    },
+    "failure_count": 0,
+    "max_num_seqs": 4,
+    "mode": "direct_control",
+    "output_token_throughput": 20.419775542598167,
+    "request_count": 50,
+    "request_throughput": 0.8508239809415902,
+    "session": 0,
+    "startup_seconds": 41.02270481409505,
+    "success_count": 50,
+    "tpot_ms": {
+      "count": 50,
+      "max": 184.965855,
+      "mean": 173.845253,
+      "min": 163.24198,
+      "p50": 170.588015,
+      "p95": 184.869245,
+      "p99": 184.965855
+    },
+    "trace_wall_seconds": 58.76656173309311,
+    "ttft_ms": {
+      "count": 50,
+      "max": 648.817533,
+      "mean": 539.73811,
+      "min": 168.270092,
+      "p50": 632.791167,
+      "p95": 648.202298,
+      "p99": 648.817533
+    },
+    "workload_id": "S2",
+    "workload_sha256": "9b41541b0d6af00a09ac18c9749430f46c6c54b0e17c1d8ba2cd88abb364b8de"
+  }
+]

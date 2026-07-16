@@ -1,0 +1,4557 @@
+[
+  {
+    "cuda_graph_capture_sizes": "1, 2",
+    "cuda_graph_profile": {
+      "full_count": 1,
+      "full_largest": 1,
+      "piecewise_count": 2,
+      "piecewise_largest": 2
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 42.7,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 1,
+        "waiting": 3
+      },
+      {
+        "generation_tokens_per_second": 58.5,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 3
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "d7ba8400eccfd0b0b0bd973a5f58eed59de602cccd7fdc9e93ae6cd5006b2a10",
+    "session": "S2-m1-c4-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2",
+    "cuda_graph_profile": {
+      "full_count": 1,
+      "full_largest": 1,
+      "piecewise_count": 2,
+      "piecewise_largest": 2
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 40.3,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 3
+      },
+      {
+        "generation_tokens_per_second": 57.2,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 2
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "864a811d9f1df15b60f6d6a1ea9709df0fb3d1a5464cb6d57a7242361aa9e40f",
+    "session": "S2-m1-c4-s1.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2",
+    "cuda_graph_profile": {
+      "full_count": 1,
+      "full_largest": 1,
+      "piecewise_count": 2,
+      "piecewise_largest": 2
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 41.2,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 1,
+        "waiting": 3
+      },
+      {
+        "generation_tokens_per_second": 56.0,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 3
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "020565a439deab72277bf04523907cabad9fbc1e89072856734a590894c2cdae",
+    "session": "S2-m1-c4-s2.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2",
+    "cuda_graph_profile": {
+      "full_count": 1,
+      "full_largest": 1,
+      "piecewise_count": 2,
+      "piecewise_largest": 2
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 41.6,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 3
+      },
+      {
+        "generation_tokens_per_second": 57.0,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 3
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "8f36ac7604cd8b810bdbfb939d89c0a3e764153f6267512add470c08ff5bb6ed",
+    "session": "S2-m1-c4-s3.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2",
+    "cuda_graph_profile": {
+      "full_count": 1,
+      "full_largest": 1,
+      "piecewise_count": 2,
+      "piecewise_largest": 2
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 38.3,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 1,
+        "waiting": 3
+      },
+      {
+        "generation_tokens_per_second": 57.1,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 3
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "5d8cb3299749371831228d4b0a3ec93f317b9eb80d1f4ba4dab0e31347919bf0",
+    "session": "S2-m1-c4-s4.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 15.7,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "56d2239afa0072dd1ebeafb29c3847b42eeee628b822badcc8d6e7aa78afe720",
+    "session": "S2-m2-c4-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 15.9,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.9,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 11.7,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "df4ba9af569a96c41a777c1b26be8182cc3715bf136af1c204479d1c0c3f6c8f",
+    "session": "S2-m2-c4-s1.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 15.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "22c943dfcecea520c56bd796eb40961dbcaf687e0fb9a5d941cdeb2639d11c47",
+    "session": "S2-m2-c4-s2.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 15.9,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "f78e15314530419f88246fb2071bae9dbed28ccd33d1dbc54c35f56b410c2e8e",
+    "session": "S2-m2-c4-s3.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 15.7,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "45c217b584856e55031b8ab8a2415bf4f12d109673e5ef51c87e10cd1dfa7398",
+    "session": "S2-m2-c4-s4.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 18.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 1
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "290db2a25498f75867a900cca06197b1e9b5fa6aa5901a912b8664a38cf5a584",
+    "session": "S2-m3-c4-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 18.5,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.9,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 17.0,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 1
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "1548ae510d3ca88e1be6e4bc02f9451ef53db63a0eb7e983519fb7d2352a3f11",
+    "session": "S2-m3-c4-s1.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 18.1,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 1
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "8db1d885eef05b65b1ce7b371a3f8d6c2294b751f5dd31f13f8854b375e5d8bb",
+    "session": "S2-m3-c4-s2.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 19.1,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 1
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "caff62143c43eff0c7b4064051a878608db4bf87e884a6830d75ca8ee5248a25",
+    "session": "S2-m3-c4-s3.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 16.9,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 17.0,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.7,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.9,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 1
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "ed91e65ab65d9860cf87f197654fe46595bf551e41a9a2b556ca2f7385a48c87",
+    "session": "S2-m3-c4-s4.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8",
+    "cuda_graph_profile": {
+      "full_count": 3,
+      "full_largest": 4,
+      "piecewise_count": 4,
+      "piecewise_largest": 8
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 19.7,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.6,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 20.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.6,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 18.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "983f998ccb729b5705051aa3bc997a0bdae7ebb533e8395544171adc0137677d",
+    "session": "S2-m4-c4-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8",
+    "cuda_graph_profile": {
+      "full_count": 3,
+      "full_largest": 4,
+      "piecewise_count": 4,
+      "piecewise_largest": 8
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 20.9,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 20.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 19.2,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "3a99c56a232d389864e2559b8f5ed28dc563480e640471a25402049b45333964",
+    "session": "S2-m4-c4-s1.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8",
+    "cuda_graph_profile": {
+      "full_count": 3,
+      "full_largest": 4,
+      "piecewise_count": 4,
+      "piecewise_largest": 8
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 20.5,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 20.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 20.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 19.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "c9c0b3a17bb9d006e0f1af97f1ecee81fe67040c4e9b74f54bf83ae1b660102d",
+    "session": "S2-m4-c4-s2.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8",
+    "cuda_graph_profile": {
+      "full_count": 3,
+      "full_largest": 4,
+      "piecewise_count": 4,
+      "piecewise_largest": 8
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 20.0,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 20.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 19.4,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "a8897111713ccb703b7d919515597ae5c88f9dbe7ca03b31ec56187ac5ff731c",
+    "session": "S2-m4-c4-s3.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8",
+    "cuda_graph_profile": {
+      "full_count": 3,
+      "full_largest": 4,
+      "piecewise_count": 4,
+      "piecewise_largest": 8
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 19.0,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 20.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 19.0,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "1641f42cc7799a985072e4d028969110e636d1613e9a99c994193c796052c1b4",
+    "session": "S2-m4-c4-s4.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8, 16",
+    "cuda_graph_profile": {
+      "full_count": 4,
+      "full_largest": 8,
+      "piecewise_count": 5,
+      "piecewise_largest": 16
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 19.9,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.6,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.1,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 20.5,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 19.0,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "1bd60e3a25c6aa2875b16da1b4f3f1b030b3883c7003646ed6d1c30ad8e366c0",
+    "session": "S2-m8-c4-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8, 16",
+    "cuda_graph_profile": {
+      "full_count": 4,
+      "full_largest": 8,
+      "piecewise_count": 5,
+      "piecewise_largest": 16
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 20.6,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 20.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 19.2,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "516726decb665d0cd3558d35211f1b4683d16a4d51593232532be339ebb06158",
+    "session": "S2-m8-c4-s1.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8, 16",
+    "cuda_graph_profile": {
+      "full_count": 4,
+      "full_largest": 8,
+      "piecewise_count": 5,
+      "piecewise_largest": 16
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 20.0,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 20.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 20.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 19.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "53d8f03c9b53ef46c6ac3a5f73d096f5f93d66a4659a61c3f4d40aafeb92f744",
+    "session": "S2-m8-c4-s2.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8, 16",
+    "cuda_graph_profile": {
+      "full_count": 4,
+      "full_largest": 8,
+      "piecewise_count": 5,
+      "piecewise_largest": 16
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 20.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 20.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 19.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "77ac4baac0ecf0bfd24c3a53d81510ce2f83fbc21922db08da85cdd44722b542",
+    "session": "S2-m8-c4-s3.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8, 16",
+    "cuda_graph_profile": {
+      "full_count": 4,
+      "full_largest": 8,
+      "piecewise_count": 5,
+      "piecewise_largest": 16
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 20.3,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.6,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 20.0,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 19.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "adc4413db54b03ab80b8e7d5fe05c8adc7dd1b8631156ce6adea9468938a1b5c",
+    "session": "S2-m8-c4-s4.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2",
+    "cuda_graph_profile": {
+      "full_count": 1,
+      "full_largest": 1,
+      "piecewise_count": 2,
+      "piecewise_largest": 2
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 41.3,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 1,
+        "waiting": 7
+      },
+      {
+        "generation_tokens_per_second": 62.0,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 6
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "c7443bdfbdf752b52bfe6491d2468333d081c587ce30e663cb7c24af29e7119f",
+    "session": "S3-m1-c8-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2",
+    "cuda_graph_profile": {
+      "full_count": 1,
+      "full_largest": 1,
+      "piecewise_count": 2,
+      "piecewise_largest": 2
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 43.3,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 7
+      },
+      {
+        "generation_tokens_per_second": 62.6,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 6
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "1893170c65d003b612da77ddc9f4f933a6b4a7c03643451d3be7f0219fad8914",
+    "session": "S3-m1-c8-s1.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2",
+    "cuda_graph_profile": {
+      "full_count": 1,
+      "full_largest": 1,
+      "piecewise_count": 2,
+      "piecewise_largest": 2
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 42.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 1,
+        "waiting": 7
+      },
+      {
+        "generation_tokens_per_second": 61.7,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 7
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "a8872a482c94115f5fe13d13425d342da0b95ddb64edd1204b54158a42642f2b",
+    "session": "S3-m1-c8-s2.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2",
+    "cuda_graph_profile": {
+      "full_count": 1,
+      "full_largest": 1,
+      "piecewise_count": 2,
+      "piecewise_largest": 2
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 43.0,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 7
+      },
+      {
+        "generation_tokens_per_second": 62.8,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 6
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "2387fd945dd71d686222b8080f2778b2f59475fdfe000e666cb92aef416311df",
+    "session": "S3-m1-c8-s3.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2",
+    "cuda_graph_profile": {
+      "full_count": 1,
+      "full_largest": 1,
+      "piecewise_count": 2,
+      "piecewise_largest": 2
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 44.8,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 62.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 1,
+        "waiting": 7
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "38080e50bad4f97bc4df481ba4ea7815cf38b30e38a54aaf68ab92797cae1533",
+    "session": "S3-m1-c8-s4.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 17.3,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.9,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 11.7,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "81bdab44463620deb2715ffad74e48e9219e3d704cf7633ef151c05a4873c0ad",
+    "session": "S3-m2-c8-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 18.1,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.9,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 11.7,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "45cddaded4f3efebd225fdd9a7091e789de2f62c633c9c167b345002cb385c6e",
+    "session": "S3-m2-c8-s1.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 17.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "cfaff70a052ec6bf05dd219274bd9d24485bb87e8a59457dc0daa1c9c524ef7c",
+    "session": "S3-m2-c8-s2.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 18.0,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "198eaa0e2a40a58d4bb3e19562d375eb740df2469cfb69efcf8498902a9fbac9",
+    "session": "S3-m2-c8-s3.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 6
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "2e0816686fe85354a4f57e63cb1bc2ed2ab277716cd199e7ae979dceb82c84cf",
+    "session": "S3-m2-c8-s4.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 19.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 14.1,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "66482794f1225e341cf251860403fc2e8c7019ee06b3c7e6f06ab5aa7dd0f7f4",
+    "session": "S3-m3-c8-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 20.0,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 17.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 14.4,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "23166b49268c636746743064f37a0b72ec2c8a3a7cbfc637e1bf88eb8789dd4e",
+    "session": "S3-m3-c8-s1.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 19.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.2,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 14.7,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "8d36d16cd2277abd1cfd0e756671ad38fbab950cdac52ae2333190c2c2818f07",
+    "session": "S3-m3-c8-s2.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 20.4,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 14.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "15590259fc6c3cc08164c9434946f1903dd4bdaa06ab0509bced7a196f4fdb35",
+    "session": "S3-m3-c8-s3.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 20.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 5
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 14.2,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "346fb56652432bcd604f4b312425b4128b8824044c1ecf12a2fb3b8db0177c59",
+    "session": "S3-m3-c8-s4.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8",
+    "cuda_graph_profile": {
+      "full_count": 3,
+      "full_largest": 4,
+      "piecewise_count": 4,
+      "piecewise_largest": 8
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 21.1,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 22.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 21.6,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 22.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 0,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "9788fb4a5ff5a3267f51ff61a02eb42f9c7485249820eb3244c22cbbb557d1ed",
+    "session": "S3-m4-c8-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8",
+    "cuda_graph_profile": {
+      "full_count": 3,
+      "full_largest": 4,
+      "piecewise_count": 4,
+      "piecewise_largest": 8
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 22.5,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 22.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 21.6,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 22.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "efa69cc78433461cffeac84d17e8660f498f99d5904c83ee910779b7c3c4b972",
+    "session": "S3-m4-c8-s1.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8",
+    "cuda_graph_profile": {
+      "full_count": 3,
+      "full_largest": 4,
+      "piecewise_count": 4,
+      "piecewise_largest": 8
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 23.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 22.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 21.6,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 22.0,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 2
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "7b989c100b8ce99821141cc66df3d4fe43352690cf14bc0ddc45d1719b30417b",
+    "session": "S3-m4-c8-s2.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8",
+    "cuda_graph_profile": {
+      "full_count": 3,
+      "full_largest": 4,
+      "piecewise_count": 4,
+      "piecewise_largest": 8
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 22.5,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 22.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 22.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 0,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "a33e5b1a277491947752fa09d46b5f6f8043969eda4eea6c47765fd092c914ca",
+    "session": "S3-m4-c8-s3.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8",
+    "cuda_graph_profile": {
+      "full_count": 3,
+      "full_largest": 4,
+      "piecewise_count": 4,
+      "piecewise_largest": 8
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 21.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 22.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 21.6,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 22.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 16.7,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 0,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "3bf3658355608bad8d79674e9a0a675cbb9bf343b92b223787e958400df19ab8",
+    "session": "S3-m4-c8-s4.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8, 16",
+    "cuda_graph_profile": {
+      "full_count": 4,
+      "full_largest": 8,
+      "piecewise_count": 5,
+      "piecewise_largest": 16
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 32.1,
+        "gpu_kv_cache_usage_percent": 0.3,
+        "running": 8,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 41.6,
+        "gpu_kv_cache_usage_percent": 0.5,
+        "running": 8,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 39.2,
+        "gpu_kv_cache_usage_percent": 0.4,
+        "running": 8,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 43.2,
+        "gpu_kv_cache_usage_percent": 0.5,
+        "running": 8,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "15bf3330337040f0ea82670fb0be6d415633448a82ed79bf4841e3e2c736d7dd",
+    "session": "S3-m8-c8-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8, 16",
+    "cuda_graph_profile": {
+      "full_count": 4,
+      "full_largest": 8,
+      "piecewise_count": 5,
+      "piecewise_largest": 16
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 32.3,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 39.3,
+        "gpu_kv_cache_usage_percent": 0.4,
+        "running": 8,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 40.0,
+        "gpu_kv_cache_usage_percent": 0.4,
+        "running": 8,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 43.2,
+        "gpu_kv_cache_usage_percent": 0.5,
+        "running": 8,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "e6ecc24df55c1c4123af2cbac787d15a7fb59eeb8e6b44b48513da01cdb94748",
+    "session": "S3-m8-c8-s1.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8, 16",
+    "cuda_graph_profile": {
+      "full_count": 4,
+      "full_largest": 8,
+      "piecewise_count": 5,
+      "piecewise_largest": 16
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 32.1,
+        "gpu_kv_cache_usage_percent": 0.3,
+        "running": 8,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 40.0,
+        "gpu_kv_cache_usage_percent": 0.4,
+        "running": 8,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 40.0,
+        "gpu_kv_cache_usage_percent": 0.4,
+        "running": 8,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 43.2,
+        "gpu_kv_cache_usage_percent": 0.5,
+        "running": 8,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "718ea4b1d40a28f68b7fa576a6f1bf8bc44b58b81d6b29819d1cd2669c87551d",
+    "session": "S3-m8-c8-s2.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8, 16",
+    "cuda_graph_profile": {
+      "full_count": 4,
+      "full_largest": 8,
+      "piecewise_count": 5,
+      "piecewise_largest": 16
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 32.9,
+        "gpu_kv_cache_usage_percent": 0.3,
+        "running": 8,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 43.2,
+        "gpu_kv_cache_usage_percent": 0.5,
+        "running": 8,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 40.0,
+        "gpu_kv_cache_usage_percent": 0.4,
+        "running": 8,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 42.4,
+        "gpu_kv_cache_usage_percent": 0.5,
+        "running": 8,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "8e32c6b2733ce49d69a46942272a0be5832fdc0b45d536f4ee8ef35d3f1462d9",
+    "session": "S3-m8-c8-s3.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8, 16",
+    "cuda_graph_profile": {
+      "full_count": 4,
+      "full_largest": 8,
+      "piecewise_count": 5,
+      "piecewise_largest": 16
+    },
+    "eager_fallback_found": false,
+    "kind": "reproduction",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 32.4,
+        "gpu_kv_cache_usage_percent": 0.3,
+        "running": 8,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 40.8,
+        "gpu_kv_cache_usage_percent": 0.5,
+        "running": 8,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 40.0,
+        "gpu_kv_cache_usage_percent": 0.4,
+        "running": 8,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 42.4,
+        "gpu_kv_cache_usage_percent": 0.5,
+        "running": 8,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "6e71be570b93855723a8a7e09b778d72f830ff3675762138f5fbfff1e870b406",
+    "session": "S3-m8-c8-s4.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2",
+    "cuda_graph_profile": {
+      "full_count": 1,
+      "full_largest": 1,
+      "piecewise_count": 2,
+      "piecewise_largest": 2
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 44.6,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 0,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 62.4,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 1,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "08c3b8026bc643f57032c52834c12e7234a97a885bb01f0ba8cce7fed8b6084f",
+    "session": "S3-m1-c1-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2",
+    "cuda_graph_profile": {
+      "full_count": 1,
+      "full_largest": 1,
+      "piecewise_count": 2,
+      "piecewise_largest": 2
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 41.1,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 1,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 62.0,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "4ddf4b60aaceace1ec0292522c44e307905e9e91935f52b31771cf4f0a615535",
+    "session": "S3-m1-c2-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2",
+    "cuda_graph_profile": {
+      "full_count": 1,
+      "full_largest": 1,
+      "piecewise_count": 2,
+      "piecewise_largest": 2
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 43.3,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 1,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 61.8,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 1
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "e59da825b6dd56e9f17f7ee4419ea02a3f48624f5e039f389023659215373d23",
+    "session": "S3-m1-c3-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2",
+    "cuda_graph_profile": {
+      "full_count": 1,
+      "full_largest": 1,
+      "piecewise_count": 2,
+      "piecewise_largest": 2
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 41.9,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 1,
+        "waiting": 3
+      },
+      {
+        "generation_tokens_per_second": 62.4,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 2
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "2eeb165ed8f910208ce02d30d91fc9f329a2a794909da13eb5f7b4879d73ec8c",
+    "session": "S3-m1-c4-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2",
+    "cuda_graph_profile": {
+      "full_count": 1,
+      "full_largest": 1,
+      "piecewise_count": 2,
+      "piecewise_largest": 2
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 43.8,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 63.2,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 1,
+        "waiting": 5
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "c0e63192f3fdec862ec13c693cba285aac84b76c3eaa8368e1db3504d3fd4efe",
+    "session": "S3-m1-c6-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 38.7,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 62.7,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 1,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "7ac2a13dfa8d29bc6af096653995db3539068c289877ef0ebd428660836aa21d",
+    "session": "S3-m2-c1-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 18.1,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "5761ae15c95427b6385ed1ac01b7378384bb0bd2624693011dfd4a0cbaf7ae32",
+    "session": "S3-m2-c2-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 17.9,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 1,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 11.7,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.7,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 1
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "190cf79fd5f1a558d1eca9218076a78d2952b8c3e2e0dcb336ecd3e9ecd4c290",
+    "session": "S3-m2-c3-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 18.0,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "3d0196b70c37edd8e9cc0f2153f3bf3c9b9912154924621800106ab108f1c365",
+    "session": "S3-m2-c4-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 17.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 11.7,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 3
+      },
+      {
+        "generation_tokens_per_second": 11.7,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 4
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "5be60aebe047d41c3a1db1ea39d5c1b5e50d13e261e9bd3fb83eed76ebf05cbe",
+    "session": "S3-m2-c6-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 39.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 1,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 61.6,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 0,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "0300b7b19681d906652384519ab790716a9cb4d50ad82ec1c56a71f84679f8fa",
+    "session": "S3-m3-c1-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 17.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.9,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.7,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "999586cf5248a0b336b0a3c65a22a73b7c85ab28725eb04ea68f75f8028d5cfb",
+    "session": "S3-m3-c2-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 20.1,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 14.3,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "e520d7acd96c53fc64e615e2771dd3cc9ac68123e4e83ee149503e05a5f142db",
+    "session": "S3-m3-c3-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 19.7,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 17.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 17.2,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 17.0,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 1
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "005453f792743e7991f561da0d15e8f87a7cf031d0959bdf6a6e8549c9c6b4f9",
+    "session": "S3-m3-c4-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 20.3,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 3
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 3
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 3
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 3
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 3
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 3
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 3
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 3
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 14.4,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "797e0ba58ff69621dde1fc3db2a4457590a6be02f775c4dccd4b87aaa9de89c9",
+    "session": "S3-m3-c6-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8",
+    "cuda_graph_profile": {
+      "full_count": 3,
+      "full_largest": 4,
+      "piecewise_count": 4,
+      "piecewise_largest": 8
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 43.5,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 62.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 1,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "b42049eb79e6a59c4771946d224a0867336bfed83c91ae9851f1bbee663eb9c3",
+    "session": "S3-m4-c1-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8",
+    "cuda_graph_profile": {
+      "full_count": 3,
+      "full_largest": 4,
+      "piecewise_count": 4,
+      "piecewise_largest": 8
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 17.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "3b08743d78edeb3118fc1042f94d61c99601c8f79198bdf09b4153add779b0ce",
+    "session": "S3-m4-c2-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8",
+    "cuda_graph_profile": {
+      "full_count": 3,
+      "full_largest": 4,
+      "piecewise_count": 4,
+      "piecewise_largest": 8
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 21.1,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 14.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "828521e7e55e587fdca4639b6b6f05e7c6d80f8d8ea7e34f77977a007d75aece",
+    "session": "S3-m4-c3-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8",
+    "cuda_graph_profile": {
+      "full_count": 3,
+      "full_largest": 4,
+      "piecewise_count": 4,
+      "piecewise_largest": 8
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 20.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 22.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.6,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 22.0,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 0,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "1e7abe3f37843bf98c0d04b87eda1f365a426debe0a690300eea3745816abab4",
+    "session": "S3-m4-c4-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8",
+    "cuda_graph_profile": {
+      "full_count": 3,
+      "full_largest": 4,
+      "piecewise_count": 4,
+      "piecewise_largest": 8
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 21.9,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 22.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 22.0,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 22.0,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 22.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 22.3,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 22.0,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 2
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "15186a786f1a9ed127b3f6f161b1338c237995be217a048b643f92972f1368b5",
+    "session": "S3-m4-c6-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8, 16",
+    "cuda_graph_profile": {
+      "full_count": 4,
+      "full_largest": 8,
+      "piecewise_count": 5,
+      "piecewise_largest": 16
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 42.6,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 62.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 1,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "9e1de47374183220a0304f61195571ec983872812508da16ba14059bb0c7dda9",
+    "session": "S3-m8-c1-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8, 16",
+    "cuda_graph_profile": {
+      "full_count": 4,
+      "full_largest": 8,
+      "piecewise_count": 5,
+      "piecewise_largest": 16
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 17.4,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.9,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.7,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 11.9,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 0,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "7ed7fbd4892a67e21ebd9c731b31b6703041cb24eadfeb3842068c5c730ac202",
+    "session": "S3-m8-c2-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8, 16",
+    "cuda_graph_profile": {
+      "full_count": 4,
+      "full_largest": 8,
+      "piecewise_count": 5,
+      "piecewise_largest": 16
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 20.4,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 17.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 17.1,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 16.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 3,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 14.7,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "315bb800da71e9b7c86a4c23790b363eb947ad3047630b76e91ccdbd78dbdcc3",
+    "session": "S3-m8-c3-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8, 16",
+    "cuda_graph_profile": {
+      "full_count": 4,
+      "full_largest": 8,
+      "piecewise_count": 5,
+      "piecewise_largest": 16
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 22.6,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 22.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 22.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "8c730090298309cabf91466f013f138b3bbb6d6f6ec606564d5d21f64fd98d67",
+    "session": "S3-m8-c4-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8, 16",
+    "cuda_graph_profile": {
+      "full_count": 4,
+      "full_largest": 8,
+      "piecewise_count": 5,
+      "piecewise_largest": 16
+    },
+    "eager_fallback_found": false,
+    "kind": "concurrency_sweep",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 25.5,
+        "gpu_kv_cache_usage_percent": 0.3,
+        "running": 6,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 33.0,
+        "gpu_kv_cache_usage_percent": 0.4,
+        "running": 6,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 31.2,
+        "gpu_kv_cache_usage_percent": 0.3,
+        "running": 6,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 30.6,
+        "gpu_kv_cache_usage_percent": 0.3,
+        "running": 6,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 32.4,
+        "gpu_kv_cache_usage_percent": 0.3,
+        "running": 6,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "60ac569116413be0e102265d1c7b0b4d96e0143aa875c033ea77f3e0f5c76cbd",
+    "session": "S3-m8-c6-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4",
+    "cuda_graph_profile": {
+      "full_count": 2,
+      "full_largest": 2,
+      "piecewise_count": 3,
+      "piecewise_largest": 4
+    },
+    "eager_fallback_found": false,
+    "kind": "direct_control",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 15.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.6,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.9,
+        "gpu_kv_cache_usage_percent": 0.0,
+        "running": 1,
+        "waiting": 1
+      },
+      {
+        "generation_tokens_per_second": 11.5,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      },
+      {
+        "generation_tokens_per_second": 11.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 2
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "bc031fe0f1d28e7e97422e5f67604f3837d01b14280c9fa36858e96c9d77b587",
+    "session": "S2-m2-c4-s0.json"
+  },
+  {
+    "cuda_graph_capture_sizes": "1, 2, 4, 8",
+    "cuda_graph_profile": {
+      "full_count": 3,
+      "full_largest": 4,
+      "piecewise_count": 4,
+      "piecewise_largest": 8
+    },
+    "eager_fallback_found": false,
+    "kind": "direct_control",
+    "oom_found": false,
+    "periodic_engine_samples": [
+      {
+        "generation_tokens_per_second": 19.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.6,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 21.2,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 20.4,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 20.8,
+        "gpu_kv_cache_usage_percent": 0.2,
+        "running": 4,
+        "waiting": 0
+      },
+      {
+        "generation_tokens_per_second": 19.8,
+        "gpu_kv_cache_usage_percent": 0.1,
+        "running": 2,
+        "waiting": 0
+      }
+    ],
+    "preemption_found": false,
+    "raw_log_sha256": "236e23a0e2b43343184837e75fbf64661a6d35041a9c6b357a6bd9b9c05432ea",
+    "session": "S2-m4-c4-s0.json"
+  }
+]

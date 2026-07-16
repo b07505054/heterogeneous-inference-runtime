@@ -19,6 +19,7 @@ class OpenAICompatibleConfig:
     timeout_s: float = 60.0
     endpoint: str = "/v1/chat/completions"
     stream: bool = True
+    record_timeline: bool = False
 
 
 class OpenAICompatibleBackend:
@@ -80,7 +81,7 @@ class OpenAICompatibleBackend:
         tpot_ms = None
         if first_token_at is not None and output_tokens > 1:
             tpot_ms = ((end - first_token_at) * 1000.0) / (output_tokens - 1)
-        return {
+        result = {
             "ok": True,
             "warmup": warmup,
             "ttft_ms": round(ttft_ms, 6) if ttft_ms is not None else None,
@@ -89,6 +90,13 @@ class OpenAICompatibleBackend:
             "output_tokens": output_tokens,
             "metadata": trace_row.get("metadata", {}),
         }
+        if self.config.record_timeline:
+            result["timeline"] = {
+                "connection_start_time": start,
+                "first_token_time": first_token_at,
+                "completion_time": end,
+            }
+        return result
 
 
 

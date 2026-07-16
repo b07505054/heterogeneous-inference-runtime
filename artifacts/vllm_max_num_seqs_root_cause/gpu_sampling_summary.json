@@ -1,0 +1,2609 @@
+[
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 99.0,
+      "mean": 98.915493,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 1,
+    "memory_used_mib": {
+      "maximum": 2907.0,
+      "mean": 2907.0,
+      "minimum": 2907.0
+    },
+    "power_watts": {
+      "maximum": 39.27,
+      "mean": 33.077183,
+      "minimum": 26.69
+    },
+    "sample_count": 71,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1845.0,
+      "mean": 1425.211268,
+      "minimum": 1140.0
+    },
+    "temperature_c": {
+      "maximum": 68.0,
+      "mean": 64.43662,
+      "minimum": 60.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 99.0,
+      "mean": 98.944444,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 1,
+    "memory_used_mib": {
+      "maximum": 2907.0,
+      "mean": 2907.0,
+      "minimum": 2907.0
+    },
+    "power_watts": {
+      "maximum": 39.99,
+      "mean": 32.759861,
+      "minimum": 26.32
+    },
+    "sample_count": 72,
+    "session": 1,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1303.125,
+      "minimum": 1005.0
+    },
+    "temperature_c": {
+      "maximum": 76.0,
+      "mean": 73.791667,
+      "minimum": 71.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 99.0,
+      "mean": 98.958904,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 1,
+    "memory_used_mib": {
+      "maximum": 2907.0,
+      "mean": 2907.0,
+      "minimum": 2907.0
+    },
+    "power_watts": {
+      "maximum": 39.42,
+      "mean": 33.091918,
+      "minimum": 26.05
+    },
+    "sample_count": 73,
+    "session": 2,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1258.972603,
+      "minimum": 930.0
+    },
+    "temperature_c": {
+      "maximum": 78.0,
+      "mean": 76.849315,
+      "minimum": 75.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 99.0,
+      "mean": 98.972603,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 1,
+    "memory_used_mib": {
+      "maximum": 2907.0,
+      "mean": 2907.0,
+      "minimum": 2907.0
+    },
+    "power_watts": {
+      "maximum": 39.98,
+      "mean": 32.280548,
+      "minimum": 26.25
+    },
+    "sample_count": 73,
+    "session": 3,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1305.410959,
+      "minimum": 990.0
+    },
+    "temperature_c": {
+      "maximum": 76.0,
+      "mean": 74.273973,
+      "minimum": 72.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 99.0,
+      "mean": 98.931507,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 1,
+    "memory_used_mib": {
+      "maximum": 2907.0,
+      "mean": 2907.0,
+      "minimum": 2907.0
+    },
+    "power_watts": {
+      "maximum": 39.48,
+      "mean": 33.121918,
+      "minimum": 26.25
+    },
+    "sample_count": 73,
+    "session": 4,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1308.082192,
+      "minimum": 990.0
+    },
+    "temperature_c": {
+      "maximum": 76.0,
+      "mean": 74.150685,
+      "minimum": 71.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.983471,
+      "minimum": 99.0
+    },
+    "max_num_seqs": 2,
+    "memory_used_mib": {
+      "maximum": 2867.0,
+      "mean": 2867.0,
+      "minimum": 2867.0
+    },
+    "power_watts": {
+      "maximum": 35.19,
+      "mean": 33.810138,
+      "minimum": 26.52
+    },
+    "sample_count": 363,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1830.0,
+      "mean": 1809.504132,
+      "minimum": 1440.0
+    },
+    "temperature_c": {
+      "maximum": 79.0,
+      "mean": 76.523416,
+      "minimum": 70.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.975069,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 2,
+    "memory_used_mib": {
+      "maximum": 2867.0,
+      "mean": 2867.0,
+      "minimum": 2867.0
+    },
+    "power_watts": {
+      "maximum": 37.33,
+      "mean": 34.187064,
+      "minimum": 31.01
+    },
+    "sample_count": 361,
+    "session": 1,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1810.387812,
+      "minimum": 1590.0
+    },
+    "temperature_c": {
+      "maximum": 80.0,
+      "mean": 77.587258,
+      "minimum": 72.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.977901,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 2,
+    "memory_used_mib": {
+      "maximum": 2867.0,
+      "mean": 2867.0,
+      "minimum": 2867.0
+    },
+    "power_watts": {
+      "maximum": 37.45,
+      "mean": 34.282155,
+      "minimum": 28.62
+    },
+    "sample_count": 362,
+    "session": 2,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1808.162983,
+      "minimum": 1665.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 78.370166,
+      "minimum": 72.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.977901,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 2,
+    "memory_used_mib": {
+      "maximum": 2867.0,
+      "mean": 2867.0,
+      "minimum": 2867.0
+    },
+    "power_watts": {
+      "maximum": 37.27,
+      "mean": 34.404365,
+      "minimum": 28.5
+    },
+    "sample_count": 362,
+    "session": 3,
+    "sm_clock_mhz": {
+      "maximum": 1830.0,
+      "mean": 1805.676796,
+      "minimum": 1515.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 78.61326,
+      "minimum": 73.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.972376,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 2,
+    "memory_used_mib": {
+      "maximum": 2867.0,
+      "mean": 2867.0,
+      "minimum": 2867.0
+    },
+    "power_watts": {
+      "maximum": 37.61,
+      "mean": 34.201077,
+      "minimum": 28.32
+    },
+    "sample_count": 362,
+    "session": 4,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1807.417127,
+      "minimum": 1425.0
+    },
+    "temperature_c": {
+      "maximum": 80.0,
+      "mean": 78.022099,
+      "minimum": 72.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.976744,
+      "minimum": 99.0
+    },
+    "max_num_seqs": 3,
+    "memory_used_mib": {
+      "maximum": 2887.0,
+      "mean": 2887.0,
+      "minimum": 2887.0
+    },
+    "power_watts": {
+      "maximum": 35.45,
+      "mean": 33.494612,
+      "minimum": 32.14
+    },
+    "sample_count": 258,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1830.0,
+      "mean": 1815.988372,
+      "minimum": 1770.0
+    },
+    "temperature_c": {
+      "maximum": 77.0,
+      "mean": 74.344961,
+      "minimum": 69.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.96124,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 3,
+    "memory_used_mib": {
+      "maximum": 2887.0,
+      "mean": 2887.0,
+      "minimum": 2887.0
+    },
+    "power_watts": {
+      "maximum": 35.4,
+      "mean": 34.061589,
+      "minimum": 29.68
+    },
+    "sample_count": 258,
+    "session": 1,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1812.44186,
+      "minimum": 1740.0
+    },
+    "temperature_c": {
+      "maximum": 79.0,
+      "mean": 76.883721,
+      "minimum": 71.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.972973,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 3,
+    "memory_used_mib": {
+      "maximum": 2887.0,
+      "mean": 2887.0,
+      "minimum": 2887.0
+    },
+    "power_watts": {
+      "maximum": 35.55,
+      "mean": 34.594247,
+      "minimum": 32.98
+    },
+    "sample_count": 259,
+    "session": 2,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1796.640927,
+      "minimum": 1740.0
+    },
+    "temperature_c": {
+      "maximum": 82.0,
+      "mean": 80.034749,
+      "minimum": 74.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.968992,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 3,
+    "memory_used_mib": {
+      "maximum": 2887.0,
+      "mean": 2887.0,
+      "minimum": 2887.0
+    },
+    "power_watts": {
+      "maximum": 35.44,
+      "mean": 34.207364,
+      "minimum": 28.47
+    },
+    "sample_count": 258,
+    "session": 3,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1811.27907,
+      "minimum": 1470.0
+    },
+    "temperature_c": {
+      "maximum": 79.0,
+      "mean": 77.127907,
+      "minimum": 72.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.968992,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 3,
+    "memory_used_mib": {
+      "maximum": 2887.0,
+      "mean": 2887.0,
+      "minimum": 2887.0
+    },
+    "power_watts": {
+      "maximum": 35.36,
+      "mean": 34.113837,
+      "minimum": 27.91
+    },
+    "sample_count": 258,
+    "session": 4,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1812.732558,
+      "minimum": 1770.0
+    },
+    "temperature_c": {
+      "maximum": 79.0,
+      "mean": 77.011628,
+      "minimum": 71.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.952153,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 4,
+    "memory_used_mib": {
+      "maximum": 2899.0,
+      "mean": 2898.990431,
+      "minimum": 2897.0
+    },
+    "power_watts": {
+      "maximum": 35.06,
+      "mean": 32.669426,
+      "minimum": 31.42
+    },
+    "sample_count": 209,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1845.0,
+      "mean": 1823.4689,
+      "minimum": 1650.0
+    },
+    "temperature_c": {
+      "maximum": 74.0,
+      "mean": 70.966507,
+      "minimum": 65.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.966507,
+      "minimum": 99.0
+    },
+    "max_num_seqs": 4,
+    "memory_used_mib": {
+      "maximum": 2899.0,
+      "mean": 2898.990431,
+      "minimum": 2897.0
+    },
+    "power_watts": {
+      "maximum": 35.19,
+      "mean": 33.772919,
+      "minimum": 30.64
+    },
+    "sample_count": 209,
+    "session": 1,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1814.354067,
+      "minimum": 1785.0
+    },
+    "temperature_c": {
+      "maximum": 78.0,
+      "mean": 76.105263,
+      "minimum": 71.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.961905,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 4,
+    "memory_used_mib": {
+      "maximum": 2899.0,
+      "mean": 2898.990476,
+      "minimum": 2897.0
+    },
+    "power_watts": {
+      "maximum": 35.61,
+      "mean": 34.544524,
+      "minimum": 27.67
+    },
+    "sample_count": 210,
+    "session": 2,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1804.714286,
+      "minimum": 1740.0
+    },
+    "temperature_c": {
+      "maximum": 82.0,
+      "mean": 79.280952,
+      "minimum": 74.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.961905,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 4,
+    "memory_used_mib": {
+      "maximum": 2899.0,
+      "mean": 2898.990476,
+      "minimum": 2897.0
+    },
+    "power_watts": {
+      "maximum": 36.23,
+      "mean": 34.436333,
+      "minimum": 32.84
+    },
+    "sample_count": 210,
+    "session": 3,
+    "sm_clock_mhz": {
+      "maximum": 1830.0,
+      "mean": 1813.0,
+      "minimum": 1500.0
+    },
+    "temperature_c": {
+      "maximum": 79.0,
+      "mean": 77.461905,
+      "minimum": 72.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.961722,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 4,
+    "memory_used_mib": {
+      "maximum": 2899.0,
+      "mean": 2899.0,
+      "minimum": 2899.0
+    },
+    "power_watts": {
+      "maximum": 35.53,
+      "mean": 34.102632,
+      "minimum": 26.54
+    },
+    "sample_count": 209,
+    "session": 4,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1812.84689,
+      "minimum": 1725.0
+    },
+    "temperature_c": {
+      "maximum": 80.0,
+      "mean": 77.397129,
+      "minimum": 72.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.966507,
+      "minimum": 99.0
+    },
+    "max_num_seqs": 8,
+    "memory_used_mib": {
+      "maximum": 2911.0,
+      "mean": 2911.0,
+      "minimum": 2911.0
+    },
+    "power_watts": {
+      "maximum": 35.75,
+      "mean": 33.071148,
+      "minimum": 29.91
+    },
+    "sample_count": 209,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1830.0,
+      "mean": 1816.866029,
+      "minimum": 1665.0
+    },
+    "temperature_c": {
+      "maximum": 75.0,
+      "mean": 73.014354,
+      "minimum": 67.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.952153,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 8,
+    "memory_used_mib": {
+      "maximum": 2911.0,
+      "mean": 2911.0,
+      "minimum": 2911.0
+    },
+    "power_watts": {
+      "maximum": 35.83,
+      "mean": 34.381148,
+      "minimum": 29.06
+    },
+    "sample_count": 209,
+    "session": 1,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1812.488038,
+      "minimum": 1740.0
+    },
+    "temperature_c": {
+      "maximum": 80.0,
+      "mean": 77.727273,
+      "minimum": 72.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.956731,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 8,
+    "memory_used_mib": {
+      "maximum": 2911.0,
+      "mean": 2911.0,
+      "minimum": 2911.0
+    },
+    "power_watts": {
+      "maximum": 35.65,
+      "mean": 34.554904,
+      "minimum": 32.84
+    },
+    "sample_count": 208,
+    "session": 2,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1811.105769,
+      "minimum": 1740.0
+    },
+    "temperature_c": {
+      "maximum": 80.0,
+      "mean": 78.269231,
+      "minimum": 74.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.961722,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 8,
+    "memory_used_mib": {
+      "maximum": 2911.0,
+      "mean": 2911.0,
+      "minimum": 2911.0
+    },
+    "power_watts": {
+      "maximum": 35.47,
+      "mean": 34.461962,
+      "minimum": 32.65
+    },
+    "sample_count": 209,
+    "session": 3,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1811.913876,
+      "minimum": 1755.0
+    },
+    "temperature_c": {
+      "maximum": 80.0,
+      "mean": 78.095694,
+      "minimum": 73.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.961538,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 8,
+    "memory_used_mib": {
+      "maximum": 2911.0,
+      "mean": 2911.0,
+      "minimum": 2911.0
+    },
+    "power_watts": {
+      "maximum": 35.31,
+      "mean": 34.249471,
+      "minimum": 32.58
+    },
+    "sample_count": 208,
+    "session": 4,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1813.701923,
+      "minimum": 1725.0
+    },
+    "temperature_c": {
+      "maximum": 79.0,
+      "mean": 77.514423,
+      "minimum": 73.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 99.0,
+      "mean": 98.966292,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 1,
+    "memory_used_mib": {
+      "maximum": 2907.0,
+      "mean": 2907.0,
+      "minimum": 2907.0
+    },
+    "power_watts": {
+      "maximum": 39.54,
+      "mean": 32.955618,
+      "minimum": 26.08
+    },
+    "sample_count": 89,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1269.438202,
+      "minimum": 990.0
+    },
+    "temperature_c": {
+      "maximum": 77.0,
+      "mean": 74.213483,
+      "minimum": 71.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 99.0,
+      "mean": 98.966292,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 1,
+    "memory_used_mib": {
+      "maximum": 2907.0,
+      "mean": 2907.0,
+      "minimum": 2907.0
+    },
+    "power_watts": {
+      "maximum": 39.54,
+      "mean": 32.687303,
+      "minimum": 26.09
+    },
+    "sample_count": 89,
+    "session": 1,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1272.134831,
+      "minimum": 1020.0
+    },
+    "temperature_c": {
+      "maximum": 77.0,
+      "mean": 74.764045,
+      "minimum": 72.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.0,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 1,
+    "memory_used_mib": {
+      "maximum": 2907.0,
+      "mean": 2907.0,
+      "minimum": 2907.0
+    },
+    "power_watts": {
+      "maximum": 39.67,
+      "mean": 32.833371,
+      "minimum": 26.34
+    },
+    "sample_count": 89,
+    "session": 2,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1252.58427,
+      "minimum": 960.0
+    },
+    "temperature_c": {
+      "maximum": 78.0,
+      "mean": 75.382022,
+      "minimum": 73.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 99.0,
+      "mean": 98.954545,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 1,
+    "memory_used_mib": {
+      "maximum": 2907.0,
+      "mean": 2907.0,
+      "minimum": 2907.0
+    },
+    "power_watts": {
+      "maximum": 40.04,
+      "mean": 32.793523,
+      "minimum": 26.3
+    },
+    "sample_count": 88,
+    "session": 3,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1279.431818,
+      "minimum": 1005.0
+    },
+    "temperature_c": {
+      "maximum": 77.0,
+      "mean": 74.443182,
+      "minimum": 71.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 99.0,
+      "mean": 98.955056,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 1,
+    "memory_used_mib": {
+      "maximum": 2907.0,
+      "mean": 2907.0,
+      "minimum": 2907.0
+    },
+    "power_watts": {
+      "maximum": 39.96,
+      "mean": 32.805169,
+      "minimum": 26.47
+    },
+    "sample_count": 89,
+    "session": 4,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1270.955056,
+      "minimum": 1005.0
+    },
+    "temperature_c": {
+      "maximum": 77.0,
+      "mean": 75.134831,
+      "minimum": 73.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.987603,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 2,
+    "memory_used_mib": {
+      "maximum": 2867.0,
+      "mean": 2867.0,
+      "minimum": 2867.0
+    },
+    "power_watts": {
+      "maximum": 37.31,
+      "mean": 34.186818,
+      "minimum": 30.79
+    },
+    "sample_count": 484,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1809.297521,
+      "minimum": 1530.0
+    },
+    "temperature_c": {
+      "maximum": 80.0,
+      "mean": 77.733471,
+      "minimum": 71.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.983437,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 2,
+    "memory_used_mib": {
+      "maximum": 2867.0,
+      "mean": 2867.0,
+      "minimum": 2867.0
+    },
+    "power_watts": {
+      "maximum": 37.54,
+      "mean": 34.350414,
+      "minimum": 30.88
+    },
+    "sample_count": 483,
+    "session": 1,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1806.677019,
+      "minimum": 1470.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 78.503106,
+      "minimum": 72.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.985507,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 2,
+    "memory_used_mib": {
+      "maximum": 2867.0,
+      "mean": 2867.0,
+      "minimum": 2867.0
+    },
+    "power_watts": {
+      "maximum": 37.17,
+      "mean": 34.471822,
+      "minimum": 31.69
+    },
+    "sample_count": 483,
+    "session": 2,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1806.304348,
+      "minimum": 1500.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 78.913043,
+      "minimum": 73.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.985537,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 2,
+    "memory_used_mib": {
+      "maximum": 2867.0,
+      "mean": 2867.0,
+      "minimum": 2867.0
+    },
+    "power_watts": {
+      "maximum": 37.58,
+      "mean": 34.343099,
+      "minimum": 30.2
+    },
+    "sample_count": 484,
+    "session": 3,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1805.88843,
+      "minimum": 1395.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 78.483471,
+      "minimum": 71.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.985507,
+      "minimum": 99.0
+    },
+    "max_num_seqs": 2,
+    "memory_used_mib": {
+      "maximum": 2867.0,
+      "mean": 2867.0,
+      "minimum": 2867.0
+    },
+    "power_watts": {
+      "maximum": 37.28,
+      "mean": 34.465714,
+      "minimum": 26.75
+    },
+    "sample_count": 483,
+    "session": 4,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1804.534161,
+      "minimum": 1410.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 79.169772,
+      "minimum": 72.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.973988,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 3,
+    "memory_used_mib": {
+      "maximum": 2887.0,
+      "mean": 2887.0,
+      "minimum": 2887.0
+    },
+    "power_watts": {
+      "maximum": 35.45,
+      "mean": 34.354249,
+      "minimum": 27.13
+    },
+    "sample_count": 346,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1810.578035,
+      "minimum": 1725.0
+    },
+    "temperature_c": {
+      "maximum": 80.0,
+      "mean": 78.118497,
+      "minimum": 72.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.976879,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 3,
+    "memory_used_mib": {
+      "maximum": 2887.0,
+      "mean": 2887.0,
+      "minimum": 2887.0
+    },
+    "power_watts": {
+      "maximum": 35.46,
+      "mean": 34.550983,
+      "minimum": 30.68
+    },
+    "sample_count": 346,
+    "session": 1,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1804.075145,
+      "minimum": 1665.0
+    },
+    "temperature_c": {
+      "maximum": 82.0,
+      "mean": 79.33526,
+      "minimum": 73.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.97971,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 3,
+    "memory_used_mib": {
+      "maximum": 2887.0,
+      "mean": 2887.0,
+      "minimum": 2887.0
+    },
+    "power_watts": {
+      "maximum": 35.72,
+      "mean": 34.478493,
+      "minimum": 32.41
+    },
+    "sample_count": 345,
+    "session": 2,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1805.956522,
+      "minimum": 1710.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 78.837681,
+      "minimum": 73.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.973913,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 3,
+    "memory_used_mib": {
+      "maximum": 2887.0,
+      "mean": 2887.0,
+      "minimum": 2887.0
+    },
+    "power_watts": {
+      "maximum": 35.59,
+      "mean": 34.548319,
+      "minimum": 32.79
+    },
+    "sample_count": 345,
+    "session": 3,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1808.478261,
+      "minimum": 1650.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 78.878261,
+      "minimum": 73.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.973837,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 3,
+    "memory_used_mib": {
+      "maximum": 2887.0,
+      "mean": 2887.0,
+      "minimum": 2887.0
+    },
+    "power_watts": {
+      "maximum": 35.43,
+      "mean": 34.441483,
+      "minimum": 32.53
+    },
+    "sample_count": 344,
+    "session": 4,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1811.293605,
+      "minimum": 1680.0
+    },
+    "temperature_c": {
+      "maximum": 80.0,
+      "mean": 78.497093,
+      "minimum": 73.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.966912,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 4,
+    "memory_used_mib": {
+      "maximum": 2899.0,
+      "mean": 2899.0,
+      "minimum": 2899.0
+    },
+    "power_watts": {
+      "maximum": 37.04,
+      "mean": 33.916949,
+      "minimum": 31.99
+    },
+    "sample_count": 272,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1813.235294,
+      "minimum": 1590.0
+    },
+    "temperature_c": {
+      "maximum": 79.0,
+      "mean": 76.444853,
+      "minimum": 70.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.966912,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 4,
+    "memory_used_mib": {
+      "maximum": 2899.0,
+      "mean": 2899.0,
+      "minimum": 2899.0
+    },
+    "power_watts": {
+      "maximum": 35.48,
+      "mean": 34.437794,
+      "minimum": 32.78
+    },
+    "sample_count": 272,
+    "session": 1,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1810.091912,
+      "minimum": 1725.0
+    },
+    "temperature_c": {
+      "maximum": 80.0,
+      "mean": 78.169118,
+      "minimum": 73.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.974265,
+      "minimum": 99.0
+    },
+    "max_num_seqs": 4,
+    "memory_used_mib": {
+      "maximum": 2899.0,
+      "mean": 2899.0,
+      "minimum": 2899.0
+    },
+    "power_watts": {
+      "maximum": 35.52,
+      "mean": 34.562941,
+      "minimum": 27.41
+    },
+    "sample_count": 272,
+    "session": 2,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1810.202206,
+      "minimum": 1755.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 78.698529,
+      "minimum": 74.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.970696,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 4,
+    "memory_used_mib": {
+      "maximum": 2899.0,
+      "mean": 2898.992674,
+      "minimum": 2897.0
+    },
+    "power_watts": {
+      "maximum": 35.54,
+      "mean": 34.474652,
+      "minimum": 28.25
+    },
+    "sample_count": 273,
+    "session": 3,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1811.538462,
+      "minimum": 1590.0
+    },
+    "temperature_c": {
+      "maximum": 80.0,
+      "mean": 78.032967,
+      "minimum": 72.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.970696,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 4,
+    "memory_used_mib": {
+      "maximum": 2899.0,
+      "mean": 2898.992674,
+      "minimum": 2897.0
+    },
+    "power_watts": {
+      "maximum": 35.52,
+      "mean": 34.417473,
+      "minimum": 28.1
+    },
+    "sample_count": 273,
+    "session": 4,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1809.725275,
+      "minimum": 1695.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 78.673993,
+      "minimum": 73.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.947712,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 8,
+    "memory_used_mib": {
+      "maximum": 2933.0,
+      "mean": 2933.0,
+      "minimum": 2933.0
+    },
+    "power_watts": {
+      "maximum": 35.45,
+      "mean": 33.913137,
+      "minimum": 32.71
+    },
+    "sample_count": 153,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1814.509804,
+      "minimum": 1770.0
+    },
+    "temperature_c": {
+      "maximum": 78.0,
+      "mean": 75.424837,
+      "minimum": 71.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.947712,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 8,
+    "memory_used_mib": {
+      "maximum": 2933.0,
+      "mean": 2932.856209,
+      "minimum": 2911.0
+    },
+    "power_watts": {
+      "maximum": 35.52,
+      "mean": 34.301111,
+      "minimum": 32.81
+    },
+    "sample_count": 153,
+    "session": 1,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1811.764706,
+      "minimum": 1680.0
+    },
+    "temperature_c": {
+      "maximum": 78.0,
+      "mean": 76.764706,
+      "minimum": 72.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.960784,
+      "minimum": 99.0
+    },
+    "max_num_seqs": 8,
+    "memory_used_mib": {
+      "maximum": 2933.0,
+      "mean": 2932.856209,
+      "minimum": 2911.0
+    },
+    "power_watts": {
+      "maximum": 35.55,
+      "mean": 34.259804,
+      "minimum": 32.51
+    },
+    "sample_count": 153,
+    "session": 2,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1810.980392,
+      "minimum": 1365.0
+    },
+    "temperature_c": {
+      "maximum": 79.0,
+      "mean": 76.562092,
+      "minimum": 72.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.947712,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 8,
+    "memory_used_mib": {
+      "maximum": 2933.0,
+      "mean": 2932.856209,
+      "minimum": 2911.0
+    },
+    "power_watts": {
+      "maximum": 35.27,
+      "mean": 34.255425,
+      "minimum": 32.77
+    },
+    "sample_count": 153,
+    "session": 3,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1812.156863,
+      "minimum": 1650.0
+    },
+    "temperature_c": {
+      "maximum": 79.0,
+      "mean": 76.830065,
+      "minimum": 72.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.954248,
+      "minimum": 99.0
+    },
+    "max_num_seqs": 8,
+    "memory_used_mib": {
+      "maximum": 2933.0,
+      "mean": 2932.856209,
+      "minimum": 2911.0
+    },
+    "power_watts": {
+      "maximum": 35.48,
+      "mean": 34.418039,
+      "minimum": 26.56
+    },
+    "sample_count": 153,
+    "session": 4,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1811.372549,
+      "minimum": 1725.0
+    },
+    "temperature_c": {
+      "maximum": 80.0,
+      "mean": 77.48366,
+      "minimum": 73.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 1,
+    "gpu_utilization_percent": {
+      "maximum": 99.0,
+      "mean": 98.966292,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 1,
+    "memory_used_mib": {
+      "maximum": 2907.0,
+      "mean": 2907.0,
+      "minimum": 2907.0
+    },
+    "power_watts": {
+      "maximum": 39.78,
+      "mean": 33.00427,
+      "minimum": 26.25
+    },
+    "sample_count": 89,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1264.044944,
+      "minimum": 1005.0
+    },
+    "temperature_c": {
+      "maximum": 77.0,
+      "mean": 75.179775,
+      "minimum": 73.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 2,
+    "gpu_utilization_percent": {
+      "maximum": 99.0,
+      "mean": 99.0,
+      "minimum": 99.0
+    },
+    "max_num_seqs": 1,
+    "memory_used_mib": {
+      "maximum": 2907.0,
+      "mean": 2907.0,
+      "minimum": 2907.0
+    },
+    "power_watts": {
+      "maximum": 39.37,
+      "mean": 32.635506,
+      "minimum": 26.35
+    },
+    "sample_count": 89,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1270.786517,
+      "minimum": 990.0
+    },
+    "temperature_c": {
+      "maximum": 76.0,
+      "mean": 74.41573,
+      "minimum": 71.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 3,
+    "gpu_utilization_percent": {
+      "maximum": 99.0,
+      "mean": 98.955056,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 1,
+    "memory_used_mib": {
+      "maximum": 2907.0,
+      "mean": 2907.0,
+      "minimum": 2907.0
+    },
+    "power_watts": {
+      "maximum": 39.59,
+      "mean": 32.678427,
+      "minimum": 26.19
+    },
+    "sample_count": 89,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1268.426966,
+      "minimum": 1005.0
+    },
+    "temperature_c": {
+      "maximum": 77.0,
+      "mean": 74.977528,
+      "minimum": 72.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 99.0,
+      "mean": 99.0,
+      "minimum": 99.0
+    },
+    "max_num_seqs": 1,
+    "memory_used_mib": {
+      "maximum": 2907.0,
+      "mean": 2907.0,
+      "minimum": 2907.0
+    },
+    "power_watts": {
+      "maximum": 40.07,
+      "mean": 32.951798,
+      "minimum": 26.13
+    },
+    "sample_count": 89,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1272.977528,
+      "minimum": 1005.0
+    },
+    "temperature_c": {
+      "maximum": 76.0,
+      "mean": 74.41573,
+      "minimum": 72.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 6,
+    "gpu_utilization_percent": {
+      "maximum": 99.0,
+      "mean": 98.954545,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 1,
+    "memory_used_mib": {
+      "maximum": 2907.0,
+      "mean": 2907.0,
+      "minimum": 2907.0
+    },
+    "power_watts": {
+      "maximum": 39.98,
+      "mean": 32.853068,
+      "minimum": 26.33
+    },
+    "sample_count": 88,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1276.534091,
+      "minimum": 1020.0
+    },
+    "temperature_c": {
+      "maximum": 76.0,
+      "mean": 73.886364,
+      "minimum": 71.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 1,
+    "gpu_utilization_percent": {
+      "maximum": 99.0,
+      "mean": 98.955056,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 2,
+    "memory_used_mib": {
+      "maximum": 2867.0,
+      "mean": 2867.0,
+      "minimum": 2867.0
+    },
+    "power_watts": {
+      "maximum": 40.03,
+      "mean": 32.576854,
+      "minimum": 26.18
+    },
+    "sample_count": 89,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1270.449438,
+      "minimum": 1005.0
+    },
+    "temperature_c": {
+      "maximum": 77.0,
+      "mean": 74.977528,
+      "minimum": 72.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 2,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.983471,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 2,
+    "memory_used_mib": {
+      "maximum": 2867.0,
+      "mean": 2867.0,
+      "minimum": 2867.0
+    },
+    "power_watts": {
+      "maximum": 36.45,
+      "mean": 34.544174,
+      "minimum": 29.94
+    },
+    "sample_count": 484,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1804.741736,
+      "minimum": 1455.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 79.458678,
+      "minimum": 73.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 3,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.981405,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 2,
+    "memory_used_mib": {
+      "maximum": 2867.0,
+      "mean": 2867.0,
+      "minimum": 2867.0
+    },
+    "power_watts": {
+      "maximum": 37.71,
+      "mean": 34.448636,
+      "minimum": 30.12
+    },
+    "sample_count": 484,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1804.400826,
+      "minimum": 1410.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 79.169421,
+      "minimum": 72.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.983402,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 2,
+    "memory_used_mib": {
+      "maximum": 2867.0,
+      "mean": 2867.0,
+      "minimum": 2867.0
+    },
+    "power_watts": {
+      "maximum": 36.33,
+      "mean": 34.41917,
+      "minimum": 29.25
+    },
+    "sample_count": 482,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1807.842324,
+      "minimum": 1500.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 78.778008,
+      "minimum": 73.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 6,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.987603,
+      "minimum": 99.0
+    },
+    "max_num_seqs": 2,
+    "memory_used_mib": {
+      "maximum": 2867.0,
+      "mean": 2867.0,
+      "minimum": 2867.0
+    },
+    "power_watts": {
+      "maximum": 36.07,
+      "mean": 34.287169,
+      "minimum": 29.51
+    },
+    "sample_count": 484,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1805.17562,
+      "minimum": 1410.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 78.714876,
+      "minimum": 71.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 1,
+    "gpu_utilization_percent": {
+      "maximum": 99.0,
+      "mean": 99.0,
+      "minimum": 99.0
+    },
+    "max_num_seqs": 3,
+    "memory_used_mib": {
+      "maximum": 2887.0,
+      "mean": 2887.0,
+      "minimum": 2887.0
+    },
+    "power_watts": {
+      "maximum": 40.09,
+      "mean": 32.992584,
+      "minimum": 26.29
+    },
+    "sample_count": 89,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1800.0,
+      "mean": 1270.617978,
+      "minimum": 1020.0
+    },
+    "temperature_c": {
+      "maximum": 77.0,
+      "mean": 74.876404,
+      "minimum": 72.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 2,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.979296,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 3,
+    "memory_used_mib": {
+      "maximum": 2887.0,
+      "mean": 2887.0,
+      "minimum": 2887.0
+    },
+    "power_watts": {
+      "maximum": 37.05,
+      "mean": 34.404037,
+      "minimum": 30.77
+    },
+    "sample_count": 483,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1804.720497,
+      "minimum": 1365.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 78.859213,
+      "minimum": 72.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 3,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.976812,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 3,
+    "memory_used_mib": {
+      "maximum": 2887.0,
+      "mean": 2887.0,
+      "minimum": 2887.0
+    },
+    "power_watts": {
+      "maximum": 35.79,
+      "mean": 34.464783,
+      "minimum": 28.91
+    },
+    "sample_count": 345,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1809.130435,
+      "minimum": 1680.0
+    },
+    "temperature_c": {
+      "maximum": 80.0,
+      "mean": 78.576812,
+      "minimum": 72.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.979532,
+      "minimum": 99.0
+    },
+    "max_num_seqs": 3,
+    "memory_used_mib": {
+      "maximum": 2887.0,
+      "mean": 2887.0,
+      "minimum": 2887.0
+    },
+    "power_watts": {
+      "maximum": 35.54,
+      "mean": 34.570292,
+      "minimum": 29.52
+    },
+    "sample_count": 342,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1806.622807,
+      "minimum": 1755.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 79.27193,
+      "minimum": 73.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 6,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.982558,
+      "minimum": 99.0
+    },
+    "max_num_seqs": 3,
+    "memory_used_mib": {
+      "maximum": 2887.0,
+      "mean": 2887.0,
+      "minimum": 2887.0
+    },
+    "power_watts": {
+      "maximum": 35.39,
+      "mean": 34.361512,
+      "minimum": 32.74
+    },
+    "sample_count": 344,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1811.991279,
+      "minimum": 1695.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 78.0,
+      "minimum": 73.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 1,
+    "gpu_utilization_percent": {
+      "maximum": 99.0,
+      "mean": 98.955056,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 4,
+    "memory_used_mib": {
+      "maximum": 2897.0,
+      "mean": 2897.0,
+      "minimum": 2897.0
+    },
+    "power_watts": {
+      "maximum": 39.73,
+      "mean": 32.69809,
+      "minimum": 26.17
+    },
+    "sample_count": 89,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1263.876404,
+      "minimum": 975.0
+    },
+    "temperature_c": {
+      "maximum": 78.0,
+      "mean": 75.617978,
+      "minimum": 73.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 2,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.989648,
+      "minimum": 99.0
+    },
+    "max_num_seqs": 4,
+    "memory_used_mib": {
+      "maximum": 2897.0,
+      "mean": 2897.0,
+      "minimum": 2897.0
+    },
+    "power_watts": {
+      "maximum": 37.17,
+      "mean": 34.490269,
+      "minimum": 29.77
+    },
+    "sample_count": 483,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1806.459627,
+      "minimum": 1530.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 79.242236,
+      "minimum": 74.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 3,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.973913,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 4,
+    "memory_used_mib": {
+      "maximum": 2899.0,
+      "mean": 2898.994203,
+      "minimum": 2897.0
+    },
+    "power_watts": {
+      "maximum": 35.69,
+      "mean": 34.566203,
+      "minimum": 32.66
+    },
+    "sample_count": 345,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1809.73913,
+      "minimum": 1650.0
+    },
+    "temperature_c": {
+      "maximum": 80.0,
+      "mean": 78.942029,
+      "minimum": 73.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.977941,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 4,
+    "memory_used_mib": {
+      "maximum": 2899.0,
+      "mean": 2899.0,
+      "minimum": 2899.0
+    },
+    "power_watts": {
+      "maximum": 35.82,
+      "mean": 34.546544,
+      "minimum": 32.88
+    },
+    "sample_count": 272,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1808.492647,
+      "minimum": 1740.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 78.669118,
+      "minimum": 73.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 6,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.977358,
+      "minimum": 99.0
+    },
+    "max_num_seqs": 4,
+    "memory_used_mib": {
+      "maximum": 2899.0,
+      "mean": 2898.992453,
+      "minimum": 2897.0
+    },
+    "power_watts": {
+      "maximum": 35.51,
+      "mean": 34.18966,
+      "minimum": 27.76
+    },
+    "sample_count": 265,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1813.358491,
+      "minimum": 1770.0
+    },
+    "temperature_c": {
+      "maximum": 79.0,
+      "mean": 77.256604,
+      "minimum": 72.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 1,
+    "gpu_utilization_percent": {
+      "maximum": 99.0,
+      "mean": 99.0,
+      "minimum": 99.0
+    },
+    "max_num_seqs": 8,
+    "memory_used_mib": {
+      "maximum": 2911.0,
+      "mean": 2911.0,
+      "minimum": 2911.0
+    },
+    "power_watts": {
+      "maximum": 39.97,
+      "mean": 32.865281,
+      "minimum": 26.32
+    },
+    "sample_count": 89,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1278.202247,
+      "minimum": 990.0
+    },
+    "temperature_c": {
+      "maximum": 77.0,
+      "mean": 74.741573,
+      "minimum": 72.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 2,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.987578,
+      "minimum": 99.0
+    },
+    "max_num_seqs": 8,
+    "memory_used_mib": {
+      "maximum": 2911.0,
+      "mean": 2911.0,
+      "minimum": 2911.0
+    },
+    "power_watts": {
+      "maximum": 37.07,
+      "mean": 34.490021,
+      "minimum": 29.52
+    },
+    "sample_count": 483,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1805.869565,
+      "minimum": 1545.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 79.213251,
+      "minimum": 72.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 3,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.982558,
+      "minimum": 99.0
+    },
+    "max_num_seqs": 8,
+    "memory_used_mib": {
+      "maximum": 2911.0,
+      "mean": 2911.0,
+      "minimum": 2911.0
+    },
+    "power_watts": {
+      "maximum": 35.8,
+      "mean": 34.396366,
+      "minimum": 28.53
+    },
+    "sample_count": 344,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1811.337209,
+      "minimum": 1710.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 77.97093,
+      "minimum": 71.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.977941,
+      "minimum": 99.0
+    },
+    "max_num_seqs": 8,
+    "memory_used_mib": {
+      "maximum": 2911.0,
+      "mean": 2911.0,
+      "minimum": 2911.0
+    },
+    "power_watts": {
+      "maximum": 35.42,
+      "mean": 34.530625,
+      "minimum": 31.23
+    },
+    "sample_count": 272,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1812.683824,
+      "minimum": 1755.0
+    },
+    "temperature_c": {
+      "maximum": 80.0,
+      "mean": 78.433824,
+      "minimum": 73.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 6,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.958763,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 8,
+    "memory_used_mib": {
+      "maximum": 2911.0,
+      "mean": 2911.0,
+      "minimum": 2911.0
+    },
+    "power_watts": {
+      "maximum": 35.29,
+      "mean": 34.381392,
+      "minimum": 32.61
+    },
+    "sample_count": 194,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1811.21134,
+      "minimum": 1590.0
+    },
+    "temperature_c": {
+      "maximum": 80.0,
+      "mean": 77.21134,
+      "minimum": 71.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.977961,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 2,
+    "memory_used_mib": {
+      "maximum": 2867.0,
+      "mean": 2867.0,
+      "minimum": 2867.0
+    },
+    "power_watts": {
+      "maximum": 37.02,
+      "mean": 34.232782,
+      "minimum": 29.92
+    },
+    "sample_count": 363,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1805.413223,
+      "minimum": 1440.0
+    },
+    "temperature_c": {
+      "maximum": 81.0,
+      "mean": 78.559229,
+      "minimum": 73.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.956938,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 4,
+    "memory_used_mib": {
+      "maximum": 2899.0,
+      "mean": 2898.990431,
+      "minimum": 2897.0
+    },
+    "power_watts": {
+      "maximum": 35.31,
+      "mean": 34.173636,
+      "minimum": 26.51
+    },
+    "sample_count": 209,
+    "session": 0,
+    "sm_clock_mhz": {
+      "maximum": 1815.0,
+      "mean": 1813.492823,
+      "minimum": 1755.0
+    },
+    "temperature_c": {
+      "maximum": 79.0,
+      "mean": 77.334928,
+      "minimum": 73.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 4,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.969529,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 2,
+    "memory_used_mib": {
+      "maximum": 2867.0,
+      "mean": 2867.0,
+      "minimum": 2867.0
+    },
+    "power_watts": {
+      "maximum": 35.67,
+      "mean": 32.622493,
+      "minimum": 30.23
+    },
+    "sample_count": 361,
+    "session": 99,
+    "sm_clock_mhz": {
+      "maximum": 1845.0,
+      "mean": 1821.398892,
+      "minimum": 1560.0
+    },
+    "temperature_c": {
+      "maximum": 75.0,
+      "mean": 70.736842,
+      "minimum": 60.0
+    },
+    "workload_id": "S2",
+    "zero_gpu_utilization_fraction": 0.0
+  },
+  {
+    "client_concurrency": 8,
+    "gpu_utilization_percent": {
+      "maximum": 100.0,
+      "mean": 99.975155,
+      "minimum": 98.0
+    },
+    "max_num_seqs": 2,
+    "memory_used_mib": {
+      "maximum": 2867.0,
+      "mean": 2867.0,
+      "minimum": 2867.0
+    },
+    "power_watts": {
+      "maximum": 35.98,
+      "mean": 33.676211,
+      "minimum": 27.7
+    },
+    "sample_count": 483,
+    "session": 99,
+    "sm_clock_mhz": {
+      "maximum": 1830.0,
+      "mean": 1813.78882,
+      "minimum": 1650.0
+    },
+    "temperature_c": {
+      "maximum": 79.0,
+      "mean": 75.73706,
+      "minimum": 67.0
+    },
+    "workload_id": "S3",
+    "zero_gpu_utilization_fraction": 0.0
+  }
+]

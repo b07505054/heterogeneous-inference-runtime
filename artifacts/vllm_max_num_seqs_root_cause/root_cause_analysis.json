@@ -1,0 +1,15 @@
+{
+  "classification": "MULTIPLE_CONTRIBUTING_CAUSES",
+  "cuda_graph_boundary": "Capture sizes change with configured limit, but no replay-miss/eager-fallback evidence was exposed. The data supports a CUDA-graph or kernel batch-shape effect but does not isolate which GPU kernel causes it without deeper profiling.",
+  "diagnostic_metric_note": "The initial diagnostic Prometheus parser used substring matching; exact running/waiting claims use corrected representative controls and server logs. Request metrics and GPU samples were unaffected.",
+  "evidence": [
+    "Performance follows actual active concurrency: client concurrency 2 is slow with server limits 2, 3, 4, and 8; concurrency 1 is fast with server limits 1 through 8.",
+    "max_num_seqs=3 is intermediate at higher concurrency, not a duplicate of 2 or 4.",
+    "Corrected exact-name Prometheus controls show S2 running<=2/waiting<=2 and S3 running<=2/waiting<=6; request timelines show continuous worker replenishment.",
+    "Direct-control runs reproduce the anomaly.",
+    "No OOM, preemption, KV pressure, worker restart, configuration mismatch, or client serialization was found."
+  ],
+  "primary_cause": "target/version-specific active decode batch-shape efficiency: two simultaneous sequences have much worse per-token efficiency than one, while larger active batches amortize work and recover aggregate throughput",
+  "recommended_next_action": "run deeper GPU profiling before proceeding",
+  "secondary_cause": "vLLM admission at max_num_seqs creates server queueing behind the active group, amplifying TTFT and E2E"
+}

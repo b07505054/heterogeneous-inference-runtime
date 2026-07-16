@@ -1,0 +1,3083 @@
+[
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1319.0,
+      "mean": 720.239437,
+      "minimum": 120.0,
+      "sample_count": 71
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784181999.7372546,
+      "mean": 1784171263.976691,
+      "minimum": 1784160478.7372546,
+      "sample_count": 71
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 1,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 1.0,
+      "mean": 0.901408,
+      "minimum": 0.0,
+      "sample_count": 71
+    },
+    "num_requests_waiting": {
+      "maximum": 6.0,
+      "mean": 5.126761,
+      "minimum": 0.0,
+      "sample_count": 71
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1541.647887,
+      "minimum": 259.0,
+      "sample_count": 71
+    },
+    "session": 0,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1305.0,
+      "mean": 720.930556,
+      "minimum": 132.0,
+      "sample_count": 72
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784183025.2476451,
+      "mean": 1784172525.747645,
+      "minimum": 1784161962.2476451,
+      "sample_count": 72
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 1,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 1.0,
+      "mean": 0.930556,
+      "minimum": 0.0,
+      "sample_count": 72
+    },
+    "num_requests_waiting": {
+      "maximum": 6.0,
+      "mean": 5.166667,
+      "minimum": 0.0,
+      "sample_count": 72
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1542.944444,
+      "minimum": 305.0,
+      "sample_count": 72
+    },
+    "session": 1,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1309.0,
+      "mean": 720.821918,
+      "minimum": 131.0,
+      "sample_count": 73
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784184099.7707942,
+      "mean": 1784173535.373534,
+      "minimum": 1784162961.7707942,
+      "sample_count": 73
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 1,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 1.0,
+      "mean": 0.931507,
+      "minimum": 0.0,
+      "sample_count": 73
+    },
+    "num_requests_waiting": {
+      "maximum": 6.0,
+      "mean": 5.178082,
+      "minimum": 0.0,
+      "sample_count": 73
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1543.821918,
+      "minimum": 310.0,
+      "sample_count": 73
+    },
+    "session": 2,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1312.0,
+      "mean": 719.027397,
+      "minimum": 121.0,
+      "sample_count": 73
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784185630.882945,
+      "mean": 1784174986.23911,
+      "minimum": 1784164284.882945,
+      "sample_count": 73
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 1,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 1.0,
+      "mean": 0.931507,
+      "minimum": 0.0,
+      "sample_count": 73
+    },
+    "num_requests_waiting": {
+      "maximum": 6.0,
+      "mean": 5.178082,
+      "minimum": 0.0,
+      "sample_count": 73
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1540.013699,
+      "minimum": 310.0,
+      "sample_count": 73
+    },
+    "session": 3,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1307.0,
+      "mean": 714.191781,
+      "minimum": 120.0,
+      "sample_count": 73
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784186436.5778422,
+      "mean": 1784175784.988801,
+      "minimum": 1784165107.5778422,
+      "sample_count": 73
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 1,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 1.0,
+      "mean": 0.931507,
+      "minimum": 0.0,
+      "sample_count": 73
+    },
+    "num_requests_waiting": {
+      "maximum": 6.0,
+      "mean": 5.123288,
+      "minimum": 0.0,
+      "sample_count": 73
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1529.616438,
+      "minimum": 259.0,
+      "sample_count": 73
+    },
+    "session": 4,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1317.0,
+      "mean": 717.68595,
+      "minimum": 121.0,
+      "sample_count": 363
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784173193.711216,
+      "mean": 1784167066.361354,
+      "minimum": 1784160925.711216,
+      "sample_count": 363
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 2,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 2.0,
+      "mean": 1.958678,
+      "minimum": 1.0,
+      "sample_count": 363
+    },
+    "num_requests_waiting": {
+      "maximum": 4.0,
+      "mean": 3.69697,
+      "minimum": 0.0,
+      "sample_count": 363
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1571.168044,
+      "minimum": 309.0,
+      "sample_count": 363
+    },
+    "session": 0,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1315.0,
+      "mean": 717.977839,
+      "minimum": 121.0,
+      "sample_count": 361
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784174209.2368174,
+      "mean": 1784168100.873936,
+      "minimum": 1784161957.2368174,
+      "sample_count": 361
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 2,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 2.0,
+      "mean": 1.963989,
+      "minimum": 1.0,
+      "sample_count": 361
+    },
+    "num_requests_waiting": {
+      "maximum": 4.0,
+      "mean": 3.711911,
+      "minimum": 0.0,
+      "sample_count": 361
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1571.819945,
+      "minimum": 309.0,
+      "sample_count": 361
+    },
+    "session": 1,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1315.0,
+      "mean": 717.118785,
+      "minimum": 120.0,
+      "sample_count": 362
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784175439.981462,
+      "mean": 1784169322.25218,
+      "minimum": 1784163125.981462,
+      "sample_count": 362
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 2,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 2.0,
+      "mean": 1.958564,
+      "minimum": 0.0,
+      "sample_count": 362
+    },
+    "num_requests_waiting": {
+      "maximum": 4.0,
+      "mean": 3.701657,
+      "minimum": 0.0,
+      "sample_count": 362
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1569.522099,
+      "minimum": 259.0,
+      "sample_count": 362
+    },
+    "session": 2,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1317.0,
+      "mean": 720.220994,
+      "minimum": 120.0,
+      "sample_count": 362
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784176302.9623842,
+      "mean": 1784170201.771776,
+      "minimum": 1784163972.9623842,
+      "sample_count": 362
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 2,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 2.0,
+      "mean": 1.961326,
+      "minimum": 0.0,
+      "sample_count": 362
+    },
+    "num_requests_waiting": {
+      "maximum": 4.0,
+      "mean": 3.690608,
+      "minimum": 0.0,
+      "sample_count": 362
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1576.60221,
+      "minimum": 259.0,
+      "sample_count": 362
+    },
+    "session": 3,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1317.0,
+      "mean": 718.447514,
+      "minimum": 120.0,
+      "sample_count": 362
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784177619.9787812,
+      "mean": 1784171500.440107,
+      "minimum": 1784165289.9787812,
+      "sample_count": 362
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 2,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 2.0,
+      "mean": 1.961326,
+      "minimum": 0.0,
+      "sample_count": 362
+    },
+    "num_requests_waiting": {
+      "maximum": 4.0,
+      "mean": 3.690608,
+      "minimum": 0.0,
+      "sample_count": 362
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1572.765193,
+      "minimum": 259.0,
+      "sample_count": 362
+    },
+    "session": 4,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1317.0,
+      "mean": 729.290698,
+      "minimum": 121.0,
+      "sample_count": 258
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784170256.6159842,
+      "mean": 1784165606.941566,
+      "minimum": 1784160811.6159842,
+      "sample_count": 258
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 3,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 3.0,
+      "mean": 2.833333,
+      "minimum": 2.0,
+      "sample_count": 258
+    },
+    "num_requests_waiting": {
+      "maximum": 2.0,
+      "mean": 1.674419,
+      "minimum": 0.0,
+      "sample_count": 258
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1614.868217,
+      "minimum": 310.0,
+      "sample_count": 258
+    },
+    "session": 0,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1315.0,
+      "mean": 725.034884,
+      "minimum": 120.0,
+      "sample_count": 258
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784171104.2655365,
+      "mean": 1784166436.133754,
+      "minimum": 1784161612.2655365,
+      "sample_count": 258
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 3,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 3.0,
+      "mean": 2.825581,
+      "minimum": 0.0,
+      "sample_count": 258
+    },
+    "num_requests_waiting": {
+      "maximum": 2.0,
+      "mean": 1.682171,
+      "minimum": 0.0,
+      "sample_count": 258
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1605.170543,
+      "minimum": 259.0,
+      "sample_count": 258
+    },
+    "session": 1,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1320.0,
+      "mean": 730.996139,
+      "minimum": 121.0,
+      "sample_count": 259
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784172446.7608685,
+      "mean": 1784167778.378629,
+      "minimum": 1784162968.7608685,
+      "sample_count": 259
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 3,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 3.0,
+      "mean": 2.822394,
+      "minimum": 0.0,
+      "sample_count": 259
+    },
+    "num_requests_waiting": {
+      "maximum": 2.0,
+      "mean": 1.675676,
+      "minimum": 0.0,
+      "sample_count": 259
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1618.285714,
+      "minimum": 309.0,
+      "sample_count": 259
+    },
+    "session": 2,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1320.0,
+      "mean": 728.236434,
+      "minimum": 121.0,
+      "sample_count": 258
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784173825.1114557,
+      "mean": 1784169135.057192,
+      "minimum": 1784164347.1114557,
+      "sample_count": 258
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 3,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 3.0,
+      "mean": 2.817829,
+      "minimum": 0.0,
+      "sample_count": 258
+    },
+    "num_requests_waiting": {
+      "maximum": 2.0,
+      "mean": 1.682171,
+      "minimum": 0.0,
+      "sample_count": 258
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1612.5,
+      "minimum": 309.0,
+      "sample_count": 258
+    },
+    "session": 3,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1317.0,
+      "mean": 726.147287,
+      "minimum": 121.0,
+      "sample_count": 258
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784174681.3306587,
+      "mean": 1784170006.977946,
+      "minimum": 1784165235.3306587,
+      "sample_count": 258
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 3,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 3.0,
+      "mean": 2.833333,
+      "minimum": 1.0,
+      "sample_count": 258
+    },
+    "num_requests_waiting": {
+      "maximum": 2.0,
+      "mean": 1.666667,
+      "minimum": 0.0,
+      "sample_count": 258
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1608.379845,
+      "minimum": 309.0,
+      "sample_count": 258
+    },
+    "session": 4,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1317.0,
+      "mean": 731.315789,
+      "minimum": 120.0,
+      "sample_count": 209
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784168696.3242314,
+      "mean": 1784164717.171121,
+      "minimum": 1784160542.3242314,
+      "sample_count": 209
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 4,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 4.0,
+      "mean": 3.736842,
+      "minimum": 0.0,
+      "sample_count": 209
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 209
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1639.095694,
+      "minimum": 259.0,
+      "sample_count": 209
+    },
+    "session": 0,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1317.0,
+      "mean": 731.559809,
+      "minimum": 120.0,
+      "sample_count": 209
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784169946.379219,
+      "mean": 1784165969.120846,
+      "minimum": 1784161792.379219,
+      "sample_count": 209
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 4,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 4.0,
+      "mean": 3.727273,
+      "minimum": 0.0,
+      "sample_count": 209
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 209
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1639.832536,
+      "minimum": 259.0,
+      "sample_count": 209
+    },
+    "session": 1,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1317.0,
+      "mean": 734.252381,
+      "minimum": 120.0,
+      "sample_count": 210
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784170957.8184874,
+      "mean": 1784166999.013726,
+      "minimum": 1784162803.8184874,
+      "sample_count": 210
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 4,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 4.0,
+      "mean": 3.695238,
+      "minimum": 0.0,
+      "sample_count": 210
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 210
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1645.82381,
+      "minimum": 259.0,
+      "sample_count": 210
+    },
+    "session": 2,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1320.0,
+      "mean": 732.32381,
+      "minimum": 120.0,
+      "sample_count": 210
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784172057.580639,
+      "mean": 1784168053.452067,
+      "minimum": 1784163871.580639,
+      "sample_count": 210
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 4,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 4.0,
+      "mean": 3.728571,
+      "minimum": 0.0,
+      "sample_count": 210
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 210
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1640.985714,
+      "minimum": 259.0,
+      "sample_count": 210
+    },
+    "session": 3,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1315.0,
+      "mean": 732.464115,
+      "minimum": 121.0,
+      "sample_count": 209
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784173142.757229,
+      "mean": 1784169187.704597,
+      "minimum": 1784165066.757229,
+      "sample_count": 209
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 4,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 4.0,
+      "mean": 3.741627,
+      "minimum": 1.0,
+      "sample_count": 209
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 209
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1642.009569,
+      "minimum": 309.0,
+      "sample_count": 209
+    },
+    "session": 4,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1315.0,
+      "mean": 729.69378,
+      "minimum": 120.0,
+      "sample_count": 209
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784168784.4478104,
+      "mean": 1784164811.012404,
+      "minimum": 1784160646.4478104,
+      "sample_count": 209
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 8,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 4.0,
+      "mean": 3.741627,
+      "minimum": 0.0,
+      "sample_count": 209
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 209
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1636.430622,
+      "minimum": 259.0,
+      "sample_count": 209
+    },
+    "session": 0,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1315.0,
+      "mean": 729.5311,
+      "minimum": 120.0,
+      "sample_count": 209
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784170178.7545843,
+      "mean": 1784166203.453149,
+      "minimum": 1784162040.7545843,
+      "sample_count": 209
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 8,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 4.0,
+      "mean": 3.727273,
+      "minimum": 0.0,
+      "sample_count": 209
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 209
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1635.210526,
+      "minimum": 259.0,
+      "sample_count": 209
+    },
+    "session": 1,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1317.0,
+      "mean": 735.076923,
+      "minimum": 121.0,
+      "sample_count": 208
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784171177.9729557,
+      "mean": 1784167224.977763,
+      "minimum": 1784163085.9729557,
+      "sample_count": 208
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 8,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 4.0,
+      "mean": 3.764423,
+      "minimum": 0.0,
+      "sample_count": 208
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 208
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1647.923077,
+      "minimum": 309.0,
+      "sample_count": 208
+    },
+    "session": 2,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1317.0,
+      "mean": 733.229665,
+      "minimum": 121.0,
+      "sample_count": 209
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784172272.680464,
+      "mean": 1784168307.27855,
+      "minimum": 1784164180.680464,
+      "sample_count": 209
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 8,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 4.0,
+      "mean": 3.722488,
+      "minimum": 0.0,
+      "sample_count": 209
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 209
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1643.956938,
+      "minimum": 309.0,
+      "sample_count": 209
+    },
+    "session": 3,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1315.0,
+      "mean": 731.884615,
+      "minimum": 121.0,
+      "sample_count": 208
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784173573.8686388,
+      "mean": 1784169614.911908,
+      "minimum": 1784165497.8686388,
+      "sample_count": 208
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 8,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 4.0,
+      "mean": 3.735577,
+      "minimum": 0.0,
+      "sample_count": 208
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 208
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1640.850962,
+      "minimum": 309.0,
+      "sample_count": 208
+    },
+    "session": 4,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1758.0,
+      "mean": 963.719101,
+      "minimum": 168.0,
+      "sample_count": 89
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784189964.6762388,
+      "mean": 1784176107.170621,
+      "minimum": 1784162234.6762388,
+      "sample_count": 89
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 1,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 1.0,
+      "mean": 0.966292,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "num_requests_waiting": {
+      "maximum": 14.0,
+      "mean": 12.337079,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1548.786517,
+      "minimum": 310.0,
+      "sample_count": 89
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1751.0,
+      "mean": 959.134831,
+      "minimum": 162.0,
+      "sample_count": 89
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784190961.291382,
+      "mean": 1784177136.167787,
+      "minimum": 1784163246.291382,
+      "sample_count": 89
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 1,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 1.0,
+      "mean": 0.94382,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "num_requests_waiting": {
+      "maximum": 14.0,
+      "mean": 12.426966,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1541.977528,
+      "minimum": 309.0,
+      "sample_count": 89
+    },
+    "session": 1,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1742.0,
+      "mean": 954.685393,
+      "minimum": 160.0,
+      "sample_count": 89
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784192002.9265358,
+      "mean": 1784178243.578221,
+      "minimum": 1784164353.9265358,
+      "sample_count": 89
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 1,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 1.0,
+      "mean": 0.955056,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "num_requests_waiting": {
+      "maximum": 14.0,
+      "mean": 12.292135,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1534.359551,
+      "minimum": 259.0,
+      "sample_count": 89
+    },
+    "session": 2,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1746.0,
+      "mean": 960.511364,
+      "minimum": 174.0,
+      "sample_count": 88
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784192964.2172837,
+      "mean": 1784179243.012738,
+      "minimum": 1784165521.2172837,
+      "sample_count": 88
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 1,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 1.0,
+      "mean": 0.954545,
+      "minimum": 0.0,
+      "sample_count": 88
+    },
+    "num_requests_waiting": {
+      "maximum": 14.0,
+      "mean": 12.409091,
+      "minimum": 0.0,
+      "sample_count": 88
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1544.022727,
+      "minimum": 309.0,
+      "sample_count": 88
+    },
+    "session": 3,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1760.0,
+      "mean": 962.426966,
+      "minimum": 168.0,
+      "sample_count": 89
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784194376.2463825,
+      "mean": 1784180463.527281,
+      "minimum": 1784166613.2463825,
+      "sample_count": 89
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 1,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 1.0,
+      "mean": 0.955056,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "num_requests_waiting": {
+      "maximum": 14.0,
+      "mean": 12.314607,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1546.022472,
+      "minimum": 309.0,
+      "sample_count": 89
+    },
+    "session": 4,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 958.413223,
+      "minimum": 161.0,
+      "sample_count": 484
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784177266.0562403,
+      "mean": 1784169547.035579,
+      "minimum": 1784161798.0562403,
+      "sample_count": 484
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 2,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 2.0,
+      "mean": 1.966942,
+      "minimum": 1.0,
+      "sample_count": 484
+    },
+    "num_requests_waiting": {
+      "maximum": 12.0,
+      "mean": 10.946281,
+      "minimum": 0.0,
+      "sample_count": 484
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1573.595041,
+      "minimum": 309.0,
+      "sample_count": 484
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1755.0,
+      "mean": 959.20911,
+      "minimum": 161.0,
+      "sample_count": 483
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784178383.7084603,
+      "mean": 1784170689.010738,
+      "minimum": 1784162931.7084603,
+      "sample_count": 483
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 2,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 2.0,
+      "mean": 1.973085,
+      "minimum": 1.0,
+      "sample_count": 483
+    },
+    "num_requests_waiting": {
+      "maximum": 12.0,
+      "mean": 10.94824,
+      "minimum": 0.0,
+      "sample_count": 483
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1575.407867,
+      "minimum": 309.0,
+      "sample_count": 483
+    },
+    "session": 1,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 960.004141,
+      "minimum": 161.0,
+      "sample_count": 483
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784179702.4716787,
+      "mean": 1784171999.297766,
+      "minimum": 1784164234.4716787,
+      "sample_count": 483
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 2,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 2.0,
+      "mean": 1.971014,
+      "minimum": 1.0,
+      "sample_count": 483
+    },
+    "num_requests_waiting": {
+      "maximum": 12.0,
+      "mean": 10.939959,
+      "minimum": 0.0,
+      "sample_count": 483
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1576.478261,
+      "minimum": 309.0,
+      "sample_count": 483
+    },
+    "session": 2,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 958.820248,
+      "minimum": 160.0,
+      "sample_count": 484
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784180850.1610065,
+      "mean": 1784173135.594891,
+      "minimum": 1784165320.1610065,
+      "sample_count": 484
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 2,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 2.0,
+      "mean": 1.969008,
+      "minimum": 0.0,
+      "sample_count": 484
+    },
+    "num_requests_waiting": {
+      "maximum": 12.0,
+      "mean": 10.917355,
+      "minimum": 0.0,
+      "sample_count": 484
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1574.731405,
+      "minimum": 259.0,
+      "sample_count": 484
+    },
+    "session": 3,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 958.768116,
+      "minimum": 161.0,
+      "sample_count": 483
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784182038.251105,
+      "mean": 1784174323.284231,
+      "minimum": 1784166570.251105,
+      "sample_count": 483
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 2,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 2.0,
+      "mean": 1.968944,
+      "minimum": 1.0,
+      "sample_count": 483
+    },
+    "num_requests_waiting": {
+      "maximum": 12.0,
+      "mean": 10.939959,
+      "minimum": 0.0,
+      "sample_count": 483
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1574.730849,
+      "minimum": 309.0,
+      "sample_count": 483
+    },
+    "session": 4,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 970.297688,
+      "minimum": 160.0,
+      "sample_count": 346
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784173759.5622761,
+      "mean": 1784167924.995802,
+      "minimum": 1784161917.5622761,
+      "sample_count": 346
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 3,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 3.0,
+      "mean": 2.858382,
+      "minimum": 0.0,
+      "sample_count": 346
+    },
+    "num_requests_waiting": {
+      "maximum": 10.0,
+      "mean": 8.83237,
+      "minimum": 0.0,
+      "sample_count": 346
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1612.419075,
+      "minimum": 259.0,
+      "sample_count": 346
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 971.913295,
+      "minimum": 160.0,
+      "sample_count": 346
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784175079.2248204,
+      "mean": 1784169256.785514,
+      "minimum": 1784163237.2248204,
+      "sample_count": 346
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 3,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 3.0,
+      "mean": 2.861272,
+      "minimum": 0.0,
+      "sample_count": 346
+    },
+    "num_requests_waiting": {
+      "maximum": 10.0,
+      "mean": 8.849711,
+      "minimum": 0.0,
+      "sample_count": 346
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1615.33526,
+      "minimum": 259.0,
+      "sample_count": 346
+    },
+    "session": 1,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 973.113043,
+      "minimum": 161.0,
+      "sample_count": 345
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784175753.389097,
+      "mean": 1784169939.968807,
+      "minimum": 1784163974.389097,
+      "sample_count": 345
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 3,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 3.0,
+      "mean": 2.875362,
+      "minimum": 1.0,
+      "sample_count": 345
+    },
+    "num_requests_waiting": {
+      "maximum": 10.0,
+      "mean": 8.846377,
+      "minimum": 0.0,
+      "sample_count": 345
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1617.385507,
+      "minimum": 310.0,
+      "sample_count": 345
+    },
+    "session": 2,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 970.023188,
+      "minimum": 160.0,
+      "sample_count": 345
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784177342.9487343,
+      "mean": 1784171506.412502,
+      "minimum": 1784165500.9487343,
+      "sample_count": 345
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 3,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 3.0,
+      "mean": 2.855072,
+      "minimum": 0.0,
+      "sample_count": 345
+    },
+    "num_requests_waiting": {
+      "maximum": 10.0,
+      "mean": 8.857971,
+      "minimum": 0.0,
+      "sample_count": 345
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1612.043478,
+      "minimum": 259.0,
+      "sample_count": 345
+    },
+    "session": 3,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1755.0,
+      "mean": 969.758721,
+      "minimum": 161.0,
+      "sample_count": 344
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784178004.4711547,
+      "mean": 1784172181.540922,
+      "minimum": 1784166241.4711547,
+      "sample_count": 344
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 3,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 3.0,
+      "mean": 2.872093,
+      "minimum": 1.0,
+      "sample_count": 344
+    },
+    "num_requests_waiting": {
+      "maximum": 10.0,
+      "mean": 8.866279,
+      "minimum": 0.0,
+      "sample_count": 344
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1611.337209,
+      "minimum": 310.0,
+      "sample_count": 344
+    },
+    "session": 4,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1760.0,
+      "mean": 980.525735,
+      "minimum": 161.0,
+      "sample_count": 272
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784172174.138241,
+      "mean": 1784167262.873535,
+      "minimum": 1784162194.138241,
+      "sample_count": 272
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 4,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 4.0,
+      "mean": 3.731618,
+      "minimum": 0.0,
+      "sample_count": 272
+    },
+    "num_requests_waiting": {
+      "maximum": 8.0,
+      "mean": 6.720588,
+      "minimum": 0.0,
+      "sample_count": 272
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1650.808824,
+      "minimum": 309.0,
+      "sample_count": 272
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 981.591912,
+      "minimum": 161.0,
+      "sample_count": 272
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784173059.3198602,
+      "mean": 1784168187.716919,
+      "minimum": 1784163111.3198602,
+      "sample_count": 272
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 4,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 4.0,
+      "mean": 3.790441,
+      "minimum": 1.0,
+      "sample_count": 272
+    },
+    "num_requests_waiting": {
+      "maximum": 8.0,
+      "mean": 6.683824,
+      "minimum": 0.0,
+      "sample_count": 272
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1653.783088,
+      "minimum": 309.0,
+      "sample_count": 272
+    },
+    "session": 1,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 979.669118,
+      "minimum": 161.0,
+      "sample_count": 272
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784174063.2476165,
+      "mean": 1784169178.633646,
+      "minimum": 1784164116.2476165,
+      "sample_count": 272
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 4,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 4.0,
+      "mean": 3.757353,
+      "minimum": 1.0,
+      "sample_count": 272
+    },
+    "num_requests_waiting": {
+      "maximum": 8.0,
+      "mean": 6.75,
+      "minimum": 0.0,
+      "sample_count": 272
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1649.882353,
+      "minimum": 310.0,
+      "sample_count": 272
+    },
+    "session": 2,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 978.333333,
+      "minimum": 160.0,
+      "sample_count": 273
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784175051.0277033,
+      "mean": 1784170158.690707,
+      "minimum": 1784165041.0277033,
+      "sample_count": 273
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 4,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 4.0,
+      "mean": 3.750916,
+      "minimum": 0.0,
+      "sample_count": 273
+    },
+    "num_requests_waiting": {
+      "maximum": 8.0,
+      "mean": 6.717949,
+      "minimum": 0.0,
+      "sample_count": 273
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1647.941392,
+      "minimum": 259.0,
+      "sample_count": 273
+    },
+    "session": 3,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 979.490842,
+      "minimum": 160.0,
+      "sample_count": 273
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784176329.4356918,
+      "mean": 1784171443.138988,
+      "minimum": 1784166319.4356918,
+      "sample_count": 273
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 4,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 4.0,
+      "mean": 3.747253,
+      "minimum": 0.0,
+      "sample_count": 273
+    },
+    "num_requests_waiting": {
+      "maximum": 8.0,
+      "mean": 6.666667,
+      "minimum": 0.0,
+      "sample_count": 273
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1648.864469,
+      "minimum": 259.0,
+      "sample_count": 273
+    },
+    "session": 4,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 1017.084967,
+      "minimum": 161.0,
+      "sample_count": 153
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784168929.425023,
+      "mean": 1784165566.170121,
+      "minimum": 1784161712.425023,
+      "sample_count": 153
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 8,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 8.0,
+      "mean": 7.091503,
+      "minimum": 0.0,
+      "sample_count": 153
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 153
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1779.379085,
+      "minimum": 310.0,
+      "sample_count": 153
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 1012.535948,
+      "minimum": 160.0,
+      "sample_count": 153
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784170063.193068,
+      "mean": 1784166678.088493,
+      "minimum": 1784162783.193068,
+      "sample_count": 153
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 8,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 8.0,
+      "mean": 7.078431,
+      "minimum": 0.0,
+      "sample_count": 153
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 153
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1770.738562,
+      "minimum": 259.0,
+      "sample_count": 153
+    },
+    "session": 1,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 1011.660131,
+      "minimum": 160.0,
+      "sample_count": 153
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784171704.3440926,
+      "mean": 1784168316.625138,
+      "minimum": 1784164424.3440926,
+      "sample_count": 153
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 8,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 8.0,
+      "mean": 7.084967,
+      "minimum": 0.0,
+      "sample_count": 153
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 153
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1770.738562,
+      "minimum": 259.0,
+      "sample_count": 153
+    },
+    "session": 2,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 1011.751634,
+      "minimum": 160.0,
+      "sample_count": 153
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784172445.532448,
+      "mean": 1784169057.9965,
+      "minimum": 1784165165.532448,
+      "sample_count": 153
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 8,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 8.0,
+      "mean": 7.084967,
+      "minimum": 0.0,
+      "sample_count": 153
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 153
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1770.738562,
+      "minimum": 259.0,
+      "sample_count": 153
+    },
+    "session": 3,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 1013.816993,
+      "minimum": 160.0,
+      "sample_count": 153
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784173970.155278,
+      "mean": 1784170591.122598,
+      "minimum": 1784166690.155278,
+      "sample_count": 153
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 8,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 8.0,
+      "mean": 7.084967,
+      "minimum": 0.0,
+      "sample_count": 153
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 153
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1773.392157,
+      "minimum": 259.0,
+      "sample_count": 153
+    },
+    "session": 4,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 1,
+    "generation_tokens_total": {
+      "maximum": 1748.0,
+      "mean": 958.977528,
+      "minimum": 165.0,
+      "sample_count": 89
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784194801.9331179,
+      "mean": 1784181021.831994,
+      "minimum": 1784167182.9331179,
+      "sample_count": 89
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 1,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 1.0,
+      "mean": 0.685393,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1541.47191,
+      "minimum": 309.0,
+      "sample_count": 89
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 2,
+    "generation_tokens_total": {
+      "maximum": 1745.0,
+      "mean": 953.58427,
+      "minimum": 160.0,
+      "sample_count": 89
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784195479.2935028,
+      "mean": 1784181652.664289,
+      "minimum": 1784167782.2935028,
+      "sample_count": 89
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 1,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 1.0,
+      "mean": 0.955056,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "num_requests_waiting": {
+      "maximum": 2.0,
+      "mean": 1.393258,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1532.516854,
+      "minimum": 259.0,
+      "sample_count": 89
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 3,
+    "generation_tokens_total": {
+      "maximum": 1739.0,
+      "mean": 950.235955,
+      "minimum": 160.0,
+      "sample_count": 89
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784194994.9916503,
+      "mean": 1784181206.002886,
+      "minimum": 1784167393.9916503,
+      "sample_count": 89
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 1,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 1.0,
+      "mean": 0.966292,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "num_requests_waiting": {
+      "maximum": 4.0,
+      "mean": 3.303371,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1527.325843,
+      "minimum": 259.0,
+      "sample_count": 89
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1753.0,
+      "mean": 959.359551,
+      "minimum": 160.0,
+      "sample_count": 89
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784197356.1051934,
+      "mean": 1784183502.711935,
+      "minimum": 1784169531.1051934,
+      "sample_count": 89
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 1,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 1.0,
+      "mean": 0.932584,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "num_requests_waiting": {
+      "maximum": 6.0,
+      "mean": 5.213483,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1542.11236,
+      "minimum": 259.0,
+      "sample_count": 89
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 6,
+    "generation_tokens_total": {
+      "maximum": 1746.0,
+      "mean": 962.443182,
+      "minimum": 173.0,
+      "sample_count": 88
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784197313.5050156,
+      "mean": 1784183625.470925,
+      "minimum": 1784169854.5050156,
+      "sample_count": 88
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 1,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 1.0,
+      "mean": 0.965909,
+      "minimum": 0.0,
+      "sample_count": 88
+    },
+    "num_requests_waiting": {
+      "maximum": 10.0,
+      "mean": 8.863636,
+      "minimum": 0.0,
+      "sample_count": 88
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1546.465909,
+      "minimum": 309.0,
+      "sample_count": 88
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 1,
+    "generation_tokens_total": {
+      "maximum": 1755.0,
+      "mean": 963.47191,
+      "minimum": 173.0,
+      "sample_count": 89
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784196253.228177,
+      "mean": 1784182439.509076,
+      "minimum": 1784168650.228177,
+      "sample_count": 89
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 2,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 1.0,
+      "mean": 0.685393,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1548.483146,
+      "minimum": 309.0,
+      "sample_count": 89
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 2,
+    "generation_tokens_total": {
+      "maximum": 1755.0,
+      "mean": 958.431818,
+      "minimum": 160.0,
+      "sample_count": 484
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784183547.1512709,
+      "mean": 1784175844.967386,
+      "minimum": 1784168033.1512709,
+      "sample_count": 484
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 2,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 2.0,
+      "mean": 1.97314,
+      "minimum": 0.0,
+      "sample_count": 484
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 484
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1574.260331,
+      "minimum": 259.0,
+      "sample_count": 484
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 3,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 959.427686,
+      "minimum": 161.0,
+      "sample_count": 484
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784183382.3396678,
+      "mean": 1784175673.829337,
+      "minimum": 1784167914.3396678,
+      "sample_count": 484
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 2,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 2.0,
+      "mean": 1.975207,
+      "minimum": 1.0,
+      "sample_count": 484
+    },
+    "num_requests_waiting": {
+      "maximum": 2.0,
+      "mean": 1.818182,
+      "minimum": 0.0,
+      "sample_count": 484
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1575.842975,
+      "minimum": 309.0,
+      "sample_count": 484
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 958.516598,
+      "minimum": 161.0,
+      "sample_count": 482
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784184772.3089533,
+      "mean": 1784177054.686547,
+      "minimum": 1784169304.3089533,
+      "sample_count": 482
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 2,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 2.0,
+      "mean": 1.973029,
+      "minimum": 1.0,
+      "sample_count": 482
+    },
+    "num_requests_waiting": {
+      "maximum": 4.0,
+      "mean": 3.73029,
+      "minimum": 0.0,
+      "sample_count": 482
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1574.136929,
+      "minimum": 309.0,
+      "sample_count": 482
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 6,
+    "generation_tokens_total": {
+      "maximum": 1755.0,
+      "mean": 958.607438,
+      "minimum": 161.0,
+      "sample_count": 484
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784185183.5171857,
+      "mean": 1784177483.004789,
+      "minimum": 1784169731.5171857,
+      "sample_count": 484
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 2,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 2.0,
+      "mean": 1.975207,
+      "minimum": 1.0,
+      "sample_count": 484
+    },
+    "num_requests_waiting": {
+      "maximum": 8.0,
+      "mean": 7.429752,
+      "minimum": 0.0,
+      "sample_count": 484
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1574.504132,
+      "minimum": 309.0,
+      "sample_count": 484
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 1,
+    "generation_tokens_total": {
+      "maximum": 1746.0,
+      "mean": 960.0,
+      "minimum": 169.0,
+      "sample_count": 89
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784196321.2044725,
+      "mean": 1784182591.092113,
+      "minimum": 1784168798.2044725,
+      "sample_count": 89
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 3,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 1.0,
+      "mean": 0.674157,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1543.235955,
+      "minimum": 309.0,
+      "sample_count": 89
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 2,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 957.658385,
+      "minimum": 160.0,
+      "sample_count": 483
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784183061.3161674,
+      "mean": 1784175335.403124,
+      "minimum": 1784167531.3161674,
+      "sample_count": 483
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 3,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 2.0,
+      "mean": 1.962733,
+      "minimum": 0.0,
+      "sample_count": 483
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 483
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1572.799172,
+      "minimum": 259.0,
+      "sample_count": 483
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 3,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 968.171014,
+      "minimum": 160.0,
+      "sample_count": 345
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784180308.8382869,
+      "mean": 1784174458.878867,
+      "minimum": 1784168466.8382869,
+      "sample_count": 345
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 3,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 3.0,
+      "mean": 2.869565,
+      "minimum": 0.0,
+      "sample_count": 345
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 345
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1609.44058,
+      "minimum": 259.0,
+      "sample_count": 345
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1760.0,
+      "mean": 971.283626,
+      "minimum": 160.0,
+      "sample_count": 342
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784180824.076534,
+      "mean": 1784174983.295832,
+      "minimum": 1784168980.076534,
+      "sample_count": 342
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 3,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 3.0,
+      "mean": 2.839181,
+      "minimum": 0.0,
+      "sample_count": 342
+    },
+    "num_requests_waiting": {
+      "maximum": 2.0,
+      "mean": 1.725146,
+      "minimum": 0.0,
+      "sample_count": 342
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1614.181287,
+      "minimum": 259.0,
+      "sample_count": 342
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 6,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 971.125,
+      "minimum": 161.0,
+      "sample_count": 344
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784178618.2727811,
+      "mean": 1784172790.345456,
+      "minimum": 1784166838.2727811,
+      "sample_count": 344
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 3,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 3.0,
+      "mean": 2.875,
+      "minimum": 1.0,
+      "sample_count": 344
+    },
+    "num_requests_waiting": {
+      "maximum": 6.0,
+      "mean": 5.331395,
+      "minimum": 0.0,
+      "sample_count": 344
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1614.412791,
+      "minimum": 309.0,
+      "sample_count": 344
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 1,
+    "generation_tokens_total": {
+      "maximum": 1758.0,
+      "mean": 965.550562,
+      "minimum": 174.0,
+      "sample_count": 89
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784195617.9320674,
+      "mean": 1784181792.033191,
+      "minimum": 1784167982.9320674,
+      "sample_count": 89
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 4,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 1.0,
+      "mean": 0.685393,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1551.269663,
+      "minimum": 309.0,
+      "sample_count": 89
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 2,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 959.084886,
+      "minimum": 161.0,
+      "sample_count": 483
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784183744.5799344,
+      "mean": 1784176032.755918,
+      "minimum": 1784168276.5799344,
+      "sample_count": 483
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 4,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 2.0,
+      "mean": 1.968944,
+      "minimum": 0.0,
+      "sample_count": 483
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 483
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1575.302277,
+      "minimum": 309.0,
+      "sample_count": 483
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 3,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 969.414493,
+      "minimum": 160.0,
+      "sample_count": 345
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784178759.3882928,
+      "mean": 1784172918.124525,
+      "minimum": 1784166917.3882928,
+      "sample_count": 345
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 4,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 3.0,
+      "mean": 2.857971,
+      "minimum": 0.0,
+      "sample_count": 345
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 345
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1610.791304,
+      "minimum": 259.0,
+      "sample_count": 345
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1755.0,
+      "mean": 978.452206,
+      "minimum": 161.0,
+      "sample_count": 272
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784177267.0854027,
+      "mean": 1784172390.092756,
+      "minimum": 1784167335.0854027,
+      "sample_count": 272
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 4,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 4.0,
+      "mean": 3.757353,
+      "minimum": 0.0,
+      "sample_count": 272
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 272
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1647.257353,
+      "minimum": 309.0,
+      "sample_count": 272
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 6,
+    "generation_tokens_total": {
+      "maximum": 1755.0,
+      "mean": 979.8,
+      "minimum": 160.0,
+      "sample_count": 265
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784178651.1904483,
+      "mean": 1784173795.654599,
+      "minimum": 1784168679.1904483,
+      "sample_count": 265
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 4,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 4.0,
+      "mean": 3.701887,
+      "minimum": 0.0,
+      "sample_count": 265
+    },
+    "num_requests_waiting": {
+      "maximum": 4.0,
+      "mean": 3.426415,
+      "minimum": 0.0,
+      "sample_count": 265
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1649.313208,
+      "minimum": 259.0,
+      "sample_count": 265
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 1,
+    "generation_tokens_total": {
+      "maximum": 1751.0,
+      "mean": 961.314607,
+      "minimum": 169.0,
+      "sample_count": 89
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784195256.0188317,
+      "mean": 1784181468.457034,
+      "minimum": 1784167653.0188317,
+      "sample_count": 89
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 8,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 1.0,
+      "mean": 0.674157,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 89
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1544.88764,
+      "minimum": 309.0,
+      "sample_count": 89
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 2,
+    "generation_tokens_total": {
+      "maximum": 1755.0,
+      "mean": 957.521739,
+      "minimum": 161.0,
+      "sample_count": 483
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784184313.3133316,
+      "mean": 1784176602.276065,
+      "minimum": 1784168862.3133316,
+      "sample_count": 483
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 8,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 2.0,
+      "mean": 1.973085,
+      "minimum": 0.0,
+      "sample_count": 483
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 483
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1572.801242,
+      "minimum": 310.0,
+      "sample_count": 483
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 3,
+    "generation_tokens_total": {
+      "maximum": 1755.0,
+      "mean": 967.386628,
+      "minimum": 160.0,
+      "sample_count": 344
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784178956.9611018,
+      "mean": 1784173117.036683,
+      "minimum": 1784167130.9611018,
+      "sample_count": 344
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 8,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 3.0,
+      "mean": 2.860465,
+      "minimum": 0.0,
+      "sample_count": 344
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 344
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1608.218023,
+      "minimum": 259.0,
+      "sample_count": 344
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 978.886029,
+      "minimum": 160.0,
+      "sample_count": 272
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784179131.395395,
+      "mean": 1784174239.601277,
+      "minimum": 1784169121.395395,
+      "sample_count": 272
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 8,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 4.0,
+      "mean": 3.731618,
+      "minimum": 0.0,
+      "sample_count": 272
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 272
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1646.132353,
+      "minimum": 259.0,
+      "sample_count": 272
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 6,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 998.840206,
+      "minimum": 160.0,
+      "sample_count": 194
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784177619.127577,
+      "mean": 1784173724.766752,
+      "minimum": 1784169433.127577,
+      "sample_count": 194
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 8,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 6.0,
+      "mean": 5.453608,
+      "minimum": 0.0,
+      "sample_count": 194
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 194
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1717.118557,
+      "minimum": 259.0,
+      "sample_count": 194
+    },
+    "session": 0,
+    "workload_id": "S3"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1317.0,
+      "mean": 719.721763,
+      "minimum": 120.0,
+      "sample_count": 363
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784181539.4291375,
+      "mean": 1784175433.274868,
+      "minimum": 1784169209.4291375,
+      "sample_count": 363
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 2,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 2.0,
+      "mean": 1.958678,
+      "minimum": 0.0,
+      "sample_count": 363
+    },
+    "num_requests_waiting": {
+      "maximum": 4.0,
+      "mean": 3.69146,
+      "minimum": 0.0,
+      "sample_count": 363
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1575.732782,
+      "minimum": 259.0,
+      "sample_count": 363
+    },
+    "session": 0,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1317.0,
+      "mean": 731.583732,
+      "minimum": 120.0,
+      "sample_count": 209
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": {
+      "maximum": 1784177508.9747224,
+      "mean": 1784173532.09434,
+      "minimum": 1784169354.9747224,
+      "sample_count": 209
+    },
+    "kv_cache_usage_perc": "not_available",
+    "max_num_seqs": 4,
+    "metric_parser": "initial_substring_parser_use_log_findings_for_running_waiting",
+    "num_requests_running": {
+      "maximum": 4.0,
+      "mean": 3.736842,
+      "minimum": 0.0,
+      "sample_count": 209
+    },
+    "num_requests_waiting": {
+      "maximum": 0.0,
+      "mean": 0.0,
+      "minimum": 0.0,
+      "sample_count": 209
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1640.066986,
+      "minimum": 259.0,
+      "sample_count": 209
+    },
+    "session": 0,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 4,
+    "generation_tokens_total": {
+      "maximum": 1317.0,
+      "mean": 720.188366,
+      "minimum": 121.0,
+      "sample_count": 361
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": "not_available",
+    "kv_cache_usage_perc": {
+      "maximum": 0.0011185682326622093,
+      "mean": 0.00096,
+      "minimum": 0.0003355704697987072,
+      "sample_count": 361
+    },
+    "max_num_seqs": 2,
+    "metric_parser": "exact_metric_name_corrected",
+    "num_requests_running": {
+      "maximum": 2.0,
+      "mean": 1.963989,
+      "minimum": 1.0,
+      "sample_count": 361
+    },
+    "num_requests_waiting": {
+      "maximum": 2.0,
+      "mean": 1.844875,
+      "minimum": 0.0,
+      "sample_count": 361
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1576.700831,
+      "minimum": 309.0,
+      "sample_count": 361
+    },
+    "session": 99,
+    "workload_id": "S2"
+  },
+  {
+    "client_concurrency": 8,
+    "generation_tokens_total": {
+      "maximum": 1757.0,
+      "mean": 958.776398,
+      "minimum": 160.0,
+      "sample_count": 483
+    },
+    "gpu_cache_usage_perc": "not_available",
+    "iteration_tokens_total": "not_available",
+    "kv_cache_usage_perc": {
+      "maximum": 0.0013422818791946067,
+      "mean": 0.001013,
+      "minimum": 0.0,
+      "sample_count": 483
+    },
+    "max_num_seqs": 2,
+    "metric_parser": "exact_metric_name_corrected",
+    "num_requests_running": {
+      "maximum": 2.0,
+      "mean": 1.971014,
+      "minimum": 0.0,
+      "sample_count": 483
+    },
+    "num_requests_waiting": {
+      "maximum": 6.0,
+      "mean": 5.465839,
+      "minimum": 0.0,
+      "sample_count": 483
+    },
+    "prompt_tokens_total": {
+      "maximum": 2796.0,
+      "mean": 1574.902692,
+      "minimum": 259.0,
+      "sample_count": 483
+    },
+    "session": 99,
+    "workload_id": "S3"
+  }
+]

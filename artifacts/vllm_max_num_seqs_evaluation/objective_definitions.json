@@ -1,0 +1,28 @@
+{
+  "balanced": {
+    "maximum_ttft_p95_ms": 10000,
+    "minimum_output_tokens_per_second": 1,
+    "weights": {
+      "latency": 0.35,
+      "memory": 0.1,
+      "throughput": 0.3,
+      "tpot": 0.25
+    }
+  },
+  "latency": {
+    "maximum_ttft_p95_ms": 10000,
+    "minimum_output_tokens_per_second": 1,
+    "metric": "ttft_ms.p95",
+    "optimization": "minimize",
+    "requires_zero_oom": true,
+    "requires_zero_request_failures": true
+  },
+  "throughput": {
+    "maximum_ttft_p95_ms": 10000,
+    "minimum_output_tokens_per_second": 1,
+    "metric": "output_token_throughput",
+    "optimization": "maximize",
+    "requires_zero_oom": true,
+    "requires_zero_request_failures": true
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "E2E": "(completion time - HTTP request start time) * 1000",
+  "TPOT": "(completion time - first streamed content event time) * 1000 / (output event count - 1)",
+  "TTFT": "(first streamed content event time - HTTP request start time) * 1000",
+  "output_count_validation": "all completed S2 requests emitted 24 content events and all S3 requests emitted 32, equal to requested max_tokens",
+  "output_token_throughput": "sum output event counts / whole concurrent trace wall seconds",
+  "queue_note": "TTFT includes server queue wait after HTTP connection start; TPOT excludes pre-first-token queue time",
+  "request_throughput": "successful requests / whole concurrent trace wall seconds"
+}

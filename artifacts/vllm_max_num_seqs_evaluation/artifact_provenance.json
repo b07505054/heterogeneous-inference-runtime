@@ -1,0 +1,24 @@
+{
+  "all_after_shutdown_gpu_memory_mib": [
+    0
+  ],
+  "all_sessions_valid": true,
+  "measured_request_count": 2250,
+  "raw_logs_location": "outside_source_control:/tmp/vllm-max-num-seqs-logs",
+  "raw_session_count": 45,
+  "raw_sessions_location": "outside_source_control:/tmp/vllm-max-num-seqs-raw",
+  "source_sha256": {
+    "../ml-graph-compiler-runtime/tools/select_vllm_max_num_seqs.py": "664aca759c2b4f1a85c106494ebd9f32b8ccef7deb716949c39273329ecadaa8",
+    "artifacts/vllm_max_num_seqs_evaluation/fixed_configuration.json": "dff7c5f2d3e150dfcb7edf01b36c5956872796ab0a36acd2e28e0fbeb752ef4d",
+    "artifacts/vllm_max_num_seqs_evaluation/objective_definitions.json": "c451e68a4a494b9d079cadb5fdada4143cd8acf990570d07f72882eade982e8f",
+    "artifacts/vllm_max_num_seqs_evaluation/workload_manifest.json": "0fbca26193b346db7d387d94389f21b1f043a99f70ed68a8eb0c8cd741680f17",
+    "deployment/vllm_adapter/policy_executor.py": "f6fa100f19544035c70c2466c42e4eb7e8ad28e89edf549d89fe8676334bd1ef",
+    "scripts/finalize_vllm_max_num_seqs_evaluation.py": "b3beb1c2c59b5697ffb558e3049b040566f1054c817c335aaeb34bdd29044350",
+    "scripts/generate_vllm_max_num_seqs_workloads.py": "45eb4332c6083cebc83f2ad7d89e2d7744fca2965391d1783fafae294c5026ee",
+    "scripts/report_vllm_max_num_seqs.py": "423310baac7f9054f7e8421497e37c16adcba8b676908cae3c92190090267f89",
+    "scripts/run_vllm_max_num_seqs_matrix.py": "6a574dccb3ba58147812148084b7709c232b3189b42dffc859e16c23faac3e7c",
+    "scripts/run_vllm_max_num_seqs_proof_matrix.py": "c63786be5d531d31deb2895992793e0a39047a728217917bbc5196eef73e558b",
+    "scripts/run_vllm_max_num_seqs_session.py": "ea60fb367a3817f6dafafe509d2fea677255df42f23881123879ee07ca9ea850"
+  },
+  "truth_boundary": "real_target_model_workload_specific_measured_vllm_serving"
+}

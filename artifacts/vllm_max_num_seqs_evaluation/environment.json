@@ -1,0 +1,22 @@
+{
+  "execution_environment": "native_runtime_repository_virtual_environment",
+  "gpu_csv": "NVIDIA GeForce GTX 1650 with Max-Q Design, GPU-5d6b9a94-86b8-b7e3-9579-49e1925841d0, 4096, 595.71.05, 7.5",
+  "hostname": "allen-ZenBook-UX534FTC-UX534FT",
+  "kernel": "Linux-7.0.0-27-generic-x86_64-with-glibc2.43",
+  "metric_availability": {
+    "E2E": "measured_directly",
+    "GPU_memory": "measured_directly_with_nvidia_smi",
+    "KV_cache_usage": "not_available",
+    "TPOT": "derived_from_stream_timestamps",
+    "TTFT": "measured_directly",
+    "decode_time": "not_available",
+    "prefill_time": "not_available",
+    "queue_wait": "not_available",
+    "throughput": "derived_from_tokens_and_concurrent_wall_time"
+  },
+  "python": "3.12.13",
+  "pytorch_cuda_runtime": "13.0",
+  "pytorch_version": "2.11.0+cu130",
+  "target_identity": "NVIDIA GeForce GTX 1650 with Max-Q Design",
+  "vllm_version": "0.24.0"
+}
