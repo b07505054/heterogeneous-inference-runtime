@@ -166,6 +166,19 @@ materializer, scheduler/prefix-cache/distributed simulations, and formula-based
 admission analysis are metadata, configuration, or simulation paths—not native
 serving execution.
 
+- Added real-vLLM `max_num_seqs` measured-policy evidence for Qwen 0.5B on a
+  GTX 1650 Max-Q using vLLM 0.24.0. The artifact set contains 45 measured
+  baseline sessions across S1/S2/S3 workloads and candidate values
+  default/1/2/4/8, plus nine independent compiler-plan proof sessions. Every
+  proof session launched the exact compiler-selected value with
+  `runtime_policy_reselection_count=0`. This is target/model/workload-specific
+  measured policy for one vLLM knob, not a universal scheduler model or
+  production SLO claim.
+- Reproduced the `max_num_seqs=2` performance cliff in root-cause artifacts:
+  S2/S3 slowdowns reproduced across five clean sessions and direct controls,
+  with vLLM admitting two active decode sequences while excess HTTP requests
+  waited behind the admitted group. No metric-definition or benchmark bug was
+  found; the next step is deeper GPU profiling.
 - Completed the Slice 3A-3G fused Linear + Bias + ReLU quantization milestone:
   compiler-owned calibration and packed weights, materialized integer IR,
   canonical custom ExecutionPlan execution, fair XNNPACK comparison, and
@@ -302,6 +315,13 @@ compiler-optimized weights, AWQ, or GPTQ. The repeatability artifacts are:
 results/qwen_no_quant/repeatability_raw.json
 results/qwen_no_quant/repeatability_summary.md
 results/qwen_no_quant/failed_default_baseline/
+```
+
+Measured vLLM `max_num_seqs` policy artifacts are committed under:
+
+```text
+artifacts/vllm_max_num_seqs_evaluation/
+artifacts/vllm_max_num_seqs_root_cause/
 ```
 
 Materializer path: `ml-graph-compiler-runtime/artifacts/qwen/execution_plan.json`
