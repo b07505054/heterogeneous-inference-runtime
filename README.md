@@ -179,6 +179,11 @@ serving execution.
   with vLLM admitting two active decode sequences while excess HTTP requests
   waited behind the admitted group. No metric-definition or benchmark bug was
   found; the next step is deeper GPU profiling.
+- Added fail-closed exact RMSNorm GPU dispatch for compiler-selected CUDA and
+  Triton candidates. Runtime validates candidate id, backend, dtype, shape,
+  target GPU identity, artifact hashes, and launch config before materializing
+  the benchmark command, records `redecision_count=0`, and rejects missing or
+  mismatched exact RMSNorm fields instead of silently falling back.
 - Completed the Slice 3A-3G fused Linear + Bias + ReLU quantization milestone:
   compiler-owned calibration and packed weights, materialized integer IR,
   canonical custom ExecutionPlan execution, fair XNNPACK comparison, and
