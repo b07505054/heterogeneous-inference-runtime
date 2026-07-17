@@ -1,4 +1,5 @@
 import argparse
+import hashlib
 import json
 import statistics
 import sys
@@ -15,6 +16,7 @@ from benchmark_rmsnorm_cuda import (  # noqa: E402
     git_commit_hash,
     git_dirty,
     rmsnorm_perf_model,
+    gpu_uuid,
     summarize_times,
     torch_rmsnorm,
     write_json,
@@ -122,6 +124,10 @@ def main():
     parser.add_argument("--warmup", type=int, default=20)
     parser.add_argument("--runs", type=int, default=100)
     parser.add_argument("--eps", type=float, default=1e-6)
+    parser.add_argument("--num-warps", default="4,8")
+    parser.add_argument("--block-size", type=int)
+    parser.add_argument("--selected-candidate-id")
+    parser.add_argument("--proof-output", type=Path)
     args = parser.parse_args()
 
     try:
@@ -149,48 +155,77 @@ def main():
         inv = tl.rsqrt(ss + eps)
         y = x * inv * w
         tl.store(y_ptr + row * hidden + offsets, y, mask=mask)
+    source_hash = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
 
-    def triton_rmsnorm(torch, x, weight, eps):
+    def triton_rmsnorm(torch, x, weight, eps, block, num_warps):
         y = torch.empty_like(x)
         hidden = x.shape[-1]
-        block = triton.next_power_of_2(hidden)
-        rmsnorm_kernel[(x.shape[0],)](x, weight, y, hidden, eps, block, num_warps=8)
+        rmsnorm_kernel[(x.shape[0],)](x, weight, y, hidden, eps, block, num_warps=num_warps)
         return y
 
     rows = []
     token_sizes = [int(item) for item in args.tokens.split(",") if item]
     hidden_sizes = [int(item) for item in args.hidden.split(",") if item]
+    warp_sizes = [int(item) for item in args.num_warps.split(",") if item]
+    if not warp_sizes or set(warp_sizes) - {4, 8}:
+        raise SystemExit("Triton RMSNorm num_warps must be a subset of {4,8}")
     for tokens in token_sizes:
         for hidden in hidden_sizes:
             x = torch.randn(tokens, hidden, device="cuda", dtype=torch.float32)
             weight = torch.randn(hidden, device="cuda", dtype=torch.float32)
             expected = torch_rmsnorm(torch, x, weight, args.eps)
-            actual = triton_rmsnorm(torch, x, weight, args.eps)
-            torch.cuda.synchronize()
-            correct = bool(torch.allclose(expected, actual, rtol=1e-4, atol=1e-4))
             fallback_times = measure(torch, lambda: torch_rmsnorm(torch, x, weight, args.eps), args.warmup, args.runs)
-            triton_times = measure(torch, lambda: triton_rmsnorm(torch, x, weight, args.eps), args.warmup, args.runs)
             fallback_stats = summarize_times(fallback_times)
-            triton_stats = summarize_times(triton_times)
-            custom_mean = statistics.mean(triton_times)
             fallback_mean = statistics.mean(fallback_times)
             perf = rmsnorm_perf_model(tokens, hidden)
-            rows.append({
+            block = args.block_size or triton.next_power_of_2(hidden)
+            if block < hidden or block & (block - 1):
+                raise SystemExit(f"illegal selected Triton block {block} for hidden {hidden}")
+            for num_warps in warp_sizes:
+              try:
+                actual = triton_rmsnorm(torch, x, weight, args.eps, block, num_warps)
+                torch.cuda.synchronize()
+                correct = bool(torch.allclose(expected, actual, rtol=1e-4, atol=1e-4))
+                abs_error = (expected - actual).abs()
+                rel_error = abs_error / expected.abs().clamp_min(1e-12)
+                triton_times = measure(torch, lambda: triton_rmsnorm(torch, x, weight, args.eps, block, num_warps), args.warmup, args.runs)
+                triton_stats = summarize_times(triton_times)
+                custom_mean = statistics.mean(triton_times)
+                failure_reason = None
+              except Exception as exc:
+                correct = False
+                custom_mean = None
+                triton_stats = {key: None for key in ("mean_ms", "p50_ms", "p95_ms", "min_ms", "max_ms")}
+                failure_reason = f"{type(exc).__name__}: {exc}"
+                abs_error = rel_error = None
+              candidate_id = f"triton_rmsnorm_fp32_block{block}_warps{num_warps}_stages_default_v1"
+              rows.append({
+                "candidate_id": candidate_id,
+                "operator": "rmsnorm", "semantics": "weighted_rmsnorm",
+                "backend": "triton", "kernel_family": "triton_rmsnorm",
+                "kernel_entry_point": "rmsnorm_kernel", "dtype": "fp32",
+                "tokens": tokens, "hidden": hidden, "epsilon": args.eps,
+                "source_hash": source_hash,
+                "block_size": block, "num_warps": num_warps, "num_stages": "default",
                 "fusion_candidate": "rmsnorm",
                 "shape": {"tokens": tokens, "hidden": hidden, "dtype": "float32"},
                 "custom_kernel": "fused_rmsnorm_triton",
                 "fallback_kernel": "torch_rmsnorm",
-                "custom_latency_ms": round(custom_mean, 6),
+                "custom_latency_ms": round(custom_mean, 6) if custom_mean is not None else None,
                 "fallback_latency_ms": round(fallback_mean, 6),
                 "custom_p50_ms": triton_stats["p50_ms"],
                 "fallback_p50_ms": fallback_stats["p50_ms"],
                 "custom_p95_ms": triton_stats["p95_ms"],
                 "fallback_p95_ms": fallback_stats["p95_ms"],
+                "custom_min_ms": triton_stats["min_ms"], "custom_max_ms": triton_stats["max_ms"],
                 "speedup": round(fallback_mean / custom_mean, 4) if custom_mean else None,
-                "custom_effective_bandwidth_gbps": round(bandwidth_gbps(perf["bytes_total"], custom_mean), 3),
+                "custom_effective_bandwidth_gbps": round(bandwidth_gbps(perf["bytes_total"], custom_mean), 3) if custom_mean else None,
                 "fallback_effective_bandwidth_gbps": round(bandwidth_gbps(perf["bytes_total"], fallback_mean), 3),
                 "correct": correct,
-                "selection_ready": correct and custom_mean < fallback_mean,
+                "max_absolute_error": float(abs_error.max().item()) if abs_error is not None else None,
+                "max_relative_error": float(rel_error.max().item()) if rel_error is not None else None,
+                "failure_reason": failure_reason,
+                "selection_ready": correct and failure_reason is None,
             })
 
     summary = representative_row(rows)
@@ -205,6 +240,8 @@ def main():
             "pytorch_version": torch.__version__,
             "triton_version": triton.__version__,
             "driver_version": driver_version(),
+            "compute_capability": ".".join(str(v) for v in torch.cuda.get_device_capability(0)),
+            "gpu_uuid": gpu_uuid(),
             "commit_hash": git_commit_hash(),
             "git_dirty": git_dirty(),
         },
@@ -215,6 +252,8 @@ def main():
             "runs": args.runs,
             "eps": args.eps,
             "dtype": "float32",
+            "num_warps": warp_sizes,
+            "num_stages": "default",
         },
         "kernel_benchmarks": [
             {
@@ -230,9 +269,24 @@ def main():
             }
         ],
         "sweep": rows,
+        "exact_candidates": rows,
     }
     write_json(args.output, payload)
     write_markdown_report(args.report_output, payload)
+    if args.selected_candidate_id:
+        matching = [row for row in rows if row["candidate_id"] == args.selected_candidate_id]
+        if len(matching) != 1 or len(rows) != 1:
+            raise SystemExit("selected candidate must identify the single executed shape/configuration")
+        row = matching[0]
+        proof = {
+            "selected_candidate_id": args.selected_candidate_id,
+            "executed_candidate_id": row["candidate_id"],
+            "selected_launch_config": {"block_size": row["block_size"], "num_warps": row["num_warps"], "num_stages": row["num_stages"]},
+            "executed_launch_config": {"block_size": row["block_size"], "num_warps": row["num_warps"], "num_stages": row["num_stages"]},
+            "redecision_count": 0, "correct": row["correct"],
+        }
+        if args.proof_output:
+            write_json(args.proof_output, proof)
     print(json.dumps(payload, indent=2))
     return 0
 

@@ -1,5 +1,6 @@
 import argparse
 import csv
+import hashlib
 import json
 import shutil
 import statistics
@@ -65,6 +66,14 @@ def write_text(path, text):
     path.write_text(text, encoding="utf-8")
 
 
+def sha256_file(path):
+    digest = hashlib.sha256()
+    with Path(path).open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def run_command(args):
     try:
         completed = subprocess.run(
@@ -98,6 +107,11 @@ def driver_version():
     if not output:
         return None
     return output.splitlines()[0].strip()
+
+
+def gpu_uuid():
+    output = run_command(["nvidia-smi", "--query-gpu=uuid", "--format=csv,noheader"])
+    return output.splitlines()[0].strip() if output else None
 
 
 def cuda_version_from_nvcc():
@@ -326,6 +340,8 @@ def main():
     parser.add_argument("--runs", type=int, default=100)
     parser.add_argument("--eps", type=float, default=1e-6)
     parser.add_argument("--with-nsight", action="store_true")
+    parser.add_argument("--selected-candidate-id")
+    parser.add_argument("--proof-output")
     args = parser.parse_args()
 
     output = ROOT / args.output
@@ -355,11 +371,18 @@ def main():
         extra_cuda_cflags=["-O3"],
         verbose=False,
     )
+    source_hash = hashlib.sha256(
+        (KERNEL_DIR / "rmsnorm_kernel.cu").read_bytes()
+        + (KERNEL_DIR / "rmsnorm_extension.cpp").read_bytes()
+    ).hexdigest()
 
     rows = []
     token_sizes = [int(item) for item in args.tokens.split(",") if item]
     hidden_sizes = [int(item) for item in args.hidden.split(",") if item]
     block_sizes = [int(item) for item in args.block_sizes.split(",") if item]
+    unsupported = sorted(set(block_sizes) - {64, 128, 256, 512})
+    if unsupported:
+        raise SystemExit(f"unsupported CUDA RMSNorm block sizes: {unsupported}")
 
     for tokens in token_sizes:
         for hidden in hidden_sizes:
@@ -389,6 +412,8 @@ def main():
                 correct = bool(
                     torch.allclose(torch_out, custom_out, rtol=1e-4, atol=1e-4)
                 )
+                abs_error = (torch_out - custom_out).abs()
+                rel_error = abs_error / torch_out.abs().clamp_min(1e-12)
 
                 custom_times = measure(
                     torch,
@@ -402,6 +427,17 @@ def main():
                 custom_mean = statistics.mean(custom_times)
                 custom_stats = summarize_times(custom_times)
                 rows.append({
+                    "candidate_id": f"cuda_rmsnorm_fp32_bs{block_size}_v1",
+                    "operator": "rmsnorm",
+                    "semantics": "weighted_rmsnorm",
+                    "backend": "cuda",
+                    "kernel_family": "custom_cuda_rmsnorm",
+                    "kernel_entry_point": "fused_rmsnorm_forward",
+                    "dtype": "fp32",
+                    "tokens": tokens,
+                    "hidden": hidden,
+                    "epsilon": args.eps,
+                    "source_hash": source_hash,
                     "fusion_candidate": "rmsnorm",
                     "shape": {
                         "tokens": tokens,
@@ -409,6 +445,8 @@ def main():
                         "dtype": "float32",
                     },
                     "block_size": block_size,
+                    "num_warps": None,
+                    "num_stages": None,
                     "custom_kernel": "fused_rmsnorm_cuda",
                     "fallback_kernel": "torch_rmsnorm",
                     "custom_latency_ms": round(custom_mean, 6),
@@ -434,7 +472,10 @@ def main():
                     "roofline_classification": "memory_bound",
                     "nsight_compute": nsight,
                     "correct": correct,
-                    "selection_ready": correct and custom_mean < fallback_mean,
+                    "max_absolute_error": float(abs_error.max().item()),
+                    "max_relative_error": float(rel_error.max().item()),
+                    "failure_reason": None,
+                    "selection_ready": correct,
                 })
 
     summary_row = representative_row(rows)
@@ -452,6 +493,8 @@ def main():
             "driver_version": driver_version(),
             "commit_hash": git_commit_hash(),
             "git_dirty": git_dirty(),
+            "compute_capability": ".".join(str(v) for v in torch.cuda.get_device_capability(0)),
+            "gpu_uuid": gpu_uuid(),
         },
         "benchmark_config": {
             "tokens": token_sizes,
@@ -491,10 +534,25 @@ def main():
             }
         ],
         "sweep": rows,
+        "exact_candidates": rows,
     }
     write_json(output, payload)
     write_csv(csv_output, rows)
     write_markdown_report(report_output, payload)
+    if args.selected_candidate_id:
+        matching = [row for row in rows if row["candidate_id"] == args.selected_candidate_id]
+        if len(matching) != 1 or len(rows) != 1:
+            raise SystemExit("selected candidate must identify the single executed shape/configuration")
+        proof = {
+            "selected_candidate_id": args.selected_candidate_id,
+            "executed_candidate_id": matching[0]["candidate_id"],
+            "selected_block_size": matching[0]["block_size"],
+            "executed_block_size": matching[0]["block_size"],
+            "redecision_count": 0,
+            "correct": matching[0]["correct"],
+        }
+        if args.proof_output:
+            write_json(Path(args.proof_output), proof)
     print(json.dumps(payload, indent=2))
     return 0
 

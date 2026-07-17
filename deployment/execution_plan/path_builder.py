@@ -129,13 +129,33 @@ def _compiler_guided_vllm_path(plan: ExecutionPlan, stage: ExecutionStage, execu
 
 def _rmsnorm_path(plan: ExecutionPlan, stage: ExecutionStage) -> ExecutionPath:
     kernel = _dict_at(stage.source_compiler_decision, "kernel")
+    exact = kernel.get("decision_kind") == "rmsnorm_gpu_exact_config_selection"
+    backend = str(kernel.get("backend", "custom_cuda")) if exact else "custom_cuda"
+    launch = _dict_at(kernel, "launch_config")
+    benchmark_script = (
+        "scripts/benchmark_rmsnorm_triton.py" if backend == "triton"
+        else "scripts/benchmark_rmsnorm_cuda.py"
+    )
+    benchmark_config = {
+        "correctness_script": "scripts/test_rmsnorm_cuda_correctness.py",
+        "benchmark_script": benchmark_script,
+    }
+    if exact:
+        benchmark_config["rmsnorm_exact_config"] = {
+            key: kernel.get(key) for key in (
+                "decision_kind", "operator", "semantics", "backend", "candidate_id",
+                "kernel_family", "kernel_entry_point", "dtype", "tokens", "hidden", "epsilon",
+                "artifact", "target",
+            )
+        }
+        benchmark_config["rmsnorm_exact_config"]["launch_config"] = launch
     return ExecutionPath(
-        path_id=f"{plan.plan_id}:{stage.stage_id}:custom_cuda",
+        path_id=f"{plan.plan_id}:{stage.stage_id}:{backend}",
         path_kind=ExecutionPathKind.CUSTOM_CUDA_MICROBENCHMARK,
         stage_id=stage.stage_id,
         function_name=stage.function_name,
         serving_phase=stage.serving_phase,
-        selected_backend="custom_cuda",
+        selected_backend=backend,
         execution_method=ExecutionMethod.RMSNORM_MICROBENCHMARK,
         selected_kernel=kernel.get("selected_kernel") or "fused_rmsnorm_forward",
         kernel_library=kernel.get("kernel_library") or "local_cuda_extension",
@@ -146,13 +166,10 @@ def _rmsnorm_path(plan: ExecutionPlan, stage: ExecutionStage) -> ExecutionPath:
             "platform/cuda.json",
         ),
         runtime_config={},
-        benchmark_config={
-            "correctness_script": "scripts/test_rmsnorm_cuda_correctness.py",
-            "benchmark_script": "scripts/benchmark_rmsnorm_cuda.py",
-        },
+        benchmark_config=benchmark_config,
         output_artifact="results/runtime_paths/rmsnorm_custom_cuda_microbenchmark.json",
         truth_boundary=RMSNORM_TRUTH_BOUNDARY,
-        metadata={"compiler_plan_id": plan.plan_id},
+        metadata={"compiler_plan_id": plan.plan_id, "runtime_no_redecision": exact},
     )
 
 

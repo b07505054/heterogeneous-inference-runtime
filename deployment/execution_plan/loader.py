@@ -59,9 +59,27 @@ def validate_execution_plan(payload: dict[str, Any]) -> list[str]:
         errors.append("function_plans must be a list")
     if _contains_measured_field(payload):
         errors.append("compiler execution plan must not contain measured runtime fields")
+    errors.extend(_validate_exact_rmsnorm_decisions(payload))
     if errors:
         raise ExecutionPlanError("; ".join(errors))
     return []
+
+
+def _validate_exact_rmsnorm_decisions(payload: dict[str, Any]) -> list[str]:
+    errors = []
+    for function in payload.get("function_plans", []):
+        for op in function.get("per_op_decisions", []):
+            kernel = op.get("kernel") or {}
+            if kernel.get("decision_kind") != "rmsnorm_gpu_exact_config_selection":
+                continue
+            for key in ("candidate_id", "operator", "semantics", "backend", "kernel_family", "kernel_entry_point", "dtype", "tokens", "hidden", "epsilon", "launch_config", "artifact", "target"):
+                if kernel.get(key) is None:
+                    errors.append(f"missing exact RMSNorm field: {key}")
+            if kernel.get("selected_kernel") != kernel.get("candidate_id"):
+                errors.append("exact RMSNorm selected_kernel must equal candidate_id")
+            if kernel.get("operator") != "rmsnorm" or kernel.get("semantics") != "weighted_rmsnorm":
+                errors.append("exact RMSNorm requires weighted_rmsnorm semantics")
+    return errors
 
 
 def _contains_measured_field(value: Any) -> bool:
