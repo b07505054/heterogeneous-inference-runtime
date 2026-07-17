@@ -1,0 +1,2 @@
+tokens,hidden,block_size,dtype,custom_median_ms,custom_p50_ms,custom_p95_ms,fallback_median_ms,fallback_p50_ms,fallback_p95_ms,speedup,correct
+16,4096,64,float32,0.034816,0.034816,0.03712,0.096384,0.096384,0.109696,2.797,True
