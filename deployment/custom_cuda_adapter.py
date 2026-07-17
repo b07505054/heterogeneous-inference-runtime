@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import re
+
 from deployment.backend_adapter import BackendMaterialization
 from deployment.execution_plan.capability_view import CapabilityValidationView
 from deployment.execution_plan.schema import (
@@ -23,7 +25,7 @@ class CustomCudaBackendAdapter:
             errors.append("path_kind_not_custom_cuda_microbenchmark")
         exact = path.benchmark_config.get("rmsnorm_exact_config")
         if exact:
-            errors.extend(self._validate_exact(exact, path))
+            errors.extend(self._validate_exact(exact, path, capabilities))
         else:
             if path.selected_backend != "custom_cuda":
                 errors.append("selected_backend_not_custom_cuda")
@@ -36,7 +38,7 @@ class CustomCudaBackendAdapter:
         return errors
 
     @staticmethod
-    def _validate_exact(exact, path):
+    def _validate_exact(exact, path, capabilities):
         errors = []
         for key in ("candidate_id", "operator", "semantics", "backend", "dtype", "tokens", "hidden", "launch_config", "target", "artifact"):
             if exact.get(key) is None:
@@ -47,17 +49,38 @@ class CustomCudaBackendAdapter:
             errors.append("unsupported_rmsnorm_dtype")
         if exact.get("candidate_id") != path.selected_kernel:
             errors.append("selected_candidate_id_mismatch")
+        artifact = exact.get("artifact") or {}
+        for key in ("source_hash", "measurement_artifact_hash"):
+            value = artifact.get(key)
+            if not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{64}", value):
+                errors.append(f"invalid_rmsnorm_{key}")
+        target = exact.get("target") or {}
+        try:
+            hardware = capabilities.load_ref(path.required_capability_refs[0])
+            expected_cc = str((hardware.get("attributes") or {}).get("compute_capability"))
+            if str(target.get("compute_capability")) != expected_cc:
+                errors.append("target_compute_capability_mismatch")
+            hardware_id = str(hardware.get("hardware_id", ""))
+            gpu_name = str(target.get("gpu_name", "")).lower()
+            if hardware_id == "nvidia_gtx1650_maxq" and not all(token in gpu_name for token in ("1650", "max-q")):
+                errors.append("target_gpu_name_mismatch")
+        except ValueError:
+            pass  # validate_refs below reports the missing capability profile.
         launch = exact.get("launch_config") or {}
         if exact.get("backend") == "cuda":
             if launch.get("block_size") not in {64, 128, 256, 512}:
                 errors.append("unsupported_cuda_rmsnorm_block_size")
             if not str(exact.get("candidate_id", "")).startswith("cuda_rmsnorm_fp32_bs"):
                 errors.append("candidate_backend_mismatch")
+            elif f"bs{launch.get('block_size')}_v1" not in exact["candidate_id"]:
+                errors.append("candidate_launch_config_mismatch")
         elif exact.get("backend") == "triton":
             if launch.get("block_size", 0) < exact.get("hidden", 0) or launch.get("num_warps") not in {4, 8} or launch.get("num_stages") != "default":
                 errors.append("unsupported_triton_rmsnorm_launch_config")
             if not str(exact.get("candidate_id", "")).startswith("triton_rmsnorm_fp32_block"):
                 errors.append("candidate_backend_mismatch")
+            elif f"block{launch.get('block_size')}_warps{launch.get('num_warps')}_stages_{launch.get('num_stages')}_v1" not in exact["candidate_id"]:
+                errors.append("candidate_launch_config_mismatch")
         else:
             errors.append("unsupported_exact_rmsnorm_backend")
         return errors
@@ -99,9 +122,11 @@ class CustomCudaBackendAdapter:
                 "--eps", str(exact.get("epsilon", 1e-6)),
             )
             if exact["backend"] == "cuda":
-                benchmark_command += ("--block-sizes", str(launch["block_size"]),)
+                benchmark_command += ("--block-sizes", str(launch["block_size"]),
+                    "--csv-output", path.output_artifact + ".csv", "--report-output", path.output_artifact + ".md")
             else:
-                benchmark_command += ("--block-size", str(launch["block_size"]), "--num-warps", str(launch["num_warps"]),)
+                benchmark_command += ("--block-size", str(launch["block_size"]), "--num-warps", str(launch["num_warps"]),
+                    "--report-output", path.output_artifact + ".md")
             benchmark_command += ("--selected-candidate-id", exact["candidate_id"], "--proof-output", path.output_artifact + ".proof.json")
             config["exact_candidate"] = exact
             config["selected_candidate_id"] = exact["candidate_id"]

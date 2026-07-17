@@ -15,7 +15,7 @@ def plan(backend="cuda", candidate="cuda_rmsnorm_fp32_bs256_v1", launch=None):
               "backend": backend, "candidate_id": candidate, "kernel_family": "custom_cuda_rmsnorm" if backend == "cuda" else "triton_rmsnorm",
               "kernel_entry_point": "fused_rmsnorm_forward" if backend == "cuda" else "rmsnorm_kernel", "dtype": "fp32",
               "tokens": 16, "hidden": 4096, "epsilon": 1e-6, "launch_config": launch,
-              "artifact": {"source_hash": "s", "compiled_artifact_hash": "a"},
+              "artifact": {"source_hash": "a" * 64, "measurement_artifact_hash": "b" * 64, "compiled_artifact_hash": None},
               "target": {"gpu_name": "NVIDIA GeForce GTX 1650 Max-Q", "compute_capability": "7.5"}}
     return {"schema": "execution_plan", "schema_version": "2.0.0", "plan_id": "rmsnorm",
             "provenance": {"compiler_tool": "test", "model_spec_ref": "operator", "capability_bundle": {"hardware_profile_ref": "hardware/nvidia_gtx1650_maxq.json"}, "truth_boundary": "operator-only"},
@@ -53,3 +53,17 @@ def test_missing_launch_config_rejected():
     del payload["function_plans"][0]["per_op_decisions"][0]["kernel"]["launch_config"]
     with pytest.raises(ExecutionPlanError, match="launch_config"):
         parse_execution_plan(payload)
+
+
+def test_runtime_rejects_target_hash_and_candidate_config_mismatch():
+    for mutate, expected in (
+        (lambda k: k["target"].update(gpu_name="Other GPU"), "target_gpu_name_mismatch"),
+        (lambda k: k["artifact"].update(source_hash="not-a-hash"), "invalid_rmsnorm_source_hash"),
+        (lambda k: k["launch_config"].update(block_size=128), "candidate_launch_config_mismatch"),
+    ):
+        payload = plan()
+        kernel = payload["function_plans"][0]["per_op_decisions"][0]["kernel"]
+        mutate(kernel)
+        parsed = parse_execution_plan(payload)
+        path = next(path for path in build_execution_paths(parsed, build_execution_stages(parsed)) if path.stage_id == "rmsnorm_0")
+        assert expected in CustomCudaBackendAdapter().validate(path, CapabilityValidationView())

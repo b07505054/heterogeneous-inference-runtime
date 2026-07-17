@@ -184,6 +184,9 @@ serving execution.
   target GPU identity, artifact hashes, and launch config before materializing
   the benchmark command, records `redecision_count=0`, and rejects missing or
   mismatched exact RMSNorm fields instead of silently falling back.
+  This is real operator-level weighted FP32 execution and benchmark dispatch,
+  not a Qwen/vLLM RMSNorm replacement, production serving integration, FP16/BF16
+  path, residual fusion, vectorized CUDA load claim, or Triton autotuning claim.
 - Completed the Slice 3A-3G fused Linear + Bias + ReLU quantization milestone:
   compiler-owned calibration and packed weights, materialized integer IR,
   canonical custom ExecutionPlan execution, fair XNNPACK comparison, and

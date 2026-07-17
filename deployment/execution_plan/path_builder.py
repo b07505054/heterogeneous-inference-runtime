@@ -167,7 +167,10 @@ def _rmsnorm_path(plan: ExecutionPlan, stage: ExecutionStage) -> ExecutionPath:
         ),
         runtime_config={},
         benchmark_config=benchmark_config,
-        output_artifact="results/runtime_paths/rmsnorm_custom_cuda_microbenchmark.json",
+        output_artifact=(
+            f"results/runtime_paths/rmsnorm_{kernel.get('candidate_id')}_execution.json"
+            if exact else "results/runtime_paths/rmsnorm_custom_cuda_microbenchmark.json"
+        ),
         truth_boundary=RMSNORM_TRUTH_BOUNDARY,
         metadata={"compiler_plan_id": plan.plan_id, "runtime_no_redecision": exact},
     )
