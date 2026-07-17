@@ -1,0 +1,16 @@
+{
+  "selected_candidate_id": "triton_rmsnorm_fp32_block8192_warps4_stages_default_v1",
+  "executed_candidate_id": "triton_rmsnorm_fp32_block8192_warps4_stages_default_v1",
+  "selected_launch_config": {
+    "block_size": 8192,
+    "num_warps": 4,
+    "num_stages": "default"
+  },
+  "executed_launch_config": {
+    "block_size": 8192,
+    "num_warps": 4,
+    "num_stages": "default"
+  },
+  "redecision_count": 0,
+  "correct": true
+}

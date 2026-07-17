@@ -1,0 +1,8 @@
+{
+  "selected_candidate_id": "cuda_rmsnorm_fp32_bs64_v1",
+  "executed_candidate_id": "cuda_rmsnorm_fp32_bs64_v1",
+  "selected_block_size": 64,
+  "executed_block_size": 64,
+  "redecision_count": 0,
+  "correct": true
+}

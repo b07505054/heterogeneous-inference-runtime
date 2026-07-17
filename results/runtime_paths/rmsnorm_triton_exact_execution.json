@@ -1,0 +1,134 @@
+{
+  "artifact_type": "runtime_kernel_profile",
+  "source": "scripts/benchmark_rmsnorm_triton.py",
+  "profile_status": "measured",
+  "environment": {
+    "gpu_name": "NVIDIA GeForce GTX 1650 with Max-Q Design",
+    "cuda_version": "13.0",
+    "nvcc_version": "Cuda compilation tools, release 13.1, V13.1.115",
+    "pytorch_version": "2.11.0+cu130",
+    "triton_version": "3.6.0",
+    "driver_version": "595.71.05",
+    "compute_capability": "7.5",
+    "gpu_uuid": "GPU-5d6b9a94-86b8-b7e3-9579-49e1925841d0",
+    "commit_hash": "95cad66",
+    "git_dirty": true
+  },
+  "benchmark_config": {
+    "tokens": [
+      128
+    ],
+    "hidden": [
+      8192
+    ],
+    "warmup": 20,
+    "runs": 100,
+    "eps": 1e-06,
+    "dtype": "float32",
+    "num_warps": [
+      4
+    ],
+    "num_stages": "default"
+  },
+  "kernel_benchmarks": [
+    {
+      "fusion_candidate": "rmsnorm",
+      "custom_kernel": "fused_rmsnorm_triton",
+      "fallback_kernel": "torch_rmsnorm",
+      "custom_latency_ms": 0.120995,
+      "fallback_latency_ms": 0.34165,
+      "speedup": 2.8237,
+      "correct": true,
+      "selection_ready": true,
+      "representative_shape": {
+        "tokens": 128,
+        "hidden": 8192,
+        "dtype": "float32"
+      }
+    }
+  ],
+  "sweep": [
+    {
+      "candidate_id": "triton_rmsnorm_fp32_block8192_warps4_stages_default_v1",
+      "operator": "rmsnorm",
+      "semantics": "weighted_rmsnorm",
+      "backend": "triton",
+      "kernel_family": "triton_rmsnorm",
+      "kernel_entry_point": "rmsnorm_kernel",
+      "dtype": "fp32",
+      "tokens": 128,
+      "hidden": 8192,
+      "epsilon": 1e-06,
+      "source_hash": "879621783a1117a6c3f4c58cf225db4f40620d2a27b3d10932ec60ebd669a5e6",
+      "block_size": 8192,
+      "num_warps": 4,
+      "num_stages": "default",
+      "fusion_candidate": "rmsnorm",
+      "shape": {
+        "tokens": 128,
+        "hidden": 8192,
+        "dtype": "float32"
+      },
+      "custom_kernel": "fused_rmsnorm_triton",
+      "fallback_kernel": "torch_rmsnorm",
+      "custom_latency_ms": 0.120995,
+      "fallback_latency_ms": 0.34165,
+      "custom_p50_ms": 0.120288,
+      "fallback_p50_ms": 0.34,
+      "custom_p95_ms": 0.127712,
+      "fallback_p95_ms": 0.349824,
+      "custom_min_ms": 0.116832,
+      "custom_max_ms": 0.1432,
+      "speedup": 2.8237,
+      "custom_effective_bandwidth_gbps": 138.661,
+      "fallback_effective_bandwidth_gbps": 49.106,
+      "correct": true,
+      "max_absolute_error": 1.430511474609375e-06,
+      "max_relative_error": 3.199471052539593e-07,
+      "failure_reason": null,
+      "selection_ready": true
+    }
+  ],
+  "exact_candidates": [
+    {
+      "candidate_id": "triton_rmsnorm_fp32_block8192_warps4_stages_default_v1",
+      "operator": "rmsnorm",
+      "semantics": "weighted_rmsnorm",
+      "backend": "triton",
+      "kernel_family": "triton_rmsnorm",
+      "kernel_entry_point": "rmsnorm_kernel",
+      "dtype": "fp32",
+      "tokens": 128,
+      "hidden": 8192,
+      "epsilon": 1e-06,
+      "source_hash": "879621783a1117a6c3f4c58cf225db4f40620d2a27b3d10932ec60ebd669a5e6",
+      "block_size": 8192,
+      "num_warps": 4,
+      "num_stages": "default",
+      "fusion_candidate": "rmsnorm",
+      "shape": {
+        "tokens": 128,
+        "hidden": 8192,
+        "dtype": "float32"
+      },
+      "custom_kernel": "fused_rmsnorm_triton",
+      "fallback_kernel": "torch_rmsnorm",
+      "custom_latency_ms": 0.120995,
+      "fallback_latency_ms": 0.34165,
+      "custom_p50_ms": 0.120288,
+      "fallback_p50_ms": 0.34,
+      "custom_p95_ms": 0.127712,
+      "fallback_p95_ms": 0.349824,
+      "custom_min_ms": 0.116832,
+      "custom_max_ms": 0.1432,
+      "speedup": 2.8237,
+      "custom_effective_bandwidth_gbps": 138.661,
+      "fallback_effective_bandwidth_gbps": 49.106,
+      "correct": true,
+      "max_absolute_error": 1.430511474609375e-06,
+      "max_relative_error": 3.199471052539593e-07,
+      "failure_reason": null,
+      "selection_ready": true
+    }
+  ]
+}
