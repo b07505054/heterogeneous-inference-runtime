@@ -1,0 +1,26 @@
+{
+  "compiler_side": {
+    "ctest_command": "ctest --output-on-failure -R 'DistributedStrategyPlanningTest|DistributedStrategyPlanningPipelineTest|DistributedPlanningTest'",
+    "all_passed": true,
+    "cases_covered": [
+      "qwen_dimension_not_divisible_by_tp2",
+      "unsupported_operator_selected_for_partitioning",
+      "missing_required_shape_metadata",
+      "distributed_capability_unavailable",
+      "distributed_pass_disabled_tp1_no_distributed_key"
+    ],
+    "stdout_tail": "Test project /Users/allen/Documents/Codex/project/systems-portfolio/ml-graph-compiler-runtime/mlir_passes/build\n    Start 6: DistributedPlanningTest\n1/3 Test #6: DistributedPlanningTest ...................   Passed    0.02 sec\n    Start 7: DistributedStrategyPlanningTest\n2/3 Test #7: DistributedStrategyPlanningTest ...........   Passed    0.05 sec\n    Start 8: DistributedStrategyPlanningPipelineTest\n3/3 Test #8: DistributedStrategyPlanningPipelineTest ...   Passed    0.11 sec\n\n100% tests passed, 0 tests failed out of 3\n\nTotal Test time (real) =   0.19 sec\n"
+  },
+  "runtime_side": {
+    "cases_covered": [
+      "collective_references_unknown_operator_tensor",
+      "runtime_dimensions_differ_from_compiler_plan",
+      "runtime_mismatched_operator_id_detected_by_cross_layer_check",
+      "duplicate_rank_id",
+      "tp2_plan_sent_to_real_vllm_adapter"
+    ],
+    "all_passed": true,
+    "stdout_tail": "============================= test session starts ==============================\nplatform darwin -- Python 3.11.11, pytest-9.1.1, pluggy-1.6.0 -- /Users/allen/Documents/Codex/project/systems-portfolio/heterogeneous-inference-runtime/.venv/bin/python\ncachedir: .pytest_cache\nrootdir: /Users/allen/Documents/Codex/project/systems-portfolio/heterogeneous-inference-runtime\ncollecting ... collected 5 items\n\ntests/test_distributed_d2_qwen_pipeline.py::test_reject_collective_referencing_unknown_operator_tensor PASSED [ 20%]\ntests/test_distributed_d2_qwen_pipeline.py::test_runtime_rejects_dimensions_differing_from_compiler_plan PASSED [ 40%]\ntests/test_distributed_d2_qwen_pipeline.py::test_runtime_mismatched_operator_id_detected_by_cross_layer_check PASSED [ 60%]\ntests/test_distributed_d2_qwen_pipeline.py::test_duplicate_rank_id_rejected PASSED [ 80%]\ntests/test_distributed_d2_qwen_pipeline.py::test_reject_tp2_real_qwen_plan_on_real_vllm_adapter_path PASSED [100%]\n\n============================== 5 passed in 0.37s ===============================\n"
+  },
+  "all_negative_tests_passed": true
+}

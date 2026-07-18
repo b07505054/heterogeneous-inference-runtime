@@ -1,0 +1,40 @@
+{
+  "recorded_at_utc": "2026-07-18T22:06:12Z",
+  "note": "D2 begins immediately after D1. D1's changes are still present as uncommitted tracked modifications + untracked new files (nothing was committed at the end of D1, per instructions not to commit unless asked). This is the true starting state for D2 -- not a clean checkout.",
+  "repositories": {
+    "ml-graph-compiler-runtime": {
+      "path": "/Users/allen/Documents/Codex/project/systems-portfolio/ml-graph-compiler-runtime",
+      "branch": "master",
+      "head_commit": "dbf7329392bd2c70fa6ef25e359b277d171b3082",
+      "working_tree_status_porcelain": [
+        " M mlir_passes/CMakeLists.txt",
+        " M mlir_passes/include/serving/ExecutionPlan.h",
+        " M mlir_passes/lib/serving/ExecutionPlanExporter.cpp",
+        "?? mlir_passes/include/serving/DistributedPlanning.h",
+        "?? mlir_passes/lib/serving/DistributedPlanning.cpp",
+        "?? mlir_passes/test/serving/DistributedPlanningTest.cpp",
+        "?? mlir_passes/tools/emit-distributed-execution-plan/"
+      ],
+      "provenance": "all of the above are D1 changes, preserved unmodified as the D2 starting point"
+    },
+    "heterogeneous-inference-runtime": {
+      "path": "/Users/allen/Documents/Codex/project/systems-portfolio/heterogeneous-inference-runtime",
+      "branch": "main",
+      "head_commit": "34aee51fef08dc447a6a52d938b4867d60eeef70",
+      "working_tree_status_porcelain": [
+        " M deployment/execution_plan/__init__.py",
+        " M deployment/execution_plan/loader.py",
+        " M deployment/execution_plan/schema.py",
+        "?? deployment/tp_process_runtime/",
+        "?? docs/DISTRIBUTED_D1_COMPILER_PLANNED_TP2_MULTIPROCESS_REPORT.md",
+        "?? results/runtime_paths/distributed_d1_tp2_multiprocess/",
+        "?? scripts/run_distributed_d1_pipeline.py",
+        "?? tests/test_distributed_tp_process_runtime.py"
+      ],
+      "provenance": "all of the above are D1 changes, preserved unmodified as the D2 starting point",
+      "d1_result_dir_file_count": 15,
+      "d1_report_present": true
+    }
+  },
+  "safety_policy": "No reset/clean/stash/delete/rebase/commit/push performed. D1's result directory and report will not be overwritten -- D2 writes only to results/runtime_paths/distributed_d2_qwen_pipeline/ and docs/DISTRIBUTED_D2_QWEN_PIPELINE_PLANNING_REPORT.md."
+}

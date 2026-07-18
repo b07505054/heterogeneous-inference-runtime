@@ -1,0 +1,19 @@
+{
+  "d1_maturity_claim": "The compiler generated a TP=2 distributed execution plan, and the runtime consumed that plan to launch two real local OS processes, execute rank-local tensor shards, move real data through local IPC during a simulated collective, reconstruct the distributed output, and verify equivalence against a single-rank reference.",
+  "not_claimed": [
+    "real tensor parallel vLLM",
+    "real GPU tensor parallelism",
+    "NCCL",
+    "multi-GPU execution",
+    "distributed KV cache",
+    "real GPU communication",
+    "performance scaling representative of GPUs"
+  ],
+  "environment": "single-host CPU multi-process simulation, localhost IPC only",
+  "explicitly_not": [
+    "not NCCL",
+    "not GPU-to-GPU communication",
+    "not real vLLM tensor parallelism",
+    "not representative of multi-GPU scaling"
+  ]
+}

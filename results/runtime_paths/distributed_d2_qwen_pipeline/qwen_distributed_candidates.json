@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "tp1",
+      "strategy": "none",
+      "world_size": 1,
+      "tensor_parallel_size": 1,
+      "pipeline_parallel_size": 1,
+      "partitioned_operator_ids": [],
+      "partition_axis": 0,
+      "shard_count": 1,
+      "required_collectives": []
+    },
+    {
+      "candidate_id": "tp2",
+      "strategy": "tensor_parallel",
+      "world_size": 2,
+      "tensor_parallel_size": 2,
+      "pipeline_parallel_size": 1,
+      "partitioned_operator_ids": [
+        "qwen_prefill::llm.o_proj::layer_0"
+      ],
+      "partition_axis": 0,
+      "shard_count": 2,
+      "required_collectives": [
+        "all_reduce"
+      ]
+    }
+  ],
+  "source": "DistributedStrategyPlanningPass module attrs, read via compile-for-target --distributed-evidence-report against the real per-layer Qwen ONNX graph"
+}

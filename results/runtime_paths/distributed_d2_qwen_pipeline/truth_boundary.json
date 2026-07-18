@@ -1,0 +1,19 @@
+{
+  "d2_maturity_claim": "The real Qwen compiler serving pipeline generated, evaluated, selected, and exported TP=1/TP=2 distributed strategy candidates as part of the normal ExecutionPlan construction path, and the runtime consumed the resulting real-Qwen plan through the D1 multi-process simulator with complete plan-to-execution provenance.",
+  "not_claimed": [
+    "real Qwen tensor parallel execution",
+    "real vLLM distributed execution",
+    "real GPU tensor parallelism",
+    "NCCL",
+    "multi-GPU speedup",
+    "distributed serving profitability"
+  ],
+  "environment": "single-host CPU multi-process simulation, localhost IPC only; real Qwen model metadata (qwen2.5-0.5b, hidden_size=896, 24 layers) and one real per-layer llm.o_proj operator instance drive the plan's dimensions, but the executed workload is a Qwen-shaped synthetic matmul, not a captured live tensor",
+  "explicitly_not": [
+    "not NCCL",
+    "not GPU-to-GPU communication",
+    "not real vLLM tensor parallelism",
+    "not representative of multi-GPU scaling",
+    "not live Transformers/vLLM tensor capture"
+  ]
+}

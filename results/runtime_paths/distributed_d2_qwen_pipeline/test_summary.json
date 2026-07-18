@@ -1,0 +1,30 @@
+{
+  "compiler_repo_ctest": {
+    "command": "ctest --output-on-failure (full suite, 39 targets after D2)",
+    "returncode": 8,
+    "tail": "  Passed    0.03 sec\n      Start 31: generic_conv_transpose2d_stride2_prototypeTest\n31/39 Test #31: generic_conv_transpose2d_stride2_prototypeTest ......   Passed    0.02 sec\n      Start 32: CVFrontendNormalizationTest\n32/39 Test #32: CVFrontendNormalizationTest .........................   Passed    0.02 sec\n      Start 33: CVShapeInferenceTest\n33/39 Test #33: CVShapeInferenceTest ................................   Passed    0.02 sec\n      Start 34: CVMemoryPlanningTest\n34/39 Test #34: CVMemoryPlanningTest ................................   Passed    0.04 sec\n      Start 35: CVExecutionDomainPlanningTest\n35/39 Test #35: CVExecutionDomainPlanningTest .......................   Passed    0.04 sec\n      Start 36: TargetProfileValidationTest\n36/39 Test #36: TargetProfileValidationTest .........................   Passed    0.06 sec\n      Start 37: NvidiaProfileLoweringTest\n37/39 Test #37: NvidiaProfileLoweringTest ...........................   Passed    0.03 sec\n      Start 38: DispatchUnitBuilderTest\n38/39 Test #38: DispatchUnitBuilderTest .............................   Passed    0.02 sec\n      Start 39: TritonShadowCandidateProviderTest\n39/39 Test #39: TritonShadowCandidateProviderTest ...................   Passed    0.27 sec\n\n92% tests passed, 3 tests failed out of 39\n\nTotal Test time (real) =   1.48 sec\n\nThe following tests FAILED:\n\t  4 - ImplementationCandidateTest (Subprocess aborted)\n\t 28 - LLMFrontendNormalizationTest (Failed)\n\t 29 - QwenOnnxServingPlanExportTest (Failed)\n",
+    "d2_new_targets": [
+      "DistributedStrategyPlanningTest",
+      "DistributedStrategyPlanningPipelineTest"
+    ],
+    "pre_existing_unrelated_failures": [
+      "ImplementationCandidateTest",
+      "LLMFrontendNormalizationTest",
+      "QwenOnnxServingPlanExportTest"
+    ]
+  },
+  "runtime_repo_pytest": {
+    "command": "pytest -q agentic_eval/tests tests (full suite)",
+    "returncode": 1,
+    "tail": "ltins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules\n\ntests/test_model_adapter_registry.py:43: AssertionError\n=========================== short test summary info ============================\nFAILED tests/test_attention_runtime.py::test_compiler_selector_scores_all_legal_candidates_and_rejects_decode_split_query\nFAILED tests/test_deployment_planner.py::test_planner_selects_coreml_latency_candidate_from_mixed_artifacts\nFAILED tests/test_model_adapter_registry.py::test_registry_does_not_import_source_format_libraries\nERROR tests/test_native_fused_attention.py::test_native_matches_reference[1-7-native_scalar]\nERROR tests/test_native_fused_attention.py::test_native_matches_reference[1-7-native_avx2]\nERROR tests/test_native_fused_attention.py::test_native_matches_reference[7-7-native_scalar]\nERROR tests/test_native_fused_attention.py::test_native_matches_reference[7-7-native_avx2]\nERROR tests/test_native_fused_attention.py::test_native_matches_reference[11-37-native_scalar]\nERROR tests/test_native_fused_attention.py::test_native_matches_reference[11-37-native_avx2]\nERROR tests/test_native_fused_attention.py::test_native_matches_reference[37-63-native_scalar]\nERROR tests/test_native_fused_attention.py::test_native_matches_reference[37-63-native_avx2]\nERROR tests/test_native_fused_attention.py::test_invalid_gqa_fails - subproce...\n3 failed, 874 passed, 52 skipped, 9 errors in 22.91s\n",
+    "d2_new_test_file": "tests/test_distributed_d2_qwen_pipeline.py",
+    "pre_existing_unrelated_failures": [
+      "test_attention_runtime.py (selector-v4, explicitly out of scope)",
+      "test_deployment_planner.py (missing local capabilities/profiles/backend/coreml.json)",
+      "test_model_adapter_registry.py (sys.modules import-pollution, test-ordering sensitive)",
+      "test_native_fused_attention.py (9 subprocess/native-binary errors)"
+    ]
+  },
+  "negative_tests_all_passed": true,
+  "d1_regressions_all_green": true
+}

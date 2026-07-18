@@ -1,0 +1,43 @@
+{
+  "function_plans": [
+    {
+      "backend": {
+        "decision_id": "",
+        "decision_type": "",
+        "fallback_backends": [],
+        "scope": "Global",
+        "selected_backend": "cpu_multiprocess_simulated",
+        "source_pass": "",
+        "truth_boundary": ""
+      },
+      "function_name": "d1_sharded_matmul",
+      "per_op_decisions": [],
+      "serving_phase": "prefill"
+    }
+  ],
+  "global_decisions": {},
+  "model_identity": {
+    "hidden_size": 0,
+    "model_family": "synthetic_matmul",
+    "model_id": "d1_synthetic_sharded_matmul",
+    "num_attention_heads": 0,
+    "num_kv_heads": 0,
+    "num_layers": 0,
+    "truth_boundary": "d1_synthetic_problem_not_a_real_model"
+  },
+  "plan_id": "d1_distributed_tp1_synthetic_matmul",
+  "provenance": {
+    "capability_bundle": {
+      "backend_profile_refs": [
+        "d1_simulated_multiprocess"
+      ],
+      "hardware_profile_ref": "d1_localhost_cpu_simulated",
+      "kernel_profile_refs": []
+    },
+    "compiler_tool": "emit-distributed-execution-plan",
+    "model_spec_ref": "d1_synthetic_sharded_matmul",
+    "truth_boundary": "d1_simulated_localhost_multiprocess_ipc_not_real_gpu_not_nccl_not_measured_gpu_performance"
+  },
+  "schema": "execution_plan",
+  "schema_version": "2.0.0"
+}

@@ -1,0 +1,55 @@
+{
+  "compiler_repo_ctest": {
+    "command": "cd mlir_passes/build && cmake . && make -j8 && ctest --output-on-failure -j4",
+    "total_targets_before_d1": 34,
+    "total_targets_after_d1": 38,
+    "new_d1_target": "DistributedPlanningTest (8 sub-cases: candidate generation, TP1 legality/build, TP2 legality/export, non-divisible rejection, rank-topology rejection, collective-participant rejection, sequence-ordering rejection, shard-coverage rejection)",
+    "new_d1_target_result": "8/8 PASS",
+    "pre_existing_failures_unrelated_to_d1": [
+      {"test": "ImplementationCandidateTest", "reason": "assertion on legacy candidate_id string mismatch in compiler-internal ImplementationCandidate encode/decode; unrelated to ExecutionPlan/distributed"},
+      {"test": "LLMFrontendNormalizationTest", "reason": "JSON missing expected field 'raw_qwen_prefill_graph'; LLM frontend normalization pipeline issue, unrelated to distributed schema"},
+      {"test": "QwenOnnxServingPlanExportTest", "reason": "normalized MLIR still contains llm.attention_scores; llm-frontend-normalization did not fully consume the raw attention pattern; unrelated to distributed schema"}
+    ],
+    "overall": "35/38 passed (3 pre-existing, D1-unrelated failures; identical before and after this D1 change; not modified per CLAUDE.md no-opportunistic-refactor policy)"
+  },
+  "runtime_repo_pytest": {
+    "command": "PYTHONPATH=\"$PWD\" .venv/bin/python -m pytest -q agentic_eval/tests tests",
+    "total_before_d1_new_tests": {"passed": 846, "skipped": 52, "failed": 3, "errors": 9},
+    "total_after_d1_new_tests": {"passed": 862, "skipped": 52, "failed": 3, "errors": 9},
+    "new_d1_test_file": "tests/test_distributed_tp_process_runtime.py",
+    "new_d1_test_result": "16/16 PASS",
+    "new_d1_tests": [
+      "test_load_valid_tp2_plan",
+      "test_reject_malformed_tp2_plan_unknown_collective_kind",
+      "test_reject_silent_downgrade_missing_rank",
+      "test_preserve_legacy_tp1_plan_behavior",
+      "test_reject_tp2_on_real_vllm_adapter_path",
+      "test_two_distinct_os_processes_start_and_shutdown_cleanly",
+      "test_no_orphan_processes_after_run",
+      "test_rank_local_shard_isolation",
+      "test_child_exception_propagates_to_parent",
+      "test_all_reduce_correctness_against_serial_reference",
+      "test_all_reduce_correctness_nontrivial_seeded_case",
+      "test_missing_participant_timeout_is_real_deadlock_detection",
+      "test_duplicate_participant_rejection",
+      "test_wrong_sequence_rejection",
+      "test_wrong_tensor_shape_rejection",
+      "test_end_to_end_compiler_plan_to_verified_distributed_output"
+    ],
+    "pre_existing_failures_unrelated_to_d1": [
+      {"test": "tests/test_attention_runtime.py::test_compiler_selector_scores_all_legal_candidates_and_rejects_decode_split_query", "reason": "known selector-v4 profitability regression (legal_candidate_count 7 vs expected 13); explicitly out of scope for D1 per task instructions (do not continue selector-v4)"},
+      {"test": "tests/test_deployment_planner.py::test_planner_selects_coreml_latency_candidate_from_mixed_artifacts", "reason": "missing local data file capabilities/profiles/backend/coreml.json in this checkout; unrelated to distributed work"},
+      {"test": "tests/test_model_adapter_registry.py::test_registry_does_not_import_source_format_libraries", "reason": "sys.modules import-pollution assertion sensitive to full-suite test ordering; unrelated to distributed work"}
+    ],
+    "pre_existing_errors_unrelated_to_d1": [
+      {"tests": "tests/test_native_fused_attention.py (9 parametrized cases)", "reason": "native attention subprocess/binary errors unrelated to distributed work"}
+    ],
+    "confirmed_pre_existing": "re-ran the full suite with --deselect tests/test_distributed_tp_process_runtime.py: identical 3 failed / 9 errors / 846 passed -- proves these are not caused by D1 changes",
+    "cross_repo_contract_tests": {
+      "files": ["tests/test_p1b_cross_repo_contract.py", "tests/test_p1c_multi_candidate_contract.py", "tests/test_p1d_thread_schedule_contract.py"],
+      "result": "31 skipped (by design)",
+      "reason": "skip condition requires a locally built heterogeneous-inference-runtime/native/cpu_kernels/portable_fused_matmul_bias_relu binary, which this checkout has never built. This is a Raspberry Pi kernel_selection_contract_v1 dispatch contract for a fused matmul+bias+relu op -- unrelated to the distributed TP ExecutionPlan contract this stage extends. Not built as part of D1 (out of scope); no stale ExecutionPlan fixture was found anywhere in this surface."
+    }
+  },
+  "part_a_conclusion": "No stale ExecutionPlan contract fixtures were found requiring repair. All ExecutionPlan-schema-related Python tests (schema.py, loader.py, path_builder.py, stage_builder.py, vllm_plan_schema/backend_adapter/config_materializer, cpu_sharding, attention_cpu_adapter) pass cleanly both before and after this D1 change. The only genuine failures in either repository are pre-existing, unrelated to D1, and explicitly left unmodified (selector-v4 profitability regression is explicitly out of scope per task instructions; the other failures are unrelated fixture/environment gaps documented honestly rather than masked)."
+}

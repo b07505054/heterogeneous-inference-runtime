@@ -1,0 +1,15 @@
+{
+  "distributed_result_matches_serial_reference": true,
+  "max_abs_error": 7.815970093361102e-14,
+  "max_rel_error": 2.198795824667559e-12,
+  "shape_match": true,
+  "dtype_match": true,
+  "all_ranks_completed": true,
+  "all_collectives_completed": true,
+  "tolerance": {
+    "rtol": 1e-09,
+    "atol": 1e-09
+  },
+  "workload_hidden_dim": 896,
+  "workload_sequence_length": 8
+}

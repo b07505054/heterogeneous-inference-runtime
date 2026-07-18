@@ -1,0 +1,55 @@
+{
+  "compiler_pipeline_wall_time_s[tp1_profile]": {
+    "median": 0.03254195803310722,
+    "p95": 0.0639291659463197,
+    "min": 0.03108166705351323,
+    "max": 0.0639291659463197,
+    "n": 5
+  },
+  "compiler_pipeline_wall_time_s[tp2_opt_in_profile]": {
+    "median": 0.03141699999105185,
+    "p95": 0.031503207981586456,
+    "min": 0.031186125008389354,
+    "max": 0.031503207981586456,
+    "n": 5
+  },
+  "legality_and_cost_evaluation_latency_ns_per_candidate_pair": 3680.7,
+  "candidate_count": 2,
+  "runtime_plan_load_latency_s": {
+    "median": 4.650000482797623e-05,
+    "p95": 6.195902824401855e-05,
+    "min": 3.954209387302399e-05,
+    "max": 0.0002568329218775034,
+    "n": 20
+  },
+  "process_startup_latency_s": {
+    "median": 0.005118792061693966,
+    "p95": 0.005542209022678435,
+    "min": 0.001892333966679871,
+    "max": 0.005542209022678435,
+    "n": 5
+  },
+  "rank_local_compute_latency_s": {
+    "median": 9.991705883294344e-05,
+    "p95": 0.00012391700875014067,
+    "min": 7.195794023573399e-05,
+    "max": 0.00012391700875014067,
+    "n": 10
+  },
+  "collective_latency_s": {
+    "median": 0.0846562385559082,
+    "p95": 0.08687186241149902,
+    "min": 0.062280893325805664,
+    "max": 0.08687186241149902,
+    "n": 5
+  },
+  "end_to_end_simulated_execution_latency_s": {
+    "median": 0.3045349579770118,
+    "p95": 0.30770754197146744,
+    "min": 0.27606254105921835,
+    "max": 0.30770754197146744,
+    "n": 5
+  },
+  "repetitions": 5,
+  "truth_boundary": "single-host CPU multi-process simulation, localhost IPC only; compiler latencies are whole-pipeline wall-clock (not pass-isolated); not GPU-measured; not NCCL-calibrated; not a distributed-serving profitability claim"
+}

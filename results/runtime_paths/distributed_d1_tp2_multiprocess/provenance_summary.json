@@ -1,0 +1,15 @@
+{
+  "rank_mismatch_count": 0,
+  "missing_rank_count": 0,
+  "unexpected_rank_count": 0,
+  "shard_mismatch_count": 0,
+  "collective_sequence_mismatch_count": 0,
+  "missing_collective_participant_count": 0,
+  "unexpected_collective_participant_count": 0,
+  "fallback_count": 0,
+  "silent_downgrade_count": 0,
+  "orphan_process_count": 0,
+  "all_zero": true,
+  "provenance_chain": "planned_rank -> launched_process -> received_shard -> executed_local_operation -> entered_collective -> completed_collective -> contributed_to_reconstructed_output",
+  "counters_derived_from": "rank_process_events.jsonl + collective_events.jsonl (computed, not hardcoded)"
+}

@@ -1,0 +1,67 @@
+{
+  "method": "Traced directly from source: mlir_passes/tools/compile-for-target/main.cpp (the real production driver) and mlir_passes/include/FusionPasses.td (pass definitions). Did not assume the '16-pass' figure from the task wording.",
+  "driver_tool": "compile-for-target (mlir_passes/tools/compile-for-target/main.cpp)",
+  "driver_pipeline_description_comment_in_source": "serving passes (15-pass pipeline)  -- NOTE: this in-source comment is itself stale/inaccurate; the actual PassManager in the same file adds 27 passes, not 15 and not 16.",
+  "exact_pass_count_before_d2": 27,
+  "exact_pass_count_after_d2": 28,
+  "note_on_registerServingOptimizationPipeline": "mlir_passes/lib/serving/ServingPipeline.cpp registers a SEPARATE standalone mlir-opt pipeline ('serving-optimization-pipeline', 19 pass invocations: 3 attention + 16 named planning passes) for ad-hoc mlir-opt testing. Its own comment explicitly says 'compile-for-target uses its own PM' -- confirming it is NOT the production path. D2 extends the real compile-for-target PassManager, not this test-only registration.",
+  "production_pass_order": [
+    {"n": 1, "pass": "LLMFrontendNormalizationPass", "mlir_name": "llm-frontend-normalization", "scope": "func::FuncOp", "source": "lib/serving/LLMFrontendNormalizationPass.cpp", "purpose": "Rewrite raw q/k/v/attention_scores/softmax/kv_cache_read/write pattern into canonical llm.attention_prefill/llm.attention_decode per layer occurrence"},
+    {"n": 2, "pass": "AttentionCandidateGenerationPass", "scope": "func::FuncOp", "source": "lib/serving/AttentionImplementationPasses.cpp"},
+    {"n": 3, "pass": "AttentionLegalityPass", "scope": "func::FuncOp", "source": "lib/serving/AttentionImplementationPasses.cpp"},
+    {"n": 4, "pass": "AttentionSelectionLoweringPass", "scope": "func::FuncOp", "source": "lib/serving/AttentionImplementationPasses.cpp"},
+    {"n": 5, "pass": "ServingPhaseAnalysisPass", "mlir_name": "serving-phase-analysis", "scope": "func::FuncOp", "source": "lib/ServingPhaseAnalysisPass.cpp", "gate": "requires an llm.attention_prefill/llm.attention_decode/hir.attention/hir.cpu_attention op in the function body; sets funcOp attr 'serving.policy' only when found", "consumer": "ExecutionPlanBuilder::build() only collects a function into plan.function_plans when funcOp has attr 'serving.policy'"},
+    {"n": 6, "pass": "KVLayoutPlanningPass", "scope": "func::FuncOp", "source": "lib/serving/KVLayoutPlanningPass.cpp"},
+    {"n": 7, "pass": "ReplayEligibilityPass", "scope": "func::FuncOp", "source": "lib/serving/ReplayEligibilityPass.cpp"},
+    {"n": 8, "pass": "ExecutionProviderPlanningPass", "scope": "func::FuncOp", "source": "lib/serving/ExecutionProviderPlanningPass.cpp"},
+    {"n": 9, "pass": "RepresentationPlanningPass", "scope": "func::FuncOp", "source": "lib/serving/RepresentationPlanningPass.cpp"},
+    {"n": 10, "pass": "LayoutPlanningPass", "scope": "func::FuncOp", "source": "lib/serving/LayoutPlanningPass.cpp"},
+    {"n": 11, "pass": "BoundaryPlanningPass", "scope": "func::FuncOp", "source": "lib/serving/BoundaryPlanningPass.cpp"},
+    {"n": 12, "pass": "WeightClassificationPlanningPass", "scope": "func::FuncOp", "source": "lib/serving/WeightClassificationPlanningPass.cpp", "outputs": "weight.classification, weight.constant_satisfied per matmul-like op incl. llm.o_proj"},
+    {"n": 13, "pass": "QuantizationStrategyPlanningPass", "scope": "func::FuncOp", "source": "lib/serving/QuantizationStrategyPlanningPass.cpp"},
+    {"n": 14, "pass": "CVExecutionPlanAttrsPass", "scope": "func::FuncOp", "source": "lib/serving/CVExecutionPlanAttrsPass.cpp"},
+    {"n": 15, "pass": "KernelAvailabilityPlanningPass", "scope": "func::FuncOp", "source": "lib/serving/KernelAvailabilityPlanningPass.cpp"},
+    {"n": 16, "pass": "LoweringDecisionPlanningPass", "scope": "func::FuncOp", "source": "lib/serving/LoweringDecisionPlanningPass.cpp"},
+    {"n": 17, "pass": "QuantizedBoundaryRefinementPass", "scope": "func::FuncOp", "source": "lib/serving/QuantizedBoundaryRefinementPass.cpp"},
+    {"n": 18, "pass": "TilePlanningPass", "scope": "func::FuncOp", "source": "lib/serving/TilePlanningPass.cpp"},
+    {"n": 19, "pass": "KernelSelectionPass", "scope": "func::FuncOp", "source": "lib/serving/KernelSelectionPass.cpp"},
+    {"n": 20, "pass": "QuantizationMaterializationPass", "scope": "func::FuncOp", "source": "lib/QuantizationCompilerPasses.cpp (Slice 3D)"},
+    {"n": 21, "pass": "QuantizedKernelLoweringPass", "scope": "func::FuncOp", "source": "lib/QuantizationCompilerPasses.cpp (Slice 3D)"},
+    {"n": 22, "pass": "QuantizationCoDesignPass", "scope": "func::FuncOp", "source": "lib/serving/QuantizationCoDesignPass.cpp"},
+    {"n": "22.5 (NEW, D2)", "pass": "DistributedStrategyPlanningPass", "mlir_name": "distributed-strategy-planning", "scope": "mlir::ModuleOp", "source": "lib/serving/DistributedStrategyPlanningPass.cpp", "inserted_after": "QuantizationCoDesignPass", "inserted_before": "AlternativeLoweringPlanningPass", "rationale": "Runs after every op-level backend/dtype/kernel/weight-classification decision is settled (so it can read real, already-annotated Qwen operator metadata) and before the per-op candidate/plan-selection trio, mirroring QuantizationPlanningPass as the codebase's existing precedent for a module-scoped (Pass<..., mlir::ModuleOp>) whole-model decision distinct from the per-func passes."},
+    {"n": 23, "pass": "AlternativeLoweringPlanningPass", "scope": "func::FuncOp", "source": "lib/serving/AlternativeLoweringPlanningPass.cpp"},
+    {"n": 24, "pass": "CandidateGenerationPass", "scope": "func::FuncOp", "source": "lib/serving/CandidateGenerationPass.cpp"},
+    {"n": 25, "pass": "CandidateEvaluationPass", "scope": "func::FuncOp", "source": "lib/serving/ServingCostModelPass.cpp"},
+    {"n": 26, "pass": "PlanSelectionPass", "scope": "func::FuncOp", "source": "lib/serving/PlanSelectionPass.cpp"},
+    {"n": 27, "pass": "BoundaryMaterializationPass", "scope": "func::FuncOp", "source": "lib/serving/BoundaryMaterializationPass.cpp", "note": "The only IR-transforming (non-annotation-only) pass; runs last, after plan selection, before export"}
+  ],
+  "downstream_of_pipeline": [
+    {"stage": "ExecutionPlanBuilder::build()", "source": "lib/serving/ExecutionPlanBuilder.cpp", "input": "annotated ModuleOp + CapabilityBundle", "output": "typed in-memory ExecutionPlan struct", "notes": "Collects plan.model_identity, plan.global_decisions, plan.cv_extension unconditionally from module attrs; per-function plan.function_plans entries are gated on funcOp->getAttr('serving.policy'); D2 adds an unconditional plan.distributed collector at the same level as global_decisions/cv_extension"},
+    {"stage": "ExecutionPlanExporter::exportToFile()", "source": "lib/serving/ExecutionPlanExporter.cpp", "input": "ExecutionPlan struct", "output": "execution_plan.json (schema_version 2.0.0)"}
+  ],
+  "qwen_frontend_paths_available": [
+    {
+      "name": "legacy ModelSpec path",
+      "tool": "qwen-to-serving-mlir",
+      "script": "tools/run_qwen_compiler_pipeline.sh (documented production script for artifacts/qwen/execution_plan.json)",
+      "characteristics": "hand-templated single op block per phase, never loops over num_layers; per CLAUDE.md this is the legacy/scaffold path being phased out; does not contain an o_proj op at all (only llm.rmsnorm)",
+      "used_for_d2": false,
+      "reason_not_used": "no o_proj/QKV/MLP projection exists in this path's output to select for TP partitioning"
+    },
+    {
+      "name": "real ONNX per-layer path (target architecture)",
+      "tool": "qwen-onnx-to-serving-mlir",
+      "input": "configs/models/qwen_0_5b_onnx_graph_facts.json",
+      "characteristics": "full per-layer expansion (24 layers x 2 phases), real serving.layer_index, real llm.o_proj/q_proj/k_proj/v_proj/mlp ops with serving.quantizable=true and real tensor<?x896xf16> shapes",
+      "used_for_d2": true,
+      "reason_used": "the only path with real, per-layer Qwen operator instances and real static hidden_size=896 to check TP2 legality against, matching D2 Part D's explicit requirement"
+    }
+  ],
+  "pre_existing_unrelated_finding": {
+    "description": "LLMFrontendNormalizationPass does not fully consume the raw per-layer attention pattern produced by qwen-onnx-to-serving-mlir: running the real production compile-for-target pipeline on this real per-layer graph leaves 0 llm.attention_prefill/llm.attention_decode ops and 48/48 residual llm.attention_scores ops, so ServingPhaseAnalysisPass's hasServingOp gate never fires and plan.function_plans is empty for this input.",
+    "confirmed_pre_existing": "identical symptom independently reproduced by the pre-existing (D1-baseline-recorded) QwenOnnxServingPlanExportTest ctest failure ('normalized MLIR still contains llm.attention_scores')",
+    "in_scope_for_d2": false,
+    "impact_on_d2": "plan.distributed is collected unconditionally at module scope (like global_decisions/cv_extension), independent of the per-function serving.policy gate, so this pre-existing bug does not block D2's distributed plan collection. plan.function_plans is honestly reported as empty for the real-Qwen TP1/TP2 exports produced in this stage; this is documented, not masked.",
+    "not_fixed_because": "fixing LLMFrontendNormalizationPass's attention-pattern rewrite is a large, unrelated MLIR rewrite-pass bug fix, explicitly out of D2's scope (D2 extends the pipeline with a new pass; it does not repair unrelated existing passes)"
+  }
+}

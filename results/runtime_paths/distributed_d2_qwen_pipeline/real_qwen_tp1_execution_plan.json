@@ -1,0 +1,32 @@
+{
+  "function_plans": [],
+  "global_decisions": {},
+  "model_identity": {
+    "hidden_size": 896,
+    "model_family": "",
+    "model_id": "qwen2.5-0.5b",
+    "num_attention_heads": 14,
+    "num_kv_heads": 2,
+    "num_layers": 24,
+    "truth_boundary": "declared_model_config_not_full_graph_import"
+  },
+  "plan_id": "nvidia-gtx1650-maxq_serving_plan",
+  "provenance": {
+    "capability_bundle": {
+      "backend_profile_refs": [
+        "cuda_triton",
+        "cuda_cublas"
+      ],
+      "hardware_profile_ref": "nvidia-gtx1650-maxq",
+      "kernel_profile_refs": [
+        "cublas",
+        "triton"
+      ]
+    },
+    "compiler_tool": "compile-for-target",
+    "model_spec_ref": "",
+    "truth_boundary": "execution_planning_declared_profiles_not_measured_runtime"
+  },
+  "schema": "execution_plan",
+  "schema_version": "2.0.0"
+}

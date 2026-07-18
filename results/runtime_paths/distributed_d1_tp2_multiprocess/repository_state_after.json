@@ -1,0 +1,46 @@
+{
+  "note": "Recorded after implementing D1. No commits were made (not instructed to commit/push). No existing S1-S2.12 evidence, artifacts, or committed files were modified or deleted -- every change below is either a new file or an additive edit to a schema/exporter/loader file.",
+  "repositories": {
+    "ml-graph-compiler-runtime": {
+      "path": "/Users/allen/Documents/Codex/project/systems-portfolio/ml-graph-compiler-runtime",
+      "branch": "master",
+      "head_commit_unchanged": "dbf7329392bd2c70fa6ef25e359b277d171b3082",
+      "modified_tracked_files": [
+        "mlir_passes/CMakeLists.txt",
+        "mlir_passes/include/serving/ExecutionPlan.h",
+        "mlir_passes/lib/serving/ExecutionPlanExporter.cpp"
+      ],
+      "untracked_new_files": [
+        "mlir_passes/include/serving/DistributedPlanning.h",
+        "mlir_passes/lib/serving/DistributedPlanning.cpp",
+        "mlir_passes/test/serving/DistributedPlanningTest.cpp",
+        "mlir_passes/tools/emit-distributed-execution-plan/main.cpp"
+      ],
+      "nature_of_modifications": "Additive only: new optional DistributedPlan struct + optional ExecutionPlan.distributed field (ExecutionPlan.h), new serializeDistributedPlan()+root[\"distributed\"] emission gated on plan.distributed being set (ExecutionPlanExporter.cpp -- byte-identical output for any plan without a distributed field), new CMake targets (DistributedPlanningTest, emit-distributed-execution-plan). No existing struct field, JSON key, or CMake target was removed or renamed."
+    },
+    "heterogeneous-inference-runtime": {
+      "path": "/Users/allen/Documents/Codex/project/systems-portfolio/heterogeneous-inference-runtime",
+      "branch": "main",
+      "head_commit_unchanged": "34aee51fef08dc447a6a52d938b4867d60eeef70",
+      "modified_tracked_files": [
+        "deployment/execution_plan/__init__.py",
+        "deployment/execution_plan/loader.py",
+        "deployment/execution_plan/schema.py"
+      ],
+      "untracked_new_files": [
+        "deployment/tp_process_runtime/__init__.py",
+        "deployment/tp_process_runtime/messages.py",
+        "deployment/tp_process_runtime/rank_worker.py",
+        "deployment/tp_process_runtime/collective.py",
+        "deployment/tp_process_runtime/runtime.py",
+        "deployment/tp_process_runtime/reference.py",
+        "scripts/run_distributed_d1_pipeline.py",
+        "tests/test_distributed_tp_process_runtime.py",
+        "results/runtime_paths/distributed_d1_tp2_multiprocess/ (this D1 result directory)"
+      ],
+      "nature_of_modifications": "Additive only: new optional DistributedPlan dataclasses + optional ExecutionPlan.distributed field default None (schema.py), new _validate_distributed_plan() invoked only when a 'distributed' key is present in the payload (loader.py), new re-exports (__init__.py). No existing dataclass field, validation rule, or export name was removed or changed. deployment/vllm_adapter/* (the real-vLLM TP>1 rejection path) was not touched.",
+      "vllm_adapter_untouched": "deployment/vllm_adapter/plan_schema.py and backend_adapter.py, which reject tensor_parallel_size != 1 for the real vLLM path, were read but not modified -- confirmed by test_reject_tp2_on_real_vllm_adapter_path."
+    }
+  },
+  "safety_policy_confirmation": "No reset/clean/stash/delete/rebase/commit/push performed. All prior S1-S2.12 committed history and artifacts remain byte-for-byte unchanged (both repos' HEAD commits are identical to repository_state_before.json)."
+}

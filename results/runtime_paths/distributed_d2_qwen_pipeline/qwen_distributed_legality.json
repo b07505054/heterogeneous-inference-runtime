@@ -1,0 +1,73 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "tp1",
+      "legality_status": "legal",
+      "rejection_reasons": [],
+      "rule_results": [
+        {
+          "detail": "world_size=1 candidates bypass operator/capability legality checks",
+          "rule": "tp1_requires_no_partitioning",
+          "status": "not_applicable"
+        }
+      ]
+    },
+    {
+      "candidate_id": "tp2",
+      "legality_status": "legal",
+      "rejection_reasons": [],
+      "rule_results": [
+        {
+          "detail": "llm.o_proj",
+          "rule": "supported_operator_type",
+          "status": "pass"
+        },
+        {
+          "detail": "896",
+          "rule": "static_shape_availability",
+          "status": "pass"
+        },
+        {
+          "detail": "hidden_dim=896 tensor_parallel_size=2",
+          "rule": "tensor_hidden_dimension_divisibility",
+          "status": "pass"
+        },
+        {
+          "detail": "o_proj partitions hidden_size directly, not per-head",
+          "rule": "head_count_divisibility",
+          "status": "not_applicable"
+        },
+        {
+          "detail": "",
+          "rule": "rank_count_consistency",
+          "status": "pass"
+        },
+        {
+          "detail": "axis=0 (K / hidden contraction dimension)",
+          "rule": "partition_axis_support",
+          "status": "pass"
+        },
+        {
+          "detail": "all_reduce(sum) is implemented by the D1 runtime",
+          "rule": "required_collective_support",
+          "status": "pass"
+        },
+        {
+          "detail": "",
+          "rule": "tensor_shape_availability",
+          "status": "pass"
+        },
+        {
+          "detail": "batch/sequence dimension may remain dynamic; only the partitioned hidden dimension must be statically known",
+          "rule": "static_vs_dynamic_shape_handling",
+          "status": "pass"
+        },
+        {
+          "detail": "requires target profile distributedStrategyOptIn=true",
+          "rule": "runtime_capability_availability",
+          "status": "pass"
+        }
+      ]
+    }
+  ]
+}

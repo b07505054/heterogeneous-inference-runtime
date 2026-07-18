@@ -1,0 +1,39 @@
+{
+  "recorded_at_utc": "2026-07-18T20:37:00Z",
+  "note": "The task prompt asserted 'substantial modified and untracked S1-S2.12 work' in the runtime repository. Actual inspection at record time found both repositories fully clean and committed (no staged, unstaged, or untracked changes). This is recorded honestly rather than fabricated. All prior S1-S2.12 evidence exists as committed history and is preserved unmodified by this D1 work.",
+  "repositories": {
+    "ml-graph-compiler-runtime": {
+      "path": "/Users/allen/Documents/Codex/project/systems-portfolio/ml-graph-compiler-runtime",
+      "branch": "master",
+      "head_commit": "dbf7329392bd2c70fa6ef25e359b277d171b3082",
+      "tracking": "origin/master (up to date)",
+      "working_tree": "clean",
+      "modified_tracked_files": [],
+      "untracked_files": [],
+      "recent_log": [
+        "dbf732939 feat: add AArch64 schedule profitability evidence",
+        "8f4828d64 chore: refresh Metal RMSNorm benchmark trace",
+        "0d200c3c7 Add exact measured RMSNorm GPU configuration selection",
+        "9012f4a80 docs: add exact RMSNorm GPU selection notes",
+        "d0a9315f9 feat: add exact RMSNorm GPU candidate selection"
+      ]
+    },
+    "heterogeneous-inference-runtime": {
+      "path": "/Users/allen/Documents/Codex/project/systems-portfolio/heterogeneous-inference-runtime",
+      "branch": "main",
+      "head_commit": "34aee51fef08dc447a6a52d938b4867d60eeef70",
+      "tracking": "origin/main (up to date)",
+      "working_tree": "clean",
+      "modified_tracked_files": [],
+      "untracked_files": [],
+      "recent_log": [
+        "34aee51 feat: add compiler-selected attention runtime evidence",
+        "5b56607 Add RMSNorm custom CUDA benchmark CSV summary",
+        "7341101 Add GTX 1650 RMSNorm exact-candidate benchmark evidence",
+        "6020016 Execute exact compiler-selected RMSNorm GPU candidates",
+        "95cad66 docs: add exact RMSNorm GPU dispatch notes"
+      ]
+    }
+  },
+  "safety_policy": "No reset/clean/stash/delete/rebase performed. No commits made as part of this recording step. Only files necessary for D1 and justified contract-test repair will be modified going forward."
+}

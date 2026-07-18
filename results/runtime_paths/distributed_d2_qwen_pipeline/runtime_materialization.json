@@ -1,0 +1,42 @@
+{
+  "plan_source": "results/runtime_paths/distributed_d2_qwen_pipeline/real_qwen_tp2_execution_plan.json",
+  "selected_operator_id": "qwen_prefill::llm.o_proj::layer_0",
+  "workload": {
+    "hidden_dim": 896,
+    "sequence_length": 8,
+    "a_shape": [
+      8,
+      896
+    ],
+    "b_shape": [
+      896,
+      896
+    ],
+    "truth_boundary": "qwen_shaped_synthetic_workload_not_live_transformers_or_vllm_tensor"
+  },
+  "planned_ranks": [
+    {
+      "rank_id": 0,
+      "logical_device": "simulated_cpu_process_0"
+    },
+    {
+      "rank_id": 1,
+      "logical_device": "simulated_cpu_process_1"
+    }
+  ],
+  "materialized_processes": {
+    "0": {
+      "pid": 86644,
+      "exitcode": 0,
+      "alive_after_teardown": false
+    },
+    "1": {
+      "pid": 86645,
+      "exitcode": 0,
+      "alive_after_teardown": false
+    }
+  },
+  "status": "completed",
+  "all_ranks_completed": true,
+  "all_collectives_completed": true
+}

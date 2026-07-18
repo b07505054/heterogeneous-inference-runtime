@@ -1,0 +1,22 @@
+{
+  "d1_compiler_tests": {
+    "command": "ctest -R DistributedPlanningTest",
+    "passed": true,
+    "stdout_tail": "Test project /Users/allen/Documents/Codex/project/systems-portfolio/ml-graph-compiler-runtime/mlir_passes/build\n    Start 6: DistributedPlanningTest\n1/1 Test #6: DistributedPlanningTest ..........   Passed    0.01 sec\n\n100% tests passed, 0 tests failed out of 1\n\nTotal Test time (real) =   0.01 sec\n"
+  },
+  "d1_runtime_tests": {
+    "command": "pytest tests/test_distributed_tp_process_runtime.py",
+    "passed": true,
+    "stdout_tail": "................                                                         [100%]\n16 passed in 4.64s\n"
+  },
+  "d1_deadlock_negative_test_rerun": {
+    "status": "timeout",
+    "wall_clock_elapsed_s": 2.213939905166626,
+    "missing_ranks": [
+      1
+    ],
+    "orphans_found": []
+  },
+  "no_d1_rank_or_d2_rank_processes_after_tests": true,
+  "all_d1_regressions_green": true
+}

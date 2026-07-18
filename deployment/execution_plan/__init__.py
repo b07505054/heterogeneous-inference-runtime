@@ -15,8 +15,14 @@ from deployment.execution_plan.path_builder import (
     build_execution_paths,
 )
 from deployment.execution_plan.schema import (
+    DISTRIBUTED_TRUTH_BOUNDARY,
+    KNOWN_COLLECTIVE_KINDS,
     BackendDecision,
     CapabilityBundleRef,
+    DistributedCollectiveStep,
+    DistributedPlan,
+    DistributedRankPlacement,
+    DistributedTensorShard,
     ExecutionMethod,
     ExecutionPath,
     ExecutionPathKind,
@@ -30,10 +36,16 @@ from deployment.execution_plan.schema import (
 from deployment.execution_plan.stage_builder import build_execution_stages
 
 __all__ = [
+    "DISTRIBUTED_TRUTH_BOUNDARY",
+    "KNOWN_COLLECTIVE_KINDS",
     "BackendDecision",
     "CapabilityBundleRef",
     "CapabilityValidationError",
     "CapabilityValidationView",
+    "DistributedCollectiveStep",
+    "DistributedPlan",
+    "DistributedRankPlacement",
+    "DistributedTensorShard",
     "ExecutionMethod",
     "ExecutionPath",
     "ExecutionPathKind",

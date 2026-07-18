@@ -1,0 +1,123 @@
+{
+  "world_size_1": {
+    "repetitions": 7,
+    "process_startup_s": {
+      "median": 0.0030736669432371855,
+      "p95": 0.0038482079980894923,
+      "min": 0.0026729999808594584,
+      "max": 0.0038482079980894923,
+      "n": 7
+    },
+    "shard_dispatch_s": {
+      "median": 0.0010202500270679593,
+      "p95": 0.0014060840476304293,
+      "min": 0.0008320841006934643,
+      "max": 0.0014060840476304293,
+      "n": 7
+    },
+    "collective_latency_s": {
+      "median": 0.0953359603881836,
+      "p95": 0.09821724891662598,
+      "min": 0.09219622611999512,
+      "max": 0.09821724891662598,
+      "n": 7
+    },
+    "broadcast_and_ack_s": {
+      "median": 0.0001004999503493309,
+      "p95": 0.00011933303903788328,
+      "min": 9.612494613975286e-05,
+      "max": 0.00011933303903788328,
+      "n": 7
+    },
+    "process_shutdown_s": {
+      "median": 0.006316374987363815,
+      "p95": 0.006794624961912632,
+      "min": 0.0062527499394491315,
+      "max": 0.006794624961912632,
+      "n": 7
+    },
+    "end_to_end_s": {
+      "median": 0.3068171669729054,
+      "p95": 0.3113322911085561,
+      "min": 0.3043450410477817,
+      "max": 0.3113322911085561,
+      "n": 7
+    },
+    "bytes_contributed_per_run": {
+      "median": 128,
+      "p95": 128,
+      "min": 128,
+      "max": 128,
+      "n": 7
+    }
+  },
+  "world_size_2": {
+    "repetitions": 7,
+    "process_startup_s": {
+      "median": 0.006244458025321364,
+      "p95": 0.0070987079525366426,
+      "min": 0.0051560839638113976,
+      "max": 0.0070987079525366426,
+      "n": 7
+    },
+    "shard_dispatch_s": {
+      "median": 0.00118695804849267,
+      "p95": 0.0012627500109374523,
+      "min": 0.0009289999725297093,
+      "max": 0.0012627500109374523,
+      "n": 7
+    },
+    "collective_latency_s": {
+      "median": 0.09234499931335449,
+      "p95": 0.0937049388885498,
+      "min": 0.08770203590393066,
+      "max": 0.0937049388885498,
+      "n": 7
+    },
+    "broadcast_and_ack_s": {
+      "median": 0.0001367910299450159,
+      "p95": 0.00015804101713001728,
+      "min": 0.00012320803944021463,
+      "max": 0.00015804101713001728,
+      "n": 7
+    },
+    "process_shutdown_s": {
+      "median": 0.007537540979683399,
+      "p95": 0.007796125020831823,
+      "min": 0.007484957925044,
+      "max": 0.007796125020831823,
+      "n": 7
+    },
+    "end_to_end_s": {
+      "median": 0.3092671660706401,
+      "p95": 0.31155312492046505,
+      "min": 0.30333120794966817,
+      "max": 0.31155312492046505,
+      "n": 7
+    },
+    "bytes_contributed_per_run": {
+      "median": 256,
+      "p95": 256,
+      "min": 256,
+      "max": 256,
+      "n": 7
+    }
+  },
+  "serial_in_process_reference": {
+    "repetitions": 7,
+    "compute_s": {
+      "median": 2.8329668566584587e-06,
+      "p95": 2.3707980290055275e-05,
+      "min": 2.1669548004865646e-06,
+      "max": 2.3707980290055275e-05,
+      "n": 7
+    }
+  },
+  "ipc_overhead_vs_serial_reference": {
+    "world_size_2_end_to_end_median_s": 0.3092671660706401,
+    "serial_reference_median_s": 2.8329668566584587e-06,
+    "overhead_ratio": 109167.23764125745,
+    "interpretation": "process spawn + IPC dominates end-to-end time for this tiny 4x16x4 problem; overhead_ratio is an IPC-cost measurement, not a distributed-scaling speedup claim -- there is no speedup claim in D1"
+  },
+  "truth_boundary": "single-host CPU multi-process simulation, localhost IPC only via multiprocessing.Queue (spawn context); not NCCL; not GPU-to-GPU communication; not real vLLM tensor parallelism; not representative of multi-GPU scaling"
+}

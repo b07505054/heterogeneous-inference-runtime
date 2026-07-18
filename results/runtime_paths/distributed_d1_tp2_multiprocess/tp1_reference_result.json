@@ -1,0 +1,15 @@
+{
+  "seed": 999,
+  "m": 4,
+  "k": 16,
+  "n": 4,
+  "a_checksum": 7.707444287112615,
+  "b_checksum": -13.961647940296352,
+  "result_shape": [
+    4,
+    4
+  ],
+  "result_checksum": -17.73973109625417,
+  "compute_s": 1.2125005014240742e-05,
+  "truth_boundary": "in-process numpy matmul; single-rank serial reference oracle"
+}

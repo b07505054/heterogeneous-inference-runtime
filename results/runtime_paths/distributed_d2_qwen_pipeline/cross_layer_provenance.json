@@ -1,0 +1,56 @@
+{
+  "all_match": true,
+  "mismatch_count": 0,
+  "operator_id_match": true,
+  "world_size_match": true,
+  "rank_ids_match": true,
+  "shard_ranges_match": true,
+  "collective_id_match": true,
+  "sequence_id_match": true,
+  "participant_set_match": true,
+  "no_silent_downgrade": true,
+  "no_synthetic_fallback_dimensions": true,
+  "details": {
+    "planned_operator_id": "qwen_prefill::llm.o_proj::layer_0",
+    "executed_operator_ids": [
+      "qwen_prefill::llm.o_proj::layer_0"
+    ],
+    "planned_world_size": 2,
+    "executed_process_count": 2,
+    "planned_rank_ids": [
+      0,
+      1
+    ],
+    "executed_rank_ids": [
+      0,
+      1
+    ],
+    "planned_shard_widths": {
+      "0": 448,
+      "1": 448
+    },
+    "executed_shard_widths": {
+      "0": 448,
+      "1": 448
+    },
+    "planned_collective_id": "all_reduce_0",
+    "executed_collective_ids": [
+      "all_reduce_0"
+    ],
+    "planned_sequence_id": 0,
+    "executed_sequence_ids": [
+      0
+    ],
+    "planned_participants": [
+      0,
+      1
+    ],
+    "executed_participants": [
+      0,
+      1
+    ],
+    "plan_declared_hidden_dim": 896,
+    "workload_hidden_dim_used": 896
+  },
+  "provenance_chain": "qwen_graph_operator -> distributed_candidate -> legality_decision -> cost_evaluation_result -> selected_candidate -> execution_plan_distributed_work_item -> runtime_rank_specifications -> launched_process_ids -> rank_local_shards -> collective_participation -> reconstructed_output"
+}

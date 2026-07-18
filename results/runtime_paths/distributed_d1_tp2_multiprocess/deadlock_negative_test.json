@@ -1,0 +1,44 @@
+{
+  "scenario": "rank 1 intentionally skips collective sequence 0 (force_skip_collective_rank=1)",
+  "configured_collective_timeout_s": 2.0,
+  "wall_clock_elapsed_s": 2.217215061187744,
+  "status": "timeout",
+  "deadlock_record": {
+    "collective_id": "all_reduce_0",
+    "sequence_id": 0,
+    "missing_ranks": [
+      1
+    ],
+    "elapsed_s": 2.001934051513672,
+    "status": "timeout_detected_deadlock"
+  },
+  "provenance": {
+    "rank_mismatch_count": 0,
+    "missing_rank_count": 0,
+    "unexpected_rank_count": 0,
+    "shard_mismatch_count": 0,
+    "collective_sequence_mismatch_count": 0,
+    "missing_collective_participant_count": 1,
+    "unexpected_collective_participant_count": 0,
+    "fallback_count": 0,
+    "silent_downgrade_count": 0,
+    "orphan_process_count": 0
+  },
+  "process_orphan_checks": [
+    {
+      "rank_id": 0,
+      "pid": 84263,
+      "os_kill_0_confirms_alive": false,
+      "exitcode": -15
+    },
+    {
+      "rank_id": 1,
+      "pid": 84264,
+      "os_kill_0_confirms_alive": false,
+      "exitcode": -15
+    }
+  ],
+  "no_orphans_confirmed": true,
+  "test_passes_because": "the configured timeout genuinely expired (wall_clock_elapsed_s >= configured timeout) and the coordinator identified exactly the missing rank from real event non-arrival, not a hardcoded result",
+  "assertion_timeout_was_real": true
+}

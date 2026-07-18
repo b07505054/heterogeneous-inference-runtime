@@ -1,0 +1,27 @@
+{
+  "status": "completed",
+  "world_size": 2,
+  "all_ranks_completed": true,
+  "all_collectives_completed": true,
+  "distributed_output_shape": [
+    4,
+    4
+  ],
+  "distributed_output_checksum": -17.73973109625417,
+  "process_pids": {
+    "0": 84261,
+    "1": 84262
+  },
+  "process_exitcodes": {
+    "0": 0,
+    "1": 0
+  },
+  "timings": {
+    "process_startup_s": 0.0020644169999286532,
+    "shard_dispatch_s": 0.00034008303191512823,
+    "collective_latency_s": 0.06116771697998047,
+    "broadcast_and_ack_s": 0.00015354203060269356,
+    "process_shutdown_s": 0.007935291971080005,
+    "end_to_end_s": 0.27711174997966737
+  }
+}

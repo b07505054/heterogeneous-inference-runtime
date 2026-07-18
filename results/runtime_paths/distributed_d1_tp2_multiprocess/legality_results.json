@@ -1,0 +1,42 @@
+{
+  "candidate_legality_probe_cases": [
+    {
+      "candidate": "tp1",
+      "tensor_dim_k": 16,
+      "expected_legal": true,
+      "observed_legal": true,
+      "matches_expectation": true,
+      "returncode": 0,
+      "stdout": "wrote /Users/allen/Documents/Codex/project/systems-portfolio/heterogeneous-inference-runtime/results/runtime_paths/distributed_d1_tp2_multiprocess/_legality_probe_tp1_16.json (candidate=tp1, world_size=1, tensor_dim_k=16, m=4, n=4)",
+      "stderr": ""
+    },
+    {
+      "candidate": "tp2",
+      "tensor_dim_k": 16,
+      "expected_legal": true,
+      "observed_legal": true,
+      "matches_expectation": true,
+      "returncode": 0,
+      "stdout": "wrote /Users/allen/Documents/Codex/project/systems-portfolio/heterogeneous-inference-runtime/results/runtime_paths/distributed_d1_tp2_multiprocess/_legality_probe_tp2_16.json (candidate=tp2, world_size=2, tensor_dim_k=16, m=4, n=4)",
+      "stderr": ""
+    },
+    {
+      "candidate": "tp2",
+      "tensor_dim_k": 15,
+      "expected_legal": false,
+      "observed_legal": false,
+      "matches_expectation": true,
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "error: candidate 'tp2' failed legality for tensor_dim_k=15:\n  - tensor dimension is not divisible by tensor_parallel_size"
+    }
+  ],
+  "all_candidate_probes_matched_expectation": true,
+  "structural_legality_negative_tests": {
+    "invalid_rank_topology_rejection": "DistributedPlanningTest::testInvalidRankTopologyRejection (ctest, PASS)",
+    "invalid_collective_participants_rejection": "DistributedPlanningTest::testInvalidCollectiveParticipantsRejection (ctest, PASS)",
+    "invalid_sequence_ordering_rejection": "DistributedPlanningTest::testInvalidSequenceOrderingRejection (ctest, PASS)",
+    "invalid_shard_coverage_rejection": "DistributedPlanningTest::testInvalidShardCoverageRejection (ctest, PASS)"
+  },
+  "source": "real subprocess invocations of emit-distributed-execution-plan plus ctest DistributedPlanningTest results"
+}

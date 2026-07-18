@@ -1,0 +1,13 @@
+{
+  "distributed_result_matches_serial_reference": true,
+  "max_abs_error": 2.220446049250313e-15,
+  "max_rel_error": 6.595358580777043e-16,
+  "shape_match": true,
+  "dtype_match": true,
+  "all_ranks_completed": true,
+  "all_collectives_completed": true,
+  "tolerance": {
+    "rtol": 1e-09,
+    "atol": 1e-09
+  }
+}

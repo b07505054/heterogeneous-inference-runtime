@@ -1,0 +1,10 @@
+{
+  "selected_candidate_id": "tp2",
+  "selection_reason": "legal_tp2_explicit_opt_in_profile",
+  "policy_id": "d2_explicit_opt_in_v1",
+  "policy_truth_boundary": "d2_qwen_pipeline_structural_planning_not_measured_gpu_performance_not_nccl_calibrated_not_distributed_profitability_claim",
+  "all_candidates_considered": [
+    "tp1",
+    "tp2"
+  ]
+}

@@ -1,0 +1,16 @@
+{"type": "event", "rank_id": 0, "event": "process_started", "ts": 1784413707.552733, "pid": 86644}
+{"type": "event", "rank_id": 1, "event": "process_started", "ts": 1784413707.552785, "pid": 86645}
+{"type": "event", "rank_id": 0, "event": "shard_received", "ts": 1784413707.556468, "a_shape": [8, 448], "b_shape": [448, 896]}
+{"type": "event", "rank_id": 1, "event": "shard_received", "ts": 1784413707.5565922, "a_shape": [8, 448], "b_shape": [448, 896]}
+{"type": "event", "rank_id": 0, "event": "local_compute_done", "ts": 1784413707.5565681, "compute_ms": 0.08370901923626661, "partial_shape": [8, 896]}
+{"type": "event", "rank_id": 0, "event": "entered_collective", "ts": 1784413707.556575, "collective_id": "all_reduce_0", "sequence_id": 0}
+{"type": "event", "rank_id": 1, "event": "local_compute_done", "ts": 1784413707.5567842, "compute_ms": 0.1728330971673131, "partial_shape": [8, 896]}
+{"type": "event", "rank_id": 1, "event": "entered_collective", "ts": 1784413707.55679, "collective_id": "all_reduce_0", "sequence_id": 0}
+{"type": "event", "rank_id": 0, "event": "collective_result_received", "ts": 1784413707.55819, "shape": [8, 896]}
+{"type": "event", "rank_id": 0, "event": "rank_done", "ts": 1784413707.558196}
+{"type": "event", "rank_id": 1, "event": "collective_result_received", "ts": 1784413707.5582888, "shape": [8, 896]}
+{"type": "event", "rank_id": 1, "event": "rank_done", "ts": 1784413707.558294}
+{"type": "event", "rank_id": 0, "event": "process_exit_checked", "ts": 1784413707.568324, "alive": false, "exitcode": 0}
+{"type": "event", "rank_id": 1, "event": "process_exit_checked", "ts": 1784413707.568348, "alive": false, "exitcode": 0}
+{"type": "event", "rank_id": 0, "event": "shutting_down", "ts": 1784413707.5584059}
+{"type": "event", "rank_id": 1, "event": "shutting_down", "ts": 1784413707.558424}

@@ -418,6 +418,123 @@ class GlobalDecisions:
         )
 
 
+# ---------------------------------------------------------------------------
+# D1: distributed execution plan (compiler-planned TP=2 multi-process
+# simulation). Mirrors ml-graph-compiler-runtime's
+# mlir_passes/include/serving/ExecutionPlan.h DistributedPlan struct and
+# ExecutionPlanExporter's "distributed" JSON block field-for-field. Absent
+# entirely on legacy/TP1 plans -- from_dict returns None for those, and every
+# existing ExecutionPlan.from_dict caller is unaffected.
+#
+# Truth boundary: this describes a compiler PLAN for a localhost CPU
+# multi-process simulation. It is not a real GPU/NCCL/vLLM distributed
+# execution claim -- see DISTRIBUTED_TRUTH_BOUNDARY below and
+# docs/DISTRIBUTED_D1_COMPILER_PLANNED_TP2_MULTIPROCESS_REPORT.md.
+# ---------------------------------------------------------------------------
+
+DISTRIBUTED_TRUTH_BOUNDARY = (
+    "D1 distributed plan: single-host CPU multi-process simulation over "
+    "localhost IPC. Not NCCL, not GPU-to-GPU communication, not real vLLM "
+    "tensor parallelism, not representative of multi-GPU scaling."
+)
+
+# D1 implements exactly one collective kind. Any other declared kind must be
+# rejected explicitly, never silently ignored.
+KNOWN_COLLECTIVE_KINDS = frozenset({"all_reduce"})
+
+
+@dataclass(frozen=True)
+class DistributedRankPlacement:
+    rank_id: int
+    logical_device: str
+
+    @classmethod
+    def from_dict(cls, payload: dict[str, Any]) -> "DistributedRankPlacement":
+        return cls(
+            rank_id=int(payload.get("rank_id", -1)),
+            logical_device=str(payload.get("logical_device", "")),
+        )
+
+
+@dataclass(frozen=True)
+class DistributedTensorShard:
+    tensor_id: str
+    partition_axis: int
+    partition_count: int
+    shard_index: int
+    range_start: int
+    range_end: int
+
+    @classmethod
+    def from_dict(cls, payload: dict[str, Any]) -> "DistributedTensorShard":
+        return cls(
+            tensor_id=str(payload.get("tensor_id", "")),
+            partition_axis=int(payload.get("partition_axis", 0)),
+            partition_count=int(payload.get("partition_count", 0)),
+            shard_index=int(payload.get("shard_index", -1)),
+            range_start=int(payload.get("range_start", 0)),
+            range_end=int(payload.get("range_end", 0)),
+        )
+
+
+@dataclass(frozen=True)
+class DistributedCollectiveStep:
+    collective_id: str
+    sequence_id: int
+    kind: str
+    participants: tuple[int, ...]
+    tensor_id: str
+    reduction: str
+
+    @classmethod
+    def from_dict(cls, payload: dict[str, Any]) -> "DistributedCollectiveStep":
+        return cls(
+            collective_id=str(payload.get("collective_id", "")),
+            sequence_id=int(payload.get("sequence_id", -1)),
+            kind=str(payload.get("kind", "")),
+            participants=tuple(int(p) for p in payload.get("participants", ())),
+            tensor_id=str(payload.get("tensor_id", "")),
+            reduction=str(payload.get("reduction", "")),
+        )
+
+
+@dataclass(frozen=True)
+class DistributedPlan:
+    strategy: str
+    world_size: int
+    tensor_parallel_size: int
+    pipeline_parallel_size: int
+    ranks: tuple[DistributedRankPlacement, ...]
+    tensor_shards: tuple[DistributedTensorShard, ...]
+    collectives: tuple[DistributedCollectiveStep, ...]
+    truth_boundary: str
+
+    @classmethod
+    def from_dict(cls, payload: dict[str, Any]) -> "DistributedPlan":
+        return cls(
+            strategy=str(payload.get("strategy", "")),
+            world_size=int(payload.get("world_size", 0)),
+            tensor_parallel_size=int(payload.get("tensor_parallel_size", 0)),
+            pipeline_parallel_size=int(payload.get("pipeline_parallel_size", 0)),
+            ranks=tuple(
+                DistributedRankPlacement.from_dict(r)
+                for r in payload.get("ranks", ())
+                if isinstance(r, dict)
+            ),
+            tensor_shards=tuple(
+                DistributedTensorShard.from_dict(s)
+                for s in payload.get("tensor_shards", ())
+                if isinstance(s, dict)
+            ),
+            collectives=tuple(
+                DistributedCollectiveStep.from_dict(c)
+                for c in payload.get("collectives", ())
+                if isinstance(c, dict)
+            ),
+            truth_boundary=str(payload.get("truth_boundary", "")),
+        )
+
+
 @dataclass(frozen=True)
 class ExecutionPlan:
     schema: str
@@ -428,10 +545,14 @@ class ExecutionPlan:
     global_decisions: GlobalDecisions
     function_plans: tuple[FunctionPlan, ...]
     truth_boundary: str
+    # D1: None for legacy/TP1 plans -- every plan predating this field, and
+    # every explicit TP1 candidate export, parses identically to before.
+    distributed: DistributedPlan | None = None
     raw: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
     def from_dict(cls, payload: dict[str, Any]) -> "ExecutionPlan":
+        distributed_payload = payload.get("distributed")
         return cls(
             schema=str(payload.get("schema", "")),
             schema_version=str(payload.get("schema_version", "")),
@@ -450,6 +571,11 @@ class ExecutionPlan:
                 _dict_at(payload, "provenance").get(
                     "truth_boundary", EXECUTION_PLAN_TRUTH_BOUNDARY
                 )
+            ),
+            distributed=(
+                DistributedPlan.from_dict(distributed_payload)
+                if isinstance(distributed_payload, dict)
+                else None
             ),
             raw=dict(payload),
         )

@@ -1,0 +1,16 @@
+{"type": "event", "rank_id": 1, "event": "process_started", "ts": 1784411854.830271, "pid": 84262}
+{"type": "event", "rank_id": 0, "event": "process_started", "ts": 1784411854.830295, "pid": 84261}
+{"type": "event", "rank_id": 1, "event": "shard_received", "ts": 1784411854.830397, "a_shape": [4, 8], "b_shape": [8, 4]}
+{"type": "event", "rank_id": 0, "event": "shard_received", "ts": 1784411854.8304021, "a_shape": [4, 8], "b_shape": [8, 4]}
+{"type": "event", "rank_id": 1, "event": "local_compute_done", "ts": 1784411854.8304372, "compute_ms": 0.01066701952368021, "partial_shape": [4, 4]}
+{"type": "event", "rank_id": 0, "event": "local_compute_done", "ts": 1784411854.830436, "compute_ms": 0.008167000487446785, "partial_shape": [4, 4]}
+{"type": "event", "rank_id": 1, "event": "entered_collective", "ts": 1784411854.830441, "collective_id": "all_reduce_0", "sequence_id": 0}
+{"type": "event", "rank_id": 0, "event": "entered_collective", "ts": 1784411854.830438, "collective_id": "all_reduce_0", "sequence_id": 0}
+{"type": "event", "rank_id": 0, "event": "collective_result_received", "ts": 1784411854.830826, "shape": [4, 4]}
+{"type": "event", "rank_id": 0, "event": "rank_done", "ts": 1784411854.830831}
+{"type": "event", "rank_id": 1, "event": "collective_result_received", "ts": 1784411854.830842, "shape": [4, 4]}
+{"type": "event", "rank_id": 1, "event": "rank_done", "ts": 1784411854.830847}
+{"type": "event", "rank_id": 0, "event": "process_exit_checked", "ts": 1784411854.838795, "alive": false, "exitcode": 0}
+{"type": "event", "rank_id": 1, "event": "process_exit_checked", "ts": 1784411854.838816, "alive": false, "exitcode": 0}
+{"type": "event", "rank_id": 0, "event": "shutting_down", "ts": 1784411854.8309288}
+{"type": "event", "rank_id": 1, "event": "shutting_down", "ts": 1784411854.8309572}

@@ -1,0 +1,1 @@
+{"collective_id": "all_reduce_0", "sequence_id": 0, "status": "completed", "participant_ranks": [0, 1], "bytes_contributed": 114688, "start_ts": 1784413707.485062, "end_ts": 1784413707.55741, "latency_s": 0.07234811782836914, "tensor_id": "qwen_prefill::llm.o_proj::layer_0"}
