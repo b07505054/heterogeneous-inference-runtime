@@ -1,0 +1,705 @@
+{
+  "scope": "attention intermediates plus common materialized GQA K/V expansion",
+  "rows": [
+    {
+      "workload": [
+        "prefill",
+        4,
+        4
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 896,
+      "probability_bytes": 896,
+      "temporary_bytes": 1792,
+      "largest_temporary_allocation_bytes": 896,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 28672,
+      "total_temporary_bytes_including_gqa": 30464,
+      "traffic": {
+        "q_read_bytes": 14336,
+        "expanded_k_read_bytes": 14336,
+        "expanded_v_read_bytes": 14336,
+        "output_write_bytes": 14336,
+        "score_write_bytes": 896,
+        "score_read_bytes": 896,
+        "probability_write_bytes": 896,
+        "probability_read_bytes": 896
+      }
+    },
+    {
+      "workload": [
+        "prefill",
+        8,
+        8
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 3584,
+      "probability_bytes": 3584,
+      "temporary_bytes": 7168,
+      "largest_temporary_allocation_bytes": 3584,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 57344,
+      "total_temporary_bytes_including_gqa": 64512,
+      "traffic": {
+        "q_read_bytes": 28672,
+        "expanded_k_read_bytes": 28672,
+        "expanded_v_read_bytes": 28672,
+        "output_write_bytes": 28672,
+        "score_write_bytes": 3584,
+        "score_read_bytes": 3584,
+        "probability_write_bytes": 3584,
+        "probability_read_bytes": 3584
+      }
+    },
+    {
+      "workload": [
+        "prefill",
+        16,
+        16
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 14336,
+      "probability_bytes": 14336,
+      "temporary_bytes": 28672,
+      "largest_temporary_allocation_bytes": 14336,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 114688,
+      "total_temporary_bytes_including_gqa": 143360,
+      "traffic": {
+        "q_read_bytes": 57344,
+        "expanded_k_read_bytes": 57344,
+        "expanded_v_read_bytes": 57344,
+        "output_write_bytes": 57344,
+        "score_write_bytes": 14336,
+        "score_read_bytes": 14336,
+        "probability_write_bytes": 14336,
+        "probability_read_bytes": 14336
+      }
+    },
+    {
+      "workload": [
+        "prefill",
+        32,
+        32
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 57344,
+      "probability_bytes": 57344,
+      "temporary_bytes": 114688,
+      "largest_temporary_allocation_bytes": 57344,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 229376,
+      "total_temporary_bytes_including_gqa": 344064,
+      "traffic": {
+        "q_read_bytes": 114688,
+        "expanded_k_read_bytes": 114688,
+        "expanded_v_read_bytes": 114688,
+        "output_write_bytes": 114688,
+        "score_write_bytes": 57344,
+        "score_read_bytes": 57344,
+        "probability_write_bytes": 57344,
+        "probability_read_bytes": 57344
+      }
+    },
+    {
+      "workload": [
+        "prefill",
+        64,
+        64
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 229376,
+      "probability_bytes": 229376,
+      "temporary_bytes": 458752,
+      "largest_temporary_allocation_bytes": 229376,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 458752,
+      "total_temporary_bytes_including_gqa": 917504,
+      "traffic": {
+        "q_read_bytes": 229376,
+        "expanded_k_read_bytes": 229376,
+        "expanded_v_read_bytes": 229376,
+        "output_write_bytes": 229376,
+        "score_write_bytes": 229376,
+        "score_read_bytes": 229376,
+        "probability_write_bytes": 229376,
+        "probability_read_bytes": 229376
+      }
+    },
+    {
+      "workload": [
+        "prefill",
+        128,
+        128
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 917504,
+      "probability_bytes": 917504,
+      "temporary_bytes": 1835008,
+      "largest_temporary_allocation_bytes": 917504,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 917504,
+      "total_temporary_bytes_including_gqa": 2752512,
+      "traffic": {
+        "q_read_bytes": 458752,
+        "expanded_k_read_bytes": 458752,
+        "expanded_v_read_bytes": 458752,
+        "output_write_bytes": 458752,
+        "score_write_bytes": 917504,
+        "score_read_bytes": 917504,
+        "probability_write_bytes": 917504,
+        "probability_read_bytes": 917504
+      }
+    },
+    {
+      "workload": [
+        "prefill",
+        256,
+        256
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 3670016,
+      "probability_bytes": 3670016,
+      "temporary_bytes": 7340032,
+      "largest_temporary_allocation_bytes": 3670016,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 1835008,
+      "total_temporary_bytes_including_gqa": 9175040,
+      "traffic": {
+        "q_read_bytes": 917504,
+        "expanded_k_read_bytes": 917504,
+        "expanded_v_read_bytes": 917504,
+        "output_write_bytes": 917504,
+        "score_write_bytes": 3670016,
+        "score_read_bytes": 3670016,
+        "probability_write_bytes": 3670016,
+        "probability_read_bytes": 3670016
+      }
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        4
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 224,
+      "probability_bytes": 224,
+      "temporary_bytes": 448,
+      "largest_temporary_allocation_bytes": 224,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 28672,
+      "total_temporary_bytes_including_gqa": 29120,
+      "traffic": {
+        "q_read_bytes": 3584,
+        "expanded_k_read_bytes": 14336,
+        "expanded_v_read_bytes": 14336,
+        "output_write_bytes": 3584,
+        "score_write_bytes": 224,
+        "score_read_bytes": 224,
+        "probability_write_bytes": 224,
+        "probability_read_bytes": 224
+      }
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        8
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 448,
+      "probability_bytes": 448,
+      "temporary_bytes": 896,
+      "largest_temporary_allocation_bytes": 448,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 57344,
+      "total_temporary_bytes_including_gqa": 58240,
+      "traffic": {
+        "q_read_bytes": 3584,
+        "expanded_k_read_bytes": 28672,
+        "expanded_v_read_bytes": 28672,
+        "output_write_bytes": 3584,
+        "score_write_bytes": 448,
+        "score_read_bytes": 448,
+        "probability_write_bytes": 448,
+        "probability_read_bytes": 448
+      }
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        16
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 896,
+      "probability_bytes": 896,
+      "temporary_bytes": 1792,
+      "largest_temporary_allocation_bytes": 896,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 114688,
+      "total_temporary_bytes_including_gqa": 116480,
+      "traffic": {
+        "q_read_bytes": 3584,
+        "expanded_k_read_bytes": 57344,
+        "expanded_v_read_bytes": 57344,
+        "output_write_bytes": 3584,
+        "score_write_bytes": 896,
+        "score_read_bytes": 896,
+        "probability_write_bytes": 896,
+        "probability_read_bytes": 896
+      }
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        32
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 1792,
+      "probability_bytes": 1792,
+      "temporary_bytes": 3584,
+      "largest_temporary_allocation_bytes": 1792,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 229376,
+      "total_temporary_bytes_including_gqa": 232960,
+      "traffic": {
+        "q_read_bytes": 3584,
+        "expanded_k_read_bytes": 114688,
+        "expanded_v_read_bytes": 114688,
+        "output_write_bytes": 3584,
+        "score_write_bytes": 1792,
+        "score_read_bytes": 1792,
+        "probability_write_bytes": 1792,
+        "probability_read_bytes": 1792
+      }
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        64
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 3584,
+      "probability_bytes": 3584,
+      "temporary_bytes": 7168,
+      "largest_temporary_allocation_bytes": 3584,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 458752,
+      "total_temporary_bytes_including_gqa": 465920,
+      "traffic": {
+        "q_read_bytes": 3584,
+        "expanded_k_read_bytes": 229376,
+        "expanded_v_read_bytes": 229376,
+        "output_write_bytes": 3584,
+        "score_write_bytes": 3584,
+        "score_read_bytes": 3584,
+        "probability_write_bytes": 3584,
+        "probability_read_bytes": 3584
+      }
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        128
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 7168,
+      "probability_bytes": 7168,
+      "temporary_bytes": 14336,
+      "largest_temporary_allocation_bytes": 7168,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 917504,
+      "total_temporary_bytes_including_gqa": 931840,
+      "traffic": {
+        "q_read_bytes": 3584,
+        "expanded_k_read_bytes": 458752,
+        "expanded_v_read_bytes": 458752,
+        "output_write_bytes": 3584,
+        "score_write_bytes": 7168,
+        "score_read_bytes": 7168,
+        "probability_write_bytes": 7168,
+        "probability_read_bytes": 7168
+      }
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        256
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 14336,
+      "probability_bytes": 14336,
+      "temporary_bytes": 28672,
+      "largest_temporary_allocation_bytes": 14336,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 1835008,
+      "total_temporary_bytes_including_gqa": 1863680,
+      "traffic": {
+        "q_read_bytes": 3584,
+        "expanded_k_read_bytes": 917504,
+        "expanded_v_read_bytes": 917504,
+        "output_write_bytes": 3584,
+        "score_write_bytes": 14336,
+        "score_read_bytes": 14336,
+        "probability_write_bytes": 14336,
+        "probability_read_bytes": 14336
+      }
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        512
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 28672,
+      "probability_bytes": 28672,
+      "temporary_bytes": 57344,
+      "largest_temporary_allocation_bytes": 28672,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 3670016,
+      "total_temporary_bytes_including_gqa": 3727360,
+      "traffic": {
+        "q_read_bytes": 3584,
+        "expanded_k_read_bytes": 1835008,
+        "expanded_v_read_bytes": 1835008,
+        "output_write_bytes": 3584,
+        "score_write_bytes": 28672,
+        "score_read_bytes": 28672,
+        "probability_write_bytes": 28672,
+        "probability_read_bytes": 28672
+      }
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        1024
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 57344,
+      "probability_bytes": 57344,
+      "temporary_bytes": 114688,
+      "largest_temporary_allocation_bytes": 57344,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 7340032,
+      "total_temporary_bytes_including_gqa": 7454720,
+      "traffic": {
+        "q_read_bytes": 3584,
+        "expanded_k_read_bytes": 3670016,
+        "expanded_v_read_bytes": 3670016,
+        "output_write_bytes": 3584,
+        "score_write_bytes": 57344,
+        "score_read_bytes": 57344,
+        "probability_write_bytes": 57344,
+        "probability_read_bytes": 57344
+      }
+    },
+    {
+      "workload": [
+        "prefill",
+        11,
+        11
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 6776,
+      "probability_bytes": 6776,
+      "temporary_bytes": 13552,
+      "largest_temporary_allocation_bytes": 6776,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 78848,
+      "total_temporary_bytes_including_gqa": 92400,
+      "traffic": {
+        "q_read_bytes": 39424,
+        "expanded_k_read_bytes": 39424,
+        "expanded_v_read_bytes": 39424,
+        "output_write_bytes": 39424,
+        "score_write_bytes": 6776,
+        "score_read_bytes": 6776,
+        "probability_write_bytes": 6776,
+        "probability_read_bytes": 6776
+      }
+    },
+    {
+      "workload": [
+        "prefill",
+        37,
+        37
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 76664,
+      "probability_bytes": 76664,
+      "temporary_bytes": 153328,
+      "largest_temporary_allocation_bytes": 76664,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 265216,
+      "total_temporary_bytes_including_gqa": 418544,
+      "traffic": {
+        "q_read_bytes": 132608,
+        "expanded_k_read_bytes": 132608,
+        "expanded_v_read_bytes": 132608,
+        "output_write_bytes": 132608,
+        "score_write_bytes": 76664,
+        "score_read_bytes": 76664,
+        "probability_write_bytes": 76664,
+        "probability_read_bytes": 76664
+      }
+    },
+    {
+      "workload": [
+        "prefill",
+        73,
+        73
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 298424,
+      "probability_bytes": 298424,
+      "temporary_bytes": 596848,
+      "largest_temporary_allocation_bytes": 298424,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 523264,
+      "total_temporary_bytes_including_gqa": 1120112,
+      "traffic": {
+        "q_read_bytes": 261632,
+        "expanded_k_read_bytes": 261632,
+        "expanded_v_read_bytes": 261632,
+        "output_write_bytes": 261632,
+        "score_write_bytes": 298424,
+        "score_read_bytes": 298424,
+        "probability_write_bytes": 298424,
+        "probability_read_bytes": 298424
+      }
+    },
+    {
+      "workload": [
+        "prefill",
+        129,
+        129
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 931896,
+      "probability_bytes": 931896,
+      "temporary_bytes": 1863792,
+      "largest_temporary_allocation_bytes": 931896,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 924672,
+      "total_temporary_bytes_including_gqa": 2788464,
+      "traffic": {
+        "q_read_bytes": 462336,
+        "expanded_k_read_bytes": 462336,
+        "expanded_v_read_bytes": 462336,
+        "output_write_bytes": 462336,
+        "score_write_bytes": 931896,
+        "score_read_bytes": 931896,
+        "probability_write_bytes": 931896,
+        "probability_read_bytes": 931896
+      }
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        17
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 952,
+      "probability_bytes": 952,
+      "temporary_bytes": 1904,
+      "largest_temporary_allocation_bytes": 952,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 121856,
+      "total_temporary_bytes_including_gqa": 123760,
+      "traffic": {
+        "q_read_bytes": 3584,
+        "expanded_k_read_bytes": 60928,
+        "expanded_v_read_bytes": 60928,
+        "output_write_bytes": 3584,
+        "score_write_bytes": 952,
+        "score_read_bytes": 952,
+        "probability_write_bytes": 952,
+        "probability_read_bytes": 952
+      }
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        63
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 3528,
+      "probability_bytes": 3528,
+      "temporary_bytes": 7056,
+      "largest_temporary_allocation_bytes": 3528,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 451584,
+      "total_temporary_bytes_including_gqa": 458640,
+      "traffic": {
+        "q_read_bytes": 3584,
+        "expanded_k_read_bytes": 225792,
+        "expanded_v_read_bytes": 225792,
+        "output_write_bytes": 3584,
+        "score_write_bytes": 3528,
+        "score_read_bytes": 3528,
+        "probability_write_bytes": 3528,
+        "probability_read_bytes": 3528
+      }
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        127
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 7112,
+      "probability_bytes": 7112,
+      "temporary_bytes": 14224,
+      "largest_temporary_allocation_bytes": 7112,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 910336,
+      "total_temporary_bytes_including_gqa": 924560,
+      "traffic": {
+        "q_read_bytes": 3584,
+        "expanded_k_read_bytes": 455168,
+        "expanded_v_read_bytes": 455168,
+        "output_write_bytes": 3584,
+        "score_write_bytes": 7112,
+        "score_read_bytes": 7112,
+        "probability_write_bytes": 7112,
+        "probability_read_bytes": 7112
+      }
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        263
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 14728,
+      "probability_bytes": 14728,
+      "temporary_bytes": 29456,
+      "largest_temporary_allocation_bytes": 14728,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 1885184,
+      "total_temporary_bytes_including_gqa": 1914640,
+      "traffic": {
+        "q_read_bytes": 3584,
+        "expanded_k_read_bytes": 942592,
+        "expanded_v_read_bytes": 942592,
+        "output_write_bytes": 3584,
+        "score_write_bytes": 14728,
+        "score_read_bytes": 14728,
+        "probability_write_bytes": 14728,
+        "probability_read_bytes": 14728
+      }
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        511
+      ],
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "full_score_materialized": true,
+      "full_probability_materialized": true,
+      "score_bytes": 28616,
+      "probability_bytes": 28616,
+      "temporary_bytes": 57232,
+      "largest_temporary_allocation_bytes": 28616,
+      "tracked_temporary_allocations": 2,
+      "gqa_expansion_bytes": 3662848,
+      "total_temporary_bytes_including_gqa": 3720080,
+      "traffic": {
+        "q_read_bytes": 3584,
+        "expanded_k_read_bytes": 1831424,
+        "expanded_v_read_bytes": 1831424,
+        "output_write_bytes": 3584,
+        "score_write_bytes": 28616,
+        "score_read_bytes": 28616,
+        "probability_write_bytes": 28616,
+        "probability_read_bytes": 28616
+      }
+    }
+  ]
+}

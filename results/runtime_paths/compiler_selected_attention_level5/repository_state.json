@@ -1,0 +1,82 @@
+{
+  "repositories": {
+    "runtime": {
+      "path": "/home/allen/Desktop/Project/heterogeneous-inference-runtime",
+      "starting_branch": "main",
+      "starting_head": "5b56607cf84d8acda2691f02762f50d30332a8d1",
+      "ending_branch": "main",
+      "ending_head": "5b56607cf84d8acda2691f02762f50d30332a8d1",
+      "ending_status": [
+        "M deployment/execution_plan/loader.py",
+        " M deployment/execution_plan/path_builder.py",
+        " M deployment/execution_plan/schema.py",
+        "?? deployment/attention_planner.py",
+        "?? deployment/attention_runtime.py",
+        "?? deployment/cpu_sharding.py",
+        "?? deployment/execution_plan/aarch64_native_object_adapter.py",
+        "?? docs/COMPILER_ATTENTION_LEVEL5_VERIFICATION.md",
+        "?? docs/COMPILER_ATTENTION_MODEL_FORWARD_REPORT.md",
+        "?? docs/COMPILER_SELECTED_ATTENTION_LEVEL5_REPORT.md",
+        "?? docs/CPU_SHARDING_VERTICAL_SLICE.md",
+        "?? native/aarch64_native_object_worker.cpp",
+        "?? results/runtime_paths/aarch64_native_calibrated_slice19_confirmation.json",
+        "?? results/runtime_paths/aarch64_native_object_execution.json",
+        "?? results/runtime_paths/attention_level5_verification/",
+        "?? results/runtime_paths/compiler_selected_attention_level5/",
+        "?? results/runtime_paths/cpu_attention_candidate_evaluation.json",
+        "?? results/runtime_paths/cpu_sharding_scaling.json",
+        "?? results/runtime_paths/qwen_compiler_attention_model_forward.json",
+        "?? results/runtime_paths/qwen_compiler_attention_model_forward_corrected.json",
+        "?? results/runtime_paths/qwen_compiler_attention_model_forward_final.json",
+        "?? scripts/benchmark_attention_candidates.py",
+        "?? scripts/benchmark_cpu_sharding.py",
+        "?? scripts/evaluate_compiler_attention_selector.py",
+        "?? scripts/run_aarch64_native_object_plan.py",
+        "?? scripts/run_aarch64_slice20_matrix.py",
+        "?? scripts/run_qwen_compiler_attention.py",
+        "?? tests/test_aarch64_native_calibration.py",
+        "?? tests/test_aarch64_native_object_adapter.py",
+        "?? tests/test_aarch64_native_profitability.py",
+        "?? tests/test_attention_runtime.py",
+        "?? tests/test_cpu_sharding.py"
+      ]
+    },
+    "compiler": {
+      "path": "/home/allen/Desktop/Project/ml-graph-compiler-runtime",
+      "starting_branch": "master",
+      "starting_head": "0d200c3c7463f21cda97e77f4ad0e912bbad329f",
+      "ending_branch": "master",
+      "ending_head": "0d200c3c7463f21cda97e77f4ad0e912bbad329f",
+      "ending_status": [
+        "M mlir_passes/include/serving/ImplementationCandidate.h",
+        " M mlir_passes/lib/HIR/IR/HIROps.cpp",
+        " M mlir_passes/test/serving/ImplementationCandidateTest.cpp",
+        " M tools/compare_aarch64_schedule_variants.py",
+        " M tools/extract_aarch64_candidate_mir.py",
+        "?? artifacts/backend_codegen/aarch64_native_calibrated_slice19/",
+        "?? artifacts/backend_codegen/aarch64_native_exact_slice18/",
+        "?? artifacts/backend_codegen/aarch64_schedule_profitability_slice20/",
+        "?? mlir/attention_qwen_gqa_contract.mlir",
+        "?? mlir/cpu_sharding_linear_after.mlir",
+        "?? mlir/cpu_sharding_linear_before.mlir",
+        "?? tests/test_aarch64_backend_evidence.py",
+        "?? tests/test_aarch64_calibrated_selection.py",
+        "?? tests/test_aarch64_profitability_dataset.py",
+        "?? tests/test_aarch64_profitability_selector.py",
+        "?? tools/aarch64_backend_evidence.py",
+        "?? tools/aarch64_schedule_profitability.py",
+        "?? tools/run_aarch64_slice19_calibration.py",
+        "?? tools/run_aarch64_slice20_profitability.py"
+      ]
+    }
+  },
+  "destructive_operations": {
+    "reset": false,
+    "clean": false,
+    "stash": false,
+    "commit": false,
+    "push": false,
+    "rebase": false,
+    "delete": false
+  }
+}

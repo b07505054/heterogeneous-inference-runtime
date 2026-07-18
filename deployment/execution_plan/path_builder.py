@@ -77,6 +77,9 @@ def build_execution_paths(plan: ExecutionPlan, stages: list[ExecutionStage]) -> 
             paths.append(_rmsnorm_path(plan, stage))
             continue
         if stage.kind == ExecutionStageKind.MATMUL:
+            if isinstance(stage.source_compiler_decision.get("native_execution"), dict):
+                paths.append(_aarch64_native_object_path(plan, stage))
+                continue
             paths.append(_portable_cpu_fused_matmul_bias_relu_path(plan, stage))
             continue
         if stage.kind == ExecutionStageKind.ATTENTION and isinstance(stage.source_compiler_decision.get("attention_execution"), dict):
@@ -229,6 +232,26 @@ def _portable_cpu_fused_matmul_bias_relu_path(plan: ExecutionPlan, stage: Execut
             "quantization_contract": quantization,
             "memory_placement_contract": memory_placement,
         },
+    )
+
+
+def _aarch64_native_object_path(plan: ExecutionPlan, stage: ExecutionStage) -> ExecutionPath:
+    contract = _dict_at(stage.source_compiler_decision, "native_execution")
+    return ExecutionPath(
+        path_id=f"{plan.plan_id}:{stage.stage_id}:aarch64_native_object",
+        path_kind=ExecutionPathKind.AARCH64_NATIVE_OBJECT,
+        stage_id=stage.stage_id, function_name=stage.function_name,
+        serving_phase=stage.serving_phase, selected_backend="aarch64_native_object",
+        execution_method=ExecutionMethod.AARCH64_NATIVE_OBJECT,
+        selected_kernel=contract.get("candidate_id"),
+        kernel_library=contract.get("object_ref"), fallback_backends=(),
+        source_compiler_decision=stage.source_compiler_decision,
+        required_capability_refs=plan.provenance.capability_bundle.refs(),
+        runtime_config={"native_execution": contract},
+        benchmark_config={"warmups": 20, "measured_calls": 500},
+        output_artifact="results/runtime_paths/aarch64_native_object_execution.json",
+        truth_boundary="fixed f32 32x32x32 generated AArch64 object execution only",
+        metadata={"compiler_plan_id": plan.plan_id, "runtime_no_redecision": True},
     )
 
 def _portable_cpu_attention_path(plan: ExecutionPlan, stage: ExecutionStage) -> ExecutionPath:

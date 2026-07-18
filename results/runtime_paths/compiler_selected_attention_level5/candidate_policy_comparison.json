@@ -1,0 +1,739 @@
+{
+  "artifact_type": "compiler_attention_policy_comparison",
+  "truth_boundary": "standalone real numerical CPU attention; not full model or vLLM serving",
+  "calls": 30,
+  "warmup": 5,
+  "rows": [
+    {
+      "phase": "prefill",
+      "query_len": 4,
+      "context_len": 4,
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "strategy": "serial",
+      "worker_count": 1,
+      "median_ms": 0.129241,
+      "p95_ms": 0.20317814999999997,
+      "variance_ms2": 0.00076179752001,
+      "compiler_selected": true,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 4,
+      "context_len": 4,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w2_v1",
+      "strategy": "split_head",
+      "worker_count": 2,
+      "median_ms": 0.7835395,
+      "p95_ms": 0.86953425,
+      "variance_ms2": 0.0015115589218666662,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 4,
+      "context_len": 4,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w4_v1",
+      "strategy": "split_head",
+      "worker_count": 4,
+      "median_ms": 0.7871905,
+      "p95_ms": 0.8713959999999998,
+      "variance_ms2": 0.0026968188987655556,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 4,
+      "context_len": 4,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w8_v1",
+      "strategy": "split_head",
+      "worker_count": 8,
+      "median_ms": 1.602341,
+      "p95_ms": 3.6665113999999965,
+      "variance_ms2": 0.5210093683916989,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 4,
+      "context_len": 4,
+      "candidate_id": "torch_cpu_attention_fp32_split_query_w2_v1",
+      "strategy": "split_query",
+      "worker_count": 2,
+      "median_ms": 0.5886255,
+      "p95_ms": 0.8240996499999997,
+      "variance_ms2": 0.009840012389359998,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 4,
+      "context_len": 4,
+      "candidate_id": "torch_cpu_attention_fp32_split_query_w4_v1",
+      "strategy": "split_query",
+      "worker_count": 4,
+      "median_ms": 0.6099969999999999,
+      "p95_ms": 0.6795633,
+      "variance_ms2": 0.0013597467639433329,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 16,
+      "context_len": 16,
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "strategy": "serial",
+      "worker_count": 1,
+      "median_ms": 0.1648505,
+      "p95_ms": 0.178792,
+      "variance_ms2": 6.922585354333336e-05,
+      "compiler_selected": true,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 16,
+      "context_len": 16,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w2_v1",
+      "strategy": "split_head",
+      "worker_count": 2,
+      "median_ms": 0.7563065,
+      "p95_ms": 0.8488940499999997,
+      "variance_ms2": 0.006305072319556667,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 16,
+      "context_len": 16,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w4_v1",
+      "strategy": "split_head",
+      "worker_count": 4,
+      "median_ms": 0.8602734999999999,
+      "p95_ms": 0.9593935499999999,
+      "variance_ms2": 0.0021639290360055564,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 16,
+      "context_len": 16,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w8_v1",
+      "strategy": "split_head",
+      "worker_count": 8,
+      "median_ms": 1.6831185,
+      "p95_ms": 3.638681949999999,
+      "variance_ms2": 0.49845704230591553,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 16,
+      "context_len": 16,
+      "candidate_id": "torch_cpu_attention_fp32_split_query_w2_v1",
+      "strategy": "split_query",
+      "worker_count": 2,
+      "median_ms": 0.7702745,
+      "p95_ms": 1.14421065,
+      "variance_ms2": 0.027796167198289996,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 16,
+      "context_len": 16,
+      "candidate_id": "torch_cpu_attention_fp32_split_query_w4_v1",
+      "strategy": "split_query",
+      "worker_count": 4,
+      "median_ms": 0.834614,
+      "p95_ms": 0.9637468999999999,
+      "variance_ms2": 0.003999810794795555,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 16,
+      "context_len": 16,
+      "candidate_id": "torch_cpu_attention_fp32_split_query_w8_v1",
+      "strategy": "split_query",
+      "worker_count": 8,
+      "median_ms": 1.6354955,
+      "p95_ms": 2.7637639999999988,
+      "variance_ms2": 0.1883495619260233,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 64,
+      "context_len": 64,
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "strategy": "serial",
+      "worker_count": 1,
+      "median_ms": 0.617067,
+      "p95_ms": 0.8050375,
+      "variance_ms2": 0.005939501366506668,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 64,
+      "context_len": 64,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w2_v1",
+      "strategy": "split_head",
+      "worker_count": 2,
+      "median_ms": 0.7706135000000001,
+      "p95_ms": 1.0057412,
+      "variance_ms2": 0.00900089304824889,
+      "compiler_selected": true,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 64,
+      "context_len": 64,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w4_v1",
+      "strategy": "split_head",
+      "worker_count": 4,
+      "median_ms": 0.8513040000000001,
+      "p95_ms": 1.3825750999999993,
+      "variance_ms2": 0.040823011876048886,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 64,
+      "context_len": 64,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w8_v1",
+      "strategy": "split_head",
+      "worker_count": 8,
+      "median_ms": 1.6888785,
+      "p95_ms": 3.313029199999998,
+      "variance_ms2": 0.32585474537652886,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 64,
+      "context_len": 64,
+      "candidate_id": "torch_cpu_attention_fp32_split_query_w2_v1",
+      "strategy": "split_query",
+      "worker_count": 2,
+      "median_ms": 0.674754,
+      "p95_ms": 0.7711425999999999,
+      "variance_ms2": 0.0028539001067388894,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 64,
+      "context_len": 64,
+      "candidate_id": "torch_cpu_attention_fp32_split_query_w4_v1",
+      "strategy": "split_query",
+      "worker_count": 4,
+      "median_ms": 0.7704495,
+      "p95_ms": 0.8534208499999999,
+      "variance_ms2": 0.002420339914262222,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 64,
+      "context_len": 64,
+      "candidate_id": "torch_cpu_attention_fp32_split_query_w8_v1",
+      "strategy": "split_query",
+      "worker_count": 8,
+      "median_ms": 1.638323,
+      "p95_ms": 2.0495837499999996,
+      "variance_ms2": 0.09403972705659557,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 128,
+      "context_len": 128,
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "strategy": "serial",
+      "worker_count": 1,
+      "median_ms": 2.052332,
+      "p95_ms": 2.3108279499999997,
+      "variance_ms2": 0.009478771813248894,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 128,
+      "context_len": 128,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w2_v1",
+      "strategy": "split_head",
+      "worker_count": 2,
+      "median_ms": 1.5743939999999998,
+      "p95_ms": 1.8603513999999997,
+      "variance_ms2": 0.012094901983848886,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 128,
+      "context_len": 128,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w4_v1",
+      "strategy": "split_head",
+      "worker_count": 4,
+      "median_ms": 1.430198,
+      "p95_ms": 1.7550506499999998,
+      "variance_ms2": 0.01823258497239556,
+      "compiler_selected": true,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 128,
+      "context_len": 128,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w8_v1",
+      "strategy": "split_head",
+      "worker_count": 8,
+      "median_ms": 2.085107,
+      "p95_ms": 4.350653749999999,
+      "variance_ms2": 0.6937502222356267,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 128,
+      "context_len": 128,
+      "candidate_id": "torch_cpu_attention_fp32_split_query_w2_v1",
+      "strategy": "split_query",
+      "worker_count": 2,
+      "median_ms": 1.792201,
+      "p95_ms": 1.9249679,
+      "variance_ms2": 0.005762351495209999,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 128,
+      "context_len": 128,
+      "candidate_id": "torch_cpu_attention_fp32_split_query_w4_v1",
+      "strategy": "split_query",
+      "worker_count": 4,
+      "median_ms": 1.4227940000000001,
+      "p95_ms": 1.8503203499999994,
+      "variance_ms2": 0.0478874238155289,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "prefill",
+      "query_len": 128,
+      "context_len": 128,
+      "candidate_id": "torch_cpu_attention_fp32_split_query_w8_v1",
+      "strategy": "split_query",
+      "worker_count": 8,
+      "median_ms": 2.3859364999999997,
+      "p95_ms": 4.045692399999998,
+      "variance_ms2": 0.5237199445145655,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "decode",
+      "query_len": 1,
+      "context_len": 4,
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "strategy": "serial",
+      "worker_count": 1,
+      "median_ms": 0.1191025,
+      "p95_ms": 0.1361008,
+      "variance_ms2": 0.00014987250432888888,
+      "compiler_selected": true,
+      "correctness": "pass"
+    },
+    {
+      "phase": "decode",
+      "query_len": 1,
+      "context_len": 4,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w2_v1",
+      "strategy": "split_head",
+      "worker_count": 2,
+      "median_ms": 0.39818600000000004,
+      "p95_ms": 0.5740310499999999,
+      "variance_ms2": 0.004361307651448889,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "decode",
+      "query_len": 1,
+      "context_len": 4,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w4_v1",
+      "strategy": "split_head",
+      "worker_count": 4,
+      "median_ms": 0.6094255,
+      "p95_ms": 0.7060586999999997,
+      "variance_ms2": 0.001971849601645555,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "decode",
+      "query_len": 1,
+      "context_len": 4,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w8_v1",
+      "strategy": "split_head",
+      "worker_count": 8,
+      "median_ms": 1.4435220000000002,
+      "p95_ms": 2.6733749999999996,
+      "variance_ms2": 0.3348221396787122,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "decode",
+      "query_len": 1,
+      "context_len": 32,
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "strategy": "serial",
+      "worker_count": 1,
+      "median_ms": 0.128291,
+      "p95_ms": 0.16400519999999996,
+      "variance_ms2": 0.00016579806774333326,
+      "compiler_selected": true,
+      "correctness": "pass"
+    },
+    {
+      "phase": "decode",
+      "query_len": 1,
+      "context_len": 32,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w2_v1",
+      "strategy": "split_head",
+      "worker_count": 2,
+      "median_ms": 0.7475655,
+      "p95_ms": 0.8019082,
+      "variance_ms2": 0.0011358263006055558,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "decode",
+      "query_len": 1,
+      "context_len": 32,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w4_v1",
+      "strategy": "split_head",
+      "worker_count": 4,
+      "median_ms": 0.7142949999999999,
+      "p95_ms": 0.8288110999999998,
+      "variance_ms2": 0.0039226271822266675,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "decode",
+      "query_len": 1,
+      "context_len": 32,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w8_v1",
+      "strategy": "split_head",
+      "worker_count": 8,
+      "median_ms": 1.3420235,
+      "p95_ms": 1.78520615,
+      "variance_ms2": 0.08443167818586221,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "decode",
+      "query_len": 1,
+      "context_len": 128,
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "strategy": "serial",
+      "worker_count": 1,
+      "median_ms": 0.16855399999999998,
+      "p95_ms": 0.22620139999999983,
+      "variance_ms2": 0.0008492409537388892,
+      "compiler_selected": true,
+      "correctness": "pass"
+    },
+    {
+      "phase": "decode",
+      "query_len": 1,
+      "context_len": 128,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w2_v1",
+      "strategy": "split_head",
+      "worker_count": 2,
+      "median_ms": 0.7219409999999999,
+      "p95_ms": 0.7885347499999998,
+      "variance_ms2": 0.0008013842650455557,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "decode",
+      "query_len": 1,
+      "context_len": 128,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w4_v1",
+      "strategy": "split_head",
+      "worker_count": 4,
+      "median_ms": 0.8603455,
+      "p95_ms": 0.9835640999999999,
+      "variance_ms2": 0.004226074394938888,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "decode",
+      "query_len": 1,
+      "context_len": 128,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w8_v1",
+      "strategy": "split_head",
+      "worker_count": 8,
+      "median_ms": 1.5538655000000001,
+      "p95_ms": 2.953669849999998,
+      "variance_ms2": 0.32126265790851555,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "decode",
+      "query_len": 1,
+      "context_len": 512,
+      "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+      "strategy": "serial",
+      "worker_count": 1,
+      "median_ms": 0.5642535,
+      "p95_ms": 0.7038297499999999,
+      "variance_ms2": 0.005331340452676668,
+      "compiler_selected": true,
+      "correctness": "pass"
+    },
+    {
+      "phase": "decode",
+      "query_len": 1,
+      "context_len": 512,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w2_v1",
+      "strategy": "split_head",
+      "worker_count": 2,
+      "median_ms": 0.7202035,
+      "p95_ms": 0.8094783999999999,
+      "variance_ms2": 0.004937046425426664,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "decode",
+      "query_len": 1,
+      "context_len": 512,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w4_v1",
+      "strategy": "split_head",
+      "worker_count": 4,
+      "median_ms": 1.0806499999999999,
+      "p95_ms": 1.3248585499999999,
+      "variance_ms2": 0.008245803992938889,
+      "compiler_selected": false,
+      "correctness": "pass"
+    },
+    {
+      "phase": "decode",
+      "query_len": 1,
+      "context_len": 512,
+      "candidate_id": "torch_cpu_attention_fp32_split_head_w8_v1",
+      "strategy": "split_head",
+      "worker_count": 8,
+      "median_ms": 1.97948,
+      "p95_ms": 4.22435895,
+      "variance_ms2": 0.66921369437204,
+      "compiler_selected": false,
+      "correctness": "pass"
+    }
+  ],
+  "details": [
+    {
+      "workload": [
+        "prefill",
+        4,
+        4
+      ],
+      "legal_candidate_count": 6,
+      "selected_candidate": "torch_cpu_attention_fp32_serial_w1_v1",
+      "measured_winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "selected_median_ms": 0.129241,
+      "winner_median_ms": 0.129241,
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "prefill",
+        16,
+        16
+      ],
+      "legal_candidate_count": 7,
+      "selected_candidate": "torch_cpu_attention_fp32_serial_w1_v1",
+      "measured_winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "selected_median_ms": 0.1648505,
+      "winner_median_ms": 0.1648505,
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "prefill",
+        64,
+        64
+      ],
+      "legal_candidate_count": 7,
+      "selected_candidate": "torch_cpu_attention_fp32_split_head_w2_v1",
+      "measured_winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "selected_median_ms": 0.7706135000000001,
+      "winner_median_ms": 0.617067,
+      "regret": 0.2488327847705354
+    },
+    {
+      "workload": [
+        "prefill",
+        128,
+        128
+      ],
+      "legal_candidate_count": 7,
+      "selected_candidate": "torch_cpu_attention_fp32_split_head_w4_v1",
+      "measured_winner": "torch_cpu_attention_fp32_split_query_w4_v1",
+      "selected_median_ms": 1.430198,
+      "winner_median_ms": 1.4227940000000001,
+      "regret": 0.005203845391532402
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        4
+      ],
+      "legal_candidate_count": 4,
+      "selected_candidate": "torch_cpu_attention_fp32_serial_w1_v1",
+      "measured_winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "selected_median_ms": 0.1191025,
+      "winner_median_ms": 0.1191025,
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        32
+      ],
+      "legal_candidate_count": 4,
+      "selected_candidate": "torch_cpu_attention_fp32_serial_w1_v1",
+      "measured_winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "selected_median_ms": 0.128291,
+      "winner_median_ms": 0.128291,
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        128
+      ],
+      "legal_candidate_count": 4,
+      "selected_candidate": "torch_cpu_attention_fp32_serial_w1_v1",
+      "measured_winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "selected_median_ms": 0.16855399999999998,
+      "winner_median_ms": 0.16855399999999998,
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        512
+      ],
+      "legal_candidate_count": 4,
+      "selected_candidate": "torch_cpu_attention_fp32_serial_w1_v1",
+      "measured_winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "selected_median_ms": 0.5642535,
+      "winner_median_ms": 0.5642535,
+      "regret": 0.0
+    }
+  ],
+  "selector_quality": {
+    "all": {
+      "workloads": 8,
+      "exact_match_rate": 0.75,
+      "mean_regret": 0.031754578770258474,
+      "median_regret": 0.0,
+      "p95_regret": 0.16356265598788422,
+      "maximum_regret": 0.2488327847705354,
+      "fallback_rate": 0.0
+    },
+    "prefill": {
+      "workloads": 4,
+      "exact_match_rate": 0.5,
+      "mean_regret": 0.06350915754051695,
+      "median_regret": 0.002601922695766201,
+      "p95_regret": 0.21228844386368484,
+      "maximum_regret": 0.2488327847705354,
+      "fallback_rate": 0.0
+    },
+    "decode": {
+      "workloads": 4,
+      "exact_match_rate": 1.0,
+      "mean_regret": 0.0,
+      "median_regret": 0.0,
+      "p95_regret": 0.0,
+      "maximum_regret": 0.0,
+      "fallback_rate": 0.0
+    }
+  },
+  "fixed_policies": {
+    "always_serial": {
+      "mean_regret": 0.05530825263530767,
+      "maximum_regret": 0.44246602108246136,
+      "fallback_rate": 0.0
+    },
+    "always_split_head_2": {
+      "mean_regret": 2.466961906514872,
+      "maximum_regret": 5.062623316130331,
+      "fallback_rate": 0.0
+    },
+    "always_split_head_4": {
+      "mean_regret": 2.9247782120358856,
+      "maximum_regret": 5.090872865421964,
+      "fallback_rate": 0.0
+    },
+    "always_split_head_8": {
+      "mean_regret": 6.764776817843612,
+      "maximum_regret": 11.398085746783142,
+      "fallback_rate": 0.0
+    },
+    "always_split_query_2_when_legal": {
+      "mean_regret": 0.9475205320976331,
+      "maximum_regret": 3.6725639291357925,
+      "fallback_rate": 0.5
+    },
+    "always_split_query_4_when_legal": {
+      "mean_regret": 1.0039077696717653,
+      "maximum_regret": 4.062853919157054,
+      "fallback_rate": 0.5
+    },
+    "always_split_query_8_when_legal": {
+      "mean_regret": 1.4066296067855075,
+      "maximum_regret": 8.921083041907668,
+      "fallback_rate": 0.625
+    }
+  }
+}

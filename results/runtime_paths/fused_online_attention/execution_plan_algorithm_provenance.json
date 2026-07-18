@@ -1,0 +1,27 @@
+{
+  "normal_compiler_selected": {
+    "selection_mode": "compiler_selected",
+    "phase_algorithms": {
+      "prefill": "dense_materialized",
+      "decode": "dense_materialized"
+    },
+    "selected_serialized_deserialized_executed_match": true,
+    "algorithm_match": true,
+    "invocations": 192,
+    "fallback_count": 0,
+    "mismatch_count": 0
+  },
+  "forced_fused_causal_diagnostic": {
+    "selection_mode": "forced_test_override",
+    "phase_algorithms": {
+      "prefill": "fused_tiled_online_softmax",
+      "decode": "fused_tiled_online_softmax"
+    },
+    "selected_serialized_deserialized_executed_match": true,
+    "algorithm_match": true,
+    "invocations": 192,
+    "fallback_count": 0,
+    "mismatch_count": 0
+  },
+  "truth_boundary": "normal selector avoids slower fused; forced fused is test-only and is not compiler-selected"
+}

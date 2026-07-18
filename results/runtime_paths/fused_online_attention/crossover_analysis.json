@@ -1,0 +1,279 @@
+{
+  "rows": [
+    {
+      "workload": [
+        "prefill",
+        4,
+        4
+      ],
+      "winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_serial_w1_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "prefill",
+        8,
+        8
+      ],
+      "winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_serial_w1_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "prefill",
+        16,
+        16
+      ],
+      "winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_serial_w1_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "prefill",
+        32,
+        32
+      ],
+      "winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_serial_w1_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "prefill",
+        64,
+        64
+      ],
+      "winner": "torch_cpu_attention_fp32_split_head_w2_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_split_head_w2_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "prefill",
+        128,
+        128
+      ],
+      "winner": "torch_cpu_attention_fp32_split_head_w4_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_split_head_w4_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "prefill",
+        256,
+        256
+      ],
+      "winner": "torch_cpu_attention_fp32_split_head_w4_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_split_head_w8_v1",
+      "regret": 0.034613354573181265
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        4
+      ],
+      "winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_serial_w1_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        8
+      ],
+      "winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_serial_w1_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        16
+      ],
+      "winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_serial_w1_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        32
+      ],
+      "winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_serial_w1_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        64
+      ],
+      "winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_serial_w1_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        128
+      ],
+      "winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_serial_w1_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        256
+      ],
+      "winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_serial_w1_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        512
+      ],
+      "winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_serial_w1_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        1024
+      ],
+      "winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_serial_w1_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "prefill",
+        11,
+        11
+      ],
+      "winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_serial_w1_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "prefill",
+        37,
+        37
+      ],
+      "winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_serial_w1_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "prefill",
+        73,
+        73
+      ],
+      "winner": "torch_cpu_attention_fp32_split_head_w2_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_split_head_w2_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "prefill",
+        129,
+        129
+      ],
+      "winner": "torch_cpu_attention_fp32_split_query_w4_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_split_head_w4_v1",
+      "regret": 0.014064353152577924
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        17
+      ],
+      "winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_serial_w1_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        63
+      ],
+      "winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_serial_w1_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        127
+      ],
+      "winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_serial_w1_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        263
+      ],
+      "winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_serial_w1_v1",
+      "regret": 0.0
+    },
+    {
+      "workload": [
+        "decode",
+        1,
+        511
+      ],
+      "winner": "torch_cpu_attention_fp32_serial_w1_v1",
+      "winner_algorithm": "dense_materialized",
+      "compiler_selected": "torch_cpu_attention_fp32_serial_w1_v1",
+      "regret": 0.0
+    }
+  ]
+}

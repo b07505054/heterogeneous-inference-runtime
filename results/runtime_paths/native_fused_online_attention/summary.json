@@ -1,0 +1,14 @@
+{
+  "correctness": {
+    "row_count": 66,
+    "max_abs_error": 1.3113021850585938e-06,
+    "max_relative_error": 0.1043701022863388,
+    "mismatch_count": 0,
+    "nan_count": 0,
+    "inf_count": 0
+  },
+  "avx2": true,
+  "artifact_sha256": "27cd4b60b16c62f8b6dfc561e534a0ac90b5ce6eb1137d3b3d60b8f4b3845274",
+  "abi_version": "hir.fused_online_attention.v1",
+  "benchmark_rows": 68
+}

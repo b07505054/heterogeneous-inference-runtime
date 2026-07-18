@@ -1,0 +1,63 @@
+{
+  "selection_mode": "forced_test_override",
+  "prefill_selected_algorithm": "fused_tiled_online_softmax",
+  "decode_selected_algorithm": "fused_tiled_online_softmax",
+  "prefill_selected_candidate": "torch_cpu_fused_online_fp32_q4_k32_serial_w1_v1",
+  "decode_selected_candidate": "torch_cpu_fused_online_fp32_q1_k32_serial_w1_v1",
+  "baseline_tokens": [
+    576,
+    5567,
+    18404,
+    264,
+    501,
+    5486,
+    311,
+    279
+  ],
+  "compiler_tokens": [
+    576,
+    5567,
+    18404,
+    264,
+    501,
+    5486,
+    311,
+    279
+  ],
+  "tokens_equal": true,
+  "max_logit_abs_diff_by_step": [
+    1.8715858459472656e-05,
+    1.6450881958007812e-05,
+    2.3365020751953125e-05,
+    1.621246337890625e-05,
+    1.52587890625e-05,
+    1.6450881958007812e-05,
+    1.049041748046875e-05,
+    1.3113021850585938e-05
+  ],
+  "outputs_entered_o_proj_count": 192,
+  "fallback_count": 0,
+  "candidate_mismatch_count": 0,
+  "perturbation": 5.0,
+  "perturbed_tokens": [
+    84565,
+    84565,
+    84565,
+    84565,
+    84565,
+    84565,
+    84565,
+    84565
+  ],
+  "perturbed_logit_max_abs_diff_by_step": [
+    19.395801544189453,
+    18.225570678710938,
+    23.240434646606445,
+    20.13709259033203,
+    20.67298126220703,
+    20.334335327148438,
+    25.511085510253906,
+    20.530406951904297
+  ],
+  "truth_boundary": "forced_test_override proves fused numerical causal path; not compiler-selected profitability decision"
+}

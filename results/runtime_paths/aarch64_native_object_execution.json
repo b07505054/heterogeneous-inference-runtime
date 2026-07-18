@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "executed": {
+    "candidate_id": "tile8x8x8_uk1",
+    "object_sha256": "dbbeb28bebaf25c6bbd43443d55528c650225cae19d323f15505612a69e9e147",
+    "entry_point": "_mlir_ciface_matmul_bias_relu_tiled_32x32x32",
+    "runtime_redecision_count": 0
+  },
+  "metrics": {
+    "correct": true,
+    "repeated_call_correct": true,
+    "guard_buffers_intact": true,
+    "max_abs_error": 0,
+    "warmup_samples": 20,
+    "sample_count": 500,
+    "calls_per_sample": 100,
+    "measured_calls": 50000,
+    "p50_ms": 0.00437093,
+    "p95_ms": 0.00438796
+  },
+  "target": {
+    "hostname": "edgeaiplatform",
+    "architecture": "aarch64",
+    "governor": "performance",
+    "current_frequency_khz": "2400000",
+    "temperature_millic": "51250"
+  },
+  "link_command": [
+    "g++",
+    "-O3",
+    "-std=c++17",
+    "native/aarch64_native_object_worker.cpp",
+    "/home/allen/aarch64_native_slice18b/artifacts/backend_codegen/aarch64_native_exact_slice18/tile8x8x8_uk1/32x32x32_tm8_tn8_tk8_uk1_greedy_misched-default.o",
+    "-o",
+    "build/aarch64_native_object_worker"
+  ],
+  "identity_proof": {
+    "compiler_selected_candidate": "tile8x8x8_uk1",
+    "runtime_executed_candidate": "tile8x8x8_uk1",
+    "selected_object_sha256": "dbbeb28bebaf25c6bbd43443d55528c650225cae19d323f15505612a69e9e147",
+    "executed_object_sha256": "dbbeb28bebaf25c6bbd43443d55528c650225cae19d323f15505612a69e9e147",
+    "selected_entry_point": "_mlir_ciface_matmul_bias_relu_tiled_32x32x32",
+    "executed_entry_point": "_mlir_ciface_matmul_bias_relu_tiled_32x32x32",
+    "runtime_redecision_count": 0
+  }
+}

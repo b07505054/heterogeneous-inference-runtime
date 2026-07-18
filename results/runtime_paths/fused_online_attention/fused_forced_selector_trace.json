@@ -1,0 +1,88 @@
+{
+  "prefill": {
+    "selector_version": "dense_fused_attention_static_cost_selector_v2",
+    "selection_mode": "forced_test_override",
+    "selection_provenance": "forced_test_override",
+    "workload": {
+      "phase": "prefill",
+      "batch": 1,
+      "query_len": 4,
+      "context_len": 4,
+      "query_heads": 14,
+      "kv_heads": 2,
+      "head_dim": 64,
+      "dtype": "float32",
+      "causal": true,
+      "q_layout": "batch_head_sequence_dim",
+      "k_layout": "batch_head_sequence_dim",
+      "v_layout": "batch_head_sequence_dim",
+      "output_layout": "batch_head_sequence_dim",
+      "kv_cache_layout": "contiguous_layer_sequence_kv_head_dim",
+      "available_logical_workers": 8,
+      "target_cpu_profile": "host_cpu_4_physical_8_logical_v1"
+    },
+    "workload_signature": "b1_q4_kv4_qh14_kvh2_d64_fp32",
+    "generated_candidate_count": 13,
+    "legal_candidate_count": 1,
+    "rejected_candidates": [],
+    "considered_candidates": [
+      {
+        "candidate_id": "torch_cpu_fused_online_fp32_q4_k32_serial_w1_v1",
+        "algorithm": "fused_tiled_online_softmax",
+        "strategy": "serial",
+        "worker_count": 1,
+        "query_tile": 4,
+        "key_tile": 32,
+        "legal": true,
+        "legality_reason": "forced_legal_test_candidate"
+      }
+    ],
+    "selected_candidate_id": "torch_cpu_fused_online_fp32_q4_k32_serial_w1_v1",
+    "selected_score": null,
+    "fallback_status": false,
+    "tie_breaking": "not_applicable_forced_test_override"
+  },
+  "decode": {
+    "selector_version": "dense_fused_attention_static_cost_selector_v2",
+    "selection_mode": "forced_test_override",
+    "selection_provenance": "forced_test_override",
+    "workload": {
+      "phase": "decode",
+      "batch": 1,
+      "query_len": 1,
+      "context_len": 5,
+      "query_heads": 14,
+      "kv_heads": 2,
+      "head_dim": 64,
+      "dtype": "float32",
+      "causal": true,
+      "q_layout": "batch_head_sequence_dim",
+      "k_layout": "batch_head_sequence_dim",
+      "v_layout": "batch_head_sequence_dim",
+      "output_layout": "batch_head_sequence_dim",
+      "kv_cache_layout": "contiguous_layer_sequence_kv_head_dim",
+      "available_logical_workers": 8,
+      "target_cpu_profile": "host_cpu_4_physical_8_logical_v1"
+    },
+    "workload_signature": "b1_q1_kv5_qh14_kvh2_d64_fp32",
+    "generated_candidate_count": 13,
+    "legal_candidate_count": 1,
+    "rejected_candidates": [],
+    "considered_candidates": [
+      {
+        "candidate_id": "torch_cpu_fused_online_fp32_q1_k32_serial_w1_v1",
+        "algorithm": "fused_tiled_online_softmax",
+        "strategy": "serial",
+        "worker_count": 1,
+        "query_tile": 1,
+        "key_tile": 32,
+        "legal": true,
+        "legality_reason": "forced_legal_test_candidate"
+      }
+    ],
+    "selected_candidate_id": "torch_cpu_fused_online_fp32_q1_k32_serial_w1_v1",
+    "selected_score": null,
+    "fallback_status": false,
+    "tie_breaking": "not_applicable_forced_test_override"
+  }
+}

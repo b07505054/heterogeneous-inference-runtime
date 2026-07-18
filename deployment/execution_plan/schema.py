@@ -63,6 +63,7 @@ class ExecutionPathKind(str, Enum):
     # (which is an unimplemented adapter stub) and from CUSTOM_CUDA_MICROBENCHMARK
     # (GPU-only). See deployment/execution_plan/portable_cpu_kernel_adapter.py.
     PORTABLE_CPU_KERNEL = "portable_cpu_kernel"
+    AARCH64_NATIVE_OBJECT = "aarch64_native_object"
     UNSUPPORTED = "unsupported"
 
 
@@ -77,6 +78,7 @@ class ExecutionMethod(str, Enum):
     # Phase P1B: dispatches native/cpu_kernels/portable_fused_matmul_bias_relu,
     # a real compiled executable (never PyTorch/ONNXRuntime/NumPy/mock).
     FUSED_MATMUL_BIAS_RELU_KERNEL = "fused_matmul_bias_relu_kernel"
+    AARCH64_NATIVE_OBJECT = "aarch64_native_object"
     CPU_ATTENTION_KERNEL = "cpu_attention_kernel"
 
 
@@ -398,6 +400,12 @@ class GlobalDecisions:
     quantization: dict[str, Any] = field(default_factory=dict)
     memory: MemoryPlanDecision = field(default_factory=MemoryPlanDecision)
     serving: ServingPlanDecision = field(default_factory=ServingPlanDecision)
+    # Optional Architecture-C single-node CPU sharding intent. Empty preserves
+    # compatibility with all existing ExecutionPlan v2 artifacts.
+    cpu_sharding: dict[str, Any] = field(default_factory=dict)
+    # Optional exact attention execution decision. Empty preserves all legacy
+    # ExecutionPlan v2 artifacts.
+    attention_execution: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
     def from_dict(cls, payload: dict[str, Any]) -> "GlobalDecisions":
@@ -405,6 +413,8 @@ class GlobalDecisions:
             quantization=_dict_at(payload, "quantization"),
             memory=MemoryPlanDecision.from_dict(_dict_at(payload, "memory")),
             serving=ServingPlanDecision.from_dict(_dict_at(payload, "serving")),
+            cpu_sharding=_dict_at(payload, "cpu_sharding"),
+            attention_execution=_dict_at(payload, "attention_execution"),
         )
 
 

@@ -1,0 +1,130 @@
+{
+  "rows": [
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 24,
+      "selected_candidate": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+      "algorithm": "fused_tiled_online_softmax",
+      "implementation": "native_avx2",
+      "legal_candidate_count": 10
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 48,
+      "selected_candidate": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+      "algorithm": "fused_tiled_online_softmax",
+      "implementation": "native_avx2",
+      "legal_candidate_count": 10
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 96,
+      "selected_candidate": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+      "algorithm": "fused_tiled_online_softmax",
+      "implementation": "native_avx2",
+      "legal_candidate_count": 10
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 192,
+      "selected_candidate": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+      "algorithm": "fused_tiled_online_softmax",
+      "implementation": "native_avx2",
+      "legal_candidate_count": 10
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 384,
+      "selected_candidate": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+      "algorithm": "fused_tiled_online_softmax",
+      "implementation": "native_avx2",
+      "legal_candidate_count": 10
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 768,
+      "selected_candidate": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+      "algorithm": "fused_tiled_online_softmax",
+      "implementation": "native_avx2",
+      "legal_candidate_count": 10
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 1536,
+      "selected_candidate": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+      "algorithm": "fused_tiled_online_softmax",
+      "implementation": "native_avx2",
+      "legal_candidate_count": 10
+    },
+    {
+      "phase": "prefill",
+      "q": 11,
+      "k": 11,
+      "selected_candidate": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+      "algorithm": "fused_tiled_online_softmax",
+      "implementation": "native_avx2",
+      "legal_candidate_count": 13
+    },
+    {
+      "phase": "prefill",
+      "q": 24,
+      "k": 24,
+      "selected_candidate": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+      "algorithm": "fused_tiled_online_softmax",
+      "implementation": "native_avx2",
+      "legal_candidate_count": 13
+    },
+    {
+      "phase": "prefill",
+      "q": 48,
+      "k": 48,
+      "selected_candidate": "torch_cpu_attention_fp32_serial_w1_v1",
+      "algorithm": "dense_materialized",
+      "implementation": "torch_dense_materialized_v1",
+      "legal_candidate_count": 13
+    },
+    {
+      "phase": "prefill",
+      "q": 73,
+      "k": 73,
+      "selected_candidate": "torch_cpu_attention_fp32_split_head_w2_v1",
+      "algorithm": "dense_materialized",
+      "implementation": "torch_dense_materialized_v1",
+      "legal_candidate_count": 13
+    },
+    {
+      "phase": "prefill",
+      "q": 96,
+      "k": 96,
+      "selected_candidate": "torch_cpu_attention_fp32_split_head_w4_v1",
+      "algorithm": "dense_materialized",
+      "implementation": "torch_dense_materialized_v1",
+      "legal_candidate_count": 13
+    },
+    {
+      "phase": "prefill",
+      "q": 192,
+      "k": 192,
+      "selected_candidate": "torch_cpu_attention_fp32_split_query_w8_v1",
+      "algorithm": "dense_materialized",
+      "implementation": "torch_dense_materialized_v1",
+      "legal_candidate_count": 13
+    },
+    {
+      "phase": "prefill",
+      "q": 384,
+      "k": 384,
+      "selected_candidate": "torch_cpu_attention_fp32_split_query_w8_v1",
+      "algorithm": "dense_materialized",
+      "implementation": "torch_dense_materialized_v1",
+      "legal_candidate_count": 13
+    }
+  ]
+}

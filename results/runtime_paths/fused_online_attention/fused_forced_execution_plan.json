@@ -1,0 +1,245 @@
+{
+  "schema": "execution_plan",
+  "schema_version": "2.0.0",
+  "plan_id": "qwen-compiler-selected-attention-level5-v1",
+  "provenance": {
+    "compiler_tool": "attention_planner.py",
+    "model_spec_ref": "/home/allen/.cache/huggingface/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775",
+    "capability_bundle": {
+      "hardware_profile_ref": "host_cpu_4_physical_8_logical_v1",
+      "backend_profile_refs": [
+        "transformers_attention_registry"
+      ],
+      "kernel_profile_refs": [
+        "torch_cpu_attention_fp32_v1"
+      ],
+      "workload_ref": "prompt_tokens=4,generated_tokens=8"
+    },
+    "truth_boundary": "compiler_selected_real_model_attention_not_vllm_serving"
+  },
+  "model_identity": {
+    "model_id": "/home/allen/.cache/huggingface/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775",
+    "dtype": "float32",
+    "architecture": "Qwen2ForCausalLM"
+  },
+  "global_decisions": {
+    "quantization": {
+      "strategy": "none",
+      "dtype": "float32"
+    },
+    "memory": {
+      "kv_cache_layout": "contiguous"
+    },
+    "serving": {
+      "parallelism_kind": "none",
+      "parallelism_degree": 1
+    },
+    "attention_execution": {
+      "decision_kind": "cpu_attention_plan_table_v1",
+      "operator_kind": "attention",
+      "operator_id": "qwen.layers.*.self_attn",
+      "plan_kind": "phase_specific_exact_prefill_decode_context_range",
+      "selector_version": "dense_fused_attention_static_cost_selector_v2",
+      "selection_mode": "forced_test_override",
+      "target_profile": "host_cpu_4_physical_8_logical_v1",
+      "phase_decisions": {
+        "prefill": {
+          "decision_kind": "cpu_attention_exact_candidate_selection",
+          "phase": "prefill",
+          "selected_strategy": "serial",
+          "worker_count": 1,
+          "split_dimension": "none",
+          "query_heads": 14,
+          "kv_heads": 2,
+          "head_dim": 64,
+          "dtype": "float32",
+          "qkv_layout": "batch_head_sequence_dim",
+          "kv_cache_layout": "contiguous_layer_sequence_kv_head_dim",
+          "causal": true,
+          "assembly": "direct_disjoint_output",
+          "native_kernel_id": "torch_cpu_fused_online_fp32_q4_k32_serial_w1_v1",
+          "algorithm": "fused_tiled_online_softmax",
+          "implementation": "torch_tiled_online_softmax_exact_v1",
+          "score_materialization": false,
+          "probability_materialization": false,
+          "online_softmax": true,
+          "query_tile": 4,
+          "key_tile": 32,
+          "causal_supported": true,
+          "gqa_supported": true,
+          "selection_provenance": "forced_test_override",
+          "fallback": {
+            "strategy": "serial",
+            "worker_count": 1
+          },
+          "runtime_no_redecision": true,
+          "operator_kind": "attention",
+          "selection_mode": "forced_test_override",
+          "selector_version": "dense_fused_attention_static_cost_selector_v2",
+          "target_profile": "host_cpu_4_physical_8_logical_v1",
+          "workload_signature": "b1_q4_kv4_qh14_kvh2_d64_fp32",
+          "workload_domain": {
+            "batch": 1,
+            "query_length_min": 4,
+            "query_length_max": 4,
+            "context_length_min": 4,
+            "context_length_max": 4
+          },
+          "query_length_domain": [
+            4,
+            4
+          ],
+          "context_length_domain": [
+            4,
+            4
+          ],
+          "fallback_status": false,
+          "selection_trace": {
+            "selector_version": "dense_fused_attention_static_cost_selector_v2",
+            "selection_mode": "forced_test_override",
+            "selection_provenance": "forced_test_override",
+            "workload": {
+              "phase": "prefill",
+              "batch": 1,
+              "query_len": 4,
+              "context_len": 4,
+              "query_heads": 14,
+              "kv_heads": 2,
+              "head_dim": 64,
+              "dtype": "float32",
+              "causal": true,
+              "q_layout": "batch_head_sequence_dim",
+              "k_layout": "batch_head_sequence_dim",
+              "v_layout": "batch_head_sequence_dim",
+              "output_layout": "batch_head_sequence_dim",
+              "kv_cache_layout": "contiguous_layer_sequence_kv_head_dim",
+              "available_logical_workers": 8,
+              "target_cpu_profile": "host_cpu_4_physical_8_logical_v1"
+            },
+            "workload_signature": "b1_q4_kv4_qh14_kvh2_d64_fp32",
+            "generated_candidate_count": 13,
+            "legal_candidate_count": 1,
+            "rejected_candidates": [],
+            "considered_candidates": [
+              {
+                "candidate_id": "torch_cpu_fused_online_fp32_q4_k32_serial_w1_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "strategy": "serial",
+                "worker_count": 1,
+                "query_tile": 4,
+                "key_tile": 32,
+                "legal": true,
+                "legality_reason": "forced_legal_test_candidate"
+              }
+            ],
+            "selected_candidate_id": "torch_cpu_fused_online_fp32_q4_k32_serial_w1_v1",
+            "selected_score": null,
+            "fallback_status": false,
+            "tie_breaking": "not_applicable_forced_test_override"
+          }
+        },
+        "decode": {
+          "decision_kind": "cpu_attention_exact_candidate_selection",
+          "phase": "decode",
+          "selected_strategy": "serial",
+          "worker_count": 1,
+          "split_dimension": "none",
+          "query_heads": 14,
+          "kv_heads": 2,
+          "head_dim": 64,
+          "dtype": "float32",
+          "qkv_layout": "batch_head_sequence_dim",
+          "kv_cache_layout": "contiguous_layer_sequence_kv_head_dim",
+          "causal": true,
+          "assembly": "direct_disjoint_output",
+          "native_kernel_id": "torch_cpu_fused_online_fp32_q1_k32_serial_w1_v1",
+          "algorithm": "fused_tiled_online_softmax",
+          "implementation": "torch_tiled_online_softmax_exact_v1",
+          "score_materialization": false,
+          "probability_materialization": false,
+          "online_softmax": true,
+          "query_tile": 1,
+          "key_tile": 32,
+          "causal_supported": true,
+          "gqa_supported": true,
+          "selection_provenance": "forced_test_override",
+          "fallback": {
+            "strategy": "serial",
+            "worker_count": 1
+          },
+          "runtime_no_redecision": true,
+          "operator_kind": "attention",
+          "selection_mode": "forced_test_override",
+          "selector_version": "dense_fused_attention_static_cost_selector_v2",
+          "target_profile": "host_cpu_4_physical_8_logical_v1",
+          "workload_signature": "b1_q1_kv5_qh14_kvh2_d64_fp32",
+          "workload_domain": {
+            "batch": 1,
+            "query_length_min": 1,
+            "query_length_max": 1,
+            "context_length_min": 5,
+            "context_length_max": 11
+          },
+          "query_length_domain": [
+            1,
+            1
+          ],
+          "context_length_domain": [
+            5,
+            11
+          ],
+          "fallback_status": false,
+          "selection_trace": {
+            "selector_version": "dense_fused_attention_static_cost_selector_v2",
+            "selection_mode": "forced_test_override",
+            "selection_provenance": "forced_test_override",
+            "workload": {
+              "phase": "decode",
+              "batch": 1,
+              "query_len": 1,
+              "context_len": 5,
+              "query_heads": 14,
+              "kv_heads": 2,
+              "head_dim": 64,
+              "dtype": "float32",
+              "causal": true,
+              "q_layout": "batch_head_sequence_dim",
+              "k_layout": "batch_head_sequence_dim",
+              "v_layout": "batch_head_sequence_dim",
+              "output_layout": "batch_head_sequence_dim",
+              "kv_cache_layout": "contiguous_layer_sequence_kv_head_dim",
+              "available_logical_workers": 8,
+              "target_cpu_profile": "host_cpu_4_physical_8_logical_v1"
+            },
+            "workload_signature": "b1_q1_kv5_qh14_kvh2_d64_fp32",
+            "generated_candidate_count": 13,
+            "legal_candidate_count": 1,
+            "rejected_candidates": [],
+            "considered_candidates": [
+              {
+                "candidate_id": "torch_cpu_fused_online_fp32_q1_k32_serial_w1_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "strategy": "serial",
+                "worker_count": 1,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": true,
+                "legality_reason": "forced_legal_test_candidate"
+              }
+            ],
+            "selected_candidate_id": "torch_cpu_fused_online_fp32_q1_k32_serial_w1_v1",
+            "selected_score": null,
+            "fallback_status": false,
+            "tie_breaking": "not_applicable_forced_test_override"
+          }
+        }
+      },
+      "fallback": {
+        "policy": "hard_failure",
+        "count": 0
+      },
+      "runtime_no_redecision": true
+    }
+  },
+  "function_plans": []
+}

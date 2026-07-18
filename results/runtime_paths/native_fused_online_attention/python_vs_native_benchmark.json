@@ -1,0 +1,1364 @@
+{
+  "rows": [
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 4,
+      "candidate": "dense",
+      "median_ms": 0.068919,
+      "p95_ms": 0.09694,
+      "variance_ms2": 0.00013651221138775508,
+      "samples_ms": [
+        0.06751,
+        0.081413,
+        0.071458,
+        0.06165,
+        0.06142,
+        0.068919,
+        0.09694
+      ],
+      "temporary_bytes": 448,
+      "total_temporary_bytes_including_gqa": 29120
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 4,
+      "candidate": "python_fused",
+      "median_ms": 0.208948,
+      "p95_ms": 0.326873,
+      "variance_ms2": 0.0017414696541224496,
+      "samples_ms": [
+        0.326873,
+        0.220343,
+        0.235293,
+        0.208948,
+        0.203726,
+        0.20272,
+        0.201302
+      ],
+      "temporary_bytes": 4144,
+      "total_temporary_bytes_including_gqa": 32816
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 4,
+      "candidate": "native_scalar",
+      "median_ms": 0.026765,
+      "p95_ms": 0.029553,
+      "variance_ms2": 1.3147356734693867e-06,
+      "samples_ms": [
+        0.029553,
+        0.027929,
+        0.027167,
+        0.026765,
+        0.02628,
+        0.026112,
+        0.026234
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 4,
+      "candidate": "native_avx2",
+      "median_ms": 0.022039,
+      "p95_ms": 0.022681,
+      "variance_ms2": 1.2371971428571413e-07,
+      "samples_ms": [
+        0.02257,
+        0.022039,
+        0.022303,
+        0.021907,
+        0.022681,
+        0.021833,
+        0.021689
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 8,
+      "candidate": "dense",
+      "median_ms": 0.055215,
+      "p95_ms": 0.058268,
+      "variance_ms2": 1.3246536326530628e-06,
+      "samples_ms": [
+        0.058268,
+        0.055967,
+        0.055215,
+        0.05523,
+        0.054719,
+        0.054812,
+        0.055019
+      ],
+      "temporary_bytes": 896,
+      "total_temporary_bytes_including_gqa": 58240
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 8,
+      "candidate": "python_fused",
+      "median_ms": 0.195214,
+      "p95_ms": 0.231716,
+      "variance_ms2": 0.0001783582476734694,
+      "samples_ms": [
+        0.197485,
+        0.195214,
+        0.231716,
+        0.203853,
+        0.192615,
+        0.191784,
+        0.191137
+      ],
+      "temporary_bytes": 4592,
+      "total_temporary_bytes_including_gqa": 61936
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 8,
+      "candidate": "native_scalar",
+      "median_ms": 0.03117,
+      "p95_ms": 0.032764,
+      "variance_ms2": 7.610064897959189e-07,
+      "samples_ms": [
+        0.032764,
+        0.031518,
+        0.030824,
+        0.03117,
+        0.031253,
+        0.03024,
+        0.029859
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 8,
+      "candidate": "native_avx2",
+      "median_ms": 0.022487,
+      "p95_ms": 0.100119,
+      "variance_ms2": 0.0007305374397142857,
+      "samples_ms": [
+        0.023032,
+        0.022487,
+        0.022198,
+        0.022272,
+        0.022428,
+        0.100119,
+        0.025142
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 16,
+      "candidate": "dense",
+      "median_ms": 0.055773,
+      "p95_ms": 0.058163,
+      "variance_ms2": 1.2669434285714297e-06,
+      "samples_ms": [
+        0.058163,
+        0.056712,
+        0.055773,
+        0.055616,
+        0.057149,
+        0.055163,
+        0.054698
+      ],
+      "temporary_bytes": 1792,
+      "total_temporary_bytes_including_gqa": 116480
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 16,
+      "candidate": "python_fused",
+      "median_ms": 0.202693,
+      "p95_ms": 0.24098,
+      "variance_ms2": 0.00022660556424489796,
+      "samples_ms": [
+        0.20709,
+        0.196721,
+        0.195098,
+        0.194241,
+        0.203199,
+        0.24098,
+        0.202693
+      ],
+      "temporary_bytes": 5488,
+      "total_temporary_bytes_including_gqa": 120176
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 16,
+      "candidate": "native_scalar",
+      "median_ms": 0.041382,
+      "p95_ms": 0.046292,
+      "variance_ms2": 3.6375818367346947e-06,
+      "samples_ms": [
+        0.042212,
+        0.041382,
+        0.040412,
+        0.046292,
+        0.042812,
+        0.040686,
+        0.040681
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 16,
+      "candidate": "native_avx2",
+      "median_ms": 0.025132,
+      "p95_ms": 0.028372,
+      "variance_ms2": 1.4238793877551029e-06,
+      "samples_ms": [
+        0.025686,
+        0.025132,
+        0.028372,
+        0.025398,
+        0.024938,
+        0.024687,
+        0.024732
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 32,
+      "candidate": "dense",
+      "median_ms": 0.059293,
+      "p95_ms": 0.071748,
+      "variance_ms2": 3.1037299551020424e-05,
+      "samples_ms": [
+        0.061471,
+        0.071748,
+        0.059102,
+        0.058191,
+        0.071505,
+        0.059255,
+        0.059293
+      ],
+      "temporary_bytes": 3584,
+      "total_temporary_bytes_including_gqa": 232960
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 32,
+      "candidate": "python_fused",
+      "median_ms": 0.206962,
+      "p95_ms": 0.220951,
+      "variance_ms2": 4.322812269387763e-05,
+      "samples_ms": [
+        0.220951,
+        0.206962,
+        0.204446,
+        0.203477,
+        0.203472,
+        0.217641,
+        0.210327
+      ],
+      "temporary_bytes": 7280,
+      "total_temporary_bytes_including_gqa": 236656
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 32,
+      "candidate": "native_scalar",
+      "median_ms": 0.058013,
+      "p95_ms": 0.062743,
+      "variance_ms2": 3.982182571428562e-06,
+      "samples_ms": [
+        0.058961,
+        0.058013,
+        0.062743,
+        0.058914,
+        0.056713,
+        0.056679,
+        0.056826
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 32,
+      "candidate": "native_avx2",
+      "median_ms": 0.02962,
+      "p95_ms": 0.030162,
+      "variance_ms2": 1.0835195918367392e-07,
+      "samples_ms": [
+        0.029704,
+        0.029506,
+        0.029095,
+        0.029313,
+        0.030162,
+        0.029894,
+        0.02962
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 64,
+      "candidate": "dense",
+      "median_ms": 0.062825,
+      "p95_ms": 0.065818,
+      "variance_ms2": 1.3362006938775531e-06,
+      "samples_ms": [
+        0.065818,
+        0.06363,
+        0.063377,
+        0.062825,
+        0.062438,
+        0.062194,
+        0.062448
+      ],
+      "temporary_bytes": 7168,
+      "total_temporary_bytes_including_gqa": 465920
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 64,
+      "candidate": "python_fused",
+      "median_ms": 0.385477,
+      "p95_ms": 0.410012,
+      "variance_ms2": 0.0001455271739999998,
+      "samples_ms": [
+        0.385477,
+        0.410012,
+        0.370425,
+        0.378605,
+        0.391027,
+        0.377398,
+        0.392885
+      ],
+      "temporary_bytes": 7280,
+      "total_temporary_bytes_including_gqa": 466032
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 64,
+      "candidate": "native_scalar",
+      "median_ms": 0.095522,
+      "p95_ms": 0.107937,
+      "variance_ms2": 2.1697236775510222e-05,
+      "samples_ms": [
+        0.107937,
+        0.101335,
+        0.095719,
+        0.095522,
+        0.095031,
+        0.094785,
+        0.094581
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 64,
+      "candidate": "native_avx2",
+      "median_ms": 0.040163,
+      "p95_ms": 0.04823,
+      "variance_ms2": 8.951883265306132e-06,
+      "samples_ms": [
+        0.040852,
+        0.040163,
+        0.04823,
+        0.04401,
+        0.039893,
+        0.039691,
+        0.039615
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 128,
+      "candidate": "dense",
+      "median_ms": 0.078444,
+      "p95_ms": 0.08928,
+      "variance_ms2": 3.171618469387756e-05,
+      "samples_ms": [
+        0.084708,
+        0.08928,
+        0.076297,
+        0.075152,
+        0.088497,
+        0.078444,
+        0.076406
+      ],
+      "temporary_bytes": 14336,
+      "total_temporary_bytes_including_gqa": 931840
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 128,
+      "candidate": "python_fused",
+      "median_ms": 0.72404,
+      "p95_ms": 0.854669,
+      "variance_ms2": 0.0025621103962448983,
+      "samples_ms": [
+        0.710053,
+        0.72404,
+        0.698951,
+        0.767666,
+        0.854669,
+        0.729406,
+        0.706965
+      ],
+      "temporary_bytes": 7280,
+      "total_temporary_bytes_including_gqa": 924784
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 128,
+      "candidate": "native_scalar",
+      "median_ms": 0.163121,
+      "p95_ms": 0.168804,
+      "variance_ms2": 4.329686408163288e-06,
+      "samples_ms": [
+        0.16496,
+        0.163777,
+        0.16287,
+        0.168804,
+        0.163121,
+        0.16268,
+        0.162412
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 128,
+      "candidate": "native_avx2",
+      "median_ms": 0.057223,
+      "p95_ms": 0.059192,
+      "variance_ms2": 5.301650612244901e-07,
+      "samples_ms": [
+        0.059192,
+        0.057481,
+        0.057223,
+        0.057251,
+        0.056915,
+        0.057048,
+        0.05708
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 256,
+      "candidate": "dense",
+      "median_ms": 0.098642,
+      "p95_ms": 0.115353,
+      "variance_ms2": 4.571797595918368e-05,
+      "samples_ms": [
+        0.115353,
+        0.102206,
+        0.098642,
+        0.098554,
+        0.097946,
+        0.098048,
+        0.111851
+      ],
+      "temporary_bytes": 28672,
+      "total_temporary_bytes_including_gqa": 1863680
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 256,
+      "candidate": "python_fused",
+      "median_ms": 1.350078,
+      "p95_ms": 1.552039,
+      "variance_ms2": 0.006274565988408162,
+      "samples_ms": [
+        1.350078,
+        1.339504,
+        1.33219,
+        1.316417,
+        1.362973,
+        1.552039,
+        1.454097
+      ],
+      "temporary_bytes": 7280,
+      "total_temporary_bytes_including_gqa": 1842288
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 256,
+      "candidate": "native_scalar",
+      "median_ms": 0.315124,
+      "p95_ms": 0.319785,
+      "variance_ms2": 7.2435102040816145e-06,
+      "samples_ms": [
+        0.319785,
+        0.315124,
+        0.312214,
+        0.317845,
+        0.312983,
+        0.312345,
+        0.316036
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 256,
+      "candidate": "native_avx2",
+      "median_ms": 0.09586,
+      "p95_ms": 0.100378,
+      "variance_ms2": 2.987179102040812e-06,
+      "samples_ms": [
+        0.097201,
+        0.09586,
+        0.100378,
+        0.097022,
+        0.095642,
+        0.095231,
+        0.094939
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 512,
+      "candidate": "dense",
+      "median_ms": 0.163748,
+      "p95_ms": 0.200291,
+      "variance_ms2": 0.00023204429538775515,
+      "samples_ms": [
+        0.200291,
+        0.186307,
+        0.169496,
+        0.16214,
+        0.163748,
+        0.156876,
+        0.156878
+      ],
+      "temporary_bytes": 57344,
+      "total_temporary_bytes_including_gqa": 3727360
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 512,
+      "candidate": "python_fused",
+      "median_ms": 2.865278,
+      "p95_ms": 2.992968,
+      "variance_ms2": 0.0030648434652652996,
+      "samples_ms": [
+        2.888959,
+        2.869977,
+        2.865278,
+        2.83448,
+        2.802768,
+        2.992968,
+        2.855052
+      ],
+      "temporary_bytes": 7280,
+      "total_temporary_bytes_including_gqa": 3677296
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 512,
+      "candidate": "native_scalar",
+      "median_ms": 0.630886,
+      "p95_ms": 0.653782,
+      "variance_ms2": 0.0003266899122040815,
+      "samples_ms": [
+        0.630886,
+        0.634939,
+        0.653782,
+        0.645204,
+        0.624598,
+        0.604472,
+        0.601456
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 512,
+      "candidate": "native_avx2",
+      "median_ms": 0.171993,
+      "p95_ms": 0.177223,
+      "variance_ms2": 5.6638293469387635e-06,
+      "samples_ms": [
+        0.177223,
+        0.171993,
+        0.170924,
+        0.170867,
+        0.171209,
+        0.175943,
+        0.172731
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 1024,
+      "candidate": "dense",
+      "median_ms": 0.421879,
+      "p95_ms": 0.455909,
+      "variance_ms2": 0.00024530242653061246,
+      "samples_ms": [
+        0.455909,
+        0.422764,
+        0.432903,
+        0.405404,
+        0.412925,
+        0.421879,
+        0.411838
+      ],
+      "temporary_bytes": 114688,
+      "total_temporary_bytes_including_gqa": 7454720
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 1024,
+      "candidate": "python_fused",
+      "median_ms": 5.81423,
+      "p95_ms": 5.960691,
+      "variance_ms2": 0.016275265876979556,
+      "samples_ms": [
+        5.959127,
+        5.818377,
+        5.960691,
+        5.74837,
+        5.587853,
+        5.81423,
+        5.678656
+      ],
+      "temporary_bytes": 7280,
+      "total_temporary_bytes_including_gqa": 7347312
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 1024,
+      "candidate": "native_scalar",
+      "median_ms": 1.194332,
+      "p95_ms": 1.24024,
+      "variance_ms2": 0.0002588707408163267,
+      "samples_ms": [
+        1.24024,
+        1.201157,
+        1.194332,
+        1.19299,
+        1.192409,
+        1.195617,
+        1.193122
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 1024,
+      "candidate": "native_avx2",
+      "median_ms": 0.326826,
+      "p95_ms": 0.334958,
+      "variance_ms2": 1.1783059061224392e-05,
+      "samples_ms": [
+        0.326826,
+        0.324516,
+        0.327439,
+        0.325488,
+        0.32374,
+        0.327137,
+        0.334958
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 2048,
+      "candidate": "dense",
+      "median_ms": 0.863169,
+      "p95_ms": 0.926419,
+      "variance_ms2": 0.0009138447602857152,
+      "samples_ms": [
+        0.863966,
+        0.863169,
+        0.926419,
+        0.871357,
+        0.843552,
+        0.829687,
+        0.834247
+      ],
+      "temporary_bytes": 229376,
+      "total_temporary_bytes_including_gqa": 14909440
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 2048,
+      "candidate": "python_fused",
+      "median_ms": 11.541423,
+      "p95_ms": 11.98121,
+      "variance_ms2": 0.06868238638306133,
+      "samples_ms": [
+        11.98121,
+        11.920012,
+        11.7291,
+        11.541423,
+        11.295038,
+        11.340151,
+        11.370878
+      ],
+      "temporary_bytes": 7280,
+      "total_temporary_bytes_including_gqa": 14687344
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 2048,
+      "candidate": "native_scalar",
+      "median_ms": 2.349079,
+      "p95_ms": 2.36924,
+      "variance_ms2": 0.0008459697156326488,
+      "samples_ms": [
+        2.36924,
+        2.354523,
+        2.352846,
+        2.292352,
+        2.290052,
+        2.330788,
+        2.349079
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 2048,
+      "candidate": "native_avx2",
+      "median_ms": 0.622956,
+      "p95_ms": 0.663054,
+      "variance_ms2": 0.00029886208612244907,
+      "samples_ms": [
+        0.621263,
+        0.618445,
+        0.622956,
+        0.606535,
+        0.640754,
+        0.663054,
+        0.638609
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "prefill",
+      "q": 4,
+      "k": 4,
+      "candidate": "dense",
+      "median_ms": 0.060392,
+      "p95_ms": 0.066561,
+      "variance_ms2": 6.253979265306115e-06,
+      "samples_ms": [
+        0.061756,
+        0.060392,
+        0.066561,
+        0.061546,
+        0.059257,
+        0.058767,
+        0.0591
+      ],
+      "temporary_bytes": 1792,
+      "total_temporary_bytes_including_gqa": 30464
+    },
+    {
+      "phase": "prefill",
+      "q": 4,
+      "k": 4,
+      "candidate": "python_fused",
+      "median_ms": 0.79628,
+      "p95_ms": 0.817893,
+      "variance_ms2": 0.00012295715355102035,
+      "samples_ms": [
+        0.788172,
+        0.79628,
+        0.811861,
+        0.817893,
+        0.803826,
+        0.786738,
+        0.792471
+      ],
+      "temporary_bytes": 4144,
+      "total_temporary_bytes_including_gqa": 32816
+    },
+    {
+      "phase": "prefill",
+      "q": 4,
+      "k": 4,
+      "candidate": "native_scalar",
+      "median_ms": 0.037571,
+      "p95_ms": 0.056241,
+      "variance_ms2": 4.280477310204081e-05,
+      "samples_ms": [
+        0.056241,
+        0.038944,
+        0.037571,
+        0.037173,
+        0.036776,
+        0.036577,
+        0.041341
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "prefill",
+      "q": 4,
+      "k": 4,
+      "candidate": "native_avx2",
+      "median_ms": 0.024361,
+      "p95_ms": 0.024865,
+      "variance_ms2": 3.52622448979595e-08,
+      "samples_ms": [
+        0.024865,
+        0.024583,
+        0.024335,
+        0.024433,
+        0.024361,
+        0.02431,
+        0.024322
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "prefill",
+      "q": 8,
+      "k": 8,
+      "candidate": "dense",
+      "median_ms": 0.067029,
+      "p95_ms": 0.082214,
+      "variance_ms2": 3.0220750244897934e-05,
+      "samples_ms": [
+        0.069332,
+        0.067029,
+        0.066449,
+        0.082214,
+        0.073586,
+        0.066278,
+        0.066264
+      ],
+      "temporary_bytes": 7168,
+      "total_temporary_bytes_including_gqa": 64512
+    },
+    {
+      "phase": "prefill",
+      "q": 8,
+      "k": 8,
+      "candidate": "python_fused",
+      "median_ms": 1.538113,
+      "p95_ms": 1.554603,
+      "variance_ms2": 0.0004447239442040809,
+      "samples_ms": [
+        1.554603,
+        1.541103,
+        1.538113,
+        1.496572,
+        1.514593,
+        1.498491,
+        1.538933
+      ],
+      "temporary_bytes": 4592,
+      "total_temporary_bytes_including_gqa": 61936
+    },
+    {
+      "phase": "prefill",
+      "q": 8,
+      "k": 8,
+      "candidate": "native_scalar",
+      "median_ms": 0.068856,
+      "p95_ms": 0.070934,
+      "variance_ms2": 8.06127142857142e-07,
+      "samples_ms": [
+        0.070934,
+        0.06957,
+        0.068856,
+        0.068462,
+        0.068187,
+        0.068224,
+        0.068914
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "prefill",
+      "q": 8,
+      "k": 8,
+      "candidate": "native_avx2",
+      "median_ms": 0.032702,
+      "p95_ms": 0.036122,
+      "variance_ms2": 1.7936875510204096e-06,
+      "samples_ms": [
+        0.03357,
+        0.032702,
+        0.032465,
+        0.032102,
+        0.032084,
+        0.036122,
+        0.034042
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "prefill",
+      "q": 16,
+      "k": 16,
+      "candidate": "dense",
+      "median_ms": 0.083508,
+      "p95_ms": 0.088575,
+      "variance_ms2": 3.851968204081631e-06,
+      "samples_ms": [
+        0.086794,
+        0.084702,
+        0.083508,
+        0.0834,
+        0.082994,
+        0.088575,
+        0.083443
+      ],
+      "temporary_bytes": 28672,
+      "total_temporary_bytes_including_gqa": 143360
+    },
+    {
+      "phase": "prefill",
+      "q": 16,
+      "k": 16,
+      "candidate": "python_fused",
+      "median_ms": 3.015739,
+      "p95_ms": 3.161452,
+      "variance_ms2": 0.002731840481061228,
+      "samples_ms": [
+        3.025009,
+        3.035431,
+        3.010444,
+        3.015739,
+        3.008229,
+        2.99819,
+        3.161452
+      ],
+      "temporary_bytes": 5488,
+      "total_temporary_bytes_including_gqa": 120176
+    },
+    {
+      "phase": "prefill",
+      "q": 16,
+      "k": 16,
+      "candidate": "native_scalar",
+      "median_ms": 0.19606,
+      "p95_ms": 0.211975,
+      "variance_ms2": 4.774507828571427e-05,
+      "samples_ms": [
+        0.211975,
+        0.204029,
+        0.205864,
+        0.19606,
+        0.193683,
+        0.193825,
+        0.19315
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "prefill",
+      "q": 16,
+      "k": 16,
+      "candidate": "native_avx2",
+      "median_ms": 0.066747,
+      "p95_ms": 0.067932,
+      "variance_ms2": 2.08721061224492e-07,
+      "samples_ms": [
+        0.067932,
+        0.067326,
+        0.066871,
+        0.066747,
+        0.066705,
+        0.066605,
+        0.066588
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "prefill",
+      "q": 32,
+      "k": 32,
+      "candidate": "dense",
+      "median_ms": 0.157744,
+      "p95_ms": 0.167723,
+      "variance_ms2": 1.3791000775510226e-05,
+      "samples_ms": [
+        0.161778,
+        0.167723,
+        0.159143,
+        0.157744,
+        0.156977,
+        0.156857,
+        0.156815
+      ],
+      "temporary_bytes": 114688,
+      "total_temporary_bytes_including_gqa": 344064
+    },
+    {
+      "phase": "prefill",
+      "q": 32,
+      "k": 32,
+      "candidate": "python_fused",
+      "median_ms": 6.237551,
+      "p95_ms": 6.267055,
+      "variance_ms2": 0.0009450098068163305,
+      "samples_ms": [
+        6.257683,
+        6.267055,
+        6.189501,
+        6.193287,
+        6.258913,
+        6.237551,
+        6.205614
+      ],
+      "temporary_bytes": 7280,
+      "total_temporary_bytes_including_gqa": 236656
+    },
+    {
+      "phase": "prefill",
+      "q": 32,
+      "k": 32,
+      "candidate": "native_scalar",
+      "median_ms": 0.627779,
+      "p95_ms": 0.634133,
+      "variance_ms2": 6.717415551020365e-06,
+      "samples_ms": [
+        0.634133,
+        0.627779,
+        0.628731,
+        0.629033,
+        0.62591,
+        0.627569,
+        0.625875
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "prefill",
+      "q": 32,
+      "k": 32,
+      "candidate": "native_avx2",
+      "median_ms": 0.176892,
+      "p95_ms": 0.18023,
+      "variance_ms2": 2.558438775510208e-06,
+      "samples_ms": [
+        0.18023,
+        0.177968,
+        0.176335,
+        0.176419,
+        0.175851,
+        0.179675,
+        0.176892
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "prefill",
+      "q": 64,
+      "k": 64,
+      "candidate": "dense",
+      "median_ms": 0.435238,
+      "p95_ms": 0.472362,
+      "variance_ms2": 0.0003046259019183674,
+      "samples_ms": [
+        0.470001,
+        0.472362,
+        0.4561,
+        0.435238,
+        0.43509,
+        0.429829,
+        0.429612
+      ],
+      "temporary_bytes": 458752,
+      "total_temporary_bytes_including_gqa": 917504
+    },
+    {
+      "phase": "prefill",
+      "q": 64,
+      "k": 64,
+      "candidate": "python_fused",
+      "median_ms": 23.093836,
+      "p95_ms": 24.28085,
+      "variance_ms2": 0.20049324026195953,
+      "samples_ms": [
+        23.144467,
+        23.093836,
+        23.209256,
+        24.28085,
+        22.961999,
+        23.048127,
+        22.819682
+      ],
+      "temporary_bytes": 7280,
+      "total_temporary_bytes_including_gqa": 466032
+    },
+    {
+      "phase": "prefill",
+      "q": 64,
+      "k": 64,
+      "candidate": "native_scalar",
+      "median_ms": 2.356843,
+      "p95_ms": 2.39532,
+      "variance_ms2": 0.00020435857395918232,
+      "samples_ms": [
+        2.353981,
+        2.357631,
+        2.356843,
+        2.352732,
+        2.39532,
+        2.368389,
+        2.352754
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "prefill",
+      "q": 64,
+      "k": 64,
+      "candidate": "native_avx2",
+      "median_ms": 0.621246,
+      "p95_ms": 0.650913,
+      "variance_ms2": 0.00012368544297959144,
+      "samples_ms": [
+        0.650913,
+        0.628589,
+        0.624124,
+        0.619868,
+        0.61692,
+        0.621246,
+        0.616272
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "prefill",
+      "q": 128,
+      "k": 128,
+      "candidate": "dense",
+      "median_ms": 1.585126,
+      "p95_ms": 1.653451,
+      "variance_ms2": 0.0017292380095510207,
+      "samples_ms": [
+        1.587632,
+        1.561348,
+        1.537723,
+        1.533849,
+        1.629794,
+        1.653451,
+        1.585126
+      ],
+      "temporary_bytes": 1835008,
+      "total_temporary_bytes_including_gqa": 2752512
+    },
+    {
+      "phase": "prefill",
+      "q": 128,
+      "k": 128,
+      "candidate": "python_fused",
+      "median_ms": 87.154726,
+      "p95_ms": 88.689353,
+      "variance_ms2": 1.1643418248396704,
+      "samples_ms": [
+        88.677319,
+        86.802446,
+        88.689353,
+        87.369217,
+        85.817948,
+        87.154726,
+        85.91507
+      ],
+      "temporary_bytes": 7280,
+      "total_temporary_bytes_including_gqa": 924784
+    },
+    {
+      "phase": "prefill",
+      "q": 128,
+      "k": 128,
+      "candidate": "native_scalar",
+      "median_ms": 9.149092,
+      "p95_ms": 9.414276,
+      "variance_ms2": 0.009895038243428536,
+      "samples_ms": [
+        9.149092,
+        9.414276,
+        9.18488,
+        9.147117,
+        9.17025,
+        9.136775,
+        9.077945
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "prefill",
+      "q": 128,
+      "k": 128,
+      "candidate": "native_avx2",
+      "median_ms": 2.418896,
+      "p95_ms": 2.461241,
+      "variance_ms2": 0.0005111829164081592,
+      "samples_ms": [
+        2.395204,
+        2.386435,
+        2.426875,
+        2.408496,
+        2.42321,
+        2.461241,
+        2.418896
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "prefill",
+      "q": 256,
+      "k": 256,
+      "candidate": "dense",
+      "median_ms": 7.079033,
+      "p95_ms": 8.084523,
+      "variance_ms2": 0.16788472699706147,
+      "samples_ms": [
+        6.692678,
+        7.07789,
+        6.871877,
+        7.079033,
+        8.084523,
+        7.24248,
+        7.157677
+      ],
+      "temporary_bytes": 7340032,
+      "total_temporary_bytes_including_gqa": 9175040
+    },
+    {
+      "phase": "prefill",
+      "q": 256,
+      "k": 256,
+      "candidate": "python_fused",
+      "median_ms": 345.585707,
+      "p95_ms": 365.675699,
+      "variance_ms2": 109.23687517001055,
+      "samples_ms": [
+        338.511558,
+        334.276422,
+        345.585707,
+        343.986129,
+        346.972483,
+        365.675699,
+        360.285609
+      ],
+      "temporary_bytes": 7280,
+      "total_temporary_bytes_including_gqa": 1842288
+    },
+    {
+      "phase": "prefill",
+      "q": 256,
+      "k": 256,
+      "candidate": "native_scalar",
+      "median_ms": 36.375837,
+      "p95_ms": 36.788349,
+      "variance_ms2": 0.03011330695583653,
+      "samples_ms": [
+        36.579322,
+        36.375837,
+        36.245832,
+        36.333417,
+        36.355332,
+        36.553985,
+        36.788349
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    },
+    {
+      "phase": "prefill",
+      "q": 256,
+      "k": 256,
+      "candidate": "native_avx2",
+      "median_ms": 9.731586,
+      "p95_ms": 9.787055,
+      "variance_ms2": 0.006502509814775563,
+      "samples_ms": [
+        9.759021,
+        9.609378,
+        9.786568,
+        9.727484,
+        9.731586,
+        9.787055,
+        9.567107
+      ],
+      "temporary_bytes": 384,
+      "total_temporary_bytes_including_gqa": 384
+    }
+  ]
+}

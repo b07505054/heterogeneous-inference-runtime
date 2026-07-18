@@ -1,0 +1,55 @@
+{
+  "artifact_type": "qwen_real_model_compiler_attention_proof",
+  "integration_level": 5,
+  "truth_boundary": "HuggingFace Qwen real model-forward path; generated tokens depend on registered compiler attention; not a vLLM serving request",
+  "model": "/home/allen/.cache/huggingface/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775",
+  "prompt": "Compiler attention proof.",
+  "prompt_token_count": 128,
+  "steps": 1,
+  "baseline_tokens": [
+    14252
+  ],
+  "compiler_tokens": [
+    14252
+  ],
+  "tokens_equal": true,
+  "max_logit_abs_diff_by_step": [
+    9.202957153320312e-05
+  ],
+  "compiler_attention_prefill_invocations": 24,
+  "compiler_attention_decode_invocations": 0,
+  "selected_equals_executed": true,
+  "fallback_count": 0,
+  "candidate_mismatch_count": 0,
+  "manual_plan_invocation_count": 0,
+  "outputs_entered_o_proj_count": 24,
+  "compiler_attention_total_ms": 52.085966,
+  "selection_mode": "compiler_selected",
+  "prefill_selected_algorithm": "dense_materialized",
+  "decode_selected_algorithm": "dense_materialized",
+  "execution_plan_path": "results/runtime_paths/fused_online_attention/qwen_long_prefill_execution_plan.json",
+  "execution_plan_id": "qwen-compiler-selected-attention-level5-v1",
+  "prefill_selected_candidate": "torch_cpu_attention_fp32_split_head_w4_v1",
+  "decode_selected_candidate": "torch_cpu_attention_fp32_serial_w1_v1",
+  "selector_invocation_count": 2,
+  "execution_plan_roundtrip_equal": true,
+  "perturbation": 5.0,
+  "perturbed_tokens": [
+    84565
+  ],
+  "perturbed_tokens_differ": true,
+  "perturbed_logit_max_abs_diff_by_step": [
+    20.506559371948242
+  ],
+  "baseline_generation_ms": 433.3678400143981,
+  "compiler_generation_ms": 602.8346139937639,
+  "perturbed_generation_ms": 557.9215630423278,
+  "baseline_ttft_ms": 433.3359720185399,
+  "compiler_ttft_ms": 602.2260000463575,
+  "baseline_tpot_median_ms": null,
+  "compiler_tpot_median_ms": null,
+  "baseline_tpot_p95_ms": null,
+  "compiler_tpot_p95_ms": null,
+  "perturbed_fallback_count": 0,
+  "perturbed_candidate_mismatch_count": 0
+}

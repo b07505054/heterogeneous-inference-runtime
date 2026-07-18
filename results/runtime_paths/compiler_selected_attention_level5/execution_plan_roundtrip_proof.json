@@ -1,0 +1,22 @@
+{
+  "plan_id": "qwen-compiler-selected-attention-level5-v1",
+  "schema_version": "2.0.0",
+  "compiler_selected_candidate_ids": {
+    "prefill": "torch_cpu_attention_fp32_serial_w1_v1",
+    "decode": "torch_cpu_attention_fp32_serial_w1_v1"
+  },
+  "serialized_candidate_ids": {
+    "prefill": "torch_cpu_attention_fp32_serial_w1_v1",
+    "decode": "torch_cpu_attention_fp32_serial_w1_v1"
+  },
+  "deserialized_candidate_ids": {
+    "prefill": "torch_cpu_attention_fp32_serial_w1_v1",
+    "decode": "torch_cpu_attention_fp32_serial_w1_v1"
+  },
+  "runtime_executed_candidate_ids": [
+    "torch_cpu_attention_fp32_serial_w1_v1"
+  ],
+  "all_four_stage_ids_match": true,
+  "normal_loader": "deployment.execution_plan.loader.load_execution_plan",
+  "in_memory_override": false
+}

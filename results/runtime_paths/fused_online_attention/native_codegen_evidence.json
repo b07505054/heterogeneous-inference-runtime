@@ -1,0 +1,11 @@
+{
+  "execution_implementation": "Python control loops with PyTorch CPU tile matmul/amax/exp/sum/matmul primitives",
+  "mlir_contract_role": "verified semantic contract only",
+  "mlir_to_native_lowering_executed": false,
+  "native_cpp_kernel": false,
+  "llvm_ir_emitted": false,
+  "assembly_emitted": false,
+  "vectorization_claim": "PyTorch operator implementation may vectorize internally; no generated assembly attribution is claimed",
+  "exponential": "torch.exp per score tile",
+  "limitation": "Python tile-loop and exact exponential overhead dominate measured latency"
+}

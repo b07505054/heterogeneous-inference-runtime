@@ -1,0 +1,68 @@
+{
+  "artifact_type": "qwen_real_model_compiler_attention_proof",
+  "integration_level": 5,
+  "truth_boundary": "HuggingFace Qwen real model-forward path; generated tokens depend on registered compiler attention; not a vLLM serving request",
+  "model": "/home/allen/.cache/huggingface/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775",
+  "prompt": "Compiler attention proof.",
+  "prompt_token_count": 4,
+  "steps": 8,
+  "baseline_tokens": [
+    576,
+    5567,
+    18404,
+    264,
+    501,
+    5486,
+    311,
+    279
+  ],
+  "compiler_tokens": [
+    576,
+    5567,
+    18404,
+    264,
+    501,
+    5486,
+    311,
+    279
+  ],
+  "tokens_equal": true,
+  "max_logit_abs_diff_by_step": [
+    1.2874603271484375e-05,
+    1.33514404296875e-05,
+    1.621246337890625e-05,
+    1.1205673217773438e-05,
+    9.5367431640625e-06,
+    9.775161743164062e-06,
+    8.106231689453125e-06,
+    9.059906005859375e-06
+  ],
+  "compiler_attention_prefill_invocations": 24,
+  "compiler_attention_decode_invocations": 168,
+  "selected_equals_executed": true,
+  "perturbation": 5.0,
+  "perturbed_tokens": [
+    84565,
+    84565,
+    84565,
+    84565,
+    84565,
+    84565,
+    84565,
+    84565
+  ],
+  "perturbed_tokens_differ": true,
+  "perturbed_logit_max_abs_diff_by_step": [
+    19.39579963684082,
+    18.225570678710938,
+    23.240440368652344,
+    20.13709259033203,
+    20.67298126220703,
+    20.33433723449707,
+    25.51108741760254,
+    20.530410766601562
+  ],
+  "baseline_generation_ms": 966.325128916651,
+  "compiler_generation_ms": 1023.4496949706227,
+  "perturbed_generation_ms": 972.0358988270164
+}
