@@ -1,7 +1,0 @@
-{
-  "representation": "immutable SchedulerStateSummary plus SummaryDelta",
-  "candidate_mutates_base": false,
-  "candidate_isolation_tests": 2,
-  "full_request_deepcopy_in_v2_selector": false,
-  "plan_generation": "existing SchedulerCompiler only"
-}

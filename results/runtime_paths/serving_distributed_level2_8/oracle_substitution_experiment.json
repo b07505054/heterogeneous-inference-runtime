@@ -1,7 +1,0 @@
-{
-  "pipeline_a": "functional modeled step latency plus modeled accumulation; historical S2.6 ranking failed",
-  "pipeline_b": "not completed because the first observability schema omitted per-request ScheduleItem identities needed for exact timestamp reconstruction",
-  "pipeline_c": "direct real-Qwen request timestamps captured",
-  "dominant_error_evidence": "large systematic step-latency residuals strongly implicate the service model, but accumulation cannot be cleared independently until pipeline B is implemented",
-  "classification": "partial isolation only"
-}

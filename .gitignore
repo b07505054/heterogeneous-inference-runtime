@@ -82,8 +82,6 @@ results/*.json
 !results/executorch_thread_scaling.json
 !results/executorch_cpu_usage.json
 !results/scaling_metrics.json
-!results/tvm_tensorir/
-!results/tvm_tensorir/**
 !results/cuda_transformer/
 !results/cuda_transformer/**
 

@@ -1,7 +1,0 @@
-{
-  "source":"results/runtime_paths/serving_distributed_level2/held_out_scheduler_evaluation.json",
-  "preserved_claim":{"dominant_policy_agreement_percent":0.0,"mean_request_level_regret_percent":41.32},
-  "classification":"Serving S2 execution semantics are verified, but the initial scheduling cost model is not profitable on held-out workload families.",
-  "selector_id":"scheduler_selector_v0_frozen",
-  "source_artifact_overwritten":false
-}

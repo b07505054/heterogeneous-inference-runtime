@@ -1,5 +1,0 @@
-{
-  "semantic_divergence_steps": 0,
-  "equivalent_plan_steps": 323,
-  "timing_divergence": "measured separately by within-cell variance; rollout-v2 does not predict time"
-}

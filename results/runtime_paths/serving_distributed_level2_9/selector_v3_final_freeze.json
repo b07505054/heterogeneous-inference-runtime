@@ -1,8 +1,0 @@
-{
-  "status": "not achieved",
-  "reason": "strict freeze-before-final-execution ordering was not satisfied",
-  "historical_exploratory_configuration": "../serving_distributed_level2_8/selector_v3_freeze.json",
-  "performance_tuning_after_results": false,
-  "static_final_claim": false,
-  "adaptive_final_claim": false
-}

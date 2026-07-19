@@ -1,6 +1,0 @@
-{
-  "preserved":{"s2_execution_correctness":true,"s2_5_modeled_agreement":"100%","s2_5_modeled_regret":"0%","shared_model_oracle_limitation":true},
-  "wall_clock_result":"modeled ranking did not generalize; S2.6 validation failed",
-  "planning_result":"fast selector meets small-state sub-ms median but not large-state p95 target; epoch/online stress overhead remains high",
-  "not_claimed":["Serving S3","P/D disaggregation","KV transfer","PagedAttention","vLLM engine","GPU","NCCL","multi-node"]
-}

@@ -1,6 +1,0 @@
-{
-  "method": "synchronous PyTorch module hooks around Qwen self_attn; non-attention is step remainder and includes runtime",
-  "overlap_warning": "self_attn timer includes o_proj; no precise per-op attribution claimed",
-  "attention_ms": 27208.956096,
-  "step_ms": 128720.977532
-}

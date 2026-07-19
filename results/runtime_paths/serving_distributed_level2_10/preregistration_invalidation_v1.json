@@ -1,7 +1,0 @@
-{
-  "invalidated_preregistration_sha256": "5a7c4850234e82d6b5331d13e0cdb098546cfd5a8f7be3c15d5a0f53138ed898",
-  "failure_stage": "first warm-up model embedding lookup",
-  "measured_final_results_produced": false,
-  "reason": "preregistered token IDs exceeded the local Qwen vocabulary",
-  "action": "invalidate v1 and restart all warm-ups and measured runs under v2"
-}

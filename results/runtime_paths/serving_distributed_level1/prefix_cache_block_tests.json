@@ -1,9 +1,0 @@
-{
-  "complete_block_matching": true,
-  "partial_final_block_reused": false,
-  "parent_lineage_checked": true,
-  "block_order_sensitive": true,
-  "token_payload_checked_after_hash": true,
-  "eviction": "deterministic LRU",
-  "collision_assumption": "SHA-256 plus token/parent equality verification"
-}

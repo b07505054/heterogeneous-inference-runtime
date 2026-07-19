@@ -1,6 +1,0 @@
-{
-  "provenance":"derived_from_measured_cpu plus configured policy weights",
-  "components":["step compute","TTFT penalty","decode-gap penalty","prefill starvation","decode starvation","KV pressure placeholder","batch efficiency benefit"],
-  "formula":"compute + TTFT + decode_gap + starvation + KV_pressure - batching_benefit",
-  "limitations":"simple analytical model; held-out regret is reported without tuning it away"
-}

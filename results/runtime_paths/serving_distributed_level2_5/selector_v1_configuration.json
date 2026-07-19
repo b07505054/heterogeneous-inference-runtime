@@ -1,8 +1,0 @@
-{
-  "selector_id":"scheduler_selector_v1_request_level",
-  "primary_mode":"full_trace calibrated request-level prediction for policy epoch",
-  "bounded_modes":{"horizons":[1,2,4,8],"continuation":"same deterministic fixed policy","terminal_cost":true},
-  "features":["waiting count","prefill-ready count","decode-ready count","remaining prefill","remaining decode","oldest age","largest decode gap","mean decode gap","token budget","sequence budget","prefix-hit tokens","KV pressure","replica core budget"],
-  "policy_epoch":{"valid_for":"complete trace in primary evaluation","reselection_trigger":"trace start","switch_count":0},
-  "runtime_heuristics_added":false
-}

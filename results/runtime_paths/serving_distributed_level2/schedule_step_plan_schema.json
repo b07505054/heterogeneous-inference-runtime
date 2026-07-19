@@ -1,7 +1,0 @@
-{
-  "schema_version":1,
-  "plan_kind":"serving_schedule_step",
-  "required":["plan_id","replica_id","step_id","scheduler_state_version","policy","candidate_id","maximum_tokens","scheduled_tokens","unused_tokens","maximum_sequences","scheduled_sequences","items","predicted_cost"],
-  "item":["request_id","phase","token_start","token_count"],
-  "separate_from":["ServingExecutionPlan","OperatorExecutionPlan"]
-}

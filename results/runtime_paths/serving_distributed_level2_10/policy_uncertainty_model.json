@@ -1,7 +1,0 @@
-{
-  "components": ["service residual variance", "training support count", "out-of-distribution distance", "rollout uncertainty", "frontier truncation"],
-  "uncertainty_threshold": 0.35,
-  "decision_margin": 0.12,
-  "robust_default": "decode_first",
-  "online_future_information": false
-}

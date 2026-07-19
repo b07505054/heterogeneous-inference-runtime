@@ -1,7 +1,0 @@
-{
-  "exploratory_s2_8": {"mean_regret": 0.0394, "exact_winner_rate": 0.0},
-  "independent_s2_9": {"mean_regret": 0.06776, "exact_winner_rate": 0.0},
-  "static_s2_9_mean_regret": 0.06150,
-  "diagnosis": ["adaptive correction used too few completed observations", "mixed-step signal did not correct policy-sequence ranking", "policy-induced sampling bias remains", "adaptive selector inherited static rule errors"],
-  "decision": "reject adaptive selector; it did not improve independent performance"
-}

@@ -1,8 +1,0 @@
-{
-  "old_target": "functional-model full-trace request objective built from calibrated per-step service costs",
-  "new_target": "relative wall-clock policy outcome",
-  "pairwise_definition": "Delta(A,B) = measured request objective(A) - measured request objective(B)",
-  "ranking_and_plan_generation_separate": true,
-  "future_arrivals_exposed": false,
-  "truth_boundary": "The new data are functional CPU wall-clock measurements, not real-Qwen measurements."
-}

@@ -1,5 +1,0 @@
-{
-  "rules":["chunk_start equals completed prefill","positive token count","count <= remaining","count <= configured maximum","total step tokens <= budget","next chunk begins at prior end"],
-  "tested":["smaller/equal/larger/much-larger prompts","partial prefix","full prefix","one-token budget","final boundary","overlap","gap","beyond remaining","zero chunk"],
-  "truth_boundary":"Chunked prefill execution in metadata mode proves scheduler token progression, plan legality, cache accounting, and model invocation sequencing. It does not prove production PagedAttention KV block persistence."
-}

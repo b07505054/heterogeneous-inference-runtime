@@ -1,6 +1,0 @@
-{
-  "proven": ["S2 execution correctness", "S2.6 negative-result preservation", "incremental summary/reference agreement", "large-state selector scalability", "plan-only runtime invariants"],
-  "not_proven": ["wall-clock ranking repair", "real-Qwen v2 cross-layer comparison", "independent wall-clock profitability"],
-  "classification": "Serving Distributed S2.7 incremental state scalability verified; policy profitability remains unvalidated",
-  "s3_allowed": false
-}

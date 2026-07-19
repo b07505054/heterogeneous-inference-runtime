@@ -1,9 +1,0 @@
-{
-  "operator_maturity":"O5",
-  "serving_placement_maturity":"S1",
-  "serving_scheduler_maturity":"S2",
-  "modeled_artifacts":"policy sweeps, topology, stress, timing tradeoffs",
-  "measured_artifact":"focused Hugging Face Qwen CPU model-forward",
-  "cache_modes":{"policy_sweeps":"metadata_only","real_qwen":"metadata progression plus contiguous per-request Transformers cache"},
-  "not_demonstrated":["vLLM engine","PagedAttention","prefill/decode disaggregation","cross-instance KV transfer","tensor parallelism","pipeline parallelism","NCCL","GPU","multi-node"]
-}

@@ -1,9 +1,0 @@
-{
-  "source": "../serving_distributed_level2_7/large_state_stress.json",
-  "requests": 1000,
-  "steps": 10501,
-  "completed": 1000,
-  "summary_reference_mismatches": 0,
-  "runtime_mutation_or_fallback": 0,
-  "note": "Reconstruction is offline; no new online-state mutation was introduced."
-}

@@ -1,6 +1,0 @@
-{
-  "rule": "depart from decode_first only when predicted improvement > 0.12 and uncertainty <= 0.35",
-  "risk_aware_executed_policy_histogram": {"decode_first": 102, "prefill_first": 4, "slo_aware": 2, "chunked_balanced": 0},
-  "default_step_rate": 0.9444444444444444,
-  "pairwise_executed_policy_histogram": {"chunked_balanced": 42, "decode_first": 34, "prefill_first": 26, "slo_aware": 6}
-}

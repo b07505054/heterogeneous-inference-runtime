@@ -1,8 +1,0 @@
-{
-  "version":"request_objective_v1",
-  "ttft_scale_ms":50.0,
-  "decode_gap_scale_ms":10.0,
-  "e2e_scale_ms":250.0,
-  "goodput_scale_requests_per_s":50.0,
-  "provenance":"declared CPU-functional SLO and workload reference scales"
-}

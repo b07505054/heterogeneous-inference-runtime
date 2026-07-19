@@ -1,6 +1,0 @@
-{
-  "ttft_target_ms": 50,
-  "maximum_decode_gap_ms": 10,
-  "completion_deadline": "not separately configured",
-  "goodput_definition": "requests satisfying TTFT and max-decode-gap SLO per modeled second"
-}

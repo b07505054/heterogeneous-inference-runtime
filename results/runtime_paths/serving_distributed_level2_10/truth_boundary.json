@@ -1,9 +1,0 @@
-{
-  "classification": "Serving Distributed S2.10 conservative wall-clock policy selector validated; exact policy ranking remains imperfect",
-  "preregistered_risk_selector": "passed regret, tie-aware, and robust-baseline gates",
-  "pairwise_selector": "failed robust-baseline comparison",
-  "rollout_fidelity": "failed",
-  "compiler_attention_operator_plans": "verified",
-  "compiler_attention_worker_events": "zero because compiler selected serial",
-  "s3_allowed": false
-}

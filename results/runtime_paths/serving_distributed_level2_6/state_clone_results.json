@@ -1,6 +1,0 @@
-{
-  "frozen_offline": "deepcopy per fixed-policy rollout; cProfile attached",
-  "fast_online": "one arrived-only compact snapshot per planning call; zero rollout clones",
-  "live_state_mutation_detected": false,
-  "large_state_limitation": "snapshot still copies arrived request records and scales with request count"
-}
