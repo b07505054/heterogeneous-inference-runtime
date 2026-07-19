@@ -1,0 +1,128 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "tp1",
+      "estimated_communication_bytes": 0,
+      "estimated_rank_local_compute": 7168,
+      "excluded_from_consideration": false,
+      "legality_rule_results": [
+        {
+          "detail": "world_size=1 candidates bypass operator/capability legality checks",
+          "rule": "tp1_requires_no_partitioning",
+          "status": "not_applicable"
+        }
+      ],
+      "legality_status": "legal",
+      "partition_axis": 0,
+      "partitioned_operator_ids": [],
+      "pipeline_parallel_size": 1,
+      "profitability": {
+        "computed": true,
+        "feasible": true,
+        "infeasibility_reason": "",
+        "memory_budget_mb": 22107.600000000002,
+        "predicted_throughput_tokens_per_s": 278.47716621855511,
+        "required_memory_mb": 15496.673803329468,
+        "truth_boundary": "linear_regression_calibrated_from_real_d5_measured_throughput_on_2x_rtx4090_pcie_no_nvlink_not_a_full_systems_simulator_not_valid_off_calibration_hardware"
+      },
+      "rejection_reasons": [],
+      "required_collectives": [],
+      "selection_score": 7168,
+      "shard_count": 1,
+      "strategy": "none",
+      "tensor_parallel_size": 1,
+      "truth_boundary": "analytical_and_d1_local_ipc_calibrated_not_gpu_measured_not_nccl_calibrated_not_multi_gpu_latency_predictor",
+      "world_size": 1
+    },
+    {
+      "candidate_id": "tp2",
+      "estimated_communication_bytes": 28672,
+      "estimated_rank_local_compute": 3584,
+      "excluded_from_consideration": false,
+      "legality_rule_results": [
+        {
+          "detail": "llm.o_proj",
+          "rule": "supported_operator_type",
+          "status": "pass"
+        },
+        {
+          "detail": "3584",
+          "rule": "static_shape_availability",
+          "status": "pass"
+        },
+        {
+          "detail": "hidden_dim=3584 tensor_parallel_size=2",
+          "rule": "tensor_hidden_dimension_divisibility",
+          "status": "pass"
+        },
+        {
+          "detail": "o_proj partitions hidden_size directly, not per-head",
+          "rule": "head_count_divisibility",
+          "status": "not_applicable"
+        },
+        {
+          "detail": "",
+          "rule": "rank_count_consistency",
+          "status": "pass"
+        },
+        {
+          "detail": "axis=0 (K / hidden contraction dimension)",
+          "rule": "partition_axis_support",
+          "status": "pass"
+        },
+        {
+          "detail": "all_reduce(sum) is implemented by the D1 runtime",
+          "rule": "required_collective_support",
+          "status": "pass"
+        },
+        {
+          "detail": "",
+          "rule": "tensor_shape_availability",
+          "status": "pass"
+        },
+        {
+          "detail": "batch/sequence dimension may remain dynamic; only the partitioned hidden dimension must be statically known",
+          "rule": "static_vs_dynamic_shape_handling",
+          "status": "pass"
+        },
+        {
+          "detail": "requires target profile distributedStrategyOptIn=true",
+          "rule": "runtime_capability_availability",
+          "status": "pass"
+        }
+      ],
+      "legality_status": "legal",
+      "partition_axis": 0,
+      "partitioned_operator_ids": [
+        "qwen_prefill::llm.o_proj::layer_0"
+      ],
+      "pipeline_parallel_size": 1,
+      "profitability": {
+        "computed": true,
+        "feasible": true,
+        "infeasibility_reason": "",
+        "memory_budget_mb": 22107.600000000002,
+        "predicted_throughput_tokens_per_s": 324.81069687285515,
+        "required_memory_mb": 7748.3369016647339,
+        "truth_boundary": "linear_regression_calibrated_from_real_d5_measured_throughput_on_2x_rtx4090_pcie_no_nvlink_not_a_full_systems_simulator_not_valid_off_calibration_hardware"
+      },
+      "rejection_reasons": [],
+      "required_collectives": [
+        "all_reduce"
+      ],
+      "selection_score": 6233256,
+      "shard_count": 2,
+      "strategy": "tensor_parallel",
+      "tensor_parallel_size": 2,
+      "truth_boundary": "analytical_and_d1_local_ipc_calibrated_not_gpu_measured_not_nccl_calibrated_not_multi_gpu_latency_predictor",
+      "world_size": 2
+    }
+  ],
+  "policy_id": "d6_profitability_selector_v1",
+  "policy_truth_boundary": "d6_qwen_pipeline_whole_model_profitability_selection_calibrated_from_real_d5_measured_2x_rtx4090_throughput_linear_regression_not_nccl_calibrated_by_the_compiler_itself_not_a_runtime_measured_guarantee_for_this_specific_compile",
+  "schema": "distributed_strategy_evidence_report",
+  "schema_version": "1.0.0",
+  "selected_candidate_id": "tp2",
+  "selection_reason": "profitable_tp2_selected_predicted_throughput_higher",
+  "truth_boundary": "d6_qwen_pipeline_whole_model_profitability_selection_calibrated_from_real_d5_measured_2x_rtx4090_throughput_linear_regression_not_nccl_calibrated_by_the_compiler_itself_not_a_runtime_measured_guarantee_for_this_specific_compile_see_per_candidate_profitability_field_for_the_actual_predicted_values_and_distributed_profitability_contract_version_for_the_calibration_in_effect"
+}

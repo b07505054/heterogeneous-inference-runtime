@@ -1,0 +1,45 @@
+{
+  "runtime_repo_head": "f89adabf85c747ae99fc50dafa9a3f4a326593bb",
+  "compiler_repo_head": "59854b892629bc0bc7f43ca0bad3eab17464c030",
+  "file_hashes": {
+    "results/runtime_paths/distributed_d4b_real_2gpu_vllm_tp2/cross_layer_provenance.json": "172a81d738afc9913559d4bd792f56666515fcbf84a3198a4520fcd83f0d03ea",
+    "results/runtime_paths/distributed_d4b_real_2gpu_vllm_tp2/test_summary.json": "80267366bf78983f53769bf7605a9b9c5db86b155bbd72ce0f4c78affccf62a3",
+    "results/runtime_paths/distributed_d5_compiler_tp_policy/tp1_sweep_full.json": "606fd9df3f10bdb87d8b2efd5761e9eee8972b9f5096fe06f131b6a966380f11",
+    "results/runtime_paths/distributed_d5_compiler_tp_policy/tp2_sweep_full.json": "1683ce37df26ad55777160f7a60e5d22c1069d05fd2ea9b7d224dc34cb192732",
+    "results/runtime_paths/distributed_d5_compiler_tp_policy/7b/tp1_sweep_full_7b.json": "f9e4f19e09d2317d8698e41a2640d18d98d852eea37117dc4b7538da13ad09d8",
+    "results/runtime_paths/distributed_d5_compiler_tp_policy/7b/tp2_sweep_full_7b.json": "ba0785724983b8599a2d9bd0bef279f8a42e0f5fbf961b91f7121281d43f9369",
+    "results/runtime_paths/distributed_d5_compiler_tp_policy/cost_model_fitted.json": "0a85cd4a9ccad60e365e86f4e19ade00397ab52300a6f224be5f7d931418bcba",
+    "results/runtime_paths/distributed_d5_compiler_tp_policy/held_out_evaluation.json": "ce2ab2c5cbde3db0d4b9f77b66c07147e52a8b29aeaf62d2cee825d7bb0f176f",
+    "results/runtime_paths/distributed_d5_compiler_tp_policy/calibration_holdout_split.json": "67dadef4905c9668744c6bd766d381057696a04fc68e161902edeb6b9584f74f",
+    "results/runtime_paths/distributed_d5_compiler_tp_policy/7b/calibration_holdout_split_7b.json": "b8863ab79877b567c74d1ab8fc94ab74cd064f5a0d7d6ce006bbc8463923df60",
+    "docs/DISTRIBUTED_COMPILER_ARCHITECTURE_AUDIT.md": "bbbe5beb83d7d81f3f89c281644163d93032bee0022d19ae65ce17503f4832f6",
+    "results/runtime_paths/distributed_d2_qwen_pipeline/real_qwen_tp1_execution_plan.json": "8f22d47b0ad2061d89967f7bd0e5143fbda68dbafec7a892e72f1ca4a68d6dd1",
+    "results/runtime_paths/distributed_d2_qwen_pipeline/real_qwen_tp2_execution_plan.json": "4bb1b63cf06346164b8e052840ff18749ec651582d4412797b67a1e14cce77ac",
+    "results/runtime_paths/distributed_d2_qwen_pipeline/real_qwen7b_tp1_execution_plan.json": "b59da13cf26b6bb1b5b403bf710124aa5a2e235413f5449fd387694a7be1e9aa",
+    "results/runtime_paths/distributed_d2_qwen_pipeline/real_qwen7b_tp2_execution_plan.json": "fc0fb1508827c0545dd0a3c26f3249efe75ff39127835268e1e5e1932c7b0a86"
+  },
+  "test_baseline": {
+    "runtime_repo_pytest": {
+      "passed": 1109,
+      "failed": 19,
+      "skipped": 22,
+      "errors": 13,
+      "note": "failed/errors are pre-existing, environment-based (no local CUDA/GPU on this dev machine), confirmed via git-stash comparison against unmodified D4B/D5 commit during the prior architecture audit"
+    },
+    "compiler_repo_ctest_full": {
+      "passed": 30,
+      "failed": 0,
+      "total": 30
+    },
+    "compiler_repo_ctest_distributed_subset": {
+      "passed": 3,
+      "failed": 0,
+      "total": 3,
+      "tests": [
+        "DistributedPlanningTest",
+        "DistributedStrategyPlanningTest",
+        "DistributedStrategyPlanningPipelineTest"
+      ]
+    }
+  }
+}

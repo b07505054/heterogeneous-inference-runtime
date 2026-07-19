@@ -1,0 +1,233 @@
+[
+  {
+    "model_label": "qwen05b",
+    "workload_id": "in1024_out128_c1",
+    "compiler_selected_tp": "tp1",
+    "selection_reason": "profitable_tp1_selected_predicted_throughput_higher",
+    "policy_id": "d6_profitability_selector_v1",
+    "plan_has_distributed_key": false,
+    "plan_tensor_parallel_size": 1,
+    "predicted_tp1_throughput": 702.212570644004,
+    "predicted_tp2_throughput": 651.1541880750237
+  },
+  {
+    "model_label": "qwen05b",
+    "workload_id": "in1024_out128_c2",
+    "compiler_selected_tp": "tp1",
+    "selection_reason": "profitable_tp1_selected_predicted_throughput_higher",
+    "policy_id": "d6_profitability_selector_v1",
+    "plan_has_distributed_key": false,
+    "plan_tensor_parallel_size": 1,
+    "predicted_tp1_throughput": 879.8782075281998,
+    "predicted_tp2_throughput": 817.177690112021
+  },
+  {
+    "model_label": "qwen05b",
+    "workload_id": "in1024_out128_c4",
+    "compiler_selected_tp": "tp1",
+    "selection_reason": "profitable_tp1_selected_predicted_throughput_higher",
+    "policy_id": "d6_profitability_selector_v1",
+    "plan_has_distributed_key": false,
+    "plan_tensor_parallel_size": 1,
+    "predicted_tp1_throughput": 1235.2094812965915,
+    "predicted_tp2_throughput": 1149.2246941860155
+  },
+  {
+    "model_label": "qwen05b",
+    "workload_id": "in1024_out128_c8",
+    "compiler_selected_tp": "tp1",
+    "selection_reason": "profitable_tp1_selected_predicted_throughput_higher",
+    "policy_id": "d6_profitability_selector_v1",
+    "plan_has_distributed_key": false,
+    "plan_tensor_parallel_size": 1,
+    "predicted_tp1_throughput": 1945.872028833375,
+    "predicted_tp2_throughput": 1813.3187023340045
+  },
+  {
+    "model_label": "qwen05b",
+    "workload_id": "in1024_out256_c8",
+    "compiler_selected_tp": "tp1",
+    "selection_reason": "profitable_tp1_selected_predicted_throughput_higher",
+    "policy_id": "d6_profitability_selector_v1",
+    "plan_has_distributed_key": false,
+    "plan_tensor_parallel_size": 1,
+    "predicted_tp1_throughput": 2049.464083937294,
+    "predicted_tp2_throughput": 1936.9515068293167
+  },
+  {
+    "model_label": "qwen05b",
+    "workload_id": "in1024_out32_c1",
+    "compiler_selected_tp": "tp1",
+    "selection_reason": "profitable_tp1_selected_predicted_throughput_higher",
+    "policy_id": "d6_profitability_selector_v1",
+    "plan_has_distributed_key": false,
+    "plan_tensor_parallel_size": 1,
+    "predicted_tp1_throughput": 624.5185293160644,
+    "predicted_tp2_throughput": 558.4295847035395
+  },
+  {
+    "model_label": "qwen05b",
+    "workload_id": "in1024_out32_c4",
+    "compiler_selected_tp": "tp1",
+    "selection_reason": "profitable_tp1_selected_predicted_throughput_higher",
+    "policy_id": "d6_profitability_selector_v1",
+    "plan_has_distributed_key": false,
+    "plan_tensor_parallel_size": 1,
+    "predicted_tp1_throughput": 1157.515439968652,
+    "predicted_tp2_throughput": 1056.5000908145312
+  },
+  {
+    "model_label": "qwen05b",
+    "workload_id": "in1024_out32_c8",
+    "compiler_selected_tp": "tp1",
+    "selection_reason": "profitable_tp1_selected_predicted_throughput_higher",
+    "policy_id": "d6_profitability_selector_v1",
+    "plan_has_distributed_key": false,
+    "plan_tensor_parallel_size": 1,
+    "predicted_tp1_throughput": 1868.1779875054353,
+    "predicted_tp2_throughput": 1720.5940989625203
+  },
+  {
+    "model_label": "qwen05b",
+    "workload_id": "in256_out128_c2",
+    "compiler_selected_tp": "tp1",
+    "selection_reason": "profitable_tp1_selected_predicted_throughput_higher",
+    "policy_id": "d6_profitability_selector_v1",
+    "plan_has_distributed_key": false,
+    "plan_tensor_parallel_size": 1,
+    "predicted_tp1_throughput": 828.5097739902471,
+    "predicted_tp2_throughput": 771.7351839012596
+  },
+  {
+    "model_label": "qwen05b",
+    "workload_id": "in256_out128_c8",
+    "compiler_selected_tp": "tp1",
+    "selection_reason": "profitable_tp1_selected_predicted_throughput_higher",
+    "policy_id": "d6_profitability_selector_v1",
+    "plan_has_distributed_key": false,
+    "plan_tensor_parallel_size": 1,
+    "predicted_tp1_throughput": 1894.5035952954224,
+    "predicted_tp2_throughput": 1767.876196123243
+  },
+  {
+    "model_label": "qwen05b",
+    "workload_id": "in256_out256_c4",
+    "compiler_selected_tp": "tp1",
+    "selection_reason": "profitable_tp1_selected_predicted_throughput_higher",
+    "policy_id": "d6_profitability_selector_v1",
+    "plan_has_distributed_key": false,
+    "plan_tensor_parallel_size": 1,
+    "predicted_tp1_throughput": 1287.4331028625584,
+    "predicted_tp2_throughput": 1227.4149924705664
+  },
+  {
+    "model_label": "qwen05b",
+    "workload_id": "in256_out32_c2",
+    "compiler_selected_tp": "tp1",
+    "selection_reason": "profitable_tp1_selected_predicted_throughput_higher",
+    "policy_id": "d6_profitability_selector_v1",
+    "plan_has_distributed_key": false,
+    "plan_tensor_parallel_size": 1,
+    "predicted_tp1_throughput": 750.8157326623077,
+    "predicted_tp2_throughput": 679.0105805297753
+  },
+  {
+    "model_label": "qwen05b",
+    "workload_id": "in256_out32_c8",
+    "compiler_selected_tp": "tp1",
+    "selection_reason": "profitable_tp1_selected_predicted_throughput_higher",
+    "policy_id": "d6_profitability_selector_v1",
+    "plan_has_distributed_key": false,
+    "plan_tensor_parallel_size": 1,
+    "predicted_tp1_throughput": 1816.8095539674828,
+    "predicted_tp2_throughput": 1675.151592751759
+  },
+  {
+    "model_label": "qwen05b",
+    "workload_id": "in32_out128_c4",
+    "compiler_selected_tp": "tp1",
+    "selection_reason": "profitable_tp1_selected_predicted_throughput_higher",
+    "policy_id": "d6_profitability_selector_v1",
+    "plan_has_distributed_key": false,
+    "plan_tensor_parallel_size": 1,
+    "predicted_tp1_throughput": 1168.858587976736,
+    "predicted_tp2_throughput": 1090.528123663782
+  },
+  {
+    "model_label": "qwen05b",
+    "workload_id": "in32_out256_c8",
+    "compiler_selected_tp": "tp1",
+    "selection_reason": "profitable_tp1_selected_predicted_throughput_higher",
+    "policy_id": "d6_profitability_selector_v1",
+    "plan_has_distributed_key": false,
+    "plan_tensor_parallel_size": 1,
+    "predicted_tp1_throughput": 1983.113190617439,
+    "predicted_tp2_throughput": 1878.2549363070834
+  },
+  {
+    "model_label": "qwen05b",
+    "workload_id": "in32_out32_c1",
+    "compiler_selected_tp": "tp1",
+    "selection_reason": "profitable_tp1_selected_predicted_throughput_higher",
+    "policy_id": "d6_profitability_selector_v1",
+    "plan_has_distributed_key": false,
+    "plan_tensor_parallel_size": 1,
+    "predicted_tp1_throughput": 558.1676359962089,
+    "predicted_tp2_throughput": 499.733014181306
+  },
+  {
+    "model_label": "qwen05b",
+    "workload_id": "in32_out32_c4",
+    "compiler_selected_tp": "tp1",
+    "selection_reason": "profitable_tp1_selected_predicted_throughput_higher",
+    "policy_id": "d6_profitability_selector_v1",
+    "plan_has_distributed_key": false,
+    "plan_tensor_parallel_size": 1,
+    "predicted_tp1_throughput": 1091.1645466487967,
+    "predicted_tp2_throughput": 997.8035202922978
+  },
+  {
+    "model_label": "qwen7b",
+    "workload_id": "in1024_out32_c1",
+    "compiler_selected_tp": "tp2",
+    "selection_reason": "profitable_tp2_selected_predicted_throughput_higher",
+    "policy_id": "d6_profitability_selector_v1",
+    "plan_has_distributed_key": true,
+    "plan_tensor_parallel_size": 2,
+    "predicted_tp1_throughput": -188.16885111417707,
+    "predicted_tp2_throughput": -114.56323871590317
+  },
+  {
+    "model_label": "qwen7b",
+    "workload_id": "in1024_out32_c4",
+    "compiler_selected_tp": "tp2",
+    "selection_reason": "profitable_tp2_selected_predicted_throughput_higher",
+    "policy_id": "d6_profitability_selector_v1",
+    "plan_has_distributed_key": true,
+    "plan_tensor_parallel_size": 2,
+    "predicted_tp1_throughput": 344.8280595384105,
+    "predicted_tp2_throughput": 383.5072673950886
+  },
+  {
+    "model_label": "qwen7b",
+    "workload_id": "in32_out32_c1",
+    "compiler_selected_tp": "tp2",
+    "selection_reason": "profitable_tp2_selected_predicted_throughput_higher",
+    "policy_id": "d6_profitability_selector_v1",
+    "plan_has_distributed_key": true,
+    "plan_tensor_parallel_size": 2,
+    "predicted_tp1_throughput": -254.51974443403248,
+    "predicted_tp2_throughput": -173.25980923813663
+  },
+  {
+    "model_label": "qwen7b",
+    "workload_id": "in32_out32_c4",
+    "compiler_selected_tp": "tp2",
+    "selection_reason": "profitable_tp2_selected_predicted_throughput_higher",
+    "policy_id": "d6_profitability_selector_v1",
+    "plan_has_distributed_key": true,
+    "plan_tensor_parallel_size": 2,
+    "predicted_tp1_throughput": 278.4771662185551,
+    "predicted_tp2_throughput": 324.81069687285515
+  }
+]

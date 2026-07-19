@@ -125,6 +125,115 @@ layer -> policy -> deployment decision.
 
 ## Recent Updates
 
+### Compiler-Owned TP1/TP2 Profitability Selection (D6): the decision moved into the real compiler
+
+An architecture audit of D5 found a precise gap: the actual C++/MLIR
+compiler pass computed real TP1/TP2 cost evidence but never compared it —
+selection was a legality check plus a boolean opt-in flag, and the
+throughput-based decision was made by a separate Python runtime script.
+D6 closes that gap: `DistributedStrategyPlanningPass` now evaluates a
+versioned `distributed_profitability_contract_v1` — calibrated from real
+D5 measurements, embedded in a versioned target profile, read by the
+compiler at compile time — and its own predicted-throughput comparison
+selects the winner. Reproduced via 21 **separate, fresh** compiler
+invocations (one per real D5 held-out workload, never a runtime choice
+between precompiled plans):
+
+| Metric | Value |
+|---|---:|
+| Compiler/oracle agreement | 100% (21/21 held-out cells) |
+| Mean/P95/worst-case compiler regret | 0.000% |
+| Mean regret, always-TP1 fixed policy | 7.330% |
+| Mean regret, always-TP2 fixed policy | 5.673% |
+
+The compiler's C++ prediction was verified bit-for-bit against the Python
+reference implementation it replaces, and two of the fresh compiler
+decisions (one TP1, one TP2) were launched for real on the same 2×RTX
+4090 host used for D4B/D5 — confirming real NCCL `world_size=2`
+initialization for the TP2 case, its correct absence for the TP1 case,
+100% correctness, and complete cleanup in both.
+
+Full report: [D6](docs/DISTRIBUTED_D6_COMPILER_OWNED_TP_SELECTION.md) ·
+[D6 one-page summary](docs/DISTRIBUTED_D6_ACHIEVEMENT_SUMMARY.md) ·
+[updated architecture audit](docs/DISTRIBUTED_COMPILER_ARCHITECTURE_AUDIT.md) ·
+raw evidence: `results/runtime_paths/distributed_d6_compiler_owned_tp_selection/`.
+
+### Compiler-Guided TP1/TP2 Policy (D5): a real, measured optimization
+
+Building on D4B's real 2-GPU execution chain, D5 asks a harder question:
+does a compiler that *chooses* between TP=1 and TP=2 — using only
+information available before execution — actually beat fixed policies on
+real hardware? A cost model fit on calibration-split measurements alone
+(model weight footprint, KV-cache bytes/token, GPU count, workload shape)
+was evaluated against held-out data it never saw:
+
+| Policy | Mean regret vs. offline oracle (21 held-out cells) |
+|---|---:|
+| **Compiler-guided (D5)** | **0.000%** (matches oracle in 21/21 cells) |
+| Always TP1 (fixed) | 7.330% |
+| Always TP2 (fixed) | 5.673% |
+
+The result reverses direction by model size: at 0.5B parameters, fixed
+NCCL communication overhead dominates and TP1 wins 35/36 measured
+workload cells; at 7B parameters, per-GPU compute time dominates and TP2
+wins 12/12 cells with 60–70% higher throughput. Both directions were
+measured on the same real 2× RTX 4090 (PCIe-only) host used for D4B, with
+correctness (10/10 TP1/TP2 output match, both models) and full
+process/GPU-memory cleanup preserved under every launch.
+
+Full report: [D5](docs/DISTRIBUTED_D5_COMPILER_TP_POLICY_REPORT.md) ·
+[D5 one-page summary](docs/DISTRIBUTED_D5_ACHIEVEMENT_SUMMARY.md) ·
+raw evidence: `results/runtime_paths/distributed_d5_compiler_tp_policy/`.
+
+### Compiler-Guided vLLM Distributed Serving (D1-D4B): real 2-GPU tensor-parallel execution
+
+A six-stage evidence chain took a compiler-selected tensor-parallel strategy
+for a real `Qwen/Qwen2.5-0.5B-Instruct` model all the way from static
+compiler planning to real, verified execution on physical multi-GPU
+hardware:
+
+| Stage | What it proved |
+|---|---|
+| D1 | Compiler-planned TP=2, simulated multi-process (localhost IPC, no GPU) |
+| D2 | Real Qwen graph → compiler TP1/TP2 candidate generation, legality/cost analysis, TP2 selection |
+| D3A | Real live Qwen activation capture; serialized rank-local `o_proj` math validated against the real model (`max_abs_error ≈ 1.8e-7`) |
+| D3B | Version-aware vLLM 0.24.0 launch-spec materialization; fail-closed preflight (correctly rejects TP=2 on a 1-GPU host) |
+| D4A | Whole-model (170-work-item) serialized TP contract validated against the real Transformers + installed vLLM implementation (`WHOLE_MODEL_TP_VALIDATED`) |
+| **D4B** | **Real execution**: the D3B-materialized TP=2 launch spec run by a real vLLM 0.24.0 server on two physical GPUs, with real NCCL communicator initialization and output verified identical to a TP=1 reference |
+
+D4B is the first stage to touch real multi-GPU hardware (a rented 2×
+RTX 4090 instance) and the first to close the gap the project's own
+[`DISTRIBUTED_ARCHITECTURE_CLASSIFICATION.md`](docs/DISTRIBUTED_ARCHITECTURE_CLASSIFICATION.md)
+had explicitly flagged as undemonstrated ("S6: real multi-GPU/vLLM
+execution"). It proves: two distinct physical GPUs in real use (direct
+`nvidia-smi --query-compute-apps` process-to-device evidence, not inferred
+from a CLI flag), real NCCL communicator initialization for `world_size=2`
+(direct log evidence: `NCCL version 2.28.9+cuda13.0`, `ncclCommInitRank ...
+Init COMPLETE` for both ranks on distinct `cudaDev`), and 100% token/text/
+finish-reason agreement between the TP=2 and a same-host TP=1 reference
+across a deterministic prompt corpus — plus 19 fail-closed negative tests,
+zero orphan processes, and all 23 cross-layer provenance counters at zero.
+
+It does **not** claim any speedup, improved TTFT/TPOT/throughput, general
+multi-node support, or that vLLM executed the compiler's work items
+individually — see the reports for the exact, deliberately narrow claim
+each stage makes.
+
+Full reports:
+[D1](docs/DISTRIBUTED_D1_COMPILER_PLANNED_TP2_MULTIPROCESS_REPORT.md) ·
+[D2](docs/DISTRIBUTED_D2_QWEN_PIPELINE_PLANNING_REPORT.md) ·
+[D3A](docs/DISTRIBUTED_D3A_LIVE_QWEN_TENSOR_VALIDATION_REPORT.md) ·
+[D3B](docs/DISTRIBUTED_D3B_VLLM_LAUNCH_SPEC_REPORT.md) ·
+[D4A](docs/DISTRIBUTED_D4A_WHOLE_MODEL_TP_CONTRACT_REPORT.md) ·
+[D4B process report](docs/DISTRIBUTED_D4B_REAL_2GPU_VLLM_TP2_REPORT.md) ·
+[**D4B achievement report (start here)**](docs/DISTRIBUTED_D4B_ACHIEVEMENT_REPORT.md) ·
+[D4B one-page summary](docs/DISTRIBUTED_D4B_ACHIEVEMENT_SUMMARY.md)
+
+Raw evidence: `results/runtime_paths/distributed_d{1,2,3a,3b,4a,4b}_*/`
+(each with a `test_summary.json`; D4B additionally has an
+[`EVIDENCE_INDEX.md`](results/runtime_paths/distributed_d4b_real_2gpu_vllm_tp2/EVIDENCE_INDEX.md)
+categorizing all 46 artifacts).
+
 ### Operator-level FP32 CPU attention
 
 The runtime has a persistent, fail-closed runner for exact compiler-selected
