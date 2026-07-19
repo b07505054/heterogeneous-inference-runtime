@@ -1,0 +1,19 @@
+{
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "device": "cpu",
+  "dtype": "float32",
+  "load_time_s": 0.29119604197330773,
+  "prompt": "The capital of France is",
+  "token_ids": [
+    785,
+    6722,
+    315,
+    9625,
+    374
+  ],
+  "seed": 1234,
+  "eval_mode": true,
+  "no_grad": true,
+  "invocation_semantics": "single forward(use_cache=False) call over the full prompt token sequence -- this is a prefill-shaped invocation (the whole sequence processed in one call), not a decode/generation loop; exactly one invocation is expected and required for this module in this call",
+  "truth_boundary": "real local Qwen2.5-0.5B-Instruct forward pass, real cached weights, CPU execution (no CUDA GPU present on this development host; MPS available but not used, CPU chosen for float32 determinism)"
+}

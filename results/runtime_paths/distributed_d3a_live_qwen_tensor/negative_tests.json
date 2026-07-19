@@ -1,0 +1,25 @@
+{
+  "command": "pytest -v tests/test_distributed_d3a_live_qwen_tensor.py -k negative",
+  "all_passed": true,
+  "cases_covered": [
+    "operator_id_maps_to_no_module",
+    "operator_id_maps_ambiguously",
+    "wrong_layer_number",
+    "weight_shape_differs_from_plan",
+    "captured_input_hidden_dimension_differs_from_plan",
+    "module_hook_never_fires",
+    "module_hook_fires_unexpected_number_of_times",
+    "rank_shard_overlap",
+    "rank_shard_coverage_gap",
+    "rank_receives_full_tensor_unexpectedly",
+    "bias_applied_twice",
+    "bias_omitted",
+    "collective_participant_missing",
+    "collective_sequence_mismatch",
+    "reconstructed_output_exceeds_tolerance",
+    "temporary_tensor_file_remains",
+    "tp2_live_tensor_plan_sent_to_real_vllm_adapter"
+  ],
+  "case_count": 17,
+  "stdout_tail": "============================= test session starts ==============================\nplatform darwin -- Python 3.11.11, pytest-9.1.1, pluggy-1.6.0 -- /Users/allen/Documents/Codex/project/systems-portfolio/heterogeneous-inference-runtime/.venv/bin/python\ncachedir: .pytest_cache\nrootdir: /Users/allen/Documents/Codex/project/systems-portfolio/heterogeneous-inference-runtime\ncollecting ... collected 24 items / 7 deselected / 17 selected\n\ntests/test_distributed_d3a_live_qwen_tensor.py::test_negative_operator_id_maps_to_no_module PASSED [  5%]\ntests/test_distributed_d3a_live_qwen_tensor.py::test_negative_operator_id_maps_ambiguously PASSED [ 11%]\ntests/test_distributed_d3a_live_qwen_tensor.py::test_negative_wrong_layer_number PASSED [ 17%]\ntests/test_distributed_d3a_live_qwen_tensor.py::test_negative_weight_shape_differs_from_plan PASSED [ 23%]\ntests/test_distributed_d3a_live_qwen_tensor.py::test_negative_captured_input_hidden_dimension_differs_from_plan PASSED [ 29%]\ntests/test_distributed_d3a_live_qwen_tensor.py::test_negative_module_hook_never_fires PASSED [ 35%]\ntests/test_distributed_d3a_live_qwen_tensor.py::test_negative_module_hook_fires_unexpected_number_of_times PASSED [ 41%]\ntests/test_distributed_d3a_live_qwen_tensor.py::test_negative_rank_shard_overlap PASSED [ 47%]\ntests/test_distributed_d3a_live_qwen_tensor.py::test_negative_rank_shard_coverage_gap PASSED [ 52%]\ntests/test_distributed_d3a_live_qwen_tensor.py::test_negative_rank_receives_full_tensor_unexpectedly PASSED [ 58%]\ntests/test_distributed_d3a_live_qwen_tensor.py::test_negative_bias_applied_twice PASSED [ 64%]\ntests/test_distributed_d3a_live_qwen_tensor.py::test_negative_bias_omitted PASSED [ 70%]\ntests/test_distributed_d3a_live_qwen_tensor.py::test_negative_collective_participant_missing PASSED [ 76%]\ntests/test_distributed_d3a_live_qwen_tensor.py::test_negative_collective_sequence_mismatch PASSED [ 82%]\ntests/test_distributed_d3a_live_qwen_tensor.py::test_negative_reconstructed_output_exceeds_tolerance PASSED [ 88%]\ntests/test_distributed_d3a_live_qwen_tensor.py::test_negative_temporary_tensor_file_remains PASSED [ 94%]\ntests/test_distributed_d3a_live_qwen_tensor.py::test_negative_tp2_live_tensor_plan_sent_to_real_vllm_adapter PASSED [100%]\n\n======================= 17 passed, 7 deselected in 2.80s =======================\n"
+}

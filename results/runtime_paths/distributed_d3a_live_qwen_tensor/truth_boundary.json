@@ -1,0 +1,22 @@
+{
+  "d3a_maturity_claim": "A real activation captured from a live Qwen2.5-0.5B-Instruct Transformers forward pass was matched to the exact compiler-selected o_proj work item, partitioned according to the D2 TP=2 plan, executed through serialized rank-local validation, reconstructed through the D1 collective contract, and verified against the original live model tensor with complete cross-layer provenance.",
+  "not_claimed": [
+    "real concurrent tensor parallelism",
+    "real multi-GPU execution",
+    "NCCL",
+    "vLLM tensor parallelism",
+    "GPU-to-GPU communication",
+    "distributed speedup",
+    "serving profitability"
+  ],
+  "device_used": "cpu",
+  "device_note": "No CUDA GPU is present on this development host (Apple Silicon Mac, Metal/MPS only). CPU was used for both the live Qwen forward pass and rank-local validation, chosen for float32 determinism; this is recorded honestly rather than fabricating CUDA usage.",
+  "environment": "single-host CPU execution; the bonus multiprocess path uses real localhost multiprocessing.Queue IPC across two real OS processes (same D1 mechanism), not NCCL and not GPU-to-GPU communication",
+  "explicitly_not": [
+    "not NCCL",
+    "not GPU-to-GPU communication",
+    "not real vLLM tensor parallelism",
+    "not representative of multi-GPU scaling",
+    "not concurrent rank execution"
+  ]
+}

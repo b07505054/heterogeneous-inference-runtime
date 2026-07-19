@@ -1,0 +1,54 @@
+{
+  "source_plan": "results/runtime_paths/distributed_d2_qwen_pipeline/real_qwen_tp2_execution_plan.json",
+  "partition_axis": 0,
+  "collective": {
+    "collective_id": "all_reduce_0",
+    "sequence_id": 0,
+    "kind": "all_reduce",
+    "participants": [
+      0,
+      1
+    ],
+    "tensor_id": "qwen_prefill::llm.o_proj::layer_0",
+    "reduction": "sum"
+  },
+  "shards": {
+    "0": {
+      "rank_id": 0,
+      "range_start": 0,
+      "range_end": 448,
+      "shard_width": 448,
+      "x_shard_shape": [
+        5,
+        448
+      ],
+      "w_shard_shape": [
+        896,
+        448
+      ],
+      "x_shard_checksum": 4.575045585632324,
+      "w_shard_checksum": 12.8788480758667,
+      "full_tensor_visible": false
+    },
+    "1": {
+      "rank_id": 1,
+      "range_start": 448,
+      "range_end": 896,
+      "shard_width": 448,
+      "x_shard_shape": [
+        5,
+        448
+      ],
+      "w_shard_shape": [
+        896,
+        448
+      ],
+      "x_shard_checksum": 0.9307788610458374,
+      "w_shard_checksum": 2.046499252319336,
+      "full_tensor_visible": false
+    }
+  },
+  "shard_disjoint_verified": true,
+  "shard_union_is_complete_partition": true,
+  "each_rank_input_width_equals_448": true
+}

@@ -1,0 +1,40 @@
+{
+  "serialized_rank_local": {
+    "reduced_tensor_shape": [
+      5,
+      896
+    ],
+    "reduced_tensor_checksum": 1.2172975540161133,
+    "bias_applied": false,
+    "bias_application_point": "after_reduction_exactly_once",
+    "final_shape": [
+      5,
+      896
+    ]
+  },
+  "multiprocess_ipc_replay": {
+    "reduced_tensor_shape": [
+      5,
+      896
+    ],
+    "reduced_tensor_checksum": 1.217297841552979,
+    "bias_applied": false,
+    "final_shape": [
+      5,
+      896
+    ],
+    "provenance": {
+      "rank_mismatch_count": 0,
+      "missing_rank_count": 0,
+      "unexpected_rank_count": 0,
+      "shard_mismatch_count": 0,
+      "collective_sequence_mismatch_count": 0,
+      "missing_collective_participant_count": 0,
+      "unexpected_collective_participant_count": 0,
+      "fallback_count": 0,
+      "silent_downgrade_count": 0,
+      "orphan_process_count": 0
+    }
+  },
+  "collective_time_s": 5.541602149605751e-05
+}

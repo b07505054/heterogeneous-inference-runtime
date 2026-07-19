@@ -1,0 +1,25 @@
+{
+  "module_path": "model.layers.0.self_attn.o_proj",
+  "input_shape": [
+    1,
+    5,
+    896
+  ],
+  "output_shape": [
+    1,
+    5,
+    896
+  ],
+  "dtype": "float32",
+  "device": "cpu",
+  "invocation_count": 1,
+  "selected_invocation_index": 0,
+  "invocation_semantics": "single forward(use_cache=False) call over the full prompt token sequence -- this is a prefill-shaped invocation (the whole sequence processed in one call), not a decode/generation loop; exactly one invocation is expected and required for this module in this call",
+  "batch_dimension": 0,
+  "sequence_dimension": 1,
+  "hidden_dimension": 2,
+  "tokenization_time_s": 0.00031462498009204865,
+  "forward_time_s": 0.07858974998816848,
+  "hook_overhead_s": 1.49579718708992e-05,
+  "capture_copy_time_s": 0.0001763750333338976
+}

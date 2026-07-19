@@ -1,0 +1,3 @@
+{"event": "planned_ranks", "ranks": [0, 1], "ts": 1784415595.016991}
+{"event": "rank_local_compute_done", "rank_id": 0, "compute_s": 0.00015866709873080254, "output_shape": [5, 896], "checksum": 0.8707340359687805, "ts": 1784415595.017154}
+{"event": "rank_local_compute_done", "rank_id": 1, "compute_s": 8.758297190070152e-05, "output_shape": [5, 896], "checksum": 0.34656357765197754, "ts": 1784415595.017251}

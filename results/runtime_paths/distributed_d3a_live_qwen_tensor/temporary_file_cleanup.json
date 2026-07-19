@@ -1,0 +1,6 @@
+{
+  "temporary_tensor_files_created": 0,
+  "mechanism": "all tensor transfer between simulated ranks used in-memory Python objects (serialized path, stdlib queue.Queue) or real multiprocessing.Queue IPC (bonus multiprocess path) -- never a temporary file on disk",
+  "temp_leak_candidates_found_in_result_dir": 0,
+  "verified_clean": true
+}

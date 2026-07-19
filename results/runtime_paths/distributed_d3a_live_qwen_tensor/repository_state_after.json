@@ -1,0 +1,39 @@
+{
+  "note": "Recorded after implementing D3A. No commits were made. D1's and D2's result directories and reports were not overwritten -- confirmed present, unmodified (git status shows zero changes under results/runtime_paths/distributed_d1_tp2_multiprocess/ or distributed_d2_qwen_pipeline/), and file-hashed in d1_d2_preservation.json.",
+  "repositories": {
+    "ml-graph-compiler-runtime": {
+      "path": "/Users/allen/Documents/Codex/project/systems-portfolio/ml-graph-compiler-runtime",
+      "branch": "master",
+      "head_commit_unchanged": "6169bd56e6ac97b839062db0a60df31c927f165c",
+      "modified_tracked_files": [],
+      "untracked_new_files": [],
+      "note": "D3A required zero changes to the compiler repository: it consumes the D2 compiler-exported real_qwen_tp2_execution_plan.json artifact unmodified. No new compiler pass, schema field, or tool was needed."
+    },
+    "heterogeneous-inference-runtime": {
+      "path": "/Users/allen/Documents/Codex/project/systems-portfolio/heterogeneous-inference-runtime",
+      "branch": "main",
+      "head_commit_unchanged": "9d954eab94796b82ce871f26f57964c3f3bee71d",
+      "modified_tracked_files": [
+        "deployment/tp_process_runtime/__init__.py"
+      ],
+      "untracked_new_files": [
+        "deployment/tp_process_runtime/qwen_module_mapping.py",
+        "deployment/tp_process_runtime/live_capture.py",
+        "deployment/tp_process_runtime/linear_tp_decomposition.py",
+        "deployment/tp_process_runtime/serialized_collective_replay.py",
+        "deployment/tp_process_runtime/live_qwen_provenance.py",
+        "scripts/run_distributed_d3a_pipeline.py",
+        "tests/test_distributed_d3a_live_qwen_tensor.py",
+        "results/runtime_paths/distributed_d3a_live_qwen_tensor/ (this D3A result directory)",
+        "docs/DISTRIBUTED_D3A_LIVE_QWEN_TENSOR_VALIDATION_REPORT.md"
+      ],
+      "d1_result_dir_untouched": true,
+      "d2_result_dir_untouched": true,
+      "d1_report_untouched": true,
+      "d2_report_untouched": true,
+      "nature_of_modifications": "Additive only: __init__.py gained new exports for the D3A modules; no existing D1/D2 export, function signature, or behavior was removed or changed. deployment/tp_process_runtime/runtime.py, collective.py, messages.py, rank_worker.py, reference.py, qwen_workload.py, cross_layer_provenance.py (all D1/D2 files) were read and reused (imported) but not modified by D3A.",
+      "vllm_adapter_untouched": "deployment/vllm_adapter/plan_schema.py and backend_adapter.py were read but not modified -- confirmed by test_negative_tp2_live_tensor_plan_sent_to_real_vllm_adapter."
+    }
+  },
+  "safety_policy_confirmation": "No reset/clean/stash/delete/rebase/commit/push performed. Both repos' HEAD commits are identical to repository_state_before.json for D3A. No d1-rank, d2-rank, or d3a-rank process remained after any run (verified via os.kill(pid, 0) -> ProcessLookupError for every process, every test run)."
+}

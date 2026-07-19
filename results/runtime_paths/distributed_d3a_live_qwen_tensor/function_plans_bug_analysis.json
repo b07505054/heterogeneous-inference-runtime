@@ -1,0 +1,40 @@
+{
+  "investigation_method": "Read mlir_passes/lib/serving/LLMFrontendNormalizationPass.cpp (isSupportedPattern, rewriteOccurrence) and mlir_passes/tools/qwen-onnx-to-serving-mlir/main.cpp (the emitter for attention_scores/softmax/q_proj/k_proj/v_proj) side by side, and diffed their actual shape/dtype/attribute contracts.",
+  "root_cause": {
+    "summary": "Two independently-developed components disagree on the raw attention pattern's shape family, dtype, and required attributes. LLMFrontendNormalizationPass::isSupportedPattern() was written against the legacy hand-authored fixture's shape (mlir/raw_qwen_frontend_input.mlir, consumed via qwen-to-serving-mlir): q/k/v are RANK-4 tensors (batch, heads, seq, head_dim), STATICALLY SHAPED, dtype F32, and llm.attention_scores/llm.softmax carry explicit attention.causal / attention.scale / attention.key_transposed / attention.softmax_axis attributes. qwen-onnx-to-serving-mlir (the real per-layer ONNX-graph-facts frontend, the one D2/D3A actually use) emits a fundamentally different shape family: q/k/v are RANK-2 tensors (dynamic batch/seq collapsed into one '?' dim, hidden/kv width in the trailing dim), dtype F16, and llm.attention_scores/llm.softmax carry NO attention.* attributes at all -- only serving.layer_index/serving.layer_role.",
+    "exact_failing_preconditions": [
+      "qt.getRank() != 4 -- real q is rank 2 (tensor<?x896xf16>), not rank 4",
+      "!qt.hasStaticShape() -- real q's leading dim is dynamic ('?'), not static",
+      "!qt.getElementType().isF32() -- real q is f16, the check requires exactly f32",
+      "!causal || !scale || !transposed || !axis -- attention.causal/attention.scale/attention.key_transposed on llm.attention_scores, and attention.softmax_axis on llm.softmax, are never emitted by qwen-onnx-to-serving-mlir; all four getAttrOfType<...> calls return null"
+    ],
+    "citations": {
+      "LLMFrontendNormalizationPass.cpp": "isSupportedPattern(), lines ~66-104 in mlir_passes/lib/serving/LLMFrontendNormalizationPass.cpp -- requires rank==4, hasStaticShape(), isF32(), and all four attention.* attrs present with specific values",
+      "qwen-onnx-to-serving-mlir/main.cpp": "emitOp() attention_scores/softmax branches (~lines 354-365) emit only serving.layer_index/serving.layer_role via layerAttrs(); no attention.causal/scale/key_transposed/softmax_axis attribute is ever written. q_proj/k_proj/v_proj emit hiddenTy()/kvTy() (2D, dynamic batch, f16), never a rank-4 static type."
+    },
+    "observed_effect": "Running the real per-layer Qwen ONNX graph through compile-for-target (confirmed by direct tool invocation and by the pre-existing QwenOnnxServingPlanExportTest ctest failure) leaves 0/48 llm.attention_prefill/llm.attention_decode ops emitted and 48/48 residual llm.attention_scores ops -- isSupportedPattern() returns false for every one of the 24 layers x 2 functions. ServingPhaseAnalysisPass's hasServingOp gate (which requires an llm.attention_prefill/decode/hir.attention/hir.cpu_attention op in the function body) therefore never fires, funcOp never gets the serving.policy attr, and ExecutionPlanBuilder::build()'s module.walk() gate (`if (!funcOp->getAttr(\"serving.policy\")) return;`) excludes qwen_prefill/qwen_decode from plan.function_plans -- leaving it empty."
+  },
+  "is_this_narrowly_fixable": false,
+  "why_not_narrowly_fixable": [
+    "A real fix requires either (a) rewriting qwen-onnx-to-serving-mlir to emit rank-4 statically-shaped f32 q/k/v with explicit attention.* attributes -- a redesign of the frontend's dynamic-shape model that the compiler CLAUDE.md explicitly documents as intentional (real serving must support arbitrary runtime sequence length; baking in a static shape would be a regression, not a fix, and would affect every other pass/test that depends on the current dynamic-shape design), or (b) teaching LLMFrontendNormalizationPass to accept the real frontend's shape family and INVENT the missing attention.causal/scale/key_transposed/softmax_axis values, since the ONNX frontend never computes or declares them anywhere in the IR.",
+    "Option (b) directly violates this repository's explicit, repeatedly-stated invariant that planning passes must never invent metadata a source pass did not produce (see ml-graph-compiler-runtime CLAUDE.md: 'If an attr is absent... No inference. No selection.' and the WeightClassificationPlanningPass/TilePlanningPass/KernelSelectionPass precedent of recording an explicit 'deferred'/'unresolved' status rather than assuming a default).",
+    "Both options are large, cross-cutting changes to passes/tools unrelated to D3A's distributed-tensor-parallel scope, explicitly out of bounds per the task's Part L instruction: 'Do not redesign unrelated plan normalization.'"
+  ],
+  "fix_attempted": false,
+  "resolution_path_taken": "acceptance_criterion_14_second_branch: shown_not_to_exist_in_the_final_d3a_plan",
+  "why_this_resolution_is_valid": {
+    "claim": "D3A's entire operator-identity mapping and cross-layer provenance chain is sourced exclusively from ExecutionPlan.distributed (populated unconditionally by DistributedStrategyPlanningPass + ExecutionPlanBuilder::collectDistributedPlan(), independent of the per-function serving.policy gate described above), and never reads plan.function_plans at any point.",
+    "verified_by": [
+      "operator_mapping.json / cross_layer_provenance.json (this D3A result directory): the compiler operator ID D3A maps to a Transformers module (qwen_prefill::llm.o_proj::layer_0) is read from plan.distributed.tensor_shards[0].tensor_id, not from plan.function_plans.",
+      "tests/test_distributed_d3a_live_qwen_tensor.py::test_function_plans_bug_does_not_affect_d3a_provenance (new D3A regression test) asserts plan.function_plans == () (documenting the known, unrelated issue) AND asserts plan.distributed is fully populated and correctly used for every subsequent D3A step.",
+      "This exact pattern (plan.distributed collected unconditionally, independent of function_plans) was already the documented resolution in D2's pipeline_inventory.json and DISTRIBUTED_D2_QWEN_PIPELINE_PLANNING_REPORT.md Part 3 -- D3A re-confirms it holds for the same real_qwen_tp2_execution_plan.json artifact D2 produced and D3A reuses unmodified."
+    ]
+  },
+  "before_after_behavior": {
+    "before_d3a": "plan.function_plans == () for the real per-layer Qwen graph; plan.distributed populated and correct (established in D2).",
+    "after_d3a": "Unchanged -- D3A made no modification to LLMFrontendNormalizationPass, qwen-onnx-to-serving-mlir, ServingPhaseAnalysisPass, or ExecutionPlanBuilder's function_plans collection gate. plan.function_plans == () still, plan.distributed still populated and correct, now additionally verified end-to-end against a real captured Qwen tensor (this stage's deliverable)."
+  },
+  "regression_test_added": false,
+  "regression_test_added_reason": "No source fix was made, so no fix-regression test is required. A provenance-independence test was added instead (test_function_plans_bug_does_not_affect_d3a_provenance), proving D3A's correctness does not rest on this unresolved, pre-existing, unrelated issue.",
+  "recommendation_for_future_stages": "If a future stage needs real per-op decisions (kernel selection, quantization strategy, etc.) for the real per-layer Qwen graph -- not just the module-level distributed plan -- LLMFrontendNormalizationPass and qwen-onnx-to-serving-mlir need to be redesigned together as a dedicated, tested unit of work: either the frontend must emit a rank-4/attention-attr-annotated raw pattern, or the normalization pass must gain an explicitly-declared second recognized pattern with attention semantics sourced from real graph facts (never invented). This is out of scope for both D2 and D3A."
+}

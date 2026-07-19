@@ -1,0 +1,28 @@
+{
+  "operator_id": "qwen_prefill::llm.o_proj::layer_0",
+  "function_name": "qwen_prefill",
+  "op_type": "llm.o_proj",
+  "layer_index": 0,
+  "module_path": "model.layers.0.self_attn.o_proj",
+  "module_class": "torch.nn.modules.linear.Linear",
+  "weight_shape": [
+    896,
+    896
+  ],
+  "bias_present": false,
+  "checks": {
+    "layer_number_matches": true,
+    "operator_kind_matches": true,
+    "weight_shape_matches_plan": true,
+    "module_appears_exactly_once": true,
+    "structural_match_count_all_layers": 24
+  },
+  "required_checks_all_passed": true,
+  "rejects_documented": [
+    "unknown operator ID -> OperatorMappingError",
+    "ambiguous module match -> OperatorMappingError",
+    "incorrect layer number -> OperatorMappingError",
+    "incorrect module type -> OperatorMappingError",
+    "shape mismatch -> OperatorMappingError"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "recorded_at_utc": "2026-07-18T22:42:29Z",
+  "note": "D3A begins immediately after D2's commits. Both repos are fully clean and committed at this point (D1+D2 work was committed in the prior session).",
+  "repositories": {
+    "ml-graph-compiler-runtime": {
+      "path": "/Users/allen/Documents/Codex/project/systems-portfolio/ml-graph-compiler-runtime",
+      "branch": "master",
+      "head_commit": "6169bd56e6ac97b839062db0a60df31c927f165c",
+      "working_tree_status_porcelain": [],
+      "working_tree": "clean"
+    },
+    "heterogeneous-inference-runtime": {
+      "path": "/Users/allen/Documents/Codex/project/systems-portfolio/heterogeneous-inference-runtime",
+      "branch": "main",
+      "head_commit": "9d954eab94796b82ce871f26f57964c3f3bee71d",
+      "working_tree_status_porcelain": [],
+      "working_tree": "clean",
+      "d1_result_dir_file_count": 15,
+      "d2_result_dir_file_count": 20,
+      "d1_report_present": true,
+      "d2_report_present": true
+    }
+  },
+  "environment": {
+    "platform": "Darwin (macOS)",
+    "python": "3.11.11",
+    "torch": "2.12.1",
+    "transformers": "4.57.6",
+    "cuda_available": false,
+    "mps_available": true,
+    "note": "No CUDA GPU is present on this development host (Apple Silicon Mac with Metal/MPS only). D3A's 'one physical GPU' language in the task refers to a CUDA GPU that does not exist here; CPU execution is used for the live Qwen forward and rank-local validation, honestly recorded rather than fabricating CUDA usage. This matches the task's own fallback allowance: 'If GPU memory is insufficient... CPU execution is acceptable, but record the actual device honestly.'",
+    "model_cache": "Qwen/Qwen2.5-0.5B-Instruct found locally in ~/.cache/huggingface/hub (offline-loadable, snapshot 7ae557604adf67be50417f59c2c2f167def9a775)"
+  },
+  "safety_policy": "No reset/clean/stash/delete/rebase/commit/push performed. D1 and D2 result directories and reports will not be overwritten -- D3A writes only to results/runtime_paths/distributed_d3a_live_qwen_tensor/ and docs/DISTRIBUTED_D3A_LIVE_QWEN_TENSOR_VALIDATION_REPORT.md."
+}

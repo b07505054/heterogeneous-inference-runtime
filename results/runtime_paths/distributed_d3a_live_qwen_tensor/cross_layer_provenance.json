@@ -1,0 +1,31 @@
+{
+  "counters": {
+    "operator_mapping_mismatch_count": 0,
+    "layer_mismatch_count": 0,
+    "weight_shape_mismatch_count": 0,
+    "activation_shape_mismatch_count": 0,
+    "partition_axis_mismatch_count": 0,
+    "shard_coverage_mismatch_count": 0,
+    "shard_overlap_count": 0,
+    "rank_input_leakage_count": 0,
+    "collective_mismatch_count": 0,
+    "bias_application_mismatch_count": 0,
+    "reference_output_mismatch_count": 0,
+    "silent_fallback_count": 0,
+    "temporary_tensor_leak_count": 0,
+    "orphan_process_count": 0
+  },
+  "all_zero": true,
+  "details": {
+    "parsed_layer": 0,
+    "mapping_layer_index": 0,
+    "plan_hidden_dim": 896,
+    "mapping_weight_shape": [
+      896,
+      896
+    ],
+    "captured_hidden_dim": 896,
+    "max_abs_error_vs_live": 1.7881393432617188e-07
+  },
+  "provenance_chain": "compiler_graph_operator_id -> transformers_module_path -> module_invocation_index -> captured_input_tensor -> compiler_declared_shard_metadata -> rank_0_shard -> rank_1_shard -> rank_local_partial_outputs -> collective -> reconstructed_output -> captured_live_module_output"
+}

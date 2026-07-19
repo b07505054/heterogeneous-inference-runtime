@@ -1,0 +1,25 @@
+{
+  "mode": "serialized_rank_local (one physical device, ranks executed sequentially)",
+  "device": "cpu",
+  "rank_0": {
+    "compute_s": 0.00015866709873080254,
+    "shard_width": 448,
+    "output_shape": [
+      5,
+      896
+    ],
+    "temp_state_released": true
+  },
+  "rank_1": {
+    "compute_s": 8.758297190070152e-05,
+    "shard_width": 448,
+    "output_shape": [
+      5,
+      896
+    ],
+    "temp_state_released": true
+  },
+  "serialized_total_rank_compute_s": 0.00024625007063150406,
+  "shard_build_time_s": 0.00020045798737555742,
+  "not_claimed": "concurrent execution, real multi-GPU, NCCL"
+}

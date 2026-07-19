@@ -13,6 +13,25 @@ from deployment.tp_process_runtime.cross_layer_provenance import (
     CrossLayerProvenanceReport,
     verify_cross_layer_provenance,
 )
+from deployment.tp_process_runtime.linear_tp_decomposition import (
+    RankShard,
+    TPDecompositionError,
+    apply_bias_contract,
+    apply_bias_twice_incorrectly,
+    build_rank_shards,
+    rank_local_partial_output,
+)
+from deployment.tp_process_runtime.live_qwen_provenance import (
+    REQUIRED_COUNTERS,
+    LiveQwenProvenanceReport,
+    verify_live_qwen_provenance,
+)
+from deployment.tp_process_runtime.qwen_module_mapping import (
+    OperatorMappingError,
+    OperatorMappingResult,
+    map_compiler_operator_to_module,
+    parse_operator_id,
+)
 from deployment.tp_process_runtime.qwen_workload import (
     QwenDerivedWorkload,
     build_qwen_derived_workload,
@@ -27,8 +46,10 @@ from deployment.tp_process_runtime.runtime import (
     ProcessRecord,
     RankMailbox,
 )
+from deployment.tp_process_runtime.serialized_collective_replay import run_serialized_all_reduce
 
 __all__ = [
+    "REQUIRED_COUNTERS",
     "CollectiveCoordinator",
     "CollectiveOutcome",
     "CrossLayerProvenanceReport",
@@ -36,11 +57,24 @@ __all__ = [
     "DistributedExecutionTrace",
     "DistributedProcessRuntime",
     "DistributedRuntimeError",
+    "LiveQwenProvenanceReport",
+    "OperatorMappingError",
+    "OperatorMappingResult",
     "ProcessRecord",
     "QwenDerivedWorkload",
     "RankMailbox",
     "RankProcessSpec",
+    "RankShard",
+    "TPDecompositionError",
+    "apply_bias_contract",
+    "apply_bias_twice_incorrectly",
     "build_qwen_derived_workload",
+    "build_rank_shards",
+    "map_compiler_operator_to_module",
+    "parse_operator_id",
+    "rank_local_partial_output",
+    "run_serialized_all_reduce",
     "serial_matmul_reference",
     "verify_cross_layer_provenance",
+    "verify_live_qwen_provenance",
 ]

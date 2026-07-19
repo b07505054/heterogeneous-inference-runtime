@@ -1,0 +1,27 @@
+{
+  "d1_compiler_tests": {
+    "passed": true,
+    "tail": "Test project /Users/allen/Documents/Codex/project/systems-portfolio/ml-graph-compiler-runtime/mlir_passes/build\n    Start 6: DistributedPlanningTest\n1/1 Test #6: DistributedPlanningTest ..........   Passed    0.01 sec\n\n100% tests passed, 0 tests failed out of 1\n\nTotal Test time (real) =   0.02 sec\n"
+  },
+  "d2_compiler_tests": {
+    "passed": true,
+    "tail": "Test project /Users/allen/Documents/Codex/project/systems-portfolio/ml-graph-compiler-runtime/mlir_passes/build\n    Start 7: DistributedStrategyPlanningTest\n1/2 Test #7: DistributedStrategyPlanningTest ...........   Passed    0.05 sec\n    Start 8: DistributedStrategyPlanningPipelineTest\n2/2 Test #8: DistributedStrategyPlanningPipelineTest ...   Passed    0.11 sec\n\n100% tests passed, 0 tests failed out of 2\n\nTotal Test time (real) =   0.16 sec\n"
+  },
+  "d1_runtime_tests": {
+    "passed": true,
+    "tail": "................                                                         [100%]\n16 passed in 4.65s\n"
+  },
+  "d2_runtime_tests": {
+    "passed": true,
+    "tail": "............                                                             [100%]\n12 passed in 1.92s\n"
+  },
+  "d1_deadlock_negative_test_rerun": {
+    "status": "timeout",
+    "missing_ranks": [
+      1
+    ],
+    "orphans_found": []
+  },
+  "no_d1_d2_d3a_rank_processes_remain": true,
+  "all_regressions_green": true
+}

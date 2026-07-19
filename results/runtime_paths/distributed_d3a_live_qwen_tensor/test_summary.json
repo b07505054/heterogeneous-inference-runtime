@@ -1,0 +1,21 @@
+{
+  "d3a_test_file": {
+    "command": "pytest -q tests/test_distributed_d3a_live_qwen_tensor.py",
+    "passed": true,
+    "tail": "........................                                                 [100%]\n24 passed in 3.16s\n"
+  },
+  "full_repo_suite": {
+    "command": "pytest -q agentic_eval/tests tests",
+    "returncode": 1,
+    "tail": "ltins': <module 'builtins' (built-in)>, '_frozen_importlib': <module '_frozen_importlib' (frozen)>, '_imp': <module '_imp' (built-in)>, ...} = sys.modules\n\ntests/test_model_adapter_registry.py:43: AssertionError\n=========================== short test summary info ============================\nFAILED tests/test_attention_runtime.py::test_compiler_selector_scores_all_legal_candidates_and_rejects_decode_split_query\nFAILED tests/test_deployment_planner.py::test_planner_selects_coreml_latency_candidate_from_mixed_artifacts\nFAILED tests/test_model_adapter_registry.py::test_registry_does_not_import_source_format_libraries\nERROR tests/test_native_fused_attention.py::test_native_matches_reference[1-7-native_scalar]\nERROR tests/test_native_fused_attention.py::test_native_matches_reference[1-7-native_avx2]\nERROR tests/test_native_fused_attention.py::test_native_matches_reference[7-7-native_scalar]\nERROR tests/test_native_fused_attention.py::test_native_matches_reference[7-7-native_avx2]\nERROR tests/test_native_fused_attention.py::test_native_matches_reference[11-37-native_scalar]\nERROR tests/test_native_fused_attention.py::test_native_matches_reference[11-37-native_avx2]\nERROR tests/test_native_fused_attention.py::test_native_matches_reference[37-63-native_scalar]\nERROR tests/test_native_fused_attention.py::test_native_matches_reference[37-63-native_avx2]\nERROR tests/test_native_fused_attention.py::test_invalid_gqa_fails - subproce...\n3 failed, 898 passed, 52 skipped, 9 errors in 25.19s\n",
+    "pre_existing_unrelated_failures": [
+      "test_attention_runtime.py (selector-v4, explicitly out of scope)",
+      "test_deployment_planner.py (missing local capabilities/profiles/backend/coreml.json)",
+      "test_model_adapter_registry.py (sys.modules import-pollution, test-ordering sensitive)",
+      "test_native_fused_attention.py (9 subprocess/native-binary errors)"
+    ],
+    "confirmed_pre_existing_and_unaffected_by_d3a": "identical failure/error set observed with --deselect tests/test_distributed_d3a_live_qwen_tensor.py"
+  },
+  "negative_tests_all_passed": true,
+  "regressions_all_green": true
+}
