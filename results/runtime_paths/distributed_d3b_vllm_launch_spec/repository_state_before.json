@@ -1,0 +1,20 @@
+{
+  "recorded_at_utc": "2026-07-18T18:11:00Z",
+  "note": "Captured via `git status --porcelain` and `git rev-parse HEAD` on both repositories immediately before any D3B file was created or modified.",
+  "repositories": {
+    "ml-graph-compiler-runtime": {
+      "path": "/home/allen/Desktop/Project/ml-graph-compiler-runtime",
+      "branch": "master",
+      "head_commit": "59854b892629bc0bc7f43ca0bad3eab17464c030",
+      "working_tree_status_porcelain": [],
+      "working_tree": "clean"
+    },
+    "heterogeneous-inference-runtime": {
+      "path": "/home/allen/Desktop/Project/heterogeneous-inference-runtime",
+      "branch": "main",
+      "head_commit": "b79ff951758b164010f95b761e3f927877e3ad10",
+      "working_tree_status_porcelain": [],
+      "working_tree": "clean"
+    }
+  }
+}

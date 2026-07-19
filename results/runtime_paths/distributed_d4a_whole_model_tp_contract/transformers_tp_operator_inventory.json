@@ -1,0 +1,589 @@
+{
+  "representative_layers": [
+    0,
+    12,
+    23
+  ],
+  "record_count": 33,
+  "records": [
+    {
+      "module_path": "model.layers.0.self_attn.q_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "operator_family": "q_proj",
+      "weight_shape": [
+        896,
+        896
+      ],
+      "bias_present": true,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "head-parallel",
+      "partition_axis": 0,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.linear.QKVParallelLinear (fused q/k/v; q shard is the column-parallel-like head-partitioned slice)",
+      "compiler_operator_mapping": "qwen_prefill::llm.q_proj::layer_0",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.0.self_attn.k_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "operator_family": "k_proj",
+      "weight_shape": [
+        128,
+        896
+      ],
+      "bias_present": true,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "kv-head-parallel",
+      "partition_axis": 0,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.linear.QKVParallelLinear (k shard; KV-head partition/replication rule per num_kv_head_replicas)",
+      "compiler_operator_mapping": "qwen_prefill::llm.k_proj::layer_0",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.0.self_attn.v_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "operator_family": "v_proj",
+      "weight_shape": [
+        128,
+        896
+      ],
+      "bias_present": true,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "kv-head-parallel",
+      "partition_axis": 0,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.linear.QKVParallelLinear (v shard; same KV-head rule as k)",
+      "compiler_operator_mapping": "qwen_prefill::llm.v_proj::layer_0",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.0.self_attn.o_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "operator_family": "o_proj",
+      "weight_shape": [
+        896,
+        896
+      ],
+      "bias_present": false,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "row-parallel",
+      "partition_axis": 1,
+      "required_collective": "all_reduce",
+      "vllm_implementation_reference": "vllm.model_executor.layers.linear.RowParallelLinear",
+      "compiler_operator_mapping": "qwen_prefill::llm.o_proj::layer_0",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.0.mlp.gate_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "operator_family": "gate_proj",
+      "weight_shape": [
+        4864,
+        896
+      ],
+      "bias_present": false,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "column-parallel",
+      "partition_axis": 0,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.linear.MergedColumnParallelLinear (gate_up_proj, shard 0)",
+      "compiler_operator_mapping": "qwen_prefill::llm.gate_proj::layer_0",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.0.mlp.up_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "operator_family": "up_proj",
+      "weight_shape": [
+        4864,
+        896
+      ],
+      "bias_present": false,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "column-parallel",
+      "partition_axis": 0,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.linear.MergedColumnParallelLinear (gate_up_proj, shard 1)",
+      "compiler_operator_mapping": "qwen_prefill::llm.up_proj::layer_0",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.0.mlp.down_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "operator_family": "down_proj",
+      "weight_shape": [
+        896,
+        4864
+      ],
+      "bias_present": false,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "row-parallel",
+      "partition_axis": 1,
+      "required_collective": "all_reduce",
+      "vllm_implementation_reference": "vllm.model_executor.layers.linear.RowParallelLinear",
+      "compiler_operator_mapping": "qwen_prefill::llm.down_proj::layer_0",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.0.input_layernorm",
+      "module_class": "transformers.models.qwen2.modeling_qwen2.Qwen2RMSNorm",
+      "operator_family": "input_layernorm",
+      "weight_shape": [
+        896
+      ],
+      "bias_present": false,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "replicated",
+      "partition_axis": null,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.layernorm.RMSNorm (replicated; consumes the full, already-reconstructed hidden state -- see attention_contract_validation.json)",
+      "compiler_operator_mapping": null,
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.0.post_attention_layernorm",
+      "module_class": "transformers.models.qwen2.modeling_qwen2.Qwen2RMSNorm",
+      "operator_family": "post_attention_layernorm",
+      "weight_shape": [
+        896
+      ],
+      "bias_present": false,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "replicated",
+      "partition_axis": null,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.layernorm.RMSNorm (replicated; consumes the full, already-reconstructed hidden state -- see attention_contract_validation.json)",
+      "compiler_operator_mapping": null,
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.12.self_attn.q_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "operator_family": "q_proj",
+      "weight_shape": [
+        896,
+        896
+      ],
+      "bias_present": true,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "head-parallel",
+      "partition_axis": 0,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.linear.QKVParallelLinear (fused q/k/v; q shard is the column-parallel-like head-partitioned slice)",
+      "compiler_operator_mapping": "qwen_prefill::llm.q_proj::layer_12",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.12.self_attn.k_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "operator_family": "k_proj",
+      "weight_shape": [
+        128,
+        896
+      ],
+      "bias_present": true,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "kv-head-parallel",
+      "partition_axis": 0,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.linear.QKVParallelLinear (k shard; KV-head partition/replication rule per num_kv_head_replicas)",
+      "compiler_operator_mapping": "qwen_prefill::llm.k_proj::layer_12",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.12.self_attn.v_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "operator_family": "v_proj",
+      "weight_shape": [
+        128,
+        896
+      ],
+      "bias_present": true,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "kv-head-parallel",
+      "partition_axis": 0,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.linear.QKVParallelLinear (v shard; same KV-head rule as k)",
+      "compiler_operator_mapping": "qwen_prefill::llm.v_proj::layer_12",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.12.self_attn.o_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "operator_family": "o_proj",
+      "weight_shape": [
+        896,
+        896
+      ],
+      "bias_present": false,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "row-parallel",
+      "partition_axis": 1,
+      "required_collective": "all_reduce",
+      "vllm_implementation_reference": "vllm.model_executor.layers.linear.RowParallelLinear",
+      "compiler_operator_mapping": "qwen_prefill::llm.o_proj::layer_12",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.12.mlp.gate_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "operator_family": "gate_proj",
+      "weight_shape": [
+        4864,
+        896
+      ],
+      "bias_present": false,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "column-parallel",
+      "partition_axis": 0,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.linear.MergedColumnParallelLinear (gate_up_proj, shard 0)",
+      "compiler_operator_mapping": "qwen_prefill::llm.gate_proj::layer_12",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.12.mlp.up_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "operator_family": "up_proj",
+      "weight_shape": [
+        4864,
+        896
+      ],
+      "bias_present": false,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "column-parallel",
+      "partition_axis": 0,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.linear.MergedColumnParallelLinear (gate_up_proj, shard 1)",
+      "compiler_operator_mapping": "qwen_prefill::llm.up_proj::layer_12",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.12.mlp.down_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "operator_family": "down_proj",
+      "weight_shape": [
+        896,
+        4864
+      ],
+      "bias_present": false,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "row-parallel",
+      "partition_axis": 1,
+      "required_collective": "all_reduce",
+      "vllm_implementation_reference": "vllm.model_executor.layers.linear.RowParallelLinear",
+      "compiler_operator_mapping": "qwen_prefill::llm.down_proj::layer_12",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.12.input_layernorm",
+      "module_class": "transformers.models.qwen2.modeling_qwen2.Qwen2RMSNorm",
+      "operator_family": "input_layernorm",
+      "weight_shape": [
+        896
+      ],
+      "bias_present": false,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "replicated",
+      "partition_axis": null,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.layernorm.RMSNorm (replicated; consumes the full, already-reconstructed hidden state -- see attention_contract_validation.json)",
+      "compiler_operator_mapping": null,
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.12.post_attention_layernorm",
+      "module_class": "transformers.models.qwen2.modeling_qwen2.Qwen2RMSNorm",
+      "operator_family": "post_attention_layernorm",
+      "weight_shape": [
+        896
+      ],
+      "bias_present": false,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "replicated",
+      "partition_axis": null,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.layernorm.RMSNorm (replicated; consumes the full, already-reconstructed hidden state -- see attention_contract_validation.json)",
+      "compiler_operator_mapping": null,
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.23.self_attn.q_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "operator_family": "q_proj",
+      "weight_shape": [
+        896,
+        896
+      ],
+      "bias_present": true,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "head-parallel",
+      "partition_axis": 0,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.linear.QKVParallelLinear (fused q/k/v; q shard is the column-parallel-like head-partitioned slice)",
+      "compiler_operator_mapping": "qwen_prefill::llm.q_proj::layer_23",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.23.self_attn.k_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "operator_family": "k_proj",
+      "weight_shape": [
+        128,
+        896
+      ],
+      "bias_present": true,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "kv-head-parallel",
+      "partition_axis": 0,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.linear.QKVParallelLinear (k shard; KV-head partition/replication rule per num_kv_head_replicas)",
+      "compiler_operator_mapping": "qwen_prefill::llm.k_proj::layer_23",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.23.self_attn.v_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "operator_family": "v_proj",
+      "weight_shape": [
+        128,
+        896
+      ],
+      "bias_present": true,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "kv-head-parallel",
+      "partition_axis": 0,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.linear.QKVParallelLinear (v shard; same KV-head rule as k)",
+      "compiler_operator_mapping": "qwen_prefill::llm.v_proj::layer_23",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.23.self_attn.o_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "operator_family": "o_proj",
+      "weight_shape": [
+        896,
+        896
+      ],
+      "bias_present": false,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "row-parallel",
+      "partition_axis": 1,
+      "required_collective": "all_reduce",
+      "vllm_implementation_reference": "vllm.model_executor.layers.linear.RowParallelLinear",
+      "compiler_operator_mapping": "qwen_prefill::llm.o_proj::layer_23",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.23.mlp.gate_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "operator_family": "gate_proj",
+      "weight_shape": [
+        4864,
+        896
+      ],
+      "bias_present": false,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "column-parallel",
+      "partition_axis": 0,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.linear.MergedColumnParallelLinear (gate_up_proj, shard 0)",
+      "compiler_operator_mapping": "qwen_prefill::llm.gate_proj::layer_23",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.23.mlp.up_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "operator_family": "up_proj",
+      "weight_shape": [
+        4864,
+        896
+      ],
+      "bias_present": false,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "column-parallel",
+      "partition_axis": 0,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.linear.MergedColumnParallelLinear (gate_up_proj, shard 1)",
+      "compiler_operator_mapping": "qwen_prefill::llm.up_proj::layer_23",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.23.mlp.down_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "operator_family": "down_proj",
+      "weight_shape": [
+        896,
+        4864
+      ],
+      "bias_present": false,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "row-parallel",
+      "partition_axis": 1,
+      "required_collective": "all_reduce",
+      "vllm_implementation_reference": "vllm.model_executor.layers.linear.RowParallelLinear",
+      "compiler_operator_mapping": "qwen_prefill::llm.down_proj::layer_23",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.23.input_layernorm",
+      "module_class": "transformers.models.qwen2.modeling_qwen2.Qwen2RMSNorm",
+      "operator_family": "input_layernorm",
+      "weight_shape": [
+        896
+      ],
+      "bias_present": false,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "replicated",
+      "partition_axis": null,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.layernorm.RMSNorm (replicated; consumes the full, already-reconstructed hidden state -- see attention_contract_validation.json)",
+      "compiler_operator_mapping": null,
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.23.post_attention_layernorm",
+      "module_class": "transformers.models.qwen2.modeling_qwen2.Qwen2RMSNorm",
+      "operator_family": "post_attention_layernorm",
+      "weight_shape": [
+        896
+      ],
+      "bias_present": false,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "replicated",
+      "partition_axis": null,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.layernorm.RMSNorm (replicated; consumes the full, already-reconstructed hidden state -- see attention_contract_validation.json)",
+      "compiler_operator_mapping": null,
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.embed_tokens",
+      "module_class": "torch.nn.modules.sparse.Embedding",
+      "operator_family": "embedding",
+      "weight_shape": [
+        151936,
+        896
+      ],
+      "bias_present": false,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "vocab-parallel",
+      "partition_axis": 0,
+      "required_collective": "all_reduce",
+      "vllm_implementation_reference": "vllm.model_executor.layers.vocab_parallel_embedding.VocabParallelEmbedding (masked local lookup + all_reduce)",
+      "compiler_operator_mapping": "qwen_prefill::llm.embed_tokens::model",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.embed_tokens (tied)",
+      "module_class": "torch.nn.modules.sparse.Embedding",
+      "operator_family": "lm_head",
+      "weight_shape": [
+        151936,
+        896
+      ],
+      "bias_present": false,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "vocab-parallel",
+      "partition_axis": 0,
+      "required_collective": "all_gather",
+      "vllm_implementation_reference": "vllm.model_executor.layers.logits_processor.LogitsProcessor + vllm.model_executor.layers.vocab_parallel_embedding.ParallelLMHead (tied to embed_tokens for this config; local vocab-shard matmul + tensor_model_parallel_all_gather)",
+      "compiler_operator_mapping": "qwen_prefill::llm.lm_head::model",
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.norm",
+      "module_class": "transformers.models.qwen2.modeling_qwen2.Qwen2RMSNorm",
+      "operator_family": "final_norm",
+      "weight_shape": [
+        896
+      ],
+      "bias_present": false,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "replicated",
+      "partition_axis": null,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.layernorm.RMSNorm (replicated)",
+      "compiler_operator_mapping": null,
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.*.self_attn.rotary_emb (computed inline, no dedicated module in this Transformers version)",
+      "module_class": "transformers.models.qwen2.modeling_qwen2.Qwen2RotaryEmbedding",
+      "operator_family": "rotary_embedding",
+      "weight_shape": null,
+      "bias_present": null,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "replicated",
+      "partition_axis": null,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.rotary_embedding.get_rope (replicated; applied per-head to each rank's LOCAL Q/K head shard -- no cross-rank data needed since rotation is elementwise within a head's own dimensions)",
+      "compiler_operator_mapping": null,
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.*.self_attn (attention score/softmax/context, no dedicated sub-module -- computed inline in Qwen2Attention.forward)",
+      "module_class": "transformers.models.qwen2.modeling_qwen2.eager_attention_forward",
+      "operator_family": "attention_computation",
+      "weight_shape": null,
+      "bias_present": null,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "head-parallel",
+      "partition_axis": null,
+      "required_collective": null,
+      "vllm_implementation_reference": "vllm.model_executor.layers.attention.Attention (head-parallel: each rank computes softmax attention over only its own local Q/K/V head shard, GQA-repeated locally)",
+      "compiler_operator_mapping": null,
+      "validation_status": "validated"
+    },
+    {
+      "module_path": "model.layers.* (residual add, no dedicated module)",
+      "module_class": "python_addition_operator",
+      "operator_family": "residual_connection",
+      "weight_shape": null,
+      "bias_present": null,
+      "input_shape": null,
+      "output_shape": null,
+      "partition_type": "replicated",
+      "partition_axis": null,
+      "required_collective": null,
+      "vllm_implementation_reference": "no dedicated vLLM class; residual add happens in Qwen2DecoderLayer.forward on the full, already-reconstructed hidden_states tensor",
+      "compiler_operator_mapping": null,
+      "validation_status": "validated"
+    }
+  ],
+  "method": "real model.named_modules() walk; shapes/bias read directly off real parameters"
+}

@@ -1,0 +1,4330 @@
+{
+  "work_item_count": 170,
+  "world_size": 2,
+  "work_items": [
+    {
+      "operator_id": "qwen_prefill::llm.embed_tokens::model",
+      "layer_id": "model",
+      "operator_family": "embedding",
+      "partition_strategy": "vocab-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        75968
+      ],
+      "rank_shard_extents": [
+        75968,
+        75968
+      ],
+      "weight_partition": "[vocab_size, hidden_size] sharded along dim 0 (vocab)",
+      "activation_partition": "input token IDs replicated to every rank; each rank masks IDs outside its vocab range to 0 before lookup",
+      "output_partition": "each rank produces a full [seq, hidden] tensor that is 0 for tokens not owned by that rank",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 0,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "input_token_ids"
+      ],
+      "reconstructed_output_contract": "all_reduce(sum) of the two masked lookups reconstructs the correct embedding row for every token"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_0",
+      "layer_id": 0,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_0",
+      "layer_id": 0,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_0",
+      "layer_id": 0,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_0",
+      "layer_id": 0,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 1,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_0",
+      "layer_id": 0,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_0",
+      "layer_id": 0,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_0",
+      "layer_id": 0,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 2,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_1",
+      "layer_id": 1,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_1",
+      "layer_id": 1,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_1",
+      "layer_id": 1,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_1",
+      "layer_id": 1,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 3,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_1",
+      "layer_id": 1,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_1",
+      "layer_id": 1,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_1",
+      "layer_id": 1,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 4,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_2",
+      "layer_id": 2,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_2",
+      "layer_id": 2,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_2",
+      "layer_id": 2,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_2",
+      "layer_id": 2,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 5,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_2",
+      "layer_id": 2,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_2",
+      "layer_id": 2,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_2",
+      "layer_id": 2,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 6,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_3",
+      "layer_id": 3,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_3",
+      "layer_id": 3,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_3",
+      "layer_id": 3,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_3",
+      "layer_id": 3,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 7,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_3",
+      "layer_id": 3,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_3",
+      "layer_id": 3,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_3",
+      "layer_id": 3,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 8,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_4",
+      "layer_id": 4,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_4",
+      "layer_id": 4,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_4",
+      "layer_id": 4,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_4",
+      "layer_id": 4,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 9,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_4",
+      "layer_id": 4,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_4",
+      "layer_id": 4,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_4",
+      "layer_id": 4,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 10,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_5",
+      "layer_id": 5,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_5",
+      "layer_id": 5,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_5",
+      "layer_id": 5,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_5",
+      "layer_id": 5,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 11,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_5",
+      "layer_id": 5,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_5",
+      "layer_id": 5,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_5",
+      "layer_id": 5,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 12,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_6",
+      "layer_id": 6,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_6",
+      "layer_id": 6,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_6",
+      "layer_id": 6,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_6",
+      "layer_id": 6,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 13,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_6",
+      "layer_id": 6,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_6",
+      "layer_id": 6,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_6",
+      "layer_id": 6,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 14,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_7",
+      "layer_id": 7,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_7",
+      "layer_id": 7,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_7",
+      "layer_id": 7,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_7",
+      "layer_id": 7,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 15,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_7",
+      "layer_id": 7,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_7",
+      "layer_id": 7,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_7",
+      "layer_id": 7,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 16,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_8",
+      "layer_id": 8,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_8",
+      "layer_id": 8,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_8",
+      "layer_id": 8,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_8",
+      "layer_id": 8,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 17,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_8",
+      "layer_id": 8,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_8",
+      "layer_id": 8,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_8",
+      "layer_id": 8,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 18,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_9",
+      "layer_id": 9,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_9",
+      "layer_id": 9,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_9",
+      "layer_id": 9,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_9",
+      "layer_id": 9,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 19,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_9",
+      "layer_id": 9,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_9",
+      "layer_id": 9,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_9",
+      "layer_id": 9,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 20,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_10",
+      "layer_id": 10,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_10",
+      "layer_id": 10,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_10",
+      "layer_id": 10,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_10",
+      "layer_id": 10,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 21,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_10",
+      "layer_id": 10,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_10",
+      "layer_id": 10,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_10",
+      "layer_id": 10,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 22,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_11",
+      "layer_id": 11,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_11",
+      "layer_id": 11,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_11",
+      "layer_id": 11,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_11",
+      "layer_id": 11,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 23,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_11",
+      "layer_id": 11,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_11",
+      "layer_id": 11,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_11",
+      "layer_id": 11,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 24,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_12",
+      "layer_id": 12,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_12",
+      "layer_id": 12,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_12",
+      "layer_id": 12,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_12",
+      "layer_id": 12,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 25,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_12",
+      "layer_id": 12,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_12",
+      "layer_id": 12,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_12",
+      "layer_id": 12,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 26,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_13",
+      "layer_id": 13,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_13",
+      "layer_id": 13,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_13",
+      "layer_id": 13,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_13",
+      "layer_id": 13,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 27,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_13",
+      "layer_id": 13,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_13",
+      "layer_id": 13,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_13",
+      "layer_id": 13,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 28,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_14",
+      "layer_id": 14,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_14",
+      "layer_id": 14,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_14",
+      "layer_id": 14,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_14",
+      "layer_id": 14,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 29,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_14",
+      "layer_id": 14,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_14",
+      "layer_id": 14,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_14",
+      "layer_id": 14,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 30,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_15",
+      "layer_id": 15,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_15",
+      "layer_id": 15,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_15",
+      "layer_id": 15,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_15",
+      "layer_id": 15,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 31,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_15",
+      "layer_id": 15,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_15",
+      "layer_id": 15,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_15",
+      "layer_id": 15,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 32,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_16",
+      "layer_id": 16,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_16",
+      "layer_id": 16,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_16",
+      "layer_id": 16,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_16",
+      "layer_id": 16,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 33,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_16",
+      "layer_id": 16,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_16",
+      "layer_id": 16,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_16",
+      "layer_id": 16,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 34,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_17",
+      "layer_id": 17,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_17",
+      "layer_id": 17,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_17",
+      "layer_id": 17,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_17",
+      "layer_id": 17,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 35,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_17",
+      "layer_id": 17,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_17",
+      "layer_id": 17,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_17",
+      "layer_id": 17,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 36,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_18",
+      "layer_id": 18,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_18",
+      "layer_id": 18,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_18",
+      "layer_id": 18,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_18",
+      "layer_id": 18,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 37,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_18",
+      "layer_id": 18,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_18",
+      "layer_id": 18,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_18",
+      "layer_id": 18,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 38,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_19",
+      "layer_id": 19,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_19",
+      "layer_id": 19,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_19",
+      "layer_id": 19,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_19",
+      "layer_id": 19,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 39,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_19",
+      "layer_id": 19,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_19",
+      "layer_id": 19,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_19",
+      "layer_id": 19,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 40,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_20",
+      "layer_id": 20,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_20",
+      "layer_id": 20,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_20",
+      "layer_id": 20,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_20",
+      "layer_id": 20,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 41,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_20",
+      "layer_id": 20,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_20",
+      "layer_id": 20,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_20",
+      "layer_id": 20,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 42,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_21",
+      "layer_id": 21,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_21",
+      "layer_id": 21,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_21",
+      "layer_id": 21,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_21",
+      "layer_id": 21,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 43,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_21",
+      "layer_id": 21,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_21",
+      "layer_id": 21,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_21",
+      "layer_id": 21,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 44,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_22",
+      "layer_id": 22,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_22",
+      "layer_id": 22,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_22",
+      "layer_id": 22,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_22",
+      "layer_id": 22,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 45,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_22",
+      "layer_id": 22,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_22",
+      "layer_id": 22,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_22",
+      "layer_id": 22,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 46,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_23",
+      "layer_id": 23,
+      "operator_family": "q_proj",
+      "partition_strategy": "column-parallel_head_partitioned",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[num_heads*head_dim, hidden_size] sharded along dim 0 into num_heads_per_rank*head_dim chunks",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_heads_per_rank query heads; kept sharded (no collective) and consumed directly by that rank's local attention computation",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_23",
+      "layer_id": 23,
+      "operator_family": "k_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_23",
+      "layer_id": 23,
+      "operator_family": "v_proj",
+      "partition_strategy": "kv-head-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        64
+      ],
+      "rank_shard_extents": [
+        64,
+        64
+      ],
+      "weight_partition": "[num_kv_heads*head_dim, hidden_size] sharded along dim 0; num_kv_head_replicas=divide(tp_size,total_kv_heads)=1 for this model+tp_size (clean partition, no duplication)",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns num_kv_heads_per_rank key/value heads; kept sharded",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "bias_sharded_per_rank_output_dim",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_23",
+      "layer_id": 23,
+      "operator_family": "o_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        448
+      ],
+      "rank_shard_extents": [
+        448,
+        448
+      ],
+      "weight_partition": "[hidden_size, num_heads*head_dim] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input attention-output activation sharded identically to q_proj's head ownership (rank's local attention-head-concat output)",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 47,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true o_proj output (no bias in this model)"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_23",
+      "layer_id": 23,
+      "operator_family": "gate_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_23",
+      "layer_id": 23,
+      "operator_family": "up_proj",
+      "partition_strategy": "column-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[intermediate_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input hidden_states fully replicated to every rank",
+      "output_partition": "rank owns the SAME intermediate-dim shard index for gate and up (matching ownership), so SiLU(gate_rank)*up_rank is rank-local-valid",
+      "collective_kind": null,
+      "collective_sequence_id": null,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "hidden_states"
+      ],
+      "reconstructed_output_contract": "not materialized in real execution; validated standalone via concatenation for operator-level comparison only"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_23",
+      "layer_id": 23,
+      "operator_family": "down_proj",
+      "partition_strategy": "row-parallel",
+      "partition_axis": 1,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        2432
+      ],
+      "rank_shard_extents": [
+        2432,
+        2432
+      ],
+      "weight_partition": "[hidden_size, intermediate_size] sharded along dim 1 (input/contraction)",
+      "activation_partition": "input is the rank-local SiLU(gate_rank)*up_rank shard",
+      "output_partition": "each rank produces a full [seq, hidden_size] PARTIAL sum",
+      "collective_kind": "all_reduce",
+      "collective_sequence_id": 48,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [],
+      "reconstructed_output_contract": "all_reduce(sum) of the two partial outputs reconstructs the true down_proj/MLP output"
+    },
+    {
+      "operator_id": "qwen_prefill::llm.lm_head::model",
+      "layer_id": "model",
+      "operator_family": "lm_head",
+      "partition_strategy": "vocab-parallel",
+      "partition_axis": 0,
+      "world_size": 2,
+      "rank_shard_offsets": [
+        0,
+        75968
+      ],
+      "rank_shard_extents": [
+        75968,
+        75968
+      ],
+      "weight_partition": "tied to embed_tokens: [vocab_size, hidden_size] sharded along dim 0",
+      "activation_partition": "input final hidden_states fully replicated to every rank",
+      "output_partition": "each rank produces its own [seq, vocab_shard] local logits",
+      "collective_kind": "all_gather",
+      "collective_sequence_id": 49,
+      "bias_policy": "no_bias",
+      "replicated_inputs": [
+        "final_hidden_states"
+      ],
+      "reconstructed_output_contract": "all_gather (concat along vocab dim, rank order) of the two local logit shards reconstructs the full [seq, vocab] logits; no padding trim needed since vocab_size is exactly divisible by world_size for this model"
+    }
+  ]
+}

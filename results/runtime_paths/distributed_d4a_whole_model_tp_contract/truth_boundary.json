@@ -1,0 +1,25 @@
+{
+  "d4a_primary_claim": "The complete set of tensor-parallel operator families required by Qwen2.5-0.5B-Instruct was identified from the live model and vLLM implementation, mapped to compiler planning entities, and validated through serialized TP=2 rank-local execution and collective reconstruction on a single host, with whole-model forward equivalence demonstrated within dtype-appropriate tolerance.",
+  "not_claimed": [
+    "concurrent TP execution",
+    "real two-GPU execution",
+    "NCCL",
+    "vLLM TP2 server execution",
+    "GPU-to-GPU communication",
+    "distributed serving speedup",
+    "profitability"
+  ],
+  "device_used": "cpu",
+  "dtype_used": "float32",
+  "world_size_simulated": 2,
+  "environment": "single-host, single-process (no multiprocessing) serialized TP replay; all rank computations run sequentially in the same Python process using real model weights",
+  "whole_model_tp_classification": "WHOLE_MODEL_TP_VALIDATED",
+  "explicitly_not": [
+    "not NCCL",
+    "not GPU-to-GPU communication",
+    "not real vLLM TP2 execution",
+    "not representative of multi-GPU scaling or speedup",
+    "not concurrent rank execution",
+    "not a claim that the C++ DistributedStrategyPlanningPass itself emits this whole-model plan (see known_limitations in the D4A report)"
+  ]
+}

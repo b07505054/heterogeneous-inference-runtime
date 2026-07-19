@@ -1,0 +1,47 @@
+{
+  "tp1": {
+    "placements": [
+      {
+        "rank_id": 0,
+        "logical_gpu_index": 0,
+        "physical_device_index": 0,
+        "rank_id_source": "compiler_plan",
+        "placement_policy_source": "explicit_D3B_default"
+      }
+    ],
+    "rank_ids_contiguous": true,
+    "one_device_per_rank": true,
+    "no_duplicate_physical_device": true,
+    "placement_count_equals_world_size": true,
+    "logical_to_physical_explicit": true,
+    "valid": true,
+    "errors": []
+  },
+  "tp2": {
+    "placements": [
+      {
+        "rank_id": 0,
+        "logical_gpu_index": 0,
+        "physical_device_index": 0,
+        "rank_id_source": "compiler_plan",
+        "placement_policy_source": "explicit_D3B_default"
+      },
+      {
+        "rank_id": 1,
+        "logical_gpu_index": 1,
+        "physical_device_index": null,
+        "rank_id_source": "compiler_plan",
+        "placement_policy_source": "explicit_D3B_default"
+      }
+    ],
+    "rank_ids_contiguous": true,
+    "one_device_per_rank": true,
+    "no_duplicate_physical_device": true,
+    "placement_count_equals_world_size": true,
+    "logical_to_physical_explicit": true,
+    "valid": true,
+    "errors": []
+  },
+  "visible_gpu_count_on_this_host": 1,
+  "note": "TP2 rank 1 resolves physical_device_index=None on this one-GPU host -- it is never fabricated onto physical GPU 0 alongside rank 0."
+}

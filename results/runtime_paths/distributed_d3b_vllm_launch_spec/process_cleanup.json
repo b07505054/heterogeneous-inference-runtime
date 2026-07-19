@@ -1,0 +1,14 @@
+{
+  "subprocess_calls_made_by_d3b_pipeline": [
+    "nvidia-smi -L (read-only capability probe, discover_environment)",
+    "git status/rev-parse (read-only, repository state recording)",
+    "pytest (test execution, this script's own negative/regression test invocations)"
+  ],
+  "vllm_server_subprocess_ever_launched": false,
+  "engine_core_ever_constructed": false,
+  "gpu_worker_ever_allocated": false,
+  "tracked_d3b_pids": [],
+  "orphan_d3b_processes_found": 0,
+  "verified_clean": true,
+  "note": "D3B never calls subprocess.Popen/os.exec* with the materialized vLLM server argv; see tests/test_distributed_d3b_vllm_launch_spec.py::test_no_subprocess_launched_for_rejected_tp2_spec."
+}

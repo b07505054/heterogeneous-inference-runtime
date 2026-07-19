@@ -1,0 +1,8 @@
+{"event": "all_reduce", "operator_id": "qwen_prefill::llm.o_proj::layer_0", "participants": [0, 1], "ts": 1784427603.8960936}
+{"event": "all_reduce", "operator_id": "qwen_prefill::llm.o_proj::layer_12", "participants": [0, 1], "ts": 1784427603.9008358}
+{"event": "all_reduce", "operator_id": "qwen_prefill::llm.o_proj::layer_23", "participants": [0, 1], "ts": 1784427603.9066021}
+{"event": "all_reduce", "operator_id": "qwen_prefill::llm.down_proj::layer_0", "participants": [0, 1], "ts": 1784427603.916798}
+{"event": "all_reduce", "operator_id": "qwen_prefill::llm.down_proj::layer_12", "participants": [0, 1], "ts": 1784427603.9221468}
+{"event": "all_reduce", "operator_id": "qwen_prefill::llm.down_proj::layer_23", "participants": [0, 1], "ts": 1784427603.9274695}
+{"event": "all_reduce", "operator_id": "qwen_prefill::llm.embed_tokens::model", "participants": [0, 1], "ts": 1784427603.9306858}
+{"event": "all_gather", "operator_id": "qwen_prefill::llm.lm_head::model", "participants": [0, 1], "ts": 1784427604.184026}

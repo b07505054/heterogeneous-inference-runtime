@@ -1,0 +1,17 @@
+{
+  "existing_vllm_adapter_tests": {
+    "command": "pytest -q tests/test_vllm_backend_adapter.py tests/test_vllm_config_materializer.py tests/test_vllm_plan_schema.py",
+    "passed": true,
+    "tail": "..............                                                           [100%]\n14 passed in 0.12s\n"
+  },
+  "d3b_tp1_materialization": {
+    "tensor_parallel_size": 1,
+    "pipeline_parallel_size": 1,
+    "world_size": 1,
+    "preflight_status": "passed",
+    "execution_readiness_state": "DRY_RUN_VALIDATED",
+    "max_num_seqs_materialized": 4
+  },
+  "no_distributed_field_broke_tp1": true,
+  "all_green": true
+}

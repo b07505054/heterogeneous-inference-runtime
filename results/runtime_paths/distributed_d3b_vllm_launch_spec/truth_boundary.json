@@ -1,0 +1,23 @@
+{
+  "d3b_primary_claim": "A compiler-selected TP=2 plan for a real Qwen model was deterministically materialized into a version-aware vLLM distributed launch specification, with model, tensor-parallel, pipeline-parallel, dtype, memory, batching, tokenizer, network, process, and environment contracts validated fail-closed against the current host and vLLM installation.",
+  "not_claimed": [
+    "successful TP=2 vLLM execution",
+    "successful multi-GPU launch",
+    "NCCL execution",
+    "real distributed Qwen serving",
+    "GPU-to-GPU data transfer",
+    "distributed performance benefit"
+  ],
+  "device_used": "NVIDIA GeForce GTX 1650 with Max-Q Design",
+  "device_note": "Real single NVIDIA GPU present on this host (1 visible); this is exactly the D3B-required 'must not rent hardware or require multiple GPUs' single-GPU development host.",
+  "whole_model_tp_evidence_status": "not_established_operator_level_only",
+  "d3b_mode": "planning_only",
+  "execution_readiness_reached": {
+    "tp1": "DRY_RUN_VALIDATED",
+    "tp2": "PREFLIGHT_REJECTED"
+  },
+  "execution_readiness_never_reached": [
+    "EXECUTION_READY",
+    "EXECUTION_STARTED"
+  ]
+}

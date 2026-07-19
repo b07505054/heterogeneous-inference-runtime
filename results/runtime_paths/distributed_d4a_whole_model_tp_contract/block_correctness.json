@@ -1,0 +1,545 @@
+{
+  "per_layer": [
+    {
+      "layer_id": 0,
+      "hidden_state_max_abs_error_vs_reference": 5.125999450683594e-06
+    },
+    {
+      "layer_id": 1,
+      "hidden_state_max_abs_error_vs_reference": 5.185604095458984e-06
+    },
+    {
+      "layer_id": 2,
+      "hidden_state_max_abs_error_vs_reference": 0.000244140625
+    },
+    {
+      "layer_id": 3,
+      "hidden_state_max_abs_error_vs_reference": 3.0517578125e-05
+    },
+    {
+      "layer_id": 4,
+      "hidden_state_max_abs_error_vs_reference": 3.0517578125e-05
+    },
+    {
+      "layer_id": 5,
+      "hidden_state_max_abs_error_vs_reference": 3.0517578125e-05
+    },
+    {
+      "layer_id": 6,
+      "hidden_state_max_abs_error_vs_reference": 3.0517578125e-05
+    },
+    {
+      "layer_id": 7,
+      "hidden_state_max_abs_error_vs_reference": 3.0517578125e-05
+    },
+    {
+      "layer_id": 8,
+      "hidden_state_max_abs_error_vs_reference": 3.0517578125e-05
+    },
+    {
+      "layer_id": 9,
+      "hidden_state_max_abs_error_vs_reference": 3.0517578125e-05
+    },
+    {
+      "layer_id": 10,
+      "hidden_state_max_abs_error_vs_reference": 3.0517578125e-05
+    },
+    {
+      "layer_id": 11,
+      "hidden_state_max_abs_error_vs_reference": 3.0517578125e-05
+    },
+    {
+      "layer_id": 12,
+      "hidden_state_max_abs_error_vs_reference": 3.0517578125e-05
+    },
+    {
+      "layer_id": 13,
+      "hidden_state_max_abs_error_vs_reference": 3.0517578125e-05
+    },
+    {
+      "layer_id": 14,
+      "hidden_state_max_abs_error_vs_reference": 3.0517578125e-05
+    },
+    {
+      "layer_id": 15,
+      "hidden_state_max_abs_error_vs_reference": 3.0517578125e-05
+    },
+    {
+      "layer_id": 16,
+      "hidden_state_max_abs_error_vs_reference": 3.0517578125e-05
+    },
+    {
+      "layer_id": 17,
+      "hidden_state_max_abs_error_vs_reference": 3.0517578125e-05
+    },
+    {
+      "layer_id": 18,
+      "hidden_state_max_abs_error_vs_reference": 3.0517578125e-05
+    },
+    {
+      "layer_id": 19,
+      "hidden_state_max_abs_error_vs_reference": 3.0517578125e-05
+    },
+    {
+      "layer_id": 20,
+      "hidden_state_max_abs_error_vs_reference": 3.814697265625e-05
+    },
+    {
+      "layer_id": 21,
+      "hidden_state_max_abs_error_vs_reference": 0.0009765625
+    },
+    {
+      "layer_id": 22,
+      "hidden_state_max_abs_error_vs_reference": 0.000408172607421875
+    },
+    {
+      "layer_id": 23,
+      "hidden_state_max_abs_error_vs_reference": 0.000209808349609375
+    }
+  ],
+  "summary": {
+    "median_s": 3.0517578125e-05,
+    "p95_s": 0.000408172607421875,
+    "min_s": 5.125999450683594e-06,
+    "max_s": 0.0009765625,
+    "n": 24
+  },
+  "attention_block": [
+    {
+      "layer": 0,
+      "max_abs_error": 1.6689300537109375e-06,
+      "allclose": true,
+      "rank_traces": [
+        {
+          "rank_id": 0,
+          "q_local_shape": [
+            1,
+            7,
+            5,
+            64
+          ],
+          "k_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "v_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "attn_score_shape": [
+            1,
+            7,
+            5,
+            5
+          ],
+          "kv_repetition_factor": 7,
+          "local_context_shape": [
+            5,
+            448
+          ],
+          "o_proj_partial_shape": [
+            5,
+            896
+          ]
+        },
+        {
+          "rank_id": 1,
+          "q_local_shape": [
+            1,
+            7,
+            5,
+            64
+          ],
+          "k_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "v_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "attn_score_shape": [
+            1,
+            7,
+            5,
+            5
+          ],
+          "kv_repetition_factor": 7,
+          "local_context_shape": [
+            5,
+            448
+          ],
+          "o_proj_partial_shape": [
+            5,
+            896
+          ]
+        }
+      ],
+      "kv_repetition_factor": 7
+    },
+    {
+      "layer": 12,
+      "max_abs_error": 9.5367431640625e-07,
+      "allclose": true,
+      "rank_traces": [
+        {
+          "rank_id": 0,
+          "q_local_shape": [
+            1,
+            7,
+            5,
+            64
+          ],
+          "k_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "v_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "attn_score_shape": [
+            1,
+            7,
+            5,
+            5
+          ],
+          "kv_repetition_factor": 7,
+          "local_context_shape": [
+            5,
+            448
+          ],
+          "o_proj_partial_shape": [
+            5,
+            896
+          ]
+        },
+        {
+          "rank_id": 1,
+          "q_local_shape": [
+            1,
+            7,
+            5,
+            64
+          ],
+          "k_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "v_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "attn_score_shape": [
+            1,
+            7,
+            5,
+            5
+          ],
+          "kv_repetition_factor": 7,
+          "local_context_shape": [
+            5,
+            448
+          ],
+          "o_proj_partial_shape": [
+            5,
+            896
+          ]
+        }
+      ],
+      "kv_repetition_factor": 7
+    },
+    {
+      "layer": 23,
+      "max_abs_error": 2.7418136596679688e-06,
+      "allclose": true,
+      "rank_traces": [
+        {
+          "rank_id": 0,
+          "q_local_shape": [
+            1,
+            7,
+            5,
+            64
+          ],
+          "k_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "v_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "attn_score_shape": [
+            1,
+            7,
+            5,
+            5
+          ],
+          "kv_repetition_factor": 7,
+          "local_context_shape": [
+            5,
+            448
+          ],
+          "o_proj_partial_shape": [
+            5,
+            896
+          ]
+        },
+        {
+          "rank_id": 1,
+          "q_local_shape": [
+            1,
+            7,
+            5,
+            64
+          ],
+          "k_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "v_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "attn_score_shape": [
+            1,
+            7,
+            5,
+            5
+          ],
+          "kv_repetition_factor": 7,
+          "local_context_shape": [
+            5,
+            448
+          ],
+          "o_proj_partial_shape": [
+            5,
+            896
+          ]
+        }
+      ],
+      "kv_repetition_factor": 7
+    }
+  ],
+  "mlp_block": [
+    {
+      "layer": 0,
+      "max_abs_error": 1.430511474609375e-06,
+      "allclose": true,
+      "rank_traces": [
+        {
+          "rank_id": 0,
+          "gate_local_shape": [
+            5,
+            2432
+          ],
+          "up_local_shape": [
+            5,
+            2432
+          ],
+          "intermediate_local_shape": [
+            5,
+            2432
+          ],
+          "down_partial_shape": [
+            5,
+            896
+          ],
+          "gate_shard_range": [
+            0,
+            2432
+          ],
+          "up_shard_range": [
+            0,
+            2432
+          ],
+          "shard_ownership_matches": true
+        },
+        {
+          "rank_id": 1,
+          "gate_local_shape": [
+            5,
+            2432
+          ],
+          "up_local_shape": [
+            5,
+            2432
+          ],
+          "intermediate_local_shape": [
+            5,
+            2432
+          ],
+          "down_partial_shape": [
+            5,
+            896
+          ],
+          "gate_shard_range": [
+            2432,
+            4864
+          ],
+          "up_shard_range": [
+            2432,
+            4864
+          ],
+          "shard_ownership_matches": true
+        }
+      ],
+      "shard_ownership_matches": true
+    },
+    {
+      "layer": 12,
+      "max_abs_error": 9.5367431640625e-07,
+      "allclose": true,
+      "rank_traces": [
+        {
+          "rank_id": 0,
+          "gate_local_shape": [
+            5,
+            2432
+          ],
+          "up_local_shape": [
+            5,
+            2432
+          ],
+          "intermediate_local_shape": [
+            5,
+            2432
+          ],
+          "down_partial_shape": [
+            5,
+            896
+          ],
+          "gate_shard_range": [
+            0,
+            2432
+          ],
+          "up_shard_range": [
+            0,
+            2432
+          ],
+          "shard_ownership_matches": true
+        },
+        {
+          "rank_id": 1,
+          "gate_local_shape": [
+            5,
+            2432
+          ],
+          "up_local_shape": [
+            5,
+            2432
+          ],
+          "intermediate_local_shape": [
+            5,
+            2432
+          ],
+          "down_partial_shape": [
+            5,
+            896
+          ],
+          "gate_shard_range": [
+            2432,
+            4864
+          ],
+          "up_shard_range": [
+            2432,
+            4864
+          ],
+          "shard_ownership_matches": true
+        }
+      ],
+      "shard_ownership_matches": true
+    },
+    {
+      "layer": 23,
+      "max_abs_error": 1.9073486328125e-05,
+      "allclose": true,
+      "rank_traces": [
+        {
+          "rank_id": 0,
+          "gate_local_shape": [
+            5,
+            2432
+          ],
+          "up_local_shape": [
+            5,
+            2432
+          ],
+          "intermediate_local_shape": [
+            5,
+            2432
+          ],
+          "down_partial_shape": [
+            5,
+            896
+          ],
+          "gate_shard_range": [
+            0,
+            2432
+          ],
+          "up_shard_range": [
+            0,
+            2432
+          ],
+          "shard_ownership_matches": true
+        },
+        {
+          "rank_id": 1,
+          "gate_local_shape": [
+            5,
+            2432
+          ],
+          "up_local_shape": [
+            5,
+            2432
+          ],
+          "intermediate_local_shape": [
+            5,
+            2432
+          ],
+          "down_partial_shape": [
+            5,
+            896
+          ],
+          "gate_shard_range": [
+            2432,
+            4864
+          ],
+          "up_shard_range": [
+            2432,
+            4864
+          ],
+          "shard_ownership_matches": true
+        }
+      ],
+      "shard_ownership_matches": true
+    }
+  ],
+  "block_tolerance_atol": 0.01,
+  "all_blocks_within_tolerance": true
+}

@@ -1,0 +1,38 @@
+{
+  "chain": "compiler_candidate_id -> selected_tp_plan -> model_identity -> distributed_plan_fields -> vllm_capability_inventory -> materialized_launch_fields -> cli_arguments -> environment -> rank_placements -> preflight_validations -> final_readiness_classification",
+  "tp1": {
+    "source_plan_mismatch_count": 0,
+    "candidate_mismatch_count": 0,
+    "model_mismatch_count": 0,
+    "tp_mismatch_count": 0,
+    "pp_mismatch_count": 0,
+    "world_size_mismatch_count": 0,
+    "rank_placement_mismatch_count": 0,
+    "unsupported_argument_count": 0,
+    "silent_default_count": 0,
+    "silent_downgrade_count": 0,
+    "preflight_bypass_count": 0,
+    "unexpected_process_launch_count": 0,
+    "orphan_process_count": 0,
+    "all_zero": true
+  },
+  "tp2": {
+    "source_plan_mismatch_count": 0,
+    "candidate_mismatch_count": 0,
+    "model_mismatch_count": 0,
+    "tp_mismatch_count": 0,
+    "pp_mismatch_count": 0,
+    "world_size_mismatch_count": 0,
+    "rank_placement_mismatch_count": 0,
+    "unsupported_argument_count": 0,
+    "silent_default_count": 0,
+    "silent_downgrade_count": 0,
+    "preflight_bypass_count": 0,
+    "unexpected_process_launch_count": 0,
+    "orphan_process_count": 0,
+    "all_zero": true
+  },
+  "all_zero_tp1": true,
+  "all_zero_tp2": true,
+  "preflight_rejection_is_not_a_provenance_mismatch": true
+}

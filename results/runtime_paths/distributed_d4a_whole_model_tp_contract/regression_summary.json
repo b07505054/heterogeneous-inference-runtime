@@ -1,0 +1,30 @@
+{
+  "d1_compiler_DistributedPlanningTest": {
+    "passed": true,
+    "tail": "Test project /home/allen/Desktop/Project/ml-graph-compiler-runtime/build-mlir\n    Start 6: DistributedPlanningTest\n1/1 Test #6: DistributedPlanningTest ..........   Passed    0.29 sec\n\n100% tests passed, 0 tests failed out of 1\n\nTotal Test time (real) =   0.30 sec\n"
+  },
+  "d2_compiler_DistributedStrategyPlanningTest": {
+    "passed": true,
+    "tail": "Test project /home/allen/Desktop/Project/ml-graph-compiler-runtime/build-mlir\n    Start 7: DistributedStrategyPlanningTest\n1/1 Test #7: DistributedStrategyPlanningTest ...   Passed    0.04 sec\n\n100% tests passed, 0 tests failed out of 1\n\nTotal Test time (real) =   0.05 sec\n"
+  },
+  "d2_compiler_pipeline_test_known_preexisting_issue_not_run": "DistributedStrategyPlanningPipelineTest: stale --distributed-evidence-report CLI flag reference vs the built compile-for-target binary's actual --dispatch-unit-report flag; pre-existing environment/build drift, unrelated to and not modified by D4A",
+  "d1_runtime_process_all_reduce_deadlock": {
+    "passed": true,
+    "tail": "................                                                         [100%]\n16 passed in 6.11s\n"
+  },
+  "d2_qwen_plan_export_provenance": {
+    "passed": true,
+    "tail": "............                                                             [100%]\n12 passed in 3.96s\n"
+  },
+  "d3a_live_capture_rank_isolation_ipc_replay": {
+    "passed": true,
+    "tail": "........................                                                 [100%]\n=============================== warnings summary ===============================\ntests/test_distributed_d3a_live_qwen_tensor.py::test_operator_mapping_is_unique_and_verified\n  <frozen importlib._bootstrap>:488: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute\n\ntests/test_distributed_d3a_live_qwen_tensor.py::test_operator_mapping_is_unique_and_verified\n  <frozen importlib._bootstrap>:488: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n24 passed, 2 warnings in 11.85s\n"
+  },
+  "d3b_launch_spec_arg_registry_tp1_dry_run_tp2_rejection": {
+    "passed": true,
+    "tail": "........................................                                 [100%]\n=============================== warnings summary ===============================\ntests/test_distributed_d3b_vllm_launch_spec.py::test_tp2_materializes_and_preflight_rejects_on_one_gpu_host\n  <frozen importlib._bootstrap>:488: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute\n\ntests/test_distributed_d3b_vllm_launch_spec.py::test_tp2_materializes_and_preflight_rejects_on_one_gpu_host\n  <frozen importlib._bootstrap>:488: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n40 passed, 2 warnings in 12.13s\n"
+  },
+  "no_d1_d2_d3a_d4a_rank_processes_remain": true,
+  "no_vllm_server_processes_remain": true,
+  "all_regressions_green": true
+}

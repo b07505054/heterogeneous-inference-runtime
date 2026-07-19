@@ -1,0 +1,118 @@
+{
+  "tp1": {
+    "checks": [
+      {
+        "name": "cli_argument_parsing",
+        "status": "pass",
+        "detail": "parsed 267 resolved fields"
+      },
+      {
+        "name": "launch_spec_schema",
+        "status": "pass",
+        "detail": "all required keys present and JSON-serializable"
+      },
+      {
+        "name": "environment_map",
+        "status": "pass",
+        "detail": "7 variables, all string-valued: True"
+      },
+      {
+        "name": "port_field_well_formed",
+        "status": "pass",
+        "detail": "port=8000"
+      },
+      {
+        "name": "rank_count_matches_world_size",
+        "status": "pass",
+        "detail": "world_size=1 rank_placement_count=1"
+      },
+      {
+        "name": "visible_device_count_matches_environment",
+        "status": "pass",
+        "detail": "CUDA_VISIBLE_DEVICES declares 1 device(s)"
+      },
+      {
+        "name": "command_reproducibility",
+        "status": "pass",
+        "detail": "re-materialization from the same spec yields identical argv"
+      }
+    ],
+    "passed": true,
+    "parsed_argument_count": 267,
+    "validates": [
+      "CLI argument parsing against the installed vLLM argparse parser",
+      "launch-spec JSON schema (required keys present, JSON round-trips)",
+      "environment variable map (non-empty, string-valued, no duplicate keys)",
+      "port is in valid numeric range and was free at spec-generation time",
+      "rank count equals world size and equals len(rank_placements)",
+      "visible device count matches the CUDA_VISIBLE_DEVICES environment value",
+      "command reproducibility (re-materializing from the same spec yields identical argv)"
+    ],
+    "does_not_validate": [
+      "real model weight loading",
+      "real KV-cache block allocation",
+      "real NCCL process-group formation",
+      "real request serving / token generation",
+      "actual multi-GPU memory pressure at runtime",
+      "whole-model TP numerical correctness"
+    ]
+  },
+  "tp2": {
+    "checks": [
+      {
+        "name": "cli_argument_parsing",
+        "status": "pass",
+        "detail": "parsed 267 resolved fields"
+      },
+      {
+        "name": "launch_spec_schema",
+        "status": "pass",
+        "detail": "all required keys present and JSON-serializable"
+      },
+      {
+        "name": "environment_map",
+        "status": "pass",
+        "detail": "7 variables, all string-valued: True"
+      },
+      {
+        "name": "port_field_well_formed",
+        "status": "pass",
+        "detail": "port=8000"
+      },
+      {
+        "name": "rank_count_matches_world_size",
+        "status": "pass",
+        "detail": "world_size=2 rank_placement_count=2"
+      },
+      {
+        "name": "visible_device_count_matches_environment",
+        "status": "pass",
+        "detail": "CUDA_VISIBLE_DEVICES declares 1 device(s)"
+      },
+      {
+        "name": "command_reproducibility",
+        "status": "pass",
+        "detail": "re-materialization from the same spec yields identical argv"
+      }
+    ],
+    "passed": true,
+    "parsed_argument_count": 267,
+    "validates": [
+      "CLI argument parsing against the installed vLLM argparse parser",
+      "launch-spec JSON schema (required keys present, JSON round-trips)",
+      "environment variable map (non-empty, string-valued, no duplicate keys)",
+      "port is in valid numeric range and was free at spec-generation time",
+      "rank count equals world size and equals len(rank_placements)",
+      "visible device count matches the CUDA_VISIBLE_DEVICES environment value",
+      "command reproducibility (re-materializing from the same spec yields identical argv)"
+    ],
+    "does_not_validate": [
+      "real model weight loading",
+      "real KV-cache block allocation",
+      "real NCCL process-group formation",
+      "real request serving / token generation",
+      "actual multi-GPU memory pressure at runtime",
+      "whole-model TP numerical correctness"
+    ]
+  }
+}

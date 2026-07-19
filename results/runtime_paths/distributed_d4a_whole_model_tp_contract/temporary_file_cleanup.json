@@ -1,0 +1,6 @@
+{
+  "temporary_tensor_files_created": 0,
+  "mechanism": "all TP-simulated computation used in-memory numpy/torch tensors; no tensor was ever written to a temporary file on disk",
+  "temp_leak_candidates_found_in_result_dir": 0,
+  "verified_clean": true
+}

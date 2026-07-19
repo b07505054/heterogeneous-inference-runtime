@@ -1,0 +1,3320 @@
+{
+  "schema": "execution_plan",
+  "schema_version": "2.0.0",
+  "plan_id": "d4a-whole-model-tp-contract-plan",
+  "provenance": {
+    "compiler_tool": "d4a_whole_model_plan_builder (Python, generated additively; does not modify or re-invoke the C++ DistributedStrategyPlanningPass -- see known_limitations in the D4A report)",
+    "model_spec_ref": "nvidia-gtx1650-maxq-d2-distributed-opt-in_serving_plan",
+    "capability_bundle": {
+      "hardware_profile_ref": "nvidia-gtx1650-maxq-d4a-whole-model",
+      "backend_profile_refs": [],
+      "kernel_profile_refs": []
+    },
+    "truth_boundary": "d4a_whole_model_serialized_tp_contract_validation_not_measured_runtime"
+  },
+  "model_identity": {
+    "model_id": "qwen2.5-0.5b",
+    "model_family": "qwen2",
+    "hidden_size": 896,
+    "num_attention_heads": 14,
+    "num_kv_heads": 2,
+    "num_layers": 24,
+    "intermediate_size": 4864,
+    "vocab_size": 151936,
+    "tie_word_embeddings": true,
+    "truth_boundary": "declared_model_config_not_full_graph_import"
+  },
+  "global_decisions": {},
+  "function_plans": [],
+  "distributed": {
+    "strategy": "tensor_parallel",
+    "world_size": 2,
+    "tensor_parallel_size": 2,
+    "pipeline_parallel_size": 1,
+    "ranks": [
+      {
+        "rank_id": 0,
+        "logical_device": "simulated_cpu_process_0"
+      },
+      {
+        "rank_id": 1,
+        "logical_device": "simulated_cpu_process_1"
+      }
+    ],
+    "tensor_shards": [
+      {
+        "tensor_id": "qwen_prefill::llm.embed_tokens::model",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 75968
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.embed_tokens::model",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 75968,
+        "range_end": 151936
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_0",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_0",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_0",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_0",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_0",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_0",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_0",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_0",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_0",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_0",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_0",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_0",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_0",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_0",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_1",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_1",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_1",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_1",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_1",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_1",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_1",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_1",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_1",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_1",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_1",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_1",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_1",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_1",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_2",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_2",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_2",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_2",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_2",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_2",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_2",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_2",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_2",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_2",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_2",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_2",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_2",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_2",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_3",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_3",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_3",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_3",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_3",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_3",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_3",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_3",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_3",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_3",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_3",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_3",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_3",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_3",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_4",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_4",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_4",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_4",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_4",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_4",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_4",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_4",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_4",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_4",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_4",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_4",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_4",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_4",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_5",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_5",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_5",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_5",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_5",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_5",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_5",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_5",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_5",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_5",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_5",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_5",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_5",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_5",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_6",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_6",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_6",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_6",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_6",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_6",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_6",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_6",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_6",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_6",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_6",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_6",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_6",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_6",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_7",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_7",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_7",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_7",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_7",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_7",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_7",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_7",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_7",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_7",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_7",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_7",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_7",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_7",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_8",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_8",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_8",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_8",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_8",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_8",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_8",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_8",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_8",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_8",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_8",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_8",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_8",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_8",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_9",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_9",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_9",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_9",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_9",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_9",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_9",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_9",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_9",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_9",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_9",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_9",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_9",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_9",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_10",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_10",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_10",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_10",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_10",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_10",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_10",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_10",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_10",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_10",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_10",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_10",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_10",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_10",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_11",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_11",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_11",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_11",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_11",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_11",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_11",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_11",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_11",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_11",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_11",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_11",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_11",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_11",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_12",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_12",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_12",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_12",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_12",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_12",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_12",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_12",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_12",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_12",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_12",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_12",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_12",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_12",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_13",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_13",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_13",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_13",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_13",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_13",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_13",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_13",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_13",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_13",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_13",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_13",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_13",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_13",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_14",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_14",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_14",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_14",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_14",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_14",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_14",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_14",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_14",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_14",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_14",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_14",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_14",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_14",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_15",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_15",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_15",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_15",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_15",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_15",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_15",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_15",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_15",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_15",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_15",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_15",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_15",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_15",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_16",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_16",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_16",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_16",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_16",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_16",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_16",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_16",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_16",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_16",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_16",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_16",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_16",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_16",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_17",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_17",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_17",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_17",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_17",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_17",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_17",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_17",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_17",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_17",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_17",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_17",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_17",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_17",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_18",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_18",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_18",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_18",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_18",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_18",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_18",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_18",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_18",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_18",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_18",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_18",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_18",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_18",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_19",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_19",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_19",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_19",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_19",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_19",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_19",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_19",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_19",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_19",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_19",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_19",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_19",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_19",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_20",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_20",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_20",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_20",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_20",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_20",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_20",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_20",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_20",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_20",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_20",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_20",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_20",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_20",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_21",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_21",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_21",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_21",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_21",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_21",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_21",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_21",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_21",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_21",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_21",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_21",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_21",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_21",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_22",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_22",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_22",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_22",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_22",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_22",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_22",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_22",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_22",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_22",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_22",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_22",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_22",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_22",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_23",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.q_proj::layer_23",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_23",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.k_proj::layer_23",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_23",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 64
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.v_proj::layer_23",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 64,
+        "range_end": 128
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_23",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 448
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_23",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 448,
+        "range_end": 896
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_23",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.gate_proj::layer_23",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_23",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.up_proj::layer_23",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_23",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 2432
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_23",
+        "partition_axis": 1,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 2432,
+        "range_end": 4864
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.lm_head::model",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 0,
+        "range_start": 0,
+        "range_end": 75968
+      },
+      {
+        "tensor_id": "qwen_prefill::llm.lm_head::model",
+        "partition_axis": 0,
+        "partition_count": 2,
+        "shard_index": 1,
+        "range_start": 75968,
+        "range_end": 151936
+      }
+    ],
+    "collectives": [
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.embed_tokens_model",
+        "sequence_id": 0,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.embed_tokens::model",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_0",
+        "sequence_id": 1,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_0",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_0",
+        "sequence_id": 2,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_0",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_1",
+        "sequence_id": 3,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_1",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_1",
+        "sequence_id": 4,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_1",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_2",
+        "sequence_id": 5,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_2",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_2",
+        "sequence_id": 6,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_2",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_3",
+        "sequence_id": 7,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_3",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_3",
+        "sequence_id": 8,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_3",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_4",
+        "sequence_id": 9,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_4",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_4",
+        "sequence_id": 10,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_4",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_5",
+        "sequence_id": 11,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_5",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_5",
+        "sequence_id": 12,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_5",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_6",
+        "sequence_id": 13,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_6",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_6",
+        "sequence_id": 14,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_6",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_7",
+        "sequence_id": 15,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_7",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_7",
+        "sequence_id": 16,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_7",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_8",
+        "sequence_id": 17,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_8",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_8",
+        "sequence_id": 18,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_8",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_9",
+        "sequence_id": 19,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_9",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_9",
+        "sequence_id": 20,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_9",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_10",
+        "sequence_id": 21,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_10",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_10",
+        "sequence_id": 22,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_10",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_11",
+        "sequence_id": 23,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_11",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_11",
+        "sequence_id": 24,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_11",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_12",
+        "sequence_id": 25,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_12",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_12",
+        "sequence_id": 26,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_12",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_13",
+        "sequence_id": 27,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_13",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_13",
+        "sequence_id": 28,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_13",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_14",
+        "sequence_id": 29,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_14",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_14",
+        "sequence_id": 30,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_14",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_15",
+        "sequence_id": 31,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_15",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_15",
+        "sequence_id": 32,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_15",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_16",
+        "sequence_id": 33,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_16",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_16",
+        "sequence_id": 34,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_16",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_17",
+        "sequence_id": 35,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_17",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_17",
+        "sequence_id": 36,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_17",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_18",
+        "sequence_id": 37,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_18",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_18",
+        "sequence_id": 38,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_18",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_19",
+        "sequence_id": 39,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_19",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_19",
+        "sequence_id": 40,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_19",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_20",
+        "sequence_id": 41,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_20",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_20",
+        "sequence_id": 42,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_20",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_21",
+        "sequence_id": 43,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_21",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_21",
+        "sequence_id": 44,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_21",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_22",
+        "sequence_id": 45,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_22",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_22",
+        "sequence_id": 46,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_22",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.o_proj_layer_23",
+        "sequence_id": 47,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.o_proj::layer_23",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_reduce_qwen_prefill_llm.down_proj_layer_23",
+        "sequence_id": 48,
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.down_proj::layer_23",
+        "reduction": "sum"
+      },
+      {
+        "collective_id": "all_gather_qwen_prefill_llm.lm_head_model",
+        "sequence_id": 49,
+        "kind": "all_gather",
+        "participants": [
+          0,
+          1
+        ],
+        "tensor_id": "qwen_prefill::llm.lm_head::model",
+        "reduction": "concat"
+      }
+    ],
+    "truth_boundary": "d1_simulated_localhost_multiprocess_ipc_not_real_gpu_not_nccl_not_measured_gpu_performance"
+  }
+}

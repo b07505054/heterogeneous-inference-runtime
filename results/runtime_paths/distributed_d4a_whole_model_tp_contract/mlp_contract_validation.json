@@ -1,0 +1,197 @@
+{
+  "validations": [
+    {
+      "layer": 0,
+      "max_abs_error": 1.430511474609375e-06,
+      "allclose": true,
+      "rank_traces": [
+        {
+          "rank_id": 0,
+          "gate_local_shape": [
+            5,
+            2432
+          ],
+          "up_local_shape": [
+            5,
+            2432
+          ],
+          "intermediate_local_shape": [
+            5,
+            2432
+          ],
+          "down_partial_shape": [
+            5,
+            896
+          ],
+          "gate_shard_range": [
+            0,
+            2432
+          ],
+          "up_shard_range": [
+            0,
+            2432
+          ],
+          "shard_ownership_matches": true
+        },
+        {
+          "rank_id": 1,
+          "gate_local_shape": [
+            5,
+            2432
+          ],
+          "up_local_shape": [
+            5,
+            2432
+          ],
+          "intermediate_local_shape": [
+            5,
+            2432
+          ],
+          "down_partial_shape": [
+            5,
+            896
+          ],
+          "gate_shard_range": [
+            2432,
+            4864
+          ],
+          "up_shard_range": [
+            2432,
+            4864
+          ],
+          "shard_ownership_matches": true
+        }
+      ],
+      "shard_ownership_matches": true
+    },
+    {
+      "layer": 12,
+      "max_abs_error": 9.5367431640625e-07,
+      "allclose": true,
+      "rank_traces": [
+        {
+          "rank_id": 0,
+          "gate_local_shape": [
+            5,
+            2432
+          ],
+          "up_local_shape": [
+            5,
+            2432
+          ],
+          "intermediate_local_shape": [
+            5,
+            2432
+          ],
+          "down_partial_shape": [
+            5,
+            896
+          ],
+          "gate_shard_range": [
+            0,
+            2432
+          ],
+          "up_shard_range": [
+            0,
+            2432
+          ],
+          "shard_ownership_matches": true
+        },
+        {
+          "rank_id": 1,
+          "gate_local_shape": [
+            5,
+            2432
+          ],
+          "up_local_shape": [
+            5,
+            2432
+          ],
+          "intermediate_local_shape": [
+            5,
+            2432
+          ],
+          "down_partial_shape": [
+            5,
+            896
+          ],
+          "gate_shard_range": [
+            2432,
+            4864
+          ],
+          "up_shard_range": [
+            2432,
+            4864
+          ],
+          "shard_ownership_matches": true
+        }
+      ],
+      "shard_ownership_matches": true
+    },
+    {
+      "layer": 23,
+      "max_abs_error": 1.9073486328125e-05,
+      "allclose": true,
+      "rank_traces": [
+        {
+          "rank_id": 0,
+          "gate_local_shape": [
+            5,
+            2432
+          ],
+          "up_local_shape": [
+            5,
+            2432
+          ],
+          "intermediate_local_shape": [
+            5,
+            2432
+          ],
+          "down_partial_shape": [
+            5,
+            896
+          ],
+          "gate_shard_range": [
+            0,
+            2432
+          ],
+          "up_shard_range": [
+            0,
+            2432
+          ],
+          "shard_ownership_matches": true
+        },
+        {
+          "rank_id": 1,
+          "gate_local_shape": [
+            5,
+            2432
+          ],
+          "up_local_shape": [
+            5,
+            2432
+          ],
+          "intermediate_local_shape": [
+            5,
+            2432
+          ],
+          "down_partial_shape": [
+            5,
+            896
+          ],
+          "gate_shard_range": [
+            2432,
+            4864
+          ],
+          "up_shard_range": [
+            2432,
+            4864
+          ],
+          "shard_ownership_matches": true
+        }
+      ],
+      "shard_ownership_matches": true
+    }
+  ],
+  "all_within_tolerance": true
+}

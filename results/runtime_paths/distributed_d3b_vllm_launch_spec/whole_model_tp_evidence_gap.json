@@ -1,0 +1,8 @@
+{
+  "whole_model_tp_evidence_status": "not_established_operator_level_only",
+  "established_by_d2_d3a": "Operator-level TP correctness for exactly one real o_proj operator (qwen_prefill::llm.o_proj::layer_0) on layer 0 only, via serialized rank-local computation and D1 collective reconstruction, verified against a live captured activation with max_abs_error ~= 1.79e-7 (serialized) / 3.42e-7 (multiprocess IPC).",
+  "not_established": "Whole-model vLLM tensor-parallel execution correctness across all 24 layers, all operator types (attention QKV/O projections, MLP gate/up/down, embeddings, lm_head), vLLM's own internal TP sharding/all-reduce implementation, and real multi-GPU execution. D3B's --tensor-parallel-size 2 launch spec targets vLLM's whole-model TP path, which has not been exercised or validated by D2/D3A.",
+  "d3b_mode": "planning_only",
+  "materializer_never_asserts_whole_model_legality": true,
+  "enforcement": "distributed_preflight.PreflightInputs.whole_model_tp_evidence_established is hardcoded False by the materializer for every plan; no code path sets it True."
+}

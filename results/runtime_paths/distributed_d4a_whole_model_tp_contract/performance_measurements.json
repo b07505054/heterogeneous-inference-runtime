@@ -1,0 +1,29 @@
+{
+  "model_load_latency_s": 2.0515175259206444,
+  "reference_forward_latency_s": {
+    "median_s": 0.24457173119299114,
+    "p95_s": 0.4500534988474101,
+    "min_s": 0.22089412389323115,
+    "max_s": 0.4500534988474101,
+    "n": 5
+  },
+  "serialized_tp_forward_latency_s": {
+    "median_s": 0.26154416194185615,
+    "p95_s": 0.26574049796909094,
+    "min_s": 0.2559329529758543,
+    "max_s": 0.26574049796909094,
+    "n": 5
+  },
+  "whole_model_plan_build_latency_s": 0.0023659439757466316,
+  "activation_capture_overhead_s": {
+    "median_s": 0.13044774485751987,
+    "p95_s": 0.17848083307035267,
+    "min_s": 0.12757303495891392,
+    "max_s": 0.17848083307035267,
+    "n": 3
+  },
+  "peak_cpu_memory_mb": 3570.69921875,
+  "peak_cuda_memory": "not_applicable_cpu_only_replay",
+  "repetitions": 5,
+  "truth_boundary": "structural/correctness measurements only; serialized TP forward latency is NOT representative of real concurrent TP performance and no speedup is claimed or implied by the ratio of these two numbers"
+}

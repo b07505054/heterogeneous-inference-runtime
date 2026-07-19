@@ -1,0 +1,27 @@
+{
+  "command": "pytest -v tests/test_distributed_d3b_vllm_launch_spec.py -k negative",
+  "all_passed": true,
+  "cases_covered": [
+    "tp2_with_one_visible_gpu",
+    "world_size_mismatch",
+    "tp_pp_mismatch_malformed_plan_rejected_by_loader",
+    "missing_rank_placement",
+    "duplicate_rank_placement",
+    "unsupported_cli_flag_is_never_silently_emitted",
+    "unsupported_dtype",
+    "invalid_model_identifier",
+    "invalid_port",
+    "port_already_occupied",
+    "missing_vllm_installation",
+    "malformed_distributed_plan_gap_in_shards",
+    "unknown_distributed_strategy",
+    "operator_level_evidence_never_marked_whole_model_ready",
+    "tp2_never_silently_downgraded_to_tp1",
+    "two_tp_ranks_never_mapped_to_one_gpu",
+    "unsupported_executor_backend",
+    "incompatible_installed_vllm_version_via_mock_registry",
+    "attempted_launch_while_preflight_rejected_raises_provenance_bypass"
+  ],
+  "case_count": 19,
+  "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0 -- /home/allen/Desktop/Project/heterogeneous-inference-runtime/.venv/bin/python3\ncachedir: .pytest_cache\nrootdir: /home/allen/Desktop/Project/heterogeneous-inference-runtime\nplugins: anyio-4.14.1\ncollecting ... collected 26 items / 7 deselected / 19 selected\n\ntests/test_distributed_d3b_vllm_launch_spec.py::test_negative_tp2_with_one_visible_gpu PASSED [  5%]\ntests/test_distributed_d3b_vllm_launch_spec.py::test_negative_world_size_mismatch PASSED [ 10%]\ntests/test_distributed_d3b_vllm_launch_spec.py::test_negative_tp_pp_mismatch_malformed_plan_rejected_by_loader PASSED [ 15%]\ntests/test_distributed_d3b_vllm_launch_spec.py::test_negative_missing_rank_placement PASSED [ 21%]\ntests/test_distributed_d3b_vllm_launch_spec.py::test_negative_duplicate_rank_placement PASSED [ 26%]\ntests/test_distributed_d3b_vllm_launch_spec.py::test_negative_two_tp_ranks_never_mapped_to_one_gpu PASSED [ 31%]\ntests/test_distributed_d3b_vllm_launch_spec.py::test_negative_unsupported_cli_flag_is_never_silently_emitted PASSED [ 36%]\ntests/test_distributed_d3b_vllm_launch_spec.py::test_negative_unsupported_dtype PASSED [ 42%]\ntests/test_distributed_d3b_vllm_launch_spec.py::test_negative_invalid_model_identifier PASSED [ 47%]\ntests/test_distributed_d3b_vllm_launch_spec.py::test_negative_invalid_port PASSED [ 52%]\ntests/test_distributed_d3b_vllm_launch_spec.py::test_negative_port_already_occupied PASSED [ 57%]\ntests/test_distributed_d3b_vllm_launch_spec.py::test_negative_missing_vllm_installation PASSED [ 63%]\ntests/test_distributed_d3b_vllm_launch_spec.py::test_negative_malformed_distributed_plan_gap_in_shards PASSED [ 68%]\ntests/test_distributed_d3b_vllm_launch_spec.py::test_negative_unknown_distributed_strategy PASSED [ 73%]\ntests/test_distributed_d3b_vllm_launch_spec.py::test_negative_operator_level_evidence_never_marked_whole_model_ready PASSED [ 78%]\ntests/test_distributed_d3b_vllm_launch_spec.py::test_negative_tp2_never_silently_downgraded_to_tp1 PASSED [ 84%]\ntests/test_distributed_d3b_vllm_launch_spec.py::test_negative_unsupported_executor_backend PASSED [ 89%]\ntests/test_distributed_d3b_vllm_launch_spec.py::test_negative_incompatible_installed_vllm_version_via_mock_registry PASSED [ 94%]\ntests/test_distributed_d3b_vllm_launch_spec.py::test_negative_attempted_launch_while_preflight_rejected_raises_provenance_bypass PASSED [100%]\n\n=============================== warnings summary ===============================\ntests/test_distributed_d3b_vllm_launch_spec.py::test_negative_unsupported_cli_flag_is_never_silently_emitted\n  <frozen importlib._bootstrap>:488: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute\n\ntests/test_distributed_d3b_vllm_launch_spec.py::test_negative_unsupported_cli_flag_is_never_silently_emitted\n  <frozen importlib._bootstrap>:488: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n================= 19 passed, 7 deselected, 2 warnings in 7.27s =================\n"
+}

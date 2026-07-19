@@ -1,0 +1,25 @@
+{
+  "d4a_test_file": {
+    "command": "pytest -q tests/test_distributed_d4a_whole_model_tp_contract.py",
+    "passed": true,
+    "tail": "...........................                                              [100%]\n=============================== warnings summary ===============================\ntests/test_distributed_d4a_whole_model_tp_contract.py::test_whole_model_plan_builds_and_validates\n  <frozen importlib._bootstrap>:488: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute\n\ntests/test_distributed_d4a_whole_model_tp_contract.py::test_whole_model_plan_builds_and_validates\n  <frozen importlib._bootstrap>:488: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n27 passed, 2 warnings in 11.02s\n"
+  },
+  "negative_tests_all_passed": true,
+  "regressions_all_green": true,
+  "cross_layer_provenance_all_zero": true,
+  "whole_model_classification": "WHOLE_MODEL_TP_VALIDATED",
+  "full_repo_suite_baseline": {
+    "command": "pytest -q --deselect tests/test_distributed_d4a_whole_model_tp_contract.py agentic_eval/tests tests",
+    "returncode": 1,
+    "tail": "unks]\nFAILED tests/test_p1d_thread_schedule_contract.py::test_11_all_candidate_schedules_produce_correct_results[4-n-contiguous_chunks]\nERROR tests/test_rmsnorm_cuda_correctness.py::test_fused_rmsnorm_cuda_matches_torch_fp32[768-1]\nERROR tests/test_rmsnorm_cuda_correctness.py::test_fused_rmsnorm_cuda_matches_torch_fp32[768-16]\nERROR tests/test_rmsnorm_cuda_correctness.py::test_fused_rmsnorm_cuda_matches_torch_fp32[768-128]\nERROR tests/test_rmsnorm_cuda_correctness.py::test_fused_rmsnorm_cuda_matches_torch_fp32[1024-1]\nERROR tests/test_rmsnorm_cuda_correctness.py::test_fused_rmsnorm_cuda_matches_torch_fp32[1024-16]\nERROR tests/test_rmsnorm_cuda_correctness.py::test_fused_rmsnorm_cuda_matches_torch_fp32[1024-128]\nERROR tests/test_rmsnorm_cuda_correctness.py::test_fused_rmsnorm_cuda_matches_torch_fp32[4096-1]\nERROR tests/test_rmsnorm_cuda_correctness.py::test_fused_rmsnorm_cuda_matches_torch_fp32[4096-16]\nERROR tests/test_rmsnorm_cuda_correctness.py::test_fused_rmsnorm_cuda_matches_torch_fp32[4096-128]\nERROR tests/test_rmsnorm_cuda_correctness.py::test_fused_rmsnorm_cuda_matches_torch_fp32[8192-1]\nERROR tests/test_rmsnorm_cuda_correctness.py::test_fused_rmsnorm_cuda_matches_torch_fp32[8192-16]\nERROR tests/test_rmsnorm_cuda_correctness.py::test_fused_rmsnorm_cuda_matches_torch_fp32[8192-128]\nERROR tests/test_rmsnorm_cuda_correctness.py::test_fused_rmsnorm_cuda_rejects_non_contiguous_input\n19 failed, 1070 passed, 3 skipped, 27 deselected, 2 warnings, 13 errors in 83.41s (0:01:23)\n",
+    "pre_existing_unrelated_failures": [
+      "test_deployment_planner.py",
+      "test_model_adapter_registry.py",
+      "test_p1b_cross_repo_contract.py",
+      "test_p1c_multi_candidate_contract.py",
+      "test_p1d_thread_schedule_contract.py",
+      "test_rmsnorm_cuda_correctness.py",
+      "(identical failure/error set confirmed present without the D4A test file, matching the D3B baseline)"
+    ]
+  }
+}

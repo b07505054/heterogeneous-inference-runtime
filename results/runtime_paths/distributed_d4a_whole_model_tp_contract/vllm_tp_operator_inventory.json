@@ -1,0 +1,103 @@
+{
+  "installed_vllm_version": "0.24.0",
+  "qwen2_model_source_file": "/home/allen/Desktop/Project/heterogeneous-inference-runtime/.venv/lib/python3.12/site-packages/vllm/model_executor/models/qwen2.py",
+  "qwen2_model_source_sha256": "040462bfb0fe47cd1bc85fe2fb48d3e567269d0dfbe7a96d52331bc9d5f460dc",
+  "qwen2_uses_qkv_fusion": true,
+  "qwen2_uses_merged_gate_up": true,
+  "qwen2_o_proj_is_row_parallel": true,
+  "qwen2_down_proj_is_row_parallel": true,
+  "facts": {
+    "QKVParallelLinear": {
+      "class_or_function": "vllm.model_executor.layers.linear.QKVParallelLinear",
+      "source_file": "/home/allen/Desktop/Project/heterogeneous-inference-runtime/.venv/lib/python3.12/site-packages/vllm/model_executor/layers/linear.py",
+      "source_sha256": "0bd60103d85d7183791077c46e0770d0a2adc8e8811b162b9084c3cbe92ba662",
+      "partition_dimension": "output dim (0): heads and kv-heads partitioned/replicated across tp ranks",
+      "weight_loader_behavior": "loads separate q/k/v checkpoint tensors into offset slices of one fused [q_size+kv_size+kv_size, hidden] parameter, per-rank via narrow(output_dim, tp_rank*shard_size, shard_size)",
+      "rank_local_weight_shape_rule": "num_heads=divide(total_num_heads,tp_size); if tp_size>=total_num_kv_heads: num_kv_heads=1, num_kv_head_replicas=divide(tp_size,total_num_kv_heads); else num_kv_heads=divide(total_num_kv_heads,tp_size), num_kv_head_replicas=1",
+      "output_contract": "rank-local qkv output width = (num_heads+2*num_kv_heads)*head_size, kept sharded (gather_output=False)",
+      "collective_behavior": "none at the qkv_proj boundary itself (kept sharded for the attention op); the row-parallel o_proj after attention performs the all_reduce",
+      "bias_handling": "Qwen2Attention hardcodes bias=True for qkv_proj regardless of config.attention_bias; bias is sharded per-rank identically to the weight (output_dim=0)",
+      "kv_head_special_handling": "see rank_local_weight_shape_rule; for Qwen2.5-0.5B-Instruct (total_num_kv_heads=2) at tp_size=2, tp_size==total_num_kv_heads so num_kv_head_replicas=divide(2,2)=1 -- structurally the 'replicate' branch executes but degenerates to a clean 1:1 partition (rank0 owns kv head 0, rank1 owns kv head 1, zero actual duplication)",
+      "verification_excerpt": "            self.num_kv_head_replicas = divide(tp_size, self.total_num_kv_heads)"
+    },
+    "RowParallelLinear": {
+      "class_or_function": "vllm.model_executor.layers.linear.RowParallelLinear",
+      "source_file": "/home/allen/Desktop/Project/heterogeneous-inference-runtime/.venv/lib/python3.12/site-packages/vllm/model_executor/layers/linear.py",
+      "source_sha256": "0bd60103d85d7183791077c46e0770d0a2adc8e8811b162b9084c3cbe92ba662",
+      "partition_dimension": "input dim (1)",
+      "weight_loader_behavior": "narrow(input_dim, tp_rank*shard_size, shard_size) per rank",
+      "rank_local_weight_shape_rule": "input_size_per_partition = divide(input_size, tp_size); weight shape [output_size, input_size_per_partition]",
+      "output_contract": "Y = tensor_model_parallel_all_reduce(X_rank @ W_rank^T [+ bias on rank 0 only])",
+      "collective_behavior": "all_reduce(sum) when reduce_results=True and tp_size>1",
+      "bias_handling": "bias is fused into rank 0's local GEMM ONLY (bias_ = None if tp_rank>0), so after all_reduce the bias has been added exactly once",
+      "kv_head_special_handling": "not applicable",
+      "verification_excerpt": "        bias_ = None if (self.tp_rank > 0 or self.skip_bias_add) else self.bias"
+    },
+    "MergedColumnParallelLinear": {
+      "class_or_function": "vllm.model_executor.layers.linear.MergedColumnParallelLinear",
+      "source_file": "/home/allen/Desktop/Project/heterogeneous-inference-runtime/.venv/lib/python3.12/site-packages/vllm/model_executor/layers/linear.py",
+      "source_sha256": "0bd60103d85d7183791077c46e0770d0a2adc8e8811b162b9084c3cbe92ba662",
+      "partition_dimension": "output dim (0), independently per merged sub-weight (gate, up)",
+      "weight_loader_behavior": "each of gate_proj/up_proj is loaded into its own contiguous output-dim slice of the fused gate_up_proj parameter, at the SAME per-rank shard index for both -- so a given rank's gate shard and up shard cover the identical intermediate-dimension indices",
+      "rank_local_weight_shape_rule": "each output_size in output_sizes must be tp-divisible; per-rank shard width = output_size // tp_size for each of gate/up independently",
+      "output_contract": "rank-local [gate_rank | up_rank] concatenated on output dim, kept sharded",
+      "collective_behavior": "none at this boundary (kept sharded); matching shard ownership makes the elementwise SiLU(gate_rank)*up_rank rank-local-valid",
+      "bias_handling": "Qwen2MLP.gate_up_proj uses bias=False",
+      "kv_head_special_handling": "not applicable",
+      "verification_excerpt": "class MergedColumnParallelLinear(ColumnParallelLinear):"
+    },
+    "VocabParallelEmbedding": {
+      "class_or_function": "vllm.model_executor.layers.vocab_parallel_embedding.VocabParallelEmbedding",
+      "source_file": "/home/allen/Desktop/Project/heterogeneous-inference-runtime/.venv/lib/python3.12/site-packages/vllm/model_executor/layers/vocab_parallel_embedding.py",
+      "source_sha256": "90bc72a4758c44fd631dda30a5e8695369bf6e3fe5e1d9b7edc80356abfcd110",
+      "partition_dimension": "vocab dim (0) of the embedding table",
+      "weight_loader_behavior": "narrow(output_dim, start_idx, shard_size) per rank vocab range",
+      "rank_local_weight_shape_rule": "per_partition_vocab_size = divide(padded_vocab_size, tp_size)",
+      "output_contract": "masked local lookup (out-of-range token ids masked to 0) then tensor_model_parallel_all_reduce to reconstruct the correct row for every token regardless of which rank owns it",
+      "collective_behavior": "all_reduce(sum) unconditionally when tp_size>1",
+      "bias_handling": "not applicable (embedding has no bias)",
+      "kv_head_special_handling": "not applicable",
+      "verification_excerpt": "        output = tensor_model_parallel_all_reduce(output_parallel)"
+    },
+    "ParallelLMHead_and_LogitsProcessor": {
+      "class_or_function": "vllm.model_executor.layers.vocab_parallel_embedding.ParallelLMHead + vllm.model_executor.layers.logits_processor.LogitsProcessor",
+      "source_file": "/home/allen/Desktop/Project/heterogeneous-inference-runtime/.venv/lib/python3.12/site-packages/vllm/model_executor/layers/vocab_parallel_embedding.py;/home/allen/Desktop/Project/heterogeneous-inference-runtime/.venv/lib/python3.12/site-packages/vllm/model_executor/layers/logits_processor.py",
+      "source_sha256": "90bc72a4758c44fd631dda30a5e8695369bf6e3fe5e1d9b7edc80356abfcd110;d6dfec7287020d587f4a4d475ce113c383b2eb55afe5ae9b0e037df2e2d13310",
+      "partition_dimension": "vocab dim (0) of the (possibly tied) lm_head weight",
+      "weight_loader_behavior": "same vocab-shard loading as VocabParallelEmbedding; for this model tie_word_embeddings=True so lm_head literally IS embed_tokens (Qwen2ForCausalLM sets self.lm_head = self.model.embed_tokens)",
+      "rank_local_weight_shape_rule": "identical vocab shard boundaries as embed_tokens (tied weight)",
+      "output_contract": "local_logits = hidden_states @ W_vocab_shard^T; full logits = concat_over_ranks(local_logits) via all-gather, then trimmed to org_vocab_size to drop any padding",
+      "collective_behavior": "tensor_model_parallel_all_gather (or tensor_model_parallel_gather) along the last (vocab) dimension -- NOT all_reduce; this is the one family that needs concatenation-style reconstruction",
+      "bias_handling": "ParallelLMHead bias defaults to False and Qwen2ForCausalLM does not enable it",
+      "kv_head_special_handling": "not applicable",
+      "verification_excerpt": "            logits = tensor_model_parallel_all_gather(logits)"
+    },
+    "tensor_model_parallel_all_reduce": {
+      "class_or_function": "vllm.distributed.communication_op.tensor_model_parallel_all_reduce",
+      "source_file": "/home/allen/Desktop/Project/heterogeneous-inference-runtime/.venv/lib/python3.12/site-packages/vllm/distributed/communication_op.py",
+      "source_sha256": "3c3f8ac60db38ece891d39dc1e2f6f1947ad438685893d2e5777d072320bd1b8",
+      "partition_dimension": "n/a (collective op)",
+      "weight_loader_behavior": "n/a",
+      "rank_local_weight_shape_rule": "n/a",
+      "output_contract": "elementwise sum across all tp ranks' local tensors, result replicated to all ranks",
+      "collective_behavior": "all_reduce(sum) over the tp process group",
+      "bias_handling": "n/a",
+      "kv_head_special_handling": "n/a",
+      "verification_excerpt": "    return get_tp_group().all_reduce(input_)"
+    },
+    "tensor_model_parallel_all_gather": {
+      "class_or_function": "vllm.distributed.communication_op.tensor_model_parallel_all_gather",
+      "source_file": "/home/allen/Desktop/Project/heterogeneous-inference-runtime/.venv/lib/python3.12/site-packages/vllm/distributed/communication_op.py",
+      "source_sha256": "3c3f8ac60db38ece891d39dc1e2f6f1947ad438685893d2e5777d072320bd1b8",
+      "partition_dimension": "n/a (collective op)",
+      "weight_loader_behavior": "n/a",
+      "rank_local_weight_shape_rule": "n/a",
+      "output_contract": "concatenation of every rank's local tensor along dim=-1, in rank order",
+      "collective_behavior": "all_gather along the last dimension over the tp process group",
+      "bias_handling": "n/a",
+      "kv_head_special_handling": "n/a",
+      "verification_excerpt": "    return get_tp_group().all_gather(input_, dim)"
+    }
+  },
+  "discovery_method": "direct introspection of the installed vLLM package's own source files (inspect.getsourcefile + literal excerpt extraction), not documentation or memory"
+}

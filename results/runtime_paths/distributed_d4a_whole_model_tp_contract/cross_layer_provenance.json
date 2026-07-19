@@ -1,0 +1,23 @@
+{
+  "chain": "model_config -> installed_vllm_qwen_implementation -> compiler_operator_inventory -> distributed_work_items -> live_module_mapping -> weight_shards -> activation_shards -> rank_local_operations -> collectives -> block_outputs -> whole_model_logits -> d3b_evidence_status",
+  "counters": {
+    "operator_inventory_mismatch_count": 0,
+    "vllm_contract_mismatch_count": 0,
+    "compiler_mapping_mismatch_count": 0,
+    "weight_shard_mismatch_count": 0,
+    "activation_shard_mismatch_count": 0,
+    "head_partition_mismatch_count": 0,
+    "kv_partition_mismatch_count": 0,
+    "collective_mismatch_count": 0,
+    "bias_mismatch_count": 0,
+    "vocab_partition_mismatch_count": 0,
+    "replicated_boundary_mismatch_count": 0,
+    "block_output_mismatch_count": 0,
+    "whole_model_output_mismatch_count": 0,
+    "synthetic_fallback_count": 0,
+    "full_operator_bypass_count": 0,
+    "temporary_tensor_leak_count": 0,
+    "orphan_process_count": 0,
+    "all_zero": true
+  }
+}

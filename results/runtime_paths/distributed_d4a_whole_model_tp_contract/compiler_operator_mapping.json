@@ -1,0 +1,388 @@
+{
+  "mappings": [
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_0",
+      "mapped_ok": true,
+      "module_path": "model.layers.0.self_attn.q_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "weight_shape": [
+        896,
+        896
+      ],
+      "bias_present": true,
+      "checks": {
+        "layer_number_matches": true,
+        "operator_kind_matches": true,
+        "weight_shape_matches_plan": true,
+        "module_appears_exactly_once": true,
+        "structural_match_count_all_layers": 24
+      }
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_0",
+      "mapped_ok": true,
+      "module_path": "model.layers.0.self_attn.k_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "weight_shape": [
+        128,
+        896
+      ],
+      "bias_present": true,
+      "checks": {
+        "layer_number_matches": true,
+        "operator_kind_matches": true,
+        "weight_shape_matches_plan": true,
+        "module_appears_exactly_once": true,
+        "structural_match_count_all_layers": 24
+      }
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_0",
+      "mapped_ok": true,
+      "module_path": "model.layers.0.self_attn.v_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "weight_shape": [
+        128,
+        896
+      ],
+      "bias_present": true,
+      "checks": {
+        "layer_number_matches": true,
+        "operator_kind_matches": true,
+        "weight_shape_matches_plan": true,
+        "module_appears_exactly_once": true,
+        "structural_match_count_all_layers": 24
+      }
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_0",
+      "mapped_ok": true,
+      "module_path": "model.layers.0.self_attn.o_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "weight_shape": [
+        896,
+        896
+      ],
+      "bias_present": false,
+      "checks": {
+        "layer_number_matches": true,
+        "operator_kind_matches": true,
+        "weight_shape_matches_plan": true,
+        "module_appears_exactly_once": true,
+        "structural_match_count_all_layers": 24
+      }
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_0",
+      "mapped_ok": true,
+      "module_path": "model.layers.0.mlp.gate_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "weight_shape": [
+        4864,
+        896
+      ],
+      "bias_present": false,
+      "checks": {
+        "layer_number_matches": true,
+        "operator_kind_matches": true,
+        "weight_shape_matches_plan": true,
+        "module_appears_exactly_once": true,
+        "structural_match_count_all_layers": 24
+      }
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_0",
+      "mapped_ok": true,
+      "module_path": "model.layers.0.mlp.up_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "weight_shape": [
+        4864,
+        896
+      ],
+      "bias_present": false,
+      "checks": {
+        "layer_number_matches": true,
+        "operator_kind_matches": true,
+        "weight_shape_matches_plan": true,
+        "module_appears_exactly_once": true,
+        "structural_match_count_all_layers": 24
+      }
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_0",
+      "mapped_ok": true,
+      "module_path": "model.layers.0.mlp.down_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "weight_shape": [
+        896,
+        4864
+      ],
+      "bias_present": false,
+      "checks": {
+        "layer_number_matches": true,
+        "operator_kind_matches": true,
+        "weight_shape_matches_plan": true,
+        "module_appears_exactly_once": true,
+        "structural_match_count_all_layers": 24
+      }
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_12",
+      "mapped_ok": true,
+      "module_path": "model.layers.12.self_attn.q_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "weight_shape": [
+        896,
+        896
+      ],
+      "bias_present": true,
+      "checks": {
+        "layer_number_matches": true,
+        "operator_kind_matches": true,
+        "weight_shape_matches_plan": true,
+        "module_appears_exactly_once": true,
+        "structural_match_count_all_layers": 24
+      }
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_12",
+      "mapped_ok": true,
+      "module_path": "model.layers.12.self_attn.k_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "weight_shape": [
+        128,
+        896
+      ],
+      "bias_present": true,
+      "checks": {
+        "layer_number_matches": true,
+        "operator_kind_matches": true,
+        "weight_shape_matches_plan": true,
+        "module_appears_exactly_once": true,
+        "structural_match_count_all_layers": 24
+      }
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_12",
+      "mapped_ok": true,
+      "module_path": "model.layers.12.self_attn.v_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "weight_shape": [
+        128,
+        896
+      ],
+      "bias_present": true,
+      "checks": {
+        "layer_number_matches": true,
+        "operator_kind_matches": true,
+        "weight_shape_matches_plan": true,
+        "module_appears_exactly_once": true,
+        "structural_match_count_all_layers": 24
+      }
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_12",
+      "mapped_ok": true,
+      "module_path": "model.layers.12.self_attn.o_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "weight_shape": [
+        896,
+        896
+      ],
+      "bias_present": false,
+      "checks": {
+        "layer_number_matches": true,
+        "operator_kind_matches": true,
+        "weight_shape_matches_plan": true,
+        "module_appears_exactly_once": true,
+        "structural_match_count_all_layers": 24
+      }
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_12",
+      "mapped_ok": true,
+      "module_path": "model.layers.12.mlp.gate_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "weight_shape": [
+        4864,
+        896
+      ],
+      "bias_present": false,
+      "checks": {
+        "layer_number_matches": true,
+        "operator_kind_matches": true,
+        "weight_shape_matches_plan": true,
+        "module_appears_exactly_once": true,
+        "structural_match_count_all_layers": 24
+      }
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_12",
+      "mapped_ok": true,
+      "module_path": "model.layers.12.mlp.up_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "weight_shape": [
+        4864,
+        896
+      ],
+      "bias_present": false,
+      "checks": {
+        "layer_number_matches": true,
+        "operator_kind_matches": true,
+        "weight_shape_matches_plan": true,
+        "module_appears_exactly_once": true,
+        "structural_match_count_all_layers": 24
+      }
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_12",
+      "mapped_ok": true,
+      "module_path": "model.layers.12.mlp.down_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "weight_shape": [
+        896,
+        4864
+      ],
+      "bias_present": false,
+      "checks": {
+        "layer_number_matches": true,
+        "operator_kind_matches": true,
+        "weight_shape_matches_plan": true,
+        "module_appears_exactly_once": true,
+        "structural_match_count_all_layers": 24
+      }
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_23",
+      "mapped_ok": true,
+      "module_path": "model.layers.23.self_attn.q_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "weight_shape": [
+        896,
+        896
+      ],
+      "bias_present": true,
+      "checks": {
+        "layer_number_matches": true,
+        "operator_kind_matches": true,
+        "weight_shape_matches_plan": true,
+        "module_appears_exactly_once": true,
+        "structural_match_count_all_layers": 24
+      }
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_23",
+      "mapped_ok": true,
+      "module_path": "model.layers.23.self_attn.k_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "weight_shape": [
+        128,
+        896
+      ],
+      "bias_present": true,
+      "checks": {
+        "layer_number_matches": true,
+        "operator_kind_matches": true,
+        "weight_shape_matches_plan": true,
+        "module_appears_exactly_once": true,
+        "structural_match_count_all_layers": 24
+      }
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_23",
+      "mapped_ok": true,
+      "module_path": "model.layers.23.self_attn.v_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "weight_shape": [
+        128,
+        896
+      ],
+      "bias_present": true,
+      "checks": {
+        "layer_number_matches": true,
+        "operator_kind_matches": true,
+        "weight_shape_matches_plan": true,
+        "module_appears_exactly_once": true,
+        "structural_match_count_all_layers": 24
+      }
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_23",
+      "mapped_ok": true,
+      "module_path": "model.layers.23.self_attn.o_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "weight_shape": [
+        896,
+        896
+      ],
+      "bias_present": false,
+      "checks": {
+        "layer_number_matches": true,
+        "operator_kind_matches": true,
+        "weight_shape_matches_plan": true,
+        "module_appears_exactly_once": true,
+        "structural_match_count_all_layers": 24
+      }
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_23",
+      "mapped_ok": true,
+      "module_path": "model.layers.23.mlp.gate_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "weight_shape": [
+        4864,
+        896
+      ],
+      "bias_present": false,
+      "checks": {
+        "layer_number_matches": true,
+        "operator_kind_matches": true,
+        "weight_shape_matches_plan": true,
+        "module_appears_exactly_once": true,
+        "structural_match_count_all_layers": 24
+      }
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_23",
+      "mapped_ok": true,
+      "module_path": "model.layers.23.mlp.up_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "weight_shape": [
+        4864,
+        896
+      ],
+      "bias_present": false,
+      "checks": {
+        "layer_number_matches": true,
+        "operator_kind_matches": true,
+        "weight_shape_matches_plan": true,
+        "module_appears_exactly_once": true,
+        "structural_match_count_all_layers": 24
+      }
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_23",
+      "mapped_ok": true,
+      "module_path": "model.layers.23.mlp.down_proj",
+      "module_class": "torch.nn.modules.linear.Linear",
+      "weight_shape": [
+        896,
+        4864
+      ],
+      "bias_present": false,
+      "checks": {
+        "layer_number_matches": true,
+        "operator_kind_matches": true,
+        "weight_shape_matches_plan": true,
+        "module_appears_exactly_once": true,
+        "structural_match_count_all_layers": 24
+      }
+    }
+  ],
+  "all_mapped_ok": true,
+  "representative_layers": [
+    0,
+    12,
+    23
+  ]
+}

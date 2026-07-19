@@ -1,0 +1,255 @@
+{
+  "validations": [
+    {
+      "layer": 0,
+      "max_abs_error": 1.6689300537109375e-06,
+      "allclose": true,
+      "rank_traces": [
+        {
+          "rank_id": 0,
+          "q_local_shape": [
+            1,
+            7,
+            5,
+            64
+          ],
+          "k_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "v_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "attn_score_shape": [
+            1,
+            7,
+            5,
+            5
+          ],
+          "kv_repetition_factor": 7,
+          "local_context_shape": [
+            5,
+            448
+          ],
+          "o_proj_partial_shape": [
+            5,
+            896
+          ]
+        },
+        {
+          "rank_id": 1,
+          "q_local_shape": [
+            1,
+            7,
+            5,
+            64
+          ],
+          "k_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "v_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "attn_score_shape": [
+            1,
+            7,
+            5,
+            5
+          ],
+          "kv_repetition_factor": 7,
+          "local_context_shape": [
+            5,
+            448
+          ],
+          "o_proj_partial_shape": [
+            5,
+            896
+          ]
+        }
+      ],
+      "kv_repetition_factor": 7
+    },
+    {
+      "layer": 12,
+      "max_abs_error": 9.5367431640625e-07,
+      "allclose": true,
+      "rank_traces": [
+        {
+          "rank_id": 0,
+          "q_local_shape": [
+            1,
+            7,
+            5,
+            64
+          ],
+          "k_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "v_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "attn_score_shape": [
+            1,
+            7,
+            5,
+            5
+          ],
+          "kv_repetition_factor": 7,
+          "local_context_shape": [
+            5,
+            448
+          ],
+          "o_proj_partial_shape": [
+            5,
+            896
+          ]
+        },
+        {
+          "rank_id": 1,
+          "q_local_shape": [
+            1,
+            7,
+            5,
+            64
+          ],
+          "k_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "v_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "attn_score_shape": [
+            1,
+            7,
+            5,
+            5
+          ],
+          "kv_repetition_factor": 7,
+          "local_context_shape": [
+            5,
+            448
+          ],
+          "o_proj_partial_shape": [
+            5,
+            896
+          ]
+        }
+      ],
+      "kv_repetition_factor": 7
+    },
+    {
+      "layer": 23,
+      "max_abs_error": 2.7418136596679688e-06,
+      "allclose": true,
+      "rank_traces": [
+        {
+          "rank_id": 0,
+          "q_local_shape": [
+            1,
+            7,
+            5,
+            64
+          ],
+          "k_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "v_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "attn_score_shape": [
+            1,
+            7,
+            5,
+            5
+          ],
+          "kv_repetition_factor": 7,
+          "local_context_shape": [
+            5,
+            448
+          ],
+          "o_proj_partial_shape": [
+            5,
+            896
+          ]
+        },
+        {
+          "rank_id": 1,
+          "q_local_shape": [
+            1,
+            7,
+            5,
+            64
+          ],
+          "k_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "v_local_shape": [
+            1,
+            1,
+            5,
+            64
+          ],
+          "attn_score_shape": [
+            1,
+            7,
+            5,
+            5
+          ],
+          "kv_repetition_factor": 7,
+          "local_context_shape": [
+            5,
+            448
+          ],
+          "o_proj_partial_shape": [
+            5,
+            896
+          ]
+        }
+      ],
+      "kv_repetition_factor": 7
+    }
+  ],
+  "head_partition_checks": {
+    "layer_0": true,
+    "layer_12": true,
+    "layer_23": true
+  },
+  "kv_partition_checks": {
+    "layer_0": true,
+    "layer_12": true,
+    "layer_23": true
+  },
+  "all_within_tolerance": true
+}

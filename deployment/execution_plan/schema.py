@@ -440,7 +440,15 @@ DISTRIBUTED_TRUTH_BOUNDARY = (
 
 # D1 implements exactly one collective kind. Any other declared kind must be
 # rejected explicitly, never silently ignored.
-KNOWN_COLLECTIVE_KINDS = frozenset({"all_reduce"})
+#
+# D4A additive extension: "all_gather" is added to describe vLLM's real
+# lm_head logit-shard reconstruction (tensor_model_parallel_all_gather,
+# concatenation along the last/vocab dimension), which is a genuinely
+# different collective from row-parallel/embedding's all_reduce(sum). This
+# widens what is accepted -- it never narrows or changes "all_reduce"
+# handling, so every D1/D2/D3A/D3B artifact (which only ever declares
+# "all_reduce") continues to validate identically.
+KNOWN_COLLECTIVE_KINDS = frozenset({"all_reduce", "all_gather"})
 
 
 @dataclass(frozen=True)

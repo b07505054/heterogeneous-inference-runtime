@@ -1,0 +1,21 @@
+{
+  "classification": "WHOLE_MODEL_TP_VALIDATED",
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "tensor_parallel_size": 2,
+  "pipeline_parallel_size": 1,
+  "installed_vllm_version": "0.24.0",
+  "all_operator_families_validated": true,
+  "whole_model_forward_within_tolerance": true,
+  "whole_model_max_abs_error": 8.046627044677734e-05,
+  "argmax_match": true,
+  "topk_match": true,
+  "not_claimed": [
+    "concurrent TP execution",
+    "real two-GPU execution",
+    "NCCL",
+    "vLLM TP2 server execution",
+    "GPU-to-GPU communication",
+    "distributed serving speedup",
+    "profitability"
+  ]
+}

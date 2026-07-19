@@ -1,0 +1,14 @@
+{
+  "shape_equal": true,
+  "dtype": "float32",
+  "max_abs_error": 8.046627044677734e-05,
+  "max_rel_error": 2.2799999713897705,
+  "mean_abs_error": 7.21926426194841e-06,
+  "allclose": true,
+  "nan_count": 0,
+  "inf_count": 0,
+  "cosine_similarity_last_token": 1.0,
+  "argmax_agreement": true,
+  "tolerance_atol": 0.01,
+  "accumulator_promotion_note": "softmax numerator/denominator promoted to float64 internally within eager_attention (matching transformers' own float32-softmax convention at a slightly higher internal precision for stability); no other stage of either forward is promoted beyond the model's native float32."
+}

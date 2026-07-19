@@ -1,0 +1,16 @@
+{
+  "before": {
+    "whole_model_tp_evidence_status": "not_established_operator_level_only",
+    "whole_model_tp_evidence_source_artifact_hash": null
+  },
+  "after": {
+    "whole_model_tp_evidence_status": "validated_serialized_whole_model_contract",
+    "whole_model_tp_evidence_source_artifact_hash": "375a08cd9a3fbe919544757116a4ba3c7f03d4b7801967e26ee0a1bf69fd9a62"
+  },
+  "hardware_preflight_status_before": "rejected",
+  "hardware_preflight_status_after": "rejected",
+  "primary_rejection_reason_after": "insufficient_visible_gpu_count",
+  "execution_readiness_state_after": "PREFLIGHT_REJECTED",
+  "still_rejects_on_one_gpu_host": true,
+  "not_marked_execution_ready": true
+}

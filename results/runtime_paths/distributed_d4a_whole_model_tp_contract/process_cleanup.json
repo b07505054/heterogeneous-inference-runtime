@@ -1,0 +1,7 @@
+{
+  "d4a_uses_multiprocessing": false,
+  "mechanism": "D4A's whole-model replay runs entirely in-process (single Python process, numpy/torch tensor operations) -- unlike D1/D3A's real multiprocess IPC path, D4A never spawns a rank subprocess, so there is no rank process to leak by construction",
+  "vllm_server_processes_found": [],
+  "orphan_d4a_rank_processes": [],
+  "verified_clean": true
+}

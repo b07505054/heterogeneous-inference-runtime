@@ -1,0 +1,63 @@
+{
+  "capability_discovery_latency_s": {
+    "median_s": 0.035521015990525484,
+    "p95_s": 0.041650398867204785,
+    "min_s": 0.020947234937921166,
+    "max_s": 0.041650398867204785,
+    "n": 7
+  },
+  "plan_loading_latency_s": {
+    "median_s": 0.0004417179152369499,
+    "p95_s": 0.000525530893355608,
+    "min_s": 0.00023462320677936077,
+    "max_s": 0.000525530893355608,
+    "n": 7
+  },
+  "materialization_latency_s": {
+    "tp1": {
+      "median_s": 0.1540144409518689,
+      "p95_s": 0.17130083311349154,
+      "min_s": 0.1420736510772258,
+      "max_s": 0.17130083311349154,
+      "n": 7
+    },
+    "tp2": {
+      "median_s": 0.17332277400419116,
+      "p95_s": 0.18930360791273415,
+      "min_s": 0.15412478405050933,
+      "max_s": 0.18930360791273415,
+      "n": 7
+    }
+  },
+  "argument_validation_latency_s": {
+    "median_s": 7.126946002244949e-06,
+    "p95_s": 8.451985195279121e-06,
+    "min_s": 6.6300854086875916e-06,
+    "max_s": 8.451985195279121e-06,
+    "n": 7
+  },
+  "preflight_validation_latency_s": "embedded in materialization_latency_s above (preflight runs inside materialize_launch_spec); not separately extractable without duplicating internal materializer state",
+  "dry_run_validation_latency_s": "embedded in materialization_latency_s above (dry-run runs inside materialize_launch_spec)",
+  "command_generation_latency_s": {
+    "tp1": {
+      "median_s": 0.0002647947985678911,
+      "p95_s": 0.00030890805646777153,
+      "min_s": 0.0002231199759989977,
+      "max_s": 0.00030890805646777153,
+      "n": 7
+    },
+    "tp2": {
+      "median_s": 0.00019591092132031918,
+      "p95_s": 0.00023602601140737534,
+      "min_s": 0.00016883411444723606,
+      "max_s": 0.00023602601140737534,
+      "n": 7
+    }
+  },
+  "one_shot_capability_discovery_latency_s": 5.708142115036026,
+  "one_shot_argument_registry_discovery_latency_s": 3.0707866379525512,
+  "one_shot_tp1_materialization_latency_s": 0.19916123384609818,
+  "one_shot_tp2_materialization_latency_s": 0.1576254740357399,
+  "repetitions": 7,
+  "truth_boundary": "D3B measurements are control-plane latencies only (discovery, plan loading, materialization, validation, command generation) -- no serving performance, no TTFT/TPOT/throughput, no projected TP speedup is measured or claimed."
+}

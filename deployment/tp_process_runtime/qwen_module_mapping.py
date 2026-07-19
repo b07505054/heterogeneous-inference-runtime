@@ -17,14 +17,41 @@ from typing import Any
 # compiler operator_id format: "{function_name}::{op_type}::layer_{layer_index}"
 _OPERATOR_ID_RE = re.compile(r"^(?P<function_name>[^:]+)::(?P<op_type>[^:]+)::layer_(?P<layer_index>\d+)$")
 
-# Only operator kinds D3A knows how to map. Extending this table is the only
-# way to add a new operator -- never a generic substring fallback.
+# Only operator kinds this module knows how to map. Extending this table is
+# the only way to add a new operator -- never a generic substring fallback.
+#
+# D4A additive extension: q_proj/k_proj/v_proj/gate_proj/up_proj/down_proj
+# are added alongside D3A's original o_proj entry so the whole-model TP
+# contract validation (D4A) can map every per-layer linear operator family
+# to its real Transformers module, using the exact same structural-regex,
+# fail-closed mapping discipline as o_proj. No existing entry or behavior
+# is changed.
 _OP_TYPE_TO_MODULE_SUFFIX = {
     "llm.o_proj": "self_attn.o_proj",
+    "llm.q_proj": "self_attn.q_proj",
+    "llm.k_proj": "self_attn.k_proj",
+    "llm.v_proj": "self_attn.v_proj",
+    "llm.gate_proj": "mlp.gate_proj",
+    "llm.up_proj": "mlp.up_proj",
+    "llm.down_proj": "mlp.down_proj",
 }
 _OP_TYPE_TO_MODULE_PATTERN = {
     "llm.o_proj": re.compile(r"^model\.layers\.(?P<layer_index>\d+)\.self_attn\.o_proj$"),
+    "llm.q_proj": re.compile(r"^model\.layers\.(?P<layer_index>\d+)\.self_attn\.q_proj$"),
+    "llm.k_proj": re.compile(r"^model\.layers\.(?P<layer_index>\d+)\.self_attn\.k_proj$"),
+    "llm.v_proj": re.compile(r"^model\.layers\.(?P<layer_index>\d+)\.self_attn\.v_proj$"),
+    "llm.gate_proj": re.compile(r"^model\.layers\.(?P<layer_index>\d+)\.mlp\.gate_proj$"),
+    "llm.up_proj": re.compile(r"^model\.layers\.(?P<layer_index>\d+)\.mlp\.up_proj$"),
+    "llm.down_proj": re.compile(r"^model\.layers\.(?P<layer_index>\d+)\.mlp\.down_proj$"),
 }
+
+# o_proj/down_proj are square-shaped ([hidden,hidden] or check against plan);
+# q/k/v/gate/up are rectangular ([out,in] with out != in in general). The
+# original o_proj-only mapping enforced a square-weight check
+# unconditionally; D4A widens that check to apply only to operators that are
+# actually expected to be square, so the new rectangular families are not
+# rejected by an o_proj-specific assumption.
+_SQUARE_WEIGHT_OP_TYPES = {"llm.o_proj"}
 
 
 class OperatorMappingError(ValueError):
@@ -114,10 +141,10 @@ def map_compiler_operator_to_module(
     if weight is None:
         raise OperatorMappingError(f"module {module_path!r} has no 'weight' attribute")
     weight_shape = tuple(weight.shape)
-    if weight_shape[0] != weight_shape[1]:
+    if op_type in _SQUARE_WEIGHT_OP_TYPES and weight_shape[0] != weight_shape[1]:
         raise OperatorMappingError(
             f"module {module_path!r} weight shape {weight_shape} is not square; "
-            "o_proj is expected to be a hidden_size x hidden_size projection"
+            f"{op_type} is expected to be a hidden_size x hidden_size projection"
         )
     if expected_hidden_size is not None and weight_shape[0] != expected_hidden_size:
         raise OperatorMappingError(

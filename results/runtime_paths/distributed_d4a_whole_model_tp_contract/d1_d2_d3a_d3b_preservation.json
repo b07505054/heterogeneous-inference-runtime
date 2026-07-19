@@ -1,0 +1,113 @@
+{
+  "d1": {
+    "dir": "results/runtime_paths/distributed_d1_tp2_multiprocess",
+    "file_count": 15,
+    "file_hashes_sha256": {
+      "collective_events.jsonl": "31e983c6619a2319691c30b0c48fae3b0c266a9744d008d6e2a39657b51fa71a",
+      "compiler_tp1_plan.json": "fc7b5424a8383ecb10f2a493f659413ce2dd3eeb6041f5c16a0bd323e9720452",
+      "compiler_tp2_plan.json": "eeaff732b534f9b2b77497ae0c0ec15f1ea4a4ce970961e641cb64767cafc4d9",
+      "correctness_summary.json": "ec23e059fa7ec4dbd7ec725f259b3d3c7117a12b3d79611b15726b9f8b860730",
+      "deadlock_negative_test.json": "6eddee234962e0b37f949fec655371d184d0c17750e8dcb4f1f5e445e3d476ad",
+      "ipc_benchmark.json": "4cf8b7bafcd0158c37599a3ea1f188c6be9103826565ce949c1b491e0d1fc313",
+      "legality_results.json": "b71f7702c703ae073166837d1c92a53adbb6b6b15903a99b1d8201050a0856d4",
+      "provenance_summary.json": "e60088b65c9ae7eae3ce3ef7c36d44da39609a599573562e59acb93325b1334a",
+      "rank_process_events.jsonl": "0ace2ef7aacbc3b7776d9e48d47a4932c6fa7533e9f8cb294988c269cfccdfeb",
+      "repository_state_after.json": "4352d3babd3cc6841755a616088105cb3045f885027fe845f159564d8f6183f7",
+      "repository_state_before.json": "0b3b68267e94d2f640ffedfe530def75beb6fb5b50798f88bba124abc1d1707a",
+      "test_summary.json": "189fe3dfb660c38ea97cf9300317b795c5d9f7e97d529e420a9f7fd2b92d630a",
+      "tp1_reference_result.json": "8cbc694a730f345d9c90648a4fcf6738ee7fc08ca54ff4908641706791f01743",
+      "tp2_distributed_result.json": "4a41e4b601d34998292426d390207cded76fd271f753ecb5d36c6a4d04f7b953",
+      "truth_boundary.json": "aa4db6fa5fd81658288cafa37febf388c1ccc6cefabc8569580e3e77bbf8d807"
+    }
+  },
+  "d2": {
+    "dir": "results/runtime_paths/distributed_d2_qwen_pipeline",
+    "file_count": 20,
+    "file_hashes_sha256": {
+      "collective_events.jsonl": "2b0f5f6ad069d310001897abe6f0dfd3ab8c1940b00defc9c2f0ce6e422d4216",
+      "correctness_summary.json": "8681c19e92e4c11a27c8a3c4d9c03b4f42cb3fc43e89e358410afb753a8553e8",
+      "cross_layer_provenance.json": "59c8192aa8de514aec44bbd2a7344f0cde0920e7bffac0dd6229c8f646a59cf5",
+      "d1_regression_summary.json": "8da375c916baa7cb129cebf4ea7cf10061afea98411578dee4e8859f98f15991",
+      "negative_tests.json": "47d9188b8d794d33472d896ceb4840401bc943327bc2109ef4049acb519cb5be",
+      "performance_measurements.json": "06b56c42c685174c526524c523337d9084dc098db5ecb8e3b027546187c20a71",
+      "pipeline_inventory.json": "3586c095bd2ab45c445e4768e2f1b0919140ffbb54677d7e7f21f8e288677f99",
+      "qwen_distributed_candidates.json": "bd310b2f34427d4b5f8cb56e9e5756ccd3dfa3bf9e10b9fa369c2c16d4e4681f",
+      "qwen_distributed_costs.json": "34e11d32e6314b30d7a38c976ae6b64c00322798c25f3f38d529e10230db7f8f",
+      "qwen_distributed_evidence_report.json": "ccb18bb295c02c1716d172a70df57324f05169c3ae16f801b4d5e47780c34c5c",
+      "qwen_distributed_legality.json": "bd579219f20b35cd27be6b8ded319472be6bf644055f012cff69d12e76a092e5",
+      "qwen_distributed_selection.json": "3b38cf9928cbcecde50151091245df3bf79cd5fb4e3051d51594fc2e744dfa50",
+      "rank_process_events.jsonl": "a9717a8e5b5d3e87c1f5d892176b425dc8fd0c81d0c146708953acdc4799982e",
+      "real_qwen_tp1_execution_plan.json": "8f22d47b0ad2061d89967f7bd0e5143fbda68dbafec7a892e72f1ca4a68d6dd1",
+      "real_qwen_tp2_execution_plan.json": "4bb1b63cf06346164b8e052840ff18749ec651582d4412797b67a1e14cce77ac",
+      "repository_state_after.json": "da167b742b857c850e2969d8a6f81115a835cff9220aabbe5c5f6e6fa0e4b654",
+      "repository_state_before.json": "6ddd139650a06d64a286e5e2a098ad1c9baebe944e2593d53d2b7e3e611ad13e",
+      "runtime_materialization.json": "750dc7701594574532902db0a6dbea84cd253c6504de5d3b9f1b5c5a9185dede",
+      "test_summary.json": "6f260b68162dbcdeee4be9c2ab3620d290a38a20c49af3d73ffe8a3824018e8c",
+      "truth_boundary.json": "54c97d0b5fd346b4c4a3cc37e727645942dfa8575b08b4975915b575c17d481b"
+    }
+  },
+  "d3a": {
+    "dir": "results/runtime_paths/distributed_d3a_live_qwen_tensor",
+    "file_count": 22,
+    "file_hashes_sha256": {
+      "capture_summary.json": "a2fe6b72d16cf61f0566ad37c7f689adef17782eae3f23af96f7c7c5e0159c8e",
+      "captured_tensor_metadata.json": "02d97879280c699de2c7129f2df10b3fd6d9f70e683b8e71ae9ea702b4a45e04",
+      "collective_events.jsonl": "f90aa23ef0e7738904837868764dd85a820573908cc09989cbb0f7fa19effb95",
+      "cross_layer_provenance.json": "65498b76b8e975c95c78d44b31555829b5f0ecee19a94746d079e02d4f33cf31",
+      "d1_d2_preservation.json": "9e4af6ee479103a38237e81b071972c14129b2c2bc1ac8737c53679b4baf8546",
+      "function_plans_bug_analysis.json": "48c48ac28f19d95e1684213250e22c4411a5e4c8625102f75c1e1a584540c6cf",
+      "live_model_execution.json": "d3221742be86e13569f8a510a6ddf49617110ba68409be8048ff1f13bf97ecdb",
+      "live_reference_comparison.json": "47e4ac0f6f20711c92b4d8d9a03a02465fae80fc54c5a2b68797df3fa3b03267",
+      "negative_tests.json": "5f679c4e4b2d342ee8473f2219061b0d1e35617d72a30ab6dc66648891d4ac20",
+      "operator_contract.json": "2f661c4b1eb89cd4dc1b22febb78a784f3d96bbc61d6af3e76ecba046d74105d",
+      "operator_mapping.json": "60b29cf1f9396dc44ab865d188414273a7bdaf33344feb3dd495a3ccc1fdf7f0",
+      "performance_measurements.json": "b20f1aab1ad573438ae18b29cda3c041b6b24889ad667bc2455f3d50ae4aebfc",
+      "rank_events.jsonl": "b3141bd1d947a0911fbea20873ece125fd563fe1f355a7634773fe4c4c7445d7",
+      "rank_local_execution.json": "42e4a422cade0b5e41bb50e2a524d5e2d148dfca6c39ae04ed4de5d81f4218ba",
+      "reconstruction_summary.json": "e9fd4edcc80a745f34cf153bf1e25ed4658919ebd8a9c0766c2a567c8f25b1d2",
+      "regression_summary.json": "1db82ae3cb2a486ea17770b3977385dc4e893282f0a0fecadc06b80153bae3cb",
+      "repository_state_after.json": "86deba7568fe348fff2b514a29384dd9dc6e3c881297413fd83e8da91b8e1f03",
+      "repository_state_before.json": "1e4803eb19cde33fc3b55bc097e83af95b8525505df336432d1488046a00a4a1",
+      "temporary_file_cleanup.json": "36471effcd2ddeca974d57d7a1862585bccce1a106e7717e7c02aadc8c3e7db9",
+      "test_summary.json": "3452e0c48a2d648ddc5658665d860cce2929e15d9adb4175dc1ea067e037a799",
+      "tp2_shard_plan.json": "9b50e4c6498066f9bfdec3a4a2c299c4da6a3604f041a2b1dfc89a94da9de5a1",
+      "truth_boundary.json": "4b99415b03ea4851cc70640b57ec6568f47a0d47ba74d50f07a2f2be73376f2f"
+    }
+  },
+  "d3b": {
+    "dir": "results/runtime_paths/distributed_d3b_vllm_launch_spec",
+    "file_count": 23,
+    "file_hashes_sha256": {
+      "cross_layer_provenance.json": "f86da1e4bff494f69f4b896921b43b6cd8bae061de6702bc2b738805043440a5",
+      "d1_d2_d3a_preservation.json": "7464a4fd6fa0064ec3871d157d31c4f7aa65f73a217cd33b3599725f060d0818",
+      "dry_run_validation.json": "d546de95e74af3de23df7007414ee42a615211bf4b665e733771c759e1642e2c",
+      "negative_tests.json": "06a23278754aff05eead1ebc61c1ceb5078d6266f760dced270d267dd3b39742",
+      "performance_measurements.json": "66a8b94d03eb49a912a05203048bf2bd0e0b4f04ebaf2a72676d99d88ba9231f",
+      "process_cleanup.json": "136ad4e3ca47e59ee951ad2ff225f5c7a58daa7aa207b757bdfb0269f5627694",
+      "rank_placement.json": "77c8794d84c1a4215a749bfea995c4b9b25fa47f29304cdc56fdbcc35f001a53",
+      "repository_state_after.json": "011fddfafb8bd5b88c8d8beadf1b095bf34ad0d7db2d05d0b82d228abf90e1fc",
+      "repository_state_before.json": "08a18ed54f2d67b0b267c26b30d294f1e4d74f536a997eedcd08781c8fec4e3a",
+      "source_tp1_execution_plan.json": "8f22d47b0ad2061d89967f7bd0e5143fbda68dbafec7a892e72f1ca4a68d6dd1",
+      "source_tp2_execution_plan.json": "4bb1b63cf06346164b8e052840ff18749ec651582d4412797b67a1e14cce77ac",
+      "test_summary.json": "3e3a8684ed4ed41a5d4d5464f8b7324529d5cd0d7c970e37a8ce511c70516a0f",
+      "tp1_cli.json": "7d2c6513894d67d2d38ee61147db9529efc4c5274c1e3b6dc7e421214c31af34",
+      "tp1_launch_spec.json": "4096f328838ed98ae51330711db84dcbf078531ddf9644cae00a61430f4adecd",
+      "tp1_preflight.json": "e837f24fde8518db6fe45622f084765608b1dc41b920cc9ddd0d8febe4336108",
+      "tp1_regression.json": "4faab380f4949def24873db015d41c76989e578cae958a8e1445524bcb0de21f",
+      "tp2_cli.json": "cd9e7677188399b496ce28828da77881d1cca35deddee71dd43228dbeb1c928a",
+      "tp2_launch_spec.json": "5aaf241c0f4056f848464e06fae5baea4282bc9d9e866aa929b118a87c62ef09",
+      "tp2_preflight.json": "702710ba967f6cc4be727ad66dd211d8fcfc919417a08b5a6f330aa7a2de9ff2",
+      "truth_boundary.json": "4c7624d471f6f38afa642da261df7b57d3e231b3116c5ab742ce987ca7378473",
+      "vllm_argument_registry.json": "83e1359c9af562b4552677320e0c73649560ea5da3591c474d4962bd982fa4cc",
+      "vllm_environment_inventory.json": "8e3a2abc228b0216b89921235cf46d06d2d64ab9b95a1908a502f52046badcad",
+      "whole_model_tp_evidence_gap.json": "207391f1d7a1106b830b66a42a2f7103c0f5448ba170f7b9e411aa8eb25439fa"
+    }
+  },
+  "reports_present": {
+    "d1": true,
+    "d2": true,
+    "d3a": true,
+    "d3b": true
+  },
+  "compiler_repo_untouched": "ml-graph-compiler-runtime required zero changes for D4A; the whole-model plan is a Python-side expansion of the same ExecutionPlan schema (see whole_model_distributed_plan.json's provenance.compiler_tool field)."
+}

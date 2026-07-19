@@ -1,0 +1,552 @@
+{
+  "entries": [
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_0",
+      "original_weight_name": "model.layers.0.self_attn_or_mlp.q_proj.weight",
+      "original_weight_shape": [
+        896,
+        896
+      ],
+      "shard_dimension": 0,
+      "rank_0_slice": [
+        0,
+        448
+      ],
+      "rank_1_slice": [
+        448,
+        896
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": -9.76472282409668,
+      "checksum_rank_1": -3.806065559387207,
+      "no_transpose_mismatch": true,
+      "bias_shape": [
+        896
+      ]
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_0",
+      "original_weight_name": "model.layers.0.self_attn_or_mlp.k_proj.weight",
+      "original_weight_shape": [
+        128,
+        896
+      ],
+      "shard_dimension": 0,
+      "rank_0_slice": [
+        0,
+        64
+      ],
+      "rank_1_slice": [
+        64,
+        128
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": 30.3647403717041,
+      "checksum_rank_1": -14.923649787902832,
+      "no_transpose_mismatch": true,
+      "bias_shape": [
+        128
+      ]
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_0",
+      "original_weight_name": "model.layers.0.self_attn_or_mlp.v_proj.weight",
+      "original_weight_shape": [
+        128,
+        896
+      ],
+      "shard_dimension": 0,
+      "rank_0_slice": [
+        0,
+        64
+      ],
+      "rank_1_slice": [
+        64,
+        128
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": -3.603774309158325,
+      "checksum_rank_1": 2.684234380722046,
+      "no_transpose_mismatch": true,
+      "bias_shape": [
+        128
+      ]
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_0",
+      "original_weight_name": "model.layers.0.self_attn_or_mlp.o_proj.weight",
+      "original_weight_shape": [
+        896,
+        896
+      ],
+      "shard_dimension": 1,
+      "rank_0_slice": [
+        0,
+        448
+      ],
+      "rank_1_slice": [
+        448,
+        896
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": 12.8788480758667,
+      "checksum_rank_1": 2.0465006828308105,
+      "no_transpose_mismatch": true,
+      "bias_shape": null
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_0",
+      "original_weight_name": "model.layers.0.self_attn_or_mlp.gate_proj.weight",
+      "original_weight_shape": [
+        4864,
+        896
+      ],
+      "shard_dimension": 0,
+      "rank_0_slice": [
+        0,
+        2432
+      ],
+      "rank_1_slice": [
+        2432,
+        4864
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": -44.71824645996094,
+      "checksum_rank_1": -94.49551391601562,
+      "no_transpose_mismatch": true,
+      "bias_shape": null
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_0",
+      "original_weight_name": "model.layers.0.self_attn_or_mlp.up_proj.weight",
+      "original_weight_shape": [
+        4864,
+        896
+      ],
+      "shard_dimension": 0,
+      "rank_0_slice": [
+        0,
+        2432
+      ],
+      "rank_1_slice": [
+        2432,
+        4864
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": -33.735252380371094,
+      "checksum_rank_1": 20.983570098876953,
+      "no_transpose_mismatch": true,
+      "bias_shape": null
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_0",
+      "original_weight_name": "model.layers.0.self_attn_or_mlp.down_proj.weight",
+      "original_weight_shape": [
+        896,
+        4864
+      ],
+      "shard_dimension": 1,
+      "rank_0_slice": [
+        0,
+        2432
+      ],
+      "rank_1_slice": [
+        2432,
+        4864
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": -9.049631118774414,
+      "checksum_rank_1": -5.438145637512207,
+      "no_transpose_mismatch": true,
+      "bias_shape": null
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_12",
+      "original_weight_name": "model.layers.12.self_attn_or_mlp.q_proj.weight",
+      "original_weight_shape": [
+        896,
+        896
+      ],
+      "shard_dimension": 0,
+      "rank_0_slice": [
+        0,
+        448
+      ],
+      "rank_1_slice": [
+        448,
+        896
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": -5.545408725738525,
+      "checksum_rank_1": -0.4816172122955322,
+      "no_transpose_mismatch": true,
+      "bias_shape": [
+        896
+      ]
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_12",
+      "original_weight_name": "model.layers.12.self_attn_or_mlp.k_proj.weight",
+      "original_weight_shape": [
+        128,
+        896
+      ],
+      "shard_dimension": 0,
+      "rank_0_slice": [
+        0,
+        64
+      ],
+      "rank_1_slice": [
+        64,
+        128
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": -6.875640392303467,
+      "checksum_rank_1": 10.989259719848633,
+      "no_transpose_mismatch": true,
+      "bias_shape": [
+        128
+      ]
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_12",
+      "original_weight_name": "model.layers.12.self_attn_or_mlp.v_proj.weight",
+      "original_weight_shape": [
+        128,
+        896
+      ],
+      "shard_dimension": 0,
+      "rank_0_slice": [
+        0,
+        64
+      ],
+      "rank_1_slice": [
+        64,
+        128
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": -2.702383041381836,
+      "checksum_rank_1": 3.2641615867614746,
+      "no_transpose_mismatch": true,
+      "bias_shape": [
+        128
+      ]
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_12",
+      "original_weight_name": "model.layers.12.self_attn_or_mlp.o_proj.weight",
+      "original_weight_shape": [
+        896,
+        896
+      ],
+      "shard_dimension": 1,
+      "rank_0_slice": [
+        0,
+        448
+      ],
+      "rank_1_slice": [
+        448,
+        896
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": -16.922138214111328,
+      "checksum_rank_1": -1.3700875043869019,
+      "no_transpose_mismatch": true,
+      "bias_shape": null
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_12",
+      "original_weight_name": "model.layers.12.self_attn_or_mlp.gate_proj.weight",
+      "original_weight_shape": [
+        4864,
+        896
+      ],
+      "shard_dimension": 0,
+      "rank_0_slice": [
+        0,
+        2432
+      ],
+      "rank_1_slice": [
+        2432,
+        4864
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": 84.49278259277344,
+      "checksum_rank_1": 59.519927978515625,
+      "no_transpose_mismatch": true,
+      "bias_shape": null
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_12",
+      "original_weight_name": "model.layers.12.self_attn_or_mlp.up_proj.weight",
+      "original_weight_shape": [
+        4864,
+        896
+      ],
+      "shard_dimension": 0,
+      "rank_0_slice": [
+        0,
+        2432
+      ],
+      "rank_1_slice": [
+        2432,
+        4864
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": -9.052511215209961,
+      "checksum_rank_1": 30.875455856323242,
+      "no_transpose_mismatch": true,
+      "bias_shape": null
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_12",
+      "original_weight_name": "model.layers.12.self_attn_or_mlp.down_proj.weight",
+      "original_weight_shape": [
+        896,
+        4864
+      ],
+      "shard_dimension": 1,
+      "rank_0_slice": [
+        0,
+        2432
+      ],
+      "rank_1_slice": [
+        2432,
+        4864
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": 8.704148292541504,
+      "checksum_rank_1": 1.787806510925293,
+      "no_transpose_mismatch": true,
+      "bias_shape": null
+    },
+    {
+      "operator_id": "qwen_prefill::llm.q_proj::layer_23",
+      "original_weight_name": "model.layers.23.self_attn_or_mlp.q_proj.weight",
+      "original_weight_shape": [
+        896,
+        896
+      ],
+      "shard_dimension": 0,
+      "rank_0_slice": [
+        0,
+        448
+      ],
+      "rank_1_slice": [
+        448,
+        896
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": -4.618399143218994,
+      "checksum_rank_1": -9.472003936767578,
+      "no_transpose_mismatch": true,
+      "bias_shape": [
+        896
+      ]
+    },
+    {
+      "operator_id": "qwen_prefill::llm.k_proj::layer_23",
+      "original_weight_name": "model.layers.23.self_attn_or_mlp.k_proj.weight",
+      "original_weight_shape": [
+        128,
+        896
+      ],
+      "shard_dimension": 0,
+      "rank_0_slice": [
+        0,
+        64
+      ],
+      "rank_1_slice": [
+        64,
+        128
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": 4.6809587478637695,
+      "checksum_rank_1": -4.145218849182129,
+      "no_transpose_mismatch": true,
+      "bias_shape": [
+        128
+      ]
+    },
+    {
+      "operator_id": "qwen_prefill::llm.v_proj::layer_23",
+      "original_weight_name": "model.layers.23.self_attn_or_mlp.v_proj.weight",
+      "original_weight_shape": [
+        128,
+        896
+      ],
+      "shard_dimension": 0,
+      "rank_0_slice": [
+        0,
+        64
+      ],
+      "rank_1_slice": [
+        64,
+        128
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": -1.9238464832305908,
+      "checksum_rank_1": 8.42842960357666,
+      "no_transpose_mismatch": true,
+      "bias_shape": [
+        128
+      ]
+    },
+    {
+      "operator_id": "qwen_prefill::llm.o_proj::layer_23",
+      "original_weight_name": "model.layers.23.self_attn_or_mlp.o_proj.weight",
+      "original_weight_shape": [
+        896,
+        896
+      ],
+      "shard_dimension": 1,
+      "rank_0_slice": [
+        0,
+        448
+      ],
+      "rank_1_slice": [
+        448,
+        896
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": 4.887173175811768,
+      "checksum_rank_1": -1.705718755722046,
+      "no_transpose_mismatch": true,
+      "bias_shape": null
+    },
+    {
+      "operator_id": "qwen_prefill::llm.gate_proj::layer_23",
+      "original_weight_name": "model.layers.23.self_attn_or_mlp.gate_proj.weight",
+      "original_weight_shape": [
+        4864,
+        896
+      ],
+      "shard_dimension": 0,
+      "rank_0_slice": [
+        0,
+        2432
+      ],
+      "rank_1_slice": [
+        2432,
+        4864
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": 112.8062515258789,
+      "checksum_rank_1": 155.73797607421875,
+      "no_transpose_mismatch": true,
+      "bias_shape": null
+    },
+    {
+      "operator_id": "qwen_prefill::llm.up_proj::layer_23",
+      "original_weight_name": "model.layers.23.self_attn_or_mlp.up_proj.weight",
+      "original_weight_shape": [
+        4864,
+        896
+      ],
+      "shard_dimension": 0,
+      "rank_0_slice": [
+        0,
+        2432
+      ],
+      "rank_1_slice": [
+        2432,
+        4864
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": 85.84557342529297,
+      "checksum_rank_1": 42.33378219604492,
+      "no_transpose_mismatch": true,
+      "bias_shape": null
+    },
+    {
+      "operator_id": "qwen_prefill::llm.down_proj::layer_23",
+      "original_weight_name": "model.layers.23.self_attn_or_mlp.down_proj.weight",
+      "original_weight_shape": [
+        896,
+        4864
+      ],
+      "shard_dimension": 1,
+      "rank_0_slice": [
+        0,
+        2432
+      ],
+      "rank_1_slice": [
+        2432,
+        4864
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": -16.448787689208984,
+      "checksum_rank_1": -30.738468170166016,
+      "no_transpose_mismatch": true,
+      "bias_shape": null
+    },
+    {
+      "operator_id": "qwen_prefill::llm.embed_tokens::model",
+      "original_weight_name": "model.embed_tokens.weight",
+      "original_weight_shape": [
+        151936,
+        896
+      ],
+      "shard_dimension": 0,
+      "rank_0_slice": [
+        0,
+        75968
+      ],
+      "rank_1_slice": [
+        75968,
+        151936
+      ],
+      "padding": 0,
+      "rank_shards_disjoint": true,
+      "rank_shards_cover_full_tensor": true,
+      "checksum_rank_0": 3827.68212890625,
+      "checksum_rank_1": 3173.94873046875,
+      "no_transpose_mismatch": true,
+      "bias_shape": null
+    }
+  ],
+  "shard_coverage_errors": [],
+  "no_rank_receives_another_ranks_shard": true
+}

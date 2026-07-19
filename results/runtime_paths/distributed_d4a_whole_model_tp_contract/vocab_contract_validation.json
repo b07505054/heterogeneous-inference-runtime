@@ -1,0 +1,27 @@
+{
+  "embedding": {
+    "max_abs_error": 0.0,
+    "allclose": true
+  },
+  "lm_head": {
+    "max_abs_error": 1.239776611328125e-05,
+    "allclose": true,
+    "argmax_match": true
+  },
+  "vocab_partition_checks": {
+    "vocab_evenly_divisible_by_world_size": true,
+    "embedding_reconstruction_within_tolerance": true,
+    "lm_head_reconstruction_within_tolerance": true
+  },
+  "tie_word_embeddings": true,
+  "vocab_shard_ranges": [
+    [
+      0,
+      75968
+    ],
+    [
+      75968,
+      151936
+    ]
+  ]
+}

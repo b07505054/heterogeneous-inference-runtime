@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 from deployment.backend_adapter import BackendMaterialization
 from deployment.execution_plan.capability_view import CapabilityValidationView
 from deployment.execution_plan.schema import (
@@ -10,6 +12,7 @@ from deployment.execution_plan.schema import (
     ExecutionPathKind,
 )
 from deployment.vllm_adapter.config_materializer import materialize_vllm_cli_args_from_path
+from deployment.vllm_adapter.distributed_materializer import MaterializationBundle, materialize_launch_spec
 
 
 class VLLMBackendAdapter:
@@ -65,6 +68,26 @@ class VLLMBackendAdapter:
             expected_output_artifact=path.output_artifact,
             truth_boundary=path.truth_boundary or COMPILER_GUIDED_VLLM_TRUTH_BOUNDARY,
         )
+
+
+class VLLMDistributedAdapter:
+    """D3B: materializes vLLM distributed (TP/PP) launch specs from the real
+    D2/D3A compiler-exported ExecutionPlan.
+
+    This class extends the same real-vLLM adapter surface as
+    VLLMBackendAdapter (above) -- it is not a disconnected script. It never
+    starts a subprocess: materialize_from_execution_plan() only produces a
+    VLLMDistributedLaunchSpec plus its preflight/dry-run results. No
+    `force`, `ignore_preflight`, or hidden bypass parameter exists anywhere
+    on this class -- a rejected preflight can never be overridden here.
+    """
+
+    backend_id = "vllm_distributed"
+
+    def materialize_from_execution_plan(
+        self, execution_plan_path: str | Path, *, repo_root: Path
+    ) -> MaterializationBundle:
+        return materialize_launch_spec(execution_plan_path, repo_root=repo_root, d3b_mode="planning_only")
 
 
 def _server_command(config: dict) -> tuple[str, ...]:
