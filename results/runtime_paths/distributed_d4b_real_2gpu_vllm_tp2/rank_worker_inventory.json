@@ -1,0 +1,58 @@
+{
+  "tracked_pids": [
+    20106,
+    20320,
+    20321,
+    20528,
+    20539
+  ],
+  "process_tree": [
+    {
+      "pid": 20106,
+      "name": "python",
+      "status": "sleeping",
+      "cmdline": ".venv/bin/python -m vllm.entrypoints.openai.api_server --model Qwen/Qwen2.5-0.5B-Instruct --tokenizer Qwen/Qwen2.5-0.5B-Instruct --no-trust-remote-code --dtype float16 --seed 1234 --served-model-name qwen2.5-0.5b-instruct-tp2-planning-only --host 127.0.0.1 --port 44435 --master-addr 127.0.0.1 --mast",
+      "ppid": 19322
+    },
+    {
+      "pid": 20320,
+      "name": "python",
+      "status": "sleeping",
+      "cmdline": "/workspace/Project/heterogeneous-inference-runtime/.venv/bin/python -c from multiprocessing.resource_tracker import main;main(46)",
+      "ppid": 20106
+    },
+    {
+      "pid": 20321,
+      "name": "VLLM::EngineCore",
+      "status": "sleeping",
+      "cmdline": "VLLM::EngineCore                                                                                                                                                                     ",
+      "ppid": 20106
+    },
+    {
+      "pid": 20528,
+      "name": "VLLM::Worker_TP0",
+      "status": "sleeping",
+      "cmdline": "VLLM::Worker_TP0                                                                                                                                                                     ",
+      "ppid": 20321
+    },
+    {
+      "pid": 20539,
+      "name": "VLLM::Worker_TP1",
+      "status": "sleeping",
+      "cmdline": "VLLM::Worker_TP1                                                                                                                                                                     ",
+      "ppid": 20321
+    }
+  ],
+  "descendant_cmdlines": [
+    ".venv/bin/python -m vllm.entrypoints.openai.api_server --model Qwen/Qwen2.5-0.5B-Instruct --tokenizer Qwen/Qwen2.5-0.5B-Instruct --no-trust-remote-code --dtype float16 --seed 1234 --served-model-name qwen2.5-0.5b-instruct-tp2-planning-only --host 127.0.0.1 --port 44435 --master-addr 127.0.0.1 --mast",
+    "/workspace/Project/heterogeneous-inference-runtime/.venv/bin/python -c from multiprocessing.resource_tracker import main;main(46)",
+    "VLLM::EngineCore                                                                                                                                                                     ",
+    "VLLM::Worker_TP0                                                                                                                                                                     ",
+    "VLLM::Worker_TP1                                                                                                                                                                     "
+  ],
+  "expected_worker_count": 2,
+  "gpu_uuids_seen": [
+    "GPU-3e930a03-3101-6841-b2c0-6d7af909067d",
+    "GPU-c8703d8b-0918-b881-caf3-7d8343a9af35"
+  ]
+}

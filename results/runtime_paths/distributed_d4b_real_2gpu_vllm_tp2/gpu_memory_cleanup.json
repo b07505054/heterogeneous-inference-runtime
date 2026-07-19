@@ -1,0 +1,41 @@
+{
+  "tp1_gpu_cleanup": {
+    "baseline_used_mb": {
+      "0": 1.0,
+      "1": 1.0
+    },
+    "final_used_mb": {
+      "0": 4.0,
+      "1": 4.0
+    },
+    "drain_latency_s": 3.4929392337799072,
+    "within_tolerance": true,
+    "tolerance_mb": 64.0,
+    "polls": 4,
+    "timed_out": false
+  },
+  "tp2_gpu_cleanup": {
+    "baseline_used_mb": {
+      "0": 1.0,
+      "1": 1.0
+    },
+    "final_used_mb": {
+      "0": 4.0,
+      "1": 4.0
+    },
+    "drain_latency_s": 0.11740565299987793,
+    "within_tolerance": true,
+    "tolerance_mb": 64.0,
+    "polls": 1,
+    "timed_out": false
+  },
+  "baseline_used_mb": {
+    "0": 1.0,
+    "1": 1.0
+  },
+  "final_used_mb": {
+    "0": 4.0,
+    "1": 4.0
+  },
+  "final_within_tolerance": true
+}

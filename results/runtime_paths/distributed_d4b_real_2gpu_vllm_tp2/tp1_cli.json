@@ -1,0 +1,243 @@
+{
+  "argv": [
+    ".venv/bin/python",
+    "-m",
+    "vllm.entrypoints.openai.api_server",
+    "--model",
+    "Qwen/Qwen2.5-0.5B-Instruct",
+    "--tokenizer",
+    "Qwen/Qwen2.5-0.5B-Instruct",
+    "--no-trust-remote-code",
+    "--dtype",
+    "float16",
+    "--seed",
+    "1234",
+    "--served-model-name",
+    "qwen2.5-0.5b-instruct-tp1-planning-only",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "8000",
+    "--master-addr",
+    "127.0.0.1",
+    "--master-port",
+    "29501",
+    "--tensor-parallel-size",
+    "1",
+    "--pipeline-parallel-size",
+    "1",
+    "--data-parallel-size",
+    "1",
+    "--distributed-executor-backend",
+    "mp",
+    "--max-model-len",
+    "2048",
+    "--max-num-seqs",
+    "4",
+    "--max-num-batched-tokens",
+    "2048",
+    "--gpu-memory-utilization",
+    "0.9",
+    "--enable-prefix-caching",
+    "--enable-chunked-prefill"
+  ],
+  "shell_command": ".venv/bin/python -m vllm.entrypoints.openai.api_server --model Qwen/Qwen2.5-0.5B-Instruct --tokenizer Qwen/Qwen2.5-0.5B-Instruct --no-trust-remote-code --dtype float16 --seed 1234 --served-model-name qwen2.5-0.5b-instruct-tp1-planning-only --host 127.0.0.1 --port 8000 --master-addr 127.0.0.1 --master-port 29501 --tensor-parallel-size 1 --pipeline-parallel-size 1 --data-parallel-size 1 --distributed-executor-backend mp --max-model-len 2048 --max-num-seqs 4 --max-num-batched-tokens 2048 --gpu-memory-utilization 0.9 --enable-prefix-caching --enable-chunked-prefill",
+  "environment": {
+    "CUDA_VISIBLE_DEVICES": "0",
+    "MASTER_ADDR": "127.0.0.1",
+    "MASTER_PORT": "29501",
+    "WORLD_SIZE": "1",
+    "VLLM_WORKER_MULTIPROC_METHOD": "spawn",
+    "TOKENIZERS_PARALLELISM": "false",
+    "NCCL_DEBUG": "INFO"
+  },
+  "working_directory": "/workspace/Project/heterogeneous-inference-runtime",
+  "expected_process_count": 1,
+  "expected_gpu_assignment": {
+    "0": 0
+  },
+  "argument_compatibility": [
+    {
+      "requested_argument": "model",
+      "dest": "model",
+      "installed_version_support_status": "supported",
+      "resolved_spelling": "--model",
+      "resolved_type": "str",
+      "resolved_default": "Qwen/Qwen3-0.6B",
+      "source": "compiler_plan"
+    },
+    {
+      "requested_argument": "tokenizer",
+      "dest": "tokenizer",
+      "installed_version_support_status": "supported",
+      "resolved_spelling": "--tokenizer",
+      "resolved_type": "str",
+      "resolved_default": null,
+      "source": "compiler_plan"
+    },
+    {
+      "requested_argument": "trust_remote_code",
+      "dest": "trust_remote_code",
+      "installed_version_support_status": "supported",
+      "resolved_spelling": "--trust-remote-code",
+      "resolved_type": null,
+      "resolved_default": false,
+      "source": "capability_profile"
+    },
+    {
+      "requested_argument": "dtype",
+      "dest": "dtype",
+      "installed_version_support_status": "supported",
+      "resolved_spelling": "--dtype",
+      "resolved_type": "str",
+      "resolved_default": "auto",
+      "source": "explicit_D3B_default"
+    },
+    {
+      "requested_argument": "seed",
+      "dest": "seed",
+      "installed_version_support_status": "supported",
+      "resolved_spelling": "--seed",
+      "resolved_type": "int",
+      "resolved_default": 0,
+      "source": "compiler_plan"
+    },
+    {
+      "requested_argument": "served_model_name",
+      "dest": "served_model_name",
+      "installed_version_support_status": "supported",
+      "resolved_spelling": "--served-model-name",
+      "resolved_type": "_optional_type",
+      "resolved_default": null,
+      "source": "explicit_D3B_default"
+    },
+    {
+      "requested_argument": "host",
+      "dest": "host",
+      "installed_version_support_status": "supported",
+      "resolved_spelling": "--host",
+      "resolved_type": "_optional_type",
+      "resolved_default": null,
+      "source": "explicit_D3B_default"
+    },
+    {
+      "requested_argument": "port",
+      "dest": "port",
+      "installed_version_support_status": "supported",
+      "resolved_spelling": "--port",
+      "resolved_type": "int",
+      "resolved_default": 8000,
+      "source": "capability_profile"
+    },
+    {
+      "requested_argument": "master_addr",
+      "dest": "master_addr",
+      "installed_version_support_status": "supported",
+      "resolved_spelling": "--master-addr",
+      "resolved_type": "str",
+      "resolved_default": "127.0.0.1",
+      "source": "capability_profile"
+    },
+    {
+      "requested_argument": "master_port",
+      "dest": "master_port",
+      "installed_version_support_status": "supported",
+      "resolved_spelling": "--master-port",
+      "resolved_type": "int",
+      "resolved_default": 29501,
+      "source": "capability_profile"
+    },
+    {
+      "requested_argument": "tensor_parallel_size",
+      "dest": "tensor_parallel_size",
+      "installed_version_support_status": "supported",
+      "resolved_spelling": "--tensor-parallel-size",
+      "resolved_type": "int",
+      "resolved_default": 1,
+      "source": "compiler_plan"
+    },
+    {
+      "requested_argument": "pipeline_parallel_size",
+      "dest": "pipeline_parallel_size",
+      "installed_version_support_status": "supported",
+      "resolved_spelling": "--pipeline-parallel-size",
+      "resolved_type": "int",
+      "resolved_default": 1,
+      "source": "compiler_plan"
+    },
+    {
+      "requested_argument": "data_parallel_size",
+      "dest": "data_parallel_size",
+      "installed_version_support_status": "supported",
+      "resolved_spelling": "--data-parallel-size",
+      "resolved_type": "int",
+      "resolved_default": 1,
+      "source": "capability_profile"
+    },
+    {
+      "requested_argument": "distributed_executor_backend",
+      "dest": "distributed_executor_backend",
+      "installed_version_support_status": "supported",
+      "resolved_spelling": "--distributed-executor-backend",
+      "resolved_type": "_optional_type",
+      "resolved_default": null,
+      "source": "explicit_D3B_default"
+    },
+    {
+      "requested_argument": "max_model_len",
+      "dest": "max_model_len",
+      "installed_version_support_status": "supported",
+      "resolved_spelling": "--max-model-len",
+      "resolved_type": "human_readable_int_or_auto",
+      "resolved_default": null,
+      "source": "explicit_D3B_default"
+    },
+    {
+      "requested_argument": "max_num_seqs",
+      "dest": "max_num_seqs",
+      "installed_version_support_status": "supported",
+      "resolved_spelling": "--max-num-seqs",
+      "resolved_type": "int",
+      "resolved_default": null,
+      "source": "explicit_D3B_default"
+    },
+    {
+      "requested_argument": "max_num_batched_tokens",
+      "dest": "max_num_batched_tokens",
+      "installed_version_support_status": "supported",
+      "resolved_spelling": "--max-num-batched-tokens",
+      "resolved_type": "human_readable_int",
+      "resolved_default": null,
+      "source": "explicit_D3B_default"
+    },
+    {
+      "requested_argument": "gpu_memory_utilization",
+      "dest": "gpu_memory_utilization",
+      "installed_version_support_status": "supported",
+      "resolved_spelling": "--gpu-memory-utilization",
+      "resolved_type": "float",
+      "resolved_default": 0.92,
+      "source": "explicit_D3B_default"
+    },
+    {
+      "requested_argument": "enable_prefix_caching",
+      "dest": "enable_prefix_caching",
+      "installed_version_support_status": "supported",
+      "resolved_spelling": "--enable-prefix-caching",
+      "resolved_type": null,
+      "resolved_default": null,
+      "source": "explicit_D3B_default"
+    },
+    {
+      "requested_argument": "enable_chunked_prefill",
+      "dest": "enable_chunked_prefill",
+      "installed_version_support_status": "supported",
+      "resolved_spelling": "--enable-chunked-prefill",
+      "resolved_type": null,
+      "resolved_default": null,
+      "source": "explicit_D3B_default"
+    }
+  ],
+  "all_arguments_supported": true,
+  "unsupported_arguments": []
+}

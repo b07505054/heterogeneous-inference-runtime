@@ -1,0 +1,32 @@
+{
+  "tp1_stop_result": {
+    "graceful": true,
+    "escalated": false,
+    "pre_stop_descendant_pids": [
+      19765,
+      19766,
+      19973
+    ],
+    "final_remaining_descendant_pids": [],
+    "zero_orphans": true,
+    "shutdown_latency_s": 2.276923894882202,
+    "preserved_prior_terminal_state": false
+  },
+  "tp2_stop_result": {
+    "graceful": true,
+    "escalated": false,
+    "pre_stop_descendant_pids": [
+      20320,
+      20321,
+      20528,
+      20539
+    ],
+    "final_remaining_descendant_pids": [],
+    "zero_orphans": true,
+    "shutdown_latency_s": 8.148257970809937,
+    "preserved_prior_terminal_state": false
+  },
+  "tp1_zero_orphans": true,
+  "tp2_zero_orphans": true,
+  "no_ray_processes": true
+}

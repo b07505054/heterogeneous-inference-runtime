@@ -1,0 +1,42 @@
+{
+  "gpu_process_mapping": {
+    "tracked_pids": [
+      20106,
+      20320,
+      20321,
+      20528,
+      20539
+    ],
+    "gpu_uuids_used_by_tracked_pids": {
+      "GPU-3e930a03-3101-6841-b2c0-6d7af909067d": [
+        20528
+      ],
+      "GPU-c8703d8b-0918-b881-caf3-7d8343a9af35": [
+        20539
+      ]
+    },
+    "distinct_gpu_uuids_used": [
+      "GPU-3e930a03-3101-6841-b2c0-6d7af909067d",
+      "GPU-c8703d8b-0918-b881-caf3-7d8343a9af35"
+    ],
+    "two_distinct_gpus_used": true,
+    "duplicate_assignment": false
+  },
+  "expected_rank_placements": [
+    {
+      "rank_id": 0,
+      "logical_gpu_index": 0,
+      "physical_device_index": 0,
+      "rank_id_source": "compiler_plan",
+      "placement_policy_source": "explicit_D3B_default"
+    },
+    {
+      "rank_id": 1,
+      "logical_gpu_index": 1,
+      "physical_device_index": 1,
+      "rank_id_source": "compiler_plan",
+      "placement_policy_source": "explicit_D3B_default"
+    }
+  ],
+  "rank_placement_agrees_with_d3b_launch_spec": true
+}

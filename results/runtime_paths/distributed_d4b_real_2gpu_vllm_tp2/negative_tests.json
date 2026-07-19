@@ -1,0 +1,24 @@
+{
+  "command": "pytest -v tests/test_distributed_d4b_real_2gpu_vllm_tp2.py -k negative",
+  "all_passed": true,
+  "cases_covered": [
+    "tp2_cuda_visible_devices_one_gpu",
+    "duplicate_physical_gpu_placement",
+    "invalid_gpu_index",
+    "occupied_api_port",
+    "invalid_master_port",
+    "model_resolution_failure",
+    "unsupported_cli_flag",
+    "startup_timeout",
+    "premature_server_exit",
+    "request_timeout",
+    "worker_rank_exit",
+    "malformed_launch_spec",
+    "d4a_evidence_hash_mismatch",
+    "whole_model_evidence_missing",
+    "attempted_tp2_downgrade_to_tp1",
+    "attempted_launch_after_rejected_preflight"
+  ],
+  "case_count": 16,
+  "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /workspace/Project/heterogeneous-inference-runtime/.venv/bin/python3\ncachedir: .pytest_cache\nrootdir: /workspace/Project/heterogeneous-inference-runtime\nplugins: anyio-4.14.2\ncollecting ... collected 19 items / 3 deselected / 16 selected\n\ntests/test_distributed_d4b_real_2gpu_vllm_tp2.py::test_negative_tp2_cuda_visible_devices_one_gpu PASSED [  6%]\ntests/test_distributed_d4b_real_2gpu_vllm_tp2.py::test_negative_duplicate_physical_gpu_placement PASSED [ 12%]\ntests/test_distributed_d4b_real_2gpu_vllm_tp2.py::test_negative_invalid_gpu_index PASSED [ 18%]\ntests/test_distributed_d4b_real_2gpu_vllm_tp2.py::test_negative_occupied_api_port PASSED [ 25%]\ntests/test_distributed_d4b_real_2gpu_vllm_tp2.py::test_negative_invalid_master_port PASSED [ 31%]\ntests/test_distributed_d4b_real_2gpu_vllm_tp2.py::test_negative_model_resolution_failure PASSED [ 37%]\ntests/test_distributed_d4b_real_2gpu_vllm_tp2.py::test_negative_unsupported_cli_flag PASSED [ 43%]\ntests/test_distributed_d4b_real_2gpu_vllm_tp2.py::test_negative_startup_timeout PASSED [ 50%]\ntests/test_distributed_d4b_real_2gpu_vllm_tp2.py::test_negative_premature_server_exit PASSED [ 56%]\ntests/test_distributed_d4b_real_2gpu_vllm_tp2.py::test_negative_request_timeout PASSED [ 62%]\ntests/test_distributed_d4b_real_2gpu_vllm_tp2.py::test_negative_worker_rank_exit PASSED [ 68%]\ntests/test_distributed_d4b_real_2gpu_vllm_tp2.py::test_negative_malformed_launch_spec PASSED [ 75%]\ntests/test_distributed_d4b_real_2gpu_vllm_tp2.py::test_negative_d4a_evidence_hash_mismatch PASSED [ 81%]\ntests/test_distributed_d4b_real_2gpu_vllm_tp2.py::test_negative_whole_model_evidence_missing PASSED [ 87%]\ntests/test_distributed_d4b_real_2gpu_vllm_tp2.py::test_negative_attempted_tp2_downgrade_to_tp1 PASSED [ 93%]\ntests/test_distributed_d4b_real_2gpu_vllm_tp2.py::test_negative_attempted_launch_after_rejected_preflight PASSED [100%]\n\n================= 16 passed, 3 deselected in 94.36s (0:01:34) ==================\n"
+}

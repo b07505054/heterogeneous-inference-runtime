@@ -1,0 +1,42 @@
+{
+  "chain": "compiler_candidate_id -> selected_tp2_execution_plan -> d4a_whole_model_evidence_hash -> d3b_vllm_launch_specification -> live_2gpu_hardware_inventory -> preflight -> generated_argv_environment -> server_process -> distributed_workers -> physical_gpu_placements -> nccl_initialization -> tp2_requests -> tp1_reference_requests -> output_comparison -> shutdown_and_cleanup",
+  "counters": {
+    "source_plan_mismatch_count": 0,
+    "candidate_mismatch_count": 0,
+    "d4a_evidence_mismatch_count": 0,
+    "vllm_version_mismatch_count": 0,
+    "model_identity_mismatch_count": 0,
+    "tp_mismatch_count": 0,
+    "pp_mismatch_count": 0,
+    "world_size_mismatch_count": 0,
+    "rank_count_mismatch_count": 0,
+    "physical_gpu_mismatch_count": 0,
+    "duplicate_gpu_assignment_count": 0,
+    "nccl_initialization_mismatch_count": 0,
+    "worker_count_mismatch_count": 0,
+    "request_failure_count": 0,
+    "token_output_mismatch_count": 0,
+    "text_output_mismatch_count": 0,
+    "finish_reason_mismatch_count": 0,
+    "silent_downgrade_count": 0,
+    "preflight_bypass_count": 0,
+    "unexpected_backend_count": 0,
+    "unexpected_process_launch_count": 0,
+    "orphan_process_count": 0,
+    "stale_port_count": 0,
+    "gpu_memory_cleanup_mismatch_count": 0,
+    "all_zero": true
+  },
+  "d4a_consistency": {
+    "model_matches": true,
+    "tensor_parallel_size_matches": true,
+    "pipeline_parallel_size_matches": true,
+    "vllm_version_matches": true,
+    "classification_was_validated": true
+  },
+  "source_hashes": {
+    "source_execution_plan_sha256": "4bb1b63cf06346164b8e052840ff18749ec651582d4412797b67a1e14cce77ac",
+    "d3b_tp2_launch_spec_sha256": "5aaf241c0f4056f848464e06fae5baea4282bc9d9e866aa929b118a87c62ef09",
+    "d4a_whole_model_evidence_sha256": "375a08cd9a3fbe919544757116a4ba3c7f03d4b7801967e26ee0a1bf69fd9a62"
+  }
+}

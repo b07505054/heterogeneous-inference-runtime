@@ -1,0 +1,65 @@
+{
+  "prompts": [
+    {
+      "prompt_id": "short_1",
+      "category": "very_short",
+      "prompt": "Hello",
+      "prompt_sha256": "185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969"
+    },
+    {
+      "prompt_id": "short_2",
+      "category": "very_short",
+      "prompt": "The capital of France is",
+      "prompt_sha256": "bbaff4d2ecd5892d4a442b0f53131641bf6e6f284761dd20fc0664bc97145762"
+    },
+    {
+      "prompt_id": "medium_1",
+      "category": "medium",
+      "prompt": "Explain in one sentence why the sky appears blue during the day.",
+      "prompt_sha256": "cb1ee91c1c4250a0c801549ae4ba819cc39ad8d3a872d39d7a5bb4f670d05da9"
+    },
+    {
+      "prompt_id": "long_prefill_1",
+      "category": "longer_prefill",
+      "prompt": "Summarize the following in one sentence: Distributed tensor parallelism splits individual weight matrices of a neural network across multiple accelerators so that each device holds only a shard of every layer, requiring collective communication operations such as all-reduce or all-gather to reconstruct full activations at specific points in the forward pass, in contrast to pipeline parallelism which assigns whole layers to distinct devices instead.",
+      "prompt_sha256": "d6d3ecfe7f75e4458f2cee1752d5dca08a355ae3e635823e924884ab6e078445"
+    },
+    {
+      "prompt_id": "code_1",
+      "category": "code",
+      "prompt": "Write a Python function that returns the factorial of a non-negative integer n.",
+      "prompt_sha256": "2005009462c0631e2e7db648fd45cdc9c7ff74a04d023eadc2bb072ee2c3631e"
+    },
+    {
+      "prompt_id": "numeric_1",
+      "category": "numeric_reasoning",
+      "prompt": "What is 17 multiplied by 6? Answer with just the number.",
+      "prompt_sha256": "96cc14df8784a6aa7aeeca9a77ecad1879b5afd3ea960311b43475273239de3f"
+    },
+    {
+      "prompt_id": "repeated_prefix_1",
+      "category": "repeated_prefix",
+      "prompt": "The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. What animal is mentioned?",
+      "prompt_sha256": "092951cd0a35fe37173a56aebb2fd784af0749a1516e01b3fe3114cc72a37b1f"
+    },
+    {
+      "prompt_id": "short_3",
+      "category": "very_short",
+      "prompt": "Good morning",
+      "prompt_sha256": "90a90a48e23dcc51ad4a821a301e3440ffeb5e986bd69d7bf347a2ba2da23bd3"
+    },
+    {
+      "prompt_id": "medium_2",
+      "category": "medium",
+      "prompt": "List three primary colors.",
+      "prompt_sha256": "89730693a28b2796e44e1fccb022018446c894acf33e40f21202c5c36894ee8e"
+    },
+    {
+      "prompt_id": "numeric_2",
+      "category": "numeric_reasoning",
+      "prompt": "If a train travels 60 miles in 1.5 hours, what is its average speed in miles per hour?",
+      "prompt_sha256": "fe160b5c4d95b884dcb0148b927599a2ca1dc607c9ac3becd2f2632cf8e9fe9a"
+    }
+  ],
+  "count": 10
+}

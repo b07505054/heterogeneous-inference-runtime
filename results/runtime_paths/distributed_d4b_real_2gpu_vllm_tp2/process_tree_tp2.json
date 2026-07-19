@@ -1,0 +1,77 @@
+{
+  "before_start": [],
+  "during": [
+    {
+      "pid": 20106,
+      "name": "python",
+      "status": "sleeping",
+      "cmdline": ".venv/bin/python -m vllm.entrypoints.openai.api_server --model Qwen/Qwen2.5-0.5B-Instruct --tokenizer Qwen/Qwen2.5-0.5B-Instruct --no-trust-remote-code --dtype float16 --seed 1234 --served-model-name qwen2.5-0.5b-instruct-tp2-planning-only --host 127.0.0.1 --port 44435 --master-addr 127.0.0.1 --mast",
+      "ppid": 19322
+    },
+    {
+      "pid": 20320,
+      "name": "python",
+      "status": "sleeping",
+      "cmdline": "/workspace/Project/heterogeneous-inference-runtime/.venv/bin/python -c from multiprocessing.resource_tracker import main;main(46)",
+      "ppid": 20106
+    },
+    {
+      "pid": 20321,
+      "name": "VLLM::EngineCore",
+      "status": "sleeping",
+      "cmdline": "VLLM::EngineCore                                                                                                                                                                     ",
+      "ppid": 20106
+    },
+    {
+      "pid": 20528,
+      "name": "VLLM::Worker_TP0",
+      "status": "sleeping",
+      "cmdline": "VLLM::Worker_TP0                                                                                                                                                                     ",
+      "ppid": 20321
+    },
+    {
+      "pid": 20539,
+      "name": "VLLM::Worker_TP1",
+      "status": "sleeping",
+      "cmdline": "VLLM::Worker_TP1                                                                                                                                                                     ",
+      "ppid": 20321
+    }
+  ],
+  "after": [
+    {
+      "pid": 20106,
+      "name": null,
+      "status": "gone",
+      "cmdline": null,
+      "ppid": null
+    },
+    {
+      "pid": 20320,
+      "name": null,
+      "status": "gone",
+      "cmdline": null,
+      "ppid": null
+    },
+    {
+      "pid": 20321,
+      "name": null,
+      "status": "gone",
+      "cmdline": null,
+      "ppid": null
+    },
+    {
+      "pid": 20528,
+      "name": null,
+      "status": "gone",
+      "cmdline": null,
+      "ppid": null
+    },
+    {
+      "pid": 20539,
+      "name": null,
+      "status": "gone",
+      "cmdline": null,
+      "ppid": null
+    }
+  ]
+}

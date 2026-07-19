@@ -1,0 +1,56 @@
+{
+  "before_start": [],
+  "during": [
+    {
+      "pid": 19551,
+      "name": "python",
+      "status": "sleeping",
+      "cmdline": ".venv/bin/python -m vllm.entrypoints.openai.api_server --model Qwen/Qwen2.5-0.5B-Instruct --tokenizer Qwen/Qwen2.5-0.5B-Instruct --no-trust-remote-code --dtype float16 --seed 1234 --served-model-name qwen2.5-0.5b-instruct-tp1-planning-only --host 127.0.0.1 --port 38101 --master-addr 127.0.0.1 --mast",
+      "ppid": 19322
+    },
+    {
+      "pid": 19765,
+      "name": "python",
+      "status": "sleeping",
+      "cmdline": "/workspace/Project/heterogeneous-inference-runtime/.venv/bin/python -c from multiprocessing.resource_tracker import main;main(46)",
+      "ppid": 19551
+    },
+    {
+      "pid": 19766,
+      "name": "VLLM::EngineCore",
+      "status": "sleeping",
+      "cmdline": "VLLM::EngineCore                                                                                                                                                                     ",
+      "ppid": 19551
+    },
+    {
+      "pid": 19973,
+      "name": "VLLM::Worker",
+      "status": "sleeping",
+      "cmdline": "VLLM::Worker                                                                                                                                                                         ",
+      "ppid": 19766
+    }
+  ],
+  "after": [
+    {
+      "pid": 19765,
+      "name": "python",
+      "status": "sleeping",
+      "cmdline": "/workspace/Project/heterogeneous-inference-runtime/.venv/bin/python -c from multiprocessing.resource_tracker import main;main(46)",
+      "ppid": 1
+    },
+    {
+      "pid": 19766,
+      "name": null,
+      "status": "gone",
+      "cmdline": null,
+      "ppid": null
+    },
+    {
+      "pid": 19973,
+      "name": "VLLM::Worker",
+      "status": "running",
+      "cmdline": "VLLM::Worker                                                                                                                                                                         ",
+      "ppid": 1
+    }
+  ]
+}

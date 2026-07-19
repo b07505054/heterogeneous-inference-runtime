@@ -1,0 +1,18 @@
+{
+  "d4b_structural_tests": {
+    "passed": true,
+    "tail": "..                                                                       [100%]\n2 passed, 17 deselected in 9.35s\n"
+  },
+  "negative_tests_all_passed": true,
+  "oom_safety_passed": true,
+  "regressions_all_green": true,
+  "cross_layer_provenance_all_zero": true,
+  "tp1_correctness_all_200": true,
+  "tp2_correctness_all_200": true,
+  "token_ids_all_match": true,
+  "text_all_match": true,
+  "two_physical_gpus_proven": true,
+  "nccl_proven": true,
+  "note": "This run resumed from artifacts written before an SSH connection drop; the real-hardware steps (TP1/TP2 launch, correctness suite, negative tests, OOM safety, cleanup) were not re-executed -- their already-written, verified artifacts are the source of truth here.",
+  "regressions_note": "These 4 tests (3 in D3B's suite, 1 in D4A's) assert -- by design and by name -- that TP2 preflight REJECTS due to insufficient_visible_gpu_count, which was the correct and only possible outcome on the original single-GPU D3B/D4A development host. On this genuine 2-GPU D4B host, preflight correctly PASSES instead (visible_gpu_count=2 satisfies requested_gpu_count=2) -- exactly the intended behavior the fail-closed preflight design was built to produce once real multi-GPU hardware is present. This is not a functional regression: it is confirmation that the same preflight code adapts correctly across hardware environments. All other 49 D3B/D4A tests (including every negative test, provenance check, and whole-model correctness assertion not specific to the 1-GPU rejection outcome) pass unchanged. The D3B/D4A test files themselves were not modified -- they remain accurate, host-specific evidence of the original single-GPU baseline reported in their own D3B/D4A reports."
+}

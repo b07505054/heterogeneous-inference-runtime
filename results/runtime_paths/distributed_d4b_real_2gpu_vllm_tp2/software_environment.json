@@ -1,0 +1,16 @@
+{
+  "python_version": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+  "torch_version": "2.11.0+cu130",
+  "torch_cuda_version": "13.0",
+  "vllm_version": "0.24.0",
+  "nccl_available": true,
+  "nccl_version": "2.28.9",
+  "cuda_device_count": 2,
+  "d3b_expected_vllm_version": "0.24.0",
+  "d3b_expected_torch_version": "2.11.0+cu130",
+  "version_matches_d3b_d4a_baseline": true,
+  "live_argument_registry_total": 267,
+  "d3b_argument_registry_total": 267,
+  "argument_registry_mismatches_vs_d3b": [],
+  "no_silent_upgrade": true
+}

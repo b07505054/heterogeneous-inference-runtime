@@ -1,0 +1,5 @@
+{
+  "command": "pytest -v tests/test_distributed_d4b_real_2gpu_vllm_tp2.py -k oom",
+  "passed": true,
+  "stdout_tail": "============================= test session starts ==============================\nplatform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /workspace/Project/heterogeneous-inference-runtime/.venv/bin/python3\ncachedir: .pytest_cache\nrootdir: /workspace/Project/heterogeneous-inference-runtime\nplugins: anyio-4.14.2\ncollecting ... collected 19 items / 18 deselected / 1 selected\n\ntests/test_distributed_d4b_real_2gpu_vllm_tp2.py::test_oom_safety_unreasonably_low_memory_utilization PASSED [100%]\n\n================= 1 passed, 18 deselected in 67.43s (0:01:07) ==================\n"
+}

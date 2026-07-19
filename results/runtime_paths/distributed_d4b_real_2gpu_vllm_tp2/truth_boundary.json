@@ -1,0 +1,16 @@
+{
+  "d4b_primary_claim": "A compiler-selected TP=2 plan for Qwen2.5-0.5B-Instruct was materialized through the existing D3B vLLM adapter and successfully executed by vLLM 0.24.0 on two physical GPUs with real distributed workers and NCCL initialization, producing inference results consistent with a TP=1 reference under deterministic correctness workloads.",
+  "not_claimed": [
+    "TP=2 speedup",
+    "better TTFT",
+    "better TPOT",
+    "higher throughput",
+    "profitable distributed selection",
+    "general multi-node support",
+    "compiler-controlled per-operator vLLM execution"
+  ],
+  "critical_clarification": "D4B validates that the compiler selects and materializes the whole-model TP strategy, and that vLLM's installed, source-verified whole-model TP implementation executes that strategy. D4B does not prove that vLLM executes the compiler's 170 Python-side D4A work items individually.",
+  "environment_kind": "rented_cloud_marketplace_2x_rtx_4090",
+  "two_physical_gpus_proven": true,
+  "nccl_initialization_proven": true
+}

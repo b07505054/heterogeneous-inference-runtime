@@ -1,0 +1,18 @@
+{
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "architecture": [
+    "Qwen2ForCausalLM"
+  ],
+  "hidden_size": 896,
+  "num_hidden_layers": 24,
+  "num_attention_heads": 14,
+  "num_key_value_heads": 2,
+  "vocab_size": 151936,
+  "tie_word_embeddings": true,
+  "dtype_config": "torch.bfloat16",
+  "revision_snapshot": null,
+  "local_path": "/root/.cache/huggingface/hub/models--Qwen--Qwen2.5-0.5B-Instruct",
+  "weight_file_manifest": [],
+  "config_sha256": "2674d70e8145553fdb9014279dbcda3ff32313be8511bd7c17e6a22e111d6674",
+  "used_identically_by_tp1_and_tp2": true
+}

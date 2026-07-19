@@ -1,0 +1,113 @@
+{
+  "checks": [
+    {
+      "name": "model_identifier_resolvable",
+      "status": "pass",
+      "detail": "model='Qwen/Qwen2.5-0.5B-Instruct' locally cached: True"
+    },
+    {
+      "name": "vllm_package_installed",
+      "status": "pass",
+      "detail": "vllm import succeeded"
+    },
+    {
+      "name": "requested_cli_arguments_exist_in_installed_version",
+      "status": "pass",
+      "detail": "unsupported: []"
+    },
+    {
+      "name": "tensor_parallel_size_at_least_one",
+      "status": "pass",
+      "detail": "tensor_parallel_size=1"
+    },
+    {
+      "name": "pipeline_parallel_size_at_least_one",
+      "status": "pass",
+      "detail": "pipeline_parallel_size=1"
+    },
+    {
+      "name": "world_size_equals_tp_times_pp",
+      "status": "pass",
+      "detail": "world_size=1 tp*pp=1"
+    },
+    {
+      "name": "data_parallel_size_supported_configuration",
+      "status": "pass",
+      "detail": "data_parallel_size=1 (D3B supports dp=1 only)"
+    },
+    {
+      "name": "cuda_available",
+      "status": "pass",
+      "detail": "cuda_available=True"
+    },
+    {
+      "name": "sufficient_visible_gpu_count",
+      "status": "pass",
+      "detail": "visible_gpu_count=2 requested_gpu_count=1"
+    },
+    {
+      "name": "per_rank_gpu_memory_plausible",
+      "status": "pass",
+      "detail": "per_rank_budget_mb=[21672.792, 21672.792] estimated_model_footprint_mb=1454.3235168457031"
+    },
+    {
+      "name": "model_dtype_supported_by_installed_vllm",
+      "status": "pass",
+      "detail": "dtype='float16' supported=['auto', 'bfloat16', 'float', 'float16', 'float32', 'half']"
+    },
+    {
+      "name": "model_max_position_embeddings_compatible",
+      "status": "pass",
+      "detail": "max_model_len=2048 model_max_position_embeddings=32768"
+    },
+    {
+      "name": "port_in_valid_range",
+      "status": "pass",
+      "detail": "port=8000"
+    },
+    {
+      "name": "port_not_already_occupied",
+      "status": "pass",
+      "detail": "port=8000 bind test"
+    },
+    {
+      "name": "master_address_valid",
+      "status": "pass",
+      "detail": "master_address='127.0.0.1'"
+    },
+    {
+      "name": "rank_placement_completeness",
+      "status": "pass",
+      "detail": "placement_count matches world_size=1"
+    },
+    {
+      "name": "rank_ids_contiguous",
+      "status": "pass",
+      "detail": "rank ids form contiguous 0..world_size-1 set"
+    },
+    {
+      "name": "no_duplicate_physical_device_assignment",
+      "status": "pass",
+      "detail": "no two ranks share one physical GPU index"
+    },
+    {
+      "name": "rank_placement_overall_valid",
+      "status": "pass",
+      "detail": "errors=[]"
+    },
+    {
+      "name": "environment_variable_conflicts",
+      "status": "pass",
+      "detail": "conflicts=[]"
+    },
+    {
+      "name": "distributed_executor_backend_supported",
+      "status": "pass",
+      "detail": "backend='mp' supported=['external_launcher', 'mp', 'ray', 'uni']"
+    }
+  ],
+  "execution_preflight": "passed",
+  "rejection_reasons": [],
+  "advisory_reasons": [],
+  "primary_reason": null
+}

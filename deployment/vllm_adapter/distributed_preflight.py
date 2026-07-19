@@ -94,9 +94,23 @@ def check_port_available(host: str, port: int) -> bool:
         return False
 
 
+def _hf_hub_cache_root() -> Path:
+    """Resolve the real HF hub cache root exactly as huggingface_hub itself
+    does (HF_HUB_CACHE, then HF_HOME/hub, then ~/.cache/huggingface/hub) --
+    D4B discovered that hardcoding the default path silently mismatched a
+    host with a custom HF_HOME (e.g. HF_HOME=/workspace/.hf_home), so this
+    defers to the library's own resolution instead of re-implementing it."""
+    try:
+        from huggingface_hub import constants as hf_constants
+
+        return Path(hf_constants.HF_HUB_CACHE)
+    except ImportError:
+        return Path.home() / ".cache" / "huggingface" / "hub"
+
+
 def check_model_locally_resolvable(model_id: str) -> bool:
     """Filesystem-only check of the local HF cache -- no network call."""
-    cache_root = Path.home() / ".cache" / "huggingface" / "hub"
+    cache_root = _hf_hub_cache_root()
     slug = "models--" + model_id.replace("/", "--")
     model_dir = cache_root / slug
     if not model_dir.is_dir():

@@ -1,0 +1,76 @@
+{
+  "comparisons": [
+    {
+      "prompt_id": "short_1",
+      "text_match": true,
+      "finish_reason_match": true,
+      "tp1_finish_reason": "length",
+      "tp2_finish_reason": "length"
+    },
+    {
+      "prompt_id": "short_2",
+      "text_match": true,
+      "finish_reason_match": true,
+      "tp1_finish_reason": "length",
+      "tp2_finish_reason": "length"
+    },
+    {
+      "prompt_id": "medium_1",
+      "text_match": true,
+      "finish_reason_match": true,
+      "tp1_finish_reason": "length",
+      "tp2_finish_reason": "length"
+    },
+    {
+      "prompt_id": "long_prefill_1",
+      "text_match": true,
+      "finish_reason_match": true,
+      "tp1_finish_reason": "length",
+      "tp2_finish_reason": "length"
+    },
+    {
+      "prompt_id": "code_1",
+      "text_match": true,
+      "finish_reason_match": true,
+      "tp1_finish_reason": "length",
+      "tp2_finish_reason": "length"
+    },
+    {
+      "prompt_id": "numeric_1",
+      "text_match": true,
+      "finish_reason_match": true,
+      "tp1_finish_reason": "length",
+      "tp2_finish_reason": "length"
+    },
+    {
+      "prompt_id": "repeated_prefix_1",
+      "text_match": true,
+      "finish_reason_match": true,
+      "tp1_finish_reason": "length",
+      "tp2_finish_reason": "length"
+    },
+    {
+      "prompt_id": "short_3",
+      "text_match": true,
+      "finish_reason_match": true,
+      "tp1_finish_reason": "length",
+      "tp2_finish_reason": "length"
+    },
+    {
+      "prompt_id": "medium_2",
+      "text_match": true,
+      "finish_reason_match": true,
+      "tp1_finish_reason": "length",
+      "tp2_finish_reason": "length"
+    },
+    {
+      "prompt_id": "numeric_2",
+      "text_match": true,
+      "finish_reason_match": true,
+      "tp1_finish_reason": "length",
+      "tp2_finish_reason": "length"
+    }
+  ],
+  "all_text_match": true,
+  "all_finish_reason_match": true
+}

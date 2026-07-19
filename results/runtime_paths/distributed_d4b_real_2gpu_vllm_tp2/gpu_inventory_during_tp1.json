@@ -1,0 +1,39 @@
+{
+  "label": "during_tp1",
+  "captured_at": 1784446675.1131876,
+  "gpu_inventory": [
+    {
+      "index": "0",
+      "name": "NVIDIA GeForce RTX 4090",
+      "uuid": "GPU-3e930a03-3101-6841-b2c0-6d7af909067d",
+      "pci.bus_id": "00000000:41:00.0",
+      "memory.total": "24564",
+      "memory.used": "22104",
+      "memory.free": "1978",
+      "utilization.gpu": "0",
+      "compute_cap": "8.9",
+      "driver_version": "580.159.03"
+    },
+    {
+      "index": "1",
+      "name": "NVIDIA GeForce RTX 4090",
+      "uuid": "GPU-c8703d8b-0918-b881-caf3-7d8343a9af35",
+      "pci.bus_id": "00000000:61:00.0",
+      "memory.total": "24564",
+      "memory.used": "4",
+      "memory.free": "24078",
+      "utilization.gpu": "0",
+      "compute_cap": "8.9",
+      "driver_version": "580.159.03"
+    }
+  ],
+  "compute_apps": [
+    {
+      "pid": "19973",
+      "process_name": "VLLM::Worker",
+      "used_memory": "22094",
+      "gpu_uuid": "GPU-3e930a03-3101-6841-b2c0-6d7af909067d"
+    }
+  ],
+  "method": "nvidia-smi --query-gpu / --query-compute-apps (real live query, not inferred)"
+}

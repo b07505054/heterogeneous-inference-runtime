@@ -1,0 +1,440 @@
+{
+  "schema_version": "1.0.0",
+  "source_execution_plan_id": "nvidia-gtx1650-maxq-d2-distributed-opt-in_serving_plan",
+  "source_execution_plan_path": "/home/allen/Desktop/Project/heterogeneous-inference-runtime/results/runtime_paths/distributed_d2_qwen_pipeline/real_qwen_tp2_execution_plan.json",
+  "source_candidate_id": "tp2",
+  "source_operator_ids": [
+    "qwen_prefill::llm.o_proj::layer_0"
+  ],
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "tokenizer": "Qwen/Qwen2.5-0.5B-Instruct",
+  "served_model_name": "qwen2.5-0.5b-instruct-tp2-planning-only",
+  "revision": null,
+  "dtype": "float16",
+  "tensor_parallel_size": 2,
+  "pipeline_parallel_size": 1,
+  "data_parallel_size": 1,
+  "distributed_executor_backend": "mp",
+  "world_size": 2,
+  "rank_count": 2,
+  "rank_placements": [
+    {
+      "rank_id": 0,
+      "logical_gpu_index": 0,
+      "physical_device_index": 0,
+      "rank_id_source": "compiler_plan",
+      "placement_policy_source": "explicit_D3B_default"
+    },
+    {
+      "rank_id": 1,
+      "logical_gpu_index": 1,
+      "physical_device_index": null,
+      "rank_id_source": "compiler_plan",
+      "placement_policy_source": "explicit_D3B_default"
+    }
+  ],
+  "visible_devices": [
+    0
+  ],
+  "device_type": "cuda",
+  "host": "127.0.0.1",
+  "port": 8000,
+  "master_address": "127.0.0.1",
+  "master_port": 29501,
+  "max_model_len": 2048,
+  "max_num_seqs": 4,
+  "max_num_batched_tokens": 2048,
+  "gpu_memory_utilization": 0.9,
+  "enable_prefix_caching": true,
+  "enable_chunked_prefill": true,
+  "trust_remote_code": false,
+  "seed": 1234,
+  "environment": {
+    "CUDA_VISIBLE_DEVICES": "0",
+    "MASTER_ADDR": "127.0.0.1",
+    "MASTER_PORT": "29501",
+    "WORLD_SIZE": "2",
+    "VLLM_WORKER_MULTIPROC_METHOD": "spawn",
+    "TOKENIZERS_PARALLELISM": "false",
+    "NCCL_DEBUG": "INFO"
+  },
+  "cli_arguments": {
+    "argv": [
+      ".venv/bin/python",
+      "-m",
+      "vllm.entrypoints.openai.api_server",
+      "--model",
+      "Qwen/Qwen2.5-0.5B-Instruct",
+      "--tokenizer",
+      "Qwen/Qwen2.5-0.5B-Instruct",
+      "--no-trust-remote-code",
+      "--dtype",
+      "float16",
+      "--seed",
+      "1234",
+      "--served-model-name",
+      "qwen2.5-0.5b-instruct-tp2-planning-only",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "8000",
+      "--master-addr",
+      "127.0.0.1",
+      "--master-port",
+      "29501",
+      "--tensor-parallel-size",
+      "2",
+      "--pipeline-parallel-size",
+      "1",
+      "--data-parallel-size",
+      "1",
+      "--distributed-executor-backend",
+      "mp",
+      "--max-model-len",
+      "2048",
+      "--max-num-seqs",
+      "4",
+      "--max-num-batched-tokens",
+      "2048",
+      "--gpu-memory-utilization",
+      "0.9",
+      "--enable-prefix-caching",
+      "--enable-chunked-prefill"
+    ],
+    "shell_command": ".venv/bin/python -m vllm.entrypoints.openai.api_server --model Qwen/Qwen2.5-0.5B-Instruct --tokenizer Qwen/Qwen2.5-0.5B-Instruct --no-trust-remote-code --dtype float16 --seed 1234 --served-model-name qwen2.5-0.5b-instruct-tp2-planning-only --host 127.0.0.1 --port 8000 --master-addr 127.0.0.1 --master-port 29501 --tensor-parallel-size 2 --pipeline-parallel-size 1 --data-parallel-size 1 --distributed-executor-backend mp --max-model-len 2048 --max-num-seqs 4 --max-num-batched-tokens 2048 --gpu-memory-utilization 0.9 --enable-prefix-caching --enable-chunked-prefill",
+    "environment": {
+      "CUDA_VISIBLE_DEVICES": "0",
+      "MASTER_ADDR": "127.0.0.1",
+      "MASTER_PORT": "29501",
+      "WORLD_SIZE": "2",
+      "VLLM_WORKER_MULTIPROC_METHOD": "spawn",
+      "TOKENIZERS_PARALLELISM": "false",
+      "NCCL_DEBUG": "INFO"
+    },
+    "working_directory": "/home/allen/Desktop/Project/heterogeneous-inference-runtime",
+    "expected_process_count": 2,
+    "expected_gpu_assignment": {
+      "0": 0,
+      "1": null
+    },
+    "argument_compatibility": [
+      {
+        "requested_argument": "model",
+        "dest": "model",
+        "installed_version_support_status": "supported",
+        "resolved_spelling": "--model",
+        "resolved_type": "str",
+        "resolved_default": "Qwen/Qwen3-0.6B",
+        "source": "compiler_plan"
+      },
+      {
+        "requested_argument": "tokenizer",
+        "dest": "tokenizer",
+        "installed_version_support_status": "supported",
+        "resolved_spelling": "--tokenizer",
+        "resolved_type": "str",
+        "resolved_default": null,
+        "source": "compiler_plan"
+      },
+      {
+        "requested_argument": "trust_remote_code",
+        "dest": "trust_remote_code",
+        "installed_version_support_status": "supported",
+        "resolved_spelling": "--trust-remote-code",
+        "resolved_type": null,
+        "resolved_default": false,
+        "source": "capability_profile"
+      },
+      {
+        "requested_argument": "dtype",
+        "dest": "dtype",
+        "installed_version_support_status": "supported",
+        "resolved_spelling": "--dtype",
+        "resolved_type": "str",
+        "resolved_default": "auto",
+        "source": "explicit_D3B_default"
+      },
+      {
+        "requested_argument": "seed",
+        "dest": "seed",
+        "installed_version_support_status": "supported",
+        "resolved_spelling": "--seed",
+        "resolved_type": "int",
+        "resolved_default": 0,
+        "source": "compiler_plan"
+      },
+      {
+        "requested_argument": "served_model_name",
+        "dest": "served_model_name",
+        "installed_version_support_status": "supported",
+        "resolved_spelling": "--served-model-name",
+        "resolved_type": "_optional_type",
+        "resolved_default": null,
+        "source": "explicit_D3B_default"
+      },
+      {
+        "requested_argument": "host",
+        "dest": "host",
+        "installed_version_support_status": "supported",
+        "resolved_spelling": "--host",
+        "resolved_type": "_optional_type",
+        "resolved_default": null,
+        "source": "explicit_D3B_default"
+      },
+      {
+        "requested_argument": "port",
+        "dest": "port",
+        "installed_version_support_status": "supported",
+        "resolved_spelling": "--port",
+        "resolved_type": "int",
+        "resolved_default": 8000,
+        "source": "capability_profile"
+      },
+      {
+        "requested_argument": "master_addr",
+        "dest": "master_addr",
+        "installed_version_support_status": "supported",
+        "resolved_spelling": "--master-addr",
+        "resolved_type": "str",
+        "resolved_default": "127.0.0.1",
+        "source": "capability_profile"
+      },
+      {
+        "requested_argument": "master_port",
+        "dest": "master_port",
+        "installed_version_support_status": "supported",
+        "resolved_spelling": "--master-port",
+        "resolved_type": "int",
+        "resolved_default": 29501,
+        "source": "capability_profile"
+      },
+      {
+        "requested_argument": "tensor_parallel_size",
+        "dest": "tensor_parallel_size",
+        "installed_version_support_status": "supported",
+        "resolved_spelling": "--tensor-parallel-size",
+        "resolved_type": "int",
+        "resolved_default": 1,
+        "source": "compiler_plan"
+      },
+      {
+        "requested_argument": "pipeline_parallel_size",
+        "dest": "pipeline_parallel_size",
+        "installed_version_support_status": "supported",
+        "resolved_spelling": "--pipeline-parallel-size",
+        "resolved_type": "int",
+        "resolved_default": 1,
+        "source": "compiler_plan"
+      },
+      {
+        "requested_argument": "data_parallel_size",
+        "dest": "data_parallel_size",
+        "installed_version_support_status": "supported",
+        "resolved_spelling": "--data-parallel-size",
+        "resolved_type": "int",
+        "resolved_default": 1,
+        "source": "capability_profile"
+      },
+      {
+        "requested_argument": "distributed_executor_backend",
+        "dest": "distributed_executor_backend",
+        "installed_version_support_status": "supported",
+        "resolved_spelling": "--distributed-executor-backend",
+        "resolved_type": "_optional_type",
+        "resolved_default": null,
+        "source": "explicit_D3B_default"
+      },
+      {
+        "requested_argument": "max_model_len",
+        "dest": "max_model_len",
+        "installed_version_support_status": "supported",
+        "resolved_spelling": "--max-model-len",
+        "resolved_type": "human_readable_int_or_auto",
+        "resolved_default": null,
+        "source": "explicit_D3B_default"
+      },
+      {
+        "requested_argument": "max_num_seqs",
+        "dest": "max_num_seqs",
+        "installed_version_support_status": "supported",
+        "resolved_spelling": "--max-num-seqs",
+        "resolved_type": "int",
+        "resolved_default": null,
+        "source": "explicit_D3B_default"
+      },
+      {
+        "requested_argument": "max_num_batched_tokens",
+        "dest": "max_num_batched_tokens",
+        "installed_version_support_status": "supported",
+        "resolved_spelling": "--max-num-batched-tokens",
+        "resolved_type": "human_readable_int",
+        "resolved_default": null,
+        "source": "explicit_D3B_default"
+      },
+      {
+        "requested_argument": "gpu_memory_utilization",
+        "dest": "gpu_memory_utilization",
+        "installed_version_support_status": "supported",
+        "resolved_spelling": "--gpu-memory-utilization",
+        "resolved_type": "float",
+        "resolved_default": 0.92,
+        "source": "explicit_D3B_default"
+      },
+      {
+        "requested_argument": "enable_prefix_caching",
+        "dest": "enable_prefix_caching",
+        "installed_version_support_status": "supported",
+        "resolved_spelling": "--enable-prefix-caching",
+        "resolved_type": null,
+        "resolved_default": null,
+        "source": "explicit_D3B_default"
+      },
+      {
+        "requested_argument": "enable_chunked_prefill",
+        "dest": "enable_chunked_prefill",
+        "installed_version_support_status": "supported",
+        "resolved_spelling": "--enable-chunked-prefill",
+        "resolved_type": null,
+        "resolved_default": null,
+        "source": "explicit_D3B_default"
+      }
+    ],
+    "all_arguments_supported": true,
+    "unsupported_arguments": []
+  },
+  "preflight_status": "rejected",
+  "rejection_reasons": [
+    "insufficient_visible_gpu_count"
+  ],
+  "execution_readiness_state": "PREFLIGHT_REJECTED",
+  "whole_model_tp_evidence_status": "not_established_operator_level_only",
+  "d3b_mode": "planning_only",
+  "field_provenance": {
+    "served_model_name": {
+      "value_summary": "'qwen2.5-0.5b-instruct-tp2-planning-only'",
+      "source": "explicit_D3B_default",
+      "reason": "D2/D3A plans do not declare a served name; D3B names it after the model and candidate id."
+    },
+    "model": {
+      "value_summary": "'Qwen/Qwen2.5-0.5B-Instruct'",
+      "source": "compiler_plan",
+      "reason": "D3A validated that the compiler's abbreviated model_identity.model_id ('qwen2.5-0.5b') corresponds to this real, locally-cached HF checkpoint."
+    },
+    "tokenizer": {
+      "value_summary": "'Qwen/Qwen2.5-0.5B-Instruct'",
+      "source": "compiler_plan",
+      "reason": "Same identity as model; no separate compiler tokenizer decision exists."
+    },
+    "revision": {
+      "value_summary": "None",
+      "source": "capability_profile",
+      "reason": "Matches installed vLLM registry default for --revision (None)."
+    },
+    "dtype": {
+      "value_summary": "'float16'",
+      "source": "explicit_D3B_default",
+      "reason": "Neither D2 nor D3A declares a serving dtype for the distributed plan; float16 is pinned explicitly for deterministic, reproducible CLI generation rather than leaving 'auto' (the installed registry default) to resolve differently across runs."
+    },
+    "tensor_parallel_size": {
+      "value_summary": "2",
+      "source": "compiler_plan",
+      "reason": "Read directly from ExecutionPlan.distributed.tensor_parallel_size (or the TP1 absence convention)."
+    },
+    "pipeline_parallel_size": {
+      "value_summary": "1",
+      "source": "compiler_plan",
+      "reason": "Read directly from ExecutionPlan.distributed.pipeline_parallel_size (or the TP1 absence convention)."
+    },
+    "data_parallel_size": {
+      "value_summary": "1",
+      "source": "capability_profile",
+      "reason": "Matches installed vLLM registry default for --data-parallel-size (1); D2 plan carries no data-parallel concept."
+    },
+    "distributed_executor_backend": {
+      "value_summary": "'mp'",
+      "source": "explicit_D3B_default",
+      "reason": "D2 plan declares a tensor-parallel strategy but not a vLLM executor backend choice; 'mp' (multiprocessing) is picked as the single-node default over 'ray'/'external_launcher'/'uni'."
+    },
+    "world_size": {
+      "value_summary": "2",
+      "source": "compiler_plan",
+      "reason": "Read directly from ExecutionPlan.distributed.world_size (or the TP1 absence convention)."
+    },
+    "rank_count": {
+      "value_summary": "2",
+      "source": "compiler_plan",
+      "reason": "Equal to the number of compiler-declared ranks."
+    },
+    "visible_devices": {
+      "value_summary": "(0,)",
+      "source": "runtime_discovery",
+      "reason": "Directly probed via torch.cuda.device_count() on this host at materialization time."
+    },
+    "device_type": {
+      "value_summary": "'cuda'",
+      "source": "runtime_discovery",
+      "reason": "torch.cuda.is_available() probed at materialization time."
+    },
+    "host": {
+      "value_summary": "'127.0.0.1'",
+      "source": "explicit_D3B_default",
+      "reason": "Installed registry default for --host is None (bind-all); D3B pins loopback explicitly for a safe planning default."
+    },
+    "port": {
+      "value_summary": "8000",
+      "source": "capability_profile",
+      "reason": "Matches installed vLLM registry default for --port (8000)."
+    },
+    "master_address": {
+      "value_summary": "'127.0.0.1'",
+      "source": "capability_profile",
+      "reason": "Matches installed vLLM registry default for --master-addr."
+    },
+    "master_port": {
+      "value_summary": "29501",
+      "source": "capability_profile",
+      "reason": "Matches installed vLLM registry default for --master-port."
+    },
+    "max_model_len": {
+      "value_summary": "2048",
+      "source": "explicit_D3B_default",
+      "reason": "Neither D2 nor D3A declares a serving context length; 2048 is a conservative D3B default well within the real model's max_position_embeddings."
+    },
+    "max_num_seqs": {
+      "value_summary": "4",
+      "source": "explicit_D3B_default",
+      "reason": "Conservative default batch width appropriate for a 4GB-class GPU; not decided by the compiler plan."
+    },
+    "max_num_batched_tokens": {
+      "value_summary": "2048",
+      "source": "explicit_D3B_default",
+      "reason": "Conservative default token budget per step; not decided by the compiler plan."
+    },
+    "gpu_memory_utilization": {
+      "value_summary": "0.9",
+      "source": "explicit_D3B_default",
+      "reason": "Set below the installed registry default (0.92) given the small 4GB-class GPU on this host."
+    },
+    "enable_prefix_caching": {
+      "value_summary": "True",
+      "source": "explicit_D3B_default",
+      "reason": "Registry default leaves this unset (None/auto); D3B explicitly enables it."
+    },
+    "enable_chunked_prefill": {
+      "value_summary": "True",
+      "source": "explicit_D3B_default",
+      "reason": "Registry default leaves this unset (None/auto); D3B explicitly enables it."
+    },
+    "trust_remote_code": {
+      "value_summary": "False",
+      "source": "capability_profile",
+      "reason": "Matches installed vLLM registry default (False); real Qwen2.5 config does not require custom remote code."
+    },
+    "seed": {
+      "value_summary": "1234",
+      "source": "compiler_plan",
+      "reason": "Reused verbatim from D3A's live_model_execution.json seed, preserving determinism continuity across D2/D3A/D3B."
+    }
+  },
+  "truth_boundary": "A vLLM distributed launch specification is materialized launch intent derived from a compiler-selected TP plan, validated fail-closed against the actual installed vLLM version and actual host hardware. It is not a claim of successful vLLM execution, NCCL initialization, multi-GPU serving, or any measured distributed performance."
+}

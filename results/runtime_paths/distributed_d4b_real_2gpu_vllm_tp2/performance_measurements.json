@@ -1,0 +1,27 @@
+{
+  "tp1_startup_latency_s": 69.0624537980184,
+  "tp2_startup_latency_s": 81.06561156315729,
+  "tp1_readiness_latency_s": 69.05337023735046,
+  "tp2_readiness_latency_s": 81.05458736419678,
+  "tp1_request_latency_s": {
+    "median_s": 0.0728824541438371,
+    "p95_s": 0.4083472369238734,
+    "min_s": 0.06589704565703869,
+    "max_s": 0.4083472369238734,
+    "n": 10
+  },
+  "tp2_request_latency_s": {
+    "median_s": 0.07584609859623015,
+    "p95_s": 0.4757476728409529,
+    "min_s": 0.06517002591863275,
+    "max_s": 0.4757476728409529,
+    "n": 10
+  },
+  "tp1_shutdown_latency_s": 1.009380311705172,
+  "tp2_shutdown_latency_s": 1.0103515377268195,
+  "tp2_nccl_init_visible_in_log": true,
+  "gpu_memory_per_rank_mb_during_tp2": "not recoverable post-hoc after the SSH interruption; the real-time value was captured live during the TP2 active window in gpu_inventory_during_tp2.json's compute_apps rows (used_gpu_memory column) instead",
+  "peak_cpu_memory_mb_this_process": 830.609375,
+  "label": "bring-up and correctness diagnostics -- NOT a controlled performance benchmark",
+  "no_speedup_claim": true
+}
