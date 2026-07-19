@@ -1,0 +1,13 @@
+{
+  "stage": "serving_distributed_level2_12",
+  "starting": {
+    "runtime": {"branch":"main","head":"34aee51fef08dc447a6a52d938b4867d60eeef70","dirty":true},
+    "compiler": {"branch":"master","head":"dbf7329392bd2c70fa6ef25e359b277d171b3082","dirty":false}
+  },
+  "ending": {
+    "runtime": {"branch":"main","head":"34aee51fef08dc447a6a52d938b4867d60eeef70","dirty":true,"head_unchanged":true},
+    "compiler": {"branch":"master","head":"dbf7329392bd2c70fa6ef25e359b277d171b3082","dirty":false,"head_unchanged":true}
+  },
+  "destructive_operations": [],
+  "prior_artifacts_overwritten": false
+}

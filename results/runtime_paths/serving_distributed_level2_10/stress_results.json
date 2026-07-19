@@ -1,0 +1,26 @@
+{
+  "provenance": "preserved_s2_7_stress_plus_s2_10_selector_scaling",
+  "completed_requests": 1000,
+  "scheduler_steps": 10501,
+  "correctness": {
+    "request_loss": 0,
+    "duplicate_completion": 0,
+    "summary_reference_mismatch": 0,
+    "prefill_gap": 0,
+    "prefill_overlap": 0,
+    "early_decode": 0,
+    "budget_overflow": 0,
+    "cross_replica_execution": 0,
+    "runtime_plan_rebuild": 0,
+    "override": 0,
+    "fallback": 0
+  },
+  "s2_10_scaling_ms": {
+    "requests_1000_summary_median": 0.023139,
+    "selector_v4_pairwise_median": 0.0089195,
+    "selector_v4_risk_aware_median": 0.008502,
+    "selector_v4_risk_aware_p95": 0.009059,
+    "requests_5000_summary_median": 0.068423
+  },
+  "result": "pass"
+}

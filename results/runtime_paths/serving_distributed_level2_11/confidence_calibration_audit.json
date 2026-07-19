@@ -1,0 +1,7 @@
+{
+  "status": "diagnostic_only",
+  "frozen_uncertainty_threshold": 0.35,
+  "probability_calibration_available": false,
+  "reason": "v4 uncertainty is a conservative support/OOD gate, not a calibrated probability; replication data was not used to refit it.",
+  "dynamic_pairwise_accuracy": 0.7295373665480427
+}

@@ -1,0 +1,14 @@
+{
+  "data_provenance": "S2.11 trace-level paired regret differences only; no S2.12 measurement",
+  "estimated_selector_mean_regret": 0.0046,
+  "estimated_baseline_mean_regret": 0.0069,
+  "estimated_paired_mean_improvement": 0.002309726062567148,
+  "paired_standard_deviation": 0.00846890187887989,
+  "confidence_level": 0.95,
+  "target_power": 0.80,
+  "minimum_detectable_effect": 0.002309726062567148,
+  "method": "normal approximation for paired mean: ((z_0.975 + z_0.80) * sd / effect)^2",
+  "required_independent_paired_traces": 106,
+  "planned_independent_traces": 12,
+  "advisory_conclusion": "The fixed S2.12 design satisfies repetition and family coverage requirements but is underpowered for the small S2.11 effect at the controlling trace-cluster level."
+}

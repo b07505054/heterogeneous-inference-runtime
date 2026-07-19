@@ -1,0 +1,8 @@
+{
+  "realized_horizon": "next 4 scheduler steps; no invisible arrivals injected",
+  "state_count": 81,
+  "pair_count": 281,
+  "dynamic_exact_or_tie_aware_pairwise_accuracy": 0.7295373665480427,
+  "practical_tie_fraction": 0.5871886120996441,
+  "limitation": "Only state hashes shared by at least two fixed-policy executions are comparable; this is diagnostic, not trace-level profitability."
+}

@@ -1,0 +1,9 @@
+{
+  "method": "initial aggregate predicted-step estimate versus actual fixed-policy sequence",
+  "predicted_ranges": {"mixed": 1.75, "long": 6.1, "burst": 3.85, "decode": 2.15},
+  "actual_step_ranges": {"mixed": [12, 12], "long": [17, 18], "burst": [13, 14], "decode": [10, 13]},
+  "first_divergence": "step-count estimate before first execution",
+  "primary_causes": ["aggregate estimate omits per-request chunk boundaries", "decode readiness transitions", "policy-dependent mixed sequencing"],
+  "prospective_rollout_fidelity": "failed",
+  "risk_selector_dependency": "no-regression default contains the error"
+}

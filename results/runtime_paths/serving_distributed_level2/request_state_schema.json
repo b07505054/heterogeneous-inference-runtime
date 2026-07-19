@@ -1,0 +1,5 @@
+{
+  "phases":["WAITING","PREFILL","DECODE","FINISHED","FAILED"],
+  "fields":["request_id","serving_plan_id","replica_id","arrival_time_ms","prompt_length","matched_prefix_tokens","uncached_prompt_tokens","prefill_completed_tokens","prefill_remaining_tokens","expected_output_tokens","decode_completed_tokens","decode_remaining_tokens","phase","priority","first_token_emitted","finished"],
+  "invariants":["prefill progress bounded by uncached prompt","decode progress bounded by expected output","decode forbidden before prefill completion","FINISHED requires zero decode remaining"]
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "immutable_hashes": {
+    "selector_v4_implementation": "35ae0fb00ba4085dacc5b6e09e672fc304559b36a0210e1ad7ad399dc33248d6",
+    "selector_v4_configuration": "2916fe76d9de8867b3603b8c55a454e2a80084be23f4783f9bf303be3831b32a",
+    "rollout_v2_implementation": "e0013b17d41ef5cf3c3b03531a06f51d4c98481f9462587cad6fff7bed52b544",
+    "service_model_prefill": "9cb5e4214fe93a5af8f56ea705893fe7aa3206d291df4852c78fcc5b0bfc3d3d",
+    "service_model_decode": "abde631288cdc7bbab732b705b23a7f453e252b54ef259fb0b4b05b883505c75",
+    "service_model_mixed": "30d955f80c79e934b052db57dac6169b2723505fc9131f4bd1704e753c9136fd",
+    "objective": "9a06f5fc7f3610c0fd87864e37998a364162b5e0091ef9c4",
+    "robust_baseline": "ccbd764f83e21d0a8a90f17e7dfec4101ffc241782fc2fd5f32d9c1e9755bd0f",
+    "trace_registry": "b315238485a4737a8b6835d201f8412b544c6995a757549b26aa1c7dd21d8cc9"
+  },
+  "frozen_configuration": {
+    "selector": "ranking_selector_v4_risk_aware",
+    "frontier_size": 8,
+    "rollout_horizon": 8,
+    "objective": "mean_TTFT_ms + 0.25 * mean_E2E_ms",
+    "robust_baseline": "decode_first",
+    "practical_equivalence_margin": 0.02,
+    "uncertainty_threshold": 0.35,
+    "decision_margin": 0.12,
+    "out_of_distribution_rule": "prefill_per_request above 64 increases bounded OOD score",
+    "no_regression_gate": "improvement > 0.12 and uncertainty <= 0.35",
+    "legal_policies": ["decode_first","prefill_first","chunked_balanced","slo_aware"]
+  },
+  "trace_registry": "s2_12_trace_registry.json",
+  "workload_families": ["decode-heavy","prefill-heavy","mixed-interactive","contention","arrival-burst","long-prefill","prefix-heavy","low-prefix-reuse","small-token-budget","large-token-budget","small-sequence-budget","larger-active-batch"],
+  "policy_measurement_series": ["decode_first","prefill_first","chunked_balanced","slo_aware","ranking_selector_v4_risk_aware"],
+  "baseline_semantic_alias": "decode_first; not executed twice",
+  "execution_order": {
+    "method": "frozen shuffled cyclic Latin-style counterbalance with reversal after a complete cycle",
+    "seed": 2120
+  },
+  "warmups_per_policy_trace_cell": 3,
+  "measured_repetitions_per_policy_trace_cell": 10,
+  "planned_warmup_executions": 180,
+  "planned_measured_executions": 600,
+  "total_planned_executions": 780,
+  "timing_method": "host monotonic perf_counter/perf_counter_ns around synchronous CPU execution",
+  "noise_metadata": ["process CPU time","context switches","minor/major page faults","system load","model warm state","order position"],
+  "outlier_policy": "retain every completed semantically valid run",
+  "missing_run_policy": "a missing or semantically invalid cell invalidates the complete S2.12 measurement set",
+  "primary_paired_observation": "logical trace x measured repetition block",
+  "paired_difference": "baseline regret - selector regret; positive favors selector",
+  "run_level_interval": "paired bootstrap, 10000 samples, seed 2120",
+  "controlling_interval": "trace-cluster bootstrap over one mean paired difference per trace, 10000 samples, seed 2120",
+  "paired_hypothesis": "mean baseline_regret - selector_regret > 0",
+  "tail_method": "trace-level empirical p95 difference with cluster bootstrap, 10000 samples",
+  "tail_noninferiority_tolerance": 0.005,
+  "family_material_regression_threshold": 0.02,
+  "family_acceptance": "no family mean selector regret exceeds baseline by more than 0.02",
+  "aggregate_acceptance": "controlling 95% CI lower bound > 0 and tail upper bound <= 0.005",
+  "stopping_rule": "execute every preregistered warm-up and measured cell; no interim analysis or early stopping",
+  "failure_classifications": {
+    "full_pass": "high-confidence conservative policy profitability and tail non-regression verified",
+    "mean_only": "average benefit verified; tail non-regression unvalidated",
+    "inconclusive": "benefit plausible; statistical closure incomplete",
+    "failed": "selector materially worse than robust baseline"
+  },
+  "locked": true
+}

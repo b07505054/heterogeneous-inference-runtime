@@ -1,0 +1,26 @@
+{
+  "requests": 1000,
+  "steps": 10501,
+  "completed": 1000,
+  "summary_latency_ms": {
+    "median": 0.033688,
+    "p95": 0.055515
+  },
+  "risk_selector_latency_ms": {
+    "median": 0.013655,
+    "p95": 0.023441
+  },
+  "requests_5000_summary_median_ms": 0.029309,
+  "summary_reference_mismatch_count": 0,
+  "runtime_counters": {
+    "runtime_schedule_rebuild_count": 0,
+    "runtime_item_override_count": 0,
+    "runtime_token_count_override_count": 0,
+    "runtime_phase_override_count": 0,
+    "runtime_unplanned_request_count": 0,
+    "runtime_fallback_schedule_count": 0
+  },
+  "request_loss": 0,
+  "duplicate_completion": 0,
+  "passed": true
+}

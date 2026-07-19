@@ -1,0 +1,374 @@
+{
+  "1x8": {
+    "policy": "prefix_queue_cost",
+    "requests": 160,
+    "latency_ms": {
+      "p50": 10.671249999999967,
+      "p95": 18.56999999999999,
+      "p99": 19.237500000000008
+    },
+    "ttft_ms": {
+      "p50": 10.491249999999967,
+      "p95": 18.38999999999999,
+      "p99": 19.057500000000008
+    },
+    "queue_wait_ms": {
+      "p50": 10.439999999999968,
+      "p95": 18.338749999999987,
+      "p99": 19.006250000000005
+    },
+    "throughput_output_tokens_per_s": 16606.123508043587,
+    "goodput_requests_per_s_at_25ms_slo": 4151.530877010897,
+    "prefix_hit_rate": 0.9875,
+    "reused_tokens": 9616,
+    "recomputed_tokens": 272,
+    "cache_evictions": 0,
+    "kv_capacity_peak_bytes": 458752,
+    "replica_utilization_busy_ms": {
+      "replica-0": 38.54000000000001
+    },
+    "load_imbalance_busy_ms": 0.0,
+    "routing_overhead_ms_p50": 0.015061,
+    "exact_replica_winner_agreement": 1.0,
+    "regret_percent": {
+      "mean": 0.0,
+      "median": 0.0,
+      "p95": 0.0,
+      "max": 0.0
+    },
+    "selection_histogram": {
+      "replica-0": 160
+    },
+    "runtime_counters": {
+      "runtime_replica_override_count": 0,
+      "runtime_reroute_count": 0,
+      "missing_plan_count": 0,
+      "manual_replica_assignment_count": 0,
+      "fallback_routing_count": 0
+    },
+    "cache_state": {
+      "replica-0": {
+        "mode": "metadata_only",
+        "block_size": 16,
+        "entries": 7,
+        "used_bytes": 458752,
+        "peak_bytes": 458752,
+        "hits": 316,
+        "misses": 4,
+        "evictions": 0
+      }
+    }
+  },
+  "2x4": {
+    "policy": "prefix_queue_cost",
+    "requests": 160,
+    "latency_ms": {
+      "p50": 11.637499999999992,
+      "p95": 19.714999999999943,
+      "p99": 20.314999999999937
+    },
+    "ttft_ms": {
+      "p50": 11.277499999999993,
+      "p95": 19.354999999999944,
+      "p99": 19.954999999999938
+    },
+    "queue_wait_ms": {
+      "p50": 11.174999999999994,
+      "p95": 19.252499999999944,
+      "p99": 19.85249999999994
+    },
+    "throughput_output_tokens_per_s": 16154.47718811134,
+    "goodput_requests_per_s_at_25ms_slo": 4038.619297027835,
+    "prefix_hit_rate": 0.98125,
+    "reused_tokens": 9552,
+    "recomputed_tokens": 336,
+    "cache_evictions": 0,
+    "kv_capacity_peak_bytes": 720896,
+    "replica_utilization_busy_ms": {
+      "replica-0": 39.617499999999936,
+      "replica-1": 39.22249999999994
+    },
+    "load_imbalance_busy_ms": 0.394999999999996,
+    "routing_overhead_ms_p50": 0.028448,
+    "exact_replica_winner_agreement": 1.0,
+    "regret_percent": {
+      "mean": 0.0,
+      "median": 0.0,
+      "p95": 0.0,
+      "max": 0.0
+    },
+    "selection_histogram": {
+      "replica-0": 79,
+      "replica-1": 81
+    },
+    "runtime_counters": {
+      "runtime_replica_override_count": 0,
+      "runtime_reroute_count": 0,
+      "missing_plan_count": 0,
+      "manual_replica_assignment_count": 0,
+      "fallback_routing_count": 0
+    },
+    "cache_state": {
+      "replica-0": {
+        "mode": "metadata_only",
+        "block_size": 16,
+        "entries": 7,
+        "used_bytes": 458752,
+        "peak_bytes": 458752,
+        "hits": 306,
+        "misses": 14,
+        "evictions": 0
+      },
+      "replica-1": {
+        "mode": "metadata_only",
+        "block_size": 16,
+        "entries": 4,
+        "used_bytes": 262144,
+        "peak_bytes": 262144,
+        "hits": 254,
+        "misses": 66,
+        "evictions": 0
+      }
+    }
+  },
+  "4x2": {
+    "policy": "prefix_queue_cost",
+    "requests": 160,
+    "latency_ms": {
+      "p50": 13.810000000000006,
+      "p95": 21.594999999999995,
+      "p99": 22.60499999999999
+    },
+    "ttft_ms": {
+      "p50": 13.090000000000003,
+      "p95": 20.874999999999996,
+      "p99": 21.88499999999999
+    },
+    "queue_wait_ms": {
+      "p50": 12.885000000000005,
+      "p95": 20.669999999999998,
+      "p99": 21.679999999999993
+    },
+    "throughput_output_tokens_per_s": 15353.244572388154,
+    "goodput_requests_per_s_at_25ms_slo": 3838.3111430970384,
+    "prefix_hit_rate": 0.96875,
+    "reused_tokens": 9424,
+    "recomputed_tokens": 464,
+    "cache_evictions": 0,
+    "kv_capacity_peak_bytes": 1245184,
+    "replica_utilization_busy_ms": {
+      "replica-0": 41.30999999999998,
+      "replica-1": 41.444999999999986,
+      "replica-2": 41.444999999999986,
+      "replica-3": 40.51999999999999
+    },
+    "load_imbalance_busy_ms": 0.9249999999999972,
+    "routing_overhead_ms_p50": 0.054675,
+    "exact_replica_winner_agreement": 1.0,
+    "regret_percent": {
+      "mean": 0.0,
+      "median": 0.0,
+      "p95": 0.0,
+      "max": 0.0
+    },
+    "selection_histogram": {
+      "replica-0": 38,
+      "replica-1": 41,
+      "replica-2": 41,
+      "replica-3": 40
+    },
+    "runtime_counters": {
+      "runtime_replica_override_count": 0,
+      "runtime_reroute_count": 0,
+      "missing_plan_count": 0,
+      "manual_replica_assignment_count": 0,
+      "fallback_routing_count": 0
+    },
+    "cache_state": {
+      "replica-0": {
+        "mode": "metadata_only",
+        "block_size": 16,
+        "entries": 7,
+        "used_bytes": 458752,
+        "peak_bytes": 458752,
+        "hits": 238,
+        "misses": 82,
+        "evictions": 0
+      },
+      "replica-1": {
+        "mode": "metadata_only",
+        "block_size": 16,
+        "entries": 4,
+        "used_bytes": 262144,
+        "peak_bytes": 262144,
+        "hits": 254,
+        "misses": 66,
+        "evictions": 0
+      },
+      "replica-2": {
+        "mode": "metadata_only",
+        "block_size": 16,
+        "entries": 4,
+        "used_bytes": 262144,
+        "peak_bytes": 262144,
+        "hits": 252,
+        "misses": 68,
+        "evictions": 0
+      },
+      "replica-3": {
+        "mode": "metadata_only",
+        "block_size": 16,
+        "entries": 4,
+        "used_bytes": 262144,
+        "peak_bytes": 262144,
+        "hits": 250,
+        "misses": 70,
+        "evictions": 0
+      }
+    }
+  },
+  "8x1": {
+    "policy": "prefix_queue_cost",
+    "requests": 160,
+    "latency_ms": {
+      "p50": 17.500000000000007,
+      "p95": 25.920000000000016,
+      "p99": 26.130000000000017
+    },
+    "ttft_ms": {
+      "p50": 16.06000000000001,
+      "p95": 24.48000000000001,
+      "p99": 24.690000000000012
+    },
+    "queue_wait_ms": {
+      "p50": 15.650000000000006,
+      "p95": 24.070000000000014,
+      "p99": 24.280000000000015
+    },
+    "throughput_output_tokens_per_s": 13910.019560965004,
+    "goodput_requests_per_s_at_25ms_slo": 3086.28559008911,
+    "prefix_hit_rate": 0.94375,
+    "reused_tokens": 9184,
+    "recomputed_tokens": 704,
+    "cache_evictions": 0,
+    "kv_capacity_peak_bytes": 2228224,
+    "replica_utilization_busy_ms": {
+      "replica-0": 45.98000000000002,
+      "replica-1": 45.89000000000002,
+      "replica-2": 44.04000000000002,
+      "replica-3": 44.04000000000002,
+      "replica-4": 44.04000000000002,
+      "replica-5": 43.77000000000001,
+      "replica-6": 44.04000000000002,
+      "replica-7": 44.04000000000002
+    },
+    "load_imbalance_busy_ms": 2.210000000000008,
+    "routing_overhead_ms_p50": 0.112983,
+    "exact_replica_winner_agreement": 1.0,
+    "regret_percent": {
+      "mean": 0.0,
+      "median": 0.0,
+      "p95": 0.0,
+      "max": 0.0
+    },
+    "selection_histogram": {
+      "replica-0": 22,
+      "replica-1": 21,
+      "replica-2": 20,
+      "replica-3": 20,
+      "replica-4": 20,
+      "replica-5": 17,
+      "replica-6": 20,
+      "replica-7": 20
+    },
+    "runtime_counters": {
+      "runtime_replica_override_count": 0,
+      "runtime_reroute_count": 0,
+      "missing_plan_count": 0,
+      "manual_replica_assignment_count": 0,
+      "fallback_routing_count": 0
+    },
+    "cache_state": {
+      "replica-0": {
+        "mode": "metadata_only",
+        "block_size": 16,
+        "entries": 3,
+        "used_bytes": 196608,
+        "peak_bytes": 196608,
+        "hits": 62,
+        "misses": 258,
+        "evictions": 0
+      },
+      "replica-1": {
+        "mode": "metadata_only",
+        "block_size": 16,
+        "entries": 4,
+        "used_bytes": 262144,
+        "peak_bytes": 262144,
+        "hits": 254,
+        "misses": 66,
+        "evictions": 0
+      },
+      "replica-2": {
+        "mode": "metadata_only",
+        "block_size": 16,
+        "entries": 4,
+        "used_bytes": 262144,
+        "peak_bytes": 262144,
+        "hits": 252,
+        "misses": 68,
+        "evictions": 0
+      },
+      "replica-3": {
+        "mode": "metadata_only",
+        "block_size": 16,
+        "entries": 4,
+        "used_bytes": 262144,
+        "peak_bytes": 262144,
+        "hits": 250,
+        "misses": 70,
+        "evictions": 0
+      },
+      "replica-4": {
+        "mode": "metadata_only",
+        "block_size": 16,
+        "entries": 4,
+        "used_bytes": 262144,
+        "peak_bytes": 262144,
+        "hits": 248,
+        "misses": 72,
+        "evictions": 0
+      },
+      "replica-5": {
+        "mode": "metadata_only",
+        "block_size": 16,
+        "entries": 7,
+        "used_bytes": 458752,
+        "peak_bytes": 458752,
+        "hits": 166,
+        "misses": 154,
+        "evictions": 0
+      },
+      "replica-6": {
+        "mode": "metadata_only",
+        "block_size": 16,
+        "entries": 4,
+        "used_bytes": 262144,
+        "peak_bytes": 262144,
+        "hits": 246,
+        "misses": 74,
+        "evictions": 0
+      },
+      "replica-7": {
+        "mode": "metadata_only",
+        "block_size": 16,
+        "entries": 4,
+        "used_bytes": 262144,
+        "peak_bytes": 262144,
+        "hits": 244,
+        "misses": 76,
+        "evictions": 0
+      }
+    }
+  }
+}

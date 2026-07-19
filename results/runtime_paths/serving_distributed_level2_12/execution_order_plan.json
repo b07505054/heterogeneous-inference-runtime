@@ -1,0 +1,10 @@
+{
+  "method": "counterbalanced",
+  "seed": 2120,
+  "base_generation": "shuffle five measured policy series once with seed 2120",
+  "block_rule": "rotate base by block modulo five; reverse after each complete five-block cycle",
+  "balance_targets": ["policy position","selector position","baseline position","first-run frequency","last-run frequency"],
+  "planned_blocks": 13,
+  "warmup_blocks": 3,
+  "measured_blocks": 10
+}

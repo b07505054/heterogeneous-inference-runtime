@@ -1,0 +1,12 @@
+{
+  "kind": "shared_memory",
+  "shared_input_buffers": [
+    "key",
+    "value"
+  ],
+  "query_access": "shard_local",
+  "output_access": "disjoint_logical_slices",
+  "copy_count": 0,
+  "copy_bytes": 0,
+  "reduction": "none"
+}

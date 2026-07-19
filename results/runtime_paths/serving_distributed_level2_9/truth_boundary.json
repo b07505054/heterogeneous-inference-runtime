@@ -1,0 +1,10 @@
+{
+  "classification": "Serving Distributed S2.9 request-level wall-clock model validated; profitability selector remains unvalidated",
+  "reconstruction": "passed",
+  "service_model_v2": "independent step-error improvement validated",
+  "static_selector": "failed profitability target",
+  "adaptive_selector": "rejected",
+  "strict_post_freeze_final": "not satisfied",
+  "compiler_attention_cross_layer": "not rerun",
+  "s3_allowed": false
+}

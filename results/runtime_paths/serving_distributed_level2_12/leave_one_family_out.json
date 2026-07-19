@@ -1,0 +1,110 @@
+[
+  {
+    "excluded_family": "decode-heavy",
+    "mean_improvement": -0.004276474343038975,
+    "cluster_bootstrap_ci95": [
+      -0.009265850846085047,
+      0.0005632673071168754
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_family": "prefill-heavy",
+    "mean_improvement": -0.0025500675781293153,
+    "cluster_bootstrap_ci95": [
+      -0.008267601671659248,
+      0.003057269219848205
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_family": "mixed-interactive",
+    "mean_improvement": -0.003123674947498097,
+    "cluster_bootstrap_ci95": [
+      -0.008735560424480414,
+      0.002561851625671033
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_family": "contention",
+    "mean_improvement": -0.001215841534212033,
+    "cluster_bootstrap_ci95": [
+      -0.005554678719614611,
+      0.0034588755080207836
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_family": "arrival-burst",
+    "mean_improvement": -0.0031623426874836783,
+    "cluster_bootstrap_ci95": [
+      -0.008740204384663148,
+      0.0024742343773947696
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_family": "long-prefill",
+    "mean_improvement": -0.00328324894657633,
+    "cluster_bootstrap_ci95": [
+      -0.00882351647927676,
+      0.0023778160759310887
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_family": "prefix-heavy",
+    "mean_improvement": -0.004190138446698869,
+    "cluster_bootstrap_ci95": [
+      -0.009177286394434294,
+      0.000776510808133025
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_family": "low-prefix-reuse",
+    "mean_improvement": -0.0025946857330137506,
+    "cluster_bootstrap_ci95": [
+      -0.008332111509847253,
+      0.00294693424990521
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_family": "small-token-budget",
+    "mean_improvement": -0.0032185951096748346,
+    "cluster_bootstrap_ci95": [
+      -0.008834042171494265,
+      0.002369095694707155
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_family": "large-token-budget",
+    "mean_improvement": -0.002062443025311583,
+    "cluster_bootstrap_ci95": [
+      -0.007693974585625768,
+      0.0032969225658576436
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_family": "small-sequence-budget",
+    "mean_improvement": -0.0021550211641861634,
+    "cluster_bootstrap_ci95": [
+      -0.007821916217634537,
+      0.003259280475033897
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_family": "larger-active-batch",
+    "mean_improvement": -0.0025212654559165232,
+    "cluster_bootstrap_ci95": [
+      -0.008335186098812765,
+      0.0030849738894316737
+    ],
+    "conclusion": "inconclusive"
+  }
+]

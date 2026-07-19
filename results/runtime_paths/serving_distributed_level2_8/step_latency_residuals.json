@@ -1,0 +1,164 @@
+[
+  {
+    "kind": "prefill",
+    "policy": "ranking_selector_v3_adaptive",
+    "n": 44,
+    "mean_residual_ms": 104.5689624721023,
+    "median_residual_ms": 130.9196325003088,
+    "mae_ms": 104.5689624721023,
+    "p95_absolute_error_ms": 267.0393845003088
+  },
+  {
+    "kind": "mixed",
+    "policy": "ranking_selector_v3_adaptive",
+    "n": 22,
+    "mean_residual_ms": 48.96147567329135,
+    "median_residual_ms": 24.995840622844014,
+    "mae_ms": 105.66781287255218,
+    "p95_absolute_error_ms": 262.184496622844
+  },
+  {
+    "kind": "decode",
+    "policy": "ranking_selector_v3_adaptive",
+    "n": 20,
+    "mean_residual_ms": 79.58199626439112,
+    "median_residual_ms": 2.426427251347306,
+    "mae_ms": 126.69131851358274,
+    "p95_absolute_error_ms": 353.01466601419406
+  },
+  {
+    "kind": "prefill",
+    "policy": "ranking_selector_v3_static",
+    "n": 44,
+    "mean_residual_ms": 103.83125888119322,
+    "median_residual_ms": 130.77086550030882,
+    "mae_ms": 103.83125888119322,
+    "p95_absolute_error_ms": 266.0894755003088
+  },
+  {
+    "kind": "mixed",
+    "policy": "ranking_selector_v3_static",
+    "n": 22,
+    "mean_residual_ms": 48.49987335510953,
+    "median_residual_ms": 24.950092122843984,
+    "mae_ms": 105.28171546346128,
+    "p95_absolute_error_ms": 258.902148622844
+  },
+  {
+    "kind": "decode",
+    "policy": "ranking_selector_v3_static",
+    "n": 20,
+    "mean_residual_ms": 79.12841136439113,
+    "median_residual_ms": 2.0033387513473073,
+    "mae_ms": 126.1560752633133,
+    "p95_absolute_error_ms": 353.5951610141941
+  },
+  {
+    "kind": "prefill",
+    "policy": "slo_aware",
+    "n": 28,
+    "mean_residual_ms": 98.8856208565664,
+    "median_residual_ms": 131.9376445003088,
+    "mae_ms": 98.8856208565664,
+    "p95_absolute_error_ms": 264.9334565003088
+  },
+  {
+    "kind": "mixed",
+    "policy": "slo_aware",
+    "n": 38,
+    "mean_residual_ms": 70.22707074276151,
+    "median_residual_ms": 25.798752019485136,
+    "mae_ms": 81.30795706554373,
+    "p95_absolute_error_ms": 155.11427605372197
+  },
+  {
+    "kind": "decode",
+    "policy": "slo_aware",
+    "n": 20,
+    "mean_residual_ms": 35.10064324601156,
+    "median_residual_ms": 1.2539867513473055,
+    "mae_ms": 83.03869338587866,
+    "p95_absolute_error_ms": 236.3143240141941
+  },
+  {
+    "kind": "prefill",
+    "policy": "chunked_balanced",
+    "n": 28,
+    "mean_residual_ms": 101.07117210656641,
+    "median_residual_ms": 132.72985000030883,
+    "mae_ms": 101.21068159311965,
+    "p95_absolute_error_ms": 280.24637250030884
+  },
+  {
+    "kind": "mixed",
+    "policy": "chunked_balanced",
+    "n": 38,
+    "mean_residual_ms": 63.30050109394471,
+    "median_residual_ms": 35.198951553722,
+    "mae_ms": 84.59986867776553,
+    "p95_absolute_error_ms": 159.00942505372197
+  },
+  {
+    "kind": "decode",
+    "policy": "chunked_balanced",
+    "n": 26,
+    "mean_residual_ms": 18.181868439550577,
+    "median_residual_ms": 2.332196711821773,
+    "mae_ms": 55.53828463581088,
+    "p95_absolute_error_ms": 116.5028457486527
+  },
+  {
+    "kind": "prefill",
+    "policy": "prefill_first",
+    "n": 46,
+    "mean_residual_ms": 113.89194195020178,
+    "median_residual_ms": 132.6296450003088,
+    "mae_ms": 113.89194195020178,
+    "p95_absolute_error_ms": 265.2654605003088
+  },
+  {
+    "kind": "mixed",
+    "policy": "prefill_first",
+    "n": 18,
+    "mean_residual_ms": 62.66838041820842,
+    "median_residual_ms": 31.08217002820642,
+    "mae_ms": 130.87758987248733,
+    "p95_absolute_error_ms": 263.19838398524826
+  },
+  {
+    "kind": "decode",
+    "policy": "prefill_first",
+    "n": 20,
+    "mean_residual_ms": 80.06956491439114,
+    "median_residual_ms": 6.528486251347303,
+    "mae_ms": 126.99864573844802,
+    "p95_absolute_error_ms": 341.64557401419415
+  },
+  {
+    "kind": "prefill",
+    "policy": "decode_first",
+    "n": 28,
+    "mean_residual_ms": 98.2779346065664,
+    "median_residual_ms": 129.5551745003088,
+    "mae_ms": 98.2779346065664,
+    "p95_absolute_error_ms": 266.9192985003088
+  },
+  {
+    "kind": "mixed",
+    "policy": "decode_first",
+    "n": 38,
+    "mean_residual_ms": 69.44456761118256,
+    "median_residual_ms": 25.347225553721984,
+    "mae_ms": 80.55342582870163,
+    "p95_absolute_error_ms": 155.51151405372198
+  },
+  {
+    "kind": "decode",
+    "policy": "decode_first",
+    "n": 20,
+    "mean_residual_ms": 34.325099896011565,
+    "median_residual_ms": 0.22599175134730842,
+    "mae_ms": 82.3815032856092,
+    "p95_absolute_error_ms": 243.41183409324518
+  }
+]

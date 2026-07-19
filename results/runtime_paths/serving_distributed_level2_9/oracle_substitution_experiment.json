@@ -1,0 +1,202 @@
+{
+  "arrival_burst_s29": {
+    "decode_first": {
+      "A_original_model": 1413.4678396261775,
+      "B_shape_model": 2188.065698303868,
+      "C_measured_reconstruction": 2121.67404771875,
+      "D_direct": 2121.6731511594844
+    },
+    "prefill_first": {
+      "A_original_model": 1538.0677388719837,
+      "B_shape_model": 2736.283173667877,
+      "C_measured_reconstruction": 2715.9158786562502,
+      "D_direct": 2715.9148305872804
+    },
+    "chunked_balanced": {
+      "A_original_model": 1412.885053213022,
+      "B_shape_model": 2187.368596237853,
+      "C_measured_reconstruction": 2174.8135599687503,
+      "D_direct": 2174.812661804026
+    },
+    "slo_aware": {
+      "A_original_model": 1413.397579824064,
+      "B_shape_model": 2187.9800725640425,
+      "C_measured_reconstruction": 2121.4206275625,
+      "D_direct": 2121.4197650770075
+    },
+    "A_original_model_ranking": [
+      "chunked_balanced",
+      "slo_aware",
+      "decode_first",
+      "prefill_first"
+    ],
+    "B_shape_model_ranking": [
+      "chunked_balanced",
+      "slo_aware",
+      "decode_first",
+      "prefill_first"
+    ],
+    "C_measured_reconstruction_ranking": [
+      "slo_aware",
+      "decode_first",
+      "chunked_balanced",
+      "prefill_first"
+    ],
+    "D_direct_ranking": [
+      "slo_aware",
+      "decode_first",
+      "chunked_balanced",
+      "prefill_first"
+    ]
+  },
+  "budget_pressure_s29": {
+    "decode_first": {
+      "A_original_model": 1877.611559598919,
+      "B_shape_model": 2722.592002239226,
+      "C_measured_reconstruction": 2669.8280729687503,
+      "D_direct": 2669.827226549387
+    },
+    "prefill_first": {
+      "A_original_model": 1999.8340998994634,
+      "B_shape_model": 3391.1726013970865,
+      "C_measured_reconstruction": 3369.89611696875,
+      "D_direct": 3369.8951013429905
+    },
+    "chunked_balanced": {
+      "A_original_model": 1877.4004842893946,
+      "B_shape_model": 2722.242406882179,
+      "C_measured_reconstruction": 2697.2622010312502,
+      "D_direct": 2697.2613279358484
+    },
+    "slo_aware": {
+      "A_original_model": 1877.1494460946476,
+      "B_shape_model": 2721.8734970111477,
+      "C_measured_reconstruction": 2651.74059378125,
+      "D_direct": 2651.739830536826
+    },
+    "A_original_model_ranking": [
+      "slo_aware",
+      "chunked_balanced",
+      "decode_first",
+      "prefill_first"
+    ],
+    "B_shape_model_ranking": [
+      "slo_aware",
+      "chunked_balanced",
+      "decode_first",
+      "prefill_first"
+    ],
+    "C_measured_reconstruction_ranking": [
+      "slo_aware",
+      "decode_first",
+      "chunked_balanced",
+      "prefill_first"
+    ],
+    "D_direct_ranking": [
+      "slo_aware",
+      "decode_first",
+      "chunked_balanced",
+      "prefill_first"
+    ]
+  },
+  "long_prefill_s29": {
+    "decode_first": {
+      "A_original_model": 2068.388107935688,
+      "B_shape_model": 3170.0651756448533,
+      "C_measured_reconstruction": 3131.56376915625,
+      "D_direct": 3131.563024377101
+    },
+    "prefill_first": {
+      "A_original_model": 1997.4514655843905,
+      "B_shape_model": 3474.0636028972663,
+      "C_measured_reconstruction": 3387.9313264062503,
+      "D_direct": 3387.9322230204707
+    },
+    "chunked_balanced": {
+      "A_original_model": 2070.1530374265994,
+      "B_shape_model": 3171.464248171952,
+      "C_measured_reconstruction": 3101.29263365625,
+      "D_direct": 3101.291791339463
+    },
+    "slo_aware": {
+      "A_original_model": 2106.782055907678,
+      "B_shape_model": 3214.4693450071227,
+      "C_measured_reconstruction": 3203.0895199687498,
+      "D_direct": 3203.088602735079
+    },
+    "A_original_model_ranking": [
+      "prefill_first",
+      "decode_first",
+      "chunked_balanced",
+      "slo_aware"
+    ],
+    "B_shape_model_ranking": [
+      "decode_first",
+      "chunked_balanced",
+      "slo_aware",
+      "prefill_first"
+    ],
+    "C_measured_reconstruction_ranking": [
+      "chunked_balanced",
+      "decode_first",
+      "slo_aware",
+      "prefill_first"
+    ],
+    "D_direct_ranking": [
+      "chunked_balanced",
+      "decode_first",
+      "slo_aware",
+      "prefill_first"
+    ]
+  },
+  "prefix_heavy_s29": {
+    "decode_first": {
+      "A_original_model": 1720.770107681266,
+      "B_shape_model": 2788.309696838289,
+      "C_measured_reconstruction": 2795.6975101875,
+      "D_direct": 2795.696346416662
+    },
+    "prefill_first": {
+      "A_original_model": 1788.5979127184091,
+      "B_shape_model": 3212.8408120863073,
+      "C_measured_reconstruction": 3152.992671375,
+      "D_direct": 3152.991815171845
+    },
+    "chunked_balanced": {
+      "A_original_model": 1720.8181769301618,
+      "B_shape_model": 2788.3879983709494,
+      "C_measured_reconstruction": 2732.367705875,
+      "D_direct": 2732.366391835967
+    },
+    "slo_aware": {
+      "A_original_model": 1720.629437687634,
+      "B_shape_model": 2788.102030245523,
+      "C_measured_reconstruction": 2796.23157184375,
+      "D_direct": 2796.2306362605887
+    },
+    "A_original_model_ranking": [
+      "slo_aware",
+      "decode_first",
+      "chunked_balanced",
+      "prefill_first"
+    ],
+    "B_shape_model_ranking": [
+      "slo_aware",
+      "decode_first",
+      "chunked_balanced",
+      "prefill_first"
+    ],
+    "C_measured_reconstruction_ranking": [
+      "chunked_balanced",
+      "decode_first",
+      "slo_aware",
+      "prefill_first"
+    ],
+    "D_direct_ranking": [
+      "chunked_balanced",
+      "decode_first",
+      "slo_aware",
+      "prefill_first"
+    ]
+  }
+}

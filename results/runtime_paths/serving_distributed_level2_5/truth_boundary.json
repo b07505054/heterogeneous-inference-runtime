@@ -1,0 +1,7 @@
+{
+  "classification":"Serving S2.5 request-level selector calibrated in functional modeled-service-time replay",
+  "execution_correctness":"previously verified and preserved",
+  "selection_profitability":{"modeled_held_out_targets_met":true,"real_qwen_statistical_profitability_proven":false},
+  "real_qwen_role":"cost-component and cross-layer semantic validation only",
+  "not_demonstrated":["Serving S3","prefill/decode instance separation","KV connector or transfer","PagedAttention","vLLM engine","TP","PP","GPU","NCCL","multi-node"]
+}

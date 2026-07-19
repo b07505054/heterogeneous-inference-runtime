@@ -1,0 +1,22 @@
+{
+  "fixed_complete_trace": "selector_v1 policy epoch",
+  "every_step": "selector_v0 frozen",
+  "every_4_steps": "supported epoch length; development comparison",
+  "on_event": "triggers defined for arrival, phase transition, completion, SLO risk",
+  "held_out_v0_switch_counts": {
+    "held-decode-301": 0,
+    "held-prefill-302": 2,
+    "held-mixed-303": 2,
+    "held-burst-304": 2,
+    "held-prefix-305": 37,
+    "held-general-306": 2
+  },
+  "held_out_v1_switch_counts": {
+    "held-decode-301": 0,
+    "held-prefill-302": 0,
+    "held-mixed-303": 0,
+    "held-burst-304": 0,
+    "held-prefix-305": 0,
+    "held-general-306": 0
+  }
+}

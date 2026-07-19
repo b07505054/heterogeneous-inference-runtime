@@ -1,0 +1,174 @@
+{
+  "traces": [
+    {
+      "family": "decode_heavy",
+      "oracle": "prefill_first",
+      "selected": "prefill_first",
+      "objectives": {
+        "decode_first": 3.6884041587149516,
+        "prefill_first": 3.5545665563808546,
+        "chunked_balanced": 3.5959436629329704,
+        "slo_aware": 3.64209227457953
+      },
+      "scores": {
+        "decode_first": 8.121053936589254,
+        "prefill_first": -14.478017458357456,
+        "chunked_balanced": 11.517631191663327,
+        "slo_aware": 6.077353310982234
+      },
+      "regret": 0.0,
+      "top1_agreement": true,
+      "pairwise_accuracy": 0.6666666666666666,
+      "measured_order": [
+        "prefill_first",
+        "chunked_balanced",
+        "slo_aware",
+        "decode_first"
+      ],
+      "predicted_order": [
+        "prefill_first",
+        "slo_aware",
+        "decode_first",
+        "chunked_balanced"
+      ],
+      "selector_overhead_ms": 0.026093
+    },
+    {
+      "family": "prefill_heavy",
+      "oracle": "chunked_balanced",
+      "selected": "chunked_balanced",
+      "objectives": {
+        "decode_first": 3.536150053453942,
+        "prefill_first": 4.925426129678574,
+        "chunked_balanced": 3.5145015426678583,
+        "slo_aware": 3.5663673237043745
+      },
+      "scores": {
+        "decode_first": 3.8449426461176452,
+        "prefill_first": 26.727237105316267,
+        "chunked_balanced": -4.0350096226216605,
+        "slo_aware": 0.2534916663501079
+      },
+      "regret": 0.0,
+      "top1_agreement": true,
+      "pairwise_accuracy": 0.8333333333333334,
+      "measured_order": [
+        "chunked_balanced",
+        "decode_first",
+        "slo_aware",
+        "prefill_first"
+      ],
+      "predicted_order": [
+        "chunked_balanced",
+        "slo_aware",
+        "decode_first",
+        "prefill_first"
+      ],
+      "selector_overhead_ms": 0.035816
+    },
+    {
+      "family": "mixed_interactive",
+      "oracle": "chunked_balanced",
+      "selected": "chunked_balanced",
+      "objectives": {
+        "decode_first": 2.5211223255610093,
+        "prefill_first": 2.809661309584044,
+        "chunked_balanced": 2.468016478815116,
+        "slo_aware": 2.5429735881819697
+      },
+      "scores": {
+        "decode_first": 0.6837910849450015,
+        "prefill_first": 21.365771512352183,
+        "chunked_balanced": 0.13672094024854387,
+        "slo_aware": 0.4326476947464257
+      },
+      "regret": 0.0,
+      "top1_agreement": true,
+      "pairwise_accuracy": 0.8333333333333334,
+      "measured_order": [
+        "chunked_balanced",
+        "decode_first",
+        "slo_aware",
+        "prefill_first"
+      ],
+      "predicted_order": [
+        "chunked_balanced",
+        "slo_aware",
+        "decode_first",
+        "prefill_first"
+      ],
+      "selector_overhead_ms": 0.019689
+    },
+    {
+      "family": "contention",
+      "oracle": "decode_first",
+      "selected": "decode_first",
+      "objectives": {
+        "decode_first": 2.9665965024226653,
+        "prefill_first": 3.3447589473022767,
+        "chunked_balanced": 2.9853871625770507,
+        "slo_aware": 3.0320113437483087
+      },
+      "scores": {
+        "decode_first": -2.7783025154623737,
+        "prefill_first": 19.820768879484337,
+        "chunked_balanced": 1.4352086912555082,
+        "slo_aware": 2.8427684260077246
+      },
+      "regret": 0.0,
+      "top1_agreement": true,
+      "pairwise_accuracy": 1.0,
+      "measured_order": [
+        "decode_first",
+        "chunked_balanced",
+        "slo_aware",
+        "prefill_first"
+      ],
+      "predicted_order": [
+        "decode_first",
+        "chunked_balanced",
+        "slo_aware",
+        "prefill_first"
+      ],
+      "selector_overhead_ms": 0.019572
+    },
+    {
+      "family": "arrival_burst",
+      "oracle": "slo_aware",
+      "selected": "slo_aware",
+      "objectives": {
+        "decode_first": 2.032707469576659,
+        "prefill_first": 2.1784973796457052,
+        "chunked_balanced": 2.0961539848940447,
+        "slo_aware": 2.032110472403777
+      },
+      "scores": {
+        "decode_first": 4.02002742512235,
+        "prefill_first": 18.95432725299194,
+        "chunked_balanced": 0.6911705053870765,
+        "slo_aware": -1.6010435163477488
+      },
+      "regret": 0.0,
+      "top1_agreement": true,
+      "pairwise_accuracy": 0.8333333333333334,
+      "measured_order": [
+        "slo_aware",
+        "decode_first",
+        "chunked_balanced",
+        "prefill_first"
+      ],
+      "predicted_order": [
+        "slo_aware",
+        "chunked_balanced",
+        "decode_first",
+        "prefill_first"
+      ],
+      "selector_overhead_ms": 0.018943
+    }
+  ],
+  "top1_agreement": 1.0,
+  "mean_regret": 0.0,
+  "median_regret": 0.0,
+  "p95_regret": 0.0,
+  "pairwise_accuracy": 0.8333333333333334
+}

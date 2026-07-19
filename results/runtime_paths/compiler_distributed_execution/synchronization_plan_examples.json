@@ -1,0 +1,6 @@
+{
+  "kind": "completion_counter",
+  "synchronization_points": 1,
+  "consumer": "o_proj",
+  "consumer_requires_all_shards_complete": true
+}

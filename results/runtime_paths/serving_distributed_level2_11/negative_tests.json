@@ -1,0 +1,25 @@
+{
+  "new_test_module": "tests/test_scheduler_rollout_v2.py",
+  "new_test_count": 5,
+  "covered": [
+    "rollout mutates live scheduler state",
+    "rollout is nondeterministic",
+    "rollout emits invalid request identity or token count",
+    "one candidate clone affects another",
+    "invalid rollout horizon"
+  ],
+  "protocol_checks": {
+    "preregistration_hash_present_before_measurement": true,
+    "selector_v4_hash_unchanged": true,
+    "robust_default_unchanged": true,
+    "order_recorded": true,
+    "runtime_noise_recorded": true,
+    "multi_worker_override_used": false
+  },
+  "regression": {
+    "focused_python_passed": 310,
+    "focused_python_failed": 0,
+    "mlir_attention_cpu_passed": 2,
+    "mlir_attention_cpu_failed": 0
+  }
+}

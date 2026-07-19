@@ -1,0 +1,75 @@
+{
+  "traces": [
+    {
+      "family": "long_prefill",
+      "oracle": "slo_aware",
+      "selected": "chunked_balanced",
+      "objectives": {
+        "decode_first": 5.926957019255497,
+        "prefill_first": 8.918142829012746,
+        "chunked_balanced": 5.940063633412744,
+        "slo_aware": 5.885015120535778
+      },
+      "scores": {
+        "decode_first": 3.4236626029094364,
+        "prefill_first": 35.379681069669495,
+        "chunked_balanced": -9.8843209917818,
+        "slo_aware": 3.720950483525372
+      },
+      "regret": 0.009354013838447762,
+      "top1_agreement": false,
+      "pairwise_accuracy": 0.5,
+      "measured_order": [
+        "slo_aware",
+        "decode_first",
+        "chunked_balanced",
+        "prefill_first"
+      ],
+      "predicted_order": [
+        "chunked_balanced",
+        "decode_first",
+        "slo_aware",
+        "prefill_first"
+      ],
+      "selector_overhead_ms": 0.020626
+    },
+    {
+      "family": "prefix_heavy",
+      "oracle": "prefill_first",
+      "selected": "decode_first",
+      "objectives": {
+        "decode_first": 1.2375958322081715,
+        "prefill_first": 1.222885024617426,
+        "chunked_balanced": 1.2441081344150007,
+        "slo_aware": 1.2481443797393392
+      },
+      "scores": {
+        "decode_first": -33.043368886287595,
+        "prefill_first": 13.738647012006473,
+        "chunked_balanced": 10.79376046044541,
+        "slo_aware": 20.472853125930982
+      },
+      "regret": 0.0120295917397039,
+      "top1_agreement": false,
+      "pairwise_accuracy": 0.6666666666666666,
+      "measured_order": [
+        "prefill_first",
+        "decode_first",
+        "chunked_balanced",
+        "slo_aware"
+      ],
+      "predicted_order": [
+        "decode_first",
+        "chunked_balanced",
+        "prefill_first",
+        "slo_aware"
+      ],
+      "selector_overhead_ms": 0.021777
+    }
+  ],
+  "top1_agreement": 0.0,
+  "mean_regret": 0.010691802789075831,
+  "median_regret": 0.010691802789075831,
+  "p95_regret": 0.0120295917397039,
+  "pairwise_accuracy": 0.5833333333333333
+}

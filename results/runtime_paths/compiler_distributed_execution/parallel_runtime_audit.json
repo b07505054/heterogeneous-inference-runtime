@@ -1,0 +1,56 @@
+{
+  "components": [
+    {
+      "file": "deployment/cpu_sharding.py",
+      "component": "PersistentCPUShardRuntime",
+      "responsibility": "persistent logical workers, per-worker queue, affinity attempt, exact targeted submission",
+      "current_owner": "runtime mechanism",
+      "execution_plan_explicit": true
+    },
+    {
+      "file": "deployment/attention_runtime.py",
+      "component": "CompilerAttentionRuntime.attention",
+      "responsibility": "bind compiler-provided ranges and wait for completion",
+      "current_owner": "runtime mechanism",
+      "execution_plan_explicit": true
+    },
+    {
+      "file": "deployment/attention_planner.py",
+      "component": "select_attention_plan",
+      "responsibility": "algorithm, worker count, legality, cost and schedule selection",
+      "current_owner": "compiler/planner",
+      "execution_plan_explicit": true
+    },
+    {
+      "file": "deployment/distributed_attention_plan.py",
+      "component": "build_attention_placement",
+      "responsibility": "exact ranges, GQA reads, output ownership, communication and synchronization",
+      "current_owner": "compiler/planner",
+      "execution_plan_explicit": true
+    }
+  ],
+  "before": {
+    "kernel_algorithm": "compiler",
+    "native_implementation": "compiler",
+    "worker_count": "compiler/runtime mixed",
+    "split_dimension": "compiler/runtime mixed",
+    "exact_worker_ranges": "runtime uneven_ranges",
+    "output_ownership": "runtime slicing/cat",
+    "barrier_requirement": "implicit future.result",
+    "reduction_requirement": "implicit",
+    "dispatch_mechanism": "runtime",
+    "thread_wakeup": "runtime"
+  },
+  "after": {
+    "kernel_algorithm": "compiler",
+    "native_implementation": "compiler",
+    "worker_count": "compiler",
+    "split_dimension": "compiler",
+    "exact_worker_ranges": "compiler",
+    "output_ownership": "compiler",
+    "barrier_requirement": "compiler",
+    "reduction_requirement": "compiler",
+    "dispatch_mechanism": "runtime",
+    "thread_wakeup": "runtime"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "plan_kind": "serving_request_placement",
+  "required": [
+    "plan_id",
+    "request_id",
+    "cluster_id",
+    "cluster_profile_version",
+    "selected_replica_id",
+    "routing_policy",
+    "routing_candidate_id",
+    "cache_mode",
+    "prompt_tokens",
+    "matched_tokens",
+    "uncached_tokens",
+    "matched_blocks",
+    "predicted_cost",
+    "selection_reason",
+    "operator_plan_policy",
+    "operator_plan_id",
+    "schema_version",
+    "plan_kind"
+  ]
+}

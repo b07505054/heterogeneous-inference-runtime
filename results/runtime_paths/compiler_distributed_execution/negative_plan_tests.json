@@ -1,0 +1,14 @@
+{
+  "tests": [
+    "overlapping output shard ranges",
+    "missing output coverage",
+    "worker count mismatch",
+    "invalid worker ID",
+    "unsupported reduction",
+    "missing completion barrier",
+    "missing compiler placement",
+    "ABI version mismatch",
+    "out-of-range worker perturbation"
+  ],
+  "all_passed": true
+}

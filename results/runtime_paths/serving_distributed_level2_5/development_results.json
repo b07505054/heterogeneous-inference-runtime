@@ -1,0 +1,168 @@
+{
+  "trace_count": 3,
+  "dominant_policy_agreement": 1.0,
+  "within_5_percent_fraction": 1.0,
+  "mean_regret_percent": 0.0,
+  "median_regret_percent": 0,
+  "p95_regret_percent": 0,
+  "maximum_regret_percent": 0,
+  "selector_v0_mean_regret_percent": 42.91143512546719,
+  "rows": [
+    {
+      "trace_id": "dev-burst-201",
+      "seed": 201,
+      "profile_variant": 0,
+      "features": {
+        "waiting_request_count": 32,
+        "prefill_ready_count": 6,
+        "decode_ready_count": 0,
+        "total_remaining_prefill_tokens": 3552,
+        "total_remaining_decode_tokens": 301,
+        "oldest_waiting_age_ms": 0.0,
+        "largest_decode_gap_ms": 0.0,
+        "mean_decode_gap_ms": 0.0,
+        "token_budget": 48,
+        "sequence_budget": 8,
+        "prefix_hit_token_total": 0,
+        "kv_pressure": 0.0,
+        "replica_core_budget": 2
+      },
+      "fixed_policy_objectives": {
+        "decode_first": 320.4932493713896,
+        "prefill_first": 378.17912641560645,
+        "chunked_balanced": 320.4932493713896,
+        "slo_aware": 320.4932493713896
+      },
+      "oracle_policy": "chunked_balanced",
+      "oracle_objective": 320.4932493713896,
+      "selector_v0": {
+        "objective": 392.1113047389135,
+        "regret_percent": 22.346197777330538,
+        "policy_switches": 2
+      },
+      "selector_v1": {
+        "policy": "chunked_balanced",
+        "objective": 320.4932493713896,
+        "regret_percent": 0,
+        "agreement": true,
+        "within_5_percent": true,
+        "selector_overhead_ns": 121880153,
+        "policy_switches": 0,
+        "runtime_counters": {
+          "runtime_schedule_rebuild_count": 0,
+          "runtime_item_override_count": 0,
+          "runtime_token_count_override_count": 0,
+          "runtime_phase_override_count": 0,
+          "runtime_unplanned_request_count": 0,
+          "runtime_fallback_schedule_count": 0
+        }
+      },
+      "objective_profile": "balanced_interactive",
+      "objective_version": "request_objective_v1"
+    },
+    {
+      "trace_id": "dev-mixed-202",
+      "seed": 202,
+      "profile_variant": 1,
+      "features": {
+        "waiting_request_count": 38,
+        "prefill_ready_count": 1,
+        "decode_ready_count": 0,
+        "total_remaining_prefill_tokens": 3681,
+        "total_remaining_decode_tokens": 416,
+        "oldest_waiting_age_ms": 0.0,
+        "largest_decode_gap_ms": 0.0,
+        "mean_decode_gap_ms": 0.0,
+        "token_budget": 64,
+        "sequence_budget": 12,
+        "prefix_hit_token_total": 0,
+        "kv_pressure": 0.0,
+        "replica_core_budget": 2
+      },
+      "fixed_policy_objectives": {
+        "decode_first": 280.02427117425896,
+        "prefill_first": 330.3340164417306,
+        "chunked_balanced": 280.02427117425896,
+        "slo_aware": 280.02427117425896
+      },
+      "oracle_policy": "chunked_balanced",
+      "oracle_objective": 280.02427117425896,
+      "selector_v0": {
+        "objective": 349.55211269385705,
+        "regret_percent": 24.829219705862908,
+        "policy_switches": 2
+      },
+      "selector_v1": {
+        "policy": "chunked_balanced",
+        "objective": 280.02427117425896,
+        "regret_percent": 0,
+        "agreement": true,
+        "within_5_percent": true,
+        "selector_overhead_ns": 111362087,
+        "policy_switches": 0,
+        "runtime_counters": {
+          "runtime_schedule_rebuild_count": 0,
+          "runtime_item_override_count": 0,
+          "runtime_token_count_override_count": 0,
+          "runtime_phase_override_count": 0,
+          "runtime_unplanned_request_count": 0,
+          "runtime_fallback_schedule_count": 0
+        }
+      },
+      "objective_profile": "balanced_interactive",
+      "objective_version": "request_objective_v1"
+    },
+    {
+      "trace_id": "dev-prefix-203",
+      "seed": 203,
+      "profile_variant": 2,
+      "features": {
+        "waiting_request_count": 39,
+        "prefill_ready_count": 0,
+        "decode_ready_count": 1,
+        "total_remaining_prefill_tokens": 2400,
+        "total_remaining_decode_tokens": 320,
+        "oldest_waiting_age_ms": 0.0,
+        "largest_decode_gap_ms": 0.0,
+        "mean_decode_gap_ms": 0.0,
+        "token_budget": 80,
+        "sequence_budget": 16,
+        "prefix_hit_token_total": 0,
+        "kv_pressure": 0.0,
+        "replica_core_budget": 2
+      },
+      "fixed_policy_objectives": {
+        "decode_first": 163.00860493359892,
+        "prefill_first": 419.371347323993,
+        "chunked_balanced": 180.26187719786262,
+        "slo_aware": 163.00860493359892
+      },
+      "oracle_policy": "decode_first",
+      "oracle_objective": 163.00860493359892,
+      "selector_v0": {
+        "objective": 295.9566102876754,
+        "regret_percent": 81.55888789320814,
+        "policy_switches": 33
+      },
+      "selector_v1": {
+        "policy": "decode_first",
+        "objective": 163.00860493359892,
+        "regret_percent": 0,
+        "agreement": true,
+        "within_5_percent": true,
+        "selector_overhead_ns": 64308608,
+        "policy_switches": 0,
+        "runtime_counters": {
+          "runtime_schedule_rebuild_count": 0,
+          "runtime_item_override_count": 0,
+          "runtime_token_count_override_count": 0,
+          "runtime_phase_override_count": 0,
+          "runtime_unplanned_request_count": 0,
+          "runtime_fallback_schedule_count": 0
+        }
+      },
+      "objective_profile": "balanced_interactive",
+      "objective_version": "request_objective_v1"
+    }
+  ]
+}

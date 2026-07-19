@@ -1,0 +1,161 @@
+{
+  "phase": "prefill",
+  "q": 64,
+  "k": 64,
+  "candidate_id": "torch_cpu_attention_fp32_split_head_w4_v1",
+  "algorithm": "dense_materialized",
+  "implementation": "torch_dense_materialized_v1",
+  "strategy": "split_head",
+  "workers": 4,
+  "query_tile": 0,
+  "key_tile": 0,
+  "median_ms": 0.713101,
+  "p95_ms": 0.835097,
+  "variance_ms2": 0.002108834619673468,
+  "kernel_compute_ms": 0.16321,
+  "dispatch_ms": 0.087219,
+  "barrier_ms": 0.451885,
+  "assembly_ms": 0.030499,
+  "predicted_latency": 1632617.3714285714,
+  "shard_sizes": [
+    4,
+    4,
+    3,
+    3
+  ],
+  "imbalance_heads": 1,
+  "temporary_bytes": 917504,
+  "max_abs_error": 4.76837158203125e-07,
+  "worker_start_skew_ms": 0.039725,
+  "worker_finish_skew_ms": 0.100296,
+  "timeline": [
+    {
+      "operator_invocation_id": 9,
+      "planned_worker_id": 0,
+      "executed_logical_worker_id": 0,
+      "planned_shard": {
+        "query_head_range": [
+          0,
+          4
+        ],
+        "query_token_range": [
+          0,
+          64
+        ]
+      },
+      "executed_shard": {
+        "query_head_range": [
+          0,
+          4
+        ],
+        "query_token_range": [
+          0,
+          64
+        ]
+      },
+      "planned_native_symbol": null,
+      "executed_native_symbol": null,
+      "start_ns": 1761081507714739,
+      "end_ns": 1761081508037484,
+      "duration_ms": 0.322745,
+      "status": "ok"
+    },
+    {
+      "operator_invocation_id": 9,
+      "planned_worker_id": 1,
+      "executed_logical_worker_id": 1,
+      "planned_shard": {
+        "query_head_range": [
+          4,
+          8
+        ],
+        "query_token_range": [
+          0,
+          64
+        ]
+      },
+      "executed_shard": {
+        "query_head_range": [
+          4,
+          8
+        ],
+        "query_token_range": [
+          0,
+          64
+        ]
+      },
+      "planned_native_symbol": null,
+      "executed_native_symbol": null,
+      "start_ns": 1761081507697083,
+      "end_ns": 1761081508063409,
+      "duration_ms": 0.366326,
+      "status": "ok"
+    },
+    {
+      "operator_invocation_id": 9,
+      "planned_worker_id": 2,
+      "executed_logical_worker_id": 2,
+      "planned_shard": {
+        "query_head_range": [
+          8,
+          11
+        ],
+        "query_token_range": [
+          0,
+          64
+        ]
+      },
+      "executed_shard": {
+        "query_head_range": [
+          8,
+          11
+        ],
+        "query_token_range": [
+          0,
+          64
+        ]
+      },
+      "planned_native_symbol": null,
+      "executed_native_symbol": null,
+      "start_ns": 1761081507688452,
+      "end_ns": 1761081508086459,
+      "duration_ms": 0.398007,
+      "status": "ok"
+    },
+    {
+      "operator_invocation_id": 9,
+      "planned_worker_id": 3,
+      "executed_logical_worker_id": 3,
+      "planned_shard": {
+        "query_head_range": [
+          11,
+          14
+        ],
+        "query_token_range": [
+          0,
+          64
+        ]
+      },
+      "executed_shard": {
+        "query_head_range": [
+          11,
+          14
+        ],
+        "query_token_range": [
+          0,
+          64
+        ]
+      },
+      "planned_native_symbol": null,
+      "executed_native_symbol": null,
+      "start_ns": 1761081507675014,
+      "end_ns": 1761081507986163,
+      "duration_ms": 0.311149,
+      "status": "ok"
+    }
+  ],
+  "fallback": false,
+  "runtime_repartition_count": 0,
+  "runtime_worker_count_override": 0,
+  "runtime_strategy_override": 0
+}

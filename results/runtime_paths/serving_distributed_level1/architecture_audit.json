@@ -1,0 +1,63 @@
+{
+  "components": [
+    {
+      "component": "split-head candidate generator",
+      "source": "deployment/attention_planner.py",
+      "current_role": "algorithm, implementation, worker-count and operator schedule selection",
+      "correct_layer": "operator compiler"
+    },
+    {
+      "component": "WorkerPlacement",
+      "source": "deployment/distributed_attention_plan.py",
+      "current_role": "exact attention head/token/output shard assignment",
+      "correct_layer": "operator execution plan"
+    },
+    {
+      "component": "PersistentCPUShardRuntime",
+      "source": "deployment/cpu_sharding.py",
+      "current_role": "persistent logical-worker queues and completion",
+      "correct_layer": "operator runtime"
+    },
+    {
+      "component": "ExecutionPlanAttentionAdapter",
+      "source": "deployment/attention_runtime.py",
+      "current_role": "plan-only local attention dispatch",
+      "correct_layer": "operator adapter"
+    },
+    {
+      "component": "PrefixCacheSimulator",
+      "source": "deployment/prefix_cache_simulator.py",
+      "current_role": "stateless metadata-only cache simulation",
+      "correct_layer": "serving analysis, not live S1 state"
+    },
+    {
+      "component": "PDSplitPlanner",
+      "source": "deployment/distributed_runtime_plan.py",
+      "current_role": "simulated phase placement and transfer-cost declaration",
+      "correct_layer": "future serving planner; not S1 live dispatch"
+    },
+    {
+      "component": "old distributed serving policy simulator",
+      "source": "deployment/distributed_serving.py",
+      "current_role": "modeled round-robin/least-queue/KV-aware events using WorkerState",
+      "correct_layer": "serving simulation; WorkerState is replica-like"
+    },
+    {
+      "component": "Qwen compiler attention",
+      "source": "scripts/run_qwen_compiler_attention.py",
+      "current_role": "real local model-forward/native operator proof",
+      "correct_layer": "operator backend integration"
+    },
+    {
+      "component": "ServingDistributedCompiler",
+      "source": "deployment/serving_execution.py",
+      "current_role": "exact request-to-CPUReplica planning",
+      "correct_layer": "serving compiler S1"
+    }
+  ],
+  "conflations_found": [
+    "deployment/distributed_serving.py calls replica-like serving entities WorkerState",
+    "prior report title used Distributed Level 5 without an operator qualifier"
+  ],
+  "corrective_action": "preserve compatibility and introduce separate CPUReplica, ServingExecutionPlan, and architecture amendment"
+}

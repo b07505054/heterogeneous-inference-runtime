@@ -1,0 +1,28 @@
+{
+  "version": "service_model_v2_prefill",
+  "features": [
+    "intercept",
+    "prefill_tokens",
+    "decode_sequences",
+    "sequence_count",
+    "model_forward_count",
+    "max_query_length",
+    "max_kv_length",
+    "phase_transitions",
+    "prefill_decode_interaction"
+  ],
+  "coefficients": {
+    "intercept": 3.764185411937997,
+    "prefill_tokens": 0.22731695269744634,
+    "decode_sequences": -1.4921397450962104e-13,
+    "sequence_count": 67.27323536622073,
+    "model_forward_count": 67.27323536622033,
+    "max_query_length": 0.14598841118202355,
+    "max_kv_length": -0.0603528509798501,
+    "phase_transitions": -0.771588493121242,
+    "prefill_decode_interaction": 0.0
+  },
+  "training_rows": 218,
+  "fit_objective": "least_squares_step_latency_ms",
+  "regularization": 0.0
+}

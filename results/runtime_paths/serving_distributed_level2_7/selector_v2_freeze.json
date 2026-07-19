@@ -1,0 +1,160 @@
+{
+  "freeze_before_validation_and_final_test": true,
+  "model": {
+    "version": "ranking_selector_v2_static_frozen_20260717",
+    "coefficients": {
+      "decode_first": {
+        "active_count": 0.9999999999999994,
+        "waiting_count": -0.0,
+        "prefill_ready_count": 3.137858162210944,
+        "decode_ready_count": -0.4313310928137536,
+        "remaining_prefill_per_budget": -0.12334054665512587,
+        "remaining_decode_per_sequence": -0.20155426428299808,
+        "oldest_waiting_age_ratio": 0.03176,
+        "largest_decode_gap_ratio": 0.022000000000000002,
+        "mean_decode_gap_ratio": 0.012400000000000003,
+        "prefix_hit_per_request": 0.08888888888888857,
+        "token_budget_utilization": -0.07499999999999996,
+        "sequence_budget_utilization": 0.10000000000000009,
+        "recent_prefill_ms": -0.0,
+        "recent_decode_ms": -0.0,
+        "recent_mixed_ms": -0.0,
+        "recent_scheduler_ms": -0.0,
+        "replica_core_budget": -0.0,
+        "policy_switch_count": -0.0,
+        "time_since_reselection_ms": -0.0
+      },
+      "prefill_first": {
+        "active_count": -4.000000000000001,
+        "waiting_count": -0.0,
+        "prefill_ready_count": -2.745625891934577,
+        "decode_ready_count": -3.6663142889169062,
+        "remaining_prefill_per_budget": 2.5332250736091293,
+        "remaining_decode_per_sequence": -3.75839422221826,
+        "oldest_waiting_age_ratio": 0.010559999999999996,
+        "largest_decode_gap_ratio": -0.1,
+        "mean_decode_gap_ratio": -0.049600000000000005,
+        "prefix_hit_per_request": -0.35555555555555607,
+        "token_budget_utilization": 0.30000000000000004,
+        "sequence_budget_utilization": -0.3999999999999999,
+        "recent_prefill_ms": -0.0,
+        "recent_decode_ms": -0.0,
+        "recent_mixed_ms": -0.0,
+        "recent_scheduler_ms": -0.0,
+        "replica_core_budget": -0.0,
+        "policy_switch_count": -0.0,
+        "time_since_reselection_ms": -0.0
+      },
+      "chunked_balanced": {
+        "active_count": 0.9999999999999994,
+        "waiting_count": -0.0,
+        "prefill_ready_count": 0.19611613513818332,
+        "decode_ready_count": 1.1861605052378228,
+        "remaining_prefill_per_budget": -1.7125360516346355,
+        "remaining_decode_per_sequence": 1.547225381701839,
+        "oldest_waiting_age_ratio": 0.020759999999999994,
+        "largest_decode_gap_ratio": 0.021,
+        "mean_decode_gap_ratio": 0.0074,
+        "prefix_hit_per_request": 0.08888888888888857,
+        "token_budget_utilization": -0.07499999999999996,
+        "sequence_budget_utilization": 0.10000000000000009,
+        "recent_prefill_ms": -0.0,
+        "recent_decode_ms": -0.0,
+        "recent_mixed_ms": -0.0,
+        "recent_scheduler_ms": -0.0,
+        "replica_core_budget": -0.0,
+        "policy_switch_count": -0.0,
+        "time_since_reselection_ms": -0.0
+      },
+      "slo_aware": {
+        "active_count": 0.9999999999999994,
+        "waiting_count": -0.0,
+        "prefill_ready_count": -0.7844645405527367,
+        "decode_ready_count": 1.7253243712550148,
+        "remaining_prefill_per_budget": 1.0151875763152691,
+        "remaining_decode_per_sequence": 0.8654977230975804,
+        "oldest_waiting_age_ratio": -0.08384,
+        "largest_decode_gap_ratio": 0.036000000000000004,
+        "mean_decode_gap_ratio": 0.022400000000000003,
+        "prefix_hit_per_request": 0.08888888888888857,
+        "token_budget_utilization": -0.07499999999999996,
+        "sequence_budget_utilization": 0.10000000000000009,
+        "recent_prefill_ms": -0.0,
+        "recent_decode_ms": -0.0,
+        "recent_mixed_ms": -0.0,
+        "recent_scheduler_ms": -0.0,
+        "replica_core_budget": -0.0,
+        "policy_switch_count": -0.0,
+        "time_since_reselection_ms": -0.0
+      }
+    },
+    "intercepts": {
+      "decode_first": 2.7783025154623737,
+      "prefill_first": 14.478017458357456,
+      "chunked_balanced": 1.9491443411865585,
+      "slo_aware": 1.6010435163477488
+    },
+    "feature_means": {
+      "active_count": 13.2,
+      "waiting_count": 0.0,
+      "prefill_ready_count": 11.6,
+      "decode_ready_count": 1.6,
+      "remaining_prefill_per_budget": 4.15,
+      "remaining_decode_per_sequence": 5.575,
+      "oldest_waiting_age_ratio": 0.01808,
+      "largest_decode_gap_ratio": 0.018000000000000002,
+      "mean_decode_gap_ratio": 0.011200000000000002,
+      "prefix_hit_per_request": 2.0444444444444443,
+      "token_budget_utilization": 0.9625,
+      "sequence_budget_utilization": 0.8,
+      "recent_prefill_ms": 0.0,
+      "recent_decode_ms": 0.0,
+      "recent_mixed_ms": 0.0,
+      "recent_scheduler_ms": 0.0,
+      "replica_core_budget": 2.0,
+      "policy_switch_count": 0.0,
+      "time_since_reselection_ms": 0.0
+    },
+    "feature_scales": {
+      "active_count": 2.4,
+      "waiting_count": 1.0,
+      "prefill_ready_count": 1.019803902718557,
+      "decode_ready_count": 1.8547236990991407,
+      "remaining_prefill_per_budget": 2.634981024599608,
+      "remaining_decode_per_sequence": 4.217226576791909,
+      "oldest_waiting_age_ratio": 1.0,
+      "largest_decode_gap_ratio": 1.0,
+      "mean_decode_gap_ratio": 1.0,
+      "prefix_hit_per_request": 1.0,
+      "token_budget_utilization": 1.0,
+      "sequence_budget_utilization": 1.0,
+      "recent_prefill_ms": 1.0,
+      "recent_decode_ms": 1.0,
+      "recent_mixed_ms": 1.0,
+      "recent_scheduler_ms": 1.0,
+      "replica_core_budget": 1.0,
+      "policy_switch_count": 1.0,
+      "time_since_reselection_ms": 1.0
+    },
+    "training_provenance": "independent_functional_cpu_wall_clock_paired_v1",
+    "equivalence_margin": 0.02,
+    "hysteresis_margin": 0.01,
+    "default_policy": "chunked_balanced"
+  },
+  "frozen_digest": "02b0fcbec25797bf010f7a8014e42ca616037e89c538daf0ec648579f59cb07d",
+  "training_winner_groups": {
+    "decode_first": [
+      3
+    ],
+    "prefill_first": [
+      0
+    ],
+    "chunked_balanced": [
+      1,
+      2
+    ],
+    "slo_aware": [
+      4
+    ]
+  }
+}

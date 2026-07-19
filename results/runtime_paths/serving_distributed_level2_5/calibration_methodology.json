@@ -1,0 +1,8 @@
+{
+  "method":"interpretable fixed-policy request-level replay plus nonnegative linear CPU service curves",
+  "opaque_model":false,
+  "parameters_frozen_before_held_out":true,
+  "coefficient_sign_check":"negative fitted latency coefficients are clamped to zero and disclosed",
+  "held_out_used_for_tuning":false,
+  "important_limitation":"full-trace selector and replay oracle share the functional service model; zero modeled regret is model-consistency evidence"
+}

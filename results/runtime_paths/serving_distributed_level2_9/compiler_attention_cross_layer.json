@@ -1,0 +1,6 @@
+{
+  "status": "not rerun for S2.9",
+  "reason": "the statistical observability harness uses eager attention; changing it after dataset definition would alter benchmark semantics",
+  "preserved_prior_evidence": "../compiler_selected_attention_level5",
+  "s2_9_operator_plan_provenance_claim": false
+}

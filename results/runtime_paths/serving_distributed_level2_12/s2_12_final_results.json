@@ -1,0 +1,132 @@
+{
+  "classification": "failed",
+  "controlling_mean": {
+    "independent_trace_count": 12,
+    "mean_improvement": -0.002862816580978346,
+    "median_improvement": -0.002902815228924989,
+    "cluster_bootstrap_ci95": [
+      -0.008159210149519628,
+      0.002296333856565552
+    ],
+    "bootstrap_probability_improvement": 0.1434,
+    "rows": [
+      {
+        "trace": "decode_heavy_s212",
+        "family": "decode-heavy",
+        "selector_regret": 0.008632444827096753,
+        "baseline_regret": 0.02131986362878533,
+        "improvement": 0.012687418801688574
+      },
+      {
+        "trace": "prefill_heavy_s212",
+        "family": "prefill-heavy",
+        "selector_regret": 0.015646200890439763,
+        "baseline_regret": 0.009343145278122078,
+        "improvement": -0.006303055612317686
+      },
+      {
+        "trace": "mixed_interactive_s212",
+        "family": "mixed-interactive",
+        "selector_regret": 0.009650604385531458,
+        "baseline_regret": 0.009657229836270374,
+        "improvement": 6.625450738916732e-06
+      },
+      {
+        "trace": "contention_s212",
+        "family": "contention",
+        "selector_regret": 0.02653959965531033,
+        "baseline_regret": 0.005560057559902539,
+        "improvement": -0.02097954209540779
+      },
+      {
+        "trace": "arrival_burst_s212",
+        "family": "arrival-burst",
+        "selector_regret": 0.00828277696417213,
+        "baseline_regret": 0.008714747554752437,
+        "improvement": 0.000431970590580308
+      },
+      {
+        "trace": "long_prefill_s212",
+        "family": "long-prefill",
+        "selector_regret": 0.004680188830340048,
+        "baseline_regret": 0.0064421282709395235,
+        "improvement": 0.0017619394405994748
+      },
+      {
+        "trace": "prefix_heavy_s212",
+        "family": "prefix-heavy",
+        "selector_regret": 0.009590869314882821,
+        "baseline_regret": 0.02132859325683023,
+        "improvement": 0.01173772394194741
+      },
+      {
+        "trace": "low_prefix_reuse_s212",
+        "family": "low-prefix-reuse",
+        "selector_regret": 0.020682885819507096,
+        "baseline_regret": 0.014870629910918202,
+        "improvement": -0.005812255908588895
+      },
+      {
+        "trace": "small_token_budget_s212",
+        "family": "small-token-budget",
+        "selector_regret": 0.010755861060476143,
+        "baseline_regret": 0.011806608295159173,
+        "improvement": 0.0010507472346830298
+      },
+      {
+        "trace": "large_token_budget_s212",
+        "family": "large-token-budget",
+        "selector_regret": 0.016359425631978425,
+        "baseline_regret": 0.004692499938665683,
+        "improvement": -0.011666925693312742
+      },
+      {
+        "trace": "small_sequence_budget_s212",
+        "family": "small-sequence-budget",
+        "selector_regret": 0.030070096663333924,
+        "baseline_regret": 0.019421530497641566,
+        "improvement": -0.010648566165692356
+      },
+      {
+        "trace": "larger_active_batch_s212",
+        "family": "larger-active-batch",
+        "selector_regret": 0.013898814493712167,
+        "baseline_regret": 0.00727893553705377,
+        "improvement": -0.006619878956658396
+      }
+    ]
+  },
+  "tail": {
+    "selector": {
+      "p90": 0.02653959965531033,
+      "p95": 0.02653959965531033,
+      "maximum": 0.030070096663333924,
+      "worst_trace_mean": 0.030070096663333924
+    },
+    "baseline": {
+      "p90": 0.02131986362878533,
+      "p95": 0.02131986362878533,
+      "maximum": 0.02132859325683023,
+      "worst_trace_mean": 0.02132859325683023
+    },
+    "p95_difference_selector_minus_baseline": 0.005219736026525,
+    "cluster_bootstrap_ci95": [
+      -0.005682392366390468,
+      0.014732991360151158
+    ],
+    "noninferiority_tolerance": 0.005,
+    "noninferiority_pass": false
+  },
+  "material_family_regression": true,
+  "measured_executions": 600,
+  "attention_to_o_proj_events": 465120,
+  "outputs_equivalent": true,
+  "runtime_counter_sums": {
+    "runtime_schedule_rebuild_count": 0,
+    "runtime_item_override_count": 0,
+    "runtime_token_count_override_count": 0,
+    "runtime_phase_override_count": 0,
+    "runtime_unplanned_request_count": 0,
+    "runtime_fallback_schedule_count": 0
+  }
+}

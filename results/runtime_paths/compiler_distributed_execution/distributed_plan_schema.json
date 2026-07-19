@@ -1,0 +1,306 @@
+{
+  "contract_version": "hir.shared_memory_attention_placement.v1",
+  "example": {
+    "contract_version": "hir.shared_memory_attention_placement.v1",
+    "execution_kind": "compiler_planned_shared_memory_multi_worker",
+    "parallel_strategy": "split_head",
+    "split_dimension": "query_head",
+    "worker_count": 4,
+    "work_item_count": 4,
+    "placement_policy": "deterministic_balanced_remainder",
+    "workers": [
+      {
+        "worker_id": 0,
+        "logical_cpu_id": 0,
+        "query_head_range": [
+          0,
+          4
+        ],
+        "query_token_range": [
+          0,
+          64
+        ],
+        "kv_head_read_range": [
+          0,
+          1
+        ],
+        "q_read": {
+          "kind": "shard_local",
+          "head_range": [
+            0,
+            4
+          ],
+          "query_range": [
+            0,
+            64
+          ]
+        },
+        "k_read": {
+          "kind": "shared_read_only",
+          "kv_head_range": [
+            0,
+            1
+          ],
+          "context_range": [
+            0,
+            "runtime_context_length"
+          ]
+        },
+        "v_read": {
+          "kind": "shared_read_only",
+          "kv_head_range": [
+            0,
+            1
+          ],
+          "context_range": [
+            0,
+            "runtime_context_length"
+          ]
+        },
+        "output_write": {
+          "kind": "disjoint_logical_tensor_slice",
+          "head_range": [
+            0,
+            4
+          ],
+          "query_range": [
+            0,
+            64
+          ],
+          "extent_elements": 16384,
+          "offset_elements": 0
+        },
+        "scratch": {
+          "ownership": "worker_private"
+        }
+      },
+      {
+        "worker_id": 1,
+        "logical_cpu_id": 1,
+        "query_head_range": [
+          4,
+          8
+        ],
+        "query_token_range": [
+          0,
+          64
+        ],
+        "kv_head_read_range": [
+          0,
+          2
+        ],
+        "q_read": {
+          "kind": "shard_local",
+          "head_range": [
+            4,
+            8
+          ],
+          "query_range": [
+            0,
+            64
+          ]
+        },
+        "k_read": {
+          "kind": "shared_read_only",
+          "kv_head_range": [
+            0,
+            2
+          ],
+          "context_range": [
+            0,
+            "runtime_context_length"
+          ]
+        },
+        "v_read": {
+          "kind": "shared_read_only",
+          "kv_head_range": [
+            0,
+            2
+          ],
+          "context_range": [
+            0,
+            "runtime_context_length"
+          ]
+        },
+        "output_write": {
+          "kind": "disjoint_logical_tensor_slice",
+          "head_range": [
+            4,
+            8
+          ],
+          "query_range": [
+            0,
+            64
+          ],
+          "extent_elements": 16384,
+          "offset_elements": 16384
+        },
+        "scratch": {
+          "ownership": "worker_private"
+        }
+      },
+      {
+        "worker_id": 2,
+        "logical_cpu_id": 2,
+        "query_head_range": [
+          8,
+          11
+        ],
+        "query_token_range": [
+          0,
+          64
+        ],
+        "kv_head_read_range": [
+          1,
+          2
+        ],
+        "q_read": {
+          "kind": "shard_local",
+          "head_range": [
+            8,
+            11
+          ],
+          "query_range": [
+            0,
+            64
+          ]
+        },
+        "k_read": {
+          "kind": "shared_read_only",
+          "kv_head_range": [
+            1,
+            2
+          ],
+          "context_range": [
+            0,
+            "runtime_context_length"
+          ]
+        },
+        "v_read": {
+          "kind": "shared_read_only",
+          "kv_head_range": [
+            1,
+            2
+          ],
+          "context_range": [
+            0,
+            "runtime_context_length"
+          ]
+        },
+        "output_write": {
+          "kind": "disjoint_logical_tensor_slice",
+          "head_range": [
+            8,
+            11
+          ],
+          "query_range": [
+            0,
+            64
+          ],
+          "extent_elements": 12288,
+          "offset_elements": 32768
+        },
+        "scratch": {
+          "ownership": "worker_private"
+        }
+      },
+      {
+        "worker_id": 3,
+        "logical_cpu_id": 3,
+        "query_head_range": [
+          11,
+          14
+        ],
+        "query_token_range": [
+          0,
+          64
+        ],
+        "kv_head_read_range": [
+          1,
+          2
+        ],
+        "q_read": {
+          "kind": "shard_local",
+          "head_range": [
+            11,
+            14
+          ],
+          "query_range": [
+            0,
+            64
+          ]
+        },
+        "k_read": {
+          "kind": "shared_read_only",
+          "kv_head_range": [
+            1,
+            2
+          ],
+          "context_range": [
+            0,
+            "runtime_context_length"
+          ]
+        },
+        "v_read": {
+          "kind": "shared_read_only",
+          "kv_head_range": [
+            1,
+            2
+          ],
+          "context_range": [
+            0,
+            "runtime_context_length"
+          ]
+        },
+        "output_write": {
+          "kind": "disjoint_logical_tensor_slice",
+          "head_range": [
+            11,
+            14
+          ],
+          "query_range": [
+            0,
+            64
+          ],
+          "extent_elements": 12288,
+          "offset_elements": 45056
+        },
+        "scratch": {
+          "ownership": "worker_private"
+        }
+      }
+    ],
+    "communication": {
+      "kind": "shared_memory",
+      "shared_input_buffers": [
+        "key",
+        "value"
+      ],
+      "query_access": "shard_local",
+      "output_access": "disjoint_logical_slices",
+      "copy_count": 0,
+      "copy_bytes": 0,
+      "reduction": "none"
+    },
+    "synchronization": {
+      "kind": "completion_counter",
+      "synchronization_points": 1,
+      "consumer": "o_proj",
+      "consumer_requires_all_shards_complete": true
+    },
+    "predicted_cost": {
+      "kernel_compute": 576716.8,
+      "dispatch": 44000.0,
+      "worker_wakeup": 20000.0,
+      "barrier": 27000.0,
+      "imbalance": 82388.11428571428,
+      "shared_cache_contention": 8847.36,
+      "memory_bandwidth_contention": 13271.04,
+      "worker_underutilization": 0.0,
+      "total": 1041023.3142857143
+    },
+    "runtime_no_repartition": true,
+    "runtime_no_worker_count_override": true,
+    "runtime_no_strategy_override": true
+  }
+}

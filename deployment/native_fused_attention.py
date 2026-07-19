@@ -60,7 +60,8 @@ class NativeFusedAttentionLibrary:
 
     def run(self, implementation: str, q: torch.Tensor, k: torch.Tensor,
             v: torch.Tensor, scale: float, query_tile: int, key_tile: int,
-            *, query_head_offset: int = 0, total_query_heads: int | None = None
+            *, query_head_offset: int = 0, total_query_heads: int | None = None,
+            output: torch.Tensor | None = None,
             ) -> tuple[torch.Tensor, dict[str, Any]]:
         if implementation not in SYMBOLS: raise NativeFusedAttentionError("unknown_native_implementation")
         if any(x.device.type != "cpu" or x.dtype != torch.float32 for x in (q,k,v)):
@@ -70,7 +71,10 @@ class NativeFusedAttentionLibrary:
         b,h,q_len,d = q.shape; bk,kvh,context,kd = k.shape
         if b != bk or d != kd: raise NativeFusedAttentionError("native_qkv_shape_mismatch")
         if total_query_heads is None: total_query_heads = h
-        output = torch.empty_like(q, memory_format=torch.contiguous_format)
+        output = (torch.empty_like(q, memory_format=torch.contiguous_format)
+                  if output is None else output)
+        if output.shape != q.shape or output.dtype != torch.float32:
+            raise NativeFusedAttentionError("native_output_shape_or_dtype_mismatch")
         ptr = ctypes.POINTER(ctypes.c_float)
         arr = lambda xs: (ctypes.c_int64 * 4)(*map(int, xs))
         p = Params(

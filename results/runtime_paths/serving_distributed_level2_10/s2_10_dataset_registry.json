@@ -1,0 +1,14 @@
+{
+  "registry_hash": "a79f7be252a5fbe55b08232b2839152e5fc7b9341ea56ea13687e65b719dfae9",
+  "policy_model_training": ["s2_8:mixed_interactive", "s2_8:contention", "s2_8:prefill_heavy", "s2_8:decode_heavy"],
+  "policy_model_development": ["s2_9:arrival_burst", "s2_9:long_prefill", "s2_9:prefix_heavy", "s2_9:budget_pressure"],
+  "preregistered_final_test": {
+    "mixed_final_s210": "d78d558ced01fe2c2f84066f751dbaace6bcdc1375aa6dda4d350004bb6356e5",
+    "long_final_s210": "cd1a1c42cb6a3dae0abe605a1036e033e255115953b5e22f547f79332799c259",
+    "burst_final_s210": "96cefdc28522a30aa755cf9d82823522d0cbc7559878587bac36372dd4de115d",
+    "decode_final_s210": "4c4b3ebd43a1a1d21fdaf8a2af03060182da4b93127b3e5e51db143c5bb6c9aa"
+  },
+  "logical_request_overlap": false,
+  "cross_layer_compiler_attention": ["focused_s210_compiler_attention"],
+  "large_state_stress": ["s2_7_1000_request_10501_step"]
+}

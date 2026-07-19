@@ -1,0 +1,19 @@
+{
+  "covered": [
+    "missing replica",
+    "disabled replica",
+    "request ID mismatch",
+    "cache match exceeds prompt",
+    "unknown policy",
+    "schema mismatch",
+    "duplicate replica IDs",
+    "negative capacity",
+    "missing backend",
+    "missing plan",
+    "duplicate request ID"
+  ],
+  "runtime_rerouting": "forbidden",
+  "manual_replica_assignment": "not exposed",
+  "namespace_guard": "replica IDs remain strings; logical worker IDs remain operator records",
+  "result": "passed"
+}

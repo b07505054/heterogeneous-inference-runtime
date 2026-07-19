@@ -1,0 +1,5 @@
+{
+  "result":"passed",
+  "covered":["invalid phase","decode before prefill","wrong prefill offset","chunk exceeds remaining","chunk exceeds maximum","token budget overflow","sequence budget overflow","duplicate request","foreign replica","unknown policy","non-monotonic step","finished request","missing request","invalid cost","nonpositive count","schema mismatch","logical-worker ID used as request ID"],
+  "runtime_rebuild_or_mutation":"not exposed; counters remained zero"
+}

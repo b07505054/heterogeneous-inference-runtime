@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "trace_source": "scripts.benchmark_qwen_observability_s2_8.trace",
+  "traces": [
+    {"trace_id":"mixed_replica_a_s211","family":"mixed_interactive","trace_hash":"b0b5b61d983cafed3e36339f40e021dccd42bc501f134b80d84d9987d73d7913"},
+    {"trace_id":"mixed_replica_b_s211","family":"mixed_interactive","trace_hash":"610fdc82ff68f0ed1f883d01707e322307d563f39bd905dde945970f9780cd72"},
+    {"trace_id":"contention_a_s211","family":"contention_decode_heavy","trace_hash":"65de5ef60da596dc474707326fec4319921827a1b571b977e9c6e53cabea2fa9"},
+    {"trace_id":"burst_a_s211","family":"arrival_burst_small_budget","trace_hash":"0abceb60bafc527dfe811e33f07f673bef7e31c0d96d9347942f07b867fa6556"},
+    {"trace_id":"long_prefill_a_s211","family":"long_prefill_prefill_heavy","trace_hash":"5bbfa8a2bfbcfe3a6d8ac6926ce438999e3591b038c38ea36defe1d2b8e0e3ed"},
+    {"trace_id":"prefix_lowreuse_a_s211","family":"low_prefix_reuse_large_token_work","trace_hash":"a019ef3ed26121c4ae0d1b07794db096f3c7bbfa822b6b0e78c89c3e8fececf2"}
+  ],
+  "coverage_limitation": "Six structurally distinct traces cover six families; two definitions are present only for mixed-interactive. This is not two traces per every requested family."
+}

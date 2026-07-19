@@ -1,0 +1,45 @@
+{
+  "buckets": {
+    "0-20": {
+      "sample_count": 0,
+      "mean_confidence": null,
+      "observed_win_rate": null,
+      "mean_realized_improvement": null,
+      "mean_regret": null,
+      "maximum_regret": null
+    },
+    "20-40": {
+      "sample_count": 0,
+      "mean_confidence": null,
+      "observed_win_rate": null,
+      "mean_realized_improvement": null,
+      "mean_regret": null,
+      "maximum_regret": null
+    },
+    "40-60": {
+      "sample_count": 0,
+      "mean_confidence": null,
+      "observed_win_rate": null,
+      "mean_realized_improvement": null,
+      "mean_regret": null,
+      "maximum_regret": null
+    },
+    "60-80": {
+      "sample_count": 0,
+      "mean_confidence": null,
+      "observed_win_rate": null,
+      "mean_realized_improvement": null,
+      "mean_regret": null,
+      "maximum_regret": null
+    },
+    "80-100": {
+      "sample_count": 1940,
+      "mean_confidence": 0.9462984589776633,
+      "observed_win_rate": 0.48195876288659795,
+      "mean_realized_improvement": -0.0026777481239312275,
+      "mean_regret": 0.014523211862659154,
+      "maximum_regret": 0.21011582333315243
+    }
+  },
+  "limitation": "Confidence is a frozen support/OOD gate, not a probability. No threshold was refit."
+}

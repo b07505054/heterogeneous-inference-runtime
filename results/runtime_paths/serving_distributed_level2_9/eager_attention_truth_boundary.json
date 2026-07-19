@@ -1,0 +1,7 @@
+{
+  "execution": "real eager Qwen CPU",
+  "attention_to_o_proj_positive": true,
+  "operator_plan_count": 0,
+  "operator_worker_event_count": 0,
+  "claim": "validates scheduler progression, real model execution, and attention-to-o_proj; does not validate compiler operator plans"
+}

@@ -1,0 +1,28 @@
+{
+  "version": "service_model_v2_decode",
+  "features": [
+    "intercept",
+    "prefill_tokens",
+    "decode_sequences",
+    "sequence_count",
+    "model_forward_count",
+    "max_query_length",
+    "max_kv_length",
+    "phase_transitions",
+    "prefill_decode_interaction"
+  ],
+  "coefficients": {
+    "intercept": 1.9873541528370395,
+    "prefill_tokens": -8.704148513061227e-14,
+    "decode_sequences": -0.49823176391834334,
+    "sequence_count": -0.49823176391813373,
+    "model_forward_count": 120.197015046614,
+    "max_query_length": -1.2987671926457032,
+    "max_kv_length": -0.03680037804090297,
+    "phase_transitions": 0.0,
+    "prefill_decode_interaction": 0.0
+  },
+  "training_rows": 126,
+  "fit_objective": "least_squares_step_latency_ms",
+  "regularization": 0.0
+}

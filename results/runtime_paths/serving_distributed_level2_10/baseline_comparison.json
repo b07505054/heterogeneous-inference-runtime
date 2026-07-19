@@ -1,0 +1,13 @@
+{
+  "baseline": {
+    "policy": "decode_first",
+    "mean_regret": 0.012976932395240908,
+    "p95_regret": 0.037393652290248346,
+    "maximum_regret": 0.037393652290248346
+  },
+  "beats_baseline": {
+    "ranking_selector_v3_static": false,
+    "ranking_selector_v4_pairwise": false,
+    "ranking_selector_v4_risk_aware": true
+  }
+}

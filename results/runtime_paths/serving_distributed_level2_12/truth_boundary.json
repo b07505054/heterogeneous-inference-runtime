@@ -1,0 +1,26 @@
+{
+  "classification": "Serving S2.10 remains historical evidence; conservative selector benefit failed broader replication",
+  "profitability": {
+    "trace_clustered_mean_improvement": -0.002862816580978346,
+    "cluster_bootstrap_ci95": [-0.008159210149519628, 0.002296333856565552],
+    "selector_p95_regret": 0.02653959965531033,
+    "baseline_p95_regret": 0.02131986362878533,
+    "tail_noninferiority": false,
+    "material_family_regression": "contention"
+  },
+  "verified": [
+    "600 new measured real-Qwen executions with ten repetitions per cell",
+    "465120 attention-to-o_proj events and equivalent outputs",
+    "rollout-v2 exact new-trace generalization",
+    "natural multi-worker compiler-attention provenance regression",
+    "microsecond-scale selector and sub-millisecond summary scalability",
+    "zero plan-only runtime mutation counters"
+  ],
+  "not_claimed": [
+    "frozen selector profitability on the broader distribution",
+    "tail non-regression",
+    "selector-v5",
+    "Serving S3",
+    "GPU, NCCL, multi-node, or production vLLM execution"
+  ]
+}

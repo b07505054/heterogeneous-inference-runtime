@@ -1,0 +1,23 @@
+{
+  "runtime": {
+    "path": "/home/allen/Desktop/Project/heterogeneous-inference-runtime",
+    "starting_branch": "main",
+    "ending_branch": "main",
+    "starting_head": "34aee51fef08dc447a6a52d938b4867d60eeef70",
+    "ending_head": "34aee51fef08dc447a6a52d938b4867d60eeef70",
+    "dirty_before": true,
+    "dirty_after": true,
+    "new_s2_8_paths": ["deployment/scheduler_observability.py", "tests/test_scheduler_observability.py", "scripts/benchmark_qwen_observability_s2_8.py", "scripts/analyze_qwen_observability_s2_8.py", "docs/SERVING_DISTRIBUTED_LEVEL2_8_POLICY_OBSERVABILITY_REPORT.md", "results/runtime_paths/serving_distributed_level2_8/"]
+  },
+  "compiler": {
+    "path": "/home/allen/Desktop/Project/ml-graph-compiler-runtime",
+    "starting_branch": "master",
+    "ending_branch": "master",
+    "starting_head": "dbf7329392bd2c70fa6ef25e359b277d171b3082",
+    "ending_head": "dbf7329392bd2c70fa6ef25e359b277d171b3082",
+    "dirty_before": false,
+    "dirty_after": false
+  },
+  "destructive_operations": [],
+  "previous_artifacts_overwritten": false
+}

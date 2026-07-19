@@ -1,0 +1,56 @@
+{
+  "chunked_balanced": {
+    "steps": 92,
+    "mixed_fraction": 0.41304347826086957,
+    "mean_sequences": 2.152173913043478,
+    "mean_model_forwards": 1.8043478260869565,
+    "attention_invocations": 3984,
+    "mean_kv_length": 12.608695652173912,
+    "mean_unused_tokens": 3.608695652173913
+  },
+  "decode_first": {
+    "steps": 86,
+    "mixed_fraction": 0.4418604651162791,
+    "mean_sequences": 2.302325581395349,
+    "mean_model_forwards": 1.930232558139535,
+    "attention_invocations": 3984,
+    "mean_kv_length": 12.86046511627907,
+    "mean_unused_tokens": 3.1627906976744184
+  },
+  "prefill_first": {
+    "steps": 84,
+    "mixed_fraction": 0.21428571428571427,
+    "mean_sequences": 2.2857142857142856,
+    "mean_model_forwards": 1.9047619047619047,
+    "attention_invocations": 3840,
+    "mean_kv_length": 12.5,
+    "mean_unused_tokens": 3.0
+  },
+  "ranking_selector_v3_adaptive": {
+    "steps": 86,
+    "mixed_fraction": 0.2558139534883721,
+    "mean_sequences": 2.255813953488372,
+    "mean_model_forwards": 1.8837209302325582,
+    "attention_invocations": 3888,
+    "mean_kv_length": 12.813953488372093,
+    "mean_unused_tokens": 3.1627906976744184
+  },
+  "ranking_selector_v3_static": {
+    "steps": 86,
+    "mixed_fraction": 0.2558139534883721,
+    "mean_sequences": 2.255813953488372,
+    "mean_model_forwards": 1.8837209302325582,
+    "attention_invocations": 3888,
+    "mean_kv_length": 12.813953488372093,
+    "mean_unused_tokens": 3.1627906976744184
+  },
+  "slo_aware": {
+    "steps": 86,
+    "mixed_fraction": 0.4418604651162791,
+    "mean_sequences": 2.302325581395349,
+    "mean_model_forwards": 1.930232558139535,
+    "attention_invocations": 3984,
+    "mean_kv_length": 12.86046511627907,
+    "mean_unused_tokens": 3.1627906976744184
+  }
+}

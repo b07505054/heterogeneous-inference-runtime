@@ -1,0 +1,17 @@
+{
+  "provenance": "derived_from_measured_cpu",
+  "target": "Intel Core i5-10210U functional CPU prototype",
+  "model": {
+    "prefill_base_ms": 0.15,
+    "prefill_token_ms_at_two_logical_core_budget": 0.055,
+    "decode_token_ms_at_two_logical_core_budget": 0.18,
+    "cache_pressure_weight_ms": 0.2,
+    "core_scaling_assumption": "two_logical_cores / configured_logical_core_budget"
+  },
+  "limitations": [
+    "large policy sweeps use modeled service time",
+    "core scaling is analytical and not physical isolation",
+    "not a GPU profile",
+    "real Qwen evidence is separately labeled measured execution"
+  ]
+}

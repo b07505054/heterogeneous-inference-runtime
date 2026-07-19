@@ -1,0 +1,23 @@
+{
+  "invocations": 1000,
+  "per_runtime_invocations": [
+    250,
+    250,
+    250,
+    250
+  ],
+  "worker_start_counts": [
+    1,
+    4,
+    1,
+    4
+  ],
+  "runtime_repartition_count": 0,
+  "worker_count_override": 0,
+  "strategy_override": 0,
+  "manual_shard_count": 0,
+  "nonfinite_failures": 0,
+  "max_abs_error": 4.172325134277344e-07,
+  "deadlock": false,
+  "worker_pool_recreated_per_call": false
+}

@@ -1,0 +1,13 @@
+{
+  "sets":{
+    "wall_clock_development":[{"trace_id":"wc-dev-infra-601","seed":601,"purpose":"measurement infrastructure only"}],
+    "wall_clock_validation":[{"trace_id":"wc-validation-calibration-701","seed":701,"purpose":"fast-selector implementation validation"}],
+    "wall_clock_final_test":[
+      {"trace_id":"mixed_interactive","seed_base":20260717,"arrival_pattern":"staggered","prompt_lengths":[10,16,12,20],"output_lengths":[2,2,2,2],"prefix_hit_pattern":"shared-prefix token pattern; no tensor reuse","topology":"functional single replica benchmark","token_budget":10,"sequence_budget":4,"objective_profile":"balanced_interactive"},
+      {"trace_id":"contention","seed_base":20260717,"arrival_pattern":"burst/staggered","prompt_lengths":[24,8,8,16],"output_lengths":[2,4,4,2],"prefix_hit_pattern":"none","topology":"functional single replica benchmark","token_budget":10,"sequence_budget":4,"objective_profile":"balanced_interactive"}
+    ],
+    "planning_overhead_benchmark":[{"trace_id":"planning-state-801","seed":801,"request_state":"four-request contention snapshot"}]
+  },
+  "overlap_count":0,
+  "final_test_used_for_tuning":false
+}

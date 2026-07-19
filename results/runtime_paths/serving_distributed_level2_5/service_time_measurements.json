@@ -1,0 +1,148 @@
+{
+  "execution_mode": "real_qwen",
+  "model": "/home/allen/.cache/huggingface/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775",
+  "dtype": "fp32",
+  "torch_threads": 4,
+  "rows": [
+    {
+      "kind": "prefill",
+      "prefill_tokens": 4,
+      "decode_sequences": 0,
+      "core_budget": 4,
+      "median_ms": 134.62755049113184,
+      "p95_ms": 136.16817397996783,
+      "samples_ms": [
+        136.16817397996783,
+        134.63645707815886,
+        134.61864390410483,
+        134.54395183362067
+      ]
+    },
+    {
+      "kind": "prefill",
+      "prefill_tokens": 8,
+      "decode_sequences": 0,
+      "core_budget": 4,
+      "median_ms": 136.8139444384724,
+      "p95_ms": 137.6858688890934,
+      "samples_ms": [
+        137.37038988620043,
+        136.25749899074435,
+        135.1867790799588,
+        137.6858688890934
+      ]
+    },
+    {
+      "kind": "prefill",
+      "prefill_tokens": 16,
+      "decode_sequences": 0,
+      "core_budget": 4,
+      "median_ms": 145.55898506660014,
+      "p95_ms": 159.96395703405142,
+      "samples_ms": [
+        143.35256488993764,
+        145.8881851285696,
+        145.22978500463068,
+        159.96395703405142
+      ]
+    },
+    {
+      "kind": "prefill",
+      "prefill_tokens": 32,
+      "decode_sequences": 0,
+      "core_budget": 4,
+      "median_ms": 174.35648944228888,
+      "p95_ms": 175.77577591873705,
+      "samples_ms": [
+        172.05469100736082,
+        175.77577591873705,
+        175.14307191595435,
+        173.5699069686234
+      ]
+    },
+    {
+      "kind": "decode",
+      "prefill_tokens": 0,
+      "decode_sequences": 1,
+      "core_budget": 4,
+      "median_ms": 113.91311162151396,
+      "p95_ms": 115.39511289447546,
+      "samples_ms": [
+        114.56366116181016,
+        111.92632699385285,
+        115.39511289447546,
+        113.26256208121777
+      ]
+    },
+    {
+      "kind": "decode",
+      "prefill_tokens": 0,
+      "decode_sequences": 2,
+      "core_budget": 4,
+      "median_ms": 127.48491251841187,
+      "p95_ms": 128.90194705687463,
+      "samples_ms": [
+        127.4876540992409,
+        127.48217093758285,
+        128.90194705687463,
+        126.7977140378207
+      ]
+    },
+    {
+      "kind": "decode",
+      "prefill_tokens": 0,
+      "decode_sequences": 4,
+      "core_budget": 4,
+      "median_ms": 129.78025642223656,
+      "p95_ms": 130.51709486171603,
+      "samples_ms": [
+        130.51709486171603,
+        126.79376010783017,
+        130.42330485768616,
+        129.13720798678696
+      ]
+    },
+    {
+      "kind": "mixed",
+      "prefill_tokens": 8,
+      "decode_sequences": 1,
+      "core_budget": 4,
+      "median_ms": 244.75096457172185,
+      "p95_ms": 245.09933008812368,
+      "samples_ms": [
+        245.09933008812368,
+        243.2572660036385,
+        244.8991450946778,
+        244.6027840487659
+      ]
+    },
+    {
+      "kind": "mixed",
+      "prefill_tokens": 16,
+      "decode_sequences": 2,
+      "core_budget": 4,
+      "median_ms": 264.00346809532493,
+      "p95_ms": 266.7028319556266,
+      "samples_ms": [
+        266.7028319556266,
+        263.29333102330565,
+        261.8184860330075,
+        264.7136051673442
+      ]
+    },
+    {
+      "kind": "mixed",
+      "prefill_tokens": 32,
+      "decode_sequences": 4,
+      "core_budget": 4,
+      "median_ms": 293.0426300736144,
+      "p95_ms": 294.8028491809964,
+      "samples_ms": [
+        292.07056411542,
+        294.01469603180885,
+        290.9283658955246,
+        294.8028491809964
+      ]
+    }
+  ]
+}

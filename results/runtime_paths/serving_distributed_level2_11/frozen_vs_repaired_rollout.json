@@ -1,0 +1,19 @@
+{
+  "configuration_a": {
+    "selector": "frozen S2.10 selector-v4",
+    "rollout": "aggregate predicted-step feature",
+    "semantic_plan_prediction": false,
+    "profitability_evidence": "S2.10 historical validation and S2.11 replication"
+  },
+  "configuration_b": {
+    "selector": "unchanged frozen S2.10 selector-v4",
+    "rollout": "policy_rollout_v2",
+    "exact_first_step_agreement": 1.0,
+    "exact_full_sequence_agreement": 1.0,
+    "mean_selected_work_jaccard": 1.0,
+    "mean_absolute_step_count_error": 0.0
+  },
+  "selector_decision_changed": false,
+  "regret_changed_by_rollout_v2": false,
+  "interpretation": "Rollout-v2 repairs diagnostic semantic fidelity. It is not wired into the frozen selector decision rule."
+}

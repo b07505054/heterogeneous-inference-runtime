@@ -1,0 +1,12 @@
+{
+  "hot_path": {
+    "total_ms": 86.55753,
+    "median_selector_ms": 0.078075,
+    "candidate_detail_captured": false
+  },
+  "evidence": {
+    "total_ms": 95.761068,
+    "median_selector_ms": 0.081735,
+    "candidate_detail_captured": true
+  }
+}

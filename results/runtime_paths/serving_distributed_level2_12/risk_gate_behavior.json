@@ -1,0 +1,24 @@
+{
+  "candidate_selection_count": 110,
+  "robust_default_count": 1830,
+  "out_of_distribution_count": 10,
+  "confidence_rejection_count": 0,
+  "improvement_margin_rejection_count": 1830,
+  "practical_tie_count": 160,
+  "step_count": 1940,
+  "selector_coverage": 0.05670103092783505,
+  "candidate_realized": {
+    "sample_count": 110,
+    "win_rate": 0.5181818181818182,
+    "mean_improvement": 0.001236430829886715,
+    "p95_regret": 0.0769875969389348,
+    "worst_loss": -0.13645323622964706
+  },
+  "default_realized": {
+    "sample_count": 1830,
+    "win_rate": 0.47978142076502733,
+    "mean_improvement": -0.0029130266402809402,
+    "p95_regret": 0.052989334355882614,
+    "worst_loss": -0.21011582333315243
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "wall_clock_final_variations":["staggered mixed prompts","burst contention","prompt lengths 8-24","outputs 2-4","token budget 10","sequence budget 4"],
+  "modeled_broader_generalization_reference":"../serving_distributed_level2_5/generalization_results.json",
+  "high_prediction_error_case":"mixed_interactive: centered prediction error p95 244.42 and completely reversed policy ranking",
+  "ranking_robust":false,
+  "limitation":"wall-clock final set covers two manageable traces, not all topology/objective/core variations"
+}

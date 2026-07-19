@@ -1,0 +1,434 @@
+[
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "mixed_interactive",
+    "policy_a": "decode_first",
+    "policy_b": "prefill_first",
+    "measured_objective_delta": -390.90186244720826,
+    "target": "a_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "mixed_interactive",
+    "policy_a": "decode_first",
+    "policy_b": "chunked_balanced",
+    "measured_objective_delta": -22.67492427927209,
+    "target": "tie",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "mixed_interactive",
+    "policy_a": "decode_first",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": 10.118892270838842,
+    "target": "tie",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "mixed_interactive",
+    "policy_a": "prefill_first",
+    "policy_b": "chunked_balanced",
+    "measured_objective_delta": 368.22693816793617,
+    "target": "b_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "mixed_interactive",
+    "policy_a": "prefill_first",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": 401.0207547180471,
+    "target": "b_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "mixed_interactive",
+    "policy_a": "chunked_balanced",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": 32.79381655011093,
+    "target": "b_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "contention",
+    "policy_a": "decode_first",
+    "policy_b": "prefill_first",
+    "measured_objective_delta": -37.977382649842184,
+    "target": "tie",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "contention",
+    "policy_a": "decode_first",
+    "policy_b": "chunked_balanced",
+    "measured_objective_delta": -19.43991617008578,
+    "target": "tie",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "contention",
+    "policy_a": "decode_first",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": -42.048618364788126,
+    "target": "a_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "contention",
+    "policy_a": "prefill_first",
+    "policy_b": "chunked_balanced",
+    "measured_objective_delta": 18.537466479756404,
+    "target": "tie",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "contention",
+    "policy_a": "prefill_first",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": -4.071235714945942,
+    "target": "tie",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "contention",
+    "policy_a": "chunked_balanced",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": -22.608702194702346,
+    "target": "tie",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "prefill_heavy",
+    "policy_a": "decode_first",
+    "policy_b": "prefill_first",
+    "measured_objective_delta": -698.7057262522285,
+    "target": "a_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "prefill_heavy",
+    "policy_a": "decode_first",
+    "policy_b": "chunked_balanced",
+    "measured_objective_delta": -106.89656924660085,
+    "target": "a_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "prefill_heavy",
+    "policy_a": "decode_first",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": -16.905451877391897,
+    "target": "tie",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "prefill_heavy",
+    "policy_a": "prefill_first",
+    "policy_b": "chunked_balanced",
+    "measured_objective_delta": 591.8091570056276,
+    "target": "b_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "prefill_heavy",
+    "policy_a": "prefill_first",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": 681.8002743748366,
+    "target": "b_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "prefill_heavy",
+    "policy_a": "chunked_balanced",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": 89.99111736920895,
+    "target": "b_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "decode_heavy",
+    "policy_a": "decode_first",
+    "policy_b": "prefill_first",
+    "measured_objective_delta": 12.507864033977967,
+    "target": "tie",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "decode_heavy",
+    "policy_a": "decode_first",
+    "policy_b": "chunked_balanced",
+    "measured_objective_delta": -173.57738244027132,
+    "target": "a_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "decode_heavy",
+    "policy_a": "decode_first",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": 1.3288742484292015,
+    "target": "tie",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "decode_heavy",
+    "policy_a": "prefill_first",
+    "policy_b": "chunked_balanced",
+    "measured_objective_delta": -186.0852464742493,
+    "target": "a_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "decode_heavy",
+    "policy_a": "prefill_first",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": -11.178989785548765,
+    "target": "tie",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_8/real_qwen_v3_policy_runs.json",
+    "trace": "decode_heavy",
+    "policy_a": "chunked_balanced",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": 174.90625668870052,
+    "target": "b_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "arrival_burst_s29",
+    "policy_a": "decode_first",
+    "policy_b": "prefill_first",
+    "measured_objective_delta": -594.241679427796,
+    "target": "a_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "arrival_burst_s29",
+    "policy_a": "decode_first",
+    "policy_b": "chunked_balanced",
+    "measured_objective_delta": -53.13951064454159,
+    "target": "a_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "arrival_burst_s29",
+    "policy_a": "decode_first",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": 0.2533860824769363,
+    "target": "tie",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "arrival_burst_s29",
+    "policy_a": "prefill_first",
+    "policy_b": "chunked_balanced",
+    "measured_objective_delta": 541.1021687832545,
+    "target": "b_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "arrival_burst_s29",
+    "policy_a": "prefill_first",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": 594.495065510273,
+    "target": "b_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "arrival_burst_s29",
+    "policy_a": "chunked_balanced",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": 53.392896727018524,
+    "target": "b_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "long_prefill_s29",
+    "policy_a": "decode_first",
+    "policy_b": "prefill_first",
+    "measured_objective_delta": -256.3691986433696,
+    "target": "a_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "long_prefill_s29",
+    "policy_a": "decode_first",
+    "policy_b": "chunked_balanced",
+    "measured_objective_delta": 30.271233037638012,
+    "target": "tie",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "long_prefill_s29",
+    "policy_a": "decode_first",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": -71.52557835797779,
+    "target": "a_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "long_prefill_s29",
+    "policy_a": "prefill_first",
+    "policy_b": "chunked_balanced",
+    "measured_objective_delta": 286.6404316810076,
+    "target": "b_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "long_prefill_s29",
+    "policy_a": "prefill_first",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": 184.8436202853918,
+    "target": "b_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "long_prefill_s29",
+    "policy_a": "chunked_balanced",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": -101.7968113956158,
+    "target": "a_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "prefix_heavy_s29",
+    "policy_a": "decode_first",
+    "policy_b": "prefill_first",
+    "measured_objective_delta": -357.2954687551828,
+    "target": "a_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "prefix_heavy_s29",
+    "policy_a": "decode_first",
+    "policy_b": "chunked_balanced",
+    "measured_objective_delta": 63.3299545806949,
+    "target": "b_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "prefix_heavy_s29",
+    "policy_a": "decode_first",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": -0.5342898439266719,
+    "target": "tie",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "prefix_heavy_s29",
+    "policy_a": "prefill_first",
+    "policy_b": "chunked_balanced",
+    "measured_objective_delta": 420.6254233358777,
+    "target": "b_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "prefix_heavy_s29",
+    "policy_a": "prefill_first",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": 356.76117891125614,
+    "target": "b_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "prefix_heavy_s29",
+    "policy_a": "chunked_balanced",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": -63.864244424621575,
+    "target": "a_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "budget_pressure_s29",
+    "policy_a": "decode_first",
+    "policy_b": "prefill_first",
+    "measured_objective_delta": -700.0678747936036,
+    "target": "a_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "budget_pressure_s29",
+    "policy_a": "decode_first",
+    "policy_b": "chunked_balanced",
+    "measured_objective_delta": -27.434101386461407,
+    "target": "tie",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "budget_pressure_s29",
+    "policy_a": "decode_first",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": 18.08739601256093,
+    "target": "tie",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "budget_pressure_s29",
+    "policy_a": "prefill_first",
+    "policy_b": "chunked_balanced",
+    "measured_objective_delta": 672.6337734071421,
+    "target": "b_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "budget_pressure_s29",
+    "policy_a": "prefill_first",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": 718.1552708061645,
+    "target": "b_wins",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  },
+  {
+    "source": "results/runtime_paths/serving_distributed_level2_9/real_qwen_final_test_runs.json",
+    "trace": "budget_pressure_s29",
+    "policy_a": "chunked_balanced",
+    "policy_b": "slo_aware",
+    "measured_objective_delta": 45.52149739902234,
+    "target": "tie",
+    "target_provenance": "measured_real_qwen_wall_clock"
+  }
+]

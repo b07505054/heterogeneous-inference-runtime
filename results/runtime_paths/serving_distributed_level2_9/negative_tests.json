@@ -1,0 +1,6 @@
+{
+  "new_reconstruction_tests": 6,
+  "covered": ["missing physical clock origin", "duplicate scheduler step", "omitted request", "item commit outside step", "invalid frozen tolerance", "exact reconstruction"],
+  "focused_python": {"passed": 299, "failed": 0},
+  "mlir_attention_cpu": {"passed": 2, "failed": 0}
+}

@@ -1,0 +1,6 @@
+{
+  "classification": "Serving Distributed S2.8 wall-clock policy behavior partially explained; profitability selector remains unvalidated",
+  "verified": ["passive real-Qwen step instrumentation", "timer accounting", "execution-shape differences", "step-latency residual decomposition", "real-Qwen static/adaptive exploratory comparison", "S2.7 scalability preserved by unchanged incremental state"],
+  "incomplete": ["independent train/development/validation/final split", "feature ablation", "measured-step request reconstruction", "compiler-attention operator-plan provenance in v3 run", "untouched final-test ranking"],
+  "s3_allowed": false
+}

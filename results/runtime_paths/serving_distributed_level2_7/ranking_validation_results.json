@@ -1,0 +1,75 @@
+{
+  "traces": [
+    {
+      "family": "low_prefix_reuse",
+      "oracle": "slo_aware",
+      "selected": "slo_aware",
+      "objectives": {
+        "decode_first": 2.167643620244538,
+        "prefill_first": 2.278312002696718,
+        "chunked_balanced": 2.1601974488779283,
+        "slo_aware": 2.1529953373828903
+      },
+      "scores": {
+        "decode_first": 3.8346577599390095,
+        "prefill_first": 19.437734423343198,
+        "chunked_balanced": 0.6217861187202984,
+        "slo_aware": -1.760312248182105
+      },
+      "regret": 0.0,
+      "top1_agreement": true,
+      "pairwise_accuracy": 1.0,
+      "measured_order": [
+        "slo_aware",
+        "chunked_balanced",
+        "decode_first",
+        "prefill_first"
+      ],
+      "predicted_order": [
+        "slo_aware",
+        "chunked_balanced",
+        "decode_first",
+        "prefill_first"
+      ],
+      "selector_overhead_ms": 0.020545
+    },
+    {
+      "family": "small_token_budget",
+      "oracle": "chunked_balanced",
+      "selected": "chunked_balanced",
+      "objectives": {
+        "decode_first": 3.800329267202566,
+        "prefill_first": 4.793115275485131,
+        "chunked_balanced": 3.705319235450588,
+        "slo_aware": 3.722841744699205
+      },
+      "scores": {
+        "decode_first": 3.506252862797701,
+        "prefill_first": 29.005786908207085,
+        "chunked_balanced": -6.164183434464443,
+        "slo_aware": 2.5719792704648015
+      },
+      "regret": 0.0,
+      "top1_agreement": true,
+      "pairwise_accuracy": 1.0,
+      "measured_order": [
+        "chunked_balanced",
+        "slo_aware",
+        "decode_first",
+        "prefill_first"
+      ],
+      "predicted_order": [
+        "chunked_balanced",
+        "slo_aware",
+        "decode_first",
+        "prefill_first"
+      ],
+      "selector_overhead_ms": 0.018757
+    }
+  ],
+  "top1_agreement": 1.0,
+  "mean_regret": 0.0,
+  "median_regret": 0.0,
+  "p95_regret": 0.0,
+  "pairwise_accuracy": 1.0
+}

@@ -1,0 +1,7 @@
+{
+  "decode_first":{"benefit":"protect inter-token latency","risk":"prefill starvation"},
+  "prefill_first":{"benefit":"prompt progress","risk":"decode interruption"},
+  "chunked_balanced":{"decode_reservation":"candidate/profile field","benefit":"mixed progress"},
+  "slo_aware":{"signals":["request age","TTFT target","decode gap target","remaining work"],"implementation":"explainable urgency ordering"},
+  "tie_break":["arrival_time","request_id","candidate_id"]
+}

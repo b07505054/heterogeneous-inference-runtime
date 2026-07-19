@@ -1,0 +1,22 @@
+{
+  "always_1_workers": {
+    "mean_regret_percent": 31.173067464032314,
+    "median_regret_percent": 3.295136916892183,
+    "max_regret_percent": 117.016535579124
+  },
+  "always_2_workers": {
+    "mean_regret_percent": 25.520964884616543,
+    "median_regret_percent": 23.859455239122585,
+    "max_regret_percent": 59.11365139421532
+  },
+  "always_4_workers": {
+    "mean_regret_percent": 79.86827342112568,
+    "median_regret_percent": 47.031882547128845,
+    "max_regret_percent": 208.69350018677625
+  },
+  "always_8_workers": {
+    "mean_regret_percent": 237.2999915366497,
+    "median_regret_percent": 180.3323719269331,
+    "max_regret_percent": 541.6679118416138
+  }
+}

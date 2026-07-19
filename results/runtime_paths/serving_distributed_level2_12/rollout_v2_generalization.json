@@ -1,0 +1,491 @@
+{
+  "case_count": 48,
+  "first_step_agreement": 1.0,
+  "full_sequence_agreement": 1.0,
+  "selected_work_jaccard": 1.0,
+  "mean_step_count_error": 0.0,
+  "next_state_agreement": 1.0,
+  "completion_order_agreement": 1.0,
+  "rows": [
+    {
+      "trace": "decode_heavy_s212",
+      "policy": "decode_first",
+      "predicted_steps": 12,
+      "actual_steps": 12,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 12,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "decode_heavy_s212",
+      "policy": "prefill_first",
+      "predicted_steps": 11,
+      "actual_steps": 11,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 11,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "decode_heavy_s212",
+      "policy": "chunked_balanced",
+      "predicted_steps": 16,
+      "actual_steps": 16,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 16,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "decode_heavy_s212",
+      "policy": "slo_aware",
+      "predicted_steps": 12,
+      "actual_steps": 12,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 12,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "prefill_heavy_s212",
+      "policy": "decode_first",
+      "predicted_steps": 24,
+      "actual_steps": 24,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 24,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "prefill_heavy_s212",
+      "policy": "prefill_first",
+      "predicted_steps": 23,
+      "actual_steps": 23,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 23,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "prefill_heavy_s212",
+      "policy": "chunked_balanced",
+      "predicted_steps": 24,
+      "actual_steps": 24,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 24,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "prefill_heavy_s212",
+      "policy": "slo_aware",
+      "predicted_steps": 24,
+      "actual_steps": 24,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 24,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "mixed_interactive_s212",
+      "policy": "decode_first",
+      "predicted_steps": 13,
+      "actual_steps": 13,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 13,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "mixed_interactive_s212",
+      "policy": "prefill_first",
+      "predicted_steps": 13,
+      "actual_steps": 13,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 13,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "mixed_interactive_s212",
+      "policy": "chunked_balanced",
+      "predicted_steps": 13,
+      "actual_steps": 13,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 13,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "mixed_interactive_s212",
+      "policy": "slo_aware",
+      "predicted_steps": 13,
+      "actual_steps": 13,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 13,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "contention_s212",
+      "policy": "decode_first",
+      "predicted_steps": 14,
+      "actual_steps": 14,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 14,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "contention_s212",
+      "policy": "prefill_first",
+      "predicted_steps": 14,
+      "actual_steps": 14,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 14,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "contention_s212",
+      "policy": "chunked_balanced",
+      "predicted_steps": 14,
+      "actual_steps": 14,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 14,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "contention_s212",
+      "policy": "slo_aware",
+      "predicted_steps": 14,
+      "actual_steps": 14,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 14,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "arrival_burst_s212",
+      "policy": "decode_first",
+      "predicted_steps": 13,
+      "actual_steps": 13,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 13,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "arrival_burst_s212",
+      "policy": "prefill_first",
+      "predicted_steps": 12,
+      "actual_steps": 12,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 12,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "arrival_burst_s212",
+      "policy": "chunked_balanced",
+      "predicted_steps": 13,
+      "actual_steps": 13,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 13,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "arrival_burst_s212",
+      "policy": "slo_aware",
+      "predicted_steps": 13,
+      "actual_steps": 13,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 13,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "long_prefill_s212",
+      "policy": "decode_first",
+      "predicted_steps": 20,
+      "actual_steps": 20,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 20,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "long_prefill_s212",
+      "policy": "prefill_first",
+      "predicted_steps": 19,
+      "actual_steps": 19,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 19,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "long_prefill_s212",
+      "policy": "chunked_balanced",
+      "predicted_steps": 20,
+      "actual_steps": 20,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 20,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "long_prefill_s212",
+      "policy": "slo_aware",
+      "predicted_steps": 20,
+      "actual_steps": 20,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 20,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "prefix_heavy_s212",
+      "policy": "decode_first",
+      "predicted_steps": 17,
+      "actual_steps": 17,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 17,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "prefix_heavy_s212",
+      "policy": "prefill_first",
+      "predicted_steps": 16,
+      "actual_steps": 16,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 16,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "prefix_heavy_s212",
+      "policy": "chunked_balanced",
+      "predicted_steps": 17,
+      "actual_steps": 17,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 17,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "prefix_heavy_s212",
+      "policy": "slo_aware",
+      "predicted_steps": 17,
+      "actual_steps": 17,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 17,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "low_prefix_reuse_s212",
+      "policy": "decode_first",
+      "predicted_steps": 16,
+      "actual_steps": 16,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 16,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "low_prefix_reuse_s212",
+      "policy": "prefill_first",
+      "predicted_steps": 15,
+      "actual_steps": 15,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 15,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "low_prefix_reuse_s212",
+      "policy": "chunked_balanced",
+      "predicted_steps": 16,
+      "actual_steps": 16,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 16,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "low_prefix_reuse_s212",
+      "policy": "slo_aware",
+      "predicted_steps": 16,
+      "actual_steps": 16,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 16,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "small_token_budget_s212",
+      "policy": "decode_first",
+      "predicted_steps": 24,
+      "actual_steps": 24,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 24,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "small_token_budget_s212",
+      "policy": "prefill_first",
+      "predicted_steps": 22,
+      "actual_steps": 22,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 22,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "small_token_budget_s212",
+      "policy": "chunked_balanced",
+      "predicted_steps": 24,
+      "actual_steps": 24,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 24,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "small_token_budget_s212",
+      "policy": "slo_aware",
+      "predicted_steps": 24,
+      "actual_steps": 24,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 24,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "large_token_budget_s212",
+      "policy": "decode_first",
+      "predicted_steps": 11,
+      "actual_steps": 11,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 11,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "large_token_budget_s212",
+      "policy": "prefill_first",
+      "predicted_steps": 11,
+      "actual_steps": 11,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 11,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "large_token_budget_s212",
+      "policy": "chunked_balanced",
+      "predicted_steps": 11,
+      "actual_steps": 11,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 11,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "large_token_budget_s212",
+      "policy": "slo_aware",
+      "predicted_steps": 11,
+      "actual_steps": 11,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 11,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "small_sequence_budget_s212",
+      "policy": "decode_first",
+      "predicted_steps": 18,
+      "actual_steps": 18,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 18,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "small_sequence_budget_s212",
+      "policy": "prefill_first",
+      "predicted_steps": 18,
+      "actual_steps": 18,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 18,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "small_sequence_budget_s212",
+      "policy": "chunked_balanced",
+      "predicted_steps": 19,
+      "actual_steps": 19,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 19,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "small_sequence_budget_s212",
+      "policy": "slo_aware",
+      "predicted_steps": 18,
+      "actual_steps": 18,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 18,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "larger_active_batch_s212",
+      "policy": "decode_first",
+      "predicted_steps": 12,
+      "actual_steps": 12,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 12,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "larger_active_batch_s212",
+      "policy": "prefill_first",
+      "predicted_steps": 12,
+      "actual_steps": 12,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 12,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "larger_active_batch_s212",
+      "policy": "chunked_balanced",
+      "predicted_steps": 12,
+      "actual_steps": 12,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 12,
+      "mean_selected_work_jaccard": 1.0
+    },
+    {
+      "trace": "larger_active_batch_s212",
+      "policy": "slo_aware",
+      "predicted_steps": 12,
+      "actual_steps": 12,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 12,
+      "mean_selected_work_jaccard": 1.0
+    }
+  ]
+}

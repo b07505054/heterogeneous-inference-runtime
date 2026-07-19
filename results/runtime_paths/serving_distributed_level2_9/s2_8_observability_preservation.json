@@ -1,0 +1,10 @@
+{
+  "observability_status": "partially_explained",
+  "timer_accounting_status": "verified",
+  "service_model_status": "systematically_biased",
+  "selector_v3_status": "exploratory",
+  "profitability_status": "unvalidated",
+  "measured_step_reconstruction_status": "incomplete",
+  "dataset_freeze_status": "incomplete",
+  "preserved": {"measured_steps": 520, "measured_executions": 48, "warmups": 24, "attention_to_o_proj": 23568, "static_mean_regret": 0.0376, "adaptive_mean_regret": 0.0394}
+}

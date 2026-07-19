@@ -1,0 +1,81 @@
+{
+  "rows": [
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 16,
+      "selected": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+      "measured_selected": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+      "winner": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+      "regret_percent": 0.0,
+      "exact": true
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 64,
+      "selected": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+      "measured_selected": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+      "winner": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+      "regret_percent": 0.0,
+      "exact": true
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 256,
+      "selected": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+      "measured_selected": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+      "winner": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+      "regret_percent": 0.0,
+      "exact": true
+    },
+    {
+      "phase": "decode",
+      "q": 1,
+      "k": 1024,
+      "selected": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w2_v1",
+      "measured_selected": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w2_v1",
+      "winner": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w2_v1",
+      "regret_percent": 0.0,
+      "exact": true
+    },
+    {
+      "phase": "prefill",
+      "q": 16,
+      "k": 16,
+      "selected": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+      "measured_selected": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+      "winner": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+      "regret_percent": 0.0,
+      "exact": true
+    },
+    {
+      "phase": "prefill",
+      "q": 64,
+      "k": 64,
+      "selected": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w4_v1",
+      "measured_selected": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w4_v1",
+      "winner": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w2_v1",
+      "regret_percent": 2.3084596116067058,
+      "exact": false
+    },
+    {
+      "phase": "prefill",
+      "q": 256,
+      "k": 256,
+      "selected": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w8_v1",
+      "measured_selected": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w8_v1",
+      "winner": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w8_v1",
+      "regret_percent": 0.0,
+      "exact": true
+    }
+  ],
+  "workloads": 7,
+  "exact_match_rate": 0.8571428571428571,
+  "mean_regret_percent": 0.3297799445152437,
+  "median_regret_percent": 0.0,
+  "p95_regret_percent": 2.3084596116067058,
+  "max_regret_percent": 2.3084596116067058,
+  "fallback_rate": 0
+}

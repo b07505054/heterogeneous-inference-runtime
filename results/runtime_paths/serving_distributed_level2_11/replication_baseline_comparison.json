@@ -1,0 +1,24 @@
+{
+  "selector": {
+    "mean_regret": 0.0046271962065891955,
+    "median_regret": 0.0012760196335543945,
+    "p90_regret": 0.008965518711319807,
+    "p95_regret": 0.016245619261106577,
+    "maximum_regret": 0.016245619261106577,
+    "tie_aware_agreement": 1.0
+  },
+  "baseline": {
+    "mean_regret": 0.006936922269156344,
+    "p95_regret": 0.01300618813664793,
+    "maximum_regret": 0.01300618813664793
+  },
+  "paired": {
+    "mean": -0.002309726062567148,
+    "bootstrap_ci95": [
+      -0.008295311535889529,
+      0.003954295491573909
+    ],
+    "fraction_selector_better": 0.6666666666666666
+  },
+  "classification": "inconclusive"
+}

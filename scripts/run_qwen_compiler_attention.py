@@ -65,6 +65,8 @@ def main():
     ap.add_argument("--forced-test-implementation",
                     choices=("torch_tiled_online_softmax_exact_v1",
                              "native_scalar", "native_avx2"))
+    ap.add_argument("--forced-test-workers", type=int, choices=(1,2,4,8), default=1)
+    ap.add_argument("--perturb-worker-id", type=int)
     args = ap.parse_args()
     from transformers import AutoModelForCausalLM, AutoTokenizer
     torch.manual_seed(20260717)
@@ -100,11 +102,13 @@ def main():
         if args.forced_test_algorithm == "fused_tiled_online_softmax":
             prefill_plan, prefill_trace = force_test_attention_plan(
                 prefill_workload, algorithm=args.forced_test_algorithm,
-                strategy="serial", workers=1, query_tile=4, key_tile=32,
+                strategy=("serial" if args.forced_test_workers==1 else "split_head"),
+                workers=args.forced_test_workers, query_tile=4, key_tile=32,
                 implementation=args.forced_test_implementation)
             decode_plan, decode_trace = force_test_attention_plan(
                 decode_workload, algorithm=args.forced_test_algorithm,
-                strategy="serial", workers=1, query_tile=1, key_tile=32,
+                strategy=("serial" if args.forced_test_workers==1 else "split_head"),
+                workers=args.forced_test_workers, query_tile=1, key_tile=32,
                 implementation=args.forced_test_implementation)
         else:
             prefill_plan, prefill_trace = force_test_attention_plan(
@@ -132,7 +136,9 @@ def main():
         raise RuntimeError("attention decision changed during ExecutionPlan round-trip")
     original = model.config._attn_implementation
     def compiler_greedy(perturb=0.0):
-        adapter = ExecutionPlanAttentionAdapter(loaded_plan, perturbation=perturb)
+        adapter = ExecutionPlanAttentionAdapter(
+            loaded_plan, perturbation=perturb,
+            perturb_worker_id=(args.perturb_worker_id if perturb else None))
         oproj_inputs = []
         handles = []
         for layer in model.model.layers:

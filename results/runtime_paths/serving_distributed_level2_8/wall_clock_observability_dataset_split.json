@@ -1,0 +1,13 @@
+{
+  "feature_discovery": ["s2_6_mixed_historical", "s2_6_contention_historical"],
+  "ranking_training": [],
+  "ranking_development": [],
+  "ranking_validation": [],
+  "ranking_final_test": [],
+  "cross_layer_qwen": ["mixed_interactive", "contention", "prefill_heavy", "decode_heavy"],
+  "large_state_stress": ["s2_7_1000_request", "s2_7_5000_snapshot"],
+  "real_qwen_repetitions": 2,
+  "counterbalanced": true,
+  "freeze_note": "selector-v3 rule configuration was frozen before these Qwen runs, but no independent train/development/validation/final split was completed",
+  "overlap_detected": false
+}

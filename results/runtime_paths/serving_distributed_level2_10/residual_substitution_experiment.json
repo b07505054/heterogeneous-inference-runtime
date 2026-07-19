@@ -1,0 +1,8 @@
+{
+  "source": "../serving_distributed_level2_9/oracle_substitution_experiment.json",
+  "A_fully_modeled": "misranked three of four S2.9 traces",
+  "B_predicted_sequence_empirical_bucket": "not completed prospectively",
+  "C_actual_sequence_predicted_latency": "shape model improved long-prefill but misranked arrival-burst and prefix-heavy",
+  "D_actual_sequence_actual_latency": "matched direct timestamps on all four traces",
+  "conclusion": "latency residual and sequence prediction are both material; conservative v4 value comes from the no-regression gate, not exact rollout fidelity"
+}

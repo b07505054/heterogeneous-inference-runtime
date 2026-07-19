@@ -1,0 +1,28 @@
+{
+  "new_test_module": "tests/test_s212_statistics.py",
+  "new_test_count": 5,
+  "covered": [
+    "nondeterministic clustered bootstrap",
+    "invalid quantile behavior",
+    "profitability inferred when confidence lower bound is not positive",
+    "preregistered repetition or tail tolerance changed",
+    "duplicate logical request hashes in the frozen trace registry"
+  ],
+  "protocol_invariants": {
+    "preregistration_hash_before_measurement": true,
+    "selector_v4_hash_unchanged": true,
+    "rollout_v2_hash_unchanged": true,
+    "baseline_unchanged": true,
+    "objective_unchanged": true,
+    "new_measured_runs_only": 600,
+    "early_stopping": false,
+    "every_cell_has_ten_runs": true,
+    "policy_order_recorded": true
+  },
+  "tests": {
+    "focused_python_passed": 315,
+    "focused_python_failed": 0,
+    "mlir_attention_cpu_passed": 2,
+    "mlir_attention_cpu_failed": 0
+  }
+}

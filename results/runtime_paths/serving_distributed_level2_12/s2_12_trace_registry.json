@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "generator_version": "qwen_observability_trace_s2_12_v1",
+  "replica_topology": "one measured eager-Qwen scheduler replica; CPU functional",
+  "core_allocation": "torch intra-op threads=4",
+  "objective_profile": "mean_TTFT + 0.25 * mean_E2E",
+  "traces": [
+    {"trace_id":"decode_heavy_s212","family":"decode-heavy","trace_hash":"e13d3e71d91be8f00c7bdb2d5dcd19ae31a8a0dd05728bafca62146545bacf6b","logical_request_hash":"3a9b4c8c997cccf46109deaf612a58bde60e642f762e7f1bec2e6e65c7a0058d","seed":21201},
+    {"trace_id":"prefill_heavy_s212","family":"prefill-heavy","trace_hash":"5d2bf92c87c1e3df39b23aece48dc1fe761077a4119a3e6141ae634a6cd7a498","logical_request_hash":"68e1c8dc22837437397136289a3484ac5f9465bb67d71013f7206c23ddac8087","seed":21202},
+    {"trace_id":"mixed_interactive_s212","family":"mixed-interactive","trace_hash":"f89cc755c09aed419f071dd599d28bdd385a445828e59ab8133e5cf7046ab47d","logical_request_hash":"b18d0be5e2781110e97ea97df07ef2fa33ce7bb89c34d4b94ac4ba22e0c23e80","seed":21203},
+    {"trace_id":"contention_s212","family":"contention","trace_hash":"ac343014b5d762e249327e103bf5d77b5f07ee5bdd8c51c3da7154fcac5eaa2d","logical_request_hash":"6cc51c4f611bfaa0c976005eedd55233f557e1d73a7f577a153e88c3ff03d694","seed":21204},
+    {"trace_id":"arrival_burst_s212","family":"arrival-burst","trace_hash":"18eaacfb43c0f8ff57b31ab151ec6a534986be13e0e9fdc39af879cd3dd2d68d","logical_request_hash":"8b7742ed57d3092846627c4084bd04b670677513c2579a502bae8fa99c147f2e","seed":21205},
+    {"trace_id":"long_prefill_s212","family":"long-prefill","trace_hash":"58d176bfcf3fe6cb4e825d364f47a28fd022bd25adb47c6060742b343db9c151","logical_request_hash":"132de43572e1a7f27f25a35011c9f471f8564f7b906676e09d64b6cdfad29f5b","seed":21206},
+    {"trace_id":"prefix_heavy_s212","family":"prefix-heavy","trace_hash":"70b32303e2726ba7c6ba7fa0dab097318a48e208f1391546d8a2bec69a55e10a","logical_request_hash":"0d130220bdb9ad68757b4c4eff08a972a6608f992eac1e7feab478d49f97a143","seed":21207},
+    {"trace_id":"low_prefix_reuse_s212","family":"low-prefix-reuse","trace_hash":"c91f3014c036b11b639064ddf794865e4318a129c7f8fd683d630021a643c216","logical_request_hash":"7f50d1381818838e09ad0520aa715d90d20ec18f3a9b5974048f3fd4a9db1035","seed":21208},
+    {"trace_id":"small_token_budget_s212","family":"small-token-budget","trace_hash":"bf4ec439ade09d1df59aa582e6a293f466b336ba5d9e51db6b866f7955cda472","logical_request_hash":"96291150dd0d4e9cde5bf33522028dfac8d08ec71c2ab79bbabc235d951e7808","seed":21209},
+    {"trace_id":"large_token_budget_s212","family":"large-token-budget","trace_hash":"af6102f5dfaf82d8f549717ef04a72ce066e1f8f71b57c7e73b8316a9067808a","logical_request_hash":"fa52f7f6ebf39f566fb40fa12176094b14cf2584413d8cdfeada0503e7228364","seed":21210},
+    {"trace_id":"small_sequence_budget_s212","family":"small-sequence-budget","trace_hash":"a55a0aff187d4d89686ed24fdb0315f370673dfff4a33063ed70b8972296131c","logical_request_hash":"f54d4ddde781446941ca1a31d8b32a5337666da368959e8ecdd6a69a44b4b8a8","seed":21211},
+    {"trace_id":"larger_active_batch_s212","family":"larger-active-batch","trace_hash":"237e0d2ae86b465c4bc5451b98a9971ca71f76337cfa8bef302b56b137f48343","logical_request_hash":"555d961c3fe9d5136abbe9429e55da160a4a93cf906cffaa43380b7033fccb28","seed":21212}
+  ],
+  "prefix_truth_boundary": "Prefix-heavy traces share token prefixes, but the eager statistical benchmark does not claim functional KV tensor reuse.",
+  "independence": "All trace and logical-request hashes are new relative to S2.10 and S2.11 registries."
+}

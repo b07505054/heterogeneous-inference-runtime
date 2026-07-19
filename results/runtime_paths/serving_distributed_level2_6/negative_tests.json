@@ -1,0 +1,5 @@
+{
+  "covered":["frozen selector digest mutation","future arrival removed online","offline selector rejected in online configuration","unsupported adaptive horizon","candidate pruning retains legal plan","live state not mutated","epoch required-event reselection","equivalence margin frozen","confidence interval requires >=2 samples"],
+  "protocol_guards":["final trace IDs separated","same trace per paired policy","wall oracle reads measured objectives","inclusive planning results mandatory","v1-fast has distinct version"],
+  "result":"passed"
+}

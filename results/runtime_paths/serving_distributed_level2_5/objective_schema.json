@@ -1,0 +1,7 @@
+{
+  "objective_version":"request_objective_v1",
+  "evaluation_levels":["step_score","fixed_horizon_predicted_outcome","full_trace_request_level"],
+  "normalized_components":["TTFT","decode gap","E2E","SLO violations","starvation","fairness","goodput"],
+  "formula":"weighted normalized penalties minus weighted normalized goodput",
+  "raw_mixed_units_added_directly":false
+}

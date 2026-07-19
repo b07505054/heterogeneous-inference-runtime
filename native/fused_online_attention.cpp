@@ -22,8 +22,9 @@ HirFusedAttentionStatus validate(const HirFusedAttentionParams *p) {
   if (p->batch <= 0 || p->query_length <= 0 || p->context_length <= 0 ||
       p->query_heads <= 0 || p->kv_heads <= 0 || p->head_dimension <= 0)
     return error(2, "invalid_dimension");
-  if (p->query_heads % p->kv_heads != 0 ||
-      p->total_query_heads % p->kv_heads != 0)
+  // A balanced split-head shard may contain a local head count that is not
+  // divisible by KV heads. Only the complete model head count defines GQA.
+  if (p->total_query_heads % p->kv_heads != 0)
     return error(3, "invalid_gqa_mapping");
   if (p->query_head_offset < 0 ||
       p->query_head_offset + p->query_heads > p->total_query_heads)

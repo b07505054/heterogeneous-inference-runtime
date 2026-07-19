@@ -1,0 +1,76 @@
+{
+  "rows": [
+    {
+      "trace": "arrival_burst_s29",
+      "oracle": "slo_aware",
+      "selector": "ranking_selector_v3_static",
+      "regret": 0.07667332342675268,
+      "objective": 2284.0760688486625,
+      "oracle_objective": 2121.4197650770075
+    },
+    {
+      "trace": "arrival_burst_s29",
+      "oracle": "slo_aware",
+      "selector": "ranking_selector_v3_adaptive",
+      "regret": 0.07929572646495742,
+      "objective": 2289.639286485908,
+      "oracle_objective": 2121.4197650770075
+    },
+    {
+      "trace": "long_prefill_s29",
+      "oracle": "chunked_balanced",
+      "selector": "ranking_selector_v3_static",
+      "regret": 0.062420952867319156,
+      "objective": 3294.8773800744675,
+      "oracle_objective": 3101.291791339463
+    },
+    {
+      "trace": "long_prefill_s29",
+      "oracle": "chunked_balanced",
+      "selector": "ranking_selector_v3_adaptive",
+      "regret": 0.05739516335478336,
+      "objective": 3279.2909403142403,
+      "oracle_objective": 3101.291791339463
+    },
+    {
+      "trace": "prefix_heavy_s29",
+      "oracle": "chunked_balanced",
+      "selector": "ranking_selector_v3_static",
+      "regret": 0.03062731392157667,
+      "objective": 2816.051435067493,
+      "oracle_objective": 2732.366391835967
+    },
+    {
+      "trace": "prefix_heavy_s29",
+      "oracle": "chunked_balanced",
+      "selector": "ranking_selector_v3_adaptive",
+      "regret": 0.044102022668230274,
+      "objective": 2852.8692763866275,
+      "oracle_objective": 2732.366391835967
+    },
+    {
+      "trace": "budget_pressure_s29",
+      "oracle": "slo_aware",
+      "selector": "ranking_selector_v3_static",
+      "regret": 0.07628165486222749,
+      "objective": 2854.018933074258,
+      "oracle_objective": 2651.739830536826
+    },
+    {
+      "trace": "budget_pressure_s29",
+      "oracle": "slo_aware",
+      "selector": "ranking_selector_v3_adaptive",
+      "regret": 0.09024731740565045,
+      "objective": 2891.0522367004887,
+      "oracle_objective": 2651.739830536826
+    }
+  ],
+  "mean_regret": {
+    "ranking_selector_v3_static": 0.061500811269469,
+    "ranking_selector_v3_adaptive": 0.06776005747340538
+  },
+  "exact_winner_rate": {
+    "ranking_selector_v3_static": 0.0,
+    "ranking_selector_v3_adaptive": 0.0
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "policies": {
+    "decode_first": {
+      "mean_regret": 0.00666625640581684,
+      "p95_regret": 0.023177694898428837,
+      "maximum_regret": 0.023177694898428837
+    },
+    "prefill_first": {
+      "mean_regret": 0.16675657005695332,
+      "p95_regret": 0.2802345275069561,
+      "maximum_regret": 0.2802345275069561
+    },
+    "chunked_balanced": {
+      "mean_regret": 0.027579978030221643,
+      "p95_regret": 0.10715538200316689,
+      "maximum_regret": 0.10715538200316689
+    },
+    "slo_aware": {
+      "mean_regret": 0.011225171825553892,
+      "p95_regret": 0.0328240031073146,
+      "maximum_regret": 0.0328240031073146
+    }
+  },
+  "selected_robust_default": "decode_first",
+  "selection_data": "S2.8 training plus S2.9 development only"
+}

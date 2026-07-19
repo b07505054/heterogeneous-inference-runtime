@@ -17,22 +17,21 @@ SELECTOR_VERSION = "native_fused_attention_static_cost_selector_v3"
 TARGET_PROFILE = "host_cpu_4_physical_8_logical_v1"
 _ROOT = Path(__file__).resolve().parents[1]
 _NATIVE_ARTIFACT = (
-    _ROOT / "results/runtime_paths/native_fused_online_attention/"
+    _ROOT / "results/runtime_paths/compiler_distributed_execution/"
     "libfused_online_attention.so")
 _CANDIDATES = (
     ("dense_materialized", "torch_dense_materialized_v1", "serial", 1, 0, 0),
     ("dense_materialized", "torch_dense_materialized_v1", "split_head", 2, 0, 0),
     ("dense_materialized", "torch_dense_materialized_v1", "split_head", 4, 0, 0),
-    ("dense_materialized", "torch_dense_materialized_v1", "split_query", 2, 0, 0),
-    ("dense_materialized", "torch_dense_materialized_v1", "split_query", 4, 0, 0),
-    ("dense_materialized", "torch_dense_materialized_v1", "split_query", 8, 0, 0),
     ("fused_tiled_online_softmax", "torch_tiled_online_softmax_exact_v1", "serial", 1, 1, 32),
     ("fused_tiled_online_softmax", "native_scalar", "serial", 1, 1, 32),
     ("fused_tiled_online_softmax", "native_scalar", "split_head", 2, 1, 32),
     ("fused_tiled_online_softmax", "native_scalar", "split_head", 4, 1, 32),
+    ("fused_tiled_online_softmax", "native_scalar", "split_head", 8, 1, 32),
     ("fused_tiled_online_softmax", "native_avx2", "serial", 1, 1, 32),
     ("fused_tiled_online_softmax", "native_avx2", "split_head", 2, 1, 32),
     ("fused_tiled_online_softmax", "native_avx2", "split_head", 4, 1, 32),
+    ("fused_tiled_online_softmax", "native_avx2", "split_head", 8, 1, 32),
 )
 
 
@@ -129,6 +128,18 @@ def _legality(
         return False, "split_query_illegal_for_decode"
     if strategy == "split_query" and workers > workload.query_len:
         return False, "worker_count_exceeds_query_tokens"
+    if strategy == "split_head" and workers > 1:
+        if workload.phase == "decode":
+            profitable_workers = (
+                1 if workload.context_len < 384 else
+                2 if workload.context_len < 2048 else 4)
+        else:
+            profitable_workers = (
+                1 if workload.query_len < 32 else
+                2 if workload.query_len < 64 else
+                4 if workload.query_len < 192 else 8)
+        if workers > profitable_workers:
+            return False, "shard_too_small_to_amortize_dispatch"
     if algorithm == "fused_tiled_online_softmax":
         if query_tile <= 0 or key_tile <= 0:
             return False, "fused_tile_must_be_positive"
@@ -156,7 +167,7 @@ def _score(
     useful = 1 if strategy == "serial" else min(
         workers, workload.query_heads if strategy == "split_head" else workload.query_len
     )
-    dispatch = 0.0 if strategy == "serial" else 750_000.0 * workers
+    dispatch = 0.0 if strategy == "serial" else 20_000.0 + 6_000.0 * workers
     assembly = 0.0 if strategy == "serial" else (
         60_000.0 * workers if strategy == "split_head" else 80_000.0 * workers
     )
@@ -187,9 +198,7 @@ def _score(
             tile_overhead = float(tiles * workload.query_heads * 150)
             # Host calibration: AVX2 wins decode and tiny prefill, while its
             # scalar expf recurrence loses to dense matmul from q_len~32.
-            exponential_factor = (
-                0.45 if workload.phase == "decode" or workload.query_len < 32
-                else 1.50)
+            exponential_factor = 0.55
     materialization_traffic = 2.0 * (score_temporary + probability_temporary)
     gqa_expansion = 0 if implementation.startswith("native_") else float(
         2 * workload.batch * workload.query_heads * workload.context_len
@@ -206,6 +215,24 @@ def _score(
     total = (
         compute_units * exponential_factor / useful + dispatch + assembly
         + memory * 0.02 + materialization_traffic * 0.35 + tile_overhead)
+    independent = (workload.query_heads if strategy != "split_query"
+                   else workload.query_len)
+    shard_sizes = [end-begin for begin,end in __import__(
+        "deployment.cpu_sharding", fromlist=["uneven_ranges"]).uneven_ranges(
+            independent, workers)]
+    average = sum(shard_sizes) / len(shard_sizes)
+    imbalance_ratio = (max(shard_sizes)-average) / average
+    predicted_kernel_compute = compute_units * exponential_factor * (
+        max(shard_sizes) / independent)
+    predicted_wakeup = 0.0 if workers == 1 else 5_000.0 * workers
+    predicted_barrier = 0.0 if workers == 1 else 15_000.0 + 3_000.0 * workers
+    predicted_imbalance = predicted_kernel_compute * imbalance_ratio
+    predicted_cache = 0.0 if workers == 1 else memory * 0.01 * (workers-1)
+    predicted_bandwidth = 0.0 if workers == 1 else memory * 0.015 * (workers-1)
+    predicted_parallel_total = (
+        predicted_kernel_compute + dispatch + predicted_wakeup
+        + predicted_barrier + predicted_imbalance + predicted_cache
+        + predicted_bandwidth + materialization_traffic * 0.35 + tile_overhead)
     return {
         "algorithm": algorithm,
         "implementation": implementation,
@@ -220,7 +247,19 @@ def _score(
         "estimated_exponential_factor": exponential_factor,
         "estimated_gqa_expansion_bytes": gqa_expansion,
         "estimated_total_temporary_bytes": estimated_temporary,
-        "score": total,
+        "legacy_score_without_explicit_schedule_terms": total,
+        "score": predicted_parallel_total,
+        "useful_shard_count": useful,
+        "shard_sizes": shard_sizes,
+        "predicted_kernel_compute": predicted_kernel_compute,
+        "predicted_dispatch": dispatch,
+        "predicted_worker_wakeup": predicted_wakeup,
+        "predicted_barrier": predicted_barrier,
+        "predicted_imbalance": predicted_imbalance,
+        "predicted_shared_cache_contention": predicted_cache,
+        "predicted_memory_bandwidth_contention": predicted_bandwidth,
+        "predicted_worker_underutilization": float(workers-useful),
+        "predicted_parallel_total": predicted_parallel_total,
     }
 
 
@@ -274,6 +313,14 @@ def select_attention_plan(workload: AttentionWorkload) -> tuple[dict[str, Any], 
                 algorithm=algorithm, query_tile=query_tile, key_tile=key_tile,
                 implementation=implementation, **native_fields,
             )
+            from deployment.distributed_attention_plan import build_attention_placement
+            plan["distributed_execution"] = build_attention_placement(
+                batch=workload.batch, query_length=workload.query_len,
+                context_length=workload.context_len,
+                query_heads=workload.query_heads, kv_heads=workload.kv_heads,
+                head_dim=workload.head_dim, strategy=strategy,
+                worker_count=workers, predicted=row,
+                direct_output=implementation.startswith("native_"))
             legal_plans.append((plan, row))
         considered.append(row)
     if not legal_plans:
@@ -341,6 +388,9 @@ def force_test_attention_plan(
         else "torch_tiled_online_softmax_exact_v1")
     legal, reason = _legality(
         workload, algorithm, implementation, strategy, workers, query_tile, key_tile)
+    if reason in {"calibrated_parallel_schedule_unprofitable",
+                  "shard_too_small_to_amortize_dispatch"}:
+        legal, reason = True, "forced_legal_but_profitability_rejected_in_normal_selection"
     if not legal:
         raise ShardingPlanError(f"forced test attention candidate is illegal: {reason}")
     native_fields = {}
@@ -394,6 +444,15 @@ def force_test_attention_plan(
         "fallback_status": False,
         "selection_trace": trace,
     })
+    score = _score(workload, algorithm, implementation, strategy, workers,
+                   query_tile, key_tile)
+    from deployment.distributed_attention_plan import build_attention_placement
+    plan["distributed_execution"] = build_attention_placement(
+        batch=workload.batch, query_length=workload.query_len,
+        context_length=workload.context_len, query_heads=workload.query_heads,
+        kv_heads=workload.kv_heads, head_dim=workload.head_dim,
+        strategy=strategy, worker_count=workers, predicted=score,
+        direct_output=implementation.startswith("native_"))
     return plan, trace
 
 

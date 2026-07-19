@@ -1,0 +1,10 @@
+{
+  "identity": ["trace_id", "run_id", "policy_id", "selector_version", "replica_id", "step_id", "scheduler_state_version"],
+  "timer_regions": ["summary_update", "policy_selection", "plan_generation", "plan_validation", "model_setup", "model_execution", "state_commit", "instrumentation"],
+  "state": ["active_request_count", "waiting_request_count", "prefill_ready_count", "decode_ready_count", "total_remaining_prefill_tokens", "total_remaining_decode_tokens", "oldest_waiting_age_ms", "largest_decode_gap_ms", "mean_decode_gap_ms", "token_budget", "sequence_budget", "prefix_hit_tokens"],
+  "work": ["scheduled_prefill_tokens", "scheduled_decode_tokens", "scheduled_decode_sequences", "scheduled_sequence_count"],
+  "execution": ["model_forward_count", "attention_invocation_count", "attention_to_o_proj_count", "operator_plan_count", "operator_worker_event_count", "shapes"],
+  "transition": ["new_arrival_count", "prefill_to_decode_transition_count", "completion_count"],
+  "accounting_tolerance": {"fraction": 0.15, "absolute_ms": 0.5},
+  "fail_closed_on_overlap": true
+}

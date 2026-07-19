@@ -1,0 +1,7 @@
+{
+  "transitions": 10501,
+  "reference_checks": 105,
+  "mismatch_count": 0,
+  "mismatches": [],
+  "method": "event updates checked against independent full recomputation"
+}

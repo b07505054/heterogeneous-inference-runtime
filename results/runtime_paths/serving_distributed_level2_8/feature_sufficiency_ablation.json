@@ -1,0 +1,5 @@
+{
+  "status": "not completed",
+  "implemented_groups": ["token/sequence composition", "active state", "query/KV shapes", "model-forward/attention counts", "phase transitions", "past-step EWMAs"],
+  "reason": "no non-overlapping ranking training/development/final dataset was completed; fitting after viewing cross-layer results would violate the freeze protocol"
+}

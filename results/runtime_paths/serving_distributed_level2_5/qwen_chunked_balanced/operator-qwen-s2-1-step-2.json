@@ -1,0 +1,1105 @@
+{
+  "schema": "execution_plan",
+  "schema_version": "2.0.0",
+  "plan_id": "operator-qwen-s2-1-step-2",
+  "provenance": {
+    "compiler_tool": "attention_planner.py",
+    "model_spec_ref": "/home/allen/.cache/huggingface/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775",
+    "capability_bundle": {
+      "hardware_profile_ref": "host_cpu_4_physical_8_logical_v1",
+      "backend_profile_refs": [
+        "transformers_attention_registry"
+      ],
+      "kernel_profile_refs": [
+        "torch_cpu_attention_fp32_v1"
+      ],
+      "workload_ref": "prompt_tokens=4,generated_tokens=1"
+    },
+    "truth_boundary": "compiler_selected_real_model_attention_not_vllm_serving"
+  },
+  "model_identity": {
+    "model_id": "/home/allen/.cache/huggingface/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775",
+    "dtype": "float32",
+    "architecture": "Qwen2ForCausalLM"
+  },
+  "global_decisions": {
+    "quantization": {
+      "strategy": "none",
+      "dtype": "float32"
+    },
+    "memory": {
+      "kv_cache_layout": "contiguous"
+    },
+    "serving": {
+      "parallelism_kind": "none",
+      "parallelism_degree": 1
+    },
+    "attention_execution": {
+      "decision_kind": "cpu_attention_plan_table_v1",
+      "operator_kind": "attention",
+      "operator_id": "qwen.layers.*.self_attn",
+      "plan_kind": "phase_specific_exact_prefill_decode_context_range",
+      "selector_version": "native_fused_attention_static_cost_selector_v3",
+      "selection_mode": "compiler_selected",
+      "target_profile": "host_cpu_4_physical_8_logical_v1",
+      "phase_decisions": {
+        "prefill": {
+          "decision_kind": "cpu_attention_exact_candidate_selection",
+          "phase": "prefill",
+          "selected_strategy": "serial",
+          "worker_count": 1,
+          "split_dimension": "none",
+          "query_heads": 14,
+          "kv_heads": 2,
+          "head_dim": 64,
+          "dtype": "float32",
+          "qkv_layout": "batch_head_sequence_dim",
+          "kv_cache_layout": "contiguous_layer_sequence_kv_head_dim",
+          "causal": true,
+          "assembly": "direct_disjoint_output",
+          "native_kernel_id": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+          "algorithm": "fused_tiled_online_softmax",
+          "implementation": "native_avx2",
+          "score_materialization": false,
+          "probability_materialization": false,
+          "online_softmax": true,
+          "query_tile": 1,
+          "key_tile": 32,
+          "causal_supported": true,
+          "gqa_supported": true,
+          "selection_provenance": "native_fused_attention_static_cost_selector_v3",
+          "fallback": {
+            "strategy": "serial",
+            "worker_count": 1
+          },
+          "runtime_no_redecision": true,
+          "artifact_ref": "/home/allen/Desktop/Project/heterogeneous-inference-runtime/results/runtime_paths/compiler_distributed_execution/libfused_online_attention.so",
+          "artifact_sha256": "4739ce7d98e045892c2c42a450f7fcb96637a9b8ec24b9f36cc711ad1d27ad72",
+          "abi_version": "hir.fused_online_attention.v1",
+          "native_symbol": "hir_fused_online_attention_avx2",
+          "target_isa": "x86_avx2_fma",
+          "distributed_execution": {
+            "contract_version": "hir.shared_memory_attention_placement.v1",
+            "execution_kind": "compiler_planned_shared_memory_multi_worker",
+            "parallel_strategy": "serial",
+            "split_dimension": "none",
+            "worker_count": 1,
+            "work_item_count": 1,
+            "placement_policy": "deterministic_balanced_remainder",
+            "workers": [
+              {
+                "worker_id": 0,
+                "logical_cpu_id": 0,
+                "query_head_range": [
+                  0,
+                  14
+                ],
+                "query_token_range": [
+                  0,
+                  4
+                ],
+                "kv_head_read_range": [
+                  0,
+                  2
+                ],
+                "q_read": {
+                  "kind": "shard_local",
+                  "head_range": [
+                    0,
+                    14
+                  ],
+                  "query_range": [
+                    0,
+                    4
+                  ]
+                },
+                "k_read": {
+                  "kind": "shared_read_only",
+                  "kv_head_range": [
+                    0,
+                    2
+                  ],
+                  "context_range": [
+                    0,
+                    "runtime_context_length"
+                  ]
+                },
+                "v_read": {
+                  "kind": "shared_read_only",
+                  "kv_head_range": [
+                    0,
+                    2
+                  ],
+                  "context_range": [
+                    0,
+                    "runtime_context_length"
+                  ]
+                },
+                "output_write": {
+                  "kind": "disjoint_logical_tensor_slice",
+                  "head_range": [
+                    0,
+                    14
+                  ],
+                  "query_range": [
+                    0,
+                    4
+                  ],
+                  "extent_elements": 3584,
+                  "offset_elements": 0
+                },
+                "scratch": {
+                  "ownership": "worker_private"
+                }
+              }
+            ],
+            "communication": {
+              "kind": "shared_memory",
+              "shared_input_buffers": [
+                "key",
+                "value"
+              ],
+              "query_access": "shard_local",
+              "output_access": "disjoint_logical_slices",
+              "copy_count": 0,
+              "copy_bytes": 0,
+              "reduction": "none"
+            },
+            "synchronization": {
+              "kind": "completion_counter",
+              "synchronization_points": 1,
+              "consumer": "o_proj",
+              "consumer_requires_all_shards_complete": true
+            },
+            "predicted_cost": {
+              "kernel_compute": 39424.0,
+              "dispatch": 0.0,
+              "worker_wakeup": 0.0,
+              "barrier": 0.0,
+              "imbalance": 0.0,
+              "shared_cache_contention": 0.0,
+              "memory_bandwidth_contention": 0.0,
+              "worker_underutilization": 0.0,
+              "total": 47824.0
+            },
+            "runtime_no_repartition": true,
+            "runtime_no_worker_count_override": true,
+            "runtime_no_strategy_override": true
+          },
+          "operator_kind": "attention",
+          "selection_mode": "compiler_selected",
+          "selector_version": "native_fused_attention_static_cost_selector_v3",
+          "target_profile": "host_cpu_4_physical_8_logical_v1",
+          "workload_signature": "b1_q4_kv20_qh14_kvh2_d64_fp32",
+          "workload_domain": {
+            "batch": 1,
+            "query_length_min": 4,
+            "query_length_max": 4,
+            "context_length_min": 20,
+            "context_length_max": 20
+          },
+          "query_length_domain": [
+            4,
+            4
+          ],
+          "context_length_domain": [
+            20,
+            20
+          ],
+          "fallback_status": false,
+          "selection_trace": {
+            "selector_version": "native_fused_attention_static_cost_selector_v3",
+            "selection_mode": "compiler_selected",
+            "selection_provenance": "native_fused_attention_static_cost_selector_v3",
+            "workload": {
+              "phase": "prefill",
+              "batch": 1,
+              "query_len": 4,
+              "context_len": 20,
+              "query_heads": 14,
+              "kv_heads": 2,
+              "head_dim": 64,
+              "dtype": "float32",
+              "causal": true,
+              "q_layout": "batch_head_sequence_dim",
+              "k_layout": "batch_head_sequence_dim",
+              "v_layout": "batch_head_sequence_dim",
+              "output_layout": "batch_head_sequence_dim",
+              "kv_cache_layout": "contiguous_layer_sequence_kv_head_dim",
+              "available_logical_workers": 4,
+              "target_cpu_profile": "host_cpu_4_physical_8_logical_v1",
+              "selection_objective": "latency",
+              "temporary_memory_budget_bytes": null
+            },
+            "workload_signature": "b1_q4_kv20_qh14_kvh2_d64_fp32",
+            "generated_candidate_count": 12,
+            "legal_candidate_count": 4,
+            "rejected_candidates": [
+              {
+                "candidate_id": "torch_cpu_attention_fp32_split_head_w2_v1",
+                "algorithm": "dense_materialized",
+                "implementation": "torch_dense_materialized_v1",
+                "strategy": "split_head",
+                "worker_count": 2,
+                "query_tile": 0,
+                "key_tile": 0,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "torch_cpu_attention_fp32_split_head_w4_v1",
+                "algorithm": "dense_materialized",
+                "implementation": "torch_dense_materialized_v1",
+                "strategy": "split_head",
+                "worker_count": 4,
+                "query_tile": 0,
+                "key_tile": 0,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_scalar_fp32_q1_k32_split_head_w2_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_scalar",
+                "strategy": "split_head",
+                "worker_count": 2,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_scalar_fp32_q1_k32_split_head_w4_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_scalar",
+                "strategy": "split_head",
+                "worker_count": 4,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_scalar_fp32_q1_k32_split_head_w8_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_scalar",
+                "strategy": "split_head",
+                "worker_count": 8,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "worker_count_exceeds_available_logical_workers"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w2_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_avx2",
+                "strategy": "split_head",
+                "worker_count": 2,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w4_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_avx2",
+                "strategy": "split_head",
+                "worker_count": 4,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w8_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_avx2",
+                "strategy": "split_head",
+                "worker_count": 8,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "worker_count_exceeds_available_logical_workers"
+              }
+            ],
+            "considered_candidates": [
+              {
+                "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+                "algorithm": "dense_materialized",
+                "implementation": "torch_dense_materialized_v1",
+                "strategy": "serial",
+                "worker_count": 1,
+                "query_tile": 0,
+                "key_tile": 0,
+                "legal": true,
+                "legality_reason": "legal",
+                "estimated_compute_units": 71680.0,
+                "estimated_qkv_output_bytes": 34816.0,
+                "estimated_score_temporary_bytes": 4480.0,
+                "estimated_probability_temporary_bytes": 4480.0,
+                "estimated_materialization_traffic_bytes": 17920.0,
+                "estimated_dispatch_cost": 0.0,
+                "estimated_assembly_cost": 0.0,
+                "estimated_tile_overhead": 0.0,
+                "estimated_exponential_factor": 1.0,
+                "estimated_gqa_expansion_bytes": 143360.0,
+                "estimated_total_temporary_bytes": 152320.0,
+                "legacy_score_without_explicit_schedule_terms": 78648.32,
+                "score": 77952.0,
+                "useful_shard_count": 1,
+                "shard_sizes": [
+                  14
+                ],
+                "predicted_kernel_compute": 71680.0,
+                "predicted_dispatch": 0.0,
+                "predicted_worker_wakeup": 0.0,
+                "predicted_barrier": 0.0,
+                "predicted_imbalance": 0.0,
+                "predicted_shared_cache_contention": 0.0,
+                "predicted_memory_bandwidth_contention": 0.0,
+                "predicted_worker_underutilization": 0.0,
+                "predicted_parallel_total": 77952.0
+              },
+              {
+                "candidate_id": "torch_cpu_attention_fp32_split_head_w2_v1",
+                "algorithm": "dense_materialized",
+                "implementation": "torch_dense_materialized_v1",
+                "strategy": "split_head",
+                "worker_count": 2,
+                "query_tile": 0,
+                "key_tile": 0,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "torch_cpu_attention_fp32_split_head_w4_v1",
+                "algorithm": "dense_materialized",
+                "implementation": "torch_dense_materialized_v1",
+                "strategy": "split_head",
+                "worker_count": 4,
+                "query_tile": 0,
+                "key_tile": 0,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "torch_cpu_fused_online_fp32_q1_k32_serial_w1_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "torch_tiled_online_softmax_exact_v1",
+                "strategy": "serial",
+                "worker_count": 1,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": true,
+                "legality_reason": "legal",
+                "estimated_compute_units": 71680.0,
+                "estimated_qkv_output_bytes": 34816.0,
+                "estimated_score_temporary_bytes": 0.0,
+                "estimated_probability_temporary_bytes": 0.0,
+                "estimated_materialization_traffic_bytes": 0.0,
+                "estimated_dispatch_cost": 0.0,
+                "estimated_assembly_cost": 0.0,
+                "estimated_tile_overhead": 2520000.0,
+                "estimated_exponential_factor": 1.12,
+                "estimated_gqa_expansion_bytes": 143360.0,
+                "estimated_total_temporary_bytes": 149296.0,
+                "legacy_score_without_explicit_schedule_terms": 2600977.92,
+                "score": 2600281.6,
+                "useful_shard_count": 1,
+                "shard_sizes": [
+                  14
+                ],
+                "predicted_kernel_compute": 80281.6,
+                "predicted_dispatch": 0.0,
+                "predicted_worker_wakeup": 0.0,
+                "predicted_barrier": 0.0,
+                "predicted_imbalance": 0.0,
+                "predicted_shared_cache_contention": 0.0,
+                "predicted_memory_bandwidth_contention": 0.0,
+                "predicted_worker_underutilization": 0.0,
+                "predicted_parallel_total": 2600281.6
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_scalar_fp32_q1_k32_serial_w1_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_scalar",
+                "strategy": "serial",
+                "worker_count": 1,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": true,
+                "legality_reason": "legal",
+                "estimated_compute_units": 71680.0,
+                "estimated_qkv_output_bytes": 34816.0,
+                "estimated_score_temporary_bytes": 0.0,
+                "estimated_probability_temporary_bytes": 0.0,
+                "estimated_materialization_traffic_bytes": 0.0,
+                "estimated_dispatch_cost": 0.0,
+                "estimated_assembly_cost": 0.0,
+                "estimated_tile_overhead": 61600.0,
+                "estimated_exponential_factor": 1.45,
+                "estimated_gqa_expansion_bytes": 0,
+                "estimated_total_temporary_bytes": 384.0,
+                "legacy_score_without_explicit_schedule_terms": 166232.32,
+                "score": 165536.0,
+                "useful_shard_count": 1,
+                "shard_sizes": [
+                  14
+                ],
+                "predicted_kernel_compute": 103936.0,
+                "predicted_dispatch": 0.0,
+                "predicted_worker_wakeup": 0.0,
+                "predicted_barrier": 0.0,
+                "predicted_imbalance": 0.0,
+                "predicted_shared_cache_contention": 0.0,
+                "predicted_memory_bandwidth_contention": 0.0,
+                "predicted_worker_underutilization": 0.0,
+                "predicted_parallel_total": 165536.0
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_scalar_fp32_q1_k32_split_head_w2_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_scalar",
+                "strategy": "split_head",
+                "worker_count": 2,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_scalar_fp32_q1_k32_split_head_w4_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_scalar",
+                "strategy": "split_head",
+                "worker_count": 4,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_scalar_fp32_q1_k32_split_head_w8_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_scalar",
+                "strategy": "split_head",
+                "worker_count": 8,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "worker_count_exceeds_available_logical_workers"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_avx2",
+                "strategy": "serial",
+                "worker_count": 1,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": true,
+                "legality_reason": "legal",
+                "estimated_compute_units": 71680.0,
+                "estimated_qkv_output_bytes": 34816.0,
+                "estimated_score_temporary_bytes": 0.0,
+                "estimated_probability_temporary_bytes": 0.0,
+                "estimated_materialization_traffic_bytes": 0.0,
+                "estimated_dispatch_cost": 0.0,
+                "estimated_assembly_cost": 0.0,
+                "estimated_tile_overhead": 8400.0,
+                "estimated_exponential_factor": 0.55,
+                "estimated_gqa_expansion_bytes": 0,
+                "estimated_total_temporary_bytes": 384.0,
+                "legacy_score_without_explicit_schedule_terms": 48520.32,
+                "score": 47824.0,
+                "useful_shard_count": 1,
+                "shard_sizes": [
+                  14
+                ],
+                "predicted_kernel_compute": 39424.0,
+                "predicted_dispatch": 0.0,
+                "predicted_worker_wakeup": 0.0,
+                "predicted_barrier": 0.0,
+                "predicted_imbalance": 0.0,
+                "predicted_shared_cache_contention": 0.0,
+                "predicted_memory_bandwidth_contention": 0.0,
+                "predicted_worker_underutilization": 0.0,
+                "predicted_parallel_total": 47824.0
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w2_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_avx2",
+                "strategy": "split_head",
+                "worker_count": 2,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w4_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_avx2",
+                "strategy": "split_head",
+                "worker_count": 4,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w8_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_avx2",
+                "strategy": "split_head",
+                "worker_count": 8,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "worker_count_exceeds_available_logical_workers"
+              }
+            ],
+            "selected_candidate_id": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+            "selected_score": 47824.0,
+            "fallback_status": false,
+            "tie_breaking": "minimum_score_then_lexicographic_candidate_id"
+          }
+        },
+        "decode": {
+          "decision_kind": "cpu_attention_exact_candidate_selection",
+          "phase": "decode",
+          "selected_strategy": "serial",
+          "worker_count": 1,
+          "split_dimension": "none",
+          "query_heads": 14,
+          "kv_heads": 2,
+          "head_dim": 64,
+          "dtype": "float32",
+          "qkv_layout": "batch_head_sequence_dim",
+          "kv_cache_layout": "contiguous_layer_sequence_kv_head_dim",
+          "causal": true,
+          "assembly": "direct_disjoint_output",
+          "native_kernel_id": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+          "algorithm": "fused_tiled_online_softmax",
+          "implementation": "native_avx2",
+          "score_materialization": false,
+          "probability_materialization": false,
+          "online_softmax": true,
+          "query_tile": 1,
+          "key_tile": 32,
+          "causal_supported": true,
+          "gqa_supported": true,
+          "selection_provenance": "native_fused_attention_static_cost_selector_v3",
+          "fallback": {
+            "strategy": "serial",
+            "worker_count": 1
+          },
+          "runtime_no_redecision": true,
+          "artifact_ref": "/home/allen/Desktop/Project/heterogeneous-inference-runtime/results/runtime_paths/compiler_distributed_execution/libfused_online_attention.so",
+          "artifact_sha256": "4739ce7d98e045892c2c42a450f7fcb96637a9b8ec24b9f36cc711ad1d27ad72",
+          "abi_version": "hir.fused_online_attention.v1",
+          "native_symbol": "hir_fused_online_attention_avx2",
+          "target_isa": "x86_avx2_fma",
+          "distributed_execution": {
+            "contract_version": "hir.shared_memory_attention_placement.v1",
+            "execution_kind": "compiler_planned_shared_memory_multi_worker",
+            "parallel_strategy": "serial",
+            "split_dimension": "none",
+            "worker_count": 1,
+            "work_item_count": 1,
+            "placement_policy": "deterministic_balanced_remainder",
+            "workers": [
+              {
+                "worker_id": 0,
+                "logical_cpu_id": 0,
+                "query_head_range": [
+                  0,
+                  14
+                ],
+                "query_token_range": [
+                  0,
+                  1
+                ],
+                "kv_head_read_range": [
+                  0,
+                  2
+                ],
+                "q_read": {
+                  "kind": "shard_local",
+                  "head_range": [
+                    0,
+                    14
+                  ],
+                  "query_range": [
+                    0,
+                    1
+                  ]
+                },
+                "k_read": {
+                  "kind": "shared_read_only",
+                  "kv_head_range": [
+                    0,
+                    2
+                  ],
+                  "context_range": [
+                    0,
+                    "runtime_context_length"
+                  ]
+                },
+                "v_read": {
+                  "kind": "shared_read_only",
+                  "kv_head_range": [
+                    0,
+                    2
+                  ],
+                  "context_range": [
+                    0,
+                    "runtime_context_length"
+                  ]
+                },
+                "output_write": {
+                  "kind": "disjoint_logical_tensor_slice",
+                  "head_range": [
+                    0,
+                    14
+                  ],
+                  "query_range": [
+                    0,
+                    1
+                  ],
+                  "extent_elements": 896,
+                  "offset_elements": 0
+                },
+                "scratch": {
+                  "ownership": "worker_private"
+                }
+              }
+            ],
+            "communication": {
+              "kind": "shared_memory",
+              "shared_input_buffers": [
+                "key",
+                "value"
+              ],
+              "query_access": "shard_local",
+              "output_access": "disjoint_logical_slices",
+              "copy_count": 0,
+              "copy_bytes": 0,
+              "reduction": "none"
+            },
+            "synchronization": {
+              "kind": "completion_counter",
+              "synchronization_points": 1,
+              "consumer": "o_proj",
+              "consumer_requires_all_shards_complete": true
+            },
+            "predicted_cost": {
+              "kernel_compute": 10348.800000000001,
+              "dispatch": 0.0,
+              "worker_wakeup": 0.0,
+              "barrier": 0.0,
+              "imbalance": 0.0,
+              "shared_cache_contention": 0.0,
+              "memory_bandwidth_contention": 0.0,
+              "worker_underutilization": 0.0,
+              "total": 12448.800000000001
+            },
+            "runtime_no_repartition": true,
+            "runtime_no_worker_count_override": true,
+            "runtime_no_strategy_override": true
+          },
+          "operator_kind": "attention",
+          "selection_mode": "compiler_selected",
+          "selector_version": "native_fused_attention_static_cost_selector_v3",
+          "target_profile": "host_cpu_4_physical_8_logical_v1",
+          "workload_signature": "b1_q1_kv21_qh14_kvh2_d64_fp32",
+          "workload_domain": {
+            "batch": 1,
+            "query_length_min": 1,
+            "query_length_max": 1,
+            "context_length_min": 21,
+            "context_length_max": 21
+          },
+          "query_length_domain": [
+            1,
+            1
+          ],
+          "context_length_domain": [
+            21,
+            21
+          ],
+          "fallback_status": false,
+          "selection_trace": {
+            "selector_version": "native_fused_attention_static_cost_selector_v3",
+            "selection_mode": "compiler_selected",
+            "selection_provenance": "native_fused_attention_static_cost_selector_v3",
+            "workload": {
+              "phase": "decode",
+              "batch": 1,
+              "query_len": 1,
+              "context_len": 21,
+              "query_heads": 14,
+              "kv_heads": 2,
+              "head_dim": 64,
+              "dtype": "float32",
+              "causal": true,
+              "q_layout": "batch_head_sequence_dim",
+              "k_layout": "batch_head_sequence_dim",
+              "v_layout": "batch_head_sequence_dim",
+              "output_layout": "batch_head_sequence_dim",
+              "kv_cache_layout": "contiguous_layer_sequence_kv_head_dim",
+              "available_logical_workers": 4,
+              "target_cpu_profile": "host_cpu_4_physical_8_logical_v1",
+              "selection_objective": "latency",
+              "temporary_memory_budget_bytes": null
+            },
+            "workload_signature": "b1_q1_kv21_qh14_kvh2_d64_fp32",
+            "generated_candidate_count": 12,
+            "legal_candidate_count": 4,
+            "rejected_candidates": [
+              {
+                "candidate_id": "torch_cpu_attention_fp32_split_head_w2_v1",
+                "algorithm": "dense_materialized",
+                "implementation": "torch_dense_materialized_v1",
+                "strategy": "split_head",
+                "worker_count": 2,
+                "query_tile": 0,
+                "key_tile": 0,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "torch_cpu_attention_fp32_split_head_w4_v1",
+                "algorithm": "dense_materialized",
+                "implementation": "torch_dense_materialized_v1",
+                "strategy": "split_head",
+                "worker_count": 4,
+                "query_tile": 0,
+                "key_tile": 0,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_scalar_fp32_q1_k32_split_head_w2_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_scalar",
+                "strategy": "split_head",
+                "worker_count": 2,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_scalar_fp32_q1_k32_split_head_w4_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_scalar",
+                "strategy": "split_head",
+                "worker_count": 4,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_scalar_fp32_q1_k32_split_head_w8_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_scalar",
+                "strategy": "split_head",
+                "worker_count": 8,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "worker_count_exceeds_available_logical_workers"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w2_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_avx2",
+                "strategy": "split_head",
+                "worker_count": 2,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w4_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_avx2",
+                "strategy": "split_head",
+                "worker_count": 4,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w8_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_avx2",
+                "strategy": "split_head",
+                "worker_count": 8,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "worker_count_exceeds_available_logical_workers"
+              }
+            ],
+            "considered_candidates": [
+              {
+                "candidate_id": "torch_cpu_attention_fp32_serial_w1_v1",
+                "algorithm": "dense_materialized",
+                "implementation": "torch_dense_materialized_v1",
+                "strategy": "serial",
+                "worker_count": 1,
+                "query_tile": 0,
+                "key_tile": 0,
+                "legal": true,
+                "legality_reason": "legal",
+                "estimated_compute_units": 18816.0,
+                "estimated_qkv_output_bytes": 25088.0,
+                "estimated_score_temporary_bytes": 1176.0,
+                "estimated_probability_temporary_bytes": 1176.0,
+                "estimated_materialization_traffic_bytes": 4704.0,
+                "estimated_dispatch_cost": 0.0,
+                "estimated_assembly_cost": 0.0,
+                "estimated_tile_overhead": 0.0,
+                "estimated_exponential_factor": 1.0,
+                "estimated_gqa_expansion_bytes": 150528.0,
+                "estimated_total_temporary_bytes": 152880.0,
+                "legacy_score_without_explicit_schedule_terms": 20964.16,
+                "score": 20462.4,
+                "useful_shard_count": 1,
+                "shard_sizes": [
+                  14
+                ],
+                "predicted_kernel_compute": 18816.0,
+                "predicted_dispatch": 0.0,
+                "predicted_worker_wakeup": 0.0,
+                "predicted_barrier": 0.0,
+                "predicted_imbalance": 0.0,
+                "predicted_shared_cache_contention": 0.0,
+                "predicted_memory_bandwidth_contention": 0.0,
+                "predicted_worker_underutilization": 0.0,
+                "predicted_parallel_total": 20462.4
+              },
+              {
+                "candidate_id": "torch_cpu_attention_fp32_split_head_w2_v1",
+                "algorithm": "dense_materialized",
+                "implementation": "torch_dense_materialized_v1",
+                "strategy": "split_head",
+                "worker_count": 2,
+                "query_tile": 0,
+                "key_tile": 0,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "torch_cpu_attention_fp32_split_head_w4_v1",
+                "algorithm": "dense_materialized",
+                "implementation": "torch_dense_materialized_v1",
+                "strategy": "split_head",
+                "worker_count": 4,
+                "query_tile": 0,
+                "key_tile": 0,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "torch_cpu_fused_online_fp32_q1_k32_serial_w1_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "torch_tiled_online_softmax_exact_v1",
+                "strategy": "serial",
+                "worker_count": 1,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": true,
+                "legality_reason": "legal",
+                "estimated_compute_units": 18816.0,
+                "estimated_qkv_output_bytes": 25088.0,
+                "estimated_score_temporary_bytes": 0.0,
+                "estimated_probability_temporary_bytes": 0.0,
+                "estimated_materialization_traffic_bytes": 0.0,
+                "estimated_dispatch_cost": 0.0,
+                "estimated_assembly_cost": 0.0,
+                "estimated_tile_overhead": 630000.0,
+                "estimated_exponential_factor": 1.12,
+                "estimated_gqa_expansion_bytes": 150528.0,
+                "estimated_total_temporary_bytes": 156576.0,
+                "legacy_score_without_explicit_schedule_terms": 651575.68,
+                "score": 651073.92,
+                "useful_shard_count": 1,
+                "shard_sizes": [
+                  14
+                ],
+                "predicted_kernel_compute": 21073.920000000002,
+                "predicted_dispatch": 0.0,
+                "predicted_worker_wakeup": 0.0,
+                "predicted_barrier": 0.0,
+                "predicted_imbalance": 0.0,
+                "predicted_shared_cache_contention": 0.0,
+                "predicted_memory_bandwidth_contention": 0.0,
+                "predicted_worker_underutilization": 0.0,
+                "predicted_parallel_total": 651073.92
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_scalar_fp32_q1_k32_serial_w1_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_scalar",
+                "strategy": "serial",
+                "worker_count": 1,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": true,
+                "legality_reason": "legal",
+                "estimated_compute_units": 18816.0,
+                "estimated_qkv_output_bytes": 25088.0,
+                "estimated_score_temporary_bytes": 0.0,
+                "estimated_probability_temporary_bytes": 0.0,
+                "estimated_materialization_traffic_bytes": 0.0,
+                "estimated_dispatch_cost": 0.0,
+                "estimated_assembly_cost": 0.0,
+                "estimated_tile_overhead": 15400.0,
+                "estimated_exponential_factor": 1.45,
+                "estimated_gqa_expansion_bytes": 0,
+                "estimated_total_temporary_bytes": 384.0,
+                "legacy_score_without_explicit_schedule_terms": 43184.96,
+                "score": 42683.2,
+                "useful_shard_count": 1,
+                "shard_sizes": [
+                  14
+                ],
+                "predicted_kernel_compute": 27283.2,
+                "predicted_dispatch": 0.0,
+                "predicted_worker_wakeup": 0.0,
+                "predicted_barrier": 0.0,
+                "predicted_imbalance": 0.0,
+                "predicted_shared_cache_contention": 0.0,
+                "predicted_memory_bandwidth_contention": 0.0,
+                "predicted_worker_underutilization": 0.0,
+                "predicted_parallel_total": 42683.2
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_scalar_fp32_q1_k32_split_head_w2_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_scalar",
+                "strategy": "split_head",
+                "worker_count": 2,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_scalar_fp32_q1_k32_split_head_w4_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_scalar",
+                "strategy": "split_head",
+                "worker_count": 4,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_scalar_fp32_q1_k32_split_head_w8_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_scalar",
+                "strategy": "split_head",
+                "worker_count": 8,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "worker_count_exceeds_available_logical_workers"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_avx2",
+                "strategy": "serial",
+                "worker_count": 1,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": true,
+                "legality_reason": "legal",
+                "estimated_compute_units": 18816.0,
+                "estimated_qkv_output_bytes": 25088.0,
+                "estimated_score_temporary_bytes": 0.0,
+                "estimated_probability_temporary_bytes": 0.0,
+                "estimated_materialization_traffic_bytes": 0.0,
+                "estimated_dispatch_cost": 0.0,
+                "estimated_assembly_cost": 0.0,
+                "estimated_tile_overhead": 2100.0,
+                "estimated_exponential_factor": 0.55,
+                "estimated_gqa_expansion_bytes": 0,
+                "estimated_total_temporary_bytes": 384.0,
+                "legacy_score_without_explicit_schedule_terms": 12950.560000000001,
+                "score": 12448.800000000001,
+                "useful_shard_count": 1,
+                "shard_sizes": [
+                  14
+                ],
+                "predicted_kernel_compute": 10348.800000000001,
+                "predicted_dispatch": 0.0,
+                "predicted_worker_wakeup": 0.0,
+                "predicted_barrier": 0.0,
+                "predicted_imbalance": 0.0,
+                "predicted_shared_cache_contention": 0.0,
+                "predicted_memory_bandwidth_contention": 0.0,
+                "predicted_worker_underutilization": 0.0,
+                "predicted_parallel_total": 12448.800000000001
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w2_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_avx2",
+                "strategy": "split_head",
+                "worker_count": 2,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w4_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_avx2",
+                "strategy": "split_head",
+                "worker_count": 4,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "shard_too_small_to_amortize_dispatch"
+              },
+              {
+                "candidate_id": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w8_v1",
+                "algorithm": "fused_tiled_online_softmax",
+                "implementation": "native_avx2",
+                "strategy": "split_head",
+                "worker_count": 8,
+                "query_tile": 1,
+                "key_tile": 32,
+                "legal": false,
+                "legality_reason": "worker_count_exceeds_available_logical_workers"
+              }
+            ],
+            "selected_candidate_id": "cpu_fused_online_native_avx2_fp32_q1_k32_serial_w1_v1",
+            "selected_score": 12448.800000000001,
+            "fallback_status": false,
+            "tie_breaking": "minimum_score_then_lexicographic_candidate_id"
+          }
+        }
+      },
+      "fallback": {
+        "policy": "hard_failure",
+        "count": 0
+      },
+      "runtime_no_redecision": true
+    }
+  },
+  "function_plans": []
+}

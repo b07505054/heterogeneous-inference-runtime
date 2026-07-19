@@ -1,0 +1,11 @@
+{
+  "evaluation_levels":{"v0":"step-level score","oracle":"full-trace request-level objective"},
+  "workloads":[
+    {"family":"mixed","selected":"chunked_balanced","oracle":"decode_first","regret_percent":43.6369,"main_failure":"policy-level versus step-level mismatch and horizon interaction"},
+    {"family":"arrival_burst","selected":"chunked_balanced","oracle":"decode_first","regret_percent":45.3551,"main_failure":"missing future arrivals and cumulative delay"},
+    {"family":"prefix_reuse","selected":"chunked_balanced","oracle":"decode_first","regret_percent":25.7721,"main_failure":"prefix interaction and decode-gap underprediction"},
+    {"family":"adversarial_starvation","selected":"chunked_balanced","oracle":"decode_first","regret_percent":50.5331,"main_failure":"missing starvation accumulation and deferred-work cost"}
+  ],
+  "root_causes":["short-horizon bias","incorrect cost scale","missing cumulative delay","missing future arrivals","missing starvation accumulation","incorrect batching-benefit estimate","policy-level versus step-level mismatch","objective-weight mismatch","prefix-reuse interaction"],
+  "not_root_cause":"ScheduleStepPlan execution; exact plan execution remained correct"
+}

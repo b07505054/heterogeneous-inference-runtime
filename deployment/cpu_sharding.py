@@ -154,17 +154,21 @@ class PersistentCPUShardRuntime:
         self._rank_lock = threading.Lock()
         self._next_rank = 0
         self.affinity: dict[int, tuple[int, ...]] = {}
-        self.pool = ThreadPoolExecutor(
-            max_workers=self.workers, thread_name_prefix="hir-cpu-rank",
-            initializer=self._initialize_worker)
-        # Force all persistent workers to start before the first measured call.
-        gate = threading.Barrier(self.workers)
-        list(self.pool.map(lambda _: gate.wait(), range(self.workers)))
+        self._executors = [
+            ThreadPoolExecutor(
+                max_workers=1, thread_name_prefix=f"hir-cpu-rank-{rank}",
+                initializer=self._initialize_worker, initargs=(rank,))
+            for rank in range(self.workers)]
+        self._round_robin = 0
+        self._submit_lock = threading.Lock()
+        # Backward-compatible facade; exact planning paths use submit_to().
+        self.pool = self
+        list(f.result() for f in [
+            executor.submit(lambda: None) for executor in self._executors])
+        self.worker_start_count = self.workers
+        self.pool_creation_ns = time.perf_counter_ns()
 
-    def _initialize_worker(self) -> None:
-        with self._rank_lock:
-            rank = self._next_rank
-            self._next_rank += 1
+    def _initialize_worker(self, rank: int) -> None:
         core = self.cores[rank]
         try:
             os.sched_setaffinity(0, {core})
@@ -175,7 +179,30 @@ class PersistentCPUShardRuntime:
         threading.current_thread().hir_rank = rank  # type: ignore[attr-defined]
 
     def close(self) -> None:
-        self.pool.shutdown(wait=True)
+        for executor in self._executors:
+            executor.shutdown(wait=True)
+
+    def submit_to(self, worker_id: int, fn: Any, *args: Any, **kwargs: Any):
+        if not isinstance(worker_id, int) or not 0 <= worker_id < self.workers:
+            raise ShardingPlanError("invalid logical worker ID")
+        def exact_worker_call():
+            actual = getattr(threading.current_thread(), "hir_rank", None)
+            if actual != worker_id:
+                raise ShardingPlanError(
+                    f"planned worker {worker_id} executed on logical worker {actual}")
+            return fn(*args, **kwargs)
+        return self._executors[worker_id].submit(exact_worker_call)
+
+    def submit(self, fn: Any, *args: Any, **kwargs: Any):
+        """Compatibility round-robin submission for pre-placement callers."""
+        with self._submit_lock:
+            worker_id = self._round_robin % self.workers
+            self._round_robin += 1
+        return self.submit_to(worker_id, fn, *args, **kwargs)
+
+    def map(self, fn: Any, iterable: Any):
+        futures = [self.submit(fn, value) for value in iterable]
+        return [future.result() for future in futures]
 
     def __enter__(self) -> "PersistentCPUShardRuntime":
         return self
@@ -204,7 +231,7 @@ class PersistentCPUShardRuntime:
 
         if strategy in {"split_m", "replicated"}:
             ranges = uneven_ranges(x.shape[0], self.workers)
-            futures = [self.pool.submit(measured, lambda s=s, e=e: x[s:e] @ w, r)
+            futures = [self.submit_to(r, measured, lambda s=s, e=e: x[s:e] @ w, r)
                        for r, (s, e) in enumerate(ranges)]
             dispatched = time.perf_counter_ns()
             parts = [f.result() for f in futures]
@@ -212,7 +239,7 @@ class PersistentCPUShardRuntime:
             y = np.concatenate(parts, axis=0)
         elif strategy == "column_parallel":
             ranges = uneven_ranges(w.shape[1], self.workers)
-            futures = [self.pool.submit(measured, lambda s=s, e=e: x @ w[:, s:e], r)
+            futures = [self.submit_to(r, measured, lambda s=s, e=e: x @ w[:, s:e], r)
                        for r, (s, e) in enumerate(ranges)]
             dispatched = time.perf_counter_ns()
             parts = [f.result() for f in futures]
@@ -220,7 +247,7 @@ class PersistentCPUShardRuntime:
             y = np.concatenate(parts, axis=1)
         elif strategy == "row_parallel":
             ranges = uneven_ranges(w.shape[0], self.workers)
-            futures = [self.pool.submit(
+            futures = [self.submit_to(r,
                 measured, lambda s=s, e=e: x[:, s:e] @ w[s:e, :], r)
                 for r, (s, e) in enumerate(ranges)]
             dispatched = time.perf_counter_ns()

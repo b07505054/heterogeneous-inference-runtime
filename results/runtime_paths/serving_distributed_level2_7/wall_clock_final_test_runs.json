@@ -1,0 +1,1682 @@
+[
+  {
+    "family": "large_token_budget",
+    "seed": 27009,
+    "policy": "decode_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.281826047692448,
+    "ttft_mean_ms": 1.5889415323423843,
+    "e2e_mean_ms": 2.7715380614002547,
+    "makespan_ms": 3.6746999248862267,
+    "steps": 12,
+    "step_latency_ms": {
+      "n": 12,
+      "mean": 0.13710724999999999,
+      "median": 0.128126,
+      "p95": 0.254003,
+      "min": 0.032807,
+      "max": 0.277675,
+      "stdev": 0.08377933731494788
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_token_budget",
+    "seed": 27009,
+    "policy": "prefill_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.4022197612794116,
+    "ttft_mean_ms": 1.6940687589036922,
+    "e2e_mean_ms": 2.832604009502878,
+    "makespan_ms": 3.6414791829884052,
+    "steps": 12,
+    "step_latency_ms": {
+      "n": 12,
+      "mean": 0.13398316666666668,
+      "median": 0.126282,
+      "p95": 0.213695,
+      "min": 0.046514,
+      "max": 0.280059,
+      "stdev": 0.07669893236406801
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_token_budget",
+    "seed": 27009,
+    "policy": "chunked_balanced",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.280530980594146,
+    "ttft_mean_ms": 1.5891789031835895,
+    "e2e_mean_ms": 2.7654083096422255,
+    "makespan_ms": 3.720249980688095,
+    "steps": 12,
+    "step_latency_ms": {
+      "n": 12,
+      "mean": 0.13667175,
+      "median": 0.119569,
+      "p95": 0.253936,
+      "min": 0.033958,
+      "max": 0.273042,
+      "stdev": 0.08257536891737699
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_token_budget",
+    "seed": 27009,
+    "policy": "slo_aware",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.3064195071735107,
+    "ttft_mean_ms": 1.6097078332677484,
+    "e2e_mean_ms": 2.78684669562305,
+    "makespan_ms": 3.687542164698243,
+    "steps": 12,
+    "step_latency_ms": {
+      "n": 12,
+      "mean": 0.13625433333333334,
+      "median": 0.120656,
+      "p95": 0.25553,
+      "min": 0.033576,
+      "max": 0.273286,
+      "stdev": 0.08342278318337626
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_token_budget",
+    "seed": 27009,
+    "policy": "slo_aware",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.2890605323482305,
+    "ttft_mean_ms": 1.5968432611164947,
+    "e2e_mean_ms": 2.768869084926943,
+    "makespan_ms": 3.6682221107184887,
+    "steps": 12,
+    "step_latency_ms": {
+      "n": 12,
+      "mean": 0.13700408333333333,
+      "median": 0.122595,
+      "p95": 0.256503,
+      "min": 0.033763,
+      "max": 0.279082,
+      "stdev": 0.08468643998084219
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_token_budget",
+    "seed": 27009,
+    "policy": "chunked_balanced",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.276055223774165,
+    "ttft_mean_ms": 1.5883318847045302,
+    "e2e_mean_ms": 2.7508933562785387,
+    "makespan_ms": 3.645853139460087,
+    "steps": 12,
+    "step_latency_ms": {
+      "n": 12,
+      "mean": 0.13638958333333334,
+      "median": 0.1217735,
+      "p95": 0.256411,
+      "min": 0.042313,
+      "max": 0.272477,
+      "stdev": 0.08239257769357884
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_token_budget",
+    "seed": 27009,
+    "policy": "prefill_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.409875412316372,
+    "ttft_mean_ms": 1.6996413469314575,
+    "e2e_mean_ms": 2.840936261539658,
+    "makespan_ms": 3.653113031759858,
+    "steps": 12,
+    "step_latency_ms": {
+      "n": 12,
+      "mean": 0.13496258333333333,
+      "median": 0.12838149999999998,
+      "p95": 0.214711,
+      "min": 0.046442,
+      "max": 0.280588,
+      "stdev": 0.07692643575220341
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_token_budget",
+    "seed": 27009,
+    "policy": "decode_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.3322288713340336,
+    "ttft_mean_ms": 1.6304196518224974,
+    "e2e_mean_ms": 2.807236878046145,
+    "makespan_ms": 3.7057430017739534,
+    "steps": 12,
+    "step_latency_ms": {
+      "n": 12,
+      "mean": 0.137692,
+      "median": 0.121404,
+      "p95": 0.265543,
+      "min": 0.033456,
+      "max": 0.287482,
+      "stdev": 0.08685872587138266
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_token_budget",
+    "seed": 27009,
+    "policy": "slo_aware",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.302655232294152,
+    "ttft_mean_ms": 1.6085284296423197,
+    "e2e_mean_ms": 2.77650721060733,
+    "makespan_ms": 3.669912926852703,
+    "steps": 12,
+    "step_latency_ms": {
+      "n": 12,
+      "mean": 0.13745291666666667,
+      "median": 0.120519,
+      "p95": 0.256015,
+      "min": 0.033761,
+      "max": 0.275577,
+      "stdev": 0.08302648380810715
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_token_budget",
+    "seed": 27009,
+    "policy": "chunked_balanced",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.289870002035362,
+    "ttft_mean_ms": 1.5989038511179388,
+    "e2e_mean_ms": 2.763864603669693,
+    "makespan_ms": 3.658022964373231,
+    "steps": 12,
+    "step_latency_ms": {
+      "n": 12,
+      "mean": 0.13656025,
+      "median": 0.1200165,
+      "p95": 0.256917,
+      "min": 0.033484,
+      "max": 0.278108,
+      "stdev": 0.08396658761904263
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_token_budget",
+    "seed": 27009,
+    "policy": "prefill_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.428993927120852,
+    "ttft_mean_ms": 1.7144298180937767,
+    "e2e_mean_ms": 2.858256436108301,
+    "makespan_ms": 3.6725730169564486,
+    "steps": 12,
+    "step_latency_ms": {
+      "n": 12,
+      "mean": 0.13607416666666666,
+      "median": 0.13022450000000002,
+      "p95": 0.228898,
+      "min": 0.046382,
+      "max": 0.284453,
+      "stdev": 0.07896196805578255
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_token_budget",
+    "seed": 27009,
+    "policy": "decode_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.296945448809614,
+    "ttft_mean_ms": 1.5949555090628564,
+    "e2e_mean_ms": 2.8079597589870295,
+    "makespan_ms": 3.718408988788724,
+    "steps": 12,
+    "step_latency_ms": {
+      "n": 12,
+      "mean": 0.13701258333333335,
+      "median": 0.1210105,
+      "p95": 0.255554,
+      "min": 0.033678,
+      "max": 0.27617,
+      "stdev": 0.08445770695384475
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_token_budget",
+    "seed": 27009,
+    "policy": "decode_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.300284249940887,
+    "ttft_mean_ms": 1.6043917664016287,
+    "e2e_mean_ms": 2.783569934157034,
+    "makespan_ms": 3.6792380269616842,
+    "steps": 12,
+    "step_latency_ms": {
+      "n": 12,
+      "mean": 0.13761925,
+      "median": 0.1238435,
+      "p95": 0.262312,
+      "min": 0.033439,
+      "max": 0.273135,
+      "stdev": 0.08446626357107961
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_token_budget",
+    "seed": 27009,
+    "policy": "prefill_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.420664022793062,
+    "ttft_mean_ms": 1.7055615317076445,
+    "e2e_mean_ms": 2.8604099643416703,
+    "makespan_ms": 3.674427978694439,
+    "steps": 12,
+    "step_latency_ms": {
+      "n": 12,
+      "mean": 0.13449733333333333,
+      "median": 0.127315,
+      "p95": 0.212732,
+      "min": 0.046754,
+      "max": 0.28376,
+      "stdev": 0.0769062029881895
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_token_budget",
+    "seed": 27009,
+    "policy": "chunked_balanced",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.288324763261092,
+    "ttft_mean_ms": 1.5985788971496124,
+    "e2e_mean_ms": 2.758983464445919,
+    "makespan_ms": 3.645199118182063,
+    "steps": 12,
+    "step_latency_ms": {
+      "n": 12,
+      "mean": 0.13575541666666666,
+      "median": 0.119644,
+      "p95": 0.256038,
+      "min": 0.033067,
+      "max": 0.274836,
+      "stdev": 0.08418662625107315
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_token_budget",
+    "seed": 27009,
+    "policy": "slo_aware",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.2898549990107617,
+    "ttft_mean_ms": 1.5960506668003898,
+    "e2e_mean_ms": 2.7752173288414874,
+    "makespan_ms": 3.7776061799377203,
+    "steps": 12,
+    "step_latency_ms": {
+      "n": 12,
+      "mean": 0.14145158333333333,
+      "median": 0.1170125,
+      "p95": 0.255619,
+      "min": 0.060549,
+      "max": 0.276857,
+      "stdev": 0.07786698201473673
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_token_budget",
+    "seed": 27009,
+    "policy": "decode_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.296136963802079,
+    "ttft_mean_ms": 1.6038342146202922,
+    "e2e_mean_ms": 2.7692109967271485,
+    "makespan_ms": 3.6638618912547827,
+    "steps": 12,
+    "step_latency_ms": {
+      "n": 12,
+      "mean": 0.13694541666666668,
+      "median": 0.1199845,
+      "p95": 0.256758,
+      "min": 0.033247,
+      "max": 0.280489,
+      "stdev": 0.08558534549947877
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_token_budget",
+    "seed": 27009,
+    "policy": "prefill_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.4090395551562933,
+    "ttft_mean_ms": 1.6993421401518087,
+    "e2e_mean_ms": 2.8387896600179374,
+    "makespan_ms": 3.6491898354142904,
+    "steps": 12,
+    "step_latency_ms": {
+      "n": 12,
+      "mean": 0.13448833333333335,
+      "median": 0.1264255,
+      "p95": 0.210872,
+      "min": 0.046021,
+      "max": 0.281361,
+      "stdev": 0.07622568565103037
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_token_budget",
+    "seed": 27009,
+    "policy": "chunked_balanced",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.284272908582352,
+    "ttft_mean_ms": 1.5995209493363898,
+    "e2e_mean_ms": 2.7390078369838498,
+    "makespan_ms": 3.605607198551297,
+    "steps": 12,
+    "step_latency_ms": {
+      "n": 12,
+      "mean": 0.13505166666666665,
+      "median": 0.118328,
+      "p95": 0.256789,
+      "min": 0.032376,
+      "max": 0.280627,
+      "stdev": 0.08504790923231376
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_token_budget",
+    "seed": 27009,
+    "policy": "slo_aware",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.2865036201740927,
+    "ttft_mean_ms": 1.5960527816787362,
+    "e2e_mean_ms": 2.7618033539814255,
+    "makespan_ms": 3.643942065536976,
+    "steps": 12,
+    "step_latency_ms": {
+      "n": 12,
+      "mean": 0.13733874999999998,
+      "median": 0.1255425,
+      "p95": 0.261093,
+      "min": 0.032574,
+      "max": 0.276844,
+      "stdev": 0.08613560157747571
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "small_sequence_budget",
+    "seed": 27010,
+    "policy": "decode_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.772252652600097,
+    "ttft_mean_ms": 2.023816923610866,
+    "e2e_mean_ms": 2.993742915956924,
+    "makespan_ms": 5.190227180719376,
+    "steps": 23,
+    "step_latency_ms": {
+      "n": 23,
+      "mean": 0.07979113043478261,
+      "median": 0.073878,
+      "p95": 0.155609,
+      "min": 0.031933,
+      "max": 0.162396,
+      "stdev": 0.04063634248518341
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "small_sequence_budget",
+    "seed": 27010,
+    "policy": "prefill_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 3.2933003870615116,
+    "ttft_mean_ms": 2.444702200591564,
+    "e2e_mean_ms": 3.3943927458797893,
+    "makespan_ms": 5.215196870267391,
+    "steps": 24,
+    "step_latency_ms": {
+      "n": 24,
+      "mean": 0.07512225,
+      "median": 0.07327,
+      "p95": 0.196999,
+      "min": 0.032014,
+      "max": 0.212797,
+      "stdev": 0.048424755744260646
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "small_sequence_budget",
+    "seed": 27010,
+    "policy": "chunked_balanced",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.6871331695777676,
+    "ttft_mean_ms": 1.9629218732006848,
+    "e2e_mean_ms": 2.896845185508331,
+    "makespan_ms": 5.07527100853622,
+    "steps": 23,
+    "step_latency_ms": {
+      "n": 23,
+      "mean": 0.07872882608695653,
+      "median": 0.073103,
+      "p95": 0.158974,
+      "min": 0.032188,
+      "max": 0.165355,
+      "stdev": 0.04161283423269161
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "small_sequence_budget",
+    "seed": 27010,
+    "policy": "slo_aware",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.752524786046706,
+    "ttft_mean_ms": 2.0166635513305664,
+    "e2e_mean_ms": 2.943444938864559,
+    "makespan_ms": 5.1220981404185295,
+    "steps": 23,
+    "step_latency_ms": {
+      "n": 23,
+      "mean": 0.07950299999999999,
+      "median": 0.073337,
+      "p95": 0.165129,
+      "min": 0.033001,
+      "max": 0.208221,
+      "stdev": 0.04534709749657233
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "small_sequence_budget",
+    "seed": 27010,
+    "policy": "slo_aware",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.7365080410769833,
+    "ttft_mean_ms": 2.005279607449969,
+    "e2e_mean_ms": 2.9249137345080576,
+    "makespan_ms": 5.1014721393585205,
+    "steps": 23,
+    "step_latency_ms": {
+      "n": 23,
+      "mean": 0.07884021739130435,
+      "median": 0.072926,
+      "p95": 0.159795,
+      "min": 0.032747,
+      "max": 0.213395,
+      "stdev": 0.04567744530943086
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "small_sequence_budget",
+    "seed": 27010,
+    "policy": "chunked_balanced",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.6952308786955355,
+    "ttft_mean_ms": 1.9685221292699377,
+    "e2e_mean_ms": 2.90683499770239,
+    "makespan_ms": 5.111351143568754,
+    "steps": 23,
+    "step_latency_ms": {
+      "n": 23,
+      "mean": 0.07929852173913043,
+      "median": 0.073616,
+      "p95": 0.160891,
+      "min": 0.03289,
+      "max": 0.162492,
+      "stdev": 0.040914339882101754
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "small_sequence_budget",
+    "seed": 27010,
+    "policy": "prefill_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 3.3370652090525255,
+    "ttft_mean_ms": 2.4757417268119752,
+    "e2e_mean_ms": 3.445293928962201,
+    "makespan_ms": 5.326355108991265,
+    "steps": 24,
+    "step_latency_ms": {
+      "n": 24,
+      "mean": 0.07552299999999999,
+      "median": 0.0732595,
+      "p95": 0.19539,
+      "min": 0.032871,
+      "max": 0.205655,
+      "stdev": 0.04731340970224165
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "small_sequence_budget",
+    "seed": 27010,
+    "policy": "decode_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.687295908496405,
+    "ttft_mean_ms": 1.9621695197808247,
+    "e2e_mean_ms": 2.9005055548623204,
+    "makespan_ms": 5.112744867801666,
+    "steps": 23,
+    "step_latency_ms": {
+      "n": 23,
+      "mean": 0.07979260869565218,
+      "median": 0.072729,
+      "p95": 0.159854,
+      "min": 0.03318,
+      "max": 0.16199,
+      "stdev": 0.041544520315548374
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "small_sequence_budget",
+    "seed": 27010,
+    "policy": "slo_aware",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.7323860510174804,
+    "ttft_mean_ms": 2.0004301331937313,
+    "e2e_mean_ms": 2.927823671294997,
+    "makespan_ms": 5.140191875398159,
+    "steps": 23,
+    "step_latency_ms": {
+      "n": 23,
+      "mean": 0.079675,
+      "median": 0.072779,
+      "p95": 0.160153,
+      "min": 0.033129,
+      "max": 0.212769,
+      "stdev": 0.04575144086951102
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "small_sequence_budget",
+    "seed": 27010,
+    "policy": "chunked_balanced",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.713728041271679,
+    "ttft_mean_ms": 1.980840713561823,
+    "e2e_mean_ms": 2.9315493108394244,
+    "makespan_ms": 5.183023866266012,
+    "steps": 23,
+    "step_latency_ms": {
+      "n": 23,
+      "mean": 0.0814544347826087,
+      "median": 0.073113,
+      "p95": 0.16671,
+      "min": 0.033376,
+      "max": 0.176816,
+      "stdev": 0.043719487491616874
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "small_sequence_budget",
+    "seed": 27010,
+    "policy": "prefill_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 3.280881438210296,
+    "ttft_mean_ms": 2.434645954053849,
+    "e2e_mean_ms": 3.3849419366257885,
+    "makespan_ms": 5.222643027082086,
+    "steps": 24,
+    "step_latency_ms": {
+      "n": 24,
+      "mean": 0.075072,
+      "median": 0.073131,
+      "p95": 0.195929,
+      "min": 0.032677,
+      "max": 0.211282,
+      "stdev": 0.047885935943838366
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "small_sequence_budget",
+    "seed": 27010,
+    "policy": "decode_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.6811740050713224,
+    "ttft_mean_ms": 1.9579822934853535,
+    "e2e_mean_ms": 2.892766846343875,
+    "makespan_ms": 5.097134038805962,
+    "steps": 23,
+    "step_latency_ms": {
+      "n": 23,
+      "mean": 0.07968782608695651,
+      "median": 0.073164,
+      "p95": 0.160427,
+      "min": 0.033045,
+      "max": 0.162028,
+      "stdev": 0.04097603353586113
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "small_sequence_budget",
+    "seed": 27010,
+    "policy": "decode_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.700892180049171,
+    "ttft_mean_ms": 1.9693429348990321,
+    "e2e_mean_ms": 2.926196980600556,
+    "makespan_ms": 5.220433929935098,
+    "steps": 23,
+    "step_latency_ms": {
+      "n": 23,
+      "mean": 0.08114991304347827,
+      "median": 0.073732,
+      "p95": 0.165305,
+      "min": 0.033584,
+      "max": 0.166056,
+      "stdev": 0.04097197385232656
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "small_sequence_budget",
+    "seed": 27010,
+    "policy": "prefill_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 3.5104212777999537,
+    "ttft_mean_ms": 2.597823079364995,
+    "e2e_mean_ms": 3.6503927937398353,
+    "makespan_ms": 5.7144740130752325,
+    "steps": 24,
+    "step_latency_ms": {
+      "n": 24,
+      "mean": 0.07970083333333333,
+      "median": 0.075034,
+      "p95": 0.19577,
+      "min": 0.034831,
+      "max": 0.209262,
+      "stdev": 0.04760838812250619
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "small_sequence_budget",
+    "seed": 27010,
+    "policy": "chunked_balanced",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.868386431752394,
+    "ttft_mean_ms": 2.0942473978114626,
+    "e2e_mean_ms": 3.096556135763725,
+    "makespan_ms": 5.48959500156343,
+    "steps": 23,
+    "step_latency_ms": {
+      "n": 23,
+      "mean": 0.08472730434782609,
+      "median": 0.077333,
+      "p95": 0.168728,
+      "min": 0.034987,
+      "max": 0.17065,
+      "stdev": 0.043159798505548255
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "small_sequence_budget",
+    "seed": 27010,
+    "policy": "slo_aware",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.9148539615562186,
+    "ttft_mean_ms": 2.1361367544159293,
+    "e2e_mean_ms": 3.114868828561157,
+    "makespan_ms": 5.427821073681116,
+    "steps": 23,
+    "step_latency_ms": {
+      "n": 23,
+      "mean": 0.08435621739130435,
+      "median": 0.076999,
+      "p95": 0.173842,
+      "min": 0.03407,
+      "max": 0.224222,
+      "stdev": 0.049340743384380825
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "small_sequence_budget",
+    "seed": 27010,
+    "policy": "decode_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.762599440757185,
+    "ttft_mean_ms": 2.016829753605028,
+    "e2e_mean_ms": 2.9830787486086288,
+    "makespan_ms": 5.266673164442182,
+    "steps": 23,
+    "step_latency_ms": {
+      "n": 23,
+      "mean": 0.08179269565217391,
+      "median": 0.075188,
+      "p95": 0.163754,
+      "min": 0.033874,
+      "max": 0.166821,
+      "stdev": 0.042341035190929445
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "small_sequence_budget",
+    "seed": 27010,
+    "policy": "prefill_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 3.3633711912746853,
+    "ttft_mean_ms": 2.4957061590005956,
+    "e2e_mean_ms": 3.470660129096359,
+    "makespan_ms": 5.3532670717686415,
+    "steps": 24,
+    "step_latency_ms": {
+      "n": 24,
+      "mean": 0.07687245833333334,
+      "median": 0.0750555,
+      "p95": 0.201251,
+      "min": 0.033591,
+      "max": 0.212867,
+      "stdev": 0.04926083723624254
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "small_sequence_budget",
+    "seed": 27010,
+    "policy": "chunked_balanced",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.840989584607693,
+    "ttft_mean_ms": 2.0709249074570835,
+    "e2e_mean_ms": 3.0802587086024382,
+    "makespan_ms": 5.436297971755266,
+    "steps": 23,
+    "step_latency_ms": {
+      "n": 23,
+      "mean": 0.08439608695652175,
+      "median": 0.076352,
+      "p95": 0.166942,
+      "min": 0.033811,
+      "max": 0.179256,
+      "stdev": 0.044846435654365954
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "small_sequence_budget",
+    "seed": 27010,
+    "policy": "slo_aware",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 2.8284403912645457,
+    "ttft_mean_ms": 2.071718180862566,
+    "e2e_mean_ms": 3.0268888416079185,
+    "makespan_ms": 5.285520805045962,
+    "steps": 23,
+    "step_latency_ms": {
+      "n": 23,
+      "mean": 0.08151647826086957,
+      "median": 0.075945,
+      "p95": 0.163853,
+      "min": 0.033764,
+      "max": 0.214392,
+      "stdev": 0.04630062049836478
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_sequence_budget",
+    "seed": 27011,
+    "policy": "decode_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 3.758369081576044,
+    "ttft_mean_ms": 2.6222217517594495,
+    "e2e_mean_ms": 4.544589319266379,
+    "makespan_ms": 5.713644903153181,
+    "steps": 13,
+    "step_latency_ms": {
+      "n": 13,
+      "mean": 0.22366423076923075,
+      "median": 0.250906,
+      "p95": 0.357518,
+      "min": 0.049642,
+      "max": 0.362692,
+      "stdev": 0.11535237226657127
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_sequence_budget",
+    "seed": 27011,
+    "policy": "prefill_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 4.882196485090794,
+    "ttft_mean_ms": 3.596024574815399,
+    "e2e_mean_ms": 5.144687641101579,
+    "makespan_ms": 6.295112892985344,
+    "steps": 16,
+    "step_latency_ms": {
+      "n": 16,
+      "mean": 0.18189375,
+      "median": 0.2071555,
+      "p95": 0.247544,
+      "min": 0.081908,
+      "max": 0.321091,
+      "stdev": 0.06891808225180578
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_sequence_budget",
+    "seed": 27011,
+    "policy": "chunked_balanced",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 3.6563463541420385,
+    "ttft_mean_ms": 2.5515540037304163,
+    "e2e_mean_ms": 4.419169401646489,
+    "makespan_ms": 5.551477195695043,
+    "steps": 13,
+    "step_latency_ms": {
+      "n": 13,
+      "mean": 0.21788938461538462,
+      "median": 0.244149,
+      "p95": 0.340579,
+      "min": 0.048268,
+      "max": 0.357354,
+      "stdev": 0.1120969844900228
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_sequence_budget",
+    "seed": 27011,
+    "policy": "slo_aware",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 3.6925858197112875,
+    "ttft_mean_ms": 2.577106817625463,
+    "e2e_mean_ms": 4.461916008343299,
+    "makespan_ms": 5.524773150682449,
+    "steps": 13,
+    "step_latency_ms": {
+      "n": 13,
+      "mean": 0.21696861538461537,
+      "median": 0.229512,
+      "p95": 0.344009,
+      "min": 0.047622,
+      "max": 0.364491,
+      "stdev": 0.11327778138168319
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_sequence_budget",
+    "seed": 27011,
+    "policy": "slo_aware",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 3.80410813441914,
+    "ttft_mean_ms": 2.658925795306762,
+    "e2e_mean_ms": 4.5807293564495115,
+    "makespan_ms": 5.657351808622479,
+    "steps": 13,
+    "step_latency_ms": {
+      "n": 13,
+      "mean": 0.22175053846153844,
+      "median": 0.232011,
+      "p95": 0.345801,
+      "min": 0.048257,
+      "max": 0.365011,
+      "stdev": 0.11688477984224135
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_sequence_budget",
+    "seed": 27011,
+    "policy": "chunked_balanced",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 3.656243307179668,
+    "ttft_mean_ms": 2.5529328397371702,
+    "e2e_mean_ms": 4.4132418697699904,
+    "makespan_ms": 5.540427984669805,
+    "steps": 13,
+    "step_latency_ms": {
+      "n": 13,
+      "mean": 0.21777430769230768,
+      "median": 0.243079,
+      "p95": 0.340031,
+      "min": 0.048264,
+      "max": 0.352238,
+      "stdev": 0.11159248534017618
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_sequence_budget",
+    "seed": 27011,
+    "policy": "prefill_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 4.762079078419548,
+    "ttft_mean_ms": 3.50698861034794,
+    "e2e_mean_ms": 5.020361872286433,
+    "makespan_ms": 6.173009052872658,
+    "steps": 16,
+    "step_latency_ms": {
+      "n": 16,
+      "mean": 0.1779100625,
+      "median": 0.2015475,
+      "p95": 0.242757,
+      "min": 0.078652,
+      "max": 0.298511,
+      "stdev": 0.06649941264750013
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_sequence_budget",
+    "seed": 27011,
+    "policy": "decode_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 3.718089208834701,
+    "ttft_mean_ms": 2.5975868209368653,
+    "e2e_mean_ms": 4.482009551591343,
+    "makespan_ms": 5.613755900412798,
+    "steps": 13,
+    "step_latency_ms": {
+      "n": 13,
+      "mean": 0.2197843076923077,
+      "median": 0.244065,
+      "p95": 0.340829,
+      "min": 0.048018,
+      "max": 0.353604,
+      "stdev": 0.11423427935926575
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_sequence_budget",
+    "seed": 27011,
+    "policy": "slo_aware",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 3.708792986193051,
+    "ttft_mean_ms": 2.5888888242964945,
+    "e2e_mean_ms": 4.4796166475862265,
+    "makespan_ms": 5.5489810183644295,
+    "steps": 13,
+    "step_latency_ms": {
+      "n": 13,
+      "mean": 0.2177759230769231,
+      "median": 0.232248,
+      "p95": 0.339661,
+      "min": 0.04896,
+      "max": 0.368738,
+      "stdev": 0.1133785131439974
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_sequence_budget",
+    "seed": 27011,
+    "policy": "chunked_balanced",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 3.652216714625764,
+    "ttft_mean_ms": 2.547455227209462,
+    "e2e_mean_ms": 4.419045949665208,
+    "makespan_ms": 5.564953899011016,
+    "steps": 13,
+    "step_latency_ms": {
+      "n": 13,
+      "mean": 0.21896876923076924,
+      "median": 0.248791,
+      "p95": 0.34395,
+      "min": 0.04829,
+      "max": 0.352289,
+      "stdev": 0.11106495542410745
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_sequence_budget",
+    "seed": 27011,
+    "policy": "prefill_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 4.782048238363738,
+    "ttft_mean_ms": 3.5221647704020143,
+    "e2e_mean_ms": 5.039533871846895,
+    "makespan_ms": 6.1781438998878,
+    "steps": 16,
+    "step_latency_ms": {
+      "n": 16,
+      "mean": 0.178179,
+      "median": 0.202233,
+      "p95": 0.243676,
+      "min": 0.090003,
+      "max": 0.299132,
+      "stdev": 0.06421083192940788
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_sequence_budget",
+    "seed": 27011,
+    "policy": "decode_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 3.7076359537119665,
+    "ttft_mean_ms": 2.5894087092537017,
+    "e2e_mean_ms": 4.472908977833059,
+    "makespan_ms": 5.614594090729952,
+    "steps": 13,
+    "step_latency_ms": {
+      "n": 13,
+      "mean": 0.21992092307692307,
+      "median": 0.249216,
+      "p95": 0.341085,
+      "min": 0.048786,
+      "max": 0.361369,
+      "stdev": 0.1132932828322591
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_sequence_budget",
+    "seed": 27011,
+    "policy": "decode_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 3.646183070183421,
+    "ttft_mean_ms": 2.5415118111090527,
+    "e2e_mean_ms": 4.4186850362974734,
+    "makespan_ms": 5.567664047703147,
+    "steps": 13,
+    "step_latency_ms": {
+      "n": 13,
+      "mean": 0.2179180769230769,
+      "median": 0.243912,
+      "p95": 0.345693,
+      "min": 0.048571,
+      "max": 0.352226,
+      "stdev": 0.11197974267359069
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_sequence_budget",
+    "seed": 27011,
+    "policy": "prefill_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 4.696536556972811,
+    "ttft_mean_ms": 3.4563689777213664,
+    "e2e_mean_ms": 4.96067031700578,
+    "makespan_ms": 6.088272202759981,
+    "steps": 16,
+    "step_latency_ms": {
+      "n": 16,
+      "mean": 0.1754833125,
+      "median": 0.2013205,
+      "p95": 0.234374,
+      "min": 0.077945,
+      "max": 0.299171,
+      "stdev": 0.06489787251954027
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_sequence_budget",
+    "seed": 27011,
+    "policy": "chunked_balanced",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 3.6513505716963364,
+    "ttft_mean_ms": 2.548744656249053,
+    "e2e_mean_ms": 4.410423661789133,
+    "makespan_ms": 5.538381170481443,
+    "steps": 13,
+    "step_latency_ms": {
+      "n": 13,
+      "mean": 0.21808207692307693,
+      "median": 0.244228,
+      "p95": 0.34695,
+      "min": 0.048675,
+      "max": 0.351729,
+      "stdev": 0.11251314004925642
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_sequence_budget",
+    "seed": 27011,
+    "policy": "slo_aware",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 3.77746220652221,
+    "ttft_mean_ms": 2.6271426662181816,
+    "e2e_mean_ms": 4.601278161216113,
+    "makespan_ms": 5.691176047548652,
+    "steps": 13,
+    "step_latency_ms": {
+      "n": 13,
+      "mean": 0.22101553846153846,
+      "median": 0.231141,
+      "p95": 0.365132,
+      "min": 0.048507,
+      "max": 0.36682,
+      "stdev": 0.11640824758267444
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_sequence_budget",
+    "seed": 27011,
+    "policy": "decode_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 3.6515177990723817,
+    "ttft_mean_ms": 2.5485701496816344,
+    "e2e_mean_ms": 4.411790597562988,
+    "makespan_ms": 5.547596141695976,
+    "steps": 13,
+    "step_latency_ms": {
+      "n": 13,
+      "mean": 0.21815007692307692,
+      "median": 0.245185,
+      "p95": 0.339141,
+      "min": 0.048928,
+      "max": 0.352924,
+      "stdev": 0.11171105728355747
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_sequence_budget",
+    "seed": 27011,
+    "policy": "prefill_first",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 4.701048627288805,
+    "ttft_mean_ms": 3.4604656328964563,
+    "e2e_mean_ms": 4.962331977569395,
+    "makespan_ms": 6.087269866839051,
+    "steps": 16,
+    "step_latency_ms": {
+      "n": 16,
+      "mean": 0.1755365625,
+      "median": 0.2008305,
+      "p95": 0.236103,
+      "min": 0.078173,
+      "max": 0.299281,
+      "stdev": 0.06497966786923301
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_sequence_budget",
+    "seed": 27011,
+    "policy": "chunked_balanced",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 3.685197531012818,
+    "ttft_mean_ms": 2.5703270997231207,
+    "e2e_mean_ms": 4.459481725158791,
+    "makespan_ms": 5.6066510733217,
+    "steps": 13,
+    "step_latency_ms": {
+      "n": 13,
+      "mean": 0.21986799999999998,
+      "median": 0.243519,
+      "p95": 0.341359,
+      "min": 0.048733,
+      "max": 0.366697,
+      "stdev": 0.11313095195391931
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  },
+  {
+    "family": "large_sequence_budget",
+    "seed": 27011,
+    "policy": "slo_aware",
+    "execution_mode": "functional_cpu_wall_clock",
+    "objective": 3.7049321755249465,
+    "ttft_mean_ms": 2.5851772451359363,
+    "e2e_mean_ms": 4.479019721556041,
+    "makespan_ms": 5.551336798816919,
+    "steps": 13,
+    "step_latency_ms": {
+      "n": 13,
+      "mean": 0.21791484615384615,
+      "median": 0.233669,
+      "p95": 0.341103,
+      "min": 0.049123,
+      "max": 0.369481,
+      "stdev": 0.11371993835943792
+    },
+    "runtime_counters": {
+      "runtime_schedule_rebuild_count": 0,
+      "runtime_item_override_count": 0,
+      "runtime_token_count_override_count": 0,
+      "runtime_phase_override_count": 0,
+      "runtime_unplanned_request_count": 0,
+      "runtime_fallback_schedule_count": 0
+    }
+  }
+]

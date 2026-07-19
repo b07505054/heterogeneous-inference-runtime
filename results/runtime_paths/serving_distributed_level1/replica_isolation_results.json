@@ -1,0 +1,9 @@
+{
+  "queue_state_independent": true,
+  "active_request_state_independent": true,
+  "prefix_cache_state_independent": true,
+  "eviction_state_independent": true,
+  "shared_mutable_cache": false,
+  "shared_immutable_model_weights_allowed": true,
+  "test": "tests/test_serving_execution.py::test_default_topology_and_replica_isolation"
+}

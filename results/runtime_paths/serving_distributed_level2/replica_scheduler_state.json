@@ -1,0 +1,6 @@
+{
+  "ownership":"one independent state per CPUReplica",
+  "state":["waiting requests","prefill-ready requests","decode-ready requests","active requests","finished requests","logical token budget","sequence budget","cache capacity reference","statistics"],
+  "default_functional_profile":{"max_num_seqs":16,"max_num_batched_tokens":64,"max_prefill_chunk_tokens":32,"decode_token_cost_per_request":1,"balanced_decode_reservation":8},
+  "clarification":"token budget is logical scheduled tokens, not cores or operator workers"
+}

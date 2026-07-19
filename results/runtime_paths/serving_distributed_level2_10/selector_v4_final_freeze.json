@@ -1,0 +1,13 @@
+{
+  "pairwise": {"version": "ranking_selector_v4_pairwise", "digest": "b9e3929e3731c9abeed5909235e4bda71164f2111b5dfe1c006ab82c1275f307"},
+  "risk_aware": {"version": "ranking_selector_v4_risk_aware", "digest": "bc71af56d26a1f94bb1efa400092bbd7b0a7880c560a05e353307b34029cf239"},
+  "service_models": ["service_model_v2_prefill", "service_model_v2_decode", "service_model_v2_mixed"],
+  "frontier_size": 8,
+  "rollout_horizon": 8,
+  "robust_default": "decode_first",
+  "decision_margin": 0.12,
+  "uncertainty_threshold": 0.35,
+  "equivalence_margin": 0.02,
+  "adaptive_selector": "disabled_and_rejected",
+  "frozen_before_final_execution": true
+}

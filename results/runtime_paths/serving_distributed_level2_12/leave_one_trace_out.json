@@ -1,0 +1,110 @@
+[
+  {
+    "excluded_trace": "decode_heavy_s212",
+    "mean_improvement": -0.004276474343038975,
+    "cluster_bootstrap_ci95": [
+      -0.009265850846085047,
+      0.0005632673071168754
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_trace": "prefill_heavy_s212",
+    "mean_improvement": -0.0025500675781293153,
+    "cluster_bootstrap_ci95": [
+      -0.008267601671659248,
+      0.003057269219848205
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_trace": "mixed_interactive_s212",
+    "mean_improvement": -0.003123674947498097,
+    "cluster_bootstrap_ci95": [
+      -0.008735560424480414,
+      0.002561851625671033
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_trace": "contention_s212",
+    "mean_improvement": -0.001215841534212033,
+    "cluster_bootstrap_ci95": [
+      -0.005554678719614611,
+      0.0034588755080207836
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_trace": "arrival_burst_s212",
+    "mean_improvement": -0.0031623426874836783,
+    "cluster_bootstrap_ci95": [
+      -0.008740204384663148,
+      0.0024742343773947696
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_trace": "long_prefill_s212",
+    "mean_improvement": -0.00328324894657633,
+    "cluster_bootstrap_ci95": [
+      -0.00882351647927676,
+      0.0023778160759310887
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_trace": "prefix_heavy_s212",
+    "mean_improvement": -0.004190138446698869,
+    "cluster_bootstrap_ci95": [
+      -0.009177286394434294,
+      0.000776510808133025
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_trace": "low_prefix_reuse_s212",
+    "mean_improvement": -0.0025946857330137506,
+    "cluster_bootstrap_ci95": [
+      -0.008332111509847253,
+      0.00294693424990521
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_trace": "small_token_budget_s212",
+    "mean_improvement": -0.0032185951096748346,
+    "cluster_bootstrap_ci95": [
+      -0.008834042171494265,
+      0.002369095694707155
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_trace": "large_token_budget_s212",
+    "mean_improvement": -0.002062443025311583,
+    "cluster_bootstrap_ci95": [
+      -0.007693974585625768,
+      0.0032969225658576436
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_trace": "small_sequence_budget_s212",
+    "mean_improvement": -0.0021550211641861634,
+    "cluster_bootstrap_ci95": [
+      -0.007821916217634537,
+      0.003259280475033897
+    ],
+    "conclusion": "inconclusive"
+  },
+  {
+    "excluded_trace": "larger_active_batch_s212",
+    "mean_improvement": -0.0025212654559165232,
+    "cluster_bootstrap_ci95": [
+      -0.008335186098812765,
+      0.0030849738894316737
+    ],
+    "conclusion": "inconclusive"
+  }
+]

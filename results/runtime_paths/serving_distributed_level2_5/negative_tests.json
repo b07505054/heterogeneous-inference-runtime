@@ -1,0 +1,5 @@
+{
+  "result":"passed",
+  "covered":["invalid objective profile","missing normalization","negative weight","non-finite weight","horizon below one","undefined continuation policy","duplicate split trace","reused split seed","unavailable candidate","live-state clone mutation guard","foreign-replica plans remain illegal","selector v0 unchanged","runtime counters remain zero"],
+  "runtime_selector_compensation":false
+}

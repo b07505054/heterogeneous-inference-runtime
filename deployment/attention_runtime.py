@@ -202,6 +202,16 @@ def validate_attention_plan(plan: dict[str, Any]) -> None:
                           "split_query": "query_token"}[strategy]
         if plan.get("split_dimension") != expected_split:
             raise ShardingPlanError("strategy/split_dimension mismatch")
+        from deployment.distributed_attention_plan import validate_attention_placement
+        placement = plan.get("distributed_execution")
+        if not isinstance(placement, dict):
+            raise ShardingPlanError("compiler-selected plan requires distributed_execution")
+        validate_attention_placement(
+            placement, query_length=domain["query_length_min"],
+            query_heads=qh, kv_heads=kvh, head_dim=dim, batch=domain["batch"])
+        if (placement["parallel_strategy"] != strategy
+                or placement["worker_count"] != workers):
+            raise ShardingPlanError("candidate and distributed placement mismatch")
 
 
 def validate_attention_execution(decision: dict[str, Any]) -> None:
@@ -278,6 +288,7 @@ class AttentionTiming:
     softmax_ms: float
     pv_ms: float
     assembly_ms: float
+    barrier_ms: float = 0.0
 
 
 @dataclass
@@ -292,6 +303,7 @@ class AttentionTrace:
     produced_returned_output: bool = True
     timing: AttentionTiming | None = None
     memory: dict[str, Any] | None = None
+    worker_events: list[dict[str, Any]] = field(default_factory=list)
 
 
 def _repeat_gqa(x: torch.Tensor, query_heads: int) -> torch.Tensor:
@@ -419,10 +431,12 @@ def _fused_online_attention_chunk(
 
 
 class CompilerAttentionRuntime:
-    def __init__(self, plan: dict[str, Any], perturbation: float = 0.0):
+    def __init__(self, plan: dict[str, Any], perturbation: float = 0.0,
+                 perturb_worker_id: int | None = None):
         validate_attention_plan(plan)
         self.plan = plan
         self.perturbation = perturbation
+        self.perturb_worker_id = perturb_worker_id
         workers = plan["worker_count"]
         cpu_plan = {
             "mesh": {"name": "cpu_mesh", "axes": [{"name": "cpu", "size": workers}]},
@@ -445,6 +459,10 @@ class CompilerAttentionRuntime:
                 raise ShardingPlanError("selected native AVX2 artifact is unavailable on host")
         self.traces: list[AttentionTrace] = []
         self._lock = threading.Lock()
+        self.runtime_repartition_count = 0
+        self.runtime_worker_count_override = 0
+        self.runtime_strategy_override = 0
+        self.manual_shard_count = 0
 
     def close(self) -> None:
         self.workers.close()
@@ -480,14 +498,39 @@ class CompilerAttentionRuntime:
         v = value if native else _repeat_gqa(value, hq)
         t0 = time.perf_counter_ns()
         futures = []
+        placement = self.plan.get("distributed_execution")
+        if placement is None:
+            if self.plan.get("selection_mode") in {
+                    "compiler_selected", "forced_test_override"}:
+                raise ShardingPlanError(
+                    "plan-driven attention requires compiler worker placement")
+            # Explicit legacy/manual compatibility path. It is counted and is
+            # never accepted as compiler-planned distributed execution.
+            from deployment.distributed_attention_plan import build_attention_placement
+            placement = build_attention_placement(
+                batch=b, query_length=qlen, context_length=context,
+                query_heads=hq, kv_heads=hkv, head_dim=dim,
+                strategy=strategy, worker_count=n,
+                direct_output=native)
+            self.runtime_repartition_count += 1
+            self.manual_shard_count += len(placement["workers"])
+        if (placement["worker_count"] != n
+                or placement["parallel_strategy"] != strategy):
+            self.runtime_worker_count_override += int(placement["worker_count"] != n)
+            self.runtime_strategy_override += int(
+                placement["parallel_strategy"] != strategy)
+            raise ShardingPlanError("runtime candidate/placement mismatch")
         algorithm = self.plan.get("algorithm", "dense_materialized")
         kernel = _attention_chunk if algorithm == "dense_materialized" else None
-        def native_call(q_part, k_part, v_part, _mask, head_offset=0):
+        direct_output = torch.empty_like(query) if native else None
+        def native_call(q_part, k_part, v_part, _mask, head_offset=0,
+                        out_part=None):
             begin = time.perf_counter_ns()
             out, memory = self.native_library.run(
                 self.plan["implementation"], q_part, k_part, v_part, scale,
                 self.plan["query_tile"], self.plan["key_tile"],
-                query_head_offset=head_offset, total_query_heads=hq)
+                query_head_offset=head_offset, total_query_heads=hq,
+                output=out_part)
             elapsed = (time.perf_counter_ns() - begin) / 1e6
             return out, (elapsed, 0.0, 0.0), memory
         def submit_args(q_part, k_part, v_part, mask_part):
@@ -497,49 +540,92 @@ class CompilerAttentionRuntime:
                 return (q_part, k_part, v_part, mask_part, scale)
             return (q_part, k_part, v_part, mask_part, scale,
                     self.plan["query_tile"], self.plan["key_tile"])
-        implementation = native_call if native else (kernel or _fused_online_attention_chunk)
-        if strategy == "serial":
-            out, stages, memory = implementation(
-                *submit_args(query, k, v, attention_mask))
-            dispatched = t0
-            parts = [(0, hq, out, stages, memory)]
-        elif strategy == "split_head":
-            for start, end in uneven_ranges(hq, n):
-                m = attention_mask
-                if m is not None and m.shape[1] != 1:
-                    m = m[:, start:end]
-                if native:
-                    future = self.workers.pool.submit(
-                        implementation, query[:, start:end], k, v, m, start)
-                else:
-                    future = self.workers.pool.submit(
-                        implementation, *submit_args(
-                            query[:, start:end], k[:, start:end],
-                            v[:, start:end], m))
-                futures.append((start, end, future))
-            dispatched = time.perf_counter_ns()
-            parts = [(s, e, *f.result()) for s, e, f in futures]
-        else:
-            for start, end in uneven_ranges(qlen, n):
-                m = attention_mask[..., start:end, :] if attention_mask is not None else None
-                futures.append((start, end, self.workers.pool.submit(
-                    implementation, *submit_args(
-                        query[:, :, start:end], k, v, m))))
-            dispatched = time.perf_counter_ns()
-            parts = [(s, e, *f.result()) for s, e, f in futures]
+        implementation = native_call if native else (
+            kernel or _fused_online_attention_chunk)
+        worker_events: list[dict[str, Any]] = []
+        invocation_id = len(self.traces) + 1
+        def execute_work_item(worker_plan, q_part, k_part, v_part, mask_part,
+                              out_part):
+            start_ns = time.perf_counter_ns()
+            actual_worker = getattr(threading.current_thread(), "hir_rank", None)
+            if native:
+                result = implementation(
+                    q_part, k_part, v_part, mask_part,
+                    worker_plan["query_head_range"][0], out_part)
+            else:
+                result = implementation(*submit_args(
+                    q_part, k_part, v_part, mask_part))
+            end_ns = time.perf_counter_ns()
+            return result, {
+                "operator_invocation_id": invocation_id,
+                "planned_worker_id": worker_plan["worker_id"],
+                "executed_logical_worker_id": actual_worker,
+                "planned_shard": {
+                    "query_head_range": worker_plan["query_head_range"],
+                    "query_token_range": worker_plan["query_token_range"]},
+                "executed_shard": {
+                    "query_head_range": worker_plan["query_head_range"],
+                    "query_token_range": worker_plan["query_token_range"]},
+                "planned_native_symbol": self.plan.get("native_symbol"),
+                "executed_native_symbol": (
+                    self.plan.get("native_symbol") if native else None),
+                "start_ns": start_ns, "end_ns": end_ns,
+                "duration_ms": (end_ns-start_ns)/1e6, "status": "ok",
+            }
+        for worker_plan in placement["workers"]:
+            hb, he = worker_plan["query_head_range"]
+            qb, qe = worker_plan["query_token_range"]
+            q_part = query[:, hb:he, qb:qe]
+            m = attention_mask
+            if m is not None:
+                if m.shape[1] != 1: m = m[:, hb:he]
+                m = m[..., qb:qe, :]
+            k_part = k if native else k[:, hb:he]
+            v_part = v if native else v[:, hb:he]
+            out_part = (
+                direct_output[:, hb:he, qb:qe] if native else None)
+            future = self.workers.submit_to(
+                worker_plan["worker_id"], execute_work_item, worker_plan,
+                q_part, k_part, v_part, m, out_part)
+            futures.append((worker_plan, future))
+        dispatched = time.perf_counter_ns()
+        barrier_begin = time.perf_counter_ns()
+        parts = []
+        for worker_plan, future in futures:
+            result, event = future.result()
+            worker_events.append(event)
+            hb, he = worker_plan["query_head_range"]
+            qb, qe = worker_plan["query_token_range"]
+            parts.append((hb, he, qb, qe, *result))
+        barrier_end = time.perf_counter_ns()
+        if any(e["planned_worker_id"] != e["executed_logical_worker_id"]
+               or e["planned_shard"] != e["executed_shard"]
+               or e["planned_native_symbol"] != e["executed_native_symbol"]
+               for e in worker_events):
+            raise ShardingPlanError("planned and executed worker provenance mismatch")
         a0 = time.perf_counter_ns()
-        if strategy == "split_head":
-            output = torch.cat([p[2] for p in parts], dim=1)
+        if native:
+            output = direct_output
+        elif strategy == "split_head":
+            output = torch.cat([p[4] for p in parts], dim=1)
         elif strategy == "split_query":
-            output = torch.cat([p[2] for p in parts], dim=2)
+            output = torch.cat([p[4] for p in parts], dim=2)
         else:
-            output = parts[0][2]
+            output = parts[0][4]
         if self.perturbation:
             # Test-only causal-dependency injection, applied before o_proj.
-            output = output + self.perturbation
+            if self.perturb_worker_id is None:
+                output = output + self.perturbation
+            else:
+                if not 0 <= self.perturb_worker_id < len(placement["workers"]):
+                    raise ShardingPlanError("perturbation worker does not own an output shard")
+                owned = placement["workers"][self.perturb_worker_id]
+                hb, he = owned["query_head_range"]
+                qb, qe = owned["query_token_range"]
+                output[:, hb:he, qb:qe].add_(self.perturbation)
         a1 = time.perf_counter_ns()
-        stage_times = [p[3] for p in parts]
-        memory_rows = [p[4] for p in parts]
+        stage_times = [p[5] for p in parts]
+        memory_rows = [p[6] for p in parts]
         memory = dict(memory_rows[0])
         if len(memory_rows) > 1:
             for name in ("score_bytes", "probability_bytes", "temporary_bytes",
@@ -558,6 +644,7 @@ class CompilerAttentionRuntime:
             softmax_ms=max(x[1] for x in stage_times),
             pv_ms=max(x[2] for x in stage_times),
             assembly_ms=(a1 - a0) / 1e6,
+            barrier_ms=(barrier_end-barrier_begin)/1e6,
         )
         with self._lock:
             self.traces.append(AttentionTrace(
@@ -566,14 +653,16 @@ class CompilerAttentionRuntime:
                 phase=actual_phase, input_shape=tuple(query.shape),
                 output_shape=tuple(output.shape),
                 output_sum=float(output.double().sum()),
-                invocation=len(self.traces) + 1, timing=timing, memory=memory))
+                invocation=invocation_id, timing=timing, memory=memory,
+                worker_events=worker_events))
         return output
 
 
 class ExecutionPlanAttentionAdapter:
     """Consumes only a deserialized ExecutionPlan attention decision table."""
 
-    def __init__(self, execution_plan: Any, *, perturbation: float = 0.0):
+    def __init__(self, execution_plan: Any, *, perturbation: float = 0.0,
+                 perturb_worker_id: int | None = None):
         table = execution_plan.global_decisions.attention_execution
         validate_attention_execution(table)
         if table.get("decision_kind") != "cpu_attention_plan_table_v1":
@@ -581,6 +670,7 @@ class ExecutionPlanAttentionAdapter:
         self.plan_id = execution_plan.plan_id
         self.table = table
         self.perturbation = perturbation
+        self.perturb_worker_id = perturb_worker_id
         self.runtimes = {
             phase: CompilerAttentionRuntime(plan)
             for phase, plan in table["phase_decisions"].items()
@@ -613,6 +703,7 @@ class ExecutionPlanAttentionAdapter:
                 f"actual workload {actual.signature} does not match compiler plan domain")
         runtime = self.runtimes[actual.phase]
         runtime.perturbation = self.perturbation
+        runtime.perturb_worker_id = self.perturb_worker_id
         output = runtime.attention(query, key, value, attention_mask, scale)
         trace = runtime.traces[-1]
         mismatch = (
@@ -656,7 +747,14 @@ class ExecutionPlanAttentionAdapter:
             "softmax_ms": trace.timing.softmax_ms if trace.timing else None,
             "pv_ms": trace.timing.pv_ms if trace.timing else None,
             "assembly_ms": trace.timing.assembly_ms if trace.timing else None,
+            "barrier_ms": trace.timing.barrier_ms if trace.timing else None,
             "memory": trace.memory,
+            "distributed_execution": plan["distributed_execution"],
+            "worker_events": trace.worker_events,
+            "runtime_repartition_count": runtime.runtime_repartition_count,
+            "runtime_worker_count_override": runtime.runtime_worker_count_override,
+            "runtime_strategy_override": runtime.runtime_strategy_override,
+            "manual_shard_count": runtime.manual_shard_count,
         })
         return output
 

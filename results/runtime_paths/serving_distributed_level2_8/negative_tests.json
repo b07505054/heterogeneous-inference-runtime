@@ -1,0 +1,6 @@
+{
+  "new_tests": 9,
+  "coverage": ["timer overlap", "unaccounted time", "missing state version", "freeze mutation", "unavailable policy", "static decision legality", "adaptive/static isolation", "hysteresis stability", "future-feature exclusion"],
+  "focused_python": {"passed": 293, "failed": 0},
+  "mlir_attention_cpu": {"passed": 2, "failed": 0}
+}

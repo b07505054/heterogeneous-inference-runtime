@@ -1,0 +1,12 @@
+{
+  "static_version": "ranking_selector_v3_static",
+  "adaptive_version": "ranking_selector_v3_adaptive",
+  "method": "interpretable measured-break-even rule set",
+  "default_policy": "chunked_balanced",
+  "equivalence_margin": 0.05,
+  "hysteresis_margin": 0.08,
+  "adaptive_inputs": "completed past-step EWMAs only",
+  "future_information": false,
+  "training_claim": "none; exploratory frozen rule configuration",
+  "post_measurement_tuning": false
+}

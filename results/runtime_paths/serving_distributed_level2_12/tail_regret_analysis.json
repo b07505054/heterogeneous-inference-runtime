@@ -1,0 +1,21 @@
+{
+  "selector": {
+    "p90": 0.02653959965531033,
+    "p95": 0.02653959965531033,
+    "maximum": 0.030070096663333924,
+    "worst_trace_mean": 0.030070096663333924
+  },
+  "baseline": {
+    "p90": 0.02131986362878533,
+    "p95": 0.02131986362878533,
+    "maximum": 0.02132859325683023,
+    "worst_trace_mean": 0.02132859325683023
+  },
+  "p95_difference_selector_minus_baseline": 0.005219736026525,
+  "cluster_bootstrap_ci95": [
+    -0.005682392366390468,
+    0.014732991360151158
+  ],
+  "noninferiority_tolerance": 0.005,
+  "noninferiority_pass": false
+}

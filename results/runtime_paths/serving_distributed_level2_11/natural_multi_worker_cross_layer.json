@@ -1,0 +1,32 @@
+{
+  "execution_mode": "focused_real_qwen_compiler_attention",
+  "statistical_profitability_evidence": false,
+  "override_used": false,
+  "workload_signature": "b1_q32_kv32_qh14_kvh2_d64_fp32",
+  "parallel_candidate_id": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w2_v1",
+  "parallel_worker_count": 2,
+  "parallel_operator_plan_count": 24,
+  "serial_decode_operator_plan_count": 24,
+  "operator_plan_count": 48,
+  "parallel_worker_event_count": 48,
+  "all_worker_event_count": 72,
+  "attention_to_o_proj_count": 48,
+  "attention_to_o_proj_complete": true,
+  "parallel_timing_ms": {
+    "attention_total_median": 0.4134845,
+    "dispatch_median": 0.0872215,
+    "barrier_median": 0.320716
+  },
+  "generated_outputs": {"qwen-s2-0": [16731, 16]},
+  "chunked_vs_whole_generated_outputs_equivalent": true,
+  "counters": {
+    "serving_reroute": 0,
+    "serving_override": 0,
+    "scheduler_rebuild": 0,
+    "scheduler_override": 0,
+    "operator_fallback": 0,
+    "operator_repartition": 0,
+    "candidate_mismatch": 0
+  },
+  "provenance_chain": "request -> decode_first policy -> ScheduleStepPlan q[0,32) -> compiler plan -> native AVX2 split-head/2 -> logical workers 0/1 -> attention output -> o_proj"
+}

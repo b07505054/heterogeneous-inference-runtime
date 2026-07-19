@@ -1,0 +1,114 @@
+{
+  "prefix_only_loses_to_queue": {
+    "max_prefix_hit": {
+      "plan_id": "serving-6a1bc9fb7c074cfb",
+      "request_id": "prefix-busy",
+      "cluster_id": "local_cpu_8c_2r",
+      "cluster_profile_version": 1,
+      "selected_replica_id": "replica-0",
+      "routing_policy": "max_prefix_hit",
+      "routing_candidate_id": "max_prefix_hit_v1",
+      "cache_mode": "metadata_only",
+      "prompt_tokens": 128,
+      "matched_tokens": 128,
+      "uncached_tokens": 0,
+      "matched_blocks": 8,
+      "predicted_cost": {
+        "queue_wait_ms": 50.0,
+        "prefill_ms": 0.075,
+        "decode_ms": 0.36,
+        "cache_pressure_ms": 0.0001953125,
+        "routing_overhead_ms": 0.056104,
+        "total_ms": 50.4912993125
+      },
+      "selection_reason": "maximum complete-block prefix match",
+      "operator_plan_policy": "compiler_selected",
+      "operator_plan_id": null,
+      "schema_version": 1,
+      "plan_kind": "serving_request_placement"
+    },
+    "prefix_queue_cost": {
+      "plan_id": "serving-d0072631515448fb",
+      "request_id": "prefix-busy",
+      "cluster_id": "local_cpu_8c_2r",
+      "cluster_profile_version": 1,
+      "selected_replica_id": "replica-1",
+      "routing_policy": "prefix_queue_cost",
+      "routing_candidate_id": "prefix_queue_cost_v1",
+      "cache_mode": "metadata_only",
+      "prompt_tokens": 128,
+      "matched_tokens": 0,
+      "uncached_tokens": 128,
+      "matched_blocks": 0,
+      "predicted_cost": {
+        "queue_wait_ms": 0.0,
+        "prefill_ms": 3.595,
+        "decode_ms": 0.36,
+        "cache_pressure_ms": 0.0,
+        "routing_overhead_ms": 0.067149,
+        "total_ms": 4.022149
+      },
+      "selection_reason": "minimum predicted queue+uncached-prefill+decode+pressure",
+      "operator_plan_policy": "compiler_selected",
+      "operator_plan_id": null,
+      "schema_version": 1,
+      "plan_kind": "serving_request_placement"
+    }
+  },
+  "least_queue_loses_to_recompute": {
+    "least_queue": {
+      "plan_id": "serving-12ecf2818e424c79",
+      "request_id": "queue-miss",
+      "cluster_id": "local_cpu_8c_2r",
+      "cluster_profile_version": 1,
+      "selected_replica_id": "replica-0",
+      "routing_policy": "least_queue",
+      "routing_candidate_id": "least_queue_v1",
+      "cache_mode": "metadata_only",
+      "prompt_tokens": 256,
+      "matched_tokens": 0,
+      "uncached_tokens": 256,
+      "matched_blocks": 0,
+      "predicted_cost": {
+        "queue_wait_ms": 0.0,
+        "prefill_ms": 7.115,
+        "decode_ms": 0.36,
+        "cache_pressure_ms": 0.0,
+        "routing_overhead_ms": 0.09526,
+        "total_ms": 7.57026
+      },
+      "selection_reason": "minimum predicted queue completion",
+      "operator_plan_policy": "compiler_selected",
+      "operator_plan_id": null,
+      "schema_version": 1,
+      "plan_kind": "serving_request_placement"
+    },
+    "prefix_queue_cost": {
+      "plan_id": "serving-5b71e5c4fece4c99",
+      "request_id": "queue-miss",
+      "cluster_id": "local_cpu_8c_2r",
+      "cluster_profile_version": 1,
+      "selected_replica_id": "replica-1",
+      "routing_policy": "prefix_queue_cost",
+      "routing_candidate_id": "prefix_queue_cost_v1",
+      "cache_mode": "metadata_only",
+      "prompt_tokens": 256,
+      "matched_tokens": 256,
+      "uncached_tokens": 0,
+      "matched_blocks": 16,
+      "predicted_cost": {
+        "queue_wait_ms": 1.0,
+        "prefill_ms": 0.075,
+        "decode_ms": 0.36,
+        "cache_pressure_ms": 0.000390625,
+        "routing_overhead_ms": 0.107557,
+        "total_ms": 1.542947625
+      },
+      "selection_reason": "minimum predicted queue+uncached-prefill+decode+pressure",
+      "operator_plan_policy": "compiler_selected",
+      "operator_plan_id": null,
+      "schema_version": 1,
+      "plan_kind": "serving_request_placement"
+    }
+  }
+}

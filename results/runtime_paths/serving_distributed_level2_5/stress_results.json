@@ -1,0 +1,22 @@
+{
+  "submitted": 1000,
+  "completed": 1000,
+  "scheduler_steps": 11010,
+  "selected_policy": "chunked_balanced",
+  "selector_evaluation_overhead_ns": 283133237,
+  "lookahead_state_clones": 4,
+  "candidate_evaluations": 32,
+  "policy_switches": 0,
+  "maximum_planning_latency_ns": 283133237,
+  "runtime_counters": {
+    "runtime_schedule_rebuild_count": 0,
+    "runtime_item_override_count": 0,
+    "runtime_token_count_override_count": 0,
+    "runtime_phase_override_count": 0,
+    "runtime_unplanned_request_count": 0,
+    "runtime_fallback_schedule_count": 0
+  },
+  "deterministic_replay": true,
+  "correctness_failures": 0,
+  "passed": true
+}

@@ -1,0 +1,9 @@
+{
+  "version": "scheduler_state_summary_v1",
+  "aggregates": ["active_count", "waiting_count", "prefill_ready_count", "decode_ready_count", "total_remaining_prefill", "total_remaining_decode", "prefix_hit_tokens"],
+  "frontiers": ["oldest waiting/prefill", "largest decode gap", "largest remaining prefill"],
+  "frontier_size": 8,
+  "rolling_history": ["prefill_ms", "decode_ms", "mixed_ms", "scheduler_ms"],
+  "completed_request_detail_in_hot_state": false,
+  "update_complexity": "heap O(log N) per changed request; snapshot O(K) plus lazy stale removal"
+}

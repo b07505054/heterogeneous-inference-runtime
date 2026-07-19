@@ -1,0 +1,6 @@
+{
+  "new_tests": 15,
+  "covered": ["frozen model mutation", "unknown/future feature", "future request leakage", "cross-replica update", "completed history exclusion", "candidate delta isolation", "base-state immutability", "stable tie default", "hysteresis", "invalid rolling latency"],
+  "focused_python_result": "284 passed",
+  "mlir_attention_cpu_result": "2 passed"
+}

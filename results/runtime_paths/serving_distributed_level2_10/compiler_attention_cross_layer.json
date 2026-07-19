@@ -1,0 +1,16 @@
+{
+  "execution": "focused real-Qwen compiler-attention serving path",
+  "scheduler_policy": "decode_first",
+  "operator_plan_count": 672,
+  "attention_to_o_proj_count": 672,
+  "all_outputs_entered_o_proj": true,
+  "operator_worker_event_count": 0,
+  "worker_event_limitation": "compiler selected serial native AVX2 for all focused shapes; no forced override was used",
+  "operator_fallback": 0,
+  "candidate_mismatch": 0,
+  "operator_repartition": 0,
+  "serving_reroute_or_override": 0,
+  "scheduler_rebuild_or_override": 0,
+  "generated_outputs_recorded": true,
+  "raw": "compiler_attention_focus/compiler_attention_cross_layer_raw.json"
+}

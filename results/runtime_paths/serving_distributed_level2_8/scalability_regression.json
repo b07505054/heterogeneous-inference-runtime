@@ -1,0 +1,21 @@
+{
+  "instrumentation_disabled_reference": {
+    "source": "../serving_distributed_level2_7",
+    "summary_1000_median_ms": 0.045878,
+    "summary_5000_median_ms": 0.068423,
+    "selector_1000_median_ms": 0.022363,
+    "selector_1000_p95_ms": 0.029035
+  },
+  "instrumentation_record_microbenchmark": {
+    "samples": 10000,
+    "median_ms": 0.014524,
+    "p95_ms": 0.027211,
+    "maximum_ms": 1.70396
+  },
+  "combined_control_plane_estimate_1000": {
+    "median_ms": 0.082765,
+    "p95_bound_ms": 0.110368
+  },
+  "targets_met": true,
+  "limitation": "Instrumentation overhead was measured independently; a new 1000-request real-Qwen stress run was not performed."
+}

@@ -1,0 +1,23 @@
+{
+  "captured_date":"2026-07-17",
+  "non_destructive_confirmation":{"reset":false,"clean":false,"stash":false,"rebase":false,"commit":false,"push":false,"delete":false},
+  "repositories":[
+    {
+      "path":"/home/allen/Desktop/Project/heterogeneous-inference-runtime",
+      "branch":"main",
+      "starting_head":"34aee51fef08dc447a6a52d938b4867d60eeef70",
+      "ending_head":"34aee51fef08dc447a6a52d938b4867d60eeef70",
+      "starting_state":"dirty with preserved Operator O5, Serving S1, and Serving S2 work",
+      "ending_state":"dirty with all prior work plus additive S2.5 files"
+    },
+    {
+      "path":"/home/allen/Desktop/Project/ml-graph-compiler-runtime",
+      "branch":"master",
+      "starting_head":"dbf7329392bd2c70fa6ef25e359b277d171b3082",
+      "ending_head":"dbf7329392bd2c70fa6ef25e359b277d171b3082",
+      "starting_state":"clean",
+      "ending_state":"clean"
+    }
+  ],
+  "tests":{"operator_o5":90,"serving_s1":14,"serving_s2":19,"serving_s2_5":16,"focused_python_total":139,"real_qwen_policy_runs":6,"mlir_attention_ctests":2,"runtime_diff_check":"passed","compiler_diff_check":"passed"}
+}

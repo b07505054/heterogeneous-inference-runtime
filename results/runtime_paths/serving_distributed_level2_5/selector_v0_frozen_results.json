@@ -1,0 +1,7 @@
+{
+  "selector_id":"scheduler_selector_v0_frozen",
+  "implementation":"deployment.serving_scheduler.SchedulerCompiler.compile",
+  "mutation_in_s2_5":false,
+  "original_s2_result":{"agreement_percent":0.0,"mean_regret_percent":41.32},
+  "new_frozen_split_mean_regret_percent":33.03361714594548
+}

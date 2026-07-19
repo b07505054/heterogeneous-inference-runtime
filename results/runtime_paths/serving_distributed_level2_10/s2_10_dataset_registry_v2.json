@@ -1,0 +1,11 @@
+{
+  "registry_hash": "32e1a50792f184db477f1c9389119edef8eacd7fad3dccc7a94d55e9570d30a0",
+  "supersedes": "s2_10_dataset_registry.json",
+  "change": "token IDs only; lengths, arrivals, outputs, policies, and metrics unchanged",
+  "preregistered_final_test": {
+    "mixed_final_s210": "034ac48b2e41f01c3080173f1924ba2ea0fc4b11a6ecbe1e195de76ef2083670",
+    "long_final_s210": "8e5f89296a9335074c1df9c1c337fd1f5527a21c911123ce1353a22b8a79579e",
+    "burst_final_s210": "f265a1202d5cd2af1ef42f0328845f3fb4ca7e63dde5864c7a2c128a6b3512af",
+    "decode_final_s210": "2c48feec3ac45bbc0c89ae091011e3b8863db0e9c04fbe3192ad565ca179cbef"
+  }
+}

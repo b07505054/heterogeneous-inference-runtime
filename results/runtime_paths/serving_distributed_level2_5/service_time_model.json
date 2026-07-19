@@ -1,0 +1,20 @@
+{
+  "version": "real_qwen_cpu_service_model_v1",
+  "coefficients": {
+    "prefill": {
+      "intercept_ms": 125.95819977982697,
+      "per_token_ms": 1.4587361719864231
+    },
+    "decode": {
+      "intercept_ms": 112.76543966960162,
+      "per_sequence_ms": 4.69742307905107
+    },
+    "mixed": {
+      "intercept_ms": 230.23138358257717,
+      "prefill_token_ms": 1.9534577932822843,
+      "decode_sequence_ms": 0.2441822241602855
+    }
+  },
+  "provenance": "measured_cpu_qwen2.5_0.5b_fp32",
+  "mixed_is_sequential_functional_step": true
+}

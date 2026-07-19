@@ -1,0 +1,13 @@
+{
+  "LogicalWorker": "persistent local operator-execution thread",
+  "OperatorShard": "one disjoint head, row, query, or output range",
+  "OperatorPlacement": "exact shard-to-logical-worker assignment",
+  "CPUReplica": "independently queued serving entity with private mutable prefix/cache state",
+  "ServingInstance": "generic serving replica or future phase instance",
+  "RequestPlacement": "compiler-selected request-to-serving-instance assignment",
+  "compatibility": {
+    "old WorkerState": "replica-like simulation name retained only in old API",
+    "operator worker_id": "never interpreted as replica_id",
+    "replica_id": "never interpreted as logical_worker_id"
+  }
+}

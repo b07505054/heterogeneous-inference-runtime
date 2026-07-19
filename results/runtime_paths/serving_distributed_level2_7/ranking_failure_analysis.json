@@ -1,0 +1,12 @@
+{
+  "historical_s2_6": {
+    "mixed": {"spearman": -0.8, "pairwise_accuracy": 0.0, "primary_causes": ["mixed-batch interaction error", "objective aggregation error", "functional-model coupling"]},
+    "contention": {"spearman": 0.4, "pairwise_accuracy": 0.5, "primary_causes": ["cumulative queueing error", "batch-composition effect"]}
+  },
+  "s2_7_final": {
+    "top1_agreement": 0.3333333333333333,
+    "pairwise_accuracy": 0.6111111111111112,
+    "mean_regret": 0.10163168947966848
+  },
+  "conclusion": "The wall-clock-derived nearest-centroid ranking model did not generalize sufficiently; no profitability repair is claimed."
+}

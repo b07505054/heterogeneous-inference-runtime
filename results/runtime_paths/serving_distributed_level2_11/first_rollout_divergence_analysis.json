@@ -1,0 +1,271 @@
+{
+  "rows": [
+    {
+      "trace": "mixed_replica_a_s211",
+      "policy": "decode_first",
+      "predicted_steps": 14,
+      "actual_steps": 14,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 14,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "mixed_replica_a_s211",
+      "policy": "prefill_first",
+      "predicted_steps": 13,
+      "actual_steps": 13,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 13,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "mixed_replica_a_s211",
+      "policy": "chunked_balanced",
+      "predicted_steps": 14,
+      "actual_steps": 14,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 14,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "mixed_replica_a_s211",
+      "policy": "slo_aware",
+      "predicted_steps": 14,
+      "actual_steps": 14,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 14,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "mixed_replica_b_s211",
+      "policy": "decode_first",
+      "predicted_steps": 12,
+      "actual_steps": 12,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 12,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "mixed_replica_b_s211",
+      "policy": "prefill_first",
+      "predicted_steps": 11,
+      "actual_steps": 11,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 11,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "mixed_replica_b_s211",
+      "policy": "chunked_balanced",
+      "predicted_steps": 12,
+      "actual_steps": 12,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 12,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "mixed_replica_b_s211",
+      "policy": "slo_aware",
+      "predicted_steps": 12,
+      "actual_steps": 12,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 12,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "contention_a_s211",
+      "policy": "decode_first",
+      "predicted_steps": 12,
+      "actual_steps": 12,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 12,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "contention_a_s211",
+      "policy": "prefill_first",
+      "predicted_steps": 12,
+      "actual_steps": 12,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 12,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "contention_a_s211",
+      "policy": "chunked_balanced",
+      "predicted_steps": 13,
+      "actual_steps": 13,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 13,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "contention_a_s211",
+      "policy": "slo_aware",
+      "predicted_steps": 12,
+      "actual_steps": 12,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 12,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "burst_a_s211",
+      "policy": "decode_first",
+      "predicted_steps": 12,
+      "actual_steps": 12,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 12,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "burst_a_s211",
+      "policy": "prefill_first",
+      "predicted_steps": 12,
+      "actual_steps": 12,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 12,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "burst_a_s211",
+      "policy": "chunked_balanced",
+      "predicted_steps": 12,
+      "actual_steps": 12,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 12,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "burst_a_s211",
+      "policy": "slo_aware",
+      "predicted_steps": 12,
+      "actual_steps": 12,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 12,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "long_prefill_a_s211",
+      "policy": "decode_first",
+      "predicted_steps": 16,
+      "actual_steps": 16,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 16,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "long_prefill_a_s211",
+      "policy": "prefill_first",
+      "predicted_steps": 16,
+      "actual_steps": 16,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 16,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "long_prefill_a_s211",
+      "policy": "chunked_balanced",
+      "predicted_steps": 17,
+      "actual_steps": 17,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 17,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "long_prefill_a_s211",
+      "policy": "slo_aware",
+      "predicted_steps": 16,
+      "actual_steps": 16,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 16,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "prefix_lowreuse_a_s211",
+      "policy": "decode_first",
+      "predicted_steps": 15,
+      "actual_steps": 15,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 15,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "prefix_lowreuse_a_s211",
+      "policy": "prefill_first",
+      "predicted_steps": 14,
+      "actual_steps": 14,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 14,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "prefix_lowreuse_a_s211",
+      "policy": "chunked_balanced",
+      "predicted_steps": 15,
+      "actual_steps": 15,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 15,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    },
+    {
+      "trace": "prefix_lowreuse_a_s211",
+      "policy": "slo_aware",
+      "predicted_steps": 15,
+      "actual_steps": 15,
+      "first_divergence_step": null,
+      "semantic_divergence_steps": 0,
+      "equivalent_steps": 15,
+      "mean_selected_work_jaccard": 1.0,
+      "classified_cause": "no_divergence"
+    }
+  ],
+  "cause_frequency": {
+    "no_divergence": 24
+  }
+}

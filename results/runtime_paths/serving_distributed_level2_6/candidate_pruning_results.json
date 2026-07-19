@@ -1,0 +1,12 @@
+{
+  "calls": 1000,
+  "generated": 4000,
+  "pruned": 3000,
+  "rolled_out": 1000,
+  "rules": [
+    "phase absence",
+    "identical exact ScheduleStepPlan",
+    "legality"
+  ],
+  "only_legal_candidate_guard": "tested"
+}

@@ -1,0 +1,42 @@
+{
+  "request_prompt_tokens": 32,
+  "whole_prefill_chunks": [
+    [
+      0,
+      32
+    ]
+  ],
+  "chunked_prefill_chunks": [
+    [
+      0,
+      8
+    ],
+    [
+      8,
+      16
+    ],
+    [
+      16,
+      24
+    ],
+    [
+      24,
+      32
+    ]
+  ],
+  "whole_generated_tokens": [
+    16731,
+    16
+  ],
+  "chunked_generated_tokens": [
+    16731,
+    16
+  ],
+  "tokens_equal": true,
+  "max_logit_abs_diff_by_step": [
+    5.8650970458984375e-05,
+    1.52587890625e-05
+  ],
+  "coverage_equal": true,
+  "truth_boundary": "real Qwen contiguous Transformers cache, not paged KV"
+}

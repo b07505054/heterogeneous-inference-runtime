@@ -1,0 +1,13 @@
+{
+  "version":"scheduler_selector_v1_fast",
+  "selection_modes":["epoch","online_step"],
+  "objective":"request_objective_v1",
+  "adaptive_horizons":[1,2,4,8],
+  "epoch_steps":4,
+  "snapshot":"arrived-only compact copy",
+  "pruning":["phase absence","identical exact plan","legality"],
+  "terminal_work":"analytical remaining prefill/decode",
+  "tie_break":"predicted_score_then_policy_id",
+  "hot_path_logging":"disabled by default",
+  "runtime_semantics_changed":false
+}

@@ -1,0 +1,31 @@
+{
+  "selection_mode": "compiler_selected",
+  "compiler_selected_replica": "replica-0",
+  "test_only_legal_nonselected_replica": "replica-1",
+  "cache_mode": "metadata_only",
+  "per_replica": {
+    "replica-0": {
+      "matched_tokens": 128,
+      "uncached_tokens": 0,
+      "queue_wait_ms": 0.0,
+      "prefill_ms": 0.075,
+      "decode_ms": 0.36,
+      "cache_pressure_ms": 0.0001953125,
+      "routing_overhead_ms": 0.0,
+      "total_ms": 0.4351953125
+    },
+    "replica-1": {
+      "matched_tokens": 0,
+      "uncached_tokens": 128,
+      "queue_wait_ms": 0.0,
+      "prefill_ms": 3.595,
+      "decode_ms": 0.36,
+      "cache_pressure_ms": 0.0,
+      "routing_overhead_ms": 0.0,
+      "total_ms": 3.955
+    }
+  },
+  "additional_uncached_tokens_on_nonselected": 128,
+  "additional_predicted_cost_ms_on_nonselected": 3.5198046875,
+  "model_semantics": "placement does not alter correct generated tokens"
+}

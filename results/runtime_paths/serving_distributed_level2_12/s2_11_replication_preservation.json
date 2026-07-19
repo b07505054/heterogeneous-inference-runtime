@@ -1,0 +1,28 @@
+{
+  "selector_version": "risk_aware_v4_frozen",
+  "rollout_version": "policy_rollout_v2_frozen",
+  "selector_mean_regret": 0.0046,
+  "selector_median_regret": 0.0013,
+  "selector_p95_regret": 0.0162,
+  "selector_max_regret": 0.0162,
+  "selector_tie_aware_agreement": 1.0,
+  "baseline_mean_regret": 0.0069,
+  "baseline_p95_regret": 0.0130,
+  "paired_improvement_ci_status": "crosses_zero",
+  "mean_profitability_status": "plausible_not_confirmed",
+  "tail_non_regression_status": "not_established",
+  "rollout_v2": {
+    "first_step_agreement": 1.0,
+    "full_sequence_agreement": 1.0,
+    "selected_work_jaccard": 1.0,
+    "step_count_error": 0,
+    "state_leakage": 0
+  },
+  "compiler_attention": {
+    "candidate": "native AVX2 split-head/2",
+    "parallel_operator_plans": 24,
+    "parallel_worker_events": 48,
+    "attention_to_o_proj": "48/48",
+    "forced": false
+  }
+}

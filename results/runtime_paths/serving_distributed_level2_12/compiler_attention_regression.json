@@ -1,0 +1,17 @@
+{
+  "execution_mode": "focused_real_qwen_compiler_attention_regression",
+  "profitability_evidence": false,
+  "candidate": "cpu_fused_online_native_avx2_fp32_q1_k32_split_head_w2_v1",
+  "workload": "b1_q32_kv32_qh14_kvh2_d64_fp32",
+  "parallel_operator_plans": 24,
+  "serial_decode_operator_plans": 24,
+  "parallel_worker_events": 48,
+  "all_worker_events": 72,
+  "attention_to_o_proj": "48/48",
+  "generated_outputs": {"qwen-s2-0": [16731, 16]},
+  "operator_fallback": 0,
+  "operator_repartition": 0,
+  "candidate_mismatch": 0,
+  "forced_worker_count": false,
+  "result": "pass"
+}

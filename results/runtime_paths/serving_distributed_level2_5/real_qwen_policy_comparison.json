@@ -1,0 +1,399 @@
+{
+  "execution_mode": "real_qwen",
+  "truth_boundary": "single focused trace; cross-layer validation, not statistical performance proof",
+  "identical_logical_requests": true,
+  "identical_s1_placement_policy": true,
+  "all_generated_outputs_equivalent": true,
+  "rows": {
+    "decode_first": {
+      "effective_epoch_policy": {
+        "replica-0": "decode_first",
+        "replica-1": "decode_first"
+      },
+      "measured_total_model_forward_ms": 5176.152693806216,
+      "scheduler_steps": 18,
+      "operator_attention_invocations": 672,
+      "outputs_entered_o_proj": 672,
+      "generated_outputs": {
+        "qwen-s2-0": [
+          198,
+          262
+        ],
+        "qwen-s2-1": [
+          198,
+          32
+        ],
+        "qwen-s2-2": [
+          16731,
+          19
+        ],
+        "qwen-s2-3": [
+          16731,
+          16
+        ],
+        "qwen-s2-4": [
+          2992,
+          32
+        ],
+        "qwen-s2-5": [
+          271,
+          2
+        ]
+      },
+      "outputs_equal_baseline": true,
+      "serving_counters": {
+        "runtime_replica_override_count": 0,
+        "runtime_reroute_count": 0,
+        "missing_plan_count": 0,
+        "manual_replica_assignment_count": 0,
+        "fallback_routing_count": 0
+      },
+      "scheduler_counters": {
+        "replica-0": {
+          "runtime_schedule_rebuild_count": 0,
+          "runtime_item_override_count": 0,
+          "runtime_token_count_override_count": 0,
+          "runtime_phase_override_count": 0,
+          "runtime_unplanned_request_count": 0,
+          "runtime_fallback_schedule_count": 0
+        },
+        "replica-1": {
+          "runtime_schedule_rebuild_count": 0,
+          "runtime_item_override_count": 0,
+          "runtime_token_count_override_count": 0,
+          "runtime_phase_override_count": 0,
+          "runtime_unplanned_request_count": 0,
+          "runtime_fallback_schedule_count": 0
+        }
+      },
+      "operator_fallback_count": 0,
+      "operator_candidate_mismatch_count": 0,
+      "operator_repartition_count": 0
+    },
+    "prefill_first": {
+      "effective_epoch_policy": {
+        "replica-0": "prefill_first",
+        "replica-1": "prefill_first"
+      },
+      "measured_total_model_forward_ms": 5139.968717005104,
+      "scheduler_steps": 18,
+      "operator_attention_invocations": 672,
+      "outputs_entered_o_proj": 672,
+      "generated_outputs": {
+        "qwen-s2-0": [
+          198,
+          262
+        ],
+        "qwen-s2-1": [
+          198,
+          32
+        ],
+        "qwen-s2-2": [
+          16731,
+          19
+        ],
+        "qwen-s2-3": [
+          16731,
+          16
+        ],
+        "qwen-s2-4": [
+          2992,
+          32
+        ],
+        "qwen-s2-5": [
+          271,
+          2
+        ]
+      },
+      "outputs_equal_baseline": true,
+      "serving_counters": {
+        "runtime_replica_override_count": 0,
+        "runtime_reroute_count": 0,
+        "missing_plan_count": 0,
+        "manual_replica_assignment_count": 0,
+        "fallback_routing_count": 0
+      },
+      "scheduler_counters": {
+        "replica-0": {
+          "runtime_schedule_rebuild_count": 0,
+          "runtime_item_override_count": 0,
+          "runtime_token_count_override_count": 0,
+          "runtime_phase_override_count": 0,
+          "runtime_unplanned_request_count": 0,
+          "runtime_fallback_schedule_count": 0
+        },
+        "replica-1": {
+          "runtime_schedule_rebuild_count": 0,
+          "runtime_item_override_count": 0,
+          "runtime_token_count_override_count": 0,
+          "runtime_phase_override_count": 0,
+          "runtime_unplanned_request_count": 0,
+          "runtime_fallback_schedule_count": 0
+        }
+      },
+      "operator_fallback_count": 0,
+      "operator_candidate_mismatch_count": 0,
+      "operator_repartition_count": 0
+    },
+    "chunked_balanced": {
+      "effective_epoch_policy": {
+        "replica-0": "chunked_balanced",
+        "replica-1": "chunked_balanced"
+      },
+      "measured_total_model_forward_ms": 5084.430062910542,
+      "scheduler_steps": 18,
+      "operator_attention_invocations": 672,
+      "outputs_entered_o_proj": 672,
+      "generated_outputs": {
+        "qwen-s2-0": [
+          198,
+          262
+        ],
+        "qwen-s2-1": [
+          198,
+          32
+        ],
+        "qwen-s2-2": [
+          16731,
+          19
+        ],
+        "qwen-s2-3": [
+          16731,
+          16
+        ],
+        "qwen-s2-4": [
+          2992,
+          32
+        ],
+        "qwen-s2-5": [
+          271,
+          2
+        ]
+      },
+      "outputs_equal_baseline": true,
+      "serving_counters": {
+        "runtime_replica_override_count": 0,
+        "runtime_reroute_count": 0,
+        "missing_plan_count": 0,
+        "manual_replica_assignment_count": 0,
+        "fallback_routing_count": 0
+      },
+      "scheduler_counters": {
+        "replica-0": {
+          "runtime_schedule_rebuild_count": 0,
+          "runtime_item_override_count": 0,
+          "runtime_token_count_override_count": 0,
+          "runtime_phase_override_count": 0,
+          "runtime_unplanned_request_count": 0,
+          "runtime_fallback_schedule_count": 0
+        },
+        "replica-1": {
+          "runtime_schedule_rebuild_count": 0,
+          "runtime_item_override_count": 0,
+          "runtime_token_count_override_count": 0,
+          "runtime_phase_override_count": 0,
+          "runtime_unplanned_request_count": 0,
+          "runtime_fallback_schedule_count": 0
+        }
+      },
+      "operator_fallback_count": 0,
+      "operator_candidate_mismatch_count": 0,
+      "operator_repartition_count": 0
+    },
+    "slo_aware": {
+      "effective_epoch_policy": {
+        "replica-0": "slo_aware",
+        "replica-1": "slo_aware"
+      },
+      "measured_total_model_forward_ms": 5179.932381957769,
+      "scheduler_steps": 18,
+      "operator_attention_invocations": 672,
+      "outputs_entered_o_proj": 672,
+      "generated_outputs": {
+        "qwen-s2-0": [
+          198,
+          262
+        ],
+        "qwen-s2-1": [
+          198,
+          32
+        ],
+        "qwen-s2-2": [
+          16731,
+          19
+        ],
+        "qwen-s2-3": [
+          16731,
+          16
+        ],
+        "qwen-s2-4": [
+          2992,
+          32
+        ],
+        "qwen-s2-5": [
+          271,
+          2
+        ]
+      },
+      "outputs_equal_baseline": true,
+      "serving_counters": {
+        "runtime_replica_override_count": 0,
+        "runtime_reroute_count": 0,
+        "missing_plan_count": 0,
+        "manual_replica_assignment_count": 0,
+        "fallback_routing_count": 0
+      },
+      "scheduler_counters": {
+        "replica-0": {
+          "runtime_schedule_rebuild_count": 0,
+          "runtime_item_override_count": 0,
+          "runtime_token_count_override_count": 0,
+          "runtime_phase_override_count": 0,
+          "runtime_unplanned_request_count": 0,
+          "runtime_fallback_schedule_count": 0
+        },
+        "replica-1": {
+          "runtime_schedule_rebuild_count": 0,
+          "runtime_item_override_count": 0,
+          "runtime_token_count_override_count": 0,
+          "runtime_phase_override_count": 0,
+          "runtime_unplanned_request_count": 0,
+          "runtime_fallback_schedule_count": 0
+        }
+      },
+      "operator_fallback_count": 0,
+      "operator_candidate_mismatch_count": 0,
+      "operator_repartition_count": 0
+    },
+    "selector_v0": {
+      "effective_epoch_policy": {
+        "replica-0": null,
+        "replica-1": null
+      },
+      "measured_total_model_forward_ms": 5127.8543749358505,
+      "scheduler_steps": 18,
+      "operator_attention_invocations": 672,
+      "outputs_entered_o_proj": 672,
+      "generated_outputs": {
+        "qwen-s2-0": [
+          198,
+          262
+        ],
+        "qwen-s2-1": [
+          198,
+          32
+        ],
+        "qwen-s2-2": [
+          16731,
+          19
+        ],
+        "qwen-s2-3": [
+          16731,
+          16
+        ],
+        "qwen-s2-4": [
+          2992,
+          32
+        ],
+        "qwen-s2-5": [
+          271,
+          2
+        ]
+      },
+      "outputs_equal_baseline": true,
+      "serving_counters": {
+        "runtime_replica_override_count": 0,
+        "runtime_reroute_count": 0,
+        "missing_plan_count": 0,
+        "manual_replica_assignment_count": 0,
+        "fallback_routing_count": 0
+      },
+      "scheduler_counters": {
+        "replica-0": {
+          "runtime_schedule_rebuild_count": 0,
+          "runtime_item_override_count": 0,
+          "runtime_token_count_override_count": 0,
+          "runtime_phase_override_count": 0,
+          "runtime_unplanned_request_count": 0,
+          "runtime_fallback_schedule_count": 0
+        },
+        "replica-1": {
+          "runtime_schedule_rebuild_count": 0,
+          "runtime_item_override_count": 0,
+          "runtime_token_count_override_count": 0,
+          "runtime_phase_override_count": 0,
+          "runtime_unplanned_request_count": 0,
+          "runtime_fallback_schedule_count": 0
+        }
+      },
+      "operator_fallback_count": 0,
+      "operator_candidate_mismatch_count": 0,
+      "operator_repartition_count": 0
+    },
+    "selector_v1": {
+      "effective_epoch_policy": {
+        "replica-0": "chunked_balanced",
+        "replica-1": "prefill_first"
+      },
+      "measured_total_model_forward_ms": 5084.304989082739,
+      "scheduler_steps": 18,
+      "operator_attention_invocations": 672,
+      "outputs_entered_o_proj": 672,
+      "generated_outputs": {
+        "qwen-s2-0": [
+          198,
+          262
+        ],
+        "qwen-s2-1": [
+          198,
+          32
+        ],
+        "qwen-s2-2": [
+          16731,
+          19
+        ],
+        "qwen-s2-3": [
+          16731,
+          16
+        ],
+        "qwen-s2-4": [
+          2992,
+          32
+        ],
+        "qwen-s2-5": [
+          271,
+          2
+        ]
+      },
+      "outputs_equal_baseline": true,
+      "serving_counters": {
+        "runtime_replica_override_count": 0,
+        "runtime_reroute_count": 0,
+        "missing_plan_count": 0,
+        "manual_replica_assignment_count": 0,
+        "fallback_routing_count": 0
+      },
+      "scheduler_counters": {
+        "replica-0": {
+          "runtime_schedule_rebuild_count": 0,
+          "runtime_item_override_count": 0,
+          "runtime_token_count_override_count": 0,
+          "runtime_phase_override_count": 0,
+          "runtime_unplanned_request_count": 0,
+          "runtime_fallback_schedule_count": 0
+        },
+        "replica-1": {
+          "runtime_schedule_rebuild_count": 0,
+          "runtime_item_override_count": 0,
+          "runtime_token_count_override_count": 0,
+          "runtime_phase_override_count": 0,
+          "runtime_unplanned_request_count": 0,
+          "runtime_fallback_schedule_count": 0
+        }
+      },
+      "operator_fallback_count": 0,
+      "operator_candidate_mismatch_count": 0,
+      "operator_repartition_count": 0
+    }
+  }
+}

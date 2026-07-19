@@ -1,0 +1,6 @@
+{
+  "selector_v1_frozen":{"classification":"offline_trace","future_arrivals":"used","future_prompt_lengths":"used","future_expected_outputs":"used","trace_termination":"used","online_legal":false},
+  "selector_v1_fast_epoch":{"classification":"epoch","available":["arrived requests","known prompt lengths","declared expected outputs","current progress/ages","historical service curves"],"future_arrivals":"excluded by online_state_view","online_legal":true},
+  "selector_v1_fast_online":{"classification":"online_step","future_arrivals":"excluded","online_legal":true},
+  "feature_classes":{"current request state":"available_online","service coefficients":"declared_workload_prior","unarrived request metadata":"offline_only"}
+}

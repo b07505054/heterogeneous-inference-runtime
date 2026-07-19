@@ -1,0 +1,41 @@
+{
+  "cluster_id": "local_cpu_8c_4r",
+  "profile_version": 1,
+  "execution_mode": "functional_cpu",
+  "detected_logical_cores": 8,
+  "affinity_applied": false,
+  "replicas": [
+    {
+      "replica_id": "replica-0",
+      "logical_core_budget": 2,
+      "queue_capacity": 64,
+      "kv_capacity_bytes": 268435456,
+      "enabled": true,
+      "execution_backend": "cpu_functional"
+    },
+    {
+      "replica_id": "replica-1",
+      "logical_core_budget": 2,
+      "queue_capacity": 64,
+      "kv_capacity_bytes": 268435456,
+      "enabled": true,
+      "execution_backend": "cpu_functional"
+    },
+    {
+      "replica_id": "replica-2",
+      "logical_core_budget": 2,
+      "queue_capacity": 64,
+      "kv_capacity_bytes": 268435456,
+      "enabled": true,
+      "execution_backend": "cpu_functional"
+    },
+    {
+      "replica_id": "replica-3",
+      "logical_core_budget": 2,
+      "queue_capacity": 64,
+      "kv_capacity_bytes": 268435456,
+      "enabled": true,
+      "execution_backend": "cpu_functional"
+    }
+  ]
+}
