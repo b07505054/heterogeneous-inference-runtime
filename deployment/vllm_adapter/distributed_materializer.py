@@ -60,6 +60,23 @@ from deployment.vllm_adapter.distributed_rank_placement import build_rank_placem
 REAL_HF_MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct"
 D3A_SEED = 1234  # reused verbatim from D3A's live_model_execution.json
 
+# D5 Part B: the compiler's abbreviated model_identity.model_id -> real HF
+# checkpoint mapping, extended beyond the single D3A-validated 0.5B entry so
+# the same, otherwise-unmodified materializer can also serve a second real
+# model (D5's search for a genuine TP1/TP2 crossover along the model-size
+# axis). Every entry must be a real, locally-resolvable HF checkpoint --
+# never a placeholder. REAL_HF_MODEL_ID above remains the default for any
+# ExecutionPlan whose model_identity.model_id is not present here, which
+# keeps every existing D3B/D4A/D4B call site byte-identical.
+KNOWN_MODEL_ID_MAP: dict[str, str] = {
+    "qwen2.5-0.5b": REAL_HF_MODEL_ID,
+    "qwen2.5-7b": "Qwen/Qwen2.5-7B-Instruct",
+}
+
+
+def _resolve_real_hf_model_id(plan: "ExecutionPlan") -> str:
+    return KNOWN_MODEL_ID_MAP.get(plan.model_identity.get("model_id"), REAL_HF_MODEL_ID)
+
 D2_RESULTS_DIR_NAME = "distributed_d2_qwen_pipeline"
 
 DEFAULT_HOST = "127.0.0.1"
@@ -135,10 +152,12 @@ def _source_operator_ids(plan: ExecutionPlan) -> tuple[str, ...]:
     return tuple(sorted({s.tensor_id for s in plan.distributed.tensor_shards}))
 
 
-def _estimate_model_footprint_mb() -> float:
+def _estimate_model_footprint_mb(real_hf_model_id: str = REAL_HF_MODEL_ID) -> float:
     """Real measured size of the cached checkpoint file(s) -- not a param-count guess."""
-    cache_root = Path.home() / ".cache" / "huggingface" / "hub"
-    slug = "models--" + REAL_HF_MODEL_ID.replace("/", "--")
+    from deployment.vllm_adapter.distributed_preflight import _hf_hub_cache_root
+
+    cache_root = _hf_hub_cache_root()
+    slug = "models--" + real_hf_model_id.replace("/", "--")
     model_dir = cache_root / slug
     total_bytes = 0
     snapshots = model_dir / "snapshots"
@@ -154,11 +173,11 @@ def _estimate_model_footprint_mb() -> float:
     return total_bytes / (1024 * 1024) + KV_CACHE_HEADROOM_MB
 
 
-def _model_max_position_embeddings() -> int | None:
+def _model_max_position_embeddings(real_hf_model_id: str = REAL_HF_MODEL_ID) -> int | None:
     try:
         from transformers import AutoConfig  # noqa: PLC0415
 
-        cfg = AutoConfig.from_pretrained(REAL_HF_MODEL_ID)
+        cfg = AutoConfig.from_pretrained(real_hf_model_id)
         return int(cfg.max_position_embeddings)
     except Exception:  # noqa: BLE001 -- offline/unavailable config must not crash materialization
         return None
@@ -174,7 +193,7 @@ def _environ_conflicts(planned: dict[str, str]) -> tuple[str, ...]:
 
 
 def _resolve_whole_model_tp_evidence(
-    d4a_evidence_path: str | Path | None, *, tensor_parallel_size: int,
+    d4a_evidence_path: str | Path | None, *, tensor_parallel_size: int, real_hf_model_id: str = REAL_HF_MODEL_ID,
 ) -> tuple[str, str | None]:
     """D4A Part N: additive, backward-compatible evidence upgrade.
 
@@ -196,7 +215,7 @@ def _resolve_whole_model_tp_evidence(
         return default_status, None
     if payload.get("classification") != "WHOLE_MODEL_TP_VALIDATED":
         return default_status, None
-    if payload.get("model") != REAL_HF_MODEL_ID or payload.get("tensor_parallel_size") != 2:
+    if payload.get("model") != real_hf_model_id or payload.get("tensor_parallel_size") != 2:
         return default_status, None
     artifact_hash = hashlib.sha256(path.read_bytes()).hexdigest()
     return "validated_serialized_whole_model_contract", artifact_hash
@@ -208,6 +227,10 @@ def materialize_launch_spec(
     repo_root: Path,
     d3b_mode: str = "planning_only",
     d4a_evidence_path: str | Path | None = None,
+    max_model_len: int = DEFAULT_MAX_MODEL_LEN,
+    max_num_seqs: int = DEFAULT_MAX_NUM_SEQS,
+    max_num_batched_tokens: int = DEFAULT_MAX_NUM_BATCHED_TOKENS,
+    gpu_memory_utilization: float = DEFAULT_GPU_MEMORY_UTILIZATION,
 ) -> MaterializationBundle:
     if d3b_mode != "planning_only":
         raise ValueError("D3B only supports d3b_mode='planning_only'; no execution mode exists here")
@@ -215,6 +238,7 @@ def materialize_launch_spec(
     plan_path = Path(execution_plan_path)
     plan = load_execution_plan(plan_path)
     tp, pp, world_size, rank_ids = _effective_distributed_fields(plan)
+    real_hf_model_id = _resolve_real_hf_model_id(plan)
 
     d2_results_dir = repo_root / "results" / "runtime_paths" / D2_RESULTS_DIR_NAME
     candidate_id = _load_candidate_id(d2_results_dir, world_size)
@@ -227,7 +251,14 @@ def materialize_launch_spec(
         compiler_rank_ids=rank_ids, world_size=world_size, visible_gpu_count=env_inv.visible_gpu_count
     )
 
-    whole_model_tp_evidence_established = False  # D3B never establishes this; see Part D
+    whole_model_evidence_status, whole_model_evidence_hash = _resolve_whole_model_tp_evidence(
+        d4a_evidence_path, tensor_parallel_size=tp, real_hf_model_id=real_hf_model_id,
+    )
+    # D4B additive wiring: the advisory-only "whole_model_tp_evidence_established"
+    # preflight check (never blocking -- see distributed_preflight.py) reflects
+    # whether a validated D4A evidence artifact was actually linked, rather than
+    # always reading False as it did before any D4A evidence existed to link.
+    whole_model_tp_evidence_established = whole_model_evidence_status == "validated_serialized_whole_model_contract"
 
     field_provenance: dict[str, FieldProvenanceEntry] = {}
 
@@ -237,18 +268,18 @@ def materialize_launch_spec(
 
     served_model_name = prov(
         "served_model_name",
-        f"{REAL_HF_MODEL_ID.split('/')[-1].lower()}-{candidate_id}-planning-only",
+        f"{real_hf_model_id.split('/')[-1].lower()}-{candidate_id}-planning-only",
         FieldSource.EXPLICIT_D3B_DEFAULT,
         "D2/D3A plans do not declare a served name; D3B names it after the model and candidate id.",
     )
     model = prov(
         "model",
-        REAL_HF_MODEL_ID,
+        real_hf_model_id,
         FieldSource.COMPILER_PLAN,
         "D3A validated that the compiler's abbreviated model_identity.model_id "
         f"({plan.model_identity.get('model_id')!r}) corresponds to this real, locally-cached HF checkpoint.",
     )
-    tokenizer = prov("tokenizer", REAL_HF_MODEL_ID, FieldSource.COMPILER_PLAN, "Same identity as model; no separate compiler tokenizer decision exists.")
+    tokenizer = prov("tokenizer", real_hf_model_id, FieldSource.COMPILER_PLAN, "Same identity as model; no separate compiler tokenizer decision exists.")
     revision = prov("revision", None, FieldSource.CAPABILITY_PROFILE, "Matches installed vLLM registry default for --revision (None).")
     dtype = prov(
         "dtype", DEFAULT_DTYPE, FieldSource.EXPLICIT_D3B_DEFAULT,
@@ -276,15 +307,17 @@ def materialize_launch_spec(
     master_address = prov("master_address", "127.0.0.1", FieldSource.CAPABILITY_PROFILE, "Matches installed vLLM registry default for --master-addr.")
     master_port = prov("master_port", 29501, FieldSource.CAPABILITY_PROFILE, "Matches installed vLLM registry default for --master-port.")
     max_model_len = prov(
-        "max_model_len", DEFAULT_MAX_MODEL_LEN, FieldSource.EXPLICIT_D3B_DEFAULT,
+        "max_model_len", max_model_len, FieldSource.EXPLICIT_D3B_DEFAULT,
         "Neither D2 nor D3A declares a serving context length; 2048 is a conservative D3B default "
-        "well within the real model's max_position_embeddings.",
+        "well within the real model's max_position_embeddings (caller-overridable for D5 memory-"
+        f"pressure experiments; this call {'used the default' if max_model_len == DEFAULT_MAX_MODEL_LEN else 'used an explicit override'}).",
     )
-    max_num_seqs = prov("max_num_seqs", DEFAULT_MAX_NUM_SEQS, FieldSource.EXPLICIT_D3B_DEFAULT, "Conservative default batch width appropriate for a 4GB-class GPU; not decided by the compiler plan.")
-    max_num_batched_tokens = prov("max_num_batched_tokens", DEFAULT_MAX_NUM_BATCHED_TOKENS, FieldSource.EXPLICIT_D3B_DEFAULT, "Conservative default token budget per step; not decided by the compiler plan.")
+    max_num_seqs = prov("max_num_seqs", max_num_seqs, FieldSource.EXPLICIT_D3B_DEFAULT, "Conservative default batch width appropriate for a 4GB-class GPU; not decided by the compiler plan (caller-overridable).")
+    max_num_batched_tokens = prov("max_num_batched_tokens", max_num_batched_tokens, FieldSource.EXPLICIT_D3B_DEFAULT, "Conservative default token budget per step; not decided by the compiler plan (caller-overridable).")
     gpu_memory_utilization = prov(
-        "gpu_memory_utilization", DEFAULT_GPU_MEMORY_UTILIZATION, FieldSource.EXPLICIT_D3B_DEFAULT,
-        "Set below the installed registry default (0.92) given the small 4GB-class GPU on this host.",
+        "gpu_memory_utilization", gpu_memory_utilization, FieldSource.EXPLICIT_D3B_DEFAULT,
+        "Set below the installed registry default (0.92) given the small 4GB-class GPU on this host "
+        "(caller-overridable).",
     )
     enable_prefix_caching = prov("enable_prefix_caching", True, FieldSource.EXPLICIT_D3B_DEFAULT, "Registry default leaves this unset (None/auto); D3B explicitly enables it.")
     enable_chunked_prefill = prov("enable_chunked_prefill", True, FieldSource.EXPLICIT_D3B_DEFAULT, "Registry default leaves this unset (None/auto); D3B explicitly enables it.")
@@ -328,10 +361,10 @@ def materialize_launch_spec(
         rank_placements=[p.to_dict() for p in rank_placement.placements],
     )
 
-    model_locally_resolvable = check_model_locally_resolvable(REAL_HF_MODEL_ID)
+    model_locally_resolvable = check_model_locally_resolvable(real_hf_model_id)
     port_available = check_port_available(host, port)
-    estimated_footprint_mb = _estimate_model_footprint_mb()
-    max_position_embeddings = _model_max_position_embeddings()
+    estimated_footprint_mb = _estimate_model_footprint_mb(real_hf_model_id)
+    max_position_embeddings = _model_max_position_embeddings(real_hf_model_id)
     per_rank_memory = tuple(g.total_memory_mb for g in env_inv.gpus)
 
     dtype_spec = registry.get("arguments", {}).get("dtype", {})
@@ -411,10 +444,6 @@ def materialize_launch_spec(
     else:
         readiness_state = ExecutionReadinessState.MATERIALIZED
     assert readiness_state in D3B_REACHABLE_STATES
-
-    whole_model_evidence_status, whole_model_evidence_hash = _resolve_whole_model_tp_evidence(
-        d4a_evidence_path, tensor_parallel_size=tensor_parallel_size,
-    )
 
     spec = VLLMDistributedLaunchSpec(
         schema_version=SCHEMA_VERSION,

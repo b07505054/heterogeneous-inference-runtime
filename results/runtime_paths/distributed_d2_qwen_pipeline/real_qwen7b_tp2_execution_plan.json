@@ -1,0 +1,80 @@
+{
+  "distributed": {
+    "collectives": [
+      {
+        "collective_id": "all_reduce_0",
+        "kind": "all_reduce",
+        "participants": [
+          0,
+          1
+        ],
+        "reduction": "sum",
+        "sequence_id": 0,
+        "tensor_id": "qwen7b_prefill::llm.o_proj::layer_0"
+      }
+    ],
+    "pipeline_parallel_size": 1,
+    "ranks": [
+      {
+        "logical_device": "simulated_cpu_process_0",
+        "rank_id": 0
+      },
+      {
+        "logical_device": "simulated_cpu_process_1",
+        "rank_id": 1
+      }
+    ],
+    "strategy": "tensor_parallel",
+    "tensor_parallel_size": 2,
+    "tensor_shards": [
+      {
+        "partition_axis": 0,
+        "partition_count": 2,
+        "range_end": 1792,
+        "range_start": 0,
+        "shard_index": 0,
+        "tensor_id": "qwen7b_prefill::llm.o_proj::layer_0"
+      },
+      {
+        "partition_axis": 0,
+        "partition_count": 2,
+        "range_end": 3584,
+        "range_start": 1792,
+        "shard_index": 1,
+        "tensor_id": "qwen7b_prefill::llm.o_proj::layer_0"
+      }
+    ],
+    "truth_boundary": "d1_simulated_localhost_multiprocess_ipc_not_real_gpu_not_nccl_not_measured_gpu_performance",
+    "world_size": 2
+  },
+  "function_plans": [],
+  "global_decisions": {},
+  "model_identity": {
+    "hidden_size": 3584,
+    "model_family": "",
+    "model_id": "qwen2.5-7b",
+    "num_attention_heads": 28,
+    "num_kv_heads": 4,
+    "num_layers": 28,
+    "truth_boundary": "declared_model_config_not_full_graph_import"
+  },
+  "plan_id": "nvidia-rtx4090-d5-model-axis-d2-distributed-opt-in_serving_plan",
+  "provenance": {
+    "capability_bundle": {
+      "backend_profile_refs": [
+        "cuda_triton",
+        "cuda_cublas"
+      ],
+      "hardware_profile_ref": "nvidia-rtx4090-d5-model-axis-d2-distributed-opt-in",
+      "kernel_profile_refs": [
+        "cublas",
+        "triton"
+      ]
+    },
+    "compiler_tool": "compile-for-target",
+    "model_spec_ref": "",
+    "truth_boundary": "execution_planning_declared_profiles_not_measured_runtime"
+  },
+  "schema": "execution_plan",
+  "schema_version": "2.0.0"
+}

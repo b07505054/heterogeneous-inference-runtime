@@ -1,0 +1,243 @@
+{
+  "input_lengths": [
+    32,
+    256,
+    1024
+  ],
+  "output_lengths": [
+    32,
+    128,
+    256
+  ],
+  "concurrency_levels": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "total_workloads": 36,
+  "calibration_workloads": [
+    {
+      "workload_id": "in32_out32_c2",
+      "input_length": 32,
+      "output_length": 32,
+      "concurrency": 2
+    },
+    {
+      "workload_id": "in32_out32_c8",
+      "input_length": 32,
+      "output_length": 32,
+      "concurrency": 8
+    },
+    {
+      "workload_id": "in32_out128_c1",
+      "input_length": 32,
+      "output_length": 128,
+      "concurrency": 1
+    },
+    {
+      "workload_id": "in32_out128_c2",
+      "input_length": 32,
+      "output_length": 128,
+      "concurrency": 2
+    },
+    {
+      "workload_id": "in32_out128_c8",
+      "input_length": 32,
+      "output_length": 128,
+      "concurrency": 8
+    },
+    {
+      "workload_id": "in32_out256_c1",
+      "input_length": 32,
+      "output_length": 256,
+      "concurrency": 1
+    },
+    {
+      "workload_id": "in32_out256_c2",
+      "input_length": 32,
+      "output_length": 256,
+      "concurrency": 2
+    },
+    {
+      "workload_id": "in32_out256_c4",
+      "input_length": 32,
+      "output_length": 256,
+      "concurrency": 4
+    },
+    {
+      "workload_id": "in256_out32_c1",
+      "input_length": 256,
+      "output_length": 32,
+      "concurrency": 1
+    },
+    {
+      "workload_id": "in256_out32_c4",
+      "input_length": 256,
+      "output_length": 32,
+      "concurrency": 4
+    },
+    {
+      "workload_id": "in256_out128_c1",
+      "input_length": 256,
+      "output_length": 128,
+      "concurrency": 1
+    },
+    {
+      "workload_id": "in256_out128_c4",
+      "input_length": 256,
+      "output_length": 128,
+      "concurrency": 4
+    },
+    {
+      "workload_id": "in256_out256_c1",
+      "input_length": 256,
+      "output_length": 256,
+      "concurrency": 1
+    },
+    {
+      "workload_id": "in256_out256_c2",
+      "input_length": 256,
+      "output_length": 256,
+      "concurrency": 2
+    },
+    {
+      "workload_id": "in256_out256_c8",
+      "input_length": 256,
+      "output_length": 256,
+      "concurrency": 8
+    },
+    {
+      "workload_id": "in1024_out32_c2",
+      "input_length": 1024,
+      "output_length": 32,
+      "concurrency": 2
+    },
+    {
+      "workload_id": "in1024_out256_c1",
+      "input_length": 1024,
+      "output_length": 256,
+      "concurrency": 1
+    },
+    {
+      "workload_id": "in1024_out256_c2",
+      "input_length": 1024,
+      "output_length": 256,
+      "concurrency": 2
+    },
+    {
+      "workload_id": "in1024_out256_c4",
+      "input_length": 1024,
+      "output_length": 256,
+      "concurrency": 4
+    }
+  ],
+  "held_out_workloads": [
+    {
+      "workload_id": "in32_out32_c1",
+      "input_length": 32,
+      "output_length": 32,
+      "concurrency": 1
+    },
+    {
+      "workload_id": "in32_out32_c4",
+      "input_length": 32,
+      "output_length": 32,
+      "concurrency": 4
+    },
+    {
+      "workload_id": "in32_out128_c4",
+      "input_length": 32,
+      "output_length": 128,
+      "concurrency": 4
+    },
+    {
+      "workload_id": "in32_out256_c8",
+      "input_length": 32,
+      "output_length": 256,
+      "concurrency": 8
+    },
+    {
+      "workload_id": "in256_out32_c2",
+      "input_length": 256,
+      "output_length": 32,
+      "concurrency": 2
+    },
+    {
+      "workload_id": "in256_out32_c8",
+      "input_length": 256,
+      "output_length": 32,
+      "concurrency": 8
+    },
+    {
+      "workload_id": "in256_out128_c2",
+      "input_length": 256,
+      "output_length": 128,
+      "concurrency": 2
+    },
+    {
+      "workload_id": "in256_out128_c8",
+      "input_length": 256,
+      "output_length": 128,
+      "concurrency": 8
+    },
+    {
+      "workload_id": "in256_out256_c4",
+      "input_length": 256,
+      "output_length": 256,
+      "concurrency": 4
+    },
+    {
+      "workload_id": "in1024_out32_c1",
+      "input_length": 1024,
+      "output_length": 32,
+      "concurrency": 1
+    },
+    {
+      "workload_id": "in1024_out32_c4",
+      "input_length": 1024,
+      "output_length": 32,
+      "concurrency": 4
+    },
+    {
+      "workload_id": "in1024_out32_c8",
+      "input_length": 1024,
+      "output_length": 32,
+      "concurrency": 8
+    },
+    {
+      "workload_id": "in1024_out128_c1",
+      "input_length": 1024,
+      "output_length": 128,
+      "concurrency": 1
+    },
+    {
+      "workload_id": "in1024_out128_c2",
+      "input_length": 1024,
+      "output_length": 128,
+      "concurrency": 2
+    },
+    {
+      "workload_id": "in1024_out128_c4",
+      "input_length": 1024,
+      "output_length": 128,
+      "concurrency": 4
+    },
+    {
+      "workload_id": "in1024_out128_c8",
+      "input_length": 1024,
+      "output_length": 128,
+      "concurrency": 8
+    },
+    {
+      "workload_id": "in1024_out256_c8",
+      "input_length": 1024,
+      "output_length": 256,
+      "concurrency": 8
+    }
+  ],
+  "calibration_count": 19,
+  "held_out_count": 17,
+  "split_rule": "held_out iff sha256(workload_id)[0] % 2 == 0 -- deterministic function of workload identity only, declared before any measurement, never a function of measured results",
+  "weighting_scheme": "uniform (weight=1.0 per workload) -- declared before any measurement; no production traffic trace was available to justify a non-uniform mix, and inventing one post-hoc would risk fitting the weighting to a desired conclusion"
+}

@@ -1,0 +1,12 @@
+{
+  "model_id": "Qwen/Qwen2.5-7B-Instruct",
+  "workload_matrix_size": 12,
+  "measured_repetitions_per_cell": 10,
+  "warmup_requests_per_cell": 2,
+  "tp1_gpu_cleanup": "GpuMemoryCleanupResult(baseline_used_mb={'0': 4.0, '1': 4.0}, final_used_mb={'0': 4.0, '1': 4.0}, drain_latency_s=0.11796236038208008, within_tolerance=True, tolerance_mb=64.0, polls=1, timed_out=False)",
+  "tp2_gpu_cleanup": "GpuMemoryCleanupResult(baseline_used_mb={'0': 4.0, '1': 4.0}, final_used_mb={'0': 4.0, '1': 4.0}, drain_latency_s=0.15656447410583496, within_tolerance=True, tolerance_mb=64.0, polls=1, timed_out=False)",
+  "tp1_startup_latency_s": 90.04773927107453,
+  "tp2_startup_latency_s": 95.04808618640527,
+  "correctness_text_match_count": 10,
+  "correctness_text_total": 10
+}

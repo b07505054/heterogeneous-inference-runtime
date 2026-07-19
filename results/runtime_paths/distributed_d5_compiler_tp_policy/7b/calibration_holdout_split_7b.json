@@ -1,0 +1,96 @@
+{
+  "input_lengths": [
+    32,
+    1024
+  ],
+  "output_lengths": [
+    32,
+    256
+  ],
+  "concurrency_levels": [
+    1,
+    2,
+    4
+  ],
+  "total_workloads": 12,
+  "calibration_count": 8,
+  "held_out_count": 4,
+  "calibration_workloads": [
+    {
+      "workload_id": "in32_out32_c2",
+      "input_length": 32,
+      "output_length": 32,
+      "concurrency": 2
+    },
+    {
+      "workload_id": "in32_out256_c1",
+      "input_length": 32,
+      "output_length": 256,
+      "concurrency": 1
+    },
+    {
+      "workload_id": "in32_out256_c2",
+      "input_length": 32,
+      "output_length": 256,
+      "concurrency": 2
+    },
+    {
+      "workload_id": "in32_out256_c4",
+      "input_length": 32,
+      "output_length": 256,
+      "concurrency": 4
+    },
+    {
+      "workload_id": "in1024_out32_c2",
+      "input_length": 1024,
+      "output_length": 32,
+      "concurrency": 2
+    },
+    {
+      "workload_id": "in1024_out256_c1",
+      "input_length": 1024,
+      "output_length": 256,
+      "concurrency": 1
+    },
+    {
+      "workload_id": "in1024_out256_c2",
+      "input_length": 1024,
+      "output_length": 256,
+      "concurrency": 2
+    },
+    {
+      "workload_id": "in1024_out256_c4",
+      "input_length": 1024,
+      "output_length": 256,
+      "concurrency": 4
+    }
+  ],
+  "held_out_workloads": [
+    {
+      "workload_id": "in32_out32_c1",
+      "input_length": 32,
+      "output_length": 32,
+      "concurrency": 1
+    },
+    {
+      "workload_id": "in32_out32_c4",
+      "input_length": 32,
+      "output_length": 32,
+      "concurrency": 4
+    },
+    {
+      "workload_id": "in1024_out32_c1",
+      "input_length": 1024,
+      "output_length": 32,
+      "concurrency": 1
+    },
+    {
+      "workload_id": "in1024_out32_c4",
+      "input_length": 1024,
+      "output_length": 32,
+      "concurrency": 4
+    }
+  ],
+  "split_rule": "held_out iff sha256(workload_id)[0] % 2 == 0 -- same deterministic rule as the 0.5B matrix, applied to this smaller declared 7B representative grid, before any 7B measurement was taken",
+  "note": "Smaller grid than the 0.5B 36-cell matrix (12 cells vs 36) to afford 10 measured repetitions per cell instead of 5, within the same real-hardware time budget, per explicit user direction to use sufficient repetitions for the 7B experiment."
+}

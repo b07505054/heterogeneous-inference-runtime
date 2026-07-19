@@ -1,0 +1,14 @@
+{
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "workload_matrix_size": 36,
+  "source_artifact_hashes": {
+    "tp1_plan_sha256": "8f22d47b0ad2061d89967f7bd0e5143fbda68dbafec7a892e72f1ca4a68d6dd1",
+    "tp2_plan_sha256": "4bb1b63cf06346164b8e052840ff18749ec651582d4412797b67a1e14cce77ac",
+    "d4a_evidence_sha256": "375a08cd9a3fbe919544757116a4ba3c7f03d4b7801967e26ee0a1bf69fd9a62"
+  },
+  "tp1_gpu_cleanup": "GpuMemoryCleanupResult(baseline_used_mb={'0': 4.0, '1': 4.0}, final_used_mb={'0': 4.0, '1': 4.0}, drain_latency_s=0.11722826957702637, within_tolerance=True, tolerance_mb=64.0, polls=1, timed_out=False)",
+  "tp2_gpu_cleanup": "GpuMemoryCleanupResult(baseline_used_mb={'0': 4.0, '1': 4.0}, final_used_mb={'0': 4.0, '1': 4.0}, drain_latency_s=0.0948338508605957, within_tolerance=True, tolerance_mb=64.0, polls=1, timed_out=False)",
+  "tp1_startup_latency_s": 66.05038311798126,
+  "tp2_startup_latency_s": 69.05147639103234,
+  "note": "Both calibration-split and held-out-split workload cells were measured in this same sweep. This is safe because the calibration/held-out partition was declared and hash-recorded in calibration_holdout_split.json before this sweep ran. The cost model (built in a later stage) must only be FIT on rows where split == 'calibration'; 'held_out' rows must only be consulted after the cost model is frozen."
+}

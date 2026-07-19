@@ -1,0 +1,51 @@
+{
+  "frozen": true,
+  "throughput_models": {
+    "1": {
+      "tp_degree": 1,
+      "coefficients": [
+        7.962344761464902,
+        -0.24772518079214728,
+        58.06762504638019,
+        7.962344761464541,
+        0.06688598116920906,
+        0.8093129304993703,
+        177.66563688419586
+      ],
+      "feature_names": [
+        "intercept",
+        "per_gpu_weight_mb",
+        "kv_cache_kb_per_token_per_gpu",
+        "gpu_count",
+        "input_length",
+        "output_length",
+        "concurrency"
+      ],
+      "n_samples": 27,
+      "r_squared": 0.8537222193670004
+    },
+    "2": {
+      "tp_degree": 2,
+      "coefficients": [
+        20.38139140395511,
+        -0.33955255109345256,
+        74.31842439533375,
+        40.762782807910725,
+        0.059169929961928894,
+        0.9658812851196273,
+        166.02350203699726
+      ],
+      "feature_names": [
+        "intercept",
+        "per_gpu_weight_mb",
+        "kv_cache_kb_per_token_per_gpu",
+        "gpu_count",
+        "input_length",
+        "output_length",
+        "concurrency"
+      ],
+      "n_samples": 27,
+      "r_squared": 0.8312363752700205
+    }
+  }
+}
