@@ -5,7 +5,8 @@
 
 ## Runtime Contract Boundary (Phase D0)
 
-Last verified: 2026-07-14.
+Last verified: 2026-07-20.
+Current repository head: `ddd205d54cd5d52adeb8c973ed694ce11dd47a1e`.
 Canonical architecture repository: `../ml-graph-compiler-runtime`.
 
 This repository owns runtime validation and exact dispatch for compiler-produced contracts. It does not own global implementation candidate search or compiler policy.
