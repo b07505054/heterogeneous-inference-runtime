@@ -1,0 +1,17 @@
+{
+  "platform": "Linux-6.18.34+rpt-rpi-2712-aarch64-with-glibc2.41",
+  "python": "3.13.5 (main, Jun 13 2026, 14:18:01) [GCC 14.2.0]",
+  "executable": "/usr/bin/python3",
+  "pid": 93022,
+  "affinity": [
+    3
+  ],
+  "native_artifact": "artifacts/kv_selection_evaluation/raspberry_pi/native/libattention_fp32.so",
+  "native_artifact_sha256": "5c31f4102c8a5c8b7263fb70952bf522b9e2eaea9960f9e1405483f25563ed8c",
+  "timer": "time.perf_counter_ns",
+  "profile_samples": 100,
+  "profile_warmups": 10,
+  "profile_inner": 1000,
+  "plan": "artifacts/kv_selection_evaluation/raspberry_pi/compiler_plans/paged8_page_major.json",
+  "artifact_root": "artifacts/kv_selection_evaluation/raspberry_pi"
+}

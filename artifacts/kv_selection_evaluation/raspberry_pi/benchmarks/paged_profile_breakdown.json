@@ -1,0 +1,264 @@
+{
+  "append_focus": [
+    {
+      "contiguous_median_ms": 0.011657481081783772,
+      "operation": "append_boundary",
+      "optimized_paged_median_ms": 0.034684984711930156,
+      "optimized_vs_contiguous_label": "overhead",
+      "optimized_vs_contiguous_overhead_percent": 197.53412824430532,
+      "optimized_vs_original_improvement_percent": -0.10664836331262251,
+      "original_paged_median_ms": 0.03464799374341965,
+      "token_count": 8
+    },
+    {
+      "contiguous_median_ms": 0.011675991117954254,
+      "operation": "append_inside",
+      "optimized_paged_median_ms": 0.02612950629554689,
+      "optimized_vs_contiguous_label": "overhead",
+      "optimized_vs_contiguous_overhead_percent": 123.7883365238893,
+      "optimized_vs_original_improvement_percent": -0.24693613186856922,
+      "original_paged_median_ms": 0.02606498310342431,
+      "token_count": 7
+    }
+  ],
+  "baseline_artifact": "paged_vs_contiguous_results.json",
+  "baseline_unstable_rows": 53,
+  "bottleneck_classification": {
+    "page_major": "hir_cpu_attention_decode_paged_kv_page_major_fp32 validates and caches physical page IDs once per logical page, then iterates contiguous tokens inside each page with pointer increments; for valid=64 this is 8 block-table loads per decode.",
+    "source": "native/cpu_kernels/attention_fp32.cpp",
+    "token_major": "hir_cpu_attention_decode_paged_kv_fp32 calls paged_addr once per token for K scores and once per token per output dimension for V accumulation; paged_addr performs token/page division, token modulo, block-table load, and validation. For h=2,d=8,valid=64 this is 1152 paged_addr calls per decode."
+  },
+  "correctness": {
+    "optimized_worst_max_abs": 6.372667676890487e-08,
+    "original_worst_max_abs": 6.372667676890487e-08
+  },
+  "decode_focus": [
+    {
+      "contiguous_median_ms": 0.011698490125127137,
+      "operation": "decode_attention",
+      "optimized_paged_median_ms": 0.02317773993127048,
+      "optimized_vs_contiguous_label": "overhead",
+      "optimized_vs_contiguous_overhead_percent": 98.12590927001008,
+      "optimized_vs_original_improvement_percent": -6.30562192662839,
+      "original_paged_median_ms": 0.021716239280067384,
+      "token_count": 1
+    },
+    {
+      "contiguous_median_ms": 0.011998499394394457,
+      "operation": "decode_attention",
+      "optimized_paged_median_ms": 0.023974579526111484,
+      "optimized_vs_contiguous_label": "overhead",
+      "optimized_vs_contiguous_overhead_percent": 99.81314944527226,
+      "optimized_vs_original_improvement_percent": -3.8736827660590722,
+      "original_paged_median_ms": 0.023045880370773375,
+      "token_count": 9
+    },
+    {
+      "contiguous_median_ms": 0.014269049279391766,
+      "operation": "decode_attention",
+      "optimized_paged_median_ms": 0.028586620464920998,
+      "optimized_vs_contiguous_label": "overhead",
+      "optimized_vs_contiguous_overhead_percent": 100.34005002847346,
+      "optimized_vs_original_improvement_percent": 11.790619456485096,
+      "original_paged_median_ms": 0.03195716009940952,
+      "token_count": 64
+    }
+  ],
+  "hashes": {
+    "native_artifact_sha256": "5c31f4102c8a5c8b7263fb70952bf522b9e2eaea9960f9e1405483f25563ed8c",
+    "optimized_plan_sha256": "ef606073133d3356f8b6e86db6977c9c0700c1018f39a08c6b89373645fce03e",
+    "optimized_results_sha256": "39457a336177e3847f44260713eb258501dff8ce7502f1fd51873605264fa4c5",
+    "original_plan_sha256": "523ba15f0d8323f05c51f934e3b38fe044f328bed2ec2d4f5cfd25e6a938e97a",
+    "original_results_sha256": "525c7585c67205e6a4ec403f2761524ed4bdf32be929b24ee9cea0fe39b1a922"
+  },
+  "lifecycle": [
+    {
+      "active_requests": 1,
+      "contiguous_median_ms": 0.6521370087284595,
+      "optimized_paged_median_ms": 1.188756519695744,
+      "optimized_vs_contiguous_overhead_percent": 82.28631465243603,
+      "optimized_vs_original_improvement_percent": -0.5436382093115477,
+      "original_paged_median_ms": 1.1822939850389957
+    },
+    {
+      "active_requests": 2,
+      "contiguous_median_ms": 1.2839795090258121,
+      "optimized_paged_median_ms": 2.120004501193762,
+      "optimized_vs_contiguous_overhead_percent": 65.11201980180066,
+      "optimized_vs_original_improvement_percent": 0.03629596885348363,
+      "original_paged_median_ms": 2.1207739773672074
+    },
+    {
+      "active_requests": 4,
+      "contiguous_median_ms": 2.5642819819040596,
+      "optimized_paged_median_ms": 4.25513950176537,
+      "optimized_vs_contiguous_overhead_percent": 65.93882934067166,
+      "optimized_vs_original_improvement_percent": -0.5975357421623362,
+      "original_paged_median_ms": 4.229713522363454
+    }
+  ],
+  "operation_comparisons": [
+    {
+      "contiguous_median_ms": 0.011657481081783772,
+      "operation": "append_boundary",
+      "optimized_paged_median_ms": 0.034684984711930156,
+      "optimized_vs_contiguous_label": "overhead",
+      "optimized_vs_contiguous_overhead_percent": 197.53412824430532,
+      "optimized_vs_original_improvement_percent": -0.10664836331262251,
+      "original_paged_median_ms": 0.03464799374341965,
+      "token_count": 8
+    },
+    {
+      "contiguous_median_ms": 0.011675991117954254,
+      "operation": "append_inside",
+      "optimized_paged_median_ms": 0.02612950629554689,
+      "optimized_vs_contiguous_label": "overhead",
+      "optimized_vs_contiguous_overhead_percent": 123.7883365238893,
+      "optimized_vs_original_improvement_percent": -0.24693613186856922,
+      "original_paged_median_ms": 0.02606498310342431,
+      "token_count": 7
+    },
+    {
+      "contiguous_median_ms": 0.011698490125127137,
+      "operation": "decode_attention",
+      "optimized_paged_median_ms": 0.02317773993127048,
+      "optimized_vs_contiguous_label": "overhead",
+      "optimized_vs_contiguous_overhead_percent": 98.12590927001008,
+      "optimized_vs_original_improvement_percent": -6.30562192662839,
+      "original_paged_median_ms": 0.021716239280067384,
+      "token_count": 1
+    },
+    {
+      "contiguous_median_ms": 0.011899599921889603,
+      "operation": "decode_attention",
+      "optimized_paged_median_ms": 0.02345607033930719,
+      "optimized_vs_contiguous_label": "overhead",
+      "optimized_vs_contiguous_overhead_percent": 97.1164618413698,
+      "optimized_vs_original_improvement_percent": -5.319689282799689,
+      "original_paged_median_ms": 0.022208280279301107,
+      "token_count": 7
+    },
+    {
+      "contiguous_median_ms": 0.011922570411115885,
+      "operation": "decode_attention",
+      "optimized_paged_median_ms": 0.023523280397057533,
+      "optimized_vs_contiguous_label": "overhead",
+      "optimized_vs_contiguous_overhead_percent": 97.30041078328082,
+      "optimized_vs_original_improvement_percent": -4.665168523311292,
+      "original_paged_median_ms": 0.02242587972432375,
+      "token_count": 8
+    },
+    {
+      "contiguous_median_ms": 0.011998499394394457,
+      "operation": "decode_attention",
+      "optimized_paged_median_ms": 0.023974579526111484,
+      "optimized_vs_contiguous_label": "overhead",
+      "optimized_vs_contiguous_overhead_percent": 99.81314944527226,
+      "optimized_vs_original_improvement_percent": -3.8736827660590722,
+      "original_paged_median_ms": 0.023045880370773375,
+      "token_count": 9
+    },
+    {
+      "contiguous_median_ms": 0.012301640235818923,
+      "operation": "decode_attention",
+      "optimized_paged_median_ms": 0.02426551014650613,
+      "optimized_vs_contiguous_label": "overhead",
+      "optimized_vs_contiguous_overhead_percent": 97.2542659461929,
+      "optimized_vs_original_improvement_percent": -2.095690807021877,
+      "original_paged_median_ms": 0.02375698008108884,
+      "token_count": 16
+    },
+    {
+      "contiguous_median_ms": 0.012885710457339883,
+      "operation": "decode_attention",
+      "optimized_paged_median_ms": 0.025609389413148165,
+      "optimized_vs_contiguous_label": "overhead",
+      "optimized_vs_contiguous_overhead_percent": 98.74254894933398,
+      "optimized_vs_original_improvement_percent": 3.180946089556569,
+      "original_paged_median_ms": 0.026424010284245014,
+      "token_count": 32
+    },
+    {
+      "contiguous_median_ms": 0.014269049279391766,
+      "operation": "decode_attention",
+      "optimized_paged_median_ms": 0.028586620464920998,
+      "optimized_vs_contiguous_label": "overhead",
+      "optimized_vs_contiguous_overhead_percent": 100.34005002847346,
+      "optimized_vs_original_improvement_percent": 11.790619456485096,
+      "original_paged_median_ms": 0.03195716009940952,
+      "token_count": 64
+    },
+    {
+      "contiguous_median_ms": 0.026879512006416917,
+      "operation": "prefill_write",
+      "optimized_paged_median_ms": 0.04430499393492937,
+      "optimized_vs_contiguous_label": "overhead",
+      "optimized_vs_contiguous_overhead_percent": 64.82811862191727,
+      "optimized_vs_original_improvement_percent": 0.8994894594260838,
+      "original_paged_median_ms": 0.044703512685373425,
+      "token_count": 1
+    },
+    {
+      "contiguous_median_ms": 0.08920350228436291,
+      "operation": "prefill_write",
+      "optimized_paged_median_ms": 0.10478700278326869,
+      "optimized_vs_contiguous_label": "overhead",
+      "optimized_vs_contiguous_overhead_percent": 17.469606125136995,
+      "optimized_vs_original_improvement_percent": 0.6976064685175754,
+      "original_paged_median_ms": 0.10551800369285047,
+      "token_count": 7
+    },
+    {
+      "contiguous_median_ms": 0.09781503467820585,
+      "operation": "prefill_write",
+      "optimized_paged_median_ms": 0.11484249262139201,
+      "optimized_vs_contiguous_label": "overhead",
+      "optimized_vs_contiguous_overhead_percent": 17.407812612042186,
+      "optimized_vs_original_improvement_percent": -0.24247597161449752,
+      "original_paged_median_ms": 0.11456402717158198,
+      "token_count": 8
+    },
+    {
+      "contiguous_median_ms": 0.10815696441568434,
+      "operation": "prefill_write",
+      "optimized_paged_median_ms": 0.12497149873524904,
+      "optimized_vs_contiguous_label": "overhead",
+      "optimized_vs_contiguous_overhead_percent": 15.546418495013103,
+      "optimized_vs_original_improvement_percent": 1.0006548690867367,
+      "original_paged_median_ms": 0.12622203212231398,
+      "token_count": 9
+    },
+    {
+      "contiguous_median_ms": 0.17889798618853092,
+      "operation": "prefill_write",
+      "optimized_paged_median_ms": 0.19648100715130568,
+      "optimized_vs_contiguous_label": "overhead",
+      "optimized_vs_contiguous_overhead_percent": 9.828518105421802,
+      "optimized_vs_original_improvement_percent": 0.4570409637868922,
+      "original_paged_median_ms": 0.1973790058400482,
+      "token_count": 16
+    },
+    {
+      "contiguous_median_ms": 0.35432353615760803,
+      "operation": "prefill_write",
+      "optimized_paged_median_ms": 0.36427652230486274,
+      "optimized_vs_contiguous_label": "statistically_indistinguishable",
+      "optimized_vs_contiguous_overhead_percent": 2.8090107293429867,
+      "optimized_vs_original_improvement_percent": 0.6635030423172816,
+      "original_paged_median_ms": 0.3666935081128031,
+      "token_count": 32
+    },
+    {
+      "contiguous_median_ms": 0.6828969926573336,
+      "operation": "prefill_write",
+      "optimized_paged_median_ms": 0.6968319939915091,
+      "optimized_vs_contiguous_label": "statistically_indistinguishable",
+      "optimized_vs_contiguous_overhead_percent": 2.04057148940584,
+      "optimized_vs_original_improvement_percent": 0.2962707417397903,
+      "original_paged_median_ms": 0.6988965033087879,
+      "token_count": 64
+    }
+  ],
+  "optimized_unstable_rows": 90,
+  "stabilized_original_unstable_rows": 79
+}

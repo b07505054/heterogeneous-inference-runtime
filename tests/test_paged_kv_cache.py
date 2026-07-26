@@ -3,7 +3,8 @@ import hashlib,math,subprocess
 from pathlib import Path
 import pytest
 from deployment.execution_plan.attention_cpu_adapter import AttentionContractError
-from deployment.execution_plan.paged_kv_cache import PagedKVAttentionSession,paged_decode_operation_counts
+from deployment.execution_plan.kv_page_manager import KVPageManager
+from deployment.execution_plan.paged_kv_cache import PagedKVAttentionSession,PagedKVStorage,paged_decode_operation_counts
 ROOT=Path(__file__).resolve().parents[1]
 @pytest.fixture(scope="module")
 def artifact(tmp_path_factory):
@@ -40,7 +41,7 @@ def test_out_of_pages(artifact):
  r,c=cfg(artifact,pages=1,pt=2,max_tokens=4);s=PagedKVAttentionSession(c,artifact_root=r);s.prefill(data(8),data(8),1);s.append(data(8),data(8))
  with pytest.raises(AttentionContractError,match="out_of_physical_pages"):s.append(data(8),data(8))
 def test_invalid_live_tables_fail(artifact):
- r,c=cfg(artifact);s=PagedKVAttentionSession(c,artifact_root=r);s.prefill(data(16),data(16),2);s.bt[0]=-1
+ r,c=cfg(artifact);s=PagedKVAttentionSession(c,artifact_root=r);s.prefill(data(16),data(16),2);s.page_manager._requests[s.request_id].physical_pages[0]=-1
  with pytest.raises(AttentionContractError,match="invalid_live_block_table"):s.decode(data(8))
 def test_capacity_and_state_failures(artifact):
  r,c=cfg(artifact,max_tokens=4);s=PagedKVAttentionSession(c,artifact_root=r)
@@ -53,7 +54,7 @@ def test_contract_failures(artifact,field,value,error):
  r,c=cfg(artifact);c[field]=value
  with pytest.raises(AttentionContractError,match=error):PagedKVAttentionSession(c,artifact_root=r)
 
-@pytest.mark.parametrize("tokens",[3,8,9])
+@pytest.mark.parametrize("tokens",[1,7,8,9,16])
 def test_page_major_matches_token_major_for_partial_and_full_pages(artifact,tokens):
  r,c=cfg(artifact);k=data(2*tokens*4,1);v=data(2*tokens*4,2);q=data(8,3)
  baseline=PagedKVAttentionSession(c,artifact_root=r);optimized=PagedKVAttentionSession(page_major(c),artifact_root=r)
@@ -62,15 +63,68 @@ def test_page_major_matches_token_major_for_partial_and_full_pages(artifact,toke
  assert optimized.trace()["runtime_executed_strategy"]=="page_major_cached_page_base"
  assert optimized.count.runtime_kernel_reselection_count==optimized.count.runtime_layout_reselection_count==optimized.count.temporary_full_history_materialization_count==0
 
+def test_page_major_pointer_walking_addresses_every_token_head_and_dimension(artifact):
+ r,c=cfg(artifact,pages=4,pt=4,max_tokens=16,h=2,d=4);c=page_major(c)
+ manager=KVPageManager(total_pages=4,tokens_per_page=4);storage=PagedKVStorage(total_pages=4,num_kv_heads=2,tokens_per_page=4,head_dim=4,workspace_tokens=16)
+ manager.reserve_prefill("gap",4)
+ s=PagedKVAttentionSession(c,artifact_root=r,request_id="walk",storage=storage,page_manager=manager)
+ tokens=10;k=data(2*tokens*4,11);v=data(2*tokens*4,19);q=data(8,23)
+ s.prefill(k,v,tokens)
+ assert list(s.bt[:3])==[1,2,3]
+ lk,lv=logical(s)
+ assert lk==list(k)
+ assert lv==list(v)
+ assert list(s.decode(q))==pytest.approx(ref(q,lk,lv,2,tokens,4),abs=1e-6)
+
+@pytest.mark.parametrize("scores",[
+ [0.0]*9,
+ [-50.0,-10.0,-1.0,0.0,1.0,10.0,25.0,40.0,50.0],
+ [50.0,-50.0,-50.0,-50.0,-50.0,-50.0,-50.0,-50.0,-50.0],
+ [-50.0]*9,
+])
+def test_page_major_softmax_stress_scores_are_stable(artifact,scores):
+ r,c=cfg(artifact,pages=4,pt=4,max_tokens=16,h=1,d=4);c=page_major(c)
+ tokens=len(scores);q=array("f",[1.0,0.0,0.0,0.0]);scale=1/math.sqrt(4)
+ k=array("f");v=array("f")
+ for idx,score in enumerate(scores):
+  k.extend([score/scale,0.0,0.0,0.0])
+  v.extend([float(idx+1),float((idx+1)*2),float((idx%3)-1),float(1-idx)])
+ s=PagedKVAttentionSession(c,artifact_root=r);s.prefill(k,v,tokens)
+ got=list(s.decode(q));expected=ref(q,*logical(s),1,tokens,4)
+ assert all(math.isfinite(x) for x in got)
+ assert got==pytest.approx(expected,abs=2e-5,rel=2e-5)
+
 def test_page_major_nonsequential_physical_pages_and_boundary_append(artifact):
- r,c=cfg(artifact);c=page_major(c);s=PagedKVAttentionSession(c,artifact_root=r);s.free=[2,0,3,1]
- s.prefill(data(2*7*4,1),data(2*7*4,2),7);assert list(s.bt[:2])==[2,0]
- s.append(data(8,4),data(8,5));s.append(data(8,6),data(8,7));assert list(s.bt[:3])==[2,0,3]
+ r,c=cfg(artifact);c=page_major(c);manager=KVPageManager(total_pages=4,tokens_per_page=4);storage=PagedKVStorage(total_pages=4,num_kv_heads=2,tokens_per_page=4,head_dim=4,workspace_tokens=16);manager.reserve_prefill("hole",8);s=PagedKVAttentionSession(c,artifact_root=r,request_id="r1",storage=storage,page_manager=manager)
+ s.prefill(data(2*7*4,1),data(2*7*4,2),7);assert list(s.bt[:2])==[2,3]
+ manager.release("hole")
+ s.append(data(8,4),data(8,5));s.append(data(8,6),data(8,7));assert list(s.bt[:3])==[2,3,0]
  q=data(8,8);lk,lv=logical(s);assert list(s.decode(q))==pytest.approx(ref(q,lk,lv,2,9,4),abs=1e-6)
- s.reset();s.free=[1,3,0,2];s.prefill(data(24,9),data(24,10),3);assert list(s.decode(q))==pytest.approx(ref(q,*logical(s),2,3,4),abs=1e-6)
+ s.reset();manager.reserve_prefill("hole2",1);s.prefill(data(24,9),data(24,10),3);assert list(s.decode(q))==pytest.approx(ref(q,*logical(s),2,3,4),abs=1e-6)
 
 def test_page_major_invalid_table_fails_closed(artifact):
- r,c=cfg(artifact);s=PagedKVAttentionSession(page_major(c),artifact_root=r);s.prefill(data(16),data(16,2),2);s.bt[0]=99
+ r,c=cfg(artifact);s=PagedKVAttentionSession(page_major(c),artifact_root=r);s.prefill(data(16),data(16,2),2);s.page_manager._requests[s.request_id].physical_pages[0]=99
+ with pytest.raises(AttentionContractError,match="invalid_live_block_table"):s.decode(data(8))
+
+def test_page_major_decode_uses_per_request_validation_not_global_scan(artifact,monkeypatch):
+ r,c=cfg(artifact,pt=4,max_tokens=16);s=PagedKVAttentionSession(page_major(c),artifact_root=r);s.prefill(data(2*9*4,1),data(2*9*4,2),9)
+ monkeypatch.setattr(s.page_manager,"validate_invariants",lambda: (_ for _ in ()).throw(AssertionError("global invariant scan should not run during decode")))
+ q=data(8,3);assert list(s.decode(q))==pytest.approx(ref(q,*logical(s),2,9,4),abs=1e-6)
+ assert s.trace()["decode_validation_strategy"]=="per_request_block_table_only"
+
+def test_page_major_boundary_append_remains_valid_after_validation_hoist(artifact):
+ r,c=cfg(artifact,pt=4,max_tokens=16);s=PagedKVAttentionSession(page_major(c),artifact_root=r);s.prefill(data(2*4*4,1),data(2*4*4,2),4);s.append(data(8,9),data(8,10))
+ assert list(s.bt[:2])==list(s.page_manager.block_table(s.request_id))
+ q=data(8,11);assert list(s.decode(q))==pytest.approx(ref(q,*logical(s),2,5,4),abs=1e-6)
+
+def test_page_major_release_reuse_remains_valid_after_validation_hoist(artifact):
+ r,c=cfg(artifact,pt=4,max_tokens=16);manager=KVPageManager(total_pages=4,tokens_per_page=4);storage=PagedKVStorage(total_pages=4,num_kv_heads=2,tokens_per_page=4,head_dim=4,workspace_tokens=16)
+ s=PagedKVAttentionSession(page_major(c),artifact_root=r,request_id="a",storage=storage,page_manager=manager);s.prefill(data(2*5*4,1),data(2*5*4,2),5);s.release();assert not manager.has_request("a")
+ s2=PagedKVAttentionSession(page_major(c),artifact_root=r,request_id="b",storage=storage,page_manager=manager);s2.prefill(data(2*4,3),data(2*4,4),1)
+ assert s2.trace()["block_table"][:1]==list(manager.block_table("b"))
+
+def test_page_major_stale_request_mapping_fails_closed_after_validation_hoist(artifact):
+ r,c=cfg(artifact,pt=4,max_tokens=16);s=PagedKVAttentionSession(page_major(c),artifact_root=r);s.prefill(data(2*5*4,1),data(2*5*4,2),5);s.page_manager._requests[s.request_id].physical_pages[0]=99
  with pytest.raises(AttentionContractError,match="invalid_live_block_table"):s.decode(data(8))
 
 def test_page_major_operation_count_reduction():

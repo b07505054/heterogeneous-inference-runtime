@@ -1,30 +1,38 @@
 {
-  "benchmark_process_threads": 1,
-  "build_command": [
-    "g++",
-    "-O3",
-    "-std=c++17",
-    "-fPIC",
-    "-shared",
-    "/home/allen/kv_selection_evaluation/native/cpu_kernels/attention_fp32.cpp",
-    "-o",
-    "build/libattention_fp32.so"
-  ],
-  "compiler_version": "g++ (Debian 14.2.0-19) 14.2.0",
-  "machine": "aarch64",
-  "native_artifact_sha256": "37fca5806a3bd597ea7a746e4b24b2e41197e6bf6f2512a5a8c37024e0ba5faa",
-  "native_compile_flags": [
-    "-O3",
-    "-std=c++17",
-    "-fPIC",
-    "-shared"
-  ],
-  "native_source_sha256": "c82d0b4d75c1ea35f9e3c79419e2fc00bb273a320e260dc931ff41679d5894bc",
-  "platform": "Linux-6.18.34+rpt-rpi-2712-aarch64-with-glibc2.41",
-  "processor": "",
-  "python_version": "3.13.5",
-  "runner_sha256": "c6f80e309ed9b2ec940ea9a08baef1e00a117c9bddc8b5b3ca2d51cbbea3cf29",
-  "schema_version": "kv_selection_evaluation.v1",
-  "target_id": "raspberry-pi5-cortex-a76",
-  "truth_boundary": "exact_target_workload_measured_profile_not_predictive_cost_model"
+    "benchmark_process_threads": 1,
+    "build_command": [
+        "g++",
+        "-O3",
+        "-std=c++17",
+        "-fPIC",
+        "-shared",
+        "/home/allen/kv_selection_evaluation/native/cpu_kernels/attention_fp32.cpp",
+        "-o",
+        "build/libattention_fp32.so"
+    ],
+    "compiler_version": "g++ (Debian 14.2.0-19) 14.2.0",
+    "machine": "aarch64",
+    "native_artifact_sha256": "5c31f4102c8a5c8b7263fb70952bf522b9e2eaea9960f9e1405483f25563ed8c",
+    "native_compile_flags": [
+        "-O3",
+        "-std=c++17",
+        "-fPIC",
+        "-shared"
+    ],
+    "native_source_sha256": "c0f0eca108bfe5246f4d8e02a606e448c3e34e269a03fcbf58ac0d61cbe815fd",
+    "platform": "Linux-6.18.34+rpt-rpi-2712-aarch64-with-glibc2.41",
+    "processor": "",
+    "python_version": "3.13.5",
+  "runner_sha256": "dad133229c91fbaf6de3e1ce93750bd86936ba877215af017ff2bf471031174c",
+    "schema_version": "kv_selection_evaluation.v1",
+    "target_id": "raspberry-pi5-cortex-a76",
+    "truth_boundary": "exact_target_workload_measured_profile_not_predictive_cost_model",
+    "compiler_plan_generation": {
+        "compiler_commit": "be3eed641a5a75214a0fe57619ef0577cd652676",
+        "compiler_tool": "mlir_passes/build/compile-for-target",
+    "generation_command": "mlir_passes/build/compile-for-target --device-profile configs/target_profiles/raspberry_pi5_cortex_a76_cpu.json --mlir /private/tmp/attention_cpu_paged_page_major_reverted_pi.mlir --out /private/tmp/paged8_page_major_reverted_pi.json --dump-annotated-mlir /private/tmp/paged8_page_major_reverted_pi_annotated.mlir",
+    "input_mlir": "mlir/attention_cpu_paged.mlir with attention.cpu.artifact_sha256 set to the Raspberry Pi rebuilt native artifact hash and attention.cpu.paged_decode_strategy set to page_major_cached_page_base",
+    "target_profile": "configs/target_profiles/raspberry_pi5_cortex_a76_cpu.json",
+    "compiler_plan_sha256": "ef606073133d3356f8b6e86db6977c9c0700c1018f39a08c6b89373645fce03e"
+  }
 }

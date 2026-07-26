@@ -1,0 +1,38 @@
+{
+  "contiguous_per_decode": {
+    "numpy_arrays_allocated": 0,
+    "python_lists_created": 0,
+    "ctypes_pointer_wrappers_created": 5,
+    "ctypes_array_from_buffer_calls": 5,
+    "copies": 1,
+    "copied_bytes": "num_kv_heads * head_dim * 4 output bytes",
+    "native_symbol_lookup": "cached during session initialization",
+    "artifact_hash_validation": "session initialization only"
+  },
+  "paged_before_optimization_per_decode": {
+    "numpy_arrays_allocated": 0,
+    "python_lists_created": "at least 1 from _validate_live refs plus manager tuple/list conversions",
+    "ctypes_pointer_wrappers_created": 7,
+    "ctypes_array_from_buffer_calls": 7,
+    "block_table_array_allocated": 1,
+    "block_table_entries_copied": "block_table_length",
+    "global_page_manager_invariant_scan": 1,
+    "copies": 2,
+    "copied_bytes": "block_table_length * 4 plus output bytes",
+    "native_symbol_lookup": "cached during session initialization",
+    "artifact_hash_validation": "session initialization only"
+  },
+  "paged_after_optimization_steady_decode": {
+    "numpy_arrays_allocated": 0,
+    "python_lists_created": "unchanged validation manager views",
+    "ctypes_pointer_wrappers_created": 7,
+    "ctypes_array_from_buffer_calls": 7,
+    "block_table_array_allocated": 1,
+    "block_table_entries_copied": "block_table_length",
+    "global_page_manager_invariant_scan": 0,
+    "per_request_block_table_validation": 1,
+    "copies": 1,
+    "copied_bytes": "block_table_length * 4 plus output bytes",
+    "optimization": "immutable/global manager invariant validation is hoisted out of steady-state decode; mutable per-request mapping checks remain"
+  }
+}

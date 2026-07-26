@@ -1,0 +1,5 @@
+{
+  "native_artifact_sha256": "5c31f4102c8a5c8b7263fb70952bf522b9e2eaea9960f9e1405483f25563ed8c",
+  "integrated_wrapper_formula": "wrapper_overhead_us = integrated_session_decode_us - direct_exported_native_us",
+  "direct_native_note": "Direct native timings are supplied by the companion exported-native profiler from the previous slice or same-run benchmark artifacts."
+}

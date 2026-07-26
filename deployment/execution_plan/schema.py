@@ -279,6 +279,7 @@ class OpDecision:
     op_type: str
     kernel: KernelDecision | None
     kernel_selection: KernelSelectionDecision | None = None
+    paged_kv_execution: "PagedKVExecutionContract | None" = None
     raw: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
@@ -292,6 +293,11 @@ class OpDecision:
             kernel_selection=(
                 KernelSelectionDecision.from_dict(kernel_selection_payload)
                 if kernel_selection_payload else None
+            ),
+            paged_kv_execution=(
+                PagedKVExecutionContract.from_dict(paged_kv_payload)
+                if (paged_kv_payload := _dict_at(payload, "paged_kv_execution"))
+                else None
             ),
             raw=dict(payload),
         )
@@ -392,6 +398,132 @@ class ServingPlanDecision:
             parallelism_degree=int(payload.get("parallelism_degree", 1) or 1),
             truth_boundary=str(payload.get("truth_boundary", "")),
         )
+
+
+@dataclass(frozen=True)
+class PagedKVExecutionContract:
+    kv_execution_unit: str
+    kv_candidate_id: str
+    kv_layout_kind: str
+    dtype: str
+    batch: int
+    num_kv_heads: int
+    head_dim: int
+    page_tokens: int
+    num_physical_pages: int
+    maximum_logical_tokens: int
+    maximum_logical_blocks: int
+    block_table_length: int
+    block_table_element_type: str
+    invalid_page_sentinel: int
+    bytes_per_token: int
+    bytes_per_k_page: int
+    bytes_per_v_page: int
+    bytes_per_combined_page: int
+    total_pool_bytes: int
+    alignment_bytes: int
+    k_page_strides: tuple[int, ...]
+    v_page_strides: tuple[int, ...]
+    pool_artifact_ref: str
+    pool_artifact_sha256: str
+    pool_artifact_version: str
+    pool_create_entry_point: str
+    prefill_write_entry_point: str
+    append_entry_point: str
+    view_binding: str
+    reset_entry_point: str
+    release_entry_point: str
+    paged_attention_kernel_id: str
+    paged_attention_entry_point: str
+    implementation_strategy: str = ""
+    measurement_provenance: str = ""
+    contiguous_fallback_identity: str = ""
+    operation_order: str = ""
+    truth_boundary: str = ""
+    runtime_no_layout_redecision: bool = False
+    runtime_no_kernel_redecision: bool = False
+    num_query_heads: int | None = None
+    workspace_bytes: int | None = None
+    raw: dict[str, Any] = field(default_factory=dict)
+
+    @classmethod
+    def from_dict(cls, payload: dict[str, Any]) -> "PagedKVExecutionContract":
+        return cls(
+            kv_execution_unit=str(payload.get("kv_execution_unit", "")),
+            kv_candidate_id=str(payload.get("kv_candidate_id", "")),
+            kv_layout_kind=str(payload.get("kv_layout_kind", "")),
+            dtype=str(payload.get("dtype", "")),
+            batch=int(payload.get("batch", 0) or 0),
+            num_kv_heads=int(payload.get("num_kv_heads", 0) or 0),
+            head_dim=int(payload.get("head_dim", 0) or 0),
+            page_tokens=int(payload.get("page_tokens", 0) or 0),
+            num_physical_pages=int(payload.get("num_physical_pages", 0) or 0),
+            maximum_logical_tokens=int(
+                payload.get("maximum_logical_tokens", 0) or 0
+            ),
+            maximum_logical_blocks=int(
+                payload.get("maximum_logical_blocks", 0) or 0
+            ),
+            block_table_length=int(payload.get("block_table_length", 0) or 0),
+            block_table_element_type=str(
+                payload.get("block_table_element_type", "")
+            ),
+            invalid_page_sentinel=int(payload.get("invalid_page_sentinel", 0)),
+            bytes_per_token=int(payload.get("bytes_per_token", 0) or 0),
+            bytes_per_k_page=int(payload.get("bytes_per_k_page", 0) or 0),
+            bytes_per_v_page=int(payload.get("bytes_per_v_page", 0) or 0),
+            bytes_per_combined_page=int(
+                payload.get("bytes_per_combined_page", 0) or 0
+            ),
+            total_pool_bytes=int(payload.get("total_pool_bytes", 0) or 0),
+            alignment_bytes=int(payload.get("alignment_bytes", 0) or 0),
+            k_page_strides=tuple(int(x) for x in payload.get("k_page_strides", ())),
+            v_page_strides=tuple(int(x) for x in payload.get("v_page_strides", ())),
+            pool_artifact_ref=str(payload.get("pool_artifact_ref", "")),
+            pool_artifact_sha256=str(payload.get("pool_artifact_sha256", "")),
+            pool_artifact_version=str(payload.get("pool_artifact_version", "")),
+            pool_create_entry_point=str(payload.get("pool_create_entry_point", "")),
+            prefill_write_entry_point=str(
+                payload.get("prefill_write_entry_point", "")
+            ),
+            append_entry_point=str(payload.get("append_entry_point", "")),
+            view_binding=str(payload.get("view_binding", "")),
+            reset_entry_point=str(payload.get("reset_entry_point", "")),
+            release_entry_point=str(payload.get("release_entry_point", "")),
+            paged_attention_kernel_id=str(
+                payload.get("paged_attention_kernel_id", "")
+            ),
+            paged_attention_entry_point=str(
+                payload.get("paged_attention_entry_point", "")
+            ),
+            implementation_strategy=str(payload.get("implementation_strategy", "")),
+            measurement_provenance=str(payload.get("measurement_provenance", "")),
+            contiguous_fallback_identity=str(
+                payload.get("contiguous_fallback_identity", "")
+            ),
+            operation_order=str(payload.get("operation_order", "")),
+            truth_boundary=str(payload.get("truth_boundary", "")),
+            runtime_no_layout_redecision=bool(
+                payload.get("runtime_no_layout_redecision", False)
+            ),
+            runtime_no_kernel_redecision=bool(
+                payload.get("runtime_no_kernel_redecision", False)
+            ),
+            num_query_heads=(
+                int(payload["num_query_heads"])
+                if "num_query_heads" in payload
+                else None
+            ),
+            workspace_bytes=(
+                int(payload["workspace_bytes"])
+                if "workspace_bytes" in payload
+                else None
+            ),
+            raw=dict(payload),
+        )
+
+    def to_session_contract(self) -> dict[str, Any]:
+        return dict(self.raw)
 
 
 @dataclass(frozen=True)

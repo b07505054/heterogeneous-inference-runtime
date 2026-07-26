@@ -13,12 +13,22 @@ import time
 import uuid
 from typing import Any, Callable
 
+from deployment.execution_plan.kv_page_manager import (
+    KVPageAllocationError,
+    KVPageManager,
+    KVPageStateError,
+)
 from deployment.serving_execution import ServingPlanError
 
 SCHEDULE_SCHEMA_VERSION = 1
 SCHEDULING_POLICIES = ("decode_first", "prefill_first", "chunked_balanced",
                        "slo_aware")
 PHASES = ("WAITING", "PREFILL", "DECODE", "FINISHED", "FAILED")
+KV_ADMITTED = "ADMITTED"
+KV_DEFERRED_PRESSURE = "DEFERRED_KV_PRESSURE"
+KV_REJECTED_PROMPT_TOO_LARGE = "REJECTED_PROMPT_TOO_LARGE"
+KV_INVALID_REQUEST = "INVALID_REQUEST"
+KV_NOT_ENABLED = "KV_NOT_ENABLED"
 
 
 @dataclass
@@ -113,10 +123,17 @@ class ReplicaSchedulerState:
     clock_ms: float = 0.0
     finished_ids: list[str] = field(default_factory=list)
     statistics: dict[str, float] = field(default_factory=lambda: {
-        "scheduled_tokens": 0, "unused_tokens": 0, "steps": 0,
-        "prefill_tokens": 0, "decode_tokens": 0,
-        "capacity_rejections": 0,
-    })
+            "scheduled_tokens": 0, "unused_tokens": 0, "steps": 0,
+            "prefill_tokens": 0, "decode_tokens": 0,
+            "capacity_rejections": 0,
+            "kv_prefill_pressure_deferrals": 0,
+            "kv_decode_boundary_deferrals": 0,
+            "kv_allocation_failures": 0,
+            "kv_prompt_too_large_rejections": 0,
+            "kv_release_events": 0,
+            "kv_released_pages": 0,
+        })
+    page_manager: KVPageManager | None = None
 
     def ingest(self, request: RequestExecutionState) -> None:
         request.validate()
@@ -131,6 +148,8 @@ class ReplicaSchedulerState:
         for request in self.requests.values():
             if request.phase == "WAITING" and request.arrival_time_ms <= self.clock_ms:
                 request.make_ready()
+            if self.page_manager is not None and request.phase == "PREFILL":
+                self._reject_prompt_that_cannot_fit(request)
         return sorted((r for r in self.requests.values()
                        if r.phase in ("PREFILL", "DECODE")),
                       key=lambda r: (r.arrival_time_ms, r.request_id))
@@ -138,6 +157,91 @@ class ReplicaSchedulerState:
     def unfinished(self) -> bool:
         return any(not r.finished and r.phase != "FAILED"
                    for r in self.requests.values())
+
+    def kv_admission_status(self, request: RequestExecutionState) -> str:
+        if self.page_manager is None:
+            return KV_NOT_ENABLED
+        if request.request_id not in self.requests:
+            return KV_INVALID_REQUEST
+        if request.prefill_remaining_tokens and not self.page_manager.has_request(
+                request.request_id):
+            target = request.uncached_prompt_tokens
+            if self.page_manager.required_pages_for_tokens(
+                    target) > self.page_manager.total_pages:
+                return KV_REJECTED_PROMPT_TOO_LARGE
+            return KV_ADMITTED if self.page_manager.can_reserve(
+                request.request_id, target) else KV_DEFERRED_PRESSURE
+        return KV_ADMITTED
+
+    def kv_decode_status(self, request: RequestExecutionState) -> str:
+        if self.page_manager is None:
+            return KV_NOT_ENABLED
+        if request.request_id not in self.requests:
+            return KV_INVALID_REQUEST
+        if not self.page_manager.has_request(request.request_id):
+            return KV_INVALID_REQUEST
+        current = self.page_manager.valid_token_count(request.request_id)
+        return KV_ADMITTED if self.page_manager.can_reserve(
+            request.request_id, current + 1) else KV_DEFERRED_PRESSURE
+
+    def kv_item_runnable(self, request: RequestExecutionState,
+                         phase: str) -> bool:
+        if self.page_manager is None:
+            return True
+        if phase == "prefill":
+            status = self.kv_admission_status(request)
+            if status == KV_REJECTED_PROMPT_TOO_LARGE:
+                self._reject_prompt_that_cannot_fit(request)
+                return False
+            if status == KV_DEFERRED_PRESSURE:
+                self.statistics["kv_prefill_pressure_deferrals"] += 1
+                return False
+            return status == KV_ADMITTED
+        if phase == "decode":
+            status = self.kv_decode_status(request)
+            if status == KV_DEFERRED_PRESSURE:
+                self.statistics["kv_decode_boundary_deferrals"] += 1
+                return False
+            return status == KV_ADMITTED
+        raise ServingPlanError("invalid schedule item phase")
+
+    def kv_telemetry(self) -> dict[str, Any]:
+        if self.page_manager is None:
+            return {"kv_page_manager_enabled": False}
+        active = [
+            rid for rid in self.requests
+            if self.page_manager.has_request(rid)
+        ]
+        return {
+            "kv_page_manager_enabled": True,
+            "total_kv_pages": self.page_manager.total_pages,
+            "free_kv_pages": self.page_manager.num_free_pages(),
+            "allocated_kv_pages": self.page_manager.num_allocated_pages(),
+            "active_kv_requests": len(active),
+            "active_kv_request_ids": sorted(active),
+            "deferred_requests_due_to_kv_page_pressure":
+                int(self.statistics["kv_prefill_pressure_deferrals"]),
+            "page_boundary_decode_deferrals":
+                int(self.statistics["kv_decode_boundary_deferrals"]),
+            "allocation_failures": int(self.statistics["kv_allocation_failures"]),
+            "release_events": int(self.statistics["kv_release_events"]),
+            "released_page_count": int(self.statistics["kv_released_pages"]),
+        }
+
+    def _reject_prompt_that_cannot_fit(self,
+                                       request: RequestExecutionState) -> None:
+        if self.page_manager is None or self.page_manager.has_request(
+                request.request_id):
+            return
+        target = request.uncached_prompt_tokens
+        if self.page_manager.required_pages_for_tokens(
+                target) <= self.page_manager.total_pages:
+            return
+        if request.phase != "FAILED":
+            request.phase = "FAILED"
+            self.statistics["capacity_rejections"] += 1
+            self.statistics["kv_prompt_too_large_rejections"] += 1
+            self.version += 1
 
 
 @dataclass(frozen=True)
@@ -288,30 +392,71 @@ class SchedulerCompiler:
         self.traces: list[dict[str, Any]] = []
 
     @staticmethod
-    def _allocate_prefill(requests, budget, profile, items):
+    def _allocate_prefill(requests, budget, state, items, kv_free_budget):
+        profile = state.profile
         for request in requests:
             if budget <= 0 or len(items) >= profile.max_num_seqs:
                 break
+            if state.page_manager is not None:
+                status = state.kv_admission_status(request)
+                if status == KV_REJECTED_PROMPT_TOO_LARGE:
+                    state._reject_prompt_that_cannot_fit(request)
+                    continue
+                if status != KV_ADMITTED:
+                    state.statistics["kv_prefill_pressure_deferrals"] += 1
+                    continue
+                additional = 0
+                if not state.page_manager.has_request(request.request_id):
+                    additional = state.page_manager.additional_pages_required(
+                        request.request_id,
+                        request.uncached_prompt_tokens,
+                    )
+                if additional > kv_free_budget[0]:
+                    state.statistics["kv_prefill_pressure_deferrals"] += 1
+                    continue
+            elif not state.kv_item_runnable(request, "prefill"):
+                continue
             count = min(request.prefill_remaining_tokens,
                         profile.max_prefill_chunk_tokens, budget)
             if count:
                 items.append(ScheduleItem(request.request_id, "prefill",
                                           request.prefill_completed_tokens, count))
                 budget -= count
+                if state.page_manager is not None:
+                    kv_free_budget[0] -= additional
         return budget
 
     @staticmethod
-    def _allocate_decode(requests, budget, profile, items, limit=None):
+    def _allocate_decode(requests, budget, state, items, kv_free_budget, limit=None):
+        profile = state.profile
         used = 0
         for request in requests:
             if budget < profile.decode_token_cost_per_request or \
                     len(items) >= profile.max_num_seqs or \
                     (limit is not None and used >= limit):
                 break
+            if state.page_manager is not None:
+                status = state.kv_decode_status(request)
+                if status != KV_ADMITTED:
+                    if status == KV_DEFERRED_PRESSURE:
+                        state.statistics["kv_decode_boundary_deferrals"] += 1
+                    continue
+                current = state.page_manager.valid_token_count(request.request_id)
+                additional = state.page_manager.additional_pages_required(
+                    request.request_id,
+                    current + 1,
+                )
+                if additional > kv_free_budget[0]:
+                    state.statistics["kv_decode_boundary_deferrals"] += 1
+                    continue
+            elif not state.kv_item_runnable(request, "decode"):
+                continue
             items.append(ScheduleItem(request.request_id, "decode",
                                       request.decode_completed_tokens,
                                       profile.decode_token_cost_per_request))
             budget -= profile.decode_token_cost_per_request
+            if state.page_manager is not None:
+                kv_free_budget[0] -= additional
             used += profile.decode_token_cost_per_request
         return budget
 
@@ -323,17 +468,24 @@ class SchedulerCompiler:
         prefill = [r for r in ready if r.phase == "PREFILL"]
         decode = [r for r in ready if r.phase == "DECODE"]
         budget, items = state.profile.max_num_batched_tokens, []
+        kv_free_budget = [
+            state.page_manager.num_free_pages()
+            if state.page_manager is not None else 0
+        ]
         if policy == "decode_first":
-            budget = self._allocate_decode(decode, budget, state.profile, items)
-            self._allocate_prefill(prefill, budget, state.profile, items)
+            budget = self._allocate_decode(decode, budget, state, items,
+                                           kv_free_budget)
+            self._allocate_prefill(prefill, budget, state, items, kv_free_budget)
         elif policy == "prefill_first":
-            budget = self._allocate_prefill(prefill, budget, state.profile, items)
-            self._allocate_decode(decode, budget, state.profile, items)
+            budget = self._allocate_prefill(prefill, budget, state, items,
+                                            kv_free_budget)
+            self._allocate_decode(decode, budget, state, items, kv_free_budget)
         elif policy == "chunked_balanced":
             reserve = min(state.profile.balanced_decode_reservation, len(decode))
-            budget = self._allocate_decode(decode, budget, state.profile, items,
+            budget = self._allocate_decode(decode, budget, state, items,
+                                           kv_free_budget,
                                            limit=reserve)
-            self._allocate_prefill(prefill, budget, state.profile, items)
+            self._allocate_prefill(prefill, budget, state, items, kv_free_budget)
         else:
             urgent = sorted(ready, key=lambda r: (
                 -max(0.0, state.clock_ms - r.arrival_time_ms -
@@ -345,10 +497,10 @@ class SchedulerCompiler:
                     break
                 if request.phase == "DECODE":
                     budget = self._allocate_decode([request], budget,
-                                                   state.profile, items)
+                                                   state, items, kv_free_budget)
                 else:
                     budget = self._allocate_prefill([request], budget,
-                                                    state.profile, items)
+                                                    state, items, kv_free_budget)
         return items, "LEGAL" if items else "NO_READY_REQUESTS"
 
     def compile(self, state: ReplicaSchedulerState, *,
@@ -402,7 +554,8 @@ class SchedulerCompiler:
 
 
 class PlanOnlySchedulerRuntime:
-    def __init__(self):
+    def __init__(self, page_manager: KVPageManager | None = None):
+        self.page_manager = page_manager
         self.runtime_schedule_rebuild_count = 0
         self.runtime_item_override_count = 0
         self.runtime_token_count_override_count = 0
@@ -415,6 +568,7 @@ class PlanOnlySchedulerRuntime:
                 execute_item: Callable[[RequestExecutionState, ScheduleItem,
                                         ScheduleStepPlan], dict[str, Any]] | None = None
                 ) -> dict[str, Any]:
+        page_manager = self._page_manager(state)
         plan.validate(state)
         started = time.perf_counter_ns()
         item_events = []
@@ -423,6 +577,9 @@ class PlanOnlySchedulerRuntime:
         for item in plan.items:
             request = state.requests[item.request_id]
             result = execute_item(request, item, plan) if execute_item else {}
+            if page_manager is not None and not result.get(
+                    "kv_page_manager_committed", False):
+                self._commit_kv_metadata(state, request, item, page_manager)
             if request.first_scheduled_ms is None:
                 request.first_scheduled_ms = state.clock_ms
             if item.phase == "prefill":
@@ -443,6 +600,9 @@ class PlanOnlySchedulerRuntime:
                     request.phase = "FINISHED"
                     request.completion_ms = end_ms
                     state.finished_ids.append(request.request_id)
+                    if page_manager is not None and page_manager.has_request(
+                            request.request_id):
+                        self.release_kv_request(state, request.request_id)
             request.operator_provenance.extend(result.get("operator_provenance", []))
             request.validate()
             item_events.append({
@@ -472,11 +632,69 @@ class PlanOnlySchedulerRuntime:
             "scheduled_sequences": plan.scheduled_sequences,
             "items": item_events, "start_ms": end_ms - duration,
             "end_ms": end_ms,
+            "kv_telemetry": state.kv_telemetry(),
             "plan_validation_and_execution_overhead_ns":
                 time.perf_counter_ns() - started,
         }
         self.events.append(event)
         return event
+
+    def release_kv_request(self, state: ReplicaSchedulerState,
+                           request_id: str) -> tuple[int, ...]:
+        page_manager = self._page_manager(state)
+        if page_manager is None:
+            return ()
+        if not page_manager.has_request(request_id):
+            raise ServingPlanError("unknown request completion")
+        try:
+            released = page_manager.release(request_id)
+        except KVPageStateError as exc:
+            raise ServingPlanError(f"kv release failed: {exc}") from exc
+        state.statistics["kv_release_events"] += 1
+        state.statistics["kv_released_pages"] += len(released)
+        return released
+
+    def _commit_kv_metadata(
+        self,
+        state: ReplicaSchedulerState,
+        request: RequestExecutionState,
+        item: ScheduleItem,
+        page_manager: KVPageManager,
+    ) -> None:
+        try:
+            if item.phase == "prefill":
+                if not page_manager.has_request(request.request_id):
+                    page_manager.reserve_prefill(
+                        request.request_id,
+                        request.uncached_prompt_tokens,
+                    )
+                return
+            if item.phase == "decode":
+                reservation = page_manager.begin_append_token(
+                    request.request_id,
+                    page_manager.valid_token_count(request.request_id),
+                )
+                try:
+                    page_manager.commit_append_token(reservation)
+                except KVPageStateError:
+                    page_manager.rollback_append_token(reservation)
+                    raise
+                return
+            raise ServingPlanError("invalid schedule item phase")
+        except KVPageAllocationError as exc:
+            state.statistics["kv_allocation_failures"] += 1
+            raise ServingPlanError("deferred due to KV page pressure") from exc
+        except KVPageStateError as exc:
+            raise ServingPlanError(f"kv state error: {exc}") from exc
+
+    def _page_manager(
+        self,
+        state: ReplicaSchedulerState,
+    ) -> KVPageManager | None:
+        if self.page_manager is not None and state.page_manager is not None and \
+                self.page_manager is not state.page_manager:
+            raise ServingPlanError("scheduler/runtime page manager mismatch")
+        return self.page_manager or state.page_manager
 
     def counters(self) -> dict[str, int]:
         return {name: getattr(self, name) for name in (

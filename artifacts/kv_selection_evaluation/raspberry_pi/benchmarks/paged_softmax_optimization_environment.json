@@ -1,0 +1,42 @@
+{
+  "affinity": [
+    3
+  ],
+  "cpu_count": 4,
+  "frequencies": {
+    "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq": "2400000",
+    "/sys/devices/system/cpu/cpu1/cpufreq/scaling_cur_freq": "2400000",
+    "/sys/devices/system/cpu/cpu2/cpufreq/scaling_cur_freq": "2400000",
+    "/sys/devices/system/cpu/cpu3/cpufreq/scaling_cur_freq": "2400000"
+  },
+  "governors": {
+    "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor": "ondemand",
+    "/sys/devices/system/cpu/cpu1/cpufreq/scaling_governor": "ondemand",
+    "/sys/devices/system/cpu/cpu2/cpufreq/scaling_governor": "ondemand",
+    "/sys/devices/system/cpu/cpu3/cpufreq/scaling_governor": "ondemand"
+  },
+  "gxx_version": "g++ (Debian 14.2.0-19) 14.2.0",
+  "kernel": "6.18.34+rpt-rpi-2712",
+  "machine": "aarch64",
+  "native_artifact": "artifacts/kv_selection_evaluation/raspberry_pi/native/libattention_fp32.so",
+  "native_artifact_sha256": "9a884b32ed05c70866cacbfa9aa31ecb95227ce4e8162ca62abe1da414554eaa",
+  "native_compile_flags": [
+    "-O3",
+    "-std=c++17",
+    "-fPIC",
+    "-shared"
+  ],
+  "platform": "Linux-6.18.34+rpt-rpi-2712-aarch64-with-glibc2.41",
+  "python_version": "3.13.5",
+  "selected_affinity": [
+    3
+  ],
+  "selected_core": 3,
+  "temperature_after": {
+    "/sys/class/thermal/thermal_zone0/temp": "49050"
+  },
+  "temperature_before": {
+    "/sys/class/thermal/thermal_zone0/temp": "45200"
+  },
+  "throttling": "throttled=0x0"
+}

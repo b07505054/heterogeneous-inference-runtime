@@ -1,0 +1,121 @@
+00000000000031e0 <hir_cpu_attention_decode_paged_kv_page_major_fp32>:
+    31e0:	f100001f 	cmp	x0, #0x0
+    31e4:	fa401844 	ccmp	x2, #0x0, #0x4, ne	// ne = any
+    31e8:	54000080 	b.eq	31f8 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x18>  // b.none
+    31ec:	f100009f 	cmp	x4, #0x0
+    31f0:	fa4018c4 	ccmp	x6, #0x0, #0x4, ne	// ne = any
+    31f4:	540000c1 	b.ne	320c <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x2c>  // b.any
+    31f8:	90000001 	adrp	x1, 3000 <hir_cpu_attention_decode_paged_kv_fp32+0x2a0>
+    31fc:	52800020 	mov	w0, #0x1                   	// #1
+    3200:	91242021 	add	x1, x1, #0x908
+    3204:	92400800 	and	x0, x0, #0x7
+    3208:	d65f03c0 	ret
+    320c:	a9b47bfd 	stp	x29, x30, [sp, #-192]!
+    3210:	910003fd 	mov	x29, sp
+    3214:	a90153f3 	stp	x19, x20, [sp, #16]
+    3218:	aa0003f4 	mov	x20, x0
+    321c:	f94063e0 	ldr	x0, [sp, #192]
+    3220:	f100001f 	cmp	x0, #0x0
+    3224:	f9406be0 	ldr	x0, [sp, #208]
+    3228:	fa401804 	ccmp	x0, #0x0, #0x4, ne	// ne = any
+    322c:	f94073e0 	ldr	x0, [sp, #224]
+    3230:	fa401804 	ccmp	x0, #0x0, #0x4, ne	// ne = any
+    3234:	54000101 	b.ne	3254 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x74>  // b.any
+    3238:	90000001 	adrp	x1, 3000 <hir_cpu_attention_decode_paged_kv_fp32+0x2a0>
+    323c:	91242021 	add	x1, x1, #0x908
+    3240:	52800020 	mov	w0, #0x1                   	// #1
+    3244:	a94153f3 	ldp	x19, x20, [sp, #16]
+    3248:	92400800 	and	x0, x0, #0x7
+    324c:	a8cc7bfd 	ldp	x29, x30, [sp], #192
+    3250:	d65f03c0 	ret
+    3254:	f9407be0 	ldr	x0, [sp, #240]
+    3258:	aa0203f3 	mov	x19, x2
+    325c:	f100001f 	cmp	x0, #0x0
+    3260:	f94087e0 	ldr	x0, [sp, #264]
+    3264:	fa40c804 	ccmp	x0, #0x0, #0x4, gt
+    3268:	1a9fc7e2 	cset	w2, le
+    326c:	540007cd 	b.le	3364 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x184>
+    3270:	f9407fe0 	ldr	x0, [sp, #248]
+    3274:	b4000800 	cbz	x0, 3374 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x194>
+    3278:	f94083e8 	ldr	x8, [sp, #256]
+    327c:	9bc87c00 	umulh	x0, x0, x8
+    3280:	b5000720 	cbnz	x0, 3364 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x184>
+    3284:	f9407fe0 	ldr	x0, [sp, #248]
+    3288:	9b087c00 	mul	x0, x0, x8
+    328c:	b4000740 	cbz	x0, 3374 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x194>
+    3290:	f94087e8 	ldr	x8, [sp, #264]
+    3294:	9bc07d08 	umulh	x8, x8, x0
+    3298:	b5000668 	cbnz	x8, 3364 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x184>
+    329c:	f94087e8 	ldr	x8, [sp, #264]
+    32a0:	9b007d00 	mul	x0, x8, x0
+    32a4:	b4000680 	cbz	x0, 3374 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x194>
+    32a8:	f9408be2 	ldr	x2, [sp, #272]
+    32ac:	9bc07c42 	umulh	x2, x2, x0
+    32b0:	b50005a2 	cbnz	x2, 3364 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x184>
+    32b4:	f9408be2 	ldr	x2, [sp, #272]
+    32b8:	9b007c42 	mul	x2, x2, x0
+    32bc:	f94083e0 	ldr	x0, [sp, #256]
+    32c0:	b50007e0 	cbnz	x0, 33bc <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x1dc>
+    32c4:	eb05007f 	cmp	x3, x5
+    32c8:	90000001 	adrp	x1, 3000 <hir_cpu_attention_decode_paged_kv_fp32+0x2a0>
+    32cc:	9a859063 	csel	x3, x3, x5, ls	// ls = plast
+    32d0:	91228021 	add	x1, x1, #0x8a0
+    32d4:	528000a0 	mov	w0, #0x5                   	// #5
+    32d8:	eb02007f 	cmp	x3, x2
+    32dc:	54fffb43 	b.cc	3244 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x64>  // b.lo, b.ul, b.last
+    32e0:	a94e83e1 	ldp	x1, x0, [sp, #232]
+    32e4:	eb01001f 	cmp	x0, x1
+    32e8:	54000888 	b.hi	33f8 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x218>  // b.pmore
+    32ec:	d1000408 	sub	x8, x0, #0x1
+    32f0:	f94067e0 	ldr	x0, [sp, #200]
+    32f4:	eb0000ff 	cmp	x7, x0
+    32f8:	f94087e0 	ldr	x0, [sp, #264]
+    32fc:	8b000108 	add	x8, x8, x0
+    3300:	f94067e0 	ldr	x0, [sp, #200]
+    3304:	9a8090e7 	csel	x7, x7, x0, ls	// ls = plast
+    3308:	f94087e0 	ldr	x0, [sp, #264]
+    330c:	9ac00908 	udiv	x8, x8, x0
+    3310:	eb07011f 	cmp	x8, x7
+    3314:	54000208 	b.hi	3354 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x174>  // b.pmore
+    3318:	d2800001 	mov	x1, #0x0                   	// #0
+    331c:	14000009 	b	3340 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x160>
+    3320:	f9407fe2 	ldr	x2, [sp, #248]
+    3324:	eb20c05f 	cmp	x2, w0, sxtw
+    3328:	5400016d 	b.le	3354 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x174>
+    332c:	f94063e2 	ldr	x2, [sp, #192]
+    3330:	b8217840 	str	w0, [x2, x1, lsl #2]
+    3334:	91000421 	add	x1, x1, #0x1
+    3338:	eb01011f 	cmp	x8, x1
+    333c:	54000669 	b.ls	3408 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x228>  // b.plast
+    3340:	b86178c0 	ldr	w0, [x6, x1, lsl #2]
+    3344:	b9411be2 	ldr	w2, [sp, #280]
+    3348:	7100001f 	cmp	w0, #0x0
+    334c:	7a42a004 	ccmp	w0, w2, #0x4, ge	// ge = tcont
+    3350:	54fffe81 	b.ne	3320 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x140>  // b.any
+    3354:	90000001 	adrp	x1, 3000 <hir_cpu_attention_decode_paged_kv_fp32+0x2a0>
+    3358:	528000e0 	mov	w0, #0x7                   	// #7
+    335c:	9125c021 	add	x1, x1, #0x970
+    3360:	17ffffb9 	b	3244 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x64>
+    3364:	90000001 	adrp	x1, 3000 <hir_cpu_attention_decode_paged_kv_fp32+0x2a0>
+    3368:	52800080 	mov	w0, #0x4                   	// #4
+    336c:	91224021 	add	x1, x1, #0x890
+    3370:	17ffffb5 	b	3244 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x64>
+    3374:	f94083e0 	ldr	x0, [sp, #256]
+    3378:	b4fffb40 	cbz	x0, 32e0 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x100>
+    337c:	f9408be3 	ldr	x3, [sp, #272]
+    3380:	9bc37c00 	umulh	x0, x0, x3
+    3384:	b5ffff00 	cbnz	x0, 3364 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x184>
+    3388:	f94083e0 	ldr	x0, [sp, #256]
+    338c:	9b037c03 	mul	x3, x0, x3
+    3390:	f9406fe0 	ldr	x0, [sp, #216]
+    3394:	f9406fe5 	ldr	x5, [sp, #216]
+    3398:	eb00003f 	cmp	x1, x0
+    339c:	90000000 	adrp	x0, 3000 <hir_cpu_attention_decode_paged_kv_fp32+0x2a0>
+    33a0:	9a859021 	csel	x1, x1, x5, ls	// ls = plast
+    33a4:	7100005f 	cmp	w2, #0x0
+    33a8:	fa410062 	ccmp	x3, x1, #0x2, eq	// eq = none
+    33ac:	91228001 	add	x1, x0, #0x8a0
+    33b0:	528000a0 	mov	w0, #0x5                   	// #5
+    33b4:	54fff488 	b.hi	3244 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x64>  // b.pmore
+    33b8:	17ffffca 	b	32e0 <hir_cpu_attention_decode_paged_kv_page_major_fp32+0x100>
+    33bc:	f9408be8 	ldr	x8, [sp, #272]

@@ -75,11 +75,227 @@ def validate_execution_plan(payload: dict[str, Any]) -> list[str]:
             validate_attention_execution(attention)
         except (TypeError, ValueError) as exc:
             errors.append(f"invalid global_decisions.attention_execution: {exc}")
+    errors.extend(_validate_paged_kv_execution_contracts(payload))
     if "distributed" in payload:
         errors.extend(_validate_distributed_plan(payload.get("distributed")))
     if errors:
         raise ExecutionPlanError("; ".join(errors))
     return []
+
+
+def _validate_paged_kv_execution_contracts(payload: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    for function in payload.get("function_plans", []):
+        if not isinstance(function, dict):
+            continue
+        for op in function.get("per_op_decisions", []):
+            if not isinstance(op, dict) or "paged_kv_execution" not in op:
+                continue
+            contract = op.get("paged_kv_execution")
+            prefix = (
+                f"function_plans.{function.get('function_name', '<unknown>')}"
+                f".per_op_decisions.{op.get('op_name', '<unknown>')}"
+                ".paged_kv_execution"
+            )
+            if not isinstance(contract, dict):
+                errors.append(f"{prefix} must be an object")
+                continue
+            errors.extend(
+                f"{prefix}: {error}"
+                for error in _validate_one_paged_kv_execution(contract)
+            )
+    return errors
+
+
+def _validate_one_paged_kv_execution(contract: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    required = (
+        "kv_execution_unit",
+        "kv_candidate_id",
+        "kv_layout_kind",
+        "dtype",
+        "batch",
+        "num_kv_heads",
+        "head_dim",
+        "page_tokens",
+        "num_physical_pages",
+        "maximum_logical_tokens",
+        "maximum_logical_blocks",
+        "block_table_length",
+        "block_table_element_type",
+        "invalid_page_sentinel",
+        "bytes_per_token",
+        "bytes_per_k_page",
+        "bytes_per_v_page",
+        "bytes_per_combined_page",
+        "total_pool_bytes",
+        "alignment_bytes",
+        "k_page_strides",
+        "v_page_strides",
+        "pool_artifact_ref",
+        "pool_artifact_sha256",
+        "pool_artifact_version",
+        "pool_create_entry_point",
+        "prefill_write_entry_point",
+        "append_entry_point",
+        "view_binding",
+        "reset_entry_point",
+        "release_entry_point",
+        "paged_attention_kernel_id",
+        "paged_attention_entry_point",
+        "runtime_no_layout_redecision",
+        "runtime_no_kernel_redecision",
+    )
+    for key in required:
+        if key not in contract:
+            errors.append(f"missing required field: {key}")
+
+    def int_field(key: str) -> int | None:
+        value = contract.get(key)
+        if not isinstance(value, int) or isinstance(value, bool):
+            errors.append(f"{key} must be an integer")
+            return None
+        return value
+
+    page_tokens = int_field("page_tokens")
+    num_pages = int_field("num_physical_pages")
+    max_tokens = int_field("maximum_logical_tokens")
+    max_blocks = int_field("maximum_logical_blocks")
+    table_len = int_field("block_table_length")
+    heads = int_field("num_kv_heads")
+    head_dim = int_field("head_dim")
+    batch = int_field("batch")
+    bytes_per_token = int_field("bytes_per_token")
+    bytes_per_k_page = int_field("bytes_per_k_page")
+    bytes_per_v_page = int_field("bytes_per_v_page")
+    bytes_per_combined_page = int_field("bytes_per_combined_page")
+    total_pool_bytes = int_field("total_pool_bytes")
+    alignment = int_field("alignment_bytes")
+    sentinel = int_field("invalid_page_sentinel")
+
+    if contract.get("kv_execution_unit") != "portable_cpu_paged_kv":
+        errors.append("kv_execution_unit must be portable_cpu_paged_kv")
+    if contract.get("kv_layout_kind") != "paged_phd_contiguous":
+        errors.append("unsupported kv_layout_kind")
+    if contract.get("dtype") != "fp32":
+        errors.append("unsupported dtype")
+    if batch != 1:
+        errors.append("batch must be 1 for current native paged-KV ABI")
+    if page_tokens is not None and page_tokens <= 0:
+        errors.append("page_tokens must be > 0")
+    if num_pages is not None and num_pages <= 0:
+        errors.append("num_physical_pages must be > 0")
+    if max_tokens is not None and max_tokens <= 0:
+        errors.append("maximum_logical_tokens must be > 0")
+    if heads is not None and heads <= 0:
+        errors.append("num_kv_heads must be > 0")
+    if head_dim is not None and head_dim <= 0:
+        errors.append("head_dim must be > 0")
+    if alignment is not None and alignment <= 0:
+        errors.append("alignment_bytes must be > 0")
+    if contract.get("block_table_element_type") != "int32":
+        errors.append("block_table_element_type must be int32")
+    if sentinel is not None and not (-(2**31) <= sentinel <= 2**31 - 1):
+        errors.append("invalid_page_sentinel must fit int32")
+
+    if (
+        page_tokens is not None
+        and num_pages is not None
+        and max_tokens is not None
+        and max_tokens > page_tokens * num_pages
+    ):
+        errors.append("maximum_logical_tokens exceeds physical page capacity")
+    if page_tokens and max_tokens and max_blocks is not None:
+        expected_blocks = (max_tokens + page_tokens - 1) // page_tokens
+        if max_blocks != expected_blocks:
+            errors.append("maximum_logical_blocks formula mismatch")
+        if table_len is not None and table_len < expected_blocks:
+            errors.append("block_table_length smaller than logical blocks")
+
+    if heads and head_dim and bytes_per_token is not None:
+        expected_bpt = 2 * heads * head_dim * 4
+        if bytes_per_token != expected_bpt:
+            errors.append("bytes_per_token formula mismatch")
+    if heads and page_tokens and head_dim and bytes_per_k_page is not None:
+        expected_page = heads * page_tokens * head_dim * 4
+        if bytes_per_k_page != expected_page:
+            errors.append("bytes_per_k_page formula mismatch")
+        if bytes_per_v_page != expected_page:
+            errors.append("bytes_per_v_page formula mismatch")
+        if bytes_per_combined_page != 2 * expected_page:
+            errors.append("bytes_per_combined_page formula mismatch")
+        if num_pages and total_pool_bytes != num_pages * 2 * expected_page:
+            errors.append("total_pool_bytes formula mismatch")
+        expected_strides = [heads * page_tokens * head_dim, page_tokens * head_dim, head_dim, 1]
+        if contract.get("k_page_strides") != expected_strides:
+            errors.append("k_page_strides formula mismatch")
+        if contract.get("v_page_strides") != expected_strides:
+            errors.append("v_page_strides formula mismatch")
+
+    if contract.get("runtime_no_layout_redecision") is not True:
+        errors.append("runtime_no_layout_redecision must be true")
+    if contract.get("runtime_no_kernel_redecision") is not True:
+        errors.append("runtime_no_kernel_redecision must be true")
+    if contract.get("contiguous_fallback_identity") not in (
+        "",
+        "cpu_contiguous_kv_fp32_v1",
+    ):
+        errors.append("unsupported fallback identity")
+    if "num_query_heads" in contract and contract.get("num_query_heads") != heads:
+        errors.append("num_query_heads must equal num_kv_heads for current native kernel")
+    if "workspace_bytes" in contract:
+        workspace = int_field("workspace_bytes")
+        if workspace is not None and workspace < 0:
+            errors.append("workspace_bytes must be non-negative")
+
+    expected_entries = {
+        "pool_create_entry_point": "hir_paged_kv_initialize",
+        "prefill_write_entry_point": "hir_paged_kv_prefill_write",
+        "append_entry_point": "hir_paged_kv_append",
+        "reset_entry_point": "hir_paged_kv_reset",
+        "release_entry_point": "runtime_owned_pool_release",
+        "view_binding": "direct_int32_block_table_translation",
+    }
+    for key, expected in expected_entries.items():
+        if contract.get(key) != expected:
+            errors.append(f"{key} must be {expected}")
+    variants = {
+        "cpu_paged_kv_fp32_v1": (
+            "cpu_attention_decode_paged_kv_fp32",
+            "hir_cpu_attention_decode_paged_kv_fp32",
+        ),
+        "cpu_paged_kv_fp32_token_major_v1": (
+            "cpu_attention_decode_paged_kv_fp32",
+            "hir_cpu_attention_decode_paged_kv_fp32",
+        ),
+        "cpu_paged_kv_fp32_page_major_v1": (
+            "cpu_attention_decode_paged_kv_page_major_fp32",
+            "hir_cpu_attention_decode_paged_kv_page_major_fp32",
+        ),
+    }
+    expected_kernel, expected_entry = variants.get(
+        contract.get("kv_candidate_id"),
+        ("", ""),
+    )
+    if not expected_kernel:
+        errors.append("unsupported kv_candidate_id")
+    if contract.get("paged_attention_kernel_id") != expected_kernel:
+        errors.append("paged_attention_kernel_id does not match candidate")
+    if contract.get("paged_attention_entry_point") != expected_entry:
+        errors.append("paged_attention_entry_point does not match candidate")
+    if contract.get("pool_artifact_version") != "hir.paged_kv.v1":
+        errors.append("pool_artifact_version must be hir.paged_kv.v1")
+    for key in (
+        "pool_artifact_ref",
+        "pool_artifact_sha256",
+        "pool_create_entry_point",
+        "prefill_write_entry_point",
+        "append_entry_point",
+        "paged_attention_entry_point",
+    ):
+        if not contract.get(key):
+            errors.append(f"{key} must be non-empty")
+    return errors
 
 
 def _validate_distributed_plan(distributed: Any) -> list[str]:

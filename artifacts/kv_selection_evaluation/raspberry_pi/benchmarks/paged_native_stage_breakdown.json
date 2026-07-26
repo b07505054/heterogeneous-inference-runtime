@@ -1,0 +1,239 @@
+{
+  "build_command": [
+    "g++",
+    "-O3",
+    "-std=c++17",
+    "build/stage_probe/paged_native_stage_probe.cpp",
+    "-o",
+    "build/stage_probe/paged_native_stage_probe"
+  ],
+  "inner_iterations": 200,
+  "probe_source_sha256": "e2f6483cbaefbcb44467138b58d66398d8c52a5c43a2246043f3fc868cb2fa80",
+  "repetitions": 80,
+  "stage_rows": [
+    {
+      "breakdown": {
+        "measured_stage_ms": 0.00017891,
+        "percent_sum": 99.99999999999999,
+        "stages": {
+          "logical_page_setup": {
+            "ms": 3.7e-05,
+            "percent_of_total": 18.71333198462472
+          },
+          "normalization": {
+            "ms": 1.2685e-05,
+            "percent_of_total": 6.415638276350394
+          },
+          "output_read": {
+            "ms": 3.639e-05,
+            "percent_of_total": 18.404814889743072
+          },
+          "qk_score": {
+            "ms": 9.355e-06,
+            "percent_of_total": 4.73143839773417
+          },
+          "setup": {
+            "ms": 3.7e-05,
+            "percent_of_total": 18.71333198462472
+          },
+          "softmax_exp_sum": {
+            "ms": 3.5275e-05,
+            "percent_of_total": 17.840886101557757
+          },
+          "softmax_max": {
+            "ms": 1.85e-07,
+            "percent_of_total": 0.0935666599231236
+          },
+          "unclassified_remainder": {
+            "ms": 1.880999999999999e-05,
+            "percent_of_total": 9.513453368399754
+          },
+          "v_accumulation": {
+            "ms": 1.102e-05,
+            "percent_of_total": 5.573538337042281
+          }
+        },
+        "total_ms": 0.00019772,
+        "unclassified_remainder_ms": 1.880999999999999e-05
+      },
+      "logical_page_setup_ms": 3.7e-05,
+      "normalization_ms": 1.2685e-05,
+      "output_read_ms": 3.639e-05,
+      "qk_score_ms": 9.355e-06,
+      "setup_ms": 3.7e-05,
+      "softmax_exp_sum_ms": 3.5275e-05,
+      "softmax_max_ms": 1.85e-07,
+      "total_ms": 0.00019772,
+      "v_accumulation_ms": 1.102e-05,
+      "valid_tokens": 1
+    },
+    {
+      "breakdown": {
+        "measured_stage_ms": 0.000387615,
+        "percent_sum": 100.0,
+        "stages": {
+          "logical_page_setup": {
+            "ms": 3.7e-05,
+            "percent_of_total": 9.114759752177072
+          },
+          "normalization": {
+            "ms": 3.343e-05,
+            "percent_of_total": 8.235308608521068
+          },
+          "output_read": {
+            "ms": 3.648e-05,
+            "percent_of_total": 8.98666042593026
+          },
+          "qk_score": {
+            "ms": 5.565e-05,
+            "percent_of_total": 13.70909135699065
+          },
+          "setup": {
+            "ms": 3.7e-05,
+            "percent_of_total": 9.114759752177072
+          },
+          "softmax_exp_sum": {
+            "ms": 0.000151295,
+            "percent_of_total": 37.270745316368384
+          },
+          "softmax_max": {
+            "ms": 1.85e-07,
+            "percent_of_total": 0.04557379876088537
+          },
+          "unclassified_remainder": {
+            "ms": 1.832e-05,
+            "percent_of_total": 4.513037801618486
+          },
+          "v_accumulation": {
+            "ms": 3.6575e-05,
+            "percent_of_total": 9.01006318745612
+          }
+        },
+        "total_ms": 0.000405935,
+        "unclassified_remainder_ms": 1.832e-05
+      },
+      "logical_page_setup_ms": 3.7e-05,
+      "normalization_ms": 3.343e-05,
+      "output_read_ms": 3.648e-05,
+      "qk_score_ms": 5.565e-05,
+      "setup_ms": 3.7e-05,
+      "softmax_exp_sum_ms": 0.000151295,
+      "softmax_max_ms": 1.85e-07,
+      "total_ms": 0.000405935,
+      "v_accumulation_ms": 3.6575e-05,
+      "valid_tokens": 9
+    },
+    {
+      "breakdown": {
+        "measured_stage_ms": 0.00103635,
+        "percent_sum": 100.00000000000001,
+        "stages": {
+          "logical_page_setup": {
+            "ms": 5.5e-05,
+            "percent_of_total": 5.304067737766891
+          },
+          "normalization": {
+            "ms": 7.167e-05,
+            "percent_of_total": 6.911682450286419
+          },
+          "output_read": {
+            "ms": 3.648e-05,
+            "percent_of_total": 3.5180434740679307
+          },
+          "qk_score": {
+            "ms": 0.00017639,
+            "percent_of_total": 17.010627422994578
+          },
+          "setup": {
+            "ms": 3.7e-05,
+            "percent_of_total": 3.5681910235886356
+          },
+          "softmax_exp_sum": {
+            "ms": 0.00055379,
+            "percent_of_total": 53.40617586359866
+          },
+          "softmax_max": {
+            "ms": 1.85e-07,
+            "percent_of_total": 0.017840955117943178
+          },
+          "unclassified_remainder": {
+            "ms": 5.900000000001824e-07,
+            "percent_of_total": 0.05689818118697151
+          },
+          "v_accumulation": {
+            "ms": 0.000105835,
+            "percent_of_total": 10.206472891391979
+          }
+        },
+        "total_ms": 0.00103694,
+        "unclassified_remainder_ms": 5.900000000001824e-07
+      },
+      "logical_page_setup_ms": 5.5e-05,
+      "normalization_ms": 7.167e-05,
+      "output_read_ms": 3.648e-05,
+      "qk_score_ms": 0.00017639,
+      "setup_ms": 3.7e-05,
+      "softmax_exp_sum_ms": 0.00055379,
+      "softmax_max_ms": 1.85e-07,
+      "total_ms": 0.00103694,
+      "v_accumulation_ms": 0.000105835,
+      "valid_tokens": 32
+    },
+    {
+      "breakdown": {
+        "measured_stage_ms": 0.001879635,
+        "percent_sum": 100.0,
+        "stages": {
+          "logical_page_setup": {
+            "ms": 3.7e-05,
+            "percent_of_total": 1.949040492633154
+          },
+          "normalization": {
+            "ms": 0.000155185,
+            "percent_of_total": 8.174644563493946
+          },
+          "output_read": {
+            "ms": 3.648e-05,
+            "percent_of_total": 1.9216485721961476
+          },
+          "qk_score": {
+            "ms": 0.0003487,
+            "percent_of_total": 18.368389723815696
+          },
+          "setup": {
+            "ms": 3.7e-05,
+            "percent_of_total": 1.949040492633154
+          },
+          "softmax_exp_sum": {
+            "ms": 0.00105657,
+            "percent_of_total": 55.65669495409219
+          },
+          "softmax_max": {
+            "ms": 1.85e-07,
+            "percent_of_total": 0.00974520246316577
+          },
+          "unclassified_remainder": {
+            "ms": 1.8734999999999976e-05,
+            "percent_of_total": 0.9868992872832997
+          },
+          "v_accumulation": {
+            "ms": 0.000208515,
+            "percent_of_total": 10.983896711389244
+          }
+        },
+        "total_ms": 0.00189837,
+        "unclassified_remainder_ms": 1.8734999999999976e-05
+      },
+      "logical_page_setup_ms": 3.7e-05,
+      "normalization_ms": 0.000155185,
+      "output_read_ms": 3.648e-05,
+      "qk_score_ms": 0.0003487,
+      "setup_ms": 3.7e-05,
+      "softmax_exp_sum_ms": 0.00105657,
+      "softmax_max_ms": 1.85e-07,
+      "total_ms": 0.00189837,
+      "v_accumulation_ms": 0.000208515,
+      "valid_tokens": 64
+    }
+  ]
+}
