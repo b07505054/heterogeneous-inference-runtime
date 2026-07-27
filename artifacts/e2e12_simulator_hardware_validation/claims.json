@@ -1,0 +1,90 @@
+{
+  "claims": [
+    {
+      "claim": {
+        "claim_id": "claim-A-rmsnorm",
+        "claim_text": "Custom CUDA RMSNorm kernel outperforms the fastest real non-custom baseline (torch.compile) at shape tokens=16,hidden=4096 on GTX 1650 Max-Q",
+        "claim_level": "target_specific_performance_claim",
+        "operation_family": "rms_norm",
+        "baseline": "torch.compile",
+        "excluded_costs": [
+          "cuda_extension_jit_compilation",
+          "ninja_build"
+        ],
+        "target_profile_ids": [
+          "gtx1650_maxq"
+        ],
+        "simulator_hardware_disagreement_acknowledged": false
+      },
+      "result": {
+        "decision": "promote_hardware_validated",
+        "reasons": [
+          "promoted on 1 hardware-validated evidence records, no simulator evidence"
+        ],
+        "claim_id": "claim-A-rmsnorm"
+      },
+      "evidence_ids": [
+        "e2e12-rmsnorm-hw-16x4096"
+      ],
+      "note": "simulator (Accel-Sim) bottleneck attribution NOT available this slice -- decision is PROMOTE_HARDWARE_VALIDATED, not _CORRELATED"
+    },
+    {
+      "claim": {
+        "claim_id": "claim-B-lmhead",
+        "claim_text": "Row-wise GEMV LM-head decomposition improves real vLLM serving TPOT at batch=2 vs default vLLM behavior",
+        "claim_level": "target_specific_performance_claim",
+        "operation_family": "linear",
+        "baseline": "default_vllm_f_linear_cublas",
+        "excluded_costs": [
+          "server_startup",
+          "model_loading",
+          "profiler_overhead"
+        ],
+        "target_profile_ids": [
+          "gtx1650_maxq"
+        ],
+        "simulator_hardware_disagreement_acknowledged": false
+      },
+      "result": {
+        "decision": "promote_hardware_validated",
+        "reasons": [
+          "promoted on 1 hardware-validated evidence records, no simulator evidence"
+        ],
+        "claim_id": "claim-B-lmhead"
+      },
+      "evidence_ids": [
+        "e2e12-lmhead-hw-b2"
+      ],
+      "note": "simulator (Accel-Sim) isolated attribution NOT available this slice"
+    },
+    {
+      "claim": {
+        "claim_id": "claim-C-matmul",
+        "claim_text": "INT8 packed-B cortex-a76-dotprod fused MatMul-Bias-ReLU outperforms FP32 tiled fallback at shape 384x384x384 on Raspberry Pi 5",
+        "claim_level": "target_specific_performance_claim",
+        "operation_family": "matmul_bias_relu",
+        "baseline": "fp32_tiled_fallback",
+        "excluded_costs": [
+          "int8_calibration_artifact_creation",
+          "packed_weight_packing",
+          "g++_compilation"
+        ],
+        "target_profile_ids": [
+          "raspberry_pi5_cortex_a76"
+        ],
+        "simulator_hardware_disagreement_acknowledged": false
+      },
+      "result": {
+        "decision": "promote_hardware_validated",
+        "reasons": [
+          "promoted on 1 hardware-validated evidence records, no simulator evidence"
+        ],
+        "claim_id": "claim-C-matmul"
+      },
+      "evidence_ids": [
+        "e2e12-matmul-hw-384"
+      ],
+      "note": "simulator (gem5) cache/memory correlation NOT available this slice"
+    }
+  ]
+}

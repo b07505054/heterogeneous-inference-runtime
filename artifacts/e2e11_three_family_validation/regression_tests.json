@@ -1,0 +1,21 @@
+{
+  "main_venv_suite": {
+    "command": "pytest tests/ -q -k 'not p1b and not p1c and not p1d and not deployment_planner and not model_adapter_registry' --ignore=tests/test_rmsnorm_cuda_correctness.py --ignore=tests/test_e2e9_runtime_dispatcher.py",
+    "passed": 1914, "skipped": 38, "deselected": 44, "unexpected_failures": 0, "wall_time_s": 324.93
+  },
+  "gpu_venv_rmsnorm_suite": {
+    "command": "PATH=.venv-rmsnorm/bin:$PATH .venv-rmsnorm/bin/python -m pytest tests/test_e2e9_runtime_dispatcher.py tests/test_rmsnorm_cuda_correctness.py -q",
+    "passed": 23, "unexpected_failures": 0
+  },
+  "e2e10_specific_tests_reconfirmed": {
+    "test_e2e10_matmul_descriptor.py": "15 passed (part of main suite total)",
+    "test_e2e10_matmul_candidates_legality.py": "12 passed",
+    "test_e2e10_matmul_cost_model.py": "8 passed (was 7 in E2E-10; +1 added mid-E2E-10 for the raw-vs-gated divergence finding)",
+    "test_e2e10_extensibility.py": "4 passed"
+  },
+  "totals": {"total_passed_across_both_environments": 1937, "total_unexpected_failures": 0, "total_skipped": 38, "total_deselected_pre_existing_unrelated": 44},
+  "deselected_reason": "44 tests in tests/test_p1b_cross_repo_contract.py, tests/test_p1c_multi_candidate_contract.py, tests/test_p1d_thread_schedule_contract.py, tests/test_deployment_planner.py, tests/test_model_adapter_registry.py are pre-existing failures caused by uncommitted WIP in deployment/execution_plan/ (5 files, 1692 insertions, last touched 2026-07-18/prior to E2E-9) unrelated to and never touched by E2E-9/E2E-10/E2E-11. Deselected here (not run) to keep the regression signal clean; their failure status is unchanged from E2E-9/E2E-10's own audits (git diff --stat reconfirmed identical this slice).",
+  "environment_specific_reruns_required": [
+    "RMSNorm CUDA extension tests and any script that JIT-compiles the RMSNorm extension require PATH=.venv-rmsnorm/bin:$PATH exported before invocation (ninja discoverability); running under plain .venv/bin/python fails with 'Ninja is required...' -- same documented workaround as E2E-9/E2E-10, re-encountered identically in E2E-11 Phase 2's three-family round-trip script."
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "final_architecture_decision": "PROVENANCE_GATE_SUCCESS_SIMULATION_INCONCLUSIVE",
+  "decision_rationale": "Both installed simulator repositories were located, inspected, and had concrete build/execution attempted (not merely assumed blocked). Accel-Sim: in-tree build failed on pre-existing root-owned directories (no sudo); worked around via an Expansion-relocated source copy; standalone nvcc compilation then confirmed FUNDAMENTALLY BROKEN on this host via a minimal, torch-free, project-free reproduction (CUDA 13.1 vs this glibc/GCC-15.2 'rsqrt' header conflict) -- a genuine SIMULATOR_INCOMPATIBILITY, not an unattempted approval gate. gem5: build launched successfully (scons installed via pip, build-dir relocated to Expansion, resource-monitored via /usr/bin/time -v, peak RSS only ~324MB, no OOM), failed fast on a missing m4 dependency; a concrete user-local source-build workaround for m4 was attempted and itself failed on an independent, diagnosed gnulib/GCC-15.2 incompatibility. Neither track produced real SIMULATOR_OUTPUT evidence. Meanwhile, the evidence taxonomy and claim gate (Phase 1/2) are fully implemented, tested (21/21 new tests), and demonstrated against real E2E-11 hardware data: three claims promoted (PROMOTE_HARDWARE_VALIDATED) and one aggregate claim correctly downgraded using real measured numbers. No existing three-family behavior regressed (1958 total tests passing). This matches PROVENANCE_GATE_SUCCESS_SIMULATION_INCONCLUSIVE precisely: the gate/provenance side succeeded; the simulation side is inconclusive due to concretely-diagnosed toolchain incompatibilities on this specific host, not due to skipped effort.",
+  "resource_conclusion": {
+    "status": "RESOURCE_USAGE_SAFE_WITH_EXTERNAL_STORAGE",
+    "ram_sufficient": true, "existing_swap_sufficient": "yes (never approached; swap usage did not increase during any attempted build)",
+    "heavy_swapping_observed": false,
+    "peak_rss_accelsim_build_attempt_kb": 8868, "peak_rss_gem5_build_attempt_kb": 331280,
+    "peak_rss_m4_build_attempt": "not separately captured via /usr/bin/time -v (small, fast build attempt); no memory pressure observed via free -h before/after",
+    "largest_generated_artifact": "accel-sim-framework-buildcopy on Expansion, 255MB",
+    "internal_disk_minimum_free_observed_gib": 13, "internal_disk_free_unchanged_throughout": true,
+    "expansion_space_consumed_mb": "~1100 (build 274MB + cache 242MB + tmp 302MB + misc)",
+    "oom_events": 0, "resource_limited_reductions": 0,
+    "full_requested_workloads_completed": false,
+    "claims_downgraded_because_of_resource_constraints": false,
+    "claims_downgraded_because_of_toolchain_incompatibility_instead": true
+  }
+}

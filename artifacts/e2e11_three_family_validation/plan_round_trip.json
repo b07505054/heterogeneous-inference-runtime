@@ -1,0 +1,31 @@
+{
+  "checks": {
+    "no_family_specific_branch_in_selector_source": "PASS",
+    "rmsnorm_candidate_id_match": "PASS",
+    "rmsnorm_implementation_kind_match": "PASS",
+    "lm_head_m1_resolution_match": "PASS",
+    "lm_head_m4_resolution_match": "PASS",
+    "lm_head_m8_resolution_match": "PASS",
+    "lm_head_m99_default_fallback_match": "PASS",
+    "matmul_candidate_id_match": "PASS",
+    "matmul_implementation_kind_match": "PASS",
+    "matmul_fallback_id_match": "PASS",
+    "unrelated_host_plan_key_untouched_by_attach": "PASS"
+  },
+  "all_checks_passed": true,
+  "real_execution_after_roundtrip": {
+    "rmsnorm": {"selected_candidate": "cuda_rmsnorm_fp32_bs256_v1", "shape": "tokens=16 hidden=4096", "correct_vs_reference": true,
+                "fallback_candidate": "rmsnorm_torch_eager_fallback_v1", "fallback_correct_vs_reference": true},
+    "lm_head": {
+      "M=1": {"resolved": "linear_default_gemm_v1", "correct_vs_F.linear": true},
+      "M=4": {"resolved": "linear_row_wise_gemv_v1", "correct_vs_F.linear": true},
+      "M=8": {"resolved": "linear_row_wise_gemv_v1", "correct_vs_F.linear": true},
+      "M=12": {"resolved": "linear_default_gemm_v1", "correct_vs_F.linear": true, "note": "12 > threshold(8), correctly falls back to default GEMM"}
+    },
+    "matmul_bias_relu": {"selected_candidate": "matmul_bias_relu_int8_packed_b_a76dotprod_v1", "fallback_candidate": "matmul_bias_relu_fp32_tiled_v1",
+                           "model": "measured_lookup", "confidence": 0.9, "target": "cpu/aarch64/cortex-a76",
+                           "real_execution_note": "validated separately on the real Raspberry Pi target -- see matmul_bias_relu/correctness.json; this GPU host cannot run the aarch64 binaries"}
+  },
+  "script": "scripts/run_three_family_plan_roundtrip_e2e11.py",
+  "environment_note": "required the same PATH=.venv-rmsnorm/bin workaround as all prior RMSNorm-CUDA-extension work (ninja discoverability)"
+}

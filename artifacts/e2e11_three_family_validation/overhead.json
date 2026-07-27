@@ -1,0 +1,34 @@
+{
+  "rmsnorm": {
+    "candidate_generation_plus_legality_plus_cost_lookup_plus_selection_full_us": 35.55,
+    "policy_serialization_note": "to_json() is a small dict/JSON dump, sub-10us by construction (not separately isolated this slice)",
+    "policy_deserialization_us": 43.18,
+    "cached_static_policy_resolve_us": 0.137,
+    "dispatcher_and_cuda_launch": "measured as part of the full custom_selected timing in rmsnorm/raw_timings.json (0.029-0.140ms depending on shape, includes real kernel execution, not separable from launch overhead without additional CUDA-graph-capture instrumentation not built this slice)",
+    "measurement_method": "time.perf_counter() over 2000 repetitions, pure Python selection path (no GPU involved in the selection itself)"
+  },
+  "lm_head": {
+    "source": "E2E-9 measurement, re-confirmed architecturally unchanged this slice (tiny_m_dispatch.py, tiny_m_oot_logits_processor.py, tiny_m_linear_cost_model.py hashes unchanged)",
+    "one_time_policy_construction_ms": 0.25,
+    "cached_m_lookup_and_branch_resolution_us": 0.266,
+    "e2e8_batch2_measured_serving_saving_ms": 35.82,
+    "cached_overhead_as_percent_of_batch2_saving": 0.00074,
+    "note": "not re-measured with a fresh microbenchmark this slice (would duplicate E2E-9 exactly since the relevant source files are byte-identical); re-validated at the serving level instead (see lm_head/aggregate_metrics.json)"
+  },
+  "matmul_bias_relu": {
+    "one_time_full_candidate_graph_build_seconds": 1.549,
+    "one_time_graph_build_note": "deployment.execution_plan.slice3c_target_selection.generate_candidate_graph() builds a 103,680-node cartesian-product graph across 14 dimensions (backend/runtime/delegate/precision/quantization/kernel/layout/packing/tile/thread_count/memory_placement/target_isa/artifact_kind/execution_strategy/measurement_evidence) covering BOTH portable_cpu and executorch_xnnpack backends -- E2E-10/E2E-11 only use the 4 portable_cpu candidates, but the underlying real function generates the full graph regardless. This is a real, non-trivial ONE-TIME cost (1.55s), cached via @lru_cache(maxsize=1) for the remainder of the process.",
+    "per_call_candidate_generation_plus_selection_full_us": 3047.6,
+    "per_call_breakdown": "enumerate_complete_candidates() alone costs ~2066.6us per call (re-lists/re-filters the cached 103,680-node graph's accepted_candidates property EVERY call -- not itself cached); the remaining ~981us is this slice's own generate_matmul_bias_relu_candidates() wrapper, legality filtering, and cost-model prediction over 4 candidates",
+    "policy_deserialization_us": 33.72,
+    "cached_static_policy_resolve_us": 0.135,
+    "packing_cost": "reported separately in matmul_bias_relu/correctness.json's underlying calibration/packing artifact creation -- a one-time, per-(shape,weight) cost, never inside the timed dispatch call (confirmed by MatMulBiasReLUExecutionContext's design: pre-built artifacts are inputs, not created per-call)",
+    "steady_state_kernel_cost": "see matmul_bias_relu/selector_comparison.json for real measured per-candidate median latencies",
+    "acceptance_check": "the ~3.05ms per-call selection cost is 100x+ larger than RMSNorm's, and is LARGER than the operation's own execution time at small shapes (e.g. 8x8x8 at 0.00032ms) -- this is acceptable ONLY because MatMul uses a STATIC policy resolved ONCE at plan-build time (build_static_policy), never re-invoked inside a steady-state execution loop; cached resolution (0.135us) is what matters for repeated calls and is negligible. This is flagged honestly as real, non-trivial, and shape-graph-driven overhead that a future slice could reduce by caching enumerate_complete_candidates()'s portable_cpu filter, not just the raw graph."
+  },
+  "framework_overhead_percentage_of_optimization": {
+    "rmsnorm": "not well-defined as a single percentage since selector VALUE vs a fixed block was found to be near-neutral this slice (see rmsnorm/baseline_comparison.json) -- the custom-KERNEL value (vs torch.compile) is 1.34x-2.98x, and the ~35.5us one-time selection overhead is <0.2% of even the smallest measured kernel call (~29us) at any shape when amortized, but is NOT negligible if (hypothetically) re-run per token; the architecture avoids this by resolving once per shape.",
+    "lm_head": "0.00074% of the batch=2 serving optimization (from E2E-9, unchanged)",
+    "matmul_bias_relu": "the one-time 1.55s graph build and ~3ms per-selection cost are BOTH amortized to zero in steady state (paid once at plan-build), so framework overhead as a percentage of REPEATED steady-state execution is 0% by architecture; as a percentage of a SINGLE cold invocation at the smallest measured shape (8x8x8, 0.00032ms selected latency), the selection overhead would be enormous (~10,000,000%) if repeated per-call, which is exactly why static, cached resolution is required and is what this architecture actually does."
+  }
+}

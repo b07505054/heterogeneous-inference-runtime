@@ -1,0 +1,23 @@
+{
+  "exact_measured_winner_rate": "12/12",
+  "correctness_rate": "12/12",
+  "policy_roundtrip_rate": "12/12",
+  "max_absolute_error_across_all_shapes": 1.9073486328125e-06,
+  "max_relative_error_across_all_shapes": 3.2824735285430506e-07,
+  "tolerance_used": {
+    "rtol": 0.001,
+    "atol": 0.0001,
+    "note": "unchanged from E2E-9 project tolerance"
+  },
+  "mean_regret_ms": 0.001007999914387862,
+  "worst_regret_ms": 0.002048000693321228,
+  "selected_block_size_distribution": {
+    "64": 3,
+    "128": 0,
+    "256": 4,
+    "512": 5
+  },
+  "illegal_candidate_count": 0,
+  "extrapolation_count": 0,
+  "model_confidence_note": "measured_lookup source used at all 12 shapes (all exact matches in the checked-in evidence set); confidence=0.9 at each"
+}

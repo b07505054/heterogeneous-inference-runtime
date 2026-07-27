@@ -1,0 +1,38 @@
+{
+  "1": {
+    "texts_equal_direct_vs_unified": true,
+    "texts_equal_baseline_vs_unified": true,
+    "texts": {
+      "baseline": " Paris. It was founded in 789 AD by Charlemagne,",
+      "direct_e2e8": " Paris. It was founded in 789 AD by Charlemagne,",
+      "unified_selector": " Paris. It was founded in 789 AD by Charlemagne,"
+    }
+  },
+  "2": {
+    "texts_equal_direct_vs_unified": true,
+    "texts_equal_baseline_vs_unified": true,
+    "texts": {
+      "baseline": " Paris. It was founded in 789 AD by Charlemagne,",
+      "direct_e2e8": " Paris. It was founded in 789 AD by Charlemagne,",
+      "unified_selector": " Paris. It was founded in 789 AD by Charlemagne,"
+    }
+  },
+  "4": {
+    "texts_equal_direct_vs_unified": true,
+    "texts_equal_baseline_vs_unified": true,
+    "texts": {
+      "baseline": " Paris. It was founded in 789 AD by Charlemagne,",
+      "direct_e2e8": " Paris. It was founded in 789 AD by Charlemagne,",
+      "unified_selector": " Paris. It was founded in 789 AD by Charlemagne,"
+    }
+  },
+  "8": {
+    "texts_equal_direct_vs_unified": true,
+    "texts_equal_baseline_vs_unified": true,
+    "texts": {
+      "baseline": " Paris. It was founded in 789 AD by Charlemagne,",
+      "direct_e2e8": " Paris. It was founded in 789 AD by Charlemagne,",
+      "unified_selector": " Paris. It was founded in 789 AD by Charlemagne,"
+    }
+  }
+}

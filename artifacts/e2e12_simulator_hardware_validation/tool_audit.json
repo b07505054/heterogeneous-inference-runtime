@@ -1,0 +1,36 @@
+{
+  "accel_sim": {
+    "installation_status": "CLONED_NOT_BUILT",
+    "missing": ["NVBit runtime (small prebuilt tarball, ~15-30MB, official NVLabs release v1.7.3)",
+                "linked gpu-simulator binary (build/release/accel-sim.out or equivalent -- currently only .o files exist)"],
+    "why_required": "NVBit is the SASS-level dynamic instrumentation tool Accel-Sim's official tracer uses to capture real GPU kernel traces; the gpu-simulator binary is the trace-driven simulator itself. Neither exists yet.",
+    "approx_disk_impact": "NVBit download ~15-30MB; gpu-simulator build ~200-500MB of object/binary files (estimate based on typical Accel-Sim builds)",
+    "existing_alternative": "None -- Accel-Sim's own generate-turing-traces.sh script is present and IS the sanctioned workflow for exactly this Turing-class GPU (GTX 1650, cc7.5); no substitute tool avoids the NVBit dependency for real SASS tracing",
+    "exact_commands_for_approval": [
+      "cd ~/Desktop/Project/simulator-validation/third_party/accel-sim-framework/util/tracer_nvbit && bash install_nvbit.sh",
+      "cd ~/Desktop/Project/simulator-validation/third_party/accel-sim-framework/gpu-simulator && export PATH=/usr/local/cuda/bin:$PATH && source setup_environment.sh && make -j1 2>&1 | tee $E2E12_LOG_ROOT/accelsim_build.log"
+    ],
+    "expected_build_time_category": "small-medium (NVBit download: seconds; gpu-simulator make -j1: likely 10-30 minutes on this CPU, single-job per the mandatory resource constraints)",
+    "required_privileges": "none beyond current user (no sudo needed for either step)",
+    "risks": ["NVBit device driver compatibility with driver 595.71.05 not yet verified", "make -j1 build could still spike RSS during heavy C++ template compilation (gpgpu-sim has large templated headers); given only 1.1GiB free swap, monitor with /usr/bin/time -v and abort on OOM per the mandatory resource protocol"],
+    "continuable_without_installation": ["evidence schema", "claim gate", "claim gate tests", "harness source code (RMSNorm)", "real hardware (ncu) measurement", "reuse of E2E-11 hardware evidence"],
+    "status": "INSTALLATION_APPROVAL_REQUIRED"
+  },
+  "gem5": {
+    "installation_status": "CLONED_NOT_BUILT",
+    "missing": ["scons (Python build tool, not installed in any venv or system-wide)", "gem5.opt binary (no build/ directory exists at all)"],
+    "why_required": "gem5 is built via scons; there is no pre-built binary anywhere in the checkout.",
+    "approx_disk_impact": "scons package itself: <5MB. gem5 ARM-only opt build: historically 1.5-4GB of object files plus a multi-hundred-MB final binary, per the ARM ISA target alone (smallest reasonable target per the mandatory resource directive's 'ARM-only or AArch64-only, gem5.opt, no LTO, one SCons job' guidance).",
+    "existing_alternative": "None found -- no other AArch64-capable cycle-level simulator is present in this environment",
+    "exact_commands_for_approval": [
+      "pip install --target=$E2E12_CACHE_ROOT/pip scons  (or: pip install scons, if a system/venv install is preferred)",
+      "cd ~/Desktop/Project/simulator-validation/third_party/gem5 && scons build/ARM/gem5.opt -j1 --no-lto  (build directory to be relocated to $E2E12_BUILD_ROOT/gem5 via symlink per the mandatory resource directive, not left on the internal 13GiB-free root filesystem)"
+    ],
+    "expected_build_time_category": "large (gem5 ARM-only opt builds commonly take 45-120+ minutes even with adequate parallelism; with the mandated -j1 single-job constraint given the thin 1.1GiB swap margin, this could run considerably longer)",
+    "required_privileges": "none beyond current user",
+    "risks": ["gem5's C++ build has individual translation units known to require 1.5-3GB RSS during compilation/linking in some build configurations; with only 5.3GiB MemAvailable and 1.1GiB SwapFree, a -j1 build is the only defensible attempt, and even that carries real OOM risk per the mandatory resource protocol's own warning about gem5 builds specifically", "internal disk has only 13GiB free -- build MUST be redirected entirely to the Expansion drive (already verified via readlink -f this slice) to avoid INTERNAL_DISK_LEAK_DETECTED"],
+    "continuable_without_installation": ["gem5 target-config schema (Phase 13's field taxonomy, populated from real Pi cache_hierarchy data)", "MatMul harness source code design", "real Pi hardware measurement (reused from E2E-10/E2E-11)"],
+    "status": "INSTALLATION_APPROVAL_REQUIRED"
+  },
+  "decision_this_slice": "Neither scons install nor NVBit download nor either simulator build was executed, per the task's explicit 'do not install without approval' rule together with this slice's mid-turn mandatory resource directive, which independently flags the machine's 1.1GiB free-swap margin as requiring extreme caution for exactly these kinds of C++ builds. Both are reported as INSTALLATION_APPROVAL_REQUIRED with exact commands above, awaiting explicit user approval before any future attempt."
+}

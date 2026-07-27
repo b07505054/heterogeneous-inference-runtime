@@ -1,0 +1,8 @@
+{
+  "note": "Kernel-level profiler attribution for the LM-head GEMM-vs-GEMV decomposition was established via torch.profiler chrome-trace analysis in E2E-7 (kernel launch grid-dimension correlation to logical N dimensions), reconfirmed structurally unchanged this slice since tiny_m_dispatch.py/tiny_m_oot_logits_processor.py are byte-identical to their E2E-9 state (see source_hashes.json). Not re-profiled from scratch this slice to avoid duplicating that exact prior work; instead re-validated at the serving-timing and output-correctness level (lm_head/aggregate_metrics.json, lm_head/correctness.json), which is the level directly relevant to E2E-11's optimization-effect question.",
+  "known_kernel_families_from_e2e7_e2e8": {
+    "batch_1_and_optimized_gemv_path": "gemv2T_kernel_val<...> family",
+    "batch_greater_equal_2_unoptimized_default_path": "volta_s884gemm_fp16_64x64_ldg8_tn / volta_fp16_s884gemm_fp16_64x64_ldg8_f2f_tn"
+  },
+  "transformer_projection_kernels_unchanged_claim": "SOURCE_PROVEN, not re-profiled this slice: perf_model/tiny_m_oot_logits_processor.py's OOT LogitsProcessor override touches only the LM-head matmul call site (lm_head.quant_method.apply -> maybe_tiny_m_linear or execute_lm_head_linear); qkv_proj/o_proj/gate_up_proj/down_proj are never referenced anywhere in perf_model/ (grep-confirmed), so their kernel dispatch is provably untouched by source inspection."
+}

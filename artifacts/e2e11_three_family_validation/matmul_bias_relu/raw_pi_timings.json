@@ -1,0 +1,3453 @@
+{
+  "build_identity": {
+    "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+      "binary_sha256": "f7750d5acf8d6bb9fe2ab76ee80a0eb0fcf91972fb0219bf24e18556ce661cbf",
+      "build_command": [
+        "g++",
+        "-O2",
+        "-std=c++17",
+        "-pthread",
+        "-o",
+        "results/e2e11_fresh/build/portable_fused_matmul_bias_relu",
+        "/home/allen/e2e10/native/cpu_kernels/portable_fused_matmul_bias_relu.cpp"
+      ],
+      "candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+      "codegen_target_id": "generic_aarch64",
+      "compiler_executable": "g++",
+      "compiler_flags": [
+        "-O2",
+        "-std=c++17",
+        "-pthread"
+      ],
+      "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+      "kernel_source": "/home/allen/e2e10/native/cpu_kernels/portable_fused_matmul_bias_relu.cpp",
+      "output_binary": "results/e2e11_fresh/build/portable_fused_matmul_bias_relu",
+      "required_isa_features": [],
+      "schema_version": "slice3c.kernel_build_manifest.v1",
+      "target_architecture": "aarch64",
+      "target_microarchitecture": "",
+      "truth_boundary": "compiler_owned_kernel_build_contract_external_cpp_compilation_not_llvm_codegen"
+    },
+    "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+      "binary_sha256": "70f5adb276edefb9e9f0d8fabf807acc7304605b58abbeecc0874235e64c5ed3",
+      "build_command": [
+        "g++",
+        "-O3",
+        "-mcpu=cortex-a76",
+        "-std=c++17",
+        "-o",
+        "results/e2e11_fresh/build/portable_fused_matmul_bias_relu_int8_packed_b_a76",
+        "/home/allen/e2e10/native/cpu_kernels/portable_fused_matmul_bias_relu_int8_packed_b.cpp"
+      ],
+      "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+      "codegen_target_id": "cortex_a76_dotprod",
+      "compiler_executable": "g++",
+      "compiler_flags": [
+        "-O3",
+        "-mcpu=cortex-a76",
+        "-std=c++17"
+      ],
+      "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+      "kernel_source": "/home/allen/e2e10/native/cpu_kernels/portable_fused_matmul_bias_relu_int8_packed_b.cpp",
+      "output_binary": "results/e2e11_fresh/build/portable_fused_matmul_bias_relu_int8_packed_b_a76",
+      "required_isa_features": [
+        "asimd",
+        "asimddp"
+      ],
+      "schema_version": "slice3c.kernel_build_manifest.v1",
+      "target_architecture": "aarch64",
+      "target_microarchitecture": "cortex-a76",
+      "truth_boundary": "compiler_owned_kernel_build_contract_external_cpp_compilation_not_llvm_codegen"
+    },
+    "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+      "binary_sha256": "6370e6172a355eac33d3f12501be8a80b96b2ef1ba8d5bd93c89c3740759386d",
+      "build_command": [
+        "g++",
+        "-O2",
+        "-std=c++17",
+        "-o",
+        "results/e2e11_fresh/build/portable_fused_matmul_bias_relu_int8_packed_b_generic",
+        "/home/allen/e2e10/native/cpu_kernels/portable_fused_matmul_bias_relu_int8_packed_b.cpp"
+      ],
+      "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64",
+      "codegen_target_id": "generic_aarch64",
+      "compiler_executable": "g++",
+      "compiler_flags": [
+        "-O2",
+        "-std=c++17"
+      ],
+      "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+      "kernel_source": "/home/allen/e2e10/native/cpu_kernels/portable_fused_matmul_bias_relu_int8_packed_b.cpp",
+      "output_binary": "results/e2e11_fresh/build/portable_fused_matmul_bias_relu_int8_packed_b_generic",
+      "required_isa_features": [],
+      "schema_version": "slice3c.kernel_build_manifest.v1",
+      "target_architecture": "aarch64",
+      "target_microarchitecture": "",
+      "truth_boundary": "compiler_owned_kernel_build_contract_external_cpp_compilation_not_llvm_codegen"
+    },
+    "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+      "binary_sha256": "3539118d3e59380a7d2f69027c388531d95d8838c2cbd58a008cf1152eb38888",
+      "build_command": [
+        "g++",
+        "-O2",
+        "-std=c++17",
+        "-o",
+        "results/e2e11_fresh/build/portable_fused_matmul_bias_relu_int8",
+        "/home/allen/e2e10/native/cpu_kernels/portable_fused_matmul_bias_relu_int8.cpp"
+      ],
+      "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64",
+      "codegen_target_id": "generic_aarch64",
+      "compiler_executable": "g++",
+      "compiler_flags": [
+        "-O2",
+        "-std=c++17"
+      ],
+      "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric",
+      "kernel_source": "/home/allen/e2e10/native/cpu_kernels/portable_fused_matmul_bias_relu_int8.cpp",
+      "output_binary": "results/e2e11_fresh/build/portable_fused_matmul_bias_relu_int8",
+      "required_isa_features": [],
+      "schema_version": "slice3c.kernel_build_manifest.v1",
+      "target_architecture": "aarch64",
+      "target_microarchitecture": "",
+      "truth_boundary": "compiler_owned_kernel_build_contract_external_cpp_compilation_not_llvm_codegen"
+    }
+  },
+  "hardware_identity": {
+    "machine": "aarch64",
+    "platform": "Linux-6.18.34+rpt-rpi-2712-aarch64-with-glibc2.41",
+    "python_version": "3.13.5"
+  },
+  "results": [
+    {
+      "correctness_metrics": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "cosine_similarity": 0.999999999999999,
+          "max_absolute_error": 1.5333911362880315e-07,
+          "mean_absolute_error": 1.9495501692385134e-08,
+          "mean_squared_error": 1.4839007666875279e-15,
+          "relative_l2_error": 4.767290655920179e-08,
+          "relu_zero_state_mismatch_percent": 0.0
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "cosine_similarity": 0.9999915700724376,
+          "max_absolute_error": 0.011618789397476403,
+          "mean_absolute_error": 0.0017907514063285471,
+          "mean_squared_error": 1.1039959563278481e-05,
+          "relative_l2_error": 0.0041119984555921555,
+          "relu_zero_state_mismatch_percent": 0.0
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "cosine_similarity": 0.9999915700724376,
+          "max_absolute_error": 0.011618789397476403,
+          "mean_absolute_error": 0.0017907514063285471,
+          "mean_squared_error": 1.1039959563278481e-05,
+          "relative_l2_error": 0.0041119984555921555,
+          "relu_zero_state_mismatch_percent": 0.0
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "cosine_similarity": 0.9999915700724376,
+          "max_absolute_error": 0.011618789397476403,
+          "mean_absolute_error": 0.0017907514063285471,
+          "mean_squared_error": 1.1039959563278481e-05,
+          "relative_l2_error": 0.0041119984555921555,
+          "relu_zero_state_mismatch_percent": 0.0
+        }
+      },
+      "latency_statistics": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "mean_ms": 0.0010091666666666667,
+          "median_ms": 0.000944,
+          "minimum_ms": 0.000925,
+          "p90_ms": 0.000945,
+          "p95_ms": 0.001,
+          "samples_ms": [
+            0.000925,
+            0.000926,
+            0.000926,
+            0.000926,
+            0.000926,
+            0.000944,
+            0.000944,
+            0.000944,
+            0.000944,
+            0.000944,
+            0.000944,
+            0.000944,
+            0.000944,
+            0.000944,
+            0.000944,
+            0.000944,
+            0.000944,
+            0.000944,
+            0.000944,
+            0.000945,
+            0.000945,
+            0.000945,
+            0.000945,
+            0.000945,
+            0.000945,
+            0.000945,
+            0.000945,
+            0.000963,
+            0.001,
+            0.002907
+          ],
+          "stddev_ms": 0.0003526627362729943
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "mean_ms": 0.0003289666666666667,
+          "median_ms": 0.000315,
+          "minimum_ms": 0.000314,
+          "p90_ms": 0.000334,
+          "p95_ms": 0.000334,
+          "samples_ms": [
+            0.000314,
+            0.000314,
+            0.000314,
+            0.000314,
+            0.000314,
+            0.000315,
+            0.000315,
+            0.000315,
+            0.000315,
+            0.000315,
+            0.000315,
+            0.000315,
+            0.000315,
+            0.000315,
+            0.000315,
+            0.000315,
+            0.000315,
+            0.000315,
+            0.000333,
+            0.000333,
+            0.000333,
+            0.000333,
+            0.000333,
+            0.000333,
+            0.000333,
+            0.000334,
+            0.000334,
+            0.000334,
+            0.000334,
+            0.000537
+          ],
+          "stddev_ms": 3.96438169481979e-05
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "mean_ms": 0.0006308,
+          "median_ms": 0.000611,
+          "minimum_ms": 0.000611,
+          "p90_ms": 0.00063,
+          "p95_ms": 0.000648,
+          "samples_ms": [
+            0.000611,
+            0.000611,
+            0.000611,
+            0.000611,
+            0.000611,
+            0.000611,
+            0.000611,
+            0.000611,
+            0.000611,
+            0.000611,
+            0.000611,
+            0.000611,
+            0.000611,
+            0.000611,
+            0.000611,
+            0.000611,
+            0.000611,
+            0.000612,
+            0.000612,
+            0.000629,
+            0.000629,
+            0.000629,
+            0.000629,
+            0.000629,
+            0.00063,
+            0.00063,
+            0.00063,
+            0.00063,
+            0.000648,
+            0.001
+          ],
+          "stddev_ms": 6.928078136587858e-05
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "mean_ms": 0.0006875666666666667,
+          "median_ms": 0.000685,
+          "minimum_ms": 0.000666,
+          "p90_ms": 0.000686,
+          "p95_ms": 0.000722,
+          "samples_ms": [
+            0.000666,
+            0.000666,
+            0.000666,
+            0.000667,
+            0.000667,
+            0.000667,
+            0.000667,
+            0.000667,
+            0.000685,
+            0.000685,
+            0.000685,
+            0.000685,
+            0.000685,
+            0.000685,
+            0.000685,
+            0.000685,
+            0.000685,
+            0.000685,
+            0.000685,
+            0.000685,
+            0.000685,
+            0.000685,
+            0.000685,
+            0.000685,
+            0.000685,
+            0.000685,
+            0.000686,
+            0.000704,
+            0.000722,
+            0.000852
+          ],
+          "stddev_ms": 3.2723776608997256e-05
+        }
+      },
+      "measurements": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "binary_sha256": "f7750d5acf8d6bb9fe2ab76ee80a0eb0fcf91972fb0219bf24e18556ce661cbf",
+          "calibration_artifact_sha256": "23aa7fb35ad24318451500dfa6cd99a35352927d25774c6067f99db548b2e393",
+          "candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.999999999999999,
+            "max_absolute_error": 1.5333911362880315e-07,
+            "mean_absolute_error": 1.9495501692385134e-08,
+            "mean_squared_error": 1.4839007666875279e-15,
+            "relative_l2_error": 4.767290655920179e-08,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+          "latency_median_ms": 0.000944,
+          "latency_p95_ms": 0.001,
+          "packed_artifact_sha256": "",
+          "sample_count": 30,
+          "shape": {
+            "K": 8,
+            "M": 8,
+            "N": 8
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "binary_sha256": "70f5adb276edefb9e9f0d8fabf807acc7304605b58abbeecc0874235e64c5ed3",
+          "calibration_artifact_sha256": "23aa7fb35ad24318451500dfa6cd99a35352927d25774c6067f99db548b2e393",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999915700724376,
+            "max_absolute_error": 0.011618789397476403,
+            "mean_absolute_error": 0.0017907514063285471,
+            "mean_squared_error": 1.1039959563278481e-05,
+            "relative_l2_error": 0.0041119984555921555,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+          "latency_median_ms": 0.000315,
+          "latency_p95_ms": 0.000334,
+          "packed_artifact_sha256": "e839a32214b78eafdf257011ebb08f335ae08b23627fdea4edbef22a617b62e4",
+          "sample_count": 30,
+          "shape": {
+            "K": 8,
+            "M": 8,
+            "N": 8
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "binary_sha256": "6370e6172a355eac33d3f12501be8a80b96b2ef1ba8d5bd93c89c3740759386d",
+          "calibration_artifact_sha256": "23aa7fb35ad24318451500dfa6cd99a35352927d25774c6067f99db548b2e393",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999915700724376,
+            "max_absolute_error": 0.011618789397476403,
+            "mean_absolute_error": 0.0017907514063285471,
+            "mean_squared_error": 1.1039959563278481e-05,
+            "relative_l2_error": 0.0041119984555921555,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+          "latency_median_ms": 0.000611,
+          "latency_p95_ms": 0.000648,
+          "packed_artifact_sha256": "e839a32214b78eafdf257011ebb08f335ae08b23627fdea4edbef22a617b62e4",
+          "sample_count": 30,
+          "shape": {
+            "K": 8,
+            "M": 8,
+            "N": 8
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "binary_sha256": "3539118d3e59380a7d2f69027c388531d95d8838c2cbd58a008cf1152eb38888",
+          "calibration_artifact_sha256": "23aa7fb35ad24318451500dfa6cd99a35352927d25774c6067f99db548b2e393",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999915700724376,
+            "max_absolute_error": 0.011618789397476403,
+            "mean_absolute_error": 0.0017907514063285471,
+            "mean_squared_error": 1.1039959563278481e-05,
+            "relative_l2_error": 0.0041119984555921555,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric",
+          "latency_median_ms": 0.000685,
+          "latency_p95_ms": 0.000722,
+          "packed_artifact_sha256": "",
+          "sample_count": 30,
+          "shape": {
+            "K": 8,
+            "M": 8,
+            "N": 8
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        }
+      },
+      "selection": {
+        "considered_candidates": [
+          {
+            "candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+            "latency_median_ms": 0.000944,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric",
+            "latency_median_ms": 0.000685,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+            "latency_median_ms": 0.000611,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+            "latency_median_ms": 0.000315,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:fp32:none:t1:aarch64",
+            "kernel_id": "xnnpack_delegate_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:int8:pt2e_per_tensor_affine_per_channel_symmetric_axis0:t1:aarch64",
+            "kernel_id": "xnnpack_delegate_quantized_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:int8:pt2e_per_tensor_affine_per_channel_symmetric_axis0:t4:aarch64",
+            "kernel_id": "xnnpack_delegate_quantized_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          }
+        ],
+        "schema_version": "slice3c.selection_result.v1",
+        "selected_candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+        "selected_kernel": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+        "selected_latency_median_ms": 0.000315,
+        "selection_reason": "lowest_measured_median_latency_correctness_and_stability_gates_passed"
+      },
+      "shape": {
+        "K": 8,
+        "M": 8,
+        "N": 8
+      },
+      "timestamp": "2026-07-27T06:51:46.959549+00:00",
+      "workload_id": "e2e10_fused_matmul_bias_relu_8x8x8_seed1000"
+    },
+    {
+      "correctness_metrics": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "cosine_similarity": 0.9999999999999954,
+          "max_absolute_error": 4.822304484619622e-07,
+          "mean_absolute_error": 4.68163635361442e-08,
+          "mean_squared_error": 7.790741246287496e-15,
+          "relative_l2_error": 9.467772423695329e-08,
+          "relu_zero_state_mismatch_percent": 0.0
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "cosine_similarity": 0.9999822546022366,
+          "max_absolute_error": 0.02137021569632047,
+          "mean_absolute_error": 0.003197880663579923,
+          "mean_squared_error": 3.163697656557966e-05,
+          "relative_l2_error": 0.006033313694440007,
+          "relu_zero_state_mismatch_percent": 0.0
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "cosine_similarity": 0.9999822546022366,
+          "max_absolute_error": 0.02137021569632047,
+          "mean_absolute_error": 0.003197880663579923,
+          "mean_squared_error": 3.163697656557966e-05,
+          "relative_l2_error": 0.006033313694440007,
+          "relu_zero_state_mismatch_percent": 0.0
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "cosine_similarity": 0.9999822546022366,
+          "max_absolute_error": 0.02137021569632047,
+          "mean_absolute_error": 0.003197880663579923,
+          "mean_squared_error": 3.163697656557966e-05,
+          "relative_l2_error": 0.006033313694440007,
+          "relu_zero_state_mismatch_percent": 0.0
+        }
+      },
+      "latency_statistics": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "mean_ms": 0.0038339333333333335,
+          "median_ms": 0.0037685,
+          "minimum_ms": 0.00374,
+          "p90_ms": 0.003778,
+          "p95_ms": 0.003833,
+          "samples_ms": [
+            0.00374,
+            0.003741,
+            0.003741,
+            0.003741,
+            0.003741,
+            0.003741,
+            0.003759,
+            0.003759,
+            0.003759,
+            0.003759,
+            0.003759,
+            0.003759,
+            0.00376,
+            0.00376,
+            0.00376,
+            0.003777,
+            0.003777,
+            0.003777,
+            0.003777,
+            0.003778,
+            0.003778,
+            0.003778,
+            0.003778,
+            0.003778,
+            0.003778,
+            0.003778,
+            0.003778,
+            0.003796,
+            0.003833,
+            0.005778
+          ],
+          "stddev_ms": 0.0003615210398057383
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "mean_ms": 0.0011283,
+          "median_ms": 0.001111,
+          "minimum_ms": 0.001111,
+          "p90_ms": 0.00113,
+          "p95_ms": 0.00113,
+          "samples_ms": [
+            0.001111,
+            0.001111,
+            0.001111,
+            0.001111,
+            0.001111,
+            0.001111,
+            0.001111,
+            0.001111,
+            0.001111,
+            0.001111,
+            0.001111,
+            0.001111,
+            0.001111,
+            0.001111,
+            0.001111,
+            0.001111,
+            0.001129,
+            0.001129,
+            0.001129,
+            0.001129,
+            0.001129,
+            0.001129,
+            0.00113,
+            0.00113,
+            0.00113,
+            0.00113,
+            0.00113,
+            0.00113,
+            0.00113,
+            0.001389
+          ],
+          "stddev_ms": 4.9253189406034074e-05
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "mean_ms": 0.0039245999999999994,
+          "median_ms": 0.003926,
+          "minimum_ms": 0.003907,
+          "p90_ms": 0.003926,
+          "p95_ms": 0.003926,
+          "samples_ms": [
+            0.003907,
+            0.003907,
+            0.003907,
+            0.003907,
+            0.003907,
+            0.003907,
+            0.003907,
+            0.003907,
+            0.003908,
+            0.003908,
+            0.003908,
+            0.003925,
+            0.003925,
+            0.003926,
+            0.003926,
+            0.003926,
+            0.003926,
+            0.003926,
+            0.003926,
+            0.003926,
+            0.003926,
+            0.003926,
+            0.003926,
+            0.003926,
+            0.003926,
+            0.003926,
+            0.003926,
+            0.003926,
+            0.003926,
+            0.004092
+          ],
+          "stddev_ms": 3.233120267893957e-05
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "mean_ms": 0.004866033333333334,
+          "median_ms": 0.00487,
+          "minimum_ms": 0.004833,
+          "p90_ms": 0.004888,
+          "p95_ms": 0.004889,
+          "samples_ms": [
+            0.004833,
+            0.004833,
+            0.004833,
+            0.004833,
+            0.004852,
+            0.004852,
+            0.004852,
+            0.004852,
+            0.004852,
+            0.004852,
+            0.004852,
+            0.004852,
+            0.00487,
+            0.00487,
+            0.00487,
+            0.00487,
+            0.00487,
+            0.00487,
+            0.004871,
+            0.004871,
+            0.004871,
+            0.004871,
+            0.004871,
+            0.004871,
+            0.004888,
+            0.004888,
+            0.004888,
+            0.004889,
+            0.004889,
+            0.004945
+          ],
+          "stddev_ms": 2.2301694006410268e-05
+        }
+      },
+      "measurements": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "binary_sha256": "f7750d5acf8d6bb9fe2ab76ee80a0eb0fcf91972fb0219bf24e18556ce661cbf",
+          "calibration_artifact_sha256": "3342d5501662687579132cb02cf77e6702b9dad383d5fbaeae98b0221aa79301",
+          "candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999999999999954,
+            "max_absolute_error": 4.822304484619622e-07,
+            "mean_absolute_error": 4.68163635361442e-08,
+            "mean_squared_error": 7.790741246287496e-15,
+            "relative_l2_error": 9.467772423695329e-08,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+          "latency_median_ms": 0.0037685,
+          "latency_p95_ms": 0.003833,
+          "packed_artifact_sha256": "",
+          "sample_count": 30,
+          "shape": {
+            "K": 16,
+            "M": 4,
+            "N": 64
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "binary_sha256": "70f5adb276edefb9e9f0d8fabf807acc7304605b58abbeecc0874235e64c5ed3",
+          "calibration_artifact_sha256": "3342d5501662687579132cb02cf77e6702b9dad383d5fbaeae98b0221aa79301",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999822546022366,
+            "max_absolute_error": 0.02137021569632047,
+            "mean_absolute_error": 0.003197880663579923,
+            "mean_squared_error": 3.163697656557966e-05,
+            "relative_l2_error": 0.006033313694440007,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+          "latency_median_ms": 0.001111,
+          "latency_p95_ms": 0.00113,
+          "packed_artifact_sha256": "bfb93a0e47eff21b43c316d36dff4610e6450126de7f4adea4bd05691f1366ab",
+          "sample_count": 30,
+          "shape": {
+            "K": 16,
+            "M": 4,
+            "N": 64
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "binary_sha256": "6370e6172a355eac33d3f12501be8a80b96b2ef1ba8d5bd93c89c3740759386d",
+          "calibration_artifact_sha256": "3342d5501662687579132cb02cf77e6702b9dad383d5fbaeae98b0221aa79301",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999822546022366,
+            "max_absolute_error": 0.02137021569632047,
+            "mean_absolute_error": 0.003197880663579923,
+            "mean_squared_error": 3.163697656557966e-05,
+            "relative_l2_error": 0.006033313694440007,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+          "latency_median_ms": 0.003926,
+          "latency_p95_ms": 0.003926,
+          "packed_artifact_sha256": "bfb93a0e47eff21b43c316d36dff4610e6450126de7f4adea4bd05691f1366ab",
+          "sample_count": 30,
+          "shape": {
+            "K": 16,
+            "M": 4,
+            "N": 64
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "binary_sha256": "3539118d3e59380a7d2f69027c388531d95d8838c2cbd58a008cf1152eb38888",
+          "calibration_artifact_sha256": "3342d5501662687579132cb02cf77e6702b9dad383d5fbaeae98b0221aa79301",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999822546022366,
+            "max_absolute_error": 0.02137021569632047,
+            "mean_absolute_error": 0.003197880663579923,
+            "mean_squared_error": 3.163697656557966e-05,
+            "relative_l2_error": 0.006033313694440007,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric",
+          "latency_median_ms": 0.00487,
+          "latency_p95_ms": 0.004889,
+          "packed_artifact_sha256": "",
+          "sample_count": 30,
+          "shape": {
+            "K": 16,
+            "M": 4,
+            "N": 64
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        }
+      },
+      "selection": {
+        "considered_candidates": [
+          {
+            "candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+            "latency_median_ms": 0.0037685,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric",
+            "latency_median_ms": 0.00487,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+            "latency_median_ms": 0.003926,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+            "latency_median_ms": 0.001111,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:fp32:none:t1:aarch64",
+            "kernel_id": "xnnpack_delegate_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:int8:pt2e_per_tensor_affine_per_channel_symmetric_axis0:t1:aarch64",
+            "kernel_id": "xnnpack_delegate_quantized_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:int8:pt2e_per_tensor_affine_per_channel_symmetric_axis0:t4:aarch64",
+            "kernel_id": "xnnpack_delegate_quantized_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          }
+        ],
+        "schema_version": "slice3c.selection_result.v1",
+        "selected_candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+        "selected_kernel": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+        "selected_latency_median_ms": 0.001111,
+        "selection_reason": "lowest_measured_median_latency_correctness_and_stability_gates_passed"
+      },
+      "shape": {
+        "K": 16,
+        "M": 4,
+        "N": 64
+      },
+      "timestamp": "2026-07-27T06:51:47.011819+00:00",
+      "workload_id": "e2e10_fused_matmul_bias_relu_4x64x16_seed1001"
+    },
+    {
+      "correctness_metrics": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "cosine_similarity": 0.9999999999999374,
+          "max_absolute_error": 2.3403155424261968e-05,
+          "mean_absolute_error": 8.181542979898484e-07,
+          "mean_squared_error": 2.7002621222067355e-12,
+          "relative_l2_error": 3.5410377121387094e-07,
+          "relu_zero_state_mismatch_percent": 0.0
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "cosine_similarity": 0.9999845412226603,
+          "max_absolute_error": 0.1587608394429756,
+          "mean_absolute_error": 0.014572146189813139,
+          "mean_squared_error": 0.0006658429275738098,
+          "relative_l2_error": 0.005560495394586095,
+          "relu_zero_state_mismatch_percent": 0.17835828993055555
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "cosine_similarity": 0.9999845412226603,
+          "max_absolute_error": 0.1587608394429756,
+          "mean_absolute_error": 0.014572146189813139,
+          "mean_squared_error": 0.0006658429275738098,
+          "relative_l2_error": 0.005560495394586095,
+          "relu_zero_state_mismatch_percent": 0.17835828993055555
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "cosine_similarity": 0.9999845412226603,
+          "max_absolute_error": 0.1587608394429756,
+          "mean_absolute_error": 0.014572146189813139,
+          "mean_squared_error": 0.0006658429275738098,
+          "relative_l2_error": 0.005560495394586095,
+          "relu_zero_state_mismatch_percent": 0.17835828993055555
+        }
+      },
+      "latency_statistics": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "mean_ms": 42.9238,
+          "median_ms": 42.066,
+          "minimum_ms": 42.0498,
+          "p90_ms": 42.1922,
+          "p95_ms": 50.7731,
+          "samples_ms": [
+            42.0498,
+            42.0506,
+            42.052,
+            42.054,
+            42.0542,
+            42.0543,
+            42.0544,
+            42.055,
+            42.0572,
+            42.0573,
+            42.0578,
+            42.0583,
+            42.0587,
+            42.0598,
+            42.0636,
+            42.0684,
+            42.0706,
+            42.0745,
+            42.0751,
+            42.0783,
+            42.0803,
+            42.0839,
+            42.0887,
+            42.091,
+            42.1216,
+            42.152,
+            42.1922,
+            44.8538,
+            50.7731,
+            56.0735
+          ],
+          "stddev_ms": 2.9311602424068646
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "mean_ms": 2.992071,
+          "median_ms": 2.99102,
+          "minimum_ms": 2.98745,
+          "p90_ms": 2.99348,
+          "p95_ms": 3.00171,
+          "samples_ms": [
+            2.98745,
+            2.98784,
+            2.98835,
+            2.98848,
+            2.98874,
+            2.989,
+            2.98904,
+            2.99002,
+            2.99011,
+            2.99026,
+            2.99047,
+            2.99065,
+            2.99082,
+            2.99095,
+            2.99098,
+            2.99106,
+            2.9911,
+            2.99148,
+            2.9915,
+            2.99191,
+            2.99208,
+            2.99222,
+            2.99234,
+            2.99278,
+            2.99306,
+            2.99315,
+            2.99348,
+            2.9983,
+            3.00171,
+            3.0128
+          ],
+          "stddev_ms": 0.004776432664656748
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "mean_ms": 48.35632,
+          "median_ms": 48.3449,
+          "minimum_ms": 48.3413,
+          "p90_ms": 48.3869,
+          "p95_ms": 48.4055,
+          "samples_ms": [
+            48.3413,
+            48.3416,
+            48.3419,
+            48.3423,
+            48.3426,
+            48.3428,
+            48.3429,
+            48.3429,
+            48.3431,
+            48.3439,
+            48.344,
+            48.344,
+            48.3446,
+            48.3447,
+            48.3449,
+            48.3449,
+            48.3488,
+            48.3509,
+            48.3515,
+            48.3531,
+            48.3536,
+            48.3542,
+            48.3561,
+            48.3565,
+            48.3712,
+            48.3777,
+            48.3869,
+            48.3935,
+            48.4055,
+            48.4377
+          ],
+          "stddev_ms": 0.0222955062736868
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "mean_ms": 63.58724,
+          "median_ms": 63.58195,
+          "minimum_ms": 63.5545,
+          "p90_ms": 63.611,
+          "p95_ms": 63.6493,
+          "samples_ms": [
+            63.5545,
+            63.564,
+            63.5642,
+            63.566,
+            63.5666,
+            63.5696,
+            63.5702,
+            63.5718,
+            63.5736,
+            63.5759,
+            63.577,
+            63.5788,
+            63.5801,
+            63.5809,
+            63.5811,
+            63.5828,
+            63.5834,
+            63.5846,
+            63.5846,
+            63.5854,
+            63.5861,
+            63.5932,
+            63.5965,
+            63.5979,
+            63.6039,
+            63.6073,
+            63.611,
+            63.6207,
+            63.6493,
+            63.6562
+          ],
+          "stddev_ms": 0.022904520660049804
+        }
+      },
+      "measurements": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "binary_sha256": "f7750d5acf8d6bb9fe2ab76ee80a0eb0fcf91972fb0219bf24e18556ce661cbf",
+          "calibration_artifact_sha256": "0bb4ed2ce33824c3fef91e5ab00c5158f6cca8c87a88d273d9e576d3bf10c0d2",
+          "candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999999999999374,
+            "max_absolute_error": 2.3403155424261968e-05,
+            "mean_absolute_error": 8.181542979898484e-07,
+            "mean_squared_error": 2.7002621222067355e-12,
+            "relative_l2_error": 3.5410377121387094e-07,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+          "latency_median_ms": 42.066,
+          "latency_p95_ms": 50.7731,
+          "packed_artifact_sha256": "",
+          "sample_count": 30,
+          "shape": {
+            "K": 384,
+            "M": 384,
+            "N": 384
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "binary_sha256": "70f5adb276edefb9e9f0d8fabf807acc7304605b58abbeecc0874235e64c5ed3",
+          "calibration_artifact_sha256": "0bb4ed2ce33824c3fef91e5ab00c5158f6cca8c87a88d273d9e576d3bf10c0d2",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999845412226603,
+            "max_absolute_error": 0.1587608394429756,
+            "mean_absolute_error": 0.014572146189813139,
+            "mean_squared_error": 0.0006658429275738098,
+            "relative_l2_error": 0.005560495394586095,
+            "relu_zero_state_mismatch_percent": 0.17835828993055555
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+          "latency_median_ms": 2.99102,
+          "latency_p95_ms": 3.00171,
+          "packed_artifact_sha256": "132bfcf6c927863a1e25a38b0c1a50125538bf13f32f856c6e3d072e22365bfd",
+          "sample_count": 30,
+          "shape": {
+            "K": 384,
+            "M": 384,
+            "N": 384
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "binary_sha256": "6370e6172a355eac33d3f12501be8a80b96b2ef1ba8d5bd93c89c3740759386d",
+          "calibration_artifact_sha256": "0bb4ed2ce33824c3fef91e5ab00c5158f6cca8c87a88d273d9e576d3bf10c0d2",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999845412226603,
+            "max_absolute_error": 0.1587608394429756,
+            "mean_absolute_error": 0.014572146189813139,
+            "mean_squared_error": 0.0006658429275738098,
+            "relative_l2_error": 0.005560495394586095,
+            "relu_zero_state_mismatch_percent": 0.17835828993055555
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+          "latency_median_ms": 48.3449,
+          "latency_p95_ms": 48.4055,
+          "packed_artifact_sha256": "132bfcf6c927863a1e25a38b0c1a50125538bf13f32f856c6e3d072e22365bfd",
+          "sample_count": 30,
+          "shape": {
+            "K": 384,
+            "M": 384,
+            "N": 384
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "binary_sha256": "3539118d3e59380a7d2f69027c388531d95d8838c2cbd58a008cf1152eb38888",
+          "calibration_artifact_sha256": "0bb4ed2ce33824c3fef91e5ab00c5158f6cca8c87a88d273d9e576d3bf10c0d2",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999845412226603,
+            "max_absolute_error": 0.1587608394429756,
+            "mean_absolute_error": 0.014572146189813139,
+            "mean_squared_error": 0.0006658429275738098,
+            "relative_l2_error": 0.005560495394586095,
+            "relu_zero_state_mismatch_percent": 0.17835828993055555
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric",
+          "latency_median_ms": 63.58195,
+          "latency_p95_ms": 63.6493,
+          "packed_artifact_sha256": "",
+          "sample_count": 30,
+          "shape": {
+            "K": 384,
+            "M": 384,
+            "N": 384
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        }
+      },
+      "selection": {
+        "considered_candidates": [
+          {
+            "candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+            "latency_median_ms": 42.066,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric",
+            "latency_median_ms": 63.58195,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+            "latency_median_ms": 48.3449,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+            "latency_median_ms": 2.99102,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:fp32:none:t1:aarch64",
+            "kernel_id": "xnnpack_delegate_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:int8:pt2e_per_tensor_affine_per_channel_symmetric_axis0:t1:aarch64",
+            "kernel_id": "xnnpack_delegate_quantized_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:int8:pt2e_per_tensor_affine_per_channel_symmetric_axis0:t4:aarch64",
+            "kernel_id": "xnnpack_delegate_quantized_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          }
+        ],
+        "schema_version": "slice3c.selection_result.v1",
+        "selected_candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+        "selected_kernel": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+        "selected_latency_median_ms": 2.99102,
+        "selection_reason": "lowest_measured_median_latency_correctness_and_stability_gates_passed"
+      },
+      "shape": {
+        "K": 384,
+        "M": 384,
+        "N": 384
+      },
+      "timestamp": "2026-07-27T06:52:04.381647+00:00",
+      "workload_id": "e2e10_fused_matmul_bias_relu_384x384x384_seed1002"
+    },
+    {
+      "correctness_metrics": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "cosine_similarity": 0.9999999999999953,
+          "max_absolute_error": 1.3234170093134878e-06,
+          "mean_absolute_error": 5.7018910185156406e-08,
+          "mean_squared_error": 1.2297546073523514e-14,
+          "relative_l2_error": 9.740890829533849e-08,
+          "relu_zero_state_mismatch_percent": 0.0
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "cosine_similarity": 0.999984184491617,
+          "max_absolute_error": 0.03458338079785478,
+          "mean_absolute_error": 0.0036428718390369547,
+          "mean_squared_error": 4.0998063044539407e-05,
+          "relative_l2_error": 0.00562433416923605,
+          "relu_zero_state_mismatch_percent": 0.177001953125
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "cosine_similarity": 0.999984184491617,
+          "max_absolute_error": 0.03458338079785478,
+          "mean_absolute_error": 0.0036428718390369547,
+          "mean_squared_error": 4.0998063044539407e-05,
+          "relative_l2_error": 0.00562433416923605,
+          "relu_zero_state_mismatch_percent": 0.177001953125
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "cosine_similarity": 0.999984184491617,
+          "max_absolute_error": 0.03458338079785478,
+          "mean_absolute_error": 0.0036428718390369547,
+          "mean_squared_error": 4.0998063044539407e-05,
+          "relative_l2_error": 0.00562433416923605,
+          "relu_zero_state_mismatch_percent": 0.177001953125
+        }
+      },
+      "latency_statistics": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "mean_ms": 1.2349313333333334,
+          "median_ms": 1.23157,
+          "minimum_ms": 1.23143,
+          "p90_ms": 1.24085,
+          "p95_ms": 1.25057,
+          "samples_ms": [
+            1.23143,
+            1.23144,
+            1.23144,
+            1.23146,
+            1.23146,
+            1.23146,
+            1.23148,
+            1.2315,
+            1.23154,
+            1.23154,
+            1.23154,
+            1.23154,
+            1.23154,
+            1.23156,
+            1.23156,
+            1.23158,
+            1.23161,
+            1.23165,
+            1.23171,
+            1.23182,
+            1.23354,
+            1.23356,
+            1.23374,
+            1.23378,
+            1.23667,
+            1.23841,
+            1.24085,
+            1.2495,
+            1.25057,
+            1.26646
+          ],
+          "stddev_ms": 0.007610049817328527
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "mean_ms": 0.4079947666666667,
+          "median_ms": 0.407352,
+          "minimum_ms": 0.40689,
+          "p90_ms": 0.407408,
+          "p95_ms": 0.408704,
+          "samples_ms": [
+            0.40689,
+            0.407333,
+            0.407334,
+            0.407334,
+            0.407352,
+            0.407352,
+            0.407352,
+            0.407352,
+            0.407352,
+            0.407352,
+            0.407352,
+            0.407352,
+            0.407352,
+            0.407352,
+            0.407352,
+            0.407352,
+            0.407353,
+            0.407353,
+            0.40737,
+            0.407371,
+            0.407389,
+            0.407389,
+            0.407389,
+            0.40739,
+            0.407407,
+            0.407408,
+            0.407408,
+            0.408019,
+            0.408704,
+            0.424778
+          ],
+          "stddev_ms": 0.003129290587160113
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "mean_ms": 1.4237273333333333,
+          "median_ms": 1.42248,
+          "minimum_ms": 1.42228,
+          "p90_ms": 1.42517,
+          "p95_ms": 1.42832,
+          "samples_ms": [
+            1.42228,
+            1.42233,
+            1.42235,
+            1.42237,
+            1.42237,
+            1.42237,
+            1.42239,
+            1.42239,
+            1.42239,
+            1.42239,
+            1.42241,
+            1.42241,
+            1.42243,
+            1.42245,
+            1.42248,
+            1.42248,
+            1.42254,
+            1.42259,
+            1.42259,
+            1.42259,
+            1.42407,
+            1.42443,
+            1.42459,
+            1.42459,
+            1.42461,
+            1.42498,
+            1.42517,
+            1.42546,
+            1.42832,
+            1.437
+          ],
+          "stddev_ms": 0.002831961550272582
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "mean_ms": 1.8043803333333333,
+          "median_ms": 1.80237,
+          "minimum_ms": 1.80033,
+          "p90_ms": 1.80582,
+          "p95_ms": 1.82963,
+          "samples_ms": [
+            1.80033,
+            1.80045,
+            1.8005,
+            1.80065,
+            1.80067,
+            1.80072,
+            1.80102,
+            1.80111,
+            1.80117,
+            1.80119,
+            1.80132,
+            1.80139,
+            1.80202,
+            1.80202,
+            1.80211,
+            1.80263,
+            1.80265,
+            1.80282,
+            1.80287,
+            1.80295,
+            1.80313,
+            1.80326,
+            1.80365,
+            1.80369,
+            1.80382,
+            1.80567,
+            1.80582,
+            1.807,
+            1.82963,
+            1.83515
+          ],
+          "stddev_ms": 0.007696197971870421
+        }
+      },
+      "measurements": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "binary_sha256": "f7750d5acf8d6bb9fe2ab76ee80a0eb0fcf91972fb0219bf24e18556ce661cbf",
+          "calibration_artifact_sha256": "af594e19c8979af112bfb9287db71b16601faeb9f122b2e4108db59753ad3ce9",
+          "candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999999999999953,
+            "max_absolute_error": 1.3234170093134878e-06,
+            "mean_absolute_error": 5.7018910185156406e-08,
+            "mean_squared_error": 1.2297546073523514e-14,
+            "relative_l2_error": 9.740890829533849e-08,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+          "latency_median_ms": 1.23157,
+          "latency_p95_ms": 1.25057,
+          "packed_artifact_sha256": "",
+          "sample_count": 30,
+          "shape": {
+            "K": 24,
+            "M": 256,
+            "N": 256
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "binary_sha256": "70f5adb276edefb9e9f0d8fabf807acc7304605b58abbeecc0874235e64c5ed3",
+          "calibration_artifact_sha256": "af594e19c8979af112bfb9287db71b16601faeb9f122b2e4108db59753ad3ce9",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+          "correctness_metrics": {
+            "cosine_similarity": 0.999984184491617,
+            "max_absolute_error": 0.03458338079785478,
+            "mean_absolute_error": 0.0036428718390369547,
+            "mean_squared_error": 4.0998063044539407e-05,
+            "relative_l2_error": 0.00562433416923605,
+            "relu_zero_state_mismatch_percent": 0.177001953125
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+          "latency_median_ms": 0.407352,
+          "latency_p95_ms": 0.408704,
+          "packed_artifact_sha256": "4ca824b05b15c4c25d528d54327b8815cddd178641625f5d19f18659c97ed3bc",
+          "sample_count": 30,
+          "shape": {
+            "K": 24,
+            "M": 256,
+            "N": 256
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "binary_sha256": "6370e6172a355eac33d3f12501be8a80b96b2ef1ba8d5bd93c89c3740759386d",
+          "calibration_artifact_sha256": "af594e19c8979af112bfb9287db71b16601faeb9f122b2e4108db59753ad3ce9",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.999984184491617,
+            "max_absolute_error": 0.03458338079785478,
+            "mean_absolute_error": 0.0036428718390369547,
+            "mean_squared_error": 4.0998063044539407e-05,
+            "relative_l2_error": 0.00562433416923605,
+            "relu_zero_state_mismatch_percent": 0.177001953125
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+          "latency_median_ms": 1.42248,
+          "latency_p95_ms": 1.42832,
+          "packed_artifact_sha256": "4ca824b05b15c4c25d528d54327b8815cddd178641625f5d19f18659c97ed3bc",
+          "sample_count": 30,
+          "shape": {
+            "K": 24,
+            "M": 256,
+            "N": 256
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "binary_sha256": "3539118d3e59380a7d2f69027c388531d95d8838c2cbd58a008cf1152eb38888",
+          "calibration_artifact_sha256": "af594e19c8979af112bfb9287db71b16601faeb9f122b2e4108db59753ad3ce9",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.999984184491617,
+            "max_absolute_error": 0.03458338079785478,
+            "mean_absolute_error": 0.0036428718390369547,
+            "mean_squared_error": 4.0998063044539407e-05,
+            "relative_l2_error": 0.00562433416923605,
+            "relu_zero_state_mismatch_percent": 0.177001953125
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric",
+          "latency_median_ms": 1.80237,
+          "latency_p95_ms": 1.82963,
+          "packed_artifact_sha256": "",
+          "sample_count": 30,
+          "shape": {
+            "K": 24,
+            "M": 256,
+            "N": 256
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        }
+      },
+      "selection": {
+        "considered_candidates": [
+          {
+            "candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+            "latency_median_ms": 1.23157,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric",
+            "latency_median_ms": 1.80237,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+            "latency_median_ms": 1.42248,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+            "latency_median_ms": 0.407352,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:fp32:none:t1:aarch64",
+            "kernel_id": "xnnpack_delegate_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:int8:pt2e_per_tensor_affine_per_channel_symmetric_axis0:t1:aarch64",
+            "kernel_id": "xnnpack_delegate_quantized_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:int8:pt2e_per_tensor_affine_per_channel_symmetric_axis0:t4:aarch64",
+            "kernel_id": "xnnpack_delegate_quantized_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          }
+        ],
+        "schema_version": "slice3c.selection_result.v1",
+        "selected_candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+        "selected_kernel": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+        "selected_latency_median_ms": 0.407352,
+        "selection_reason": "lowest_measured_median_latency_correctness_and_stability_gates_passed"
+      },
+      "shape": {
+        "K": 24,
+        "M": 256,
+        "N": 256
+      },
+      "timestamp": "2026-07-27T06:52:05.148922+00:00",
+      "workload_id": "e2e10_fused_matmul_bias_relu_256x256x24_seed1003"
+    },
+    {
+      "correctness_metrics": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "cosine_similarity": 0.9999999999999947,
+          "max_absolute_error": 8.987338846466741e-07,
+          "mean_absolute_error": 6.696363272513828e-08,
+          "mean_squared_error": 1.6428707141318636e-14,
+          "relative_l2_error": 1.0194222074420241e-07,
+          "relu_zero_state_mismatch_percent": 0.0
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "cosine_similarity": 0.9999844036351898,
+          "max_absolute_error": 0.037756586596335406,
+          "mean_absolute_error": 0.0039240530133957605,
+          "mean_squared_error": 4.9342903068798475e-05,
+          "relative_l2_error": 0.005586820845674511,
+          "relu_zero_state_mismatch_percent": 0.13183915622940012
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "cosine_similarity": 0.9999844036351898,
+          "max_absolute_error": 0.037756586596335406,
+          "mean_absolute_error": 0.0039240530133957605,
+          "mean_squared_error": 4.9342903068798475e-05,
+          "relative_l2_error": 0.005586820845674511,
+          "relu_zero_state_mismatch_percent": 0.13183915622940012
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "cosine_similarity": 0.9999844036351898,
+          "max_absolute_error": 0.037756586596335406,
+          "mean_absolute_error": 0.0039240530133957605,
+          "mean_squared_error": 4.9342903068798475e-05,
+          "relative_l2_error": 0.005586820845674511,
+          "relu_zero_state_mismatch_percent": 0.13183915622940012
+        }
+      },
+      "latency_statistics": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "mean_ms": 0.03528333333333333,
+          "median_ms": 0.035204,
+          "minimum_ms": 0.035185,
+          "p90_ms": 0.035204,
+          "p95_ms": 0.03524,
+          "samples_ms": [
+            0.035185,
+            0.035185,
+            0.035203,
+            0.035203,
+            0.035203,
+            0.035203,
+            0.035203,
+            0.035203,
+            0.035204,
+            0.035204,
+            0.035204,
+            0.035204,
+            0.035204,
+            0.035204,
+            0.035204,
+            0.035204,
+            0.035204,
+            0.035204,
+            0.035204,
+            0.035204,
+            0.035204,
+            0.035204,
+            0.035204,
+            0.035204,
+            0.035204,
+            0.035204,
+            0.035204,
+            0.035222,
+            0.03524,
+            0.037574
+          ],
+          "stddev_ms": 0.00042545797546748317
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "mean_ms": 0.0164451,
+          "median_ms": 0.016444,
+          "minimum_ms": 0.01637,
+          "p90_ms": 0.016445,
+          "p95_ms": 0.016463,
+          "samples_ms": [
+            0.01637,
+            0.01637,
+            0.016389,
+            0.016408,
+            0.016426,
+            0.016426,
+            0.016426,
+            0.016426,
+            0.016426,
+            0.016444,
+            0.016444,
+            0.016444,
+            0.016444,
+            0.016444,
+            0.016444,
+            0.016444,
+            0.016444,
+            0.016444,
+            0.016444,
+            0.016445,
+            0.016445,
+            0.016445,
+            0.016445,
+            0.016445,
+            0.016445,
+            0.016445,
+            0.016445,
+            0.016445,
+            0.016463,
+            0.016778
+          ],
+          "stddev_ms": 6.551913206588365e-05
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "mean_ms": 0.03952286666666667,
+          "median_ms": 0.0395,
+          "minimum_ms": 0.0395,
+          "p90_ms": 0.039574,
+          "p95_ms": 0.03963,
+          "samples_ms": [
+            0.0395,
+            0.0395,
+            0.0395,
+            0.0395,
+            0.0395,
+            0.0395,
+            0.0395,
+            0.0395,
+            0.0395,
+            0.0395,
+            0.0395,
+            0.0395,
+            0.0395,
+            0.0395,
+            0.0395,
+            0.0395,
+            0.0395,
+            0.0395,
+            0.0395,
+            0.0395,
+            0.0395,
+            0.039501,
+            0.039501,
+            0.039518,
+            0.039518,
+            0.039518,
+            0.039574,
+            0.03963,
+            0.03963,
+            0.039796
+          ],
+          "stddev_ms": 6.114994321792523e-05
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "mean_ms": 0.0496328,
+          "median_ms": 0.049612,
+          "minimum_ms": 0.049555,
+          "p90_ms": 0.049703,
+          "p95_ms": 0.049704,
+          "samples_ms": [
+            0.049555,
+            0.049556,
+            0.049574,
+            0.049574,
+            0.049574,
+            0.049574,
+            0.049575,
+            0.049593,
+            0.049593,
+            0.049611,
+            0.049611,
+            0.049611,
+            0.049611,
+            0.049611,
+            0.049612,
+            0.049612,
+            0.04963,
+            0.04963,
+            0.04963,
+            0.04963,
+            0.04963,
+            0.049649,
+            0.049666,
+            0.049666,
+            0.049685,
+            0.049685,
+            0.049703,
+            0.049703,
+            0.049704,
+            0.049926
+          ],
+          "stddev_ms": 6.937309757151225e-05
+        }
+      },
+      "measurements": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "binary_sha256": "f7750d5acf8d6bb9fe2ab76ee80a0eb0fcf91972fb0219bf24e18556ce661cbf",
+          "calibration_artifact_sha256": "ba232069d9ed676253a0c65ec724c0562dd4d3a5c525ddc36b41589b503f1761",
+          "candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999999999999947,
+            "max_absolute_error": 8.987338846466741e-07,
+            "mean_absolute_error": 6.696363272513828e-08,
+            "mean_squared_error": 1.6428707141318636e-14,
+            "relative_l2_error": 1.0194222074420241e-07,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+          "latency_median_ms": 0.035204,
+          "latency_p95_ms": 0.03524,
+          "packed_artifact_sha256": "",
+          "sample_count": 30,
+          "shape": {
+            "K": 29,
+            "M": 37,
+            "N": 41
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "binary_sha256": "70f5adb276edefb9e9f0d8fabf807acc7304605b58abbeecc0874235e64c5ed3",
+          "calibration_artifact_sha256": "ba232069d9ed676253a0c65ec724c0562dd4d3a5c525ddc36b41589b503f1761",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999844036351898,
+            "max_absolute_error": 0.037756586596335406,
+            "mean_absolute_error": 0.0039240530133957605,
+            "mean_squared_error": 4.9342903068798475e-05,
+            "relative_l2_error": 0.005586820845674511,
+            "relu_zero_state_mismatch_percent": 0.13183915622940012
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+          "latency_median_ms": 0.016444,
+          "latency_p95_ms": 0.016463,
+          "packed_artifact_sha256": "43b027ec923d09a99f90c21b669e8d897c96fc774881656b6b256bd963877456",
+          "sample_count": 30,
+          "shape": {
+            "K": 29,
+            "M": 37,
+            "N": 41
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "binary_sha256": "6370e6172a355eac33d3f12501be8a80b96b2ef1ba8d5bd93c89c3740759386d",
+          "calibration_artifact_sha256": "ba232069d9ed676253a0c65ec724c0562dd4d3a5c525ddc36b41589b503f1761",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999844036351898,
+            "max_absolute_error": 0.037756586596335406,
+            "mean_absolute_error": 0.0039240530133957605,
+            "mean_squared_error": 4.9342903068798475e-05,
+            "relative_l2_error": 0.005586820845674511,
+            "relu_zero_state_mismatch_percent": 0.13183915622940012
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+          "latency_median_ms": 0.0395,
+          "latency_p95_ms": 0.03963,
+          "packed_artifact_sha256": "43b027ec923d09a99f90c21b669e8d897c96fc774881656b6b256bd963877456",
+          "sample_count": 30,
+          "shape": {
+            "K": 29,
+            "M": 37,
+            "N": 41
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "binary_sha256": "3539118d3e59380a7d2f69027c388531d95d8838c2cbd58a008cf1152eb38888",
+          "calibration_artifact_sha256": "ba232069d9ed676253a0c65ec724c0562dd4d3a5c525ddc36b41589b503f1761",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999844036351898,
+            "max_absolute_error": 0.037756586596335406,
+            "mean_absolute_error": 0.0039240530133957605,
+            "mean_squared_error": 4.9342903068798475e-05,
+            "relative_l2_error": 0.005586820845674511,
+            "relu_zero_state_mismatch_percent": 0.13183915622940012
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric",
+          "latency_median_ms": 0.049612,
+          "latency_p95_ms": 0.049704,
+          "packed_artifact_sha256": "",
+          "sample_count": 30,
+          "shape": {
+            "K": 29,
+            "M": 37,
+            "N": 41
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        }
+      },
+      "selection": {
+        "considered_candidates": [
+          {
+            "candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+            "latency_median_ms": 0.035204,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric",
+            "latency_median_ms": 0.049612,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+            "latency_median_ms": 0.0395,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+            "latency_median_ms": 0.016444,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:fp32:none:t1:aarch64",
+            "kernel_id": "xnnpack_delegate_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:int8:pt2e_per_tensor_affine_per_channel_symmetric_axis0:t1:aarch64",
+            "kernel_id": "xnnpack_delegate_quantized_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:int8:pt2e_per_tensor_affine_per_channel_symmetric_axis0:t4:aarch64",
+            "kernel_id": "xnnpack_delegate_quantized_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          }
+        ],
+        "schema_version": "slice3c.selection_result.v1",
+        "selected_candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+        "selected_kernel": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+        "selected_latency_median_ms": 0.016444,
+        "selection_reason": "lowest_measured_median_latency_correctness_and_stability_gates_passed"
+      },
+      "shape": {
+        "K": 29,
+        "M": 37,
+        "N": 41
+      },
+      "timestamp": "2026-07-27T06:52:05.228352+00:00",
+      "workload_id": "e2e10_fused_matmul_bias_relu_37x41x29_seed1004"
+    },
+    {
+      "correctness_metrics": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "cosine_similarity": 0.9999999999999692,
+          "max_absolute_error": 8.981238845962025e-06,
+          "mean_absolute_error": 4.070775189702789e-07,
+          "mean_squared_error": 6.602292239527687e-13,
+          "relative_l2_error": 2.4880533697760777e-07,
+          "relu_zero_state_mismatch_percent": 0.0
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "cosine_similarity": 0.9999843706015697,
+          "max_absolute_error": 0.10450207634559572,
+          "mean_absolute_error": 0.01033665957145908,
+          "mean_squared_error": 0.0003334388237479178,
+          "relative_l2_error": 0.0055913979471494575,
+          "relu_zero_state_mismatch_percent": 0.18174913194444445
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "cosine_similarity": 0.9999843706015697,
+          "max_absolute_error": 0.10450207634559572,
+          "mean_absolute_error": 0.01033665957145908,
+          "mean_squared_error": 0.0003334388237479178,
+          "relative_l2_error": 0.0055913979471494575,
+          "relu_zero_state_mismatch_percent": 0.18174913194444445
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "cosine_similarity": 0.9999843706015697,
+          "max_absolute_error": 0.10450207634559572,
+          "mean_absolute_error": 0.01033665957145908,
+          "mean_squared_error": 0.0003334388237479178,
+          "relative_l2_error": 0.0055913979471494575,
+          "relu_zero_state_mismatch_percent": 0.18174913194444445
+        }
+      },
+      "latency_statistics": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "mean_ms": 5.288046333333333,
+          "median_ms": 5.285905,
+          "minimum_ms": 5.28475,
+          "p90_ms": 5.2895,
+          "p95_ms": 5.3105,
+          "samples_ms": [
+            5.28475,
+            5.28476,
+            5.2848,
+            5.28486,
+            5.28486,
+            5.28498,
+            5.28508,
+            5.2851,
+            5.28512,
+            5.28515,
+            5.28517,
+            5.28519,
+            5.28526,
+            5.28575,
+            5.28584,
+            5.28597,
+            5.2866,
+            5.28665,
+            5.28676,
+            5.28693,
+            5.287,
+            5.28713,
+            5.28719,
+            5.28725,
+            5.28745,
+            5.28847,
+            5.2895,
+            5.2915,
+            5.3105,
+            5.31582
+          ],
+          "stddev_ms": 0.006917023677533333
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "mean_ms": 0.42047816666666665,
+          "median_ms": 0.419639,
+          "minimum_ms": 0.416778,
+          "p90_ms": 0.420389,
+          "p95_ms": 0.421815,
+          "samples_ms": [
+            0.416778,
+            0.417037,
+            0.417093,
+            0.417204,
+            0.417297,
+            0.417501,
+            0.417593,
+            0.41763,
+            0.417686,
+            0.417723,
+            0.417759,
+            0.417815,
+            0.417815,
+            0.418574,
+            0.419167,
+            0.420111,
+            0.420112,
+            0.420112,
+            0.42013,
+            0.42013,
+            0.42013,
+            0.420149,
+            0.420167,
+            0.420185,
+            0.420186,
+            0.420241,
+            0.420389,
+            0.420408,
+            0.421815,
+            0.465408
+          ],
+          "stddev_ms": 0.00845996881823778
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "mean_ms": 5.965327666666667,
+          "median_ms": 5.96456,
+          "minimum_ms": 5.96291,
+          "p90_ms": 5.9668,
+          "p95_ms": 5.97363,
+          "samples_ms": [
+            5.96291,
+            5.96293,
+            5.96293,
+            5.96295,
+            5.96295,
+            5.96313,
+            5.96313,
+            5.96323,
+            5.96328,
+            5.96328,
+            5.9635,
+            5.96426,
+            5.96452,
+            5.96456,
+            5.96456,
+            5.96456,
+            5.96467,
+            5.96488,
+            5.96491,
+            5.96519,
+            5.96521,
+            5.96537,
+            5.96597,
+            5.9661,
+            5.96654,
+            5.96671,
+            5.9668,
+            5.96752,
+            5.97363,
+            5.97965
+          ],
+          "stddev_ms": 0.0033875218900482422
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "mean_ms": 7.7157073333333335,
+          "median_ms": 7.71143,
+          "minimum_ms": 7.70669,
+          "p90_ms": 7.72084,
+          "p95_ms": 7.73451,
+          "samples_ms": [
+            7.70669,
+            7.70765,
+            7.70864,
+            7.70893,
+            7.70939,
+            7.70988,
+            7.7099,
+            7.71056,
+            7.7106,
+            7.71078,
+            7.71082,
+            7.71117,
+            7.71125,
+            7.71128,
+            7.7113,
+            7.71156,
+            7.71177,
+            7.71201,
+            7.71201,
+            7.7121,
+            7.71256,
+            7.71265,
+            7.71343,
+            7.71347,
+            7.71366,
+            7.72021,
+            7.72084,
+            7.72578,
+            7.73451,
+            7.79582
+          ],
+          "stddev_ms": 0.015870600688764818
+        }
+      },
+      "measurements": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "binary_sha256": "f7750d5acf8d6bb9fe2ab76ee80a0eb0fcf91972fb0219bf24e18556ce661cbf",
+          "calibration_artifact_sha256": "936133858be7a0b0bd9abec2e67d1c8f314ac625b50d4aaa09aeaf5939a5c216",
+          "candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999999999999692,
+            "max_absolute_error": 8.981238845962025e-06,
+            "mean_absolute_error": 4.070775189702789e-07,
+            "mean_squared_error": 6.602292239527687e-13,
+            "relative_l2_error": 2.4880533697760777e-07,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+          "latency_median_ms": 5.285905,
+          "latency_p95_ms": 5.3105,
+          "packed_artifact_sha256": "",
+          "sample_count": 30,
+          "shape": {
+            "K": 192,
+            "M": 192,
+            "N": 192
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "binary_sha256": "70f5adb276edefb9e9f0d8fabf807acc7304605b58abbeecc0874235e64c5ed3",
+          "calibration_artifact_sha256": "936133858be7a0b0bd9abec2e67d1c8f314ac625b50d4aaa09aeaf5939a5c216",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999843706015697,
+            "max_absolute_error": 0.10450207634559572,
+            "mean_absolute_error": 0.01033665957145908,
+            "mean_squared_error": 0.0003334388237479178,
+            "relative_l2_error": 0.0055913979471494575,
+            "relu_zero_state_mismatch_percent": 0.18174913194444445
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+          "latency_median_ms": 0.419639,
+          "latency_p95_ms": 0.421815,
+          "packed_artifact_sha256": "fef5f00605a7f39393e0ed04421b9dd10c2d338a7381c2d36ae7de5c2974ed20",
+          "sample_count": 30,
+          "shape": {
+            "K": 192,
+            "M": 192,
+            "N": 192
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "binary_sha256": "6370e6172a355eac33d3f12501be8a80b96b2ef1ba8d5bd93c89c3740759386d",
+          "calibration_artifact_sha256": "936133858be7a0b0bd9abec2e67d1c8f314ac625b50d4aaa09aeaf5939a5c216",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999843706015697,
+            "max_absolute_error": 0.10450207634559572,
+            "mean_absolute_error": 0.01033665957145908,
+            "mean_squared_error": 0.0003334388237479178,
+            "relative_l2_error": 0.0055913979471494575,
+            "relu_zero_state_mismatch_percent": 0.18174913194444445
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+          "latency_median_ms": 5.96456,
+          "latency_p95_ms": 5.97363,
+          "packed_artifact_sha256": "fef5f00605a7f39393e0ed04421b9dd10c2d338a7381c2d36ae7de5c2974ed20",
+          "sample_count": 30,
+          "shape": {
+            "K": 192,
+            "M": 192,
+            "N": 192
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "binary_sha256": "3539118d3e59380a7d2f69027c388531d95d8838c2cbd58a008cf1152eb38888",
+          "calibration_artifact_sha256": "936133858be7a0b0bd9abec2e67d1c8f314ac625b50d4aaa09aeaf5939a5c216",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999843706015697,
+            "max_absolute_error": 0.10450207634559572,
+            "mean_absolute_error": 0.01033665957145908,
+            "mean_squared_error": 0.0003334388237479178,
+            "relative_l2_error": 0.0055913979471494575,
+            "relu_zero_state_mismatch_percent": 0.18174913194444445
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric",
+          "latency_median_ms": 7.71143,
+          "latency_p95_ms": 7.73451,
+          "packed_artifact_sha256": "",
+          "sample_count": 30,
+          "shape": {
+            "K": 192,
+            "M": 192,
+            "N": 192
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        }
+      },
+      "selection": {
+        "considered_candidates": [
+          {
+            "candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+            "latency_median_ms": 5.285905,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric",
+            "latency_median_ms": 7.71143,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+            "latency_median_ms": 5.96456,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+            "latency_median_ms": 0.419639,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:fp32:none:t1:aarch64",
+            "kernel_id": "xnnpack_delegate_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:int8:pt2e_per_tensor_affine_per_channel_symmetric_axis0:t1:aarch64",
+            "kernel_id": "xnnpack_delegate_quantized_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:int8:pt2e_per_tensor_affine_per_channel_symmetric_axis0:t4:aarch64",
+            "kernel_id": "xnnpack_delegate_quantized_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          }
+        ],
+        "schema_version": "slice3c.selection_result.v1",
+        "selected_candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+        "selected_kernel": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+        "selected_latency_median_ms": 0.419639,
+        "selection_reason": "lowest_measured_median_latency_correctness_and_stability_gates_passed"
+      },
+      "shape": {
+        "K": 192,
+        "M": 192,
+        "N": 192
+      },
+      "timestamp": "2026-07-27T06:52:07.523355+00:00",
+      "workload_id": "e2e10_fused_matmul_bias_relu_192x192x192_seed1005"
+    },
+    {
+      "correctness_metrics": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "cosine_similarity": 1.0,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "mean_squared_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relu_zero_state_mismatch_percent": 0.0
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "cosine_similarity": 1.0,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "mean_squared_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relu_zero_state_mismatch_percent": 0.0
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "cosine_similarity": 1.0,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "mean_squared_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relu_zero_state_mismatch_percent": 0.0
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "cosine_similarity": 1.0,
+          "max_absolute_error": 0.0,
+          "mean_absolute_error": 0.0,
+          "mean_squared_error": 0.0,
+          "relative_l2_error": 0.0,
+          "relu_zero_state_mismatch_percent": 0.0
+        }
+      },
+      "latency_statistics": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "mean_ms": 0.0005066666666666667,
+          "median_ms": 0.000444,
+          "minimum_ms": 0.000425,
+          "p90_ms": 0.000445,
+          "p95_ms": 0.000481,
+          "samples_ms": [
+            0.000425,
+            0.000426,
+            0.000426,
+            0.000426,
+            0.000426,
+            0.000426,
+            0.000426,
+            0.000426,
+            0.000426,
+            0.000426,
+            0.000426,
+            0.000426,
+            0.000426,
+            0.000444,
+            0.000444,
+            0.000444,
+            0.000444,
+            0.000444,
+            0.000444,
+            0.000444,
+            0.000444,
+            0.000444,
+            0.000444,
+            0.000444,
+            0.000445,
+            0.000445,
+            0.000445,
+            0.000445,
+            0.000481,
+            0.002518
+          ],
+          "stddev_ms": 0.0003736881349765098
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "mean_ms": 4.9966666666666664e-05,
+          "median_ms": 3.7e-05,
+          "minimum_ms": 3.7e-05,
+          "p90_ms": 5.6e-05,
+          "p95_ms": 5.6e-05,
+          "samples_ms": [
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            0.000315
+          ],
+          "stddev_ms": 4.9764433975369285e-05
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "mean_ms": 4.383333333333333e-05,
+          "median_ms": 3.7e-05,
+          "minimum_ms": 3.7e-05,
+          "p90_ms": 3.8e-05,
+          "p95_ms": 5.5e-05,
+          "samples_ms": [
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.8e-05,
+            3.8e-05,
+            5.5e-05,
+            5.5e-05,
+            0.000204
+          ],
+          "stddev_ms": 3.0076661309985117e-05
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "mean_ms": 3.89e-05,
+          "median_ms": 3.7e-05,
+          "minimum_ms": 3.7e-05,
+          "p90_ms": 3.7e-05,
+          "p95_ms": 5.6e-05,
+          "samples_ms": [
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.8e-05,
+            5.6e-05,
+            7.4e-05
+          ],
+          "stddev_ms": 7.3545904032787576e-06
+        }
+      },
+      "measurements": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "binary_sha256": "f7750d5acf8d6bb9fe2ab76ee80a0eb0fcf91972fb0219bf24e18556ce661cbf",
+          "calibration_artifact_sha256": "c7582d1506a3e757f376b7774cb46f090c9d6d80aa00aeb2d2624661154dcf73",
+          "candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 1.0,
+            "max_absolute_error": 0.0,
+            "mean_absolute_error": 0.0,
+            "mean_squared_error": 0.0,
+            "relative_l2_error": 0.0,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+          "latency_median_ms": 0.000444,
+          "latency_p95_ms": 0.000481,
+          "packed_artifact_sha256": "",
+          "sample_count": 30,
+          "shape": {
+            "K": 1,
+            "M": 1,
+            "N": 1
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "binary_sha256": "70f5adb276edefb9e9f0d8fabf807acc7304605b58abbeecc0874235e64c5ed3",
+          "calibration_artifact_sha256": "c7582d1506a3e757f376b7774cb46f090c9d6d80aa00aeb2d2624661154dcf73",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+          "correctness_metrics": {
+            "cosine_similarity": 1.0,
+            "max_absolute_error": 0.0,
+            "mean_absolute_error": 0.0,
+            "mean_squared_error": 0.0,
+            "relative_l2_error": 0.0,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+          "latency_median_ms": 3.7e-05,
+          "latency_p95_ms": 5.6e-05,
+          "packed_artifact_sha256": "591b7cc95037822dec5a4d593a2e2e8b19c07ddd2570e5699003d17f14c440a6",
+          "sample_count": 30,
+          "shape": {
+            "K": 1,
+            "M": 1,
+            "N": 1
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "binary_sha256": "6370e6172a355eac33d3f12501be8a80b96b2ef1ba8d5bd93c89c3740759386d",
+          "calibration_artifact_sha256": "c7582d1506a3e757f376b7774cb46f090c9d6d80aa00aeb2d2624661154dcf73",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 1.0,
+            "max_absolute_error": 0.0,
+            "mean_absolute_error": 0.0,
+            "mean_squared_error": 0.0,
+            "relative_l2_error": 0.0,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+          "latency_median_ms": 3.7e-05,
+          "latency_p95_ms": 5.5e-05,
+          "packed_artifact_sha256": "591b7cc95037822dec5a4d593a2e2e8b19c07ddd2570e5699003d17f14c440a6",
+          "sample_count": 30,
+          "shape": {
+            "K": 1,
+            "M": 1,
+            "N": 1
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "binary_sha256": "3539118d3e59380a7d2f69027c388531d95d8838c2cbd58a008cf1152eb38888",
+          "calibration_artifact_sha256": "c7582d1506a3e757f376b7774cb46f090c9d6d80aa00aeb2d2624661154dcf73",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 1.0,
+            "max_absolute_error": 0.0,
+            "mean_absolute_error": 0.0,
+            "mean_squared_error": 0.0,
+            "relative_l2_error": 0.0,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric",
+          "latency_median_ms": 3.7e-05,
+          "latency_p95_ms": 5.6e-05,
+          "packed_artifact_sha256": "",
+          "sample_count": 30,
+          "shape": {
+            "K": 1,
+            "M": 1,
+            "N": 1
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        }
+      },
+      "selection": {
+        "considered_candidates": [
+          {
+            "candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+            "latency_median_ms": 0.000444,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric",
+            "latency_median_ms": 3.7e-05,
+            "rejection_reasons": [
+              "performance_gate_failed"
+            ]
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+            "latency_median_ms": 3.7e-05,
+            "rejection_reasons": [
+              "performance_gate_failed"
+            ]
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+            "latency_median_ms": 3.7e-05,
+            "rejection_reasons": [
+              "performance_gate_failed"
+            ]
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:fp32:none:t1:aarch64",
+            "kernel_id": "xnnpack_delegate_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:int8:pt2e_per_tensor_affine_per_channel_symmetric_axis0:t1:aarch64",
+            "kernel_id": "xnnpack_delegate_quantized_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:int8:pt2e_per_tensor_affine_per_channel_symmetric_axis0:t4:aarch64",
+            "kernel_id": "xnnpack_delegate_quantized_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          }
+        ],
+        "schema_version": "slice3c.selection_result.v1",
+        "selected_candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+        "selected_kernel": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "selected_latency_median_ms": 0.000444,
+        "selection_reason": "lowest_measured_median_latency_correctness_and_stability_gates_passed"
+      },
+      "shape": {
+        "K": 1,
+        "M": 1,
+        "N": 1
+      },
+      "timestamp": "2026-07-27T06:52:07.572971+00:00",
+      "workload_id": "e2e10_fused_matmul_bias_relu_1x1x1_seed1006"
+    },
+    {
+      "correctness_metrics": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "cosine_similarity": 0.9999999999999979,
+          "max_absolute_error": 1.1601376681547038e-07,
+          "mean_absolute_error": 3.8481624123343217e-08,
+          "mean_squared_error": 3.547932153739004e-15,
+          "relative_l2_error": 8.764608854782435e-08,
+          "relu_zero_state_mismatch_percent": 0.0
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "cosine_similarity": 0.9999981071739555,
+          "max_absolute_error": 0.0050774780743136905,
+          "mean_absolute_error": 0.0018828404646849123,
+          "mean_squared_error": 7.201864920012535e-06,
+          "relative_l2_error": 0.003948820310404096,
+          "relu_zero_state_mismatch_percent": 0.0
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "cosine_similarity": 0.9999981071739555,
+          "max_absolute_error": 0.0050774780743136905,
+          "mean_absolute_error": 0.0018828404646849123,
+          "mean_squared_error": 7.201864920012535e-06,
+          "relative_l2_error": 0.003948820310404096,
+          "relu_zero_state_mismatch_percent": 0.0
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "cosine_similarity": 0.9999981071739555,
+          "max_absolute_error": 0.0050774780743136905,
+          "mean_absolute_error": 0.0018828404646849123,
+          "mean_squared_error": 7.201864920012535e-06,
+          "relative_l2_error": 0.003948820310404096,
+          "relu_zero_state_mismatch_percent": 0.0
+        }
+      },
+      "latency_statistics": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "mean_ms": 0.0005161,
+          "median_ms": 0.000445,
+          "minimum_ms": 0.000444,
+          "p90_ms": 0.000463,
+          "p95_ms": 0.000537,
+          "samples_ms": [
+            0.000444,
+            0.000444,
+            0.000444,
+            0.000444,
+            0.000444,
+            0.000444,
+            0.000444,
+            0.000444,
+            0.000444,
+            0.000445,
+            0.000445,
+            0.000445,
+            0.000445,
+            0.000445,
+            0.000445,
+            0.000445,
+            0.000445,
+            0.000445,
+            0.000463,
+            0.000463,
+            0.000463,
+            0.000463,
+            0.000463,
+            0.000463,
+            0.000463,
+            0.000463,
+            0.000463,
+            0.000481,
+            0.000537,
+            0.002297
+          ],
+          "stddev_ms": 0.00033120651664281405
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "mean_ms": 6.54e-05,
+          "median_ms": 5.6e-05,
+          "minimum_ms": 3.7e-05,
+          "p90_ms": 5.6e-05,
+          "p95_ms": 7.4e-05,
+          "samples_ms": [
+            3.7e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            7.4e-05,
+            7.4e-05,
+            0.000333
+          ],
+          "stddev_ms": 5.00330557398473e-05
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "mean_ms": 5.93e-05,
+          "median_ms": 5.5e-05,
+          "minimum_ms": 3.7e-05,
+          "p90_ms": 7.4e-05,
+          "p95_ms": 7.4e-05,
+          "samples_ms": [
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.8e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            0.00026
+          ],
+          "stddev_ms": 3.87815677867721e-05
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "mean_ms": 5.37e-05,
+          "median_ms": 5.5e-05,
+          "minimum_ms": 3.7e-05,
+          "p90_ms": 5.6e-05,
+          "p95_ms": 7.4e-05,
+          "samples_ms": [
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            3.7e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.5e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            5.6e-05,
+            7.4e-05,
+            9.3e-05
+          ],
+          "stddev_ms": 1.1121001153972904e-05
+        }
+      },
+      "measurements": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "binary_sha256": "f7750d5acf8d6bb9fe2ab76ee80a0eb0fcf91972fb0219bf24e18556ce661cbf",
+          "calibration_artifact_sha256": "fb8410943043e742eae129af29c1eb3f565427e07119e21896418a4d01c22741",
+          "candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999999999999979,
+            "max_absolute_error": 1.1601376681547038e-07,
+            "mean_absolute_error": 3.8481624123343217e-08,
+            "mean_squared_error": 3.547932153739004e-15,
+            "relative_l2_error": 8.764608854782435e-08,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+          "latency_median_ms": 0.000445,
+          "latency_p95_ms": 0.000537,
+          "packed_artifact_sha256": "",
+          "sample_count": 30,
+          "shape": {
+            "K": 2,
+            "M": 2,
+            "N": 2
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "binary_sha256": "70f5adb276edefb9e9f0d8fabf807acc7304605b58abbeecc0874235e64c5ed3",
+          "calibration_artifact_sha256": "fb8410943043e742eae129af29c1eb3f565427e07119e21896418a4d01c22741",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999981071739555,
+            "max_absolute_error": 0.0050774780743136905,
+            "mean_absolute_error": 0.0018828404646849123,
+            "mean_squared_error": 7.201864920012535e-06,
+            "relative_l2_error": 0.003948820310404096,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+          "latency_median_ms": 5.6e-05,
+          "latency_p95_ms": 7.4e-05,
+          "packed_artifact_sha256": "073b8cac9f9ddfdcdd606dddb82a7b1726bc3333a245edfbb3e3bc2e57a921ee",
+          "sample_count": 30,
+          "shape": {
+            "K": 2,
+            "M": 2,
+            "N": 2
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "binary_sha256": "6370e6172a355eac33d3f12501be8a80b96b2ef1ba8d5bd93c89c3740759386d",
+          "calibration_artifact_sha256": "fb8410943043e742eae129af29c1eb3f565427e07119e21896418a4d01c22741",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999981071739555,
+            "max_absolute_error": 0.0050774780743136905,
+            "mean_absolute_error": 0.0018828404646849123,
+            "mean_squared_error": 7.201864920012535e-06,
+            "relative_l2_error": 0.003948820310404096,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+          "latency_median_ms": 5.5e-05,
+          "latency_p95_ms": 7.4e-05,
+          "packed_artifact_sha256": "073b8cac9f9ddfdcdd606dddb82a7b1726bc3333a245edfbb3e3bc2e57a921ee",
+          "sample_count": 30,
+          "shape": {
+            "K": 2,
+            "M": 2,
+            "N": 2
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "binary_sha256": "3539118d3e59380a7d2f69027c388531d95d8838c2cbd58a008cf1152eb38888",
+          "calibration_artifact_sha256": "fb8410943043e742eae129af29c1eb3f565427e07119e21896418a4d01c22741",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999981071739555,
+            "max_absolute_error": 0.0050774780743136905,
+            "mean_absolute_error": 0.0018828404646849123,
+            "mean_squared_error": 7.201864920012535e-06,
+            "relative_l2_error": 0.003948820310404096,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric",
+          "latency_median_ms": 5.5e-05,
+          "latency_p95_ms": 7.4e-05,
+          "packed_artifact_sha256": "",
+          "sample_count": 30,
+          "shape": {
+            "K": 2,
+            "M": 2,
+            "N": 2
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        }
+      },
+      "selection": {
+        "considered_candidates": [
+          {
+            "candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+            "latency_median_ms": 0.000445,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric",
+            "latency_median_ms": 5.5e-05,
+            "rejection_reasons": [
+              "performance_gate_failed"
+            ]
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+            "latency_median_ms": 5.5e-05,
+            "rejection_reasons": [
+              "performance_gate_failed"
+            ]
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+            "latency_median_ms": 5.6e-05,
+            "rejection_reasons": [
+              "performance_gate_failed"
+            ]
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:fp32:none:t1:aarch64",
+            "kernel_id": "xnnpack_delegate_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:int8:pt2e_per_tensor_affine_per_channel_symmetric_axis0:t1:aarch64",
+            "kernel_id": "xnnpack_delegate_quantized_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:int8:pt2e_per_tensor_affine_per_channel_symmetric_axis0:t4:aarch64",
+            "kernel_id": "xnnpack_delegate_quantized_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          }
+        ],
+        "schema_version": "slice3c.selection_result.v1",
+        "selected_candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+        "selected_kernel": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+        "selected_latency_median_ms": 0.000445,
+        "selection_reason": "lowest_measured_median_latency_correctness_and_stability_gates_passed"
+      },
+      "shape": {
+        "K": 2,
+        "M": 2,
+        "N": 2
+      },
+      "timestamp": "2026-07-27T06:52:07.618755+00:00",
+      "workload_id": "e2e10_fused_matmul_bias_relu_2x2x2_seed1007"
+    },
+    {
+      "correctness_metrics": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "cosine_similarity": 0.9999999999999993,
+          "max_absolute_error": 2.9647399979459976e-08,
+          "mean_absolute_error": 6.144389034605051e-09,
+          "mean_squared_error": 1.445556171300578e-16,
+          "relative_l2_error": 3.950230555956183e-08,
+          "relu_zero_state_mismatch_percent": 0.0
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "cosine_similarity": 0.9999925660920945,
+          "max_absolute_error": 0.004491502000715797,
+          "mean_absolute_error": 0.0011079690604247011,
+          "mean_squared_error": 4.184305445755104e-06,
+          "relative_l2_error": 0.0067207330870919435,
+          "relu_zero_state_mismatch_percent": 0.0
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "cosine_similarity": 0.9999925660920945,
+          "max_absolute_error": 0.004491502000715797,
+          "mean_absolute_error": 0.0011079690604247011,
+          "mean_squared_error": 4.184305445755104e-06,
+          "relative_l2_error": 0.0067207330870919435,
+          "relu_zero_state_mismatch_percent": 0.0
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "cosine_similarity": 0.9999925660920945,
+          "max_absolute_error": 0.004491502000715797,
+          "mean_absolute_error": 0.0011079690604247011,
+          "mean_squared_error": 4.184305445755104e-06,
+          "relative_l2_error": 0.0067207330870919435,
+          "relu_zero_state_mismatch_percent": 0.0
+        }
+      },
+      "latency_statistics": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "mean_ms": 0.0005598333333333333,
+          "median_ms": 0.000481,
+          "minimum_ms": 0.000462,
+          "p90_ms": 0.0005,
+          "p95_ms": 0.000593,
+          "samples_ms": [
+            0.000462,
+            0.000463,
+            0.000463,
+            0.000463,
+            0.000463,
+            0.000463,
+            0.000463,
+            0.000463,
+            0.000463,
+            0.000463,
+            0.000463,
+            0.000481,
+            0.000481,
+            0.000481,
+            0.000481,
+            0.000481,
+            0.000481,
+            0.000481,
+            0.000481,
+            0.000482,
+            0.000482,
+            0.000482,
+            0.000482,
+            0.000482,
+            0.000482,
+            0.000482,
+            0.0005,
+            0.000518,
+            0.000593,
+            0.00287
+          ],
+          "stddev_ms": 0.00042968058549992176
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "mean_ms": 9.51e-05,
+          "median_ms": 9.2e-05,
+          "minimum_ms": 7.4e-05,
+          "p90_ms": 9.3e-05,
+          "p95_ms": 9.3e-05,
+          "samples_ms": [
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.5e-05,
+            7.5e-05,
+            9.2e-05,
+            9.2e-05,
+            9.2e-05,
+            9.2e-05,
+            9.2e-05,
+            9.2e-05,
+            9.3e-05,
+            9.3e-05,
+            9.3e-05,
+            9.3e-05,
+            9.3e-05,
+            9.3e-05,
+            9.3e-05,
+            9.3e-05,
+            9.3e-05,
+            9.3e-05,
+            0.000407
+          ],
+          "stddev_ms": 5.8619877174896916e-05
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "mean_ms": 8.953333333333333e-05,
+          "median_ms": 7.4e-05,
+          "minimum_ms": 7.4e-05,
+          "p90_ms": 9.3e-05,
+          "p95_ms": 0.000167,
+          "samples_ms": [
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.5e-05,
+            9.3e-05,
+            9.3e-05,
+            0.00013,
+            0.000167,
+            0.000352
+          ],
+          "stddev_ms": 5.245743247836499e-05
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "mean_ms": 8.513333333333333e-05,
+          "median_ms": 7.4e-05,
+          "minimum_ms": 7.4e-05,
+          "p90_ms": 9.3e-05,
+          "p95_ms": 0.00013,
+          "samples_ms": [
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            7.4e-05,
+            9.2e-05,
+            9.2e-05,
+            9.2e-05,
+            9.3e-05,
+            9.3e-05,
+            9.3e-05,
+            9.3e-05,
+            9.3e-05,
+            0.000111,
+            0.00013,
+            0.000166
+          ],
+          "stddev_ms": 2.0022875806326014e-05
+        }
+      },
+      "measurements": {
+        "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64": {
+          "binary_sha256": "f7750d5acf8d6bb9fe2ab76ee80a0eb0fcf91972fb0219bf24e18556ce661cbf",
+          "calibration_artifact_sha256": "4f76891ae825028bbbdc338411d0fb3394db7f2cadadf1fb9448a6bd243cc5af",
+          "candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999999999999993,
+            "max_absolute_error": 2.9647399979459976e-08,
+            "mean_absolute_error": 6.144389034605051e-09,
+            "mean_squared_error": 1.445556171300578e-16,
+            "relative_l2_error": 3.950230555956183e-08,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+          "latency_median_ms": 0.000481,
+          "latency_p95_ms": 0.000593,
+          "packed_artifact_sha256": "",
+          "sample_count": 30,
+          "shape": {
+            "K": 3,
+            "M": 3,
+            "N": 3
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod": {
+          "binary_sha256": "70f5adb276edefb9e9f0d8fabf807acc7304605b58abbeecc0874235e64c5ed3",
+          "calibration_artifact_sha256": "4f76891ae825028bbbdc338411d0fb3394db7f2cadadf1fb9448a6bd243cc5af",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999925660920945,
+            "max_absolute_error": 0.004491502000715797,
+            "mean_absolute_error": 0.0011079690604247011,
+            "mean_squared_error": 4.184305445755104e-06,
+            "relative_l2_error": 0.0067207330870919435,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+          "latency_median_ms": 9.2e-05,
+          "latency_p95_ms": 9.3e-05,
+          "packed_artifact_sha256": "369317fa81274c05c57d2af3320cb533d433e2a2fcf50811c214de047fd0f173",
+          "sample_count": 30,
+          "shape": {
+            "K": 3,
+            "M": 3,
+            "N": 3
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64": {
+          "binary_sha256": "6370e6172a355eac33d3f12501be8a80b96b2ef1ba8d5bd93c89c3740759386d",
+          "calibration_artifact_sha256": "4f76891ae825028bbbdc338411d0fb3394db7f2cadadf1fb9448a6bd243cc5af",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999925660920945,
+            "max_absolute_error": 0.004491502000715797,
+            "mean_absolute_error": 0.0011079690604247011,
+            "mean_squared_error": 4.184305445755104e-06,
+            "relative_l2_error": 0.0067207330870919435,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+          "latency_median_ms": 7.4e-05,
+          "latency_p95_ms": 0.000167,
+          "packed_artifact_sha256": "369317fa81274c05c57d2af3320cb533d433e2a2fcf50811c214de047fd0f173",
+          "sample_count": 30,
+          "shape": {
+            "K": 3,
+            "M": 3,
+            "N": 3
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        },
+        "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64": {
+          "binary_sha256": "3539118d3e59380a7d2f69027c388531d95d8838c2cbd58a008cf1152eb38888",
+          "calibration_artifact_sha256": "4f76891ae825028bbbdc338411d0fb3394db7f2cadadf1fb9448a6bd243cc5af",
+          "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64",
+          "correctness_metrics": {
+            "cosine_similarity": 0.9999925660920945,
+            "max_absolute_error": 0.004491502000715797,
+            "mean_absolute_error": 0.0011079690604247011,
+            "mean_squared_error": 4.184305445755104e-06,
+            "relative_l2_error": 0.0067207330870919435,
+            "relu_zero_state_mismatch_percent": 0.0
+          },
+          "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric",
+          "latency_median_ms": 7.4e-05,
+          "latency_p95_ms": 0.00013,
+          "packed_artifact_sha256": "",
+          "sample_count": 30,
+          "shape": {
+            "K": 3,
+            "M": 3,
+            "N": 3
+          },
+          "target_architecture": "aarch64",
+          "target_id": "raspberry-pi5-cortex-a76-cpu",
+          "target_microarchitecture": "cortex-a76"
+        }
+      },
+      "selection": {
+        "considered_candidates": [
+          {
+            "candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+            "latency_median_ms": 0.000481,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:row_major_kx_n:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric",
+            "latency_median_ms": 7.4e-05,
+            "rejection_reasons": [
+              "performance_gate_failed"
+            ]
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+            "latency_median_ms": 7.4e-05,
+            "rejection_reasons": [
+              "performance_gate_failed"
+            ]
+          },
+          {
+            "candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+            "latency_median_ms": 9.2e-05,
+            "rejection_reasons": []
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:fp32:none:t1:aarch64",
+            "kernel_id": "xnnpack_delegate_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:int8:pt2e_per_tensor_affine_per_channel_symmetric_axis0:t1:aarch64",
+            "kernel_id": "xnnpack_delegate_quantized_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          },
+          {
+            "candidate_id": "slice3g:executorch_xnnpack:int8:pt2e_per_tensor_affine_per_channel_symmetric_axis0:t4:aarch64",
+            "kernel_id": "xnnpack_delegate_quantized_linear_bias_relu",
+            "latency_median_ms": null,
+            "rejection_reasons": [
+              "missing_measurement_artifact"
+            ]
+          }
+        ],
+        "schema_version": "slice3c.selection_result.v1",
+        "selected_candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+        "selected_kernel": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+        "selected_latency_median_ms": 9.2e-05,
+        "selection_reason": "lowest_measured_median_latency_correctness_and_stability_gates_passed"
+      },
+      "shape": {
+        "K": 3,
+        "M": 3,
+        "N": 3
+      },
+      "timestamp": "2026-07-27T06:52:07.666355+00:00",
+      "workload_id": "e2e10_fused_matmul_bias_relu_3x3x3_seed1008"
+    }
+  ],
+  "schema": "e2e10_fused_matmul_bias_relu_pi_evidence.v1",
+  "target_profile_id": "raspberry-pi5-cortex-a76-cpu",
+  "timestamp": "2026-07-27T06:52:07.667473+00:00"
+}

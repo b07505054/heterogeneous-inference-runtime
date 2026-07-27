@@ -1,0 +1,39 @@
+{
+  "repository_located": true, "path": "~/Desktop/Project/simulator-validation/third_party/gem5",
+  "commit": "c8222cc67a399bfc01e8658dd14b30d5bfd634f9", "commit_date": "2026-04-21", "clone_size_mb": 155,
+  "repository_ownership": "allen:allen mode 775 (unlike accel-sim, NOT root-owned -- confirmed via stat)",
+  "existing_binaries_search": {
+    "command": "find $GEM5_ROOT -type f \\( -name 'gem5.opt' -o -name 'gem5.fast' -o -name 'gem5.debug' \\) -executable -print",
+    "result": "none found; no build/ directory exists at all in the checkout"
+  },
+  "existing_test_binaries_found": {
+    "path": "tests/test-progs/hello/bin/{arm,x86,riscv,power}/linux/hello",
+    "note": "real, pre-existing, framework-provided static 'hello world' binaries for multiple ISAs including arm -- confirmed present, intended as the Step-5 smoke-test target once a gem5.opt binary exists"
+  },
+  "scons_installation": {
+    "status": "concrete missing dependency confirmed (ModuleNotFoundError: No module named 'scons'; pip3 show scons returned nothing)",
+    "action_taken": "pip3 install --target=$E2E12_CACHE_ROOT/pip scons -- SUCCEEDED (scons 4.10.1 installed to Expansion-backed cache, ~4.1MB download)",
+    "invocation_note": "the installed console-script wrapper's shebang did not resolve correctly with --target installs; worked around by invoking via `python3 -c \"sys.path.insert(0,'$E2E12_CACHE_ROOT/pip'); from SCons.Script.Main import main; ...\"`, confirmed working (scons --version succeeded, printed v4.10.1)"
+  },
+  "build_directory_relocation": {
+    "action": "symlink $GEM5_ROOT/build -> $E2E12_BUILD_ROOT/gem5 created BEFORE any build (build/ did not pre-exist, so no existing content was at risk)",
+    "verified": "readlink -f $GEM5_ROOT/build resolved to /run/media/allen/Expansion/simulator-validation-e2e12/build/gem5"
+  },
+  "build_attempt": {
+    "command": "scons build/ARM/gem5.opt -j1 --no-lto (smallest ARM-only opt target per the mandatory resource directive)",
+    "resource_monitoring": "/usr/bin/time -v wrapper used; peak RSS observed = 331280 KB (~324MB) -- well within safe margin, NOT an OOM",
+    "result": "FAILED after 19.93s wall-clock: 'Error: Can't find version of M4 macro processor. Please install M4 and try again.'",
+    "classification_of_this_failure": "MISSING_DEPENDENCY (m4), NOT resource-limited, NOT OOM -- peak RSS and elapsed time both confirm this failed fast on a missing tool, not on resource exhaustion"
+  },
+  "m4_installation_attempt": {
+    "apt_attempt": "apt-get install -y m4 FAILED: 'Could not open lock file /var/lib/dpkg/lock-frontend...are you root?' (sudo -n true also confirmed unavailable)",
+    "source_build_attempt": {
+      "download": "curl https://ftp.gnu.org/gnu/m4/m4-1.4.19.tar.gz -- SUCCEEDED (2.95MB, network access confirmed working)",
+      "configure": "./configure --prefix=$E2E12_CACHE_ROOT/m4-local -- SUCCEEDED",
+      "make": "make -j1 -- FAILED: gl_oset.h:275: error: expected identifier or '(' before 'int' (a gnulib _GL_ATTRIBUTE_NODISCARD macro-expansion incompatibility with this host's GCC 15.2.0 -- m4 1.4.19 is GNU's current stable release, from 2021, predating GCC 15's stricter/changed attribute handling)",
+      "classification": "SIMULATOR_INCOMPATIBILITY (build-toolchain-version incompatibility), root-caused via direct log inspection, not assumed"
+    }
+  },
+  "final_status_this_slice": "MISSING_DEPENDENCY (m4) escalating to SIMULATOR_INCOMPATIBILITY once a source-build workaround was concretely attempted and failed for an independent, diagnosed reason (gnulib/GCC-15.2 incompatibility)",
+  "what_would_unblock_this": "A root-privileged 'apt-get install m4' (seconds, trivial once available), OR a newer/patched m4 gnulib snapshot compatible with GCC 15.2, OR building with an older GCC (g++-13 is present but the failure is in m4's OWN bundled gnulib headers, not the project's CUDA/host-compiler choice, so -ccbin-style workarounds do not apply here the same way)."
+}

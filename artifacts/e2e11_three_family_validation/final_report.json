@@ -1,0 +1,26 @@
+{
+  "final_architecture_decision": "THREE_FAMILY_COMPLETE_MIXED_PERFORMANCE",
+  "decision_rationale": "All three families are architecturally complete (H1/H2/H11 SUPPORTED: full descriptor-to-real-runtime path, policy round-trip, zero regressions) and each shows a real, separately-measured optimization effect in at least one clearly-defined domain (RMSNorm custom kernel vs torch.compile; LM-head real serving TPOT; MatMul INT8-packed-plus-codegen vs FP32). This alone would satisfy THREE_FAMILY_OPTIMIZATION_VALIDATED's literal bar. However, two real, honestly-measured negative/partial findings exist that the task explicitly requires not be blurred into an unqualified success: (1) RMSNorm's SELECTOR specifically does not beat a single well-chosen fixed block size on this shape sweep (H4 REJECTED -- the speedup credit belongs to the custom kernel, not shape-aware selection); (2) MatMul's unified selector achieves only 7-8/9 fidelity to the gated production selector, not 9/9 (H9 PARTIAL, Path B). Both are selector-accuracy nuances layered on top of otherwise-real custom-kernel/precision wins. Per the task's explicit instruction to separate selector accuracy from custom-kernel value from architecture completeness and to report negative results honestly, THREE_FAMILY_COMPLETE_MIXED_PERFORMANCE is the more precise choice: complete architecture, mixed (not uniformly clean) performance/fidelity picture.",
+  "scorecard": {
+    "Full descriptor-to-runtime path": {"RMSNorm": "YES", "LM-head": "YES", "MatMul-Bias-ReLU": "YES"},
+    "Policy round-trip": {"RMSNorm": "YES", "LM-head": "YES", "MatMul-Bias-ReLU": "YES"},
+    "Correctness": {"RMSNorm": "YES (12/12 shapes)", "LM-head": "YES (identical outputs, 4/4 batches)", "MatMul-Bias-ReLU": "YES (accuracy gate passed, 6/6 dispatch cases)"},
+    "Safe fallback": {"RMSNorm": "YES", "LM-head": "YES", "MatMul-Bias-ReLU": "YES"},
+    "Selector accuracy": {"RMSNorm": "12/12 exact measured-winner match", "LM-head": "within 0.83% of direct E2E-8 at all batches", "MatMul-Bias-ReLU": "7/9 fresh-run agreement with gated production selector (PARTIAL, known gap)"},
+    "Framework/native baseline measured": {"RMSNorm": "eager + torch.compile real; flashinfer attempted, unavailable on this GPU", "LM-head": "baseline default vLLM, real", "MatMul-Bias-ReLU": "FP32 tiled (project's own always-legal baseline), real"},
+    "Best optimization effect": {"RMSNorm": "2.98x vs torch.compile (custom-kernel value)", "LM-head": "-21.48% TPOT vs baseline at batch=2", "MatMul-Bias-ReLU": "14.06x vs FP32 fallback at 384^3"},
+    "Worst regression": {"RMSNorm": "selector 6.6% slower than best fixed block at one shape", "LM-head": "+0.91% at batch=1 (within budget)", "MatMul-Bias-ReLU": "unified selector picks INT8 where production correctly falls back to FP32 at 2 tiny shapes"},
+    "Dispatch overhead": {"RMSNorm": "~35.5us one-time selection, 0.137us cached resolve", "LM-head": "0.266us cached, 0.00074% of the optimization", "MatMul-Bias-ReLU": "~3.05ms one-time selection (large but amortized to 0.135us cached), 1.55s one-time graph build"},
+    "Real target execution": {"RMSNorm": "YES, live GPU", "LM-head": "YES, live vLLM server", "MatMul-Bias-ReLU": "YES, live Raspberry Pi 5"},
+    "Production-path integration": {"RMSNorm": "standalone (no separate 'production' RMSNorm path exists in this project outside this system)", "LM-head": "YES, real OOT LogitsProcessor extension point, zero vLLM source patch", "MatMul-Bias-ReLU": "reuses the real slice3c/portable_cpu_kernel_adapter production dispatch contract"},
+    "Remaining gap": {"RMSNorm": "selector value vs fixed block is neutral/negative on this shape domain", "LM-head": "none identified this slice", "MatMul-Bias-ReLU": "stability/performance gate not integrated into the unified selector (Path B, explicit)"}
+  },
+  "distinctions_required_by_task": {
+    "rmsnorm_custom_kernel_speedup": "1.34x-2.98x vs torch.compile (the real fastest non-custom baseline)",
+    "rmsnorm_selector_speedup_over_fixed_block": "mean 0.986x (i.e. selector is ~1.4% SLOWER on average than a single well-chosen fixed block on this sweep) -- NOT a selector win",
+    "lm_head_direct_gemv_optimization": "-21.2%-ish TPOT at batch=2 (E2E-8 original) / -21.48% (this slice's fresh direct_e2e8-vs-baseline re-measurement)",
+    "lm_head_unified_framework_preservation": "unified selector within 0.83% of direct E2E-8 at every tested batch",
+    "matmul_kernel_precision_speedup": "2.14x-14.06x vs FP32 fallback where INT8+packing+codegen is selected",
+    "matmul_selector_fidelity_to_gated_production_policy": "7/9 (this slice's fresh run) / 8/9 (E2E-10's original run) -- NOT 9/9, explicit known gap"
+  }
+}

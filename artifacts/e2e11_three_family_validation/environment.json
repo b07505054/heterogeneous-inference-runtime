@@ -1,0 +1,35 @@
+{
+  "gpu_host": {
+    "hostname": "allen-ZenBook-UX534FTC-UX534FT",
+    "ssh_target": "allen@100.87.220.5",
+    "date_utc": "2026-07-27T06:43:28Z",
+    "git_branch": "main",
+    "git_status_short_lines": 44,
+    "git_status_note": "same pre-existing uncommitted WIP in deployment/execution_plan/ (5 modified files, 1692 insertions) documented since E2E-9/E2E-10; not touched by E2E-11",
+    "python_version": "3.12.13",
+    "venvs": [".venv", ".venv-gpu-bench", ".venv-rmsnorm", ".venv-trt"],
+    "torch_version_main_venv": "2.11.0+cu130",
+    "cuda_version": "13.0",
+    "gpu_name": "NVIDIA GeForce GTX 1650 with Max-Q Design",
+    "gpu_driver_version": "595.71.05",
+    "gpu_compute_capability": [7, 5],
+    "cpu_model": "Intel(R) Core(TM) i5-10210U CPU @ 1.60GHz",
+    "installed_relevant_packages_main_venv": ["torch==2.11.0", "triton==3.6.0", "vllm==0.24.0", "flashinfer-python==0.6.12"],
+    "venv_trt_packages": ["torch==2.12.0", "triton==3.7.0", "tensorrt_cu13==10.16.1.11", "executorch==1.2.0"],
+    "flashinfer_rmsnorm_feasibility_on_this_gpu": "NOT_AVAILABLE: KeyError 'sm_75' (flashinfer has no sm_75 kernel dispatch entry for rmsnorm on this GPU)"
+  },
+  "raspberry_pi": {
+    "hostname": "edgeaiplatform",
+    "ssh_target": "allen@edgeaiplatform (reached via allen@100.87.220.5 as jump host; resolves via tailscale to 100.110.37.6)",
+    "date_utc": "2026-07-27T06:51:20Z",
+    "board_model": "Raspberry Pi 5 Model B Rev 1.1",
+    "architecture": "aarch64",
+    "python_version": "3.13.5",
+    "gpp_version": "g++ (Debian 14.2.0-19) 14.2.0",
+    "cpu_cores": 4,
+    "discovery_method": "resolved via /etc/hosts on the GPU host (getent hosts edgeaiplatform -> tailscale FQDN), first established in E2E-10, re-confirmed live for E2E-11, not invented"
+  },
+  "environment_workarounds_recorded": [
+    "RMSNorm CUDA extension JIT compilation requires ninja on PATH; invoking the interpreter directly via .venv/bin/python or .venv-rmsnorm/bin/python does not activate the venv, so PATH=$PWD/.venv-rmsnorm/bin:$PATH must be exported explicitly before any script that JIT-compiles the RMSNorm extension. This is the same documented workaround from E2E-9/E2E-10, re-encountered and re-applied identically in E2E-11 (Phase 2 three-family round-trip script)."
+  ]
+}

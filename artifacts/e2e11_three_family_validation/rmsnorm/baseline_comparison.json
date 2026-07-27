@@ -1,0 +1,101 @@
+{
+  "baselines_measured": {
+    "eager_pytorch_decomposition": "REAL, measured on GTX 1650 Max-Q",
+    "torch_compile": "REAL, measured; compile+specialization excluded from timed region (one untimed warmup call before the timed loop)",
+    "flashinfer_native_fused": "ATTEMPTED, NOT AVAILABLE on this GPU (sm_75 unsupported by installed flashinfer-python 0.6.12's rmsnorm kernel dispatch) -- honestly reported as unavailable, not fabricated",
+    "vllm_own_rmsnorm_dispatch": "PROFILED separately (not part of the 12-shape sweep): vllm.ir.ops.rms_norm emits 'Priority not set for op rms_norm, using native implementation' and dispatches to the SAME eager decomposition (aten::pow/mean/mul), confirming vLLM's own production RMSNorm path on this GPU/vLLM-version IS the eager baseline, not a separate fused kernel"
+  },
+  "custom_kernel_value_vs_fastest_non_custom": {
+    "definition": "custom_selected_median_ms vs min(eager_median_ms, torch_compile_median_ms) per shape",
+    "fastest_non_custom_was_torch_compile_at_all_12_shapes": true,
+    "per_shape_speedup": [
+      {
+        "tokens": 1,
+        "hidden": 768,
+        "speedup": 2.4836659374687042
+      },
+      {
+        "tokens": 1,
+        "hidden": 1024,
+        "speedup": 2.9001030053796226
+      },
+      {
+        "tokens": 1,
+        "hidden": 4096,
+        "speedup": 2.86637440428796
+      },
+      {
+        "tokens": 1,
+        "hidden": 8192,
+        "speedup": 2.941964299345105
+      },
+      {
+        "tokens": 16,
+        "hidden": 768,
+        "speedup": 2.881675405434645
+      },
+      {
+        "tokens": 16,
+        "hidden": 1024,
+        "speedup": 2.9241916289598486
+      },
+      {
+        "tokens": 16,
+        "hidden": 4096,
+        "speedup": 2.70996088831712
+      },
+      {
+        "tokens": 16,
+        "hidden": 8192,
+        "speedup": 2.9811695620891716
+      },
+      {
+        "tokens": 128,
+        "hidden": 768,
+        "speedup": 2.9229909408482193
+      },
+      {
+        "tokens": 128,
+        "hidden": 1024,
+        "speedup": 2.9073660819417038
+      },
+      {
+        "tokens": 128,
+        "hidden": 4096,
+        "speedup": 1.862269502473007
+      },
+      {
+        "tokens": 128,
+        "hidden": 8192,
+        "speedup": 1.3436787646862105
+      }
+    ],
+    "mean_speedup": 2.6437842017692765,
+    "min_speedup": 1.3436787646862105,
+    "max_speedup": 2.9811695620891716,
+    "conclusion": "custom CUDA kernel beats torch.compile (the fastest real non-custom baseline) at all 12/12 tested shapes, 1.34x-2.98x"
+  },
+  "selector_value_vs_one_globally_fixed_block_size": {
+    "definition": "one single block size (chosen by minimizing SUM of median latency across all 12 shapes) held fixed for every shape, vs the selector's per-shape adaptive choice",
+    "best_single_global_fixed_block_size": 512,
+    "per_shape_ratio_fixed_over_selected": [
+      0.9836660431087412,
+      0.934088546260973,
+      0.9780941562761531,
+      1.0,
+      0.9675392635054726,
+      0.9944258216705495,
+      0.9658202795263761,
+      0.9504460125963916,
+      1.0,
+      1.0714285296660602,
+      0.9932104239019275,
+      0.9931538649303798
+    ],
+    "mean_ratio": 0.9859894117869187,
+    "min_ratio": 0.934088546260973,
+    "max_ratio": 1.0714285296660602,
+    "conclusion": "NEGATIVE/NEUTRAL RESULT, reported honestly: on this 12-shape sweep, always using block_size=512 is competitive with, and on average marginally BETTER than (mean ratio 0.986, i.e. selector ~1.4% slower on average), the selector's per-shape adaptive choice. The selector wins clearly only at 1/12 shapes (128x1024, +7.1%); it loses by up to 6.6% at others. This is because RMSNorm block-size latency differences are within a few percent at almost every shape -- the absolute op cost is tiny and dominated by launch/memory overhead, not by tile-size-sensitive compute, so there is little headroom for a shape-aware selector to exploit on THIS operation/shape domain."
+  },
+  "rmsnorm_conclusion_category": "CUSTOM_KERNEL_CLEAR_WIN (custom-kernel value) combined with a documented selector-value caveat: the selector reproduces the measured winner 12/12 (proving SELECTION ACCURACY), but does not clearly outperform a single well-chosen fixed block size on THIS shape domain (selector VALUE is neutral-to-slightly-negative here). These are reported as two separate findings per the task's explicit instruction not to conflate them."
+}

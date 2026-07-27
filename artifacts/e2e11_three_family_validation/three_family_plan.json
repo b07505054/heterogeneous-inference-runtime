@@ -1,0 +1,356 @@
+{
+  "host": "e2e11_three_family_validation",
+  "unrelated_key": "untouched",
+  "operation_policies": {
+    "rmsnorm": {
+      "schema_version": "e2e9_execution_policy_v1",
+      "operation_family": "rms_norm",
+      "operation_subtype": "rms_norm_generic",
+      "decision_kind": "launch_configuration",
+      "selection_mode": "static",
+      "candidates_by_id": {
+        "rmsnorm_torch_eager_fallback_v1": {
+          "candidate_id": "rmsnorm_torch_eager_fallback_v1",
+          "operation_family": "rms_norm",
+          "operation_subtype": "rms_norm_generic",
+          "decision_kind": "launch_configuration",
+          "implementation_kind": "cuda_rmsnorm_block_256",
+          "parameters": {
+            "is_eager_fallback": true
+          },
+          "supported_dtypes": [
+            "float32",
+            "float16",
+            "bfloat16"
+          ],
+          "supported_devices": [
+            "cuda",
+            "cpu"
+          ],
+          "required_runtime_features": [],
+          "fallback_candidate_id": null,
+          "provenance": "always-legal eager torch.nn.functional RMSNorm reference; not a CUDA-kernel candidate"
+        },
+        "cuda_rmsnorm_fp32_bs64_v1": {
+          "candidate_id": "cuda_rmsnorm_fp32_bs64_v1",
+          "operation_family": "rms_norm",
+          "operation_subtype": "rms_norm_generic",
+          "decision_kind": "launch_configuration",
+          "implementation_kind": "cuda_rmsnorm_block_64",
+          "parameters": {
+            "block_size": 64
+          },
+          "supported_dtypes": [
+            "float32"
+          ],
+          "supported_devices": [
+            "cuda"
+          ],
+          "required_runtime_features": [
+            "ninja_available",
+            "cuda_extension_compiled"
+          ],
+          "fallback_candidate_id": "rmsnorm_torch_eager_fallback_v1",
+          "provenance": "cuda_transformer_kernels/rmsnorm_kernel.cu template<kBlockSize>, candidate_id convention matches deployment/custom_cuda_adapter.py"
+        },
+        "cuda_rmsnorm_fp32_bs128_v1": {
+          "candidate_id": "cuda_rmsnorm_fp32_bs128_v1",
+          "operation_family": "rms_norm",
+          "operation_subtype": "rms_norm_generic",
+          "decision_kind": "launch_configuration",
+          "implementation_kind": "cuda_rmsnorm_block_128",
+          "parameters": {
+            "block_size": 128
+          },
+          "supported_dtypes": [
+            "float32"
+          ],
+          "supported_devices": [
+            "cuda"
+          ],
+          "required_runtime_features": [
+            "ninja_available",
+            "cuda_extension_compiled"
+          ],
+          "fallback_candidate_id": "rmsnorm_torch_eager_fallback_v1",
+          "provenance": "cuda_transformer_kernels/rmsnorm_kernel.cu template<kBlockSize>, candidate_id convention matches deployment/custom_cuda_adapter.py"
+        },
+        "cuda_rmsnorm_fp32_bs256_v1": {
+          "candidate_id": "cuda_rmsnorm_fp32_bs256_v1",
+          "operation_family": "rms_norm",
+          "operation_subtype": "rms_norm_generic",
+          "decision_kind": "launch_configuration",
+          "implementation_kind": "cuda_rmsnorm_block_256",
+          "parameters": {
+            "block_size": 256
+          },
+          "supported_dtypes": [
+            "float32"
+          ],
+          "supported_devices": [
+            "cuda"
+          ],
+          "required_runtime_features": [
+            "ninja_available",
+            "cuda_extension_compiled"
+          ],
+          "fallback_candidate_id": "rmsnorm_torch_eager_fallback_v1",
+          "provenance": "cuda_transformer_kernels/rmsnorm_kernel.cu template<kBlockSize>, candidate_id convention matches deployment/custom_cuda_adapter.py"
+        },
+        "cuda_rmsnorm_fp32_bs512_v1": {
+          "candidate_id": "cuda_rmsnorm_fp32_bs512_v1",
+          "operation_family": "rms_norm",
+          "operation_subtype": "rms_norm_generic",
+          "decision_kind": "launch_configuration",
+          "implementation_kind": "cuda_rmsnorm_block_512",
+          "parameters": {
+            "block_size": 512
+          },
+          "supported_dtypes": [
+            "float32"
+          ],
+          "supported_devices": [
+            "cuda"
+          ],
+          "required_runtime_features": [
+            "ninja_available",
+            "cuda_extension_compiled"
+          ],
+          "fallback_candidate_id": "rmsnorm_torch_eager_fallback_v1",
+          "provenance": "cuda_transformer_kernels/rmsnorm_kernel.cu template<kBlockSize>, candidate_id convention matches deployment/custom_cuda_adapter.py"
+        }
+      },
+      "static_candidate_id": "cuda_rmsnorm_fp32_bs256_v1",
+      "rules": [],
+      "default_candidate_id": null,
+      "fallback_candidate_id": "rmsnorm_torch_eager_fallback_v1",
+      "expected_latency_ms": 0.029696,
+      "confidence": 0.9,
+      "provenance": "static selection for shape=(16, 4096); source=exact measured shape=(16,4096) block=256, source_hash=4315015619923ab68d932cc203a3b26a97b20907103d0510dbeca4955551e97d"
+    },
+    "lm_head": {
+      "schema_version": "e2e9_execution_policy_v1",
+      "operation_family": "linear",
+      "operation_subtype": "lm_head",
+      "decision_kind": "operation_decomposition",
+      "selection_mode": "runtime_piecewise",
+      "candidates_by_id": {
+        "linear_default_gemm_v1": {
+          "candidate_id": "linear_default_gemm_v1",
+          "operation_family": "linear",
+          "operation_subtype": "lm_head",
+          "decision_kind": "operation_decomposition",
+          "implementation_kind": "linear_default_gemm",
+          "parameters": {},
+          "supported_dtypes": [
+            "float16",
+            "bfloat16",
+            "float32"
+          ],
+          "supported_devices": [
+            "cuda",
+            "cpu"
+          ],
+          "required_runtime_features": [],
+          "fallback_candidate_id": null,
+          "provenance": "production default_unquantized_gemm -> torch.nn.functional.linear path"
+        },
+        "linear_row_wise_gemv_v1": {
+          "candidate_id": "linear_row_wise_gemv_v1",
+          "operation_family": "linear",
+          "operation_subtype": "lm_head",
+          "decision_kind": "operation_decomposition",
+          "implementation_kind": "linear_row_wise_gemv",
+          "parameters": {
+            "threshold": 8
+          },
+          "supported_dtypes": [
+            "float16",
+            "bfloat16",
+            "float32"
+          ],
+          "supported_devices": [
+            "cuda"
+          ],
+          "required_runtime_features": [
+            "no_cuda_graph_capture"
+          ],
+          "fallback_candidate_id": "linear_default_gemm_v1",
+          "provenance": "perf_model/tiny_m_dispatch.py tiny_m_linear row-list+cat GEMV-loop assembly, proven in E2E-7 isolated benchmark + E2E-8 real vLLM integration"
+        }
+      },
+      "static_candidate_id": null,
+      "rules": [
+        {
+          "attr": "M",
+          "value": 1,
+          "candidate_id": "linear_default_gemm_v1"
+        },
+        {
+          "attr": "M",
+          "value": 2,
+          "candidate_id": "linear_row_wise_gemv_v1"
+        },
+        {
+          "attr": "M",
+          "value": 3,
+          "candidate_id": "linear_row_wise_gemv_v1"
+        },
+        {
+          "attr": "M",
+          "value": 4,
+          "candidate_id": "linear_row_wise_gemv_v1"
+        },
+        {
+          "attr": "M",
+          "value": 5,
+          "candidate_id": "linear_row_wise_gemv_v1"
+        },
+        {
+          "attr": "M",
+          "value": 6,
+          "candidate_id": "linear_row_wise_gemv_v1"
+        },
+        {
+          "attr": "M",
+          "value": 7,
+          "candidate_id": "linear_row_wise_gemv_v1"
+        },
+        {
+          "attr": "M",
+          "value": 8,
+          "candidate_id": "linear_row_wise_gemv_v1"
+        },
+        {
+          "attr": "M",
+          "value": 9,
+          "candidate_id": "linear_default_gemm_v1"
+        },
+        {
+          "attr": "M",
+          "value": 10,
+          "candidate_id": "linear_default_gemm_v1"
+        },
+        {
+          "attr": "M",
+          "value": 11,
+          "candidate_id": "linear_default_gemm_v1"
+        },
+        {
+          "attr": "M",
+          "value": 12,
+          "candidate_id": "linear_default_gemm_v1"
+        }
+      ],
+      "default_candidate_id": "linear_default_gemm_v1",
+      "fallback_candidate_id": "linear_default_gemm_v1",
+      "expected_latency_ms": null,
+      "confidence": null,
+      "provenance": "derived from select_implementation() at plan-build time for M in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]; cost model=tiny_m_linear_measured_lookup_v1"
+    },
+    "matmul_bias_relu": {
+      "schema_version": "e2e9_execution_policy_v1",
+      "operation_family": "matmul_bias_relu",
+      "operation_subtype": "fused_matmul_bias_relu",
+      "decision_kind": "kernel_implementation",
+      "selection_mode": "static",
+      "candidates_by_id": {
+        "matmul_bias_relu_fp32_tiled_v1": {
+          "candidate_id": "matmul_bias_relu_fp32_tiled_v1",
+          "operation_family": "matmul_bias_relu",
+          "operation_subtype": "fused_matmul_bias_relu",
+          "decision_kind": "kernel_implementation",
+          "implementation_kind": "fp32_tiled",
+          "parameters": {
+            "kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32",
+            "block_m": 32,
+            "block_n": 128,
+            "block_k": 32,
+            "complete_candidate_id": "slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64",
+            "codegen_target_id": "generic_aarch64",
+            "required_compiler_flags": [
+              "-O2"
+            ],
+            "weight_layout": "row_major_kx_n",
+            "packing_scheme": ""
+          },
+          "supported_dtypes": [
+            "fp32"
+          ],
+          "supported_devices": [
+            "cpu"
+          ],
+          "required_runtime_features": [],
+          "fallback_candidate_id": null,
+          "provenance": "deployment.execution_plan.slice3c_target_selection candidate 'slice3c:portable_cpu:fp32:row_major_kx_n:generic_aarch64' (kernel_id=portable_fused_matmul_bias_relu_bm32_bn128_bk32); native/cpu_kernels/portable_fused_matmul_bias_relu.cpp"
+        },
+        "matmul_bias_relu_int8_packed_b_generic_v1": {
+          "candidate_id": "matmul_bias_relu_int8_packed_b_generic_v1",
+          "operation_family": "matmul_bias_relu",
+          "operation_subtype": "fused_matmul_bias_relu",
+          "decision_kind": "kernel_implementation",
+          "implementation_kind": "int8_packed_b",
+          "parameters": {
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+            "target_isa": "generic_aarch64",
+            "complete_candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64",
+            "codegen_target_id": "generic_aarch64",
+            "required_compiler_flags": [
+              "-O2"
+            ],
+            "weight_layout": "packed_b_transposed_nxk",
+            "packing_scheme": "b_transposed_nxk_contiguous"
+          },
+          "supported_dtypes": [
+            "int8"
+          ],
+          "supported_devices": [
+            "cpu"
+          ],
+          "required_runtime_features": [
+            "packed_b_artifact"
+          ],
+          "fallback_candidate_id": "matmul_bias_relu_fp32_tiled_v1",
+          "provenance": "deployment.execution_plan.slice3c_target_selection candidate 'slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:generic_aarch64' (kernel_id=portable_fused_matmul_bias_relu_int8_symmetric_packed_b); native/cpu_kernels/portable_fused_matmul_bias_relu_int8_packed_b.cpp"
+        },
+        "matmul_bias_relu_int8_packed_b_a76dotprod_v1": {
+          "candidate_id": "matmul_bias_relu_int8_packed_b_a76dotprod_v1",
+          "operation_family": "matmul_bias_relu",
+          "operation_subtype": "fused_matmul_bias_relu",
+          "decision_kind": "kernel_implementation",
+          "implementation_kind": "int8_packed_b",
+          "parameters": {
+            "kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b",
+            "target_isa": "cortex_a76_dotprod",
+            "complete_candidate_id": "slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod",
+            "codegen_target_id": "cortex_a76_dotprod",
+            "required_compiler_flags": [
+              "-O3",
+              "-mcpu=cortex-a76"
+            ],
+            "weight_layout": "packed_b_transposed_nxk",
+            "packing_scheme": "b_transposed_nxk_contiguous"
+          },
+          "supported_dtypes": [
+            "int8"
+          ],
+          "supported_devices": [
+            "cpu"
+          ],
+          "required_runtime_features": [
+            "packed_b_artifact"
+          ],
+          "fallback_candidate_id": "matmul_bias_relu_fp32_tiled_v1",
+          "provenance": "deployment.execution_plan.slice3c_target_selection candidate 'slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod' (kernel_id=portable_fused_matmul_bias_relu_int8_symmetric_packed_b); native/cpu_kernels/portable_fused_matmul_bias_relu_int8_packed_b.cpp"
+        }
+      },
+      "static_candidate_id": "matmul_bias_relu_int8_packed_b_a76dotprod_v1",
+      "rules": [],
+      "default_candidate_id": null,
+      "fallback_candidate_id": "matmul_bias_relu_fp32_tiled_v1",
+      "expected_latency_ms": 2.9917949999999998,
+      "confidence": 0.9,
+      "provenance": "static selection for shape=(384, 384, 384); source=Pi5 cortex-a76 measured_median_ms at shape=(384, 384, 384) for slice3c:portable_cpu:int8_static_symmetric:packed_b_transposed_nxk:cortex_a76_dotprod (target_profile=raspberry-pi5-cortex-a76-cpu, hardware={'machine': 'aarch64', 'platform': 'Linux-6.18.34+rpt-rpi-2712-aarch64-with-glibc2.41', 'python_version': '3.13.5'})"
+    }
+  }
+}

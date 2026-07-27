@@ -1,0 +1,21 @@
+{
+  "H1": {"statement": "Existing RMSNorm CUDA kernels can be traced and simulated through Accel-Sim.", "verdict": "REJECTED",
+         "evidence": "Concrete, root-caused SIMULATOR_INCOMPATIBILITY: standalone nvcc compilation confirmed broken on this host for ANY CUDA program (minimal repro: #include <cuda_runtime.h> + empty kernel fails identically). accel_sim/installation_audit.json."},
+  "H2": {"statement": "Accel-Sim reproduces directional ordering of RMSNorm block candidates.", "verdict": "NOT_APPLICABLE", "evidence": "No simulation ran (H1 rejected)."},
+  "H3": {"statement": "Accel-Sim counters provide a plausible bottleneck explanation for RMSNorm's advantage.", "verdict": "NOT_APPLICABLE", "evidence": "No simulation ran."},
+  "H4": {"statement": "LM-head GEMM/GEMV crossover can be analyzed using isolated Accel-Sim traces.", "verdict": "NOT_APPLICABLE", "evidence": "Same root-cause blocker as H1; no LM-head trace attempted given the RMSNorm harness already demonstrated the underlying nvcc incompatibility is system-wide."},
+  "H5": {"statement": "Isolated simulator evidence remains explicitly separate from real vLLM TPOT evidence.", "verdict": "SUPPORTED",
+         "evidence": "The evidence taxonomy (EvidenceKind.SIMULATOR_OUTPUT vs HARDWARE_BENCHMARK) and claim gate enforce this separation by construction and by test (test_e2e12_evidence_and_claim_gate.py, 21/21 passing); Claim B explicitly discloses 'simulator isolated attribution NOT available this slice' rather than conflating the two."},
+  "H6": {"statement": "Existing MatMul-Bias-ReLU kernels can execute in an AArch64 gem5 setup.", "verdict": "REJECTED",
+         "evidence": "gem5.opt build failed on a missing m4 dependency; a concrete user-local source-build workaround was attempted and failed for an independent, diagnosed reason (gnulib/GCC-15.2 attribute-macro incompatibility). gem5/installation_audit.json."},
+  "H7": {"statement": "gem5 reproduces at least the directional benefit of packed-B over row-major INT8.", "verdict": "NOT_APPLICABLE", "evidence": "No gem5 binary was ever produced (H6 rejected)."},
+  "H8": {"statement": "gem5 identifies cache/memory/instruction effects consistent with real Pi measurements.", "verdict": "NOT_APPLICABLE", "evidence": "Same."},
+  "H9": {"statement": "Target-specific A76 dot-product gains are not overclaimed when the CPU model cannot represent them.", "verdict": "SUPPORTED",
+         "evidence": "No gem5-based A76 claim was made at all this slice; Claim C explicitly states 'gem5 cache/memory correlation NOT available this slice' -- the absence of overclaiming is by construction, not by luck."},
+  "H10": {"statement": "The evidence gate rejects or downgrades claims lacking real hardware support.", "verdict": "SUPPORTED",
+          "evidence": "21/21 claim-gate tests pass, including a REAL downgrade demonstration using actual E2E-11 RMSNorm selector-vs-fixed-block numbers (mean ratio 0.9859 -> DOWNGRADE_TARGET_SPECIFIC). rejected_claims.json."},
+  "H11": {"statement": "All simulator results are hash-bound to source, binary, config, workload, and tool version.", "verdict": "NOT_APPLICABLE",
+          "evidence": "No simulator results exist to hash-bind (both tracks blocked). The HASH-BINDING MECHANISM ITSELF is implemented and enforced (Evidence.__post_init__ requires simulator_config_hash+binary_hash for any SIMULATOR_OUTPUT record, tested), ready for future simulator evidence."},
+  "H12": {"statement": "No existing three-family runtime or selector behavior regresses.", "verdict": "SUPPORTED",
+          "evidence": "1935 passed (main venv) + 23 passed (GPU venv) = 1958 total, 0 unexpected failures, up from E2E-11's 1937 total (net +21 new E2E-12 tests, 0 regressions). All 7 generic-core source hashes unchanged from E2E-11."}
+}

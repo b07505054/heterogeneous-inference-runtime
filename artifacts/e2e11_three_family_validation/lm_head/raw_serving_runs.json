@@ -1,0 +1,18 @@
+{
+  "note": "24 real per-run raw result JSON files (each ~10-50KB, full timelines/gpu_samples/server_info) are packaged as raw_serving_runs.tar.gz alongside this index rather than inlined here, for practicality. This file indexes them.",
+  "run_ids": [
+    "baseline-B1-R1", "baseline-B1-R2", "baseline-B2-R1", "baseline-B2-R2",
+    "baseline-B4-R1", "baseline-B4-R2", "baseline-B8-R1", "baseline-B8-R2",
+    "direct_e2e8-B1-R1", "direct_e2e8-B1-R2", "direct_e2e8-B2-R1", "direct_e2e8-B2-R2",
+    "direct_e2e8-B4-R1", "direct_e2e8-B4-R2", "direct_e2e8-B8-R1", "direct_e2e8-B8-R2",
+    "unified_selector-B1-R1", "unified_selector-B1-R2", "unified_selector-B2-R1", "unified_selector-B2-R2",
+    "unified_selector-B4-R1", "unified_selector-B4-R2", "unified_selector-B8-R1", "unified_selector-B8-R2"
+  ],
+  "total_runs": 24,
+  "all_classified_valid": true,
+  "server_config": {
+    "model": "Qwen2.5-0.5B-Instruct", "prompt_length": 128, "max_num_seqs": 8, "port": 8214,
+    "launcher": "scripts/launch_vllm_with_tiny_m.py (same launcher for all 3 states; byte-identical when env vars unset)",
+    "identical_across_all_24_runs": "model, prompt set (workload_manifest.json from /tmp/perfmodel_e2e8, reused unchanged), output-token count, decoding config, scheduler config, memory config, random seed derivation, server warmup, VLLM_HOST_IP, VLLM_SERVER_DEV_MODE"
+  }
+}

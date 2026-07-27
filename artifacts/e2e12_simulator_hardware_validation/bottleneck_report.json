@@ -1,0 +1,35 @@
+{
+  "schema_note": "unavailable simulator-derived statistics are explicitly null with an availability_reason, per instruction, never invented",
+  "comparisons": [
+    {
+      "workload": "rmsnorm_block_64_256_512", "target": "gtx1650_maxq", "evidence_kind": "HARDWARE_BENCHMARK",
+      "simulated_or_measured": "measured", "latency_ms": {"64": "see rmsnorm/raw_timings.json (E2E-11)", "256": "...", "512": "..."},
+      "compute_utilization": null, "memory_utilization": null, "memory_stall": null, "cache_misses": null,
+      "dma_utilization": null, "noc_utilization": null,
+      "dominant_bottleneck": "INCONCLUSIVE", "availability_reason": "ncu hardware-counter capture was verified WORKING this slice (real test against a CUDA kernel succeeded) but full basic/full counter sets were not captured for all 12 RMSNorm shapes this slice due to time; Accel-Sim's own counter breakdown is unavailable (simulator never ran)",
+      "confidence": "low", "correlation_status": "INCONCLUSIVE (no simulator evidence)", "claim_status": "PROMOTE_HARDWARE_VALIDATED (Claim A, hardware-timing-only)"
+    },
+    {
+      "workload": "lm_head_gemm_vs_gemv_tiny_m", "target": "gtx1650_maxq", "evidence_kind": "HARDWARE_BENCHMARK",
+      "simulated_or_measured": "measured", "latency_ms": "see lm_head/aggregate_metrics.json (E2E-11, real vLLM serving)",
+      "compute_utilization": null, "memory_utilization": null, "memory_stall": null, "cache_misses": null,
+      "dma_utilization": null, "noc_utilization": null,
+      "dominant_bottleneck": "INCONCLUSIVE", "availability_reason": "isolated Accel-Sim attribution for the GEMM/GEMV crossover unavailable (simulator never ran); prior E2E-7 profiler kernel-family attribution (gemv2T_kernel_val vs volta_s884gemm) remains the strongest existing evidence, reused not regenerated",
+      "confidence": "low", "correlation_status": "INCONCLUSIVE (no simulator evidence)", "claim_status": "PROMOTE_HARDWARE_VALIDATED (Claim B, hardware-timing-only)"
+    },
+    {
+      "workload": "matmul_bias_relu_fp32_int8_packed", "target": "raspberry_pi5_cortex_a76", "evidence_kind": "HARDWARE_BENCHMARK",
+      "simulated_or_measured": "measured", "latency_ms": "see matmul_bias_relu/selector_comparison.json (E2E-10/11, real Pi)",
+      "compute_utilization": null, "memory_utilization": null, "memory_stall": null, "cache_misses": null,
+      "dma_utilization": null, "noc_utilization": null,
+      "dominant_bottleneck": "INCONCLUSIVE", "availability_reason": "gem5 cache/memory analysis unavailable (build failed on missing/incompatible m4 dependency, see gem5/installation_audit.json); real Pi cache_hierarchy CONFIG data exists (L1D/L2/L3 sizes) but no simulated hit/miss counters were produced",
+      "confidence": "low", "correlation_status": "INCONCLUSIVE (no simulator evidence)", "claim_status": "PROMOTE_HARDWARE_VALIDATED (Claim C, hardware-timing-only)"
+    },
+    {
+      "workload": "noc_synthetic_traffic", "target": "n/a", "evidence_kind": "n/a",
+      "simulated_or_measured": null, "dominant_bottleneck": null,
+      "availability_reason": "Phase 16 (optional Garnet/NoC) explicitly deferred: earlier phases did not succeed (both simulator tracks blocked), so per instruction ('do not implement... unless all earlier phases succeed') this was correctly not attempted",
+      "confidence": null, "correlation_status": "NOT_ATTEMPTED", "claim_status": "NOT_APPLICABLE"
+    }
+  ]
+}

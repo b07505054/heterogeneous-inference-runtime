@@ -1,0 +1,40 @@
+{
+  "gpu_host": {
+    "hostname": "allen-ZenBook-UX534FTC-UX534FT", "ssh_target": "allen@100.87.220.5", "date_utc": "2026-07-27",
+    "gpu": "NVIDIA GeForce GTX 1650 with Max-Q Design, compute_capability=7.5, driver=595.71.05",
+    "cpu": "Intel(R) Core(TM) i5-10210U CPU @ 1.60GHz",
+    "ram_total_gib": 7.1, "ram_available_gib_at_audit": 5.3,
+    "swap_total_gib": 4.0, "swap_free_gib_at_audit": 1.1,
+    "internal_disk_total_gib": 176, "internal_disk_free_gib": 13, "internal_disk_used_percent": 93,
+    "external_expansion_mount": "/run/media/allen/Expansion", "external_expansion_filesystem": "exFAT",
+    "external_expansion_free_tib": 1.1,
+    "cuda_toolkit_found": "YES at /usr/local/cuda (nvcc release 13.1, V13.1.115) -- NOT on default PATH (same PATH-not-activated pattern as the ninja/.venv-rmsnorm issue from E2E-9/10/11)",
+    "nsight_compute_found": "YES at /usr/local/cuda/bin/ncu -- WORKING, hardware counters accessible with no permission errors (live-tested this slice against a real CUDA kernel)",
+    "nvbit_found": "NO -- accel-sim-framework ships util/tracer_nvbit/install_nvbit.sh which downloads a small (~15-30MB) prebuilt NVBit v1.7.3 release; not run this slice (approval-gated per task rules)",
+    "scons_found": "NO -- required to build gem5; not installed (approval-gated)"
+  },
+  "raspberry_pi": {
+    "hostname": "edgeaiplatform", "ssh_target": "allen@edgeaiplatform (via GPU host as jump, tailscale)",
+    "board": "Raspberry Pi 5 Model B Rev 1.1", "cpu": "Cortex-A76, aarch64, 4 cores, freq 1.5-2.4GHz",
+    "cache_hierarchy_source": "~/Desktop/Project/raspberry_pi_hardware_profile_raw.json (real, DIRECTLY_MEASURED, pre-existing artifact, not generated this slice)",
+    "l1d": "64KB per core, 4-way, 64B line", "l1i": "64KB per core, 4-way, 64B line",
+    "l2": "512KB per core, 8-way, 64B line", "l3": "2048KB shared across 4 cores, 16-way, 64B line",
+    "isa_features": "fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm lrcpc dcpop asimddp"
+  },
+  "simulator_repositories": {
+    "accel_sim_framework": {"path": "~/Desktop/Project/simulator-validation/third_party/accel-sim-framework",
+                              "git_commit": "c5296df152c99a28dd64e5d9560bd58a8fd2e774", "git_commit_date": "2025-02-12",
+                              "clone_size_mb": 113, "build_status": "PARTIAL -- some .o files present in gpu-simulator/build/release/, no linked binary in bin/release/"},
+    "gem5": {"path": "~/Desktop/Project/simulator-validation/third_party/gem5",
+             "git_commit": "c8222cc67a399bfc01e8658dd14b30d5bfd634f9", "git_commit_date": "2026-04-21",
+             "clone_size_mb": 155, "build_status": "NOT BUILT -- no build/ directory exists, scons not installed"}
+  },
+  "e2e12_external_storage_layout": {
+    "root": "/run/media/allen/Expansion/simulator-validation-e2e12",
+    "subdirs_created_and_verified": ["build/accel-sim", "build/gem5", "traces/rmsnorm", "traces/lm_head",
+                                       "runs/accel-sim", "runs/gem5", "cache/{xdg,torch_extensions,cuda,triton,pip,ccache}",
+                                       "tmp", "logs", "artifacts"],
+    "readlink_verification": "all resolved paths confirmed under /run/media/allen/Expansion, none under /tmp or internal root",
+    "baseline_resource_check_log": "logs/baseline_resource_check.log (free -h / swapon / meminfo / df / du, captured this slice)"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "phase_9_audit": {
+    "question": "Does the current unified selector (perf_model/cost_model_registry.py CostEstimate, perf_model/matmul_bias_relu_cost_model.py MatMulBiasReLUCostModel) support p95 latency, median latency, stability ratio, performance gate, or policy rejection reason?",
+    "finding": "NO. CostEstimate (perf_model/cost_model_registry.py) has fields: candidate_id, predicted_latency_ms, source, confidence, is_extrapolation, evidence_note. It has no p95/stability/performance-gate/rejection-reason field. MatMulBiasReLUCostModel.predict() returns only the raw measured median latency. The ONLY place a p95/median stability gate exists in the whole repository is the pre-existing, separate deployment.execution_plan.slice3c_target_selection.validate_measurement() function (max_p95_over_median<=1.25), which the unified selector does not call.",
+    "classification": "SOURCE_PROVEN (read cost_model_registry.py, matmul_bias_relu_cost_model.py, slice3c_target_selection.py in full)"
+  },
+  "decision": "PATH_B_VALIDATION_ONLY",
+  "path_b_rationale": [
+    "Path A (minimal integration) would require: (1) adding new optional fields to CostEstimate (generic core file, already proven byte-identical-except-for-E2E-10's-necessary-fix across two slices -- a third edit is not 'minimal' relative to the goal of leaving it alone), (2) populating those fields for MatMul specifically while leaving RMSNorm/LM-head's cost models untouched (fine), (3) inserting a NEW step in the generic selection ORDER inside select_implementation() or a wrapper around it (kernel legality -> accuracy gate -> performance/stability gate -> cost comparison -> fallback) -- this is a five-stage pipeline change to the one file (implementation_decision.py) that has remained byte-identical since E2E-9, which is the single most load-bearing 'strongest claim' artifact validated across E2E-9, E2E-10, and E2E-11 Phase 0.",
+    "Given the explicit instruction to prefer no code changes this slice and to choose Path B when Path A would require more than minimal, narrowly-scoped work, and given this same trade-off was already flagged as a known, explained gap at the end of E2E-10, Path B (run the original production selector beside the unified selector, report the mismatch explicitly, classify fidelity as PARTIAL) is chosen for E2E-11 as well."
+  ],
+  "production_vs_unified_agreement": {
+    "e2e10_original_run_agreement": "8/9 (2x2x2 was the sole mismatch)",
+    "e2e11_fresh_rerun_agreement": "7/9 (both 1x1x1 AND 2x2x2 mismatched this time)",
+    "explanation_of_the_difference_between_runs": "Real, reproducible, run-to-run measurement variance at microsecond-scale latencies. At 1x1x1 and 2x2x2, all 3 INT8 candidates' p95/median ratio hovers right around the 1.25 stability-gate threshold (measured 1.01-1.51 across the two runs) -- small OS/process-scheduling jitter at this scale can push a candidate's ratio to either side of 1.25, flipping whether the production selector's stability gate accepts or rejects it. This is not selector misbehavior; it IS what the stability gate is designed to guard against (untrustworthy latency at ultra-tiny operation sizes), and the unified selector's absence of this gate is precisely why it disagrees at exactly these boundary shapes and nowhere else.",
+    "classification": "unified MatMul selector fidelity to the gated production policy: PARTIAL (not 9/9). Explicitly NOT claimed as 9/9."
+  },
+  "requirements_confirmed": {
+    "fields_optional_no_broad_redesign_attempted": true,
+    "rmsnorm_behavior_unchanged": "confirmed -- RMSNormCostModel/CostEstimate untouched this slice, all 12/12 RMSNorm selector tests still pass",
+    "lm_head_behavior_unchanged": "confirmed -- TinyMLinearCostModel/execute_lm_head_linear untouched this slice, LM-head serving matrix re-run and matches E2E-9/E2E-10 behavior (see lm_head/ artifacts)",
+    "no_matmul_specific_branch_added_to_selector": "confirmed -- implementation_decision.py hash unchanged this slice (see source_hashes.json)",
+    "2x2x2_fp32_fallback_reproduced": "YES, in both the E2E-10 and E2E-11 fresh runs of the PRODUCTION selector; the UNIFIED selector does not reproduce it (see above)",
+    "9_of_9_matmul_shapes_agree_with_production_selector": "NO -- explicitly not claimed; 8/9 (E2E-10) and 7/9 (E2E-11 fresh) are the two real, honestly-reported measurements"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "no_family_specific_branch_in_generic_core": {
+    "implementation_decision.py": "CONFIRMED via grep -- string 'matmul'/'rms_norm'/'linear' (case-insensitive) appears only in docstring prose (0 executable occurrences), TEST_PROVEN by tests/test_e2e10_extensibility.py::test_selector_source_contains_no_matmul_family_branch",
+    "cost_model_registry.py": "CONFIRMED, same method, TEST_PROVEN"
+  },
+  "registry_membership": {
+    "payload_type_registry (_PAYLOAD_TYPES)": {"rms_norm": "RMSNormDescriptor", "linear": "LinearDescriptor", "matmul_bias_relu": "MatMulBiasReLUDescriptor"},
+    "candidate_generator_registry (_GENERATORS)": {"rms_norm": "generate_rmsnorm_candidates", "linear": "generate_linear_candidates", "matmul_bias_relu": "generate_matmul_bias_relu_candidates"},
+    "legality_checker_registry (_LEGALITY_CHECKERS)": {"rms_norm": "_check_rmsnorm", "linear": "_check_linear", "matmul_bias_relu": "_check_matmul_bias_relu"},
+    "implementation_kind_type_registry (_IMPLEMENTATION_KIND_TYPES)": {"rms_norm": "ImplementationKind", "linear": "ImplementationKind (shared with rms_norm)", "matmul_bias_relu": "MatMulBiasReLUImplementationKind"},
+    "cost_model_registry (CostModelRegistry, per-instance not module-global)": {"rms_norm": "RMSNormCostModel", "linear": "TinyMLinearCostModel", "matmul_bias_relu": "MatMulBiasReLUCostModel"},
+    "runtime_executor_registry (_EXECUTORS in runtime_dispatcher.py)": {
+      "rms_norm": "_execute_rmsnorm_via_decision",
+      "matmul_bias_relu": "_execute_via_decision (registered only if perf_model.matmul_bias_relu_executor is imported; conditional torch import wrapped in try/except since this family's real target has no torch dependency)",
+      "linear": "NOT REGISTERED HERE BY DESIGN -- LM-head uses execute_lm_head_linear() directly with a cached ExecutionPolicy, a documented architectural asymmetry from E2E-9, not a gap"
+    },
+    "each_registry_has_exactly_one_entry_per_family": "CONFIRMED for payload/generator/legality/implementation_kind-type registries (3/3 each); cost-model registry is populated per-script-instance (not persistent), confirmed 3/3 when populated in E2E-11's own scripts; executor registry intentionally 2/3 (see above)."
+  },
+  "duplicate_candidate_id_check": {
+    "method": "generated candidates for one real RMSNorm descriptor + one real Linear descriptor + one real MatMul descriptor, pooled all candidate_ids",
+    "total_candidates": 11,
+    "unique_candidate_ids": 11,
+    "duplicates_found": 0
+  },
+  "missing_fallback_check": {"dangling_fallback_references_found": 0},
+  "fallback_cycle_check": {"cycles_found": 0},
+  "root_fallback_candidates": ["rmsnorm_torch_eager_fallback_v1", "linear_default_gemm_v1", "matmul_bias_relu_fp32_tiled_v1"],
+  "root_fallback_count_matches_family_count": true,
+  "policy_reference_check": "three_family_plan.json (Phase 2) round-tripped through JSON with 0 candidate-ID / fallback-ID / implementation-kind mismatches across all 3 families -- see plan_round_trip.json",
+  "classification": "SOURCE_PROVEN + TEST_PROVEN + DIRECTLY_MEASURED (all checks executed live against the current repository state on 2026-07-27, not read from prior reports)"
+}

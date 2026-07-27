@@ -1,0 +1,32 @@
+{
+  "re_run_of_pi_e2e10_real_dispatch_test_for_e2e11": {
+    "date_utc": "2026-07-27",
+    "host": "allen@edgeaiplatform (Raspberry Pi 5, cortex-a76, aarch64)",
+    "cases": [
+      {"name": "fp32_only", "shape": "37x41x29", "selected": "matmul_bias_relu_fp32_tiled_v1", "executed_kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32", "median_ms": 0.03519, "cosine": 1.0, "rel_l2": 0.0, "accuracy_gate": true, "policy_roundtrip_ok": true},
+      {"name": "int8_row_major", "shape": "192x192x192", "selected": "matmul_bias_relu_fp32_tiled_v1", "note": "selector correctly fell back to FP32 -- naive INT8 row-major is measurably slower than tiled FP32 at this shape", "executed_kernel_id": "portable_fused_matmul_bias_relu_bm32_bn128_bk32", "median_ms": 5.28819, "cosine": 1.0, "rel_l2": 0.0, "accuracy_gate": true, "policy_roundtrip_ok": true},
+      {"name": "int8_packed_generic", "shape": "256x256x24", "selected": "matmul_bias_relu_int8_packed_b_a76dotprod_v1", "executed_kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b", "median_ms": 0.40746, "cosine": 0.999985, "rel_l2": 0.005493, "accuracy_gate": true, "policy_roundtrip_ok": true},
+      {"name": "int8_packed_a76_win", "shape": "384x384x384", "selected": "matmul_bias_relu_int8_packed_b_a76dotprod_v1", "executed_kernel_id": "portable_fused_matmul_bias_relu_int8_symmetric_packed_b", "median_ms": 2.99615, "cosine": 0.999985, "rel_l2": 0.005529, "accuracy_gate": true, "policy_roundtrip_ok": true},
+      {"name": "repeat_call_1", "shape": "64x64x64", "selected": "matmul_bias_relu_int8_packed_b_a76dotprod_v1", "median_ms": 0.02509, "cosine": 0.999986, "rel_l2": 0.005323, "accuracy_gate": true},
+      {"name": "repeat_call_2", "shape": "64x64x64", "selected": "matmul_bias_relu_int8_packed_b_a76dotprod_v1", "median_ms": 0.02509, "cosine": 0.999986, "rel_l2": 0.005323, "accuracy_gate": true, "repeated_call_determinism": "identical selection AND byte-identical output across 2 calls with the same seed and reused (packed once) execution context"}
+    ],
+    "all_cases_passed": true,
+    "reproducibility_vs_e2e10_original_run": "median_ms values match the original E2E-10 run to within measurement noise (e.g. int8_row_major case: 5.28819ms here vs 5.28913ms in E2E-10); all selection decisions identical"
+  },
+  "correctness_checks_covered": [
+    "fused bias semantics (verified against reference_fused_matmul_bias_relu, which adds bias post-dequantization)",
+    "fused ReLU semantics (verified against the same reference, max(0, ...))",
+    "output shape (M x N, verified by Tensor.__post_init__ element-count check)",
+    "output dtype (fp32, always, verified by PortableCpuKernelResult contract)",
+    "symmetric per-tensor quantization (activation_granularity/weight_granularity == 'per_tensor', enforced in _validate_quantization_contract)",
+    "zero points equal zero (enforced at 3 layers: kernel-level hard check, portable_cpu_kernel_adapter contract check, MatMulBiasReLUDescriptor construction check)",
+    "scale application (dequant = acc * activation_scale * weight_scale, matches int8_quantization.py exactly)",
+    "repeated calls (case repeat_call_1/2 above)",
+    "packed-weight lifetime (MatMulBiasReLUExecutionContext holds pre-packed artifacts, packing done once, reused across calls, never re-packed inside dispatch)",
+    "fallback (int8_row_major case: correctly falls back to FP32 when INT8 is measurably slower)",
+    "target mismatch rejection (tested in E2E-10's test suite: cortex_a76_dotprod rejected off-target, reconfirmed still passing this slice)",
+    "layout mismatch rejection (tested in E2E-10's test suite, reconfirmed passing)",
+    "thread-count rejection (tested in E2E-10's test suite, reconfirmed passing)"
+  ],
+  "accuracy_gate_used": "unchanged from E2E-10/production: cosine_similarity >= 0.99 AND relative_l2_error <= 0.05 (deployment.execution_plan.int8_quantization thresholds, not modified this slice)"
+}

@@ -1,0 +1,49 @@
+{
+  "rows": [
+    {
+      "operation_family": "RMS_NORM", "operation_subtype": "rms_norm_generic", "decision_kind": "launch_configuration",
+      "descriptor_implemented": "YES", "descriptor_validation_implemented": "YES",
+      "candidate_generation_implemented": "YES", "legality_implemented": "YES", "cost_model_implemented": "YES",
+      "selector_path_implemented": "YES", "fallback_implemented": "YES",
+      "policy_serialization_implemented": "YES", "policy_deserialization_implemented": "YES",
+      "runtime_dispatcher_implemented": "YES", "real_implementation_invoked": "YES (real CUDA kernel via subprocess-free torch extension, confirmed by direct kernel-arg cross-check in the C++ layer)",
+      "correctness_test_exists": "YES (tests/test_rmsnorm_cuda_correctness.py + tests/test_e2e9_runtime_dispatcher.py, 23 tests, real GPU)",
+      "performance_benchmark_exists": "YES (this slice: scripts/run_rmsnorm_baseline_benchmark_e2e11.py, real GPU, 12 shapes)",
+      "framework_native_baseline_exists": "PARTIAL -- eager decomposition and torch.compile are real and measured; flashinfer fused kernel exists as an installed package but is NOT available on this GPU (sm_75 unsupported); vLLM's own dispatch was confirmed (via profiler) to fall through to the eager path on this GPU/version, so no separate 'vLLM native fused' baseline exists to measure here",
+      "real_target_available": "YES (GTX 1650 Max-Q, live)",
+      "current_status": "COMPLETE, real end-to-end, real optimization measured vs available baselines",
+      "evidence_reference": "artifacts/e2e11_three_family_validation/rmsnorm/*.json"
+    },
+    {
+      "operation_family": "LINEAR", "operation_subtype": "lm_head", "decision_kind": "operation_decomposition",
+      "descriptor_implemented": "YES", "descriptor_validation_implemented": "YES",
+      "candidate_generation_implemented": "YES", "legality_implemented": "YES", "cost_model_implemented": "YES",
+      "selector_path_implemented": "YES (also has a direct, non-selector env-var-gated path preserved from E2E-8, both real)",
+      "fallback_implemented": "YES", "policy_serialization_implemented": "YES", "policy_deserialization_implemented": "YES",
+      "runtime_dispatcher_implemented": "PARTIAL BY DESIGN -- does not use the shared runtime_dispatcher._EXECUTORS registry (execute_lm_head_linear is called directly with a cached ExecutionPolicy); this is a documented E2E-9 architectural choice, not a gap",
+      "real_implementation_invoked": "YES -- real vLLM server, real OOT LogitsProcessor, real GEMV-loop/GEMM dispatch, confirmed via this slice's fresh serving matrix",
+      "correctness_test_exists": "YES (tests/test_tiny_m_dispatch.py, plus this slice's serving-level output-equality check)",
+      "performance_benchmark_exists": "YES (this slice: fresh 24-run serving matrix, batch 1/2/4/8 x {baseline, direct_e2e8, unified_selector} x 2 reps)",
+      "framework_native_baseline_exists": "YES -- baseline default vLLM (F.linear/cuBLAS) measured fresh this slice",
+      "real_target_available": "YES (same GTX 1650 Max-Q, live vLLM server)",
+      "current_status": "COMPLETE, real end-to-end, real serving-level optimization re-measured",
+      "evidence_reference": "artifacts/e2e11_three_family_validation/lm_head/*.json"
+    },
+    {
+      "operation_family": "MATMUL_BIAS_RELU", "operation_subtype": "fused_matmul_bias_relu", "decision_kind": "kernel_implementation",
+      "descriptor_implemented": "YES", "descriptor_validation_implemented": "YES",
+      "candidate_generation_implemented": "YES", "legality_implemented": "YES", "cost_model_implemented": "YES (measured-lookup only; no GBDT/Hybrid model exists in the repo for this op, confirmed by exhaustive grep in E2E-10, re-confirmed unchanged this slice)",
+      "selector_path_implemented": "YES", "fallback_implemented": "YES",
+      "policy_serialization_implemented": "YES", "policy_deserialization_implemented": "YES",
+      "runtime_dispatcher_implemented": "YES (registered into the shared runtime_dispatcher._EXECUTORS registry, torch-import-optional)",
+      "real_implementation_invoked": "YES -- real Raspberry Pi 5 subprocess dispatch of real compiled C++ kernels, re-confirmed fresh this slice",
+      "correctness_test_exists": "YES (37 torch-free tests + 6 real-hardware assertion-based dispatch cases, re-run fresh this slice)",
+      "performance_benchmark_exists": "YES (this slice: fresh 9-shape Pi re-measurement)",
+      "framework_native_baseline_exists": "YES -- FP32 tiled kernel is itself the framework-native/always-legal baseline (not an external framework, but the project's own non-quantized reference path)",
+      "real_target_available": "YES (Raspberry Pi 5, live, re-confirmed this slice)",
+      "current_status": "COMPLETE end-to-end; selector fidelity to the ORIGINAL production selector's stability gate is PARTIAL (see stability_gate.json) -- this is a selection-accuracy nuance, not an architecture-completeness gap",
+      "evidence_reference": "artifacts/e2e11_three_family_validation/matmul_bias_relu/*.json"
+    }
+  ],
+  "note": "No field above was marked complete merely because a test mocks the executor -- every 'real_implementation_invoked: YES' is backed by an actual subprocess/kernel/server execution performed live during this slice (RMSNorm: real CUDA kernel this session; LM-head: real vLLM server this session; MatMul: real Raspberry Pi subprocess this session)."
+}

@@ -1,0 +1,35 @@
+{
+  "generic_core": {
+    "perf_model/operation_descriptor.py": "e9fc5cfb8457c4cb",
+    "perf_model/implementation_candidate.py": "caa75740f00f6343",
+    "perf_model/legality.py": "d97392a53b14c70e",
+    "perf_model/cost_model_registry.py": "ebc541a58142a351",
+    "perf_model/implementation_decision.py": "35a085b384d58233",
+    "perf_model/execution_policy.py": "18de3b61753e74e7",
+    "perf_model/runtime_dispatcher.py": "36028d685c6869fe"
+  },
+  "note": "all 7 generic-core hashes reconfirmed IDENTICAL to the values recorded at the end of E2E-10 -- zero drift, zero edits made during E2E-11 (this slice is read-mostly as instructed).",
+  "rmsnorm": {
+    "cuda_transformer_kernels/rmsnorm_kernel.cu": "cd3608c9ac2723e9",
+    "cuda_transformer_kernels/rmsnorm_extension.cpp": "dc4eeb6bf59681cd",
+    "perf_model/rmsnorm_cost_model_adapter.py": "4a05817c80931ce5",
+    "perf_model/evidence/rmsnorm_benchmark_e2e9.json": "04b01472827de475"
+  },
+  "lm_head": {
+    "perf_model/tiny_m_dispatch.py": "b25b008a09ea4583",
+    "perf_model/tiny_m_oot_logits_processor.py": "fe52724beff0e353",
+    "perf_model/tiny_m_linear_cost_model.py": "25b631191ab53325"
+  },
+  "matmul_bias_relu": {
+    "perf_model/matmul_bias_relu_descriptor.py": "dc7e70e4ef997835",
+    "perf_model/matmul_bias_relu_candidates.py": "5bbb2cd5310fe08c",
+    "perf_model/matmul_bias_relu_legality.py": "7e8f42a3b0c0e459",
+    "perf_model/matmul_bias_relu_cost_model.py": "76731f026eaa948d",
+    "perf_model/matmul_bias_relu_executor.py": "1aa0b71cf4b1c00e",
+    "native/cpu_kernels/portable_fused_matmul_bias_relu.cpp": "9ad233d0f9d0d427",
+    "native/cpu_kernels/portable_fused_matmul_bias_relu_int8.cpp": "14c437470215a1a5",
+    "native/cpu_kernels/portable_fused_matmul_bias_relu_int8_packed_b.cpp": "8155aa6b45ae8a0d",
+    "perf_model/evidence/matmul_bias_relu_e2e10.json": "36f880e678928017"
+  },
+  "hash_format": "sha256, truncated to first 16 hex characters for table brevity; full sha256sum was computed and matches exactly across E2E-10 end-state and E2E-11 audit-start-state"
+}

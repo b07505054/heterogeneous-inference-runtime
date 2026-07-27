@@ -1,0 +1,21 @@
+{
+  "accel_sim_correlation": {
+    "status": "INCONCLUSIVE",
+    "reason": "no SIMULATOR_OUTPUT evidence produced -- standalone nvcc compilation confirmed broken system-wide (SIMULATOR_INCOMPATIBILITY, accel_sim/installation_audit.json); no trace was generated, no simulation was run",
+    "candidate_ordering": null, "normalized_latency": null, "speedup_ratios": null, "rank_correlation": null,
+    "mape": null, "direction_agreement": null, "winner_agreement": null,
+    "availability_reason": "simulator never produced output this slice"
+  },
+  "gem5_correlation": {
+    "status": "INCONCLUSIVE",
+    "reason": "no SIMULATOR_OUTPUT evidence produced -- gem5.opt build failed on a missing/incompatible m4 dependency (gem5/installation_audit.json); no gem5 binary was produced, no simulation was run",
+    "candidate_ordering": null, "normalized_latency": null, "speedup_ratios": null, "rank_correlation": null,
+    "absolute_error": null, "winner_agreement": null,
+    "availability_reason": "simulator never produced output this slice"
+  },
+  "hardware_only_correlation_available": {
+    "rmsnorm": "real hardware timing available (E2E-11 reused + this slice's environment work), no simulator counterpart to correlate against",
+    "lm_head": "real vLLM serving timing available (E2E-11 reused), no simulator counterpart to correlate against",
+    "matmul_bias_relu": "real Pi timing available (E2E-10/11 reused), no simulator counterpart to correlate against"
+  }
+}

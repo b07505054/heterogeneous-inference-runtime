@@ -1,0 +1,26 @@
+{
+  "rejected_claims": [
+    {
+      "claim_text": "Shape-aware block selection improves RMSNorm performance across the evaluated domain (aggregate)",
+      "decision": "downgrade_target_specific",
+      "reasons": [
+        "per-shape evidence shows wins at some shapes (any_shape_wins=True), but aggregate mean ratio=0.9859 does not exceed threshold=1.0 -- hardware measurements do not support an aggregate speedup promotion"
+      ],
+      "per_shape_ratios": [
+        0.984,
+        0.934,
+        0.978,
+        1.0,
+        0.968,
+        0.994,
+        0.966,
+        0.95,
+        1.0,
+        1.071,
+        0.993,
+        0.993
+      ],
+      "evidence_source": "artifacts/e2e11_three_family_validation/rmsnorm/baseline_comparison.json (real E2E-11 hardware measurement)"
+    }
+  ]
+}

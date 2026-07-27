@@ -1,0 +1,14 @@
+{
+  "purpose": "identify what vLLM's OWN RMSNorm dispatch actually executes on this GPU/vLLM version, to determine whether a separate 'vLLM native fused RMSNorm' baseline exists to measure",
+  "method": "torch.profiler over 10 real calls to vllm.ir.ops.rms_norm(x, weight, eps, None) on a (16,4096) fp16 tensor on the GTX 1650 Max-Q, 5 warmup calls excluded",
+  "finding": "WARNING emitted by vLLM itself: 'Priority not set for op rms_norm, using native implementation.' Profiler confirms dispatch to the eager decomposition: vllm_ir::rms_norm (551us CPU-side incl. dispatch overhead) -> aten::mean (35.80% of CUDA time, backed by at::native::reduce_kernel) -> aten::mul (26.02%) -> aten::to/_to_copy/copy_ (20.78%, dtype casts) -> aten::pow (8.37%) -- i.e. multiple small elementwise/reduction kernels, NOT a single fused custom kernel.",
+  "conclusion": "vLLM's own production RMSNorm path on this GPU/vLLM-version (0.24.0) IS the eager PyTorch decomposition baseline (Baseline A in this slice's terminology) -- there is no separate 'vLLM native fused RMSNorm' to measure as a distinct baseline C on this hardware/software combination. This is reported honestly rather than assumed.",
+  "top_kernels_by_self_cuda_time": [
+    {"name": "aten::mean (at::native::reduce_kernel)", "self_cuda_pct": 35.80, "cuda_time_avg_us": 14.89},
+    {"name": "aten::mul", "self_cuda_pct": 26.02, "cuda_time_avg_us": 5.411},
+    {"name": "aten::to/_to_copy/copy_", "self_cuda_pct": 20.78, "cuda_time_avg_us": 4.616},
+    {"name": "elementwise_kernel (bias/scale)", "self_cuda_pct": 13.62, "cuda_time_avg_us": 5.664},
+    {"name": "unrolled_elementwise_kernel", "self_cuda_pct": 13.36, "cuda_time_avg_us": 5.555},
+    {"name": "aten::pow", "self_cuda_pct": 8.37, "cuda_time_avg_us": 3.482}
+  ]
+}
