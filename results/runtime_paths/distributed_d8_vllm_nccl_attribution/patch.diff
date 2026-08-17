@@ -1,0 +1,215 @@
+--- a/vllm/distributed/device_communicators/pynccl.py
++++ b/vllm/distributed/device_communicators/pynccl.py
+@@ -10,6 +10,7 @@
+ from torch.distributed import ProcessGroup, ReduceOp
+
+ import vllm.envs as envs
++from vllm import tp_profile
+ from vllm.distributed.device_communicators.pynccl_wrapper import (
+     NCCLLibrary,
+     buffer_type,
+@@ -185,15 +186,16 @@
+
+         if stream is None:
+             stream = current_stream()
+-        self.nccl.ncclAllReduce(
+-            buffer_type(in_tensor.data_ptr()),
+-            buffer_type(out_tensor.data_ptr()),
+-            in_tensor.numel(),
+-            ncclDataTypeEnum.from_torch(in_tensor.dtype),
+-            ncclRedOpTypeEnum.from_torch(op),
+-            self.comm,
+-            cudaStream_t(stream.cuda_stream),
+-        )
++        with tp_profile.nccl_range("all_reduce", in_tensor, self.world_size):
++            self.nccl.ncclAllReduce(
++                buffer_type(in_tensor.data_ptr()),
++                buffer_type(out_tensor.data_ptr()),
++                in_tensor.numel(),
++                ncclDataTypeEnum.from_torch(in_tensor.dtype),
++                ncclRedOpTypeEnum.from_torch(op),
++                self.comm,
++                cudaStream_t(stream.cuda_stream),
++            )
+         return out_tensor
+
+     def all_gather(
+@@ -210,14 +212,15 @@
+         )
+         if stream is None:
+             stream = current_stream()
+-        self.nccl.ncclAllGather(
+-            buffer_type(input_tensor.data_ptr()),
+-            buffer_type(output_tensor.data_ptr()),
+-            input_tensor.numel(),
+-            ncclDataTypeEnum.from_torch(input_tensor.dtype),
+-            self.comm,
+-            cudaStream_t(stream.cuda_stream),
+-        )
++        with tp_profile.nccl_range("all_gather", input_tensor, self.world_size):
++            self.nccl.ncclAllGather(
++                buffer_type(input_tensor.data_ptr()),
++                buffer_type(output_tensor.data_ptr()),
++                input_tensor.numel(),
++                ncclDataTypeEnum.from_torch(input_tensor.dtype),
++                self.comm,
++                cudaStream_t(stream.cuda_stream),
++            )
+
+     def all_gatherv(
+         self,
+@@ -272,15 +275,16 @@
+         )
+         if stream is None:
+             stream = current_stream()
+-        self.nccl.ncclReduceScatter(
+-            buffer_type(input_tensor.data_ptr()),
+-            buffer_type(output_tensor.data_ptr()),
+-            output_tensor.numel(),
+-            ncclDataTypeEnum.from_torch(input_tensor.dtype),
+-            ncclRedOpTypeEnum.from_torch(op),
+-            self.comm,
+-            cudaStream_t(stream.cuda_stream),
+-        )
++        with tp_profile.nccl_range("reduce_scatter", output_tensor, self.world_size):
++            self.nccl.ncclReduceScatter(
++                buffer_type(input_tensor.data_ptr()),
++                buffer_type(output_tensor.data_ptr()),
++                output_tensor.numel(),
++                ncclDataTypeEnum.from_torch(input_tensor.dtype),
++                ncclRedOpTypeEnum.from_torch(op),
++                self.comm,
++                cudaStream_t(stream.cuda_stream),
++            )
+
+     def reduce_scatterv(
+         self,
+@@ -389,15 +393,16 @@
+         else:
+             sendbuff = buffer_type()
+             recvbuff = buffer_type(tensor.data_ptr())
+-        self.nccl.ncclBroadcast(
+-            sendbuff,
+-            recvbuff,
+-            tensor.numel(),
+-            ncclDataTypeEnum.from_torch(tensor.dtype),
+-            src,
+-            self.comm,
+-            cudaStream_t(stream.cuda_stream),
+-        )
++        with tp_profile.nccl_range("broadcast", tensor, self.world_size):
++            self.nccl.ncclBroadcast(
++                sendbuff,
++                recvbuff,
++                tensor.numel(),
++                ncclDataTypeEnum.from_torch(tensor.dtype),
++                src,
++                self.comm,
++                cudaStream_t(stream.cuda_stream),
++            )
+
+     def group_start(self):
+         self.nccl.ncclGroupStart()
+--- a/vllm/v1/worker/gpu_worker.py
++++ b/vllm/v1/worker/gpu_worker.py
+@@ -16,6 +16,7 @@
+ import torch.nn as nn
+
+ import vllm.envs as envs
++from vllm import tp_profile
+ from vllm.config import CUDAGraphMode, VllmConfig, set_current_vllm_config
+ from vllm.config.compilation import CompilationMode
+ from vllm.device_allocator import get_mem_allocator_instance
+@@ -774,13 +775,31 @@
+         # add trace annotation so that we can easily distinguish
+         # context/generation request numbers in each iteration.
+         # A context request is a request that has not yet generated any tokens
++        iteration_details = compute_iteration_details(scheduler_output)
++        if tp_profile.enabled():
++            step_id = getattr(self, "_tp_profile_step_id", 0)
++            self._tp_profile_step_id = step_id + 1
++            phase = (
++                "decode"
++                if iteration_details.num_generation_requests > 0
++                else "prefill"
++            )
++            return tp_profile.step_range(
++                phase=phase,
++                step_id=step_id,
++                tokens=scheduler_output.total_num_scheduled_tokens,
++                requests=len(scheduler_output.num_scheduled_tokens),
++                ctx_tokens=iteration_details.num_ctx_tokens,
++                ctx_requests=iteration_details.num_ctx_requests,
++                decode_tokens=iteration_details.num_generation_tokens,
++                decode_requests=iteration_details.num_generation_requests,
++            )
++
+         if not self.profiler:
+             return nullcontext()
+
+         self.profiler.step()
+
+-        iteration_details = compute_iteration_details(scheduler_output)
+-
+         annotation = "".join(
+             [
+                 "execute_context_",
+--- /dev/null
++++ b/vllm/tp_profile.py
+@@ -0,0 +1,49 @@
++# SPDX-License-Identifier: Apache-2.0
++# SPDX-FileCopyrightText: Copyright contributors to the vLLM project
++
++import os
++from contextlib import nullcontext
++
++import torch
++
++_ENV_FLAG = "VLLM_TP_PROFILE_NVTX"
++
++
++def enabled() -> bool:
++    return os.environ.get(_ENV_FLAG) == "1"
++
++
++def _range(label: str):
++    if not enabled() or not torch.cuda.is_available():
++        return nullcontext()
++    return torch.cuda.nvtx.range(label)
++
++
++def tensor_bytes(tensor: torch.Tensor) -> int:
++    return tensor.numel() * tensor.element_size()
++
++
++def nccl_range(collective: str, tensor: torch.Tensor, world_size: int):
++    if not enabled():
++        return nullcontext()
++    label = (
++        f"vllm.nccl collective={collective} "
++        f"numel={tensor.numel()} element_size={tensor.element_size()} "
++        f"bytes={tensor_bytes(tensor)} dtype={tensor.dtype} "
++        f"world_size={world_size}"
++    )
++    return _range(label)
++
++
++def _sanitize_req_id(req_id: str) -> str:
++    return str(req_id).replace(" ", "_").replace("|", "_")
++
++
++def step_range(phase: str, step_id: int, tokens: int, requests: int,
++               ctx_tokens: int, ctx_requests: int, decode_tokens: int,
++               decode_requests: int, req_ids: list[str] | None = None):
++    if not enabled():
++        return nullcontext()
++    req_label = ""
++    if req_ids:
++        req_label = " req_ids=" + "|".join(_sanitize_req_id(r) for r in req_ids)
++    label = (
++        f"vllm.step phase={phase} step={step_id} tokens={tokens} "
++        f"requests={requests} ctx_tokens={ctx_tokens} "
++        f"ctx_requests={ctx_requests} decode_tokens={decode_tokens} "
++        f"decode_requests={decode_requests}{req_label}"
++    )
++    return _range(label)

@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import concurrent.futures
 import json
+import statistics
 import time
 from dataclasses import dataclass, field
 from typing import Any
@@ -39,6 +40,8 @@ class StreamedRequestResult:
     last_token_ts: float | None
     output_token_count: int
     prompt_token_count: int | None
+    request_id: str | None = None
+    request_kind: str | None = None
 
     @property
     def ttft_s(self) -> float | None:
@@ -64,6 +67,7 @@ class StreamedRequestResult:
     def to_dict(self) -> dict[str, Any]:
         return {
             "request_index": self.request_index, "ok": self.ok, "error": self.error,
+            "request_id": self.request_id, "request_kind": self.request_kind,
             "ttft_s": self.ttft_s, "tpot_s": self.tpot_s, "e2e_latency_s": self.e2e_latency_s,
             "output_token_count": self.output_token_count, "prompt_token_count": self.prompt_token_count,
         }
@@ -71,6 +75,7 @@ class StreamedRequestResult:
 
 def _send_one_streaming_request(
     base_url: str, model: str, prompt: str, max_tokens: int, request_index: int, *, timeout_s: float,
+    request_id: str | None = None, request_kind: str | None = None,
 ) -> StreamedRequestResult:
     payload = {
         "model": model, "prompt": prompt, "max_tokens": max_tokens,
@@ -82,12 +87,13 @@ def _send_one_streaming_request(
     output_token_count = 0
     prompt_token_count: int | None = None
     try:
-        with requests.post(f"{base_url}/v1/completions", json=payload, stream=True, timeout=timeout_s) as resp:
+        headers = {"X-Request-Id": request_id} if request_id else None
+        with requests.post(f"{base_url}/v1/completions", json=payload, headers=headers, stream=True, timeout=timeout_s) as resp:
             if resp.status_code != 200:
                 return StreamedRequestResult(
                     request_index=request_index, ok=False, error=f"http_{resp.status_code}: {resp.text[:500]}",
                     request_start_ts=t_start, first_token_ts=None, last_token_ts=None,
-                    output_token_count=0, prompt_token_count=None,
+                    output_token_count=0, prompt_token_count=None, request_id=request_id, request_kind=request_kind,
                 )
             for raw_line in resp.iter_lines(decode_unicode=True):
                 if not raw_line or not raw_line.startswith("data:"):
@@ -111,11 +117,13 @@ def _send_one_streaming_request(
             request_index=request_index, ok=first_token_ts is not None, error=None if first_token_ts is not None else "no_tokens_streamed",
             request_start_ts=t_start, first_token_ts=first_token_ts, last_token_ts=last_token_ts,
             output_token_count=output_token_count, prompt_token_count=prompt_token_count,
+            request_id=request_id, request_kind=request_kind,
         )
     except requests.RequestException as exc:
         return StreamedRequestResult(
             request_index=request_index, ok=False, error=str(exc), request_start_ts=t_start,
             first_token_ts=None, last_token_ts=None, output_token_count=0, prompt_token_count=None,
+            request_id=request_id, request_kind=request_kind,
         )
 
 
@@ -138,14 +146,21 @@ class WorkloadBenchmarkResult:
         tpots = [r.tpot_s for r in valid if r.tpot_s is not None]
         e2es = [r.e2e_latency_s for r in valid if r.e2e_latency_s is not None]
         total_output_tokens = sum(r.output_token_count for r in valid)
+        mean_tpot_s = (sum(tpots) / len(tpots)) if tpots else None
+        tpot_std_s = statistics.stdev(tpots) if len(tpots) >= 2 else None
         return {
             "workload_id": self.workload.workload_id, "tp_degree": self.tp_degree,
             "requests_ok": n_ok, "requests_total": n_total,
             "mean_ttft_s": (sum(ttfts) / len(ttfts)) if ttfts else None,
-            "p50_ttft_s": _percentile(ttfts, 0.50), "p95_ttft_s": _percentile(ttfts, 0.95),
-            "mean_tpot_s": (sum(tpots) / len(tpots)) if tpots else None,
+            "p50_ttft_s": _percentile(ttfts, 0.50) if len(ttfts) >= 5 else None,
+            "p95_ttft_s": _percentile(ttfts, 0.95) if len(ttfts) >= 5 else None,
+            "mean_tpot_s": mean_tpot_s,
+            "p50_tpot_s": _percentile(tpots, 0.50) if len(tpots) >= 5 else None,
+            "p95_tpot_s": _percentile(tpots, 0.95) if len(tpots) >= 5 else None,
+            "tpot_cv": (tpot_std_s / mean_tpot_s) if tpot_std_s is not None and mean_tpot_s else None,
+            "tpot_sample_count": len(tpots),
             "mean_e2e_latency_s": (sum(e2es) / len(e2es)) if e2es else None,
-            "p95_e2e_latency_s": _percentile(e2es, 0.95),
+            "p95_e2e_latency_s": _percentile(e2es, 0.95) if len(e2es) >= 5 else None,
             "aggregate_throughput_tokens_per_s": (
                 total_output_tokens / self.wall_clock_batch_s if self.wall_clock_batch_s > 0 else None
             ),
@@ -180,8 +195,11 @@ def run_workload_benchmark(
     concurrency multiplier."""
     prompt = build_prompt_of_token_length(tokenizer, workload.input_length, seed_offset=workload.concurrency)
 
+    tag_prefix = f"d8-tp{tp_degree}-{workload.workload_id}"
     for i in range(warmup_requests):
-        _send_one_streaming_request(base_url, model, prompt, workload.output_length, -1 - i, timeout_s=timeout_s)
+        _send_one_streaming_request(
+            base_url, model, prompt, workload.output_length, -1 - i, timeout_s=timeout_s,
+            request_id=f"{tag_prefix}-warmup-{i}", request_kind="warmup")
 
     result = WorkloadBenchmarkResult(workload=workload, tp_degree=tp_degree, warmup_count=warmup_requests)
     batch_start = time.perf_counter()
@@ -191,6 +209,7 @@ def run_workload_benchmark(
                 pool.submit(
                     _send_one_streaming_request, base_url, model, prompt, workload.output_length,
                     rep * workload.concurrency + slot, timeout_s=timeout_s,
+                    request_id=f"{tag_prefix}-measured-{rep}-{slot}", request_kind="measured",
                 )
                 for slot in range(workload.concurrency)
             ]

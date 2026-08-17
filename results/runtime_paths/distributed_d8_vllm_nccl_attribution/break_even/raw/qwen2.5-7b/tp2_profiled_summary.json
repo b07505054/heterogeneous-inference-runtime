@@ -1,0 +1,920 @@
+{
+  "controller": {
+    "argv": [
+      "nsys",
+      "profile",
+      "--trace=cuda,nvtx",
+      "--sample=none",
+      "--cpuctxsw=none",
+      "--trace-fork-before-exec=true",
+      "--cuda-event-trace=true",
+      "--cuda-graph-trace=node",
+      "--cuda-flush-interval=1000",
+      "--force-overwrite=true",
+      "--output=/workspace/heterogeneous-inference-runtime/results/runtime_paths/distributed_d8_vllm_nccl_attribution/break_even/raw/qwen2.5-7b/traces/d8_tp2_vllm",
+      "/workspace/d8-vllm-env/bin/python",
+      "-m",
+      "vllm.entrypoints.openai.api_server",
+      "--model",
+      "Qwen/Qwen2.5-7B-Instruct",
+      "--tokenizer",
+      "Qwen/Qwen2.5-7B-Instruct",
+      "--no-trust-remote-code",
+      "--dtype",
+      "float16",
+      "--seed",
+      "1234",
+      "--served-model-name",
+      "qwen2.5-7b-instruct-tp2-planning-only",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "56287",
+      "--master-addr",
+      "127.0.0.1",
+      "--master-port",
+      "29501",
+      "--tensor-parallel-size",
+      "2",
+      "--pipeline-parallel-size",
+      "1",
+      "--data-parallel-size",
+      "1",
+      "--distributed-executor-backend",
+      "mp",
+      "--max-model-len",
+      "2048",
+      "--max-num-seqs",
+      "4",
+      "--max-num-batched-tokens",
+      "2048",
+      "--gpu-memory-utilization",
+      "0.9",
+      "--enable-prefix-caching",
+      "--enable-chunked-prefill"
+    ],
+    "descendant_pids_at_ready": [
+      26157,
+      26158,
+      26159,
+      26312,
+      26313,
+      26460,
+      26461
+    ],
+    "events": [
+      {
+        "detail": "nsys profile --trace=cuda,nvtx --sample=none --cpuctxsw=none --trace-fork-before-exec=true --cuda-event-trace=true --cuda-graph-trace=node --cuda-flush-interval=1000 --force-overwrite=true --output=/workspace/heterogeneous-inference-runtime/results/runtime_paths/distributed_d8_vllm_nccl_attribution/break_even/raw/qwen2.5-7b/traces/d8_tp2_vllm /workspace/d8-vllm-env/bin/python -m vllm.entrypoints.openai.api_server --model Qwen/Qwen2.5-7B-Instruct --tokenizer Qwen/Qwen2.5-7B-Instruct --no-trust-remote-code --dtype float16 --seed 1234 --served-model-name qwen2.5-7b-instruct-tp2-planning-only --host 127.0.0.1 --port 56287 --master-addr 127.0.0.1 --master-port 29501 --tensor-parallel-size 2 --pipeline-parallel-size 1 --data-parallel-size 1 --distributed-executor-backend mp --max-model-len 2048 --max-num-seqs 4 --max-num-batched-tokens 2048 --gpu-memory-utilization 0.9 --enable-prefix-caching --enable-chunked-prefill",
+        "event": "starting",
+        "ts": 1786925727.708992
+      },
+      {
+        "detail": "pid=26137 pgid=26137",
+        "event": "started",
+        "ts": 1786925727.7096841
+      },
+      {
+        "detail": "readiness_latency_s=50.03",
+        "event": "ready",
+        "ts": 1786925777.7375875
+      },
+      {
+        "detail": "[26157, 26158, 26159, 26312, 26313, 26460, 26461]",
+        "event": "descendants_at_ready",
+        "ts": 1786925777.740768
+      },
+      {
+        "detail": "",
+        "event": "stopping",
+        "ts": 1786925780.2100098
+      },
+      {
+        "detail": "exit_code=0 escalated=False final_remaining_descendants=[] preserved_prior_terminal_state=False",
+        "event": "stopped",
+        "ts": 1786925792.2148373
+      }
+    ],
+    "exit_code": 0,
+    "host": "127.0.0.1",
+    "log_path": "/workspace/heterogeneous-inference-runtime/results/runtime_paths/distributed_d8_vllm_nccl_attribution/break_even/raw/qwen2.5-7b/logs/d8_tp2_profiled_server.log",
+    "pgid": 26137,
+    "pid": 26137,
+    "port": 56287,
+    "readiness_latency_s": 50.028478384017944,
+    "ready_ts": 1786925777.7375813,
+    "start_ts": 1786925727.7091029,
+    "state": "STOPPED",
+    "stop_ts": 1786925792.2147996
+  },
+  "launch_spec": {
+    "cli_arguments": {
+      "all_arguments_supported": true,
+      "argument_compatibility": [
+        {
+          "dest": "model",
+          "installed_version_support_status": "supported",
+          "requested_argument": "model",
+          "resolved_default": "Qwen/Qwen3-0.6B",
+          "resolved_spelling": "--model",
+          "resolved_type": "str",
+          "source": "compiler_plan"
+        },
+        {
+          "dest": "tokenizer",
+          "installed_version_support_status": "supported",
+          "requested_argument": "tokenizer",
+          "resolved_default": null,
+          "resolved_spelling": "--tokenizer",
+          "resolved_type": "str",
+          "source": "compiler_plan"
+        },
+        {
+          "dest": "trust_remote_code",
+          "installed_version_support_status": "supported",
+          "requested_argument": "trust_remote_code",
+          "resolved_default": false,
+          "resolved_spelling": "--trust-remote-code",
+          "resolved_type": null,
+          "source": "capability_profile"
+        },
+        {
+          "dest": "dtype",
+          "installed_version_support_status": "supported",
+          "requested_argument": "dtype",
+          "resolved_default": "auto",
+          "resolved_spelling": "--dtype",
+          "resolved_type": "str",
+          "source": "explicit_D3B_default"
+        },
+        {
+          "dest": "seed",
+          "installed_version_support_status": "supported",
+          "requested_argument": "seed",
+          "resolved_default": 0,
+          "resolved_spelling": "--seed",
+          "resolved_type": "int",
+          "source": "compiler_plan"
+        },
+        {
+          "dest": "served_model_name",
+          "installed_version_support_status": "supported",
+          "requested_argument": "served_model_name",
+          "resolved_default": null,
+          "resolved_spelling": "--served-model-name",
+          "resolved_type": "_optional_type",
+          "source": "explicit_D3B_default"
+        },
+        {
+          "dest": "host",
+          "installed_version_support_status": "supported",
+          "requested_argument": "host",
+          "resolved_default": null,
+          "resolved_spelling": "--host",
+          "resolved_type": "_optional_type",
+          "source": "explicit_D3B_default"
+        },
+        {
+          "dest": "port",
+          "installed_version_support_status": "supported",
+          "requested_argument": "port",
+          "resolved_default": 8000,
+          "resolved_spelling": "--port",
+          "resolved_type": "int",
+          "source": "capability_profile"
+        },
+        {
+          "dest": "master_addr",
+          "installed_version_support_status": "supported",
+          "requested_argument": "master_addr",
+          "resolved_default": "127.0.0.1",
+          "resolved_spelling": "--master-addr",
+          "resolved_type": "str",
+          "source": "capability_profile"
+        },
+        {
+          "dest": "master_port",
+          "installed_version_support_status": "supported",
+          "requested_argument": "master_port",
+          "resolved_default": 29501,
+          "resolved_spelling": "--master-port",
+          "resolved_type": "int",
+          "source": "capability_profile"
+        },
+        {
+          "dest": "tensor_parallel_size",
+          "installed_version_support_status": "supported",
+          "requested_argument": "tensor_parallel_size",
+          "resolved_default": 1,
+          "resolved_spelling": "--tensor-parallel-size",
+          "resolved_type": "int",
+          "source": "compiler_plan"
+        },
+        {
+          "dest": "pipeline_parallel_size",
+          "installed_version_support_status": "supported",
+          "requested_argument": "pipeline_parallel_size",
+          "resolved_default": 1,
+          "resolved_spelling": "--pipeline-parallel-size",
+          "resolved_type": "int",
+          "source": "compiler_plan"
+        },
+        {
+          "dest": "data_parallel_size",
+          "installed_version_support_status": "supported",
+          "requested_argument": "data_parallel_size",
+          "resolved_default": 1,
+          "resolved_spelling": "--data-parallel-size",
+          "resolved_type": "int",
+          "source": "capability_profile"
+        },
+        {
+          "dest": "distributed_executor_backend",
+          "installed_version_support_status": "supported",
+          "requested_argument": "distributed_executor_backend",
+          "resolved_default": null,
+          "resolved_spelling": "--distributed-executor-backend",
+          "resolved_type": "_optional_type",
+          "source": "explicit_D3B_default"
+        },
+        {
+          "dest": "max_model_len",
+          "installed_version_support_status": "supported",
+          "requested_argument": "max_model_len",
+          "resolved_default": null,
+          "resolved_spelling": "--max-model-len",
+          "resolved_type": "human_readable_int_or_auto",
+          "source": "explicit_D3B_default"
+        },
+        {
+          "dest": "max_num_seqs",
+          "installed_version_support_status": "supported",
+          "requested_argument": "max_num_seqs",
+          "resolved_default": null,
+          "resolved_spelling": "--max-num-seqs",
+          "resolved_type": "int",
+          "source": "explicit_D3B_default"
+        },
+        {
+          "dest": "max_num_batched_tokens",
+          "installed_version_support_status": "supported",
+          "requested_argument": "max_num_batched_tokens",
+          "resolved_default": null,
+          "resolved_spelling": "--max-num-batched-tokens",
+          "resolved_type": "human_readable_int",
+          "source": "explicit_D3B_default"
+        },
+        {
+          "dest": "gpu_memory_utilization",
+          "installed_version_support_status": "supported",
+          "requested_argument": "gpu_memory_utilization",
+          "resolved_default": 0.92,
+          "resolved_spelling": "--gpu-memory-utilization",
+          "resolved_type": "float",
+          "source": "explicit_D3B_default"
+        },
+        {
+          "dest": "enable_prefix_caching",
+          "installed_version_support_status": "supported",
+          "requested_argument": "enable_prefix_caching",
+          "resolved_default": null,
+          "resolved_spelling": "--enable-prefix-caching",
+          "resolved_type": null,
+          "source": "explicit_D3B_default"
+        },
+        {
+          "dest": "enable_chunked_prefill",
+          "installed_version_support_status": "supported",
+          "requested_argument": "enable_chunked_prefill",
+          "resolved_default": null,
+          "resolved_spelling": "--enable-chunked-prefill",
+          "resolved_type": null,
+          "source": "explicit_D3B_default"
+        }
+      ],
+      "argv": [
+        ".venv/bin/python",
+        "-m",
+        "vllm.entrypoints.openai.api_server",
+        "--model",
+        "Qwen/Qwen2.5-7B-Instruct",
+        "--tokenizer",
+        "Qwen/Qwen2.5-7B-Instruct",
+        "--no-trust-remote-code",
+        "--dtype",
+        "float16",
+        "--seed",
+        "1234",
+        "--served-model-name",
+        "qwen2.5-7b-instruct-tp2-planning-only",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8000",
+        "--master-addr",
+        "127.0.0.1",
+        "--master-port",
+        "29501",
+        "--tensor-parallel-size",
+        "2",
+        "--pipeline-parallel-size",
+        "1",
+        "--data-parallel-size",
+        "1",
+        "--distributed-executor-backend",
+        "mp",
+        "--max-model-len",
+        "2048",
+        "--max-num-seqs",
+        "4",
+        "--max-num-batched-tokens",
+        "2048",
+        "--gpu-memory-utilization",
+        "0.9",
+        "--enable-prefix-caching",
+        "--enable-chunked-prefill"
+      ],
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "0,1",
+        "MASTER_ADDR": "127.0.0.1",
+        "MASTER_PORT": "29501",
+        "NCCL_DEBUG": "INFO",
+        "TOKENIZERS_PARALLELISM": "false",
+        "VLLM_WORKER_MULTIPROC_METHOD": "spawn",
+        "WORLD_SIZE": "2"
+      },
+      "expected_gpu_assignment": {
+        "0": 0,
+        "1": 1
+      },
+      "expected_process_count": 2,
+      "shell_command": ".venv/bin/python -m vllm.entrypoints.openai.api_server --model Qwen/Qwen2.5-7B-Instruct --tokenizer Qwen/Qwen2.5-7B-Instruct --no-trust-remote-code --dtype float16 --seed 1234 --served-model-name qwen2.5-7b-instruct-tp2-planning-only --host 127.0.0.1 --port 8000 --master-addr 127.0.0.1 --master-port 29501 --tensor-parallel-size 2 --pipeline-parallel-size 1 --data-parallel-size 1 --distributed-executor-backend mp --max-model-len 2048 --max-num-seqs 4 --max-num-batched-tokens 2048 --gpu-memory-utilization 0.9 --enable-prefix-caching --enable-chunked-prefill",
+      "unsupported_arguments": [],
+      "working_directory": "/workspace/heterogeneous-inference-runtime"
+    },
+    "d3b_mode": "planning_only",
+    "data_parallel_size": 1,
+    "device_type": "cuda",
+    "distributed_executor_backend": "mp",
+    "dtype": "float16",
+    "enable_chunked_prefill": true,
+    "enable_prefix_caching": true,
+    "environment": {
+      "CUDA_VISIBLE_DEVICES": "0,1",
+      "MASTER_ADDR": "127.0.0.1",
+      "MASTER_PORT": "29501",
+      "NCCL_DEBUG": "INFO",
+      "TOKENIZERS_PARALLELISM": "false",
+      "VLLM_WORKER_MULTIPROC_METHOD": "spawn",
+      "WORLD_SIZE": "2"
+    },
+    "execution_readiness_state": "DRY_RUN_VALIDATED",
+    "field_provenance": {
+      "data_parallel_size": {
+        "reason": "Matches installed vLLM registry default for --data-parallel-size (1); D2 plan carries no data-parallel concept.",
+        "source": "capability_profile",
+        "value_summary": "1"
+      },
+      "device_type": {
+        "reason": "torch.cuda.is_available() probed at materialization time.",
+        "source": "runtime_discovery",
+        "value_summary": "'cuda'"
+      },
+      "distributed_executor_backend": {
+        "reason": "D2 plan declares a tensor-parallel strategy but not a vLLM executor backend choice; 'mp' (multiprocessing) is picked as the single-node default over 'ray'/'external_launcher'/'uni'.",
+        "source": "explicit_D3B_default",
+        "value_summary": "'mp'"
+      },
+      "dtype": {
+        "reason": "Neither D2 nor D3A declares a serving dtype for the distributed plan; float16 is pinned explicitly for deterministic, reproducible CLI generation rather than leaving 'auto' (the installed registry default) to resolve differently across runs.",
+        "source": "explicit_D3B_default",
+        "value_summary": "'float16'"
+      },
+      "enable_chunked_prefill": {
+        "reason": "Registry default leaves this unset (None/auto); D3B explicitly enables it.",
+        "source": "explicit_D3B_default",
+        "value_summary": "True"
+      },
+      "enable_prefix_caching": {
+        "reason": "Registry default leaves this unset (None/auto); D3B explicitly enables it.",
+        "source": "explicit_D3B_default",
+        "value_summary": "True"
+      },
+      "gpu_memory_utilization": {
+        "reason": "Set below the installed registry default (0.92) given the small 4GB-class GPU on this host (caller-overridable).",
+        "source": "explicit_D3B_default",
+        "value_summary": "0.9"
+      },
+      "host": {
+        "reason": "Installed registry default for --host is None (bind-all); D3B pins loopback explicitly for a safe planning default.",
+        "source": "explicit_D3B_default",
+        "value_summary": "'127.0.0.1'"
+      },
+      "master_address": {
+        "reason": "Matches installed vLLM registry default for --master-addr.",
+        "source": "capability_profile",
+        "value_summary": "'127.0.0.1'"
+      },
+      "master_port": {
+        "reason": "Matches installed vLLM registry default for --master-port.",
+        "source": "capability_profile",
+        "value_summary": "29501"
+      },
+      "max_model_len": {
+        "reason": "Neither D2 nor D3A declares a serving context length; 2048 is a conservative D3B default well within the real model's max_position_embeddings (caller-overridable for D5 memory-pressure experiments; this call used the default).",
+        "source": "explicit_D3B_default",
+        "value_summary": "2048"
+      },
+      "max_num_batched_tokens": {
+        "reason": "Conservative default token budget per step; not decided by the compiler plan (caller-overridable).",
+        "source": "explicit_D3B_default",
+        "value_summary": "2048"
+      },
+      "max_num_seqs": {
+        "reason": "Conservative default batch width appropriate for a 4GB-class GPU; not decided by the compiler plan (caller-overridable).",
+        "source": "explicit_D3B_default",
+        "value_summary": "4"
+      },
+      "model": {
+        "reason": "D3A validated that the compiler's abbreviated model_identity.model_id ('qwen2.5-7b') corresponds to this real, locally-cached HF checkpoint.",
+        "source": "compiler_plan",
+        "value_summary": "'Qwen/Qwen2.5-7B-Instruct'"
+      },
+      "pipeline_parallel_size": {
+        "reason": "Read directly from ExecutionPlan.distributed.pipeline_parallel_size (or the TP1 absence convention).",
+        "source": "compiler_plan",
+        "value_summary": "1"
+      },
+      "port": {
+        "reason": "Matches installed vLLM registry default for --port (8000).",
+        "source": "capability_profile",
+        "value_summary": "8000"
+      },
+      "rank_count": {
+        "reason": "Equal to the number of compiler-declared ranks.",
+        "source": "compiler_plan",
+        "value_summary": "2"
+      },
+      "revision": {
+        "reason": "Matches installed vLLM registry default for --revision (None).",
+        "source": "capability_profile",
+        "value_summary": "None"
+      },
+      "seed": {
+        "reason": "Reused verbatim from D3A's live_model_execution.json seed, preserving determinism continuity across D2/D3A/D3B.",
+        "source": "compiler_plan",
+        "value_summary": "1234"
+      },
+      "served_model_name": {
+        "reason": "D2/D3A plans do not declare a served name; D3B names it after the model and candidate id.",
+        "source": "explicit_D3B_default",
+        "value_summary": "'qwen2.5-7b-instruct-tp2-planning-only'"
+      },
+      "tensor_parallel_size": {
+        "reason": "Read directly from ExecutionPlan.distributed.tensor_parallel_size (or the TP1 absence convention).",
+        "source": "compiler_plan",
+        "value_summary": "2"
+      },
+      "tokenizer": {
+        "reason": "Same identity as model; no separate compiler tokenizer decision exists.",
+        "source": "compiler_plan",
+        "value_summary": "'Qwen/Qwen2.5-7B-Instruct'"
+      },
+      "trust_remote_code": {
+        "reason": "Matches installed vLLM registry default (False); real Qwen2.5 config does not require custom remote code.",
+        "source": "capability_profile",
+        "value_summary": "False"
+      },
+      "visible_devices": {
+        "reason": "Directly probed via torch.cuda.device_count() on this host at materialization time.",
+        "source": "runtime_discovery",
+        "value_summary": "(0, 1)"
+      },
+      "world_size": {
+        "reason": "Read directly from ExecutionPlan.distributed.world_size (or the TP1 absence convention).",
+        "source": "compiler_plan",
+        "value_summary": "2"
+      }
+    },
+    "gpu_memory_utilization": 0.9,
+    "host": "127.0.0.1",
+    "master_address": "127.0.0.1",
+    "master_port": 29501,
+    "max_model_len": 2048,
+    "max_num_batched_tokens": 2048,
+    "max_num_seqs": 4,
+    "model": "Qwen/Qwen2.5-7B-Instruct",
+    "pipeline_parallel_size": 1,
+    "port": 8000,
+    "preflight_status": "passed",
+    "rank_count": 2,
+    "rank_placements": [
+      {
+        "logical_gpu_index": 0,
+        "physical_device_index": 0,
+        "placement_policy_source": "explicit_D3B_default",
+        "rank_id": 0,
+        "rank_id_source": "compiler_plan"
+      },
+      {
+        "logical_gpu_index": 1,
+        "physical_device_index": 1,
+        "placement_policy_source": "explicit_D3B_default",
+        "rank_id": 1,
+        "rank_id_source": "compiler_plan"
+      }
+    ],
+    "rejection_reasons": [],
+    "revision": null,
+    "schema_version": "1.0.0",
+    "seed": 1234,
+    "served_model_name": "qwen2.5-7b-instruct-tp2-planning-only",
+    "source_candidate_id": "tp2",
+    "source_execution_plan_id": "phase4d-qwen2.5-7b-real_qwen_tp2_execution_plan",
+    "source_execution_plan_path": "/workspace/heterogeneous-inference-runtime/results/runtime_paths/distributed_d8_vllm_nccl_attribution/break_even/plans/qwen2.5-7b/real_qwen_tp2_execution_plan.json",
+    "source_operator_ids": [
+      "qwen_prefill::llm.o_proj::layer_0"
+    ],
+    "tensor_parallel_size": 2,
+    "tokenizer": "Qwen/Qwen2.5-7B-Instruct",
+    "trust_remote_code": false,
+    "truth_boundary": "A vLLM distributed launch specification is materialized launch intent derived from a compiler-selected TP plan, validated fail-closed against the actual installed vLLM version and actual host hardware. It is not a claim of successful vLLM execution, NCCL initialization, multi-GPU serving, or any measured distributed performance.",
+    "visible_devices": [
+      0,
+      1
+    ],
+    "whole_model_tp_evidence_source_artifact_hash": null,
+    "whole_model_tp_evidence_status": "not_established_operator_level_only",
+    "world_size": 2
+  },
+  "nccl_transport_evidence": {
+    "bounded_nccl_excerpt": [
+      "07eb3d340eae:26461:26461 [1] NCCL INFO Channel 01 : 1[1] -> 0[0] via SHM/direct/direct",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO P2P is disabled between connected GPUs 1 and 0. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO Channel 01 : 0[0] -> 1[1] via SHM/direct/direct",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO P2P is disabled between connected GPUs 0 and 1. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO Channel 02 : 1[1] -> 0[0] via SHM/direct/direct",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO P2P is disabled between connected GPUs 1 and 0. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO Channel 02 : 0[0] -> 1[1] via SHM/direct/direct",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO P2P is disabled between connected GPUs 0 and 1. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO Channel 03 : 1[1] -> 0[0] via SHM/direct/direct",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO Channel 03 : 0[0] -> 1[1] via SHM/direct/direct",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO Connected all rings, use ring PXN 0 GDR 1",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO Connected all rings, use ring PXN 0 GDR 1",
+      "(Worker pid=26460) INFO 08-17 00:15:52 [cuda_communicator.py:237] Using ['PYNCCL'] all-reduce backends (in dispatch order) for group 'tp:0' out of potential backends: ['NCCL_SYMM_MEM', 'QUICK_REDUCE', 'FLASHINFER', 'CUSTOM', 'SYMM_MEM', 'PYNCCL'].",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO Comm config Blocking set to 1",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO Comm config Blocking set to 1",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO Initialized NET plugin Socket",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO Assigned NET plugin Socket to comm",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO Using network Socket",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO Initialized NET plugin Socket",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO ncclCommInitRankConfig comm 0x624e3bf0 rank 0 nranks 2 cudaDev 0 nvmlDev 0 busId 4000 commId 0x96d32aaa2224e2b2 - Init START",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO Assigned NET plugin Socket to comm",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO Using network Socket",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO ncclCommInitRankConfig comm 0x39521b60 rank 1 nranks 2 cudaDev 1 nvmlDev 1 busId 5000 commId 0x96d32aaa2224e2b2 - Init START",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO P2P is disabled between connected GPUs 1 and 0. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO P2P is disabled between connected GPUs 1 and 0. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO P2P is disabled between connected GPUs 0 and 1. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO P2P is disabled between connected GPUs 0 and 1. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO P2P is disabled between connected GPUs 1 and 0. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO P2P is disabled between connected GPUs 1 and 0. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO P2P is disabled between connected GPUs 0 and 1. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO P2P is disabled between connected GPUs 0 and 1. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 1 is empty, ignoring. (GPU affinity =  ; CPU affinity = 0-63).",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO NVLS multicast support is not available on dev 1 (NVLS_NCHANNELS 0)",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO P2P is disabled between connected GPUs 1 and 0. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO P2P is disabled between connected GPUs 1 and 0. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO P2P is disabled between connected GPUs 0 and 1. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO P2P is disabled between connected GPUs 0 and 1. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO P2P is disabled between connected GPUs 1 and 0. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO P2P is disabled between connected GPUs 1 and 0. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO P2P is disabled between connected GPUs 0 and 1. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO P2P is disabled between connected GPUs 0 and 1. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 0 is empty, ignoring. (GPU affinity =  ; CPU affinity = 0-63).",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO NVLS multicast support is not available on dev 0 (NVLS_NCHANNELS 0)",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO comm 0x624e3bf0 rank 0 nRanks 2 nNodes 1 localRanks 2 localRank 0 MNNVL 0",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO comm 0x39521b60 rank 1 nRanks 2 nNodes 1 localRanks 2 localRank 1 MNNVL 0",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO Channel 00/04 : 0 1",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO Channel 01/04 : 0 1",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO Trees [0] -1/-1/-1->1->0 [1] 0/-1/-1->1->-1 [2] -1/-1/-1->1->0 [3] 0/-1/-1->1->-1",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO Channel 02/04 : 0 1",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO P2P Chunksize set to 131072",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO Channel 03/04 : 0 1",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO P2P is disabled between connected GPUs 0 and 1. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO Check P2P Type isAllDirectP2p 0 directMode 0 isAllCudaP2p 0",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO Trees [0] 1/-1/-1->0->-1 [1] -1/-1/-1->0->1 [2] 1/-1/-1->0->-1 [3] -1/-1/-1->0->1",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO P2P Chunksize set to 131072",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO P2P is disabled between connected GPUs 0 and 1. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO Check P2P Type isAllDirectP2p 0 directMode 0 isAllCudaP2p 0",
+      "07eb3d340eae:26460:26676 [0] NCCL INFO [Proxy Service] Device 0 CPU core 3",
+      "07eb3d340eae:26460:26678 [0] NCCL INFO [Proxy Service UDS] Device 0 CPU core 13",
+      "07eb3d340eae:26461:26677 [0] NCCL INFO [Proxy Service] Device 1 CPU core 10",
+      "07eb3d340eae:26461:26679 [0] NCCL INFO [Proxy Service UDS] Device 1 CPU core 14",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO threadThresholds 8/8/64 | 16/8/64 | 512 | 512",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 2 p2p channels per peer",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO threadThresholds 8/8/64 | 16/8/64 | 512 | 512",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 2 p2p channels per peer",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO CC Off, workFifoBytes 1048576",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO ncclCommInitRankConfig comm 0x39521b60 rank 1 nranks 2 cudaDev 1 nvmlDev 1 busId 5000 commId 0x96d32aaa2224e2b2 - Init COMPLETE",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO Init timings - ncclCommInitRankConfig: rank 1 nranks 2 total 0.01 (kernels 0.00, alloc 0.00, bootstrap 0.00, allgathers 0.00, topo 0.01, graphs 0.00, connections 0.01, rest 0.00)",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO ncclCommInitRankConfig comm 0x624e3bf0 rank 0 nranks 2 cudaDev 0 nvmlDev 0 busId 4000 commId 0x96d32aaa2224e2b2 - Init COMPLETE",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO Init timings - ncclCommInitRankConfig: rank 0 nranks 2 total 0.01 (kernels 0.00, alloc 0.00, bootstrap 0.00, allgathers 0.00, topo 0.01, graphs 0.00, connections 0.01, rest 0.00)",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO P2P is disabled between connected GPUs 1 and 0. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO P2P is disabled between connected GPUs 0 and 1. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO P2P is disabled between connected GPUs 1 and 0. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO P2P is disabled between connected GPUs 0 and 1. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO P2P is disabled between connected GPUs 1 and 0. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO P2P is disabled between connected GPUs 0 and 1. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO P2P is disabled between connected GPUs 1 and 0. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO P2P is disabled between connected GPUs 0 and 1. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO P2P is disabled between connected GPUs 0 and 1. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO P2P is disabled between connected GPUs 1 and 0. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO Channel 00 : 0[0] -> 1[1] via SHM/direct/direct",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO P2P is disabled between connected GPUs 0 and 1. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO Channel 00 : 1[1] -> 0[0] via SHM/direct/direct",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO P2P is disabled between connected GPUs 1 and 0. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO Channel 01 : 0[0] -> 1[1] via SHM/direct/direct",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO P2P is disabled between connected GPUs 0 and 1. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO Channel 01 : 1[1] -> 0[0] via SHM/direct/direct",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO P2P is disabled between connected GPUs 1 and 0. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO Channel 02 : 0[0] -> 1[1] via SHM/direct/direct",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO P2P is disabled between connected GPUs 0 and 1. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO Channel 02 : 1[1] -> 0[0] via SHM/direct/direct",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO P2P is disabled between connected GPUs 1 and 0. You can repress this message with NCCL_IGNORE_DISABLED_P2P=1.",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO Channel 03 : 0[0] -> 1[1] via SHM/direct/direct",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO Channel 03 : 1[1] -> 0[0] via SHM/direct/direct",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO Connected all rings, use ring PXN 0 GDR 1",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO Connected all rings, use ring PXN 0 GDR 1",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO comm 0x624e3bf0 rank 0 nranks 2 cudaDev 0 busId 4000 - Destroy COMPLETE",
+      "07eb3d340eae:26460:26724 [0] NCCL INFO comm 0x419c8d30 rank 0 nRanks 2 cudaDev 0 busId 4000 - Abort START",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO comm 0x39521b60 rank 1 nranks 2 cudaDev 1 busId 5000 - Destroy COMPLETE",
+      "07eb3d340eae:26461:26725 [1] NCCL INFO comm 0x18a00230 rank 1 nRanks 2 cudaDev 1 busId 5000 - Abort START",
+      "07eb3d340eae:26460:26724 [0] NCCL INFO misc/socket.cc:64 -> 3",
+      "07eb3d340eae:26460:26724 [0] NCCL INFO misc/socket.cc:81 -> 3",
+      "07eb3d340eae:26460:26724 [0] NCCL INFO misc/socket.cc:868 -> 3",
+      "07eb3d340eae:26460:26536 [0] NCCL INFO misc/socket.cc:943 -> 3",
+      "07eb3d340eae:26460:26724 [0] NCCL INFO misc/socket.cc:64 -> 3",
+      "07eb3d340eae:26460:26724 [0] NCCL INFO misc/socket.cc:81 -> 3",
+      "07eb3d340eae:26460:26724 [0] NCCL INFO misc/socket.cc:868 -> 3",
+      "07eb3d340eae:26461:26537 [1] NCCL INFO misc/socket.cc:943 -> 3",
+      "07eb3d340eae:26460:26724 [0] NCCL INFO comm 0x419c8d30 rank 0 nranks 2 cudaDev 0 busId 4000 - Abort COMPLETE",
+      "07eb3d340eae:26460:26460 [0] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault",
+      "07eb3d340eae:26461:26725 [1] NCCL INFO misc/socket.cc:64 -> 3",
+      "07eb3d340eae:26461:26725 [1] NCCL INFO misc/socket.cc:81 -> 3",
+      "07eb3d340eae:26461:26725 [1] NCCL INFO misc/socket.cc:868 -> 3",
+      "07eb3d340eae:26461:26725 [1] NCCL INFO misc/socket.cc:64 -> 3",
+      "07eb3d340eae:26461:26725 [1] NCCL INFO misc/socket.cc:81 -> 3",
+      "07eb3d340eae:26461:26725 [1] NCCL INFO misc/socket.cc:868 -> 3",
+      "07eb3d340eae:26461:26537 [1] NCCL INFO misc/socket.cc:943 -> 3",
+      "07eb3d340eae:26461:26725 [1] NCCL INFO comm 0x18a00230 rank 1 nranks 2 cudaDev 1 busId 5000 - Abort COMPLETE",
+      "07eb3d340eae:26461:26461 [1] NCCL INFO ENV/Plugin: Closing env plugin ncclEnvDefault",
+      "\t/workspace/heterogeneous-inference-runtime/results/runtime_paths/distributed_d8_vllm_nccl_attribution/break_even/raw/qwen2.5-7b/traces/d8_tp2_vllm.nsys-rep"
+    ],
+    "direct_transport_evidence": true,
+    "log_path": "/workspace/heterogeneous-inference-runtime/results/runtime_paths/distributed_d8_vllm_nccl_attribution/break_even/raw/qwen2.5-7b/logs/d8_tp2_profiled_server.log",
+    "nccl_evidence_found": true,
+    "nccl_log_line_count": 214,
+    "p2p_disabled_evidence": true,
+    "shm_transport_evidence": true
+  },
+  "nsight_report": "/workspace/heterogeneous-inference-runtime/results/runtime_paths/distributed_d8_vllm_nccl_attribution/break_even/raw/qwen2.5-7b/traces/d8_tp2_vllm.nsys-rep",
+  "profiled": true,
+  "server_log": "/workspace/heterogeneous-inference-runtime/results/runtime_paths/distributed_d8_vllm_nccl_attribution/break_even/raw/qwen2.5-7b/logs/d8_tp2_profiled_server.log",
+  "status": "measured",
+  "stop_result": {
+    "escalated": false,
+    "final_remaining_descendant_pids": [],
+    "graceful": true,
+    "pre_stop_descendant_pids": [
+      26157,
+      26158,
+      26159,
+      26312,
+      26313,
+      26460,
+      26461
+    ],
+    "preserved_prior_terminal_state": false,
+    "shutdown_latency_s": 14.477218389511108,
+    "zero_orphans": true
+  },
+  "tensor_parallel_size": 2,
+  "tp_profile_nvtx": true,
+  "workload_results": [
+    {
+      "aggregate_throughput_tokens_per_s": 103.14528490649899,
+      "mean_e2e_latency_s": 0.30971233698073775,
+      "mean_tpot_s": 0.009092571840982043,
+      "mean_ttft_s": 0.027842609910294414,
+      "p50_tpot_s": null,
+      "p50_ttft_s": null,
+      "p95_e2e_latency_s": null,
+      "p95_tpot_s": null,
+      "p95_ttft_s": null,
+      "per_request": [
+        {
+          "e2e_latency_s": 0.30971233698073775,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp2-in32_out32_c1-measured-0-0",
+          "request_index": 0,
+          "request_kind": "measured",
+          "tpot_s": 0.009092571840982043,
+          "ttft_s": 0.027842609910294414
+        }
+      ],
+      "requests_ok": 1,
+      "requests_total": 1,
+      "tp_degree": 2,
+      "tpot_cv": null,
+      "tpot_sample_count": 1,
+      "wall_clock_batch_s": 0.31024200504180044,
+      "workload_id": "in32_out32_c1"
+    },
+    {
+      "aggregate_throughput_tokens_per_s": 327.9216894614955,
+      "mean_e2e_latency_s": 0.3769625452696346,
+      "mean_tpot_s": 0.010591885387604576,
+      "mean_ttft_s": 0.048614098253892735,
+      "p50_tpot_s": null,
+      "p50_ttft_s": null,
+      "p95_e2e_latency_s": null,
+      "p95_tpot_s": null,
+      "p95_ttft_s": null,
+      "per_request": [
+        {
+          "e2e_latency_s": 0.3718222910538316,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp2-in32_out32_c4-measured-0-0",
+          "request_index": 0,
+          "request_kind": "measured",
+          "tpot_s": 0.010936840260852008,
+          "ttft_s": 0.032780242967419326
+        },
+        {
+          "e2e_latency_s": 0.3703981009311974,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp2-in32_out32_c4-measured-0-1",
+          "request_index": 1,
+          "request_kind": "measured",
+          "tpot_s": 0.01092464825694239,
+          "ttft_s": 0.03173400496598333
+        },
+        {
+          "e2e_latency_s": 0.37874776509124786,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp2-in32_out32_c4-measured-0-2",
+          "request_index": 2,
+          "request_kind": "measured",
+          "tpot_s": 0.010466453679386646,
+          "ttft_s": 0.054287701030261815
+        },
+        {
+          "e2e_latency_s": 0.38688202400226146,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp2-in32_out32_c4-measured-0-3",
+          "request_index": 3,
+          "request_kind": "measured",
+          "tpot_s": 0.010039599353237259,
+          "ttft_s": 0.07565444405190647
+        }
+      ],
+      "requests_ok": 4,
+      "requests_total": 4,
+      "tp_degree": 2,
+      "tpot_cv": 0.04044232092583191,
+      "tpot_sample_count": 4,
+      "wall_clock_batch_s": 0.39033709606155753,
+      "workload_id": "in32_out32_c4"
+    },
+    {
+      "aggregate_throughput_tokens_per_s": 342.4311181874422,
+      "mean_e2e_latency_s": 0.5525893226295011,
+      "mean_tpot_s": 0.010576481874581546,
+      "mean_ttft_s": 0.22471838451747317,
+      "p50_tpot_s": 0.010806848193638988,
+      "p50_ttft_s": 0.38776085805147886,
+      "p95_e2e_latency_s": 0.7397742780158296,
+      "p95_tpot_s": 0.010861244416915841,
+      "p95_ttft_s": 0.4282801460940391,
+      "per_request": [
+        {
+          "e2e_latency_s": 0.3682074669050053,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp2-in32_out32_c8-measured-0-0",
+          "request_index": 0,
+          "request_kind": "measured",
+          "tpot_s": 0.010861244416915841,
+          "ttft_s": 0.031508889980614185
+        },
+        {
+          "e2e_latency_s": 0.3668987250421196,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp2-in32_out32_c8-measured-0-1",
+          "request_index": 1,
+          "request_kind": "measured",
+          "tpot_s": 0.010849474516186503,
+          "ttft_s": 0.03056501504033804
+        },
+        {
+          "e2e_latency_s": 0.37553166097495705,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp2-in32_out32_c8-measured-0-2",
+          "request_index": 2,
+          "request_kind": "measured",
+          "tpot_s": 0.01046279999953244,
+          "ttft_s": 0.05118486098945141
+        },
+        {
+          "e2e_latency_s": 0.3908209870569408,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp2-in32_out32_c8-measured-0-3",
+          "request_index": 3,
+          "request_kind": "measured",
+          "tpot_s": 0.010290384228761879,
+          "ttft_s": 0.07181907596532255
+        },
+        {
+          "e2e_latency_s": 0.724929089890793,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp2-in32_out32_c8-measured-0-4",
+          "request_index": 4,
+          "request_kind": "measured",
+          "tpot_s": 0.01081773996608512,
+          "ttft_s": 0.38957915094215423
+        },
+        {
+          "e2e_latency_s": 0.7227731520542875,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp2-in32_out32_c8-measured-0-5",
+          "request_index": 5,
+          "request_kind": "measured",
+          "tpot_s": 0.010806848193638988,
+          "ttft_s": 0.38776085805147886
+        },
+        {
+          "e2e_latency_s": 0.7317792210960761,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp2-in32_out32_c8-measured-0-6",
+          "request_index": 6,
+          "request_kind": "measured",
+          "tpot_s": 0.010475165871602873,
+          "ttft_s": 0.407049079076387
+        },
+        {
+          "e2e_latency_s": 0.7397742780158296,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp2-in32_out32_c8-measured-0-7",
+          "request_index": 7,
+          "request_kind": "measured",
+          "tpot_s": 0.010048197803928727,
+          "ttft_s": 0.4282801460940391
+        }
+      ],
+      "requests_ok": 8,
+      "requests_total": 8,
+      "tp_degree": 2,
+      "tpot_cv": 0.028833984063571252,
+      "tpot_sample_count": 8,
+      "wall_clock_batch_s": 0.7475956080015749,
+      "workload_id": "in32_out32_c8"
+    }
+  ]
+}

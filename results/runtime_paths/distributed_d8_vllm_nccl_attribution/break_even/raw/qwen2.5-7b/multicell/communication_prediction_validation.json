@@ -1,0 +1,261 @@
+{
+  "call_count_aware_exposed_prediction": {
+    "definition": "predicted_raw_comm_us sums Phase 1 predictions for rank0 collective calls per decode step; overlap-aware multiplies by (1 - measured step overlap_ratio).",
+    "overall_overlap_aware": {
+      "count": 130,
+      "mae_us": 267.4229260455846,
+      "mape": 0.32518659018557355,
+      "max_abs_error_us": 6651.740062606079
+    },
+    "overall_zero_overlap_baseline": {
+      "count": 130,
+      "mae_us": 256.993582631994,
+      "mape": 0.33183748057233037,
+      "max_abs_error_us": 6248.440905550733
+    },
+    "per_cell": [
+      {
+        "overlap_aware": {
+          "count": 31,
+          "mae_us": 156.23867667771293,
+          "mape": 1.0820421240528475,
+          "max_abs_error_us": 223.1955152391918
+        },
+        "workload_id": "in32_out32_c1",
+        "zero_overlap_baseline": {
+          "count": 31,
+          "mae_us": 160.119789806876,
+          "mape": 1.1086948286817309,
+          "max_abs_error_us": 231.2264258721631
+        }
+      },
+      {
+        "overlap_aware": {
+          "count": 33,
+          "mae_us": 233.839275226013,
+          "mape": 0.08680441081456003,
+          "max_abs_error_us": 5530.5952644418885
+        },
+        "workload_id": "in32_out32_c4",
+        "zero_overlap_baseline": {
+          "count": 33,
+          "mae_us": 207.34009675781465,
+          "mape": 0.09699159046016266,
+          "max_abs_error_us": 4995.997905550732
+        }
+      },
+      {
+        "overlap_aware": {
+          "count": 66,
+          "mae_us": 336.43765646149194,
+          "mape": 0.08888492911523943,
+          "max_abs_error_us": 6651.740062606079
+        },
+        "workload_id": "in32_out32_c8",
+        "zero_overlap_baseline": {
+          "count": 66,
+          "mae_us": 327.3216525020936,
+          "mape": 0.08437288333460494,
+          "max_abs_error_us": 6248.440905550733
+        }
+      }
+    ]
+  },
+  "per_collective_kernel_prediction": [
+    {
+      "all_samples": {
+        "error_by_collective_kind": {
+          "all_reduce": {
+            "count": 904,
+            "mae_us": 11.423093591631147,
+            "max_abs_error_us": 105.18477870639185
+          }
+        },
+        "error_by_message_size_bucket": {
+          "<16KiB": {
+            "count": 904,
+            "mae_us": 11.423093591631147,
+            "max_abs_error_us": 105.18477870639185
+          }
+        },
+        "mae_us": 11.423093591631147,
+        "mape": 1.1964268593435148,
+        "max_abs_error_us": 105.18477870639185,
+        "max_relative_error": 1.3932928875928485,
+        "p50_abs_error_us": 11.471221293608156,
+        "p95_abs_error_us": 11.967221293608155
+      },
+      "outlier_counts_by_abs_error_threshold_us": {
+        "10": 884,
+        "100": 1,
+        "50": 1
+      },
+      "sample_count": 904,
+      "steady_state_samples": {
+        "error_by_collective_kind": {
+          "all_reduce": {
+            "count": 888,
+            "mae_us": 11.333902599914461,
+            "max_abs_error_us": 12.127221293608155
+          }
+        },
+        "error_by_message_size_bucket": {
+          "<16KiB": {
+            "count": 888,
+            "mae_us": 11.333902599914461,
+            "max_abs_error_us": 12.127221293608155
+          }
+        },
+        "mae_us": 11.333902599914461,
+        "mape": 1.1999678020927191,
+        "max_abs_error_us": 12.127221293608155,
+        "max_relative_error": 1.3932928875928485,
+        "p50_abs_error_us": 11.487221293608156,
+        "p95_abs_error_us": 11.967221293608155
+      },
+      "workload_id": "in32_out32_c1"
+    },
+    {
+      "all_samples": {
+        "error_by_collective_kind": {
+          "all_gather": {
+            "count": 2,
+            "mae_us": 224.00802160709304,
+            "max_abs_error_us": 260.48802160709306
+          },
+          "all_reduce": {
+            "count": 1130,
+            "mae_us": 7.9883754775322755,
+            "max_abs_error_us": 493.5707787063919
+          }
+        },
+        "error_by_message_size_bucket": {
+          "16KiB-1MiB": {
+            "count": 228,
+            "mae_us": 32.255612395141846,
+            "max_abs_error_us": 291.02668255352165
+          },
+          "<16KiB": {
+            "count": 904,
+            "mae_us": 2.3457972419616344,
+            "max_abs_error_us": 493.5707787063919
+          }
+        },
+        "mae_us": 8.370035629704644,
+        "mape": 0.09731820767680256,
+        "max_abs_error_us": 493.5707787063919,
+        "max_relative_error": 0.9595040040792839,
+        "p50_abs_error_us": 1.183221293608156,
+        "p95_abs_error_us": 17.442682553521674
+      },
+      "outlier_counts_by_abs_error_threshold_us": {
+        "10": 78,
+        "100": 31,
+        "50": 38
+      },
+      "sample_count": 1132,
+      "steady_state_samples": {
+        "error_by_collective_kind": {
+          "all_reduce": {
+            "count": 1101,
+            "mae_us": 2.6942474109050627,
+            "max_abs_error_us": 98.82375729686726
+          }
+        },
+        "error_by_message_size_bucket": {
+          "16KiB-1MiB": {
+            "count": 200,
+            "mae_us": 8.936762572968671,
+            "max_abs_error_us": 98.82375729686726
+          },
+          "<16KiB": {
+            "count": 901,
+            "mae_us": 1.308561470380399,
+            "max_abs_error_us": 9.342221293608155
+          }
+        },
+        "mae_us": 2.6942474109050627,
+        "mape": 0.07882111794648619,
+        "max_abs_error_us": 98.82375729686726,
+        "max_relative_error": 0.8131448597448128,
+        "p50_abs_error_us": 1.151221293608156,
+        "p95_abs_error_us": 8.799221293608156
+      },
+      "workload_id": "in32_out32_c4"
+    },
+    {
+      "all_samples": {
+        "error_by_collective_kind": {
+          "all_gather": {
+            "count": 8,
+            "mae_us": 159.34402160709305,
+            "max_abs_error_us": 206.63202160709304
+          },
+          "all_reduce": {
+            "count": 2258,
+            "mae_us": 19.184741700726278,
+            "max_abs_error_us": 751.8447787063919
+          }
+        },
+        "error_by_message_size_bucket": {
+          "16KiB-1MiB": {
+            "count": 570,
+            "mae_us": 55.74700174812366,
+            "max_abs_error_us": 457.3006825535216
+          },
+          "<16KiB": {
+            "count": 1696,
+            "mae_us": 7.557846660770163,
+            "max_abs_error_us": 751.8447787063919
+          }
+        },
+        "mae_us": 19.67956704902766,
+        "mape": 0.48336999501264805,
+        "max_abs_error_us": 751.8447787063919,
+        "max_relative_error": 8.845702468498429,
+        "p50_abs_error_us": 1.1002199251944411,
+        "p95_abs_error_us": 100.85142995810995
+      },
+      "outlier_counts_by_abs_error_threshold_us": {
+        "10": 378,
+        "100": 171,
+        "50": 317
+      },
+      "sample_count": 2266,
+      "steady_state_samples": {
+        "error_by_collective_kind": {
+          "all_gather": {
+            "count": 2,
+            "mae_us": 96.71202160709305,
+            "max_abs_error_us": 97.99202160709305
+          },
+          "all_reduce": {
+            "count": 2093,
+            "mae_us": 7.989689368294432,
+            "max_abs_error_us": 99.98742995810994
+          }
+        },
+        "error_by_message_size_bucket": {
+          "16KiB-1MiB": {
+            "count": 413,
+            "mae_us": 17.70130100165116,
+            "max_abs_error_us": 99.98742995810994
+          },
+          "<16KiB": {
+            "count": 1682,
+            "mae_us": 5.710586550162011,
+            "max_abs_error_us": 97.99202160709305
+          }
+        },
+        "mae_us": 8.074388492150087,
+        "mape": 0.19515212177421787,
+        "max_abs_error_us": 99.98742995810994,
+        "max_relative_error": 7.620993137051063,
+        "p50_abs_error_us": 0.9912212936081559,
+        "p95_abs_error_us": 86.75377870639184
+      },
+      "workload_id": "in32_out32_c8"
+    }
+  ],
+  "status": "measured"
+}

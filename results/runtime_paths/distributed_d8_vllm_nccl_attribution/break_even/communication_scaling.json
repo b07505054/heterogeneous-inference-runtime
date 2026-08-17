@@ -1,0 +1,65 @@
+{
+  "rows": [
+    {
+      "collective_bytes_per_call_mean": 7168.0,
+      "collective_bytes_per_step_mean": 677954.0645161291,
+      "collective_calls_per_step_mean": 94.58064516129032,
+      "exposed_nccl_wall_us_mean": 949.1660322580645,
+      "model_key": "qwen2.5-0.5b",
+      "overlap_ratio_mean": 0.0167460856545932,
+      "predicted_raw_nccl_comm_us_per_step_mean": 493.87417500858044,
+      "workload_id": "in32_out32_c1"
+    },
+    {
+      "collective_bytes_per_call_mean": 8501.117408906883,
+      "collective_bytes_per_step_mean": 1049440.0,
+      "collective_calls_per_step_mean": 123.5,
+      "exposed_nccl_wall_us_mean": 1624.22778125,
+      "model_key": "qwen2.5-0.5b",
+      "overlap_ratio_mean": 0.013653308175260948,
+      "predicted_raw_nccl_comm_us_per_step_mean": 683.148381294321,
+      "workload_id": "in32_out32_c4"
+    },
+    {
+      "collective_bytes_per_call_mean": 8538.073475571266,
+      "collective_bytes_per_step_mean": 1049104.0,
+      "collective_calls_per_step_mean": 123.765625,
+      "exposed_nccl_wall_us_mean": 1663.0665,
+      "model_key": "qwen2.5-0.5b",
+      "overlap_ratio_mean": 0.014886281231287971,
+      "predicted_raw_nccl_comm_us_per_step_mean": 685.4431163246255,
+      "workload_id": "in32_out32_c8"
+    },
+    {
+      "collective_bytes_per_call_mean": 28672.0,
+      "collective_bytes_per_step_mean": 836112.5161290322,
+      "collective_calls_per_step_mean": 29.161290322580644,
+      "exposed_nccl_wall_us_mean": 145.72622580645162,
+      "model_key": "qwen2.5-7b",
+      "overlap_ratio_mean": 0.01356163645695854,
+      "predicted_raw_nccl_comm_us_per_step_mean": 303.7326459584157,
+      "workload_id": "in32_out32_c1"
+    },
+    {
+      "collective_bytes_per_call_mean": 49606.10600706714,
+      "collective_bytes_per_step_mean": 1701639.7575757576,
+      "collective_calls_per_step_mean": 34.303030303030305,
+      "exposed_nccl_wall_us_mean": 691.8627878787878,
+      "model_key": "qwen2.5-7b",
+      "overlap_ratio_mean": 0.0307127776017254,
+      "predicted_raw_nccl_comm_us_per_step_mean": 511.3418397072127,
+      "workload_id": "in32_out32_c4"
+    },
+    {
+      "collective_bytes_per_call_mean": 60045.44395410415,
+      "collective_bytes_per_step_mean": 2017248.9696969697,
+      "collective_calls_per_step_mean": 34.333333333333336,
+      "exposed_nccl_wall_us_mean": 857.5820151515152,
+      "model_key": "qwen2.5-7b",
+      "overlap_ratio_mean": 0.03274763899535914,
+      "predicted_raw_nccl_comm_us_per_step_mean": 591.1787280309825,
+      "workload_id": "in32_out32_c8"
+    }
+  ],
+  "status": "measured"
+}

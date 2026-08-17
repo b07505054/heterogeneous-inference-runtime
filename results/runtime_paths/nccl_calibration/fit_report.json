@@ -1,0 +1,381 @@
+{
+  "collectives": {
+    "all_gather": {
+      "in_place": {
+        "alpha_beta_baseline": {
+          "alpha_us": 13.963543099662274,
+          "beta_us_per_byte": 0.00013876312032823235,
+          "evaluation": {
+            "mae_us": 183.78990682371793,
+            "mape": 0.1456540915000357,
+            "max_absolute_error_us": 538.8050243915859,
+            "max_relative_error": 0.3709355509930863
+          }
+        },
+        "held_out_bytes": [
+          4096,
+          1048576,
+          268435456
+        ],
+        "log_size_piecewise_interpolation": {
+          "mae_us": 3097.488333333333,
+          "mape": 0.1633061337412246,
+          "max_absolute_error_us": 9254.849999999999,
+          "max_relative_error": 0.25201026029228757
+        },
+        "training_bytes": [
+          1024,
+          2048,
+          8192,
+          16384,
+          32768,
+          65536,
+          131072,
+          262144,
+          524288,
+          2097152,
+          4194304,
+          8388608,
+          16777216,
+          33554432,
+          67108864,
+          134217728,
+          536870912,
+          1073741824
+        ]
+      },
+      "out_of_place": {
+        "alpha_beta_baseline": {
+          "alpha_us": 19.087328177254676,
+          "beta_us_per_byte": 0.00013867253532824487,
+          "evaluation": {
+            "mae_us": 175.53396466371154,
+            "mape": 0.29612133532387835,
+            "max_absolute_error_us": 512.7125836907799,
+            "max_relative_error": 0.8455709748318465
+          }
+        },
+        "held_out_bytes": [
+          4096,
+          1048576,
+          268435456
+        ],
+        "log_size_piecewise_interpolation": {
+          "mae_us": 3094.8816666666658,
+          "mape": 0.1622491133511927,
+          "max_absolute_error_us": 9248.199999999997,
+          "max_relative_error": 0.2517818736217363
+        },
+        "training_bytes": [
+          1024,
+          2048,
+          8192,
+          16384,
+          32768,
+          65536,
+          131072,
+          262144,
+          524288,
+          2097152,
+          4194304,
+          8388608,
+          16777216,
+          33554432,
+          67108864,
+          134217728,
+          536870912,
+          1073741824
+        ]
+      }
+    },
+    "all_reduce": {
+      "in_place": {
+        "alpha_beta_baseline": {
+          "alpha_us": -55.15299025235436,
+          "beta_us_per_byte": 0.00023651126495343168,
+          "evaluation": {
+            "mae_us": 599.1144869541829,
+            "mape": 2.1991176078034433,
+            "max_absolute_error_us": 1635.3562666588987,
+            "max_relative_error": 6.235192281266193
+          }
+        },
+        "held_out_bytes": [
+          4096,
+          1048576,
+          268435456
+        ],
+        "log_size_piecewise_interpolation": {
+          "mae_us": 5361.141666666666,
+          "mape": 0.15928795909410395,
+          "max_absolute_error_us": 16020.5,
+          "max_relative_error": 0.25924187871677656
+        },
+        "training_bytes": [
+          1024,
+          2048,
+          8192,
+          16384,
+          32768,
+          65536,
+          131072,
+          262144,
+          524288,
+          2097152,
+          4194304,
+          8388608,
+          16777216,
+          33554432,
+          67108864,
+          134217728,
+          536870912,
+          1073741824
+        ]
+      },
+      "out_of_place": {
+        "alpha_beta_baseline": {
+          "alpha_us": -43.24350439166301,
+          "beta_us_per_byte": 0.00023641113114266016,
+          "evaluation": {
+            "mae_us": 497.5433059684139,
+            "mape": 1.8122216512534859,
+            "max_absolute_error_us": 1354.686287364122,
+            "max_relative_error": 5.120386393616245
+          }
+        },
+        "held_out_bytes": [
+          4096,
+          1048576,
+          268435456
+        ],
+        "log_size_piecewise_interpolation": {
+          "mae_us": 5330.786666666671,
+          "mape": 0.15975587697271432,
+          "max_absolute_error_us": 15930.250000000015,
+          "max_relative_error": 0.25667787029995254
+        },
+        "training_bytes": [
+          1024,
+          2048,
+          8192,
+          16384,
+          32768,
+          65536,
+          131072,
+          262144,
+          524288,
+          2097152,
+          4194304,
+          8388608,
+          16777216,
+          33554432,
+          67108864,
+          134217728,
+          536870912,
+          1073741824
+        ]
+      }
+    },
+    "broadcast": {
+      "in_place": {
+        "alpha_beta_baseline": {
+          "alpha_us": -394.3848574539734,
+          "beta_us_per_byte": 0.00023028524223862878,
+          "evaluation": {
+            "mae_us": 1429.474680444309,
+            "mape": 12.920746358624893,
+            "max_absolute_error_us": 3492.0391529428016,
+            "max_relative_error": 37.06247562802603
+          }
+        },
+        "held_out_bytes": [
+          4096,
+          1048576,
+          268435456
+        ],
+        "log_size_piecewise_interpolation": {
+          "mae_us": 5287.473333333329,
+          "mape": 0.1763108265138128,
+          "max_absolute_error_us": 15803.999999999985,
+          "max_relative_error": 0.2728106017058428
+        },
+        "training_bytes": [
+          1024,
+          2048,
+          8192,
+          16384,
+          32768,
+          65536,
+          131072,
+          262144,
+          524288,
+          2097152,
+          4194304,
+          8388608,
+          16777216,
+          33554432,
+          67108864,
+          134217728,
+          536870912,
+          1073741824
+        ]
+      },
+      "out_of_place": {
+        "alpha_beta_baseline": {
+          "alpha_us": -390.65264244396167,
+          "beta_us_per_byte": 0.00022965960682133507,
+          "evaluation": {
+            "mae_us": 1425.47589555931,
+            "mape": 12.269639192115159,
+            "max_absolute_error_us": 3485.0286394218347,
+            "max_relative_error": 35.12539025345197
+          }
+        },
+        "held_out_bytes": [
+          4096,
+          1048576,
+          268435456
+        ],
+        "log_size_piecewise_interpolation": {
+          "mae_us": 5291.461666666663,
+          "mape": 0.18437596979837398,
+          "max_absolute_error_us": 15817.44999999999,
+          "max_relative_error": 0.27378572380571564
+        },
+        "training_bytes": [
+          1024,
+          2048,
+          8192,
+          16384,
+          32768,
+          65536,
+          131072,
+          262144,
+          524288,
+          2097152,
+          4194304,
+          8388608,
+          16777216,
+          33554432,
+          67108864,
+          134217728,
+          536870912,
+          1073741824
+        ]
+      }
+    },
+    "reduce_scatter": {
+      "in_place": {
+        "alpha_beta_baseline": {
+          "alpha_us": -21.47251874691392,
+          "beta_us_per_byte": 0.00014339946464754947,
+          "evaluation": {
+            "mae_us": 208.28020010608967,
+            "mape": 1.0902636737509654,
+            "max_absolute_error_us": 555.9281640739064,
+            "max_relative_error": 3.029655446036692
+          }
+        },
+        "held_out_bytes": [
+          4096,
+          1048576,
+          268435456
+        ],
+        "log_size_piecewise_interpolation": {
+          "mae_us": 3201.8016666666654,
+          "mape": 0.16550304865112442,
+          "max_absolute_error_us": 9567.299999999996,
+          "max_relative_error": 0.25232816666271046
+        },
+        "training_bytes": [
+          1024,
+          2048,
+          8192,
+          16384,
+          32768,
+          65536,
+          131072,
+          262144,
+          524288,
+          2097152,
+          4194304,
+          8388608,
+          16777216,
+          33554432,
+          67108864,
+          134217728,
+          536870912,
+          1073741824
+        ]
+      },
+      "out_of_place": {
+        "alpha_beta_baseline": {
+          "alpha_us": -17.179850991573403,
+          "beta_us_per_byte": 0.00014339512064142298,
+          "evaluation": {
+            "mae_us": 207.09214003703764,
+            "mape": 0.9359514710268578,
+            "max_absolute_error_us": 561.1547465638141,
+            "max_relative_error": 2.593900535775805
+          }
+        },
+        "held_out_bytes": [
+          4096,
+          1048576,
+          268435456
+        ],
+        "log_size_piecewise_interpolation": {
+          "mae_us": 3220.278333333333,
+          "mape": 0.16534049318308972,
+          "max_absolute_error_us": 9622.5,
+          "max_relative_error": 0.253798069314765
+        },
+        "training_bytes": [
+          1024,
+          2048,
+          8192,
+          16384,
+          32768,
+          65536,
+          131072,
+          262144,
+          524288,
+          2097152,
+          4194304,
+          8388608,
+          16777216,
+          33554432,
+          67108864,
+          134217728,
+          536870912,
+          1073741824
+        ]
+      }
+    }
+  },
+  "evaluation_method": {
+    "alpha_beta_baseline": "Least-squares latency_us = alpha_us + beta_us_per_byte * bytes on training points only.",
+    "held_out_selection": "Deterministic internal holdout by measurement index: third, middle, and third-from-last sizes.",
+    "log_size_piecewise_interpolation": "Train on remaining points; interpolate linearly in log2(bytes)."
+  },
+  "generated_at": "2026-08-16T20:07:19.855324Z",
+  "machine_calibration_boundary": {
+    "cuda_p2p_available": false,
+    "gpu_count": 2,
+    "gpu_model": "NVIDIA GeForce RTX 4090",
+    "nccl_intra_node_transport": "SHM/direct/direct",
+    "nccl_tests_version": "2.19.7",
+    "nccl_version": "22803",
+    "numa_count": 1,
+    "topology_class": "PHB"
+  },
+  "profile_id": "2x_rtx4090_phb_single_numa_p2p_unavailable_nccl_shm_direct",
+  "schema_version": "nccl.communication_calibration.v1",
+  "source_artifact_hashes": {
+    "all_gather.txt": "7c4ffd6d6d8231b702c2ba1bdf6207a7b3465483ffd4f950c6ed808d3d96334a",
+    "all_reduce.txt": "46fca7c8c010f277095a8d38d5a80ae819e7b6d742ed8e03aa6a84c3f8514ac6",
+    "broadcast.txt": "9296b0c16e8f399cfbdc0e93834535b79799437ff90fe285d20566ae9c20b603",
+    "reduce_scatter.txt": "cc847de9b7b4a3c1537a22344b8d099cb19327f1e397c0afbe132944599f6088"
+  },
+  "validity_note": "The alpha-beta representation is a baseline and is not assumed valid across 1 KiB to 1 GiB."
+}

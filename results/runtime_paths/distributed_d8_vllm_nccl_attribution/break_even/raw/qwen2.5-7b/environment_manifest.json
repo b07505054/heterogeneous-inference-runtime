@@ -1,0 +1,51 @@
+{
+  "dependency_inventory": {
+    "can_collect_nsys": true,
+    "can_run_real_vllm": true,
+    "modules": {
+      "numpy": "/workspace/d8-vllm-env/lib/python3.12/site-packages/numpy/__init__.py",
+      "requests": "/workspace/d8-vllm-env/lib/python3.12/site-packages/requests/__init__.py",
+      "torch": "/workspace/d8-vllm-env/lib/python3.12/site-packages/torch/__init__.py",
+      "transformers": "/workspace/d8-vllm-env/lib/python3.12/site-packages/transformers/__init__.py",
+      "vllm": "/workspace/d8-vllm-env/lib/python3.12/site-packages/vllm/__init__.py"
+    },
+    "nsys_path": "/usr/local/bin/nsys",
+    "nsys_version": {
+      "argv": [
+        "/usr/local/bin/nsys",
+        "--version"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "NVIDIA Nsight Systems version 2025.3.1.0\n"
+    },
+    "python_executable": "/workspace/d8-vllm-env/bin/python"
+  },
+  "environment_path": "/workspace/d8-vllm-env",
+  "install_strategy": "dedicated D8 profiling environment; /venv/main was left unmodified because it did not contain torch/vllm",
+  "python_executable": "/workspace/d8-vllm-env/bin/python",
+  "status": "ready",
+  "verification": {
+    "torch_cuda_device_count": 2,
+    "torch_cuda_device_count_is_2": true,
+    "torch_cuda_is_available": true,
+    "torch_cuda_nccl_version": [
+      2,
+      28,
+      9
+    ],
+    "transformers_imports": true,
+    "vllm_imports": true
+  },
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "torch_cuda": "13.0",
+    "torch_cuda_nccl_version": [
+      2,
+      28,
+      9
+    ],
+    "transformers": "4.57.6",
+    "vllm": "0.23.0"
+  }
+}

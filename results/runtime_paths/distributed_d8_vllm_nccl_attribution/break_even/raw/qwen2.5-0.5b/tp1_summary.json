@@ -1,0 +1,1385 @@
+{
+  "controller": {
+    "argv": [
+      "/workspace/d8-vllm-env/bin/python",
+      "-m",
+      "vllm.entrypoints.openai.api_server",
+      "--model",
+      "Qwen/Qwen2.5-0.5B-Instruct",
+      "--tokenizer",
+      "Qwen/Qwen2.5-0.5B-Instruct",
+      "--no-trust-remote-code",
+      "--dtype",
+      "float16",
+      "--seed",
+      "1234",
+      "--served-model-name",
+      "qwen2.5-0.5b-instruct-tp1-planning-only",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "57315",
+      "--master-addr",
+      "127.0.0.1",
+      "--master-port",
+      "29501",
+      "--tensor-parallel-size",
+      "1",
+      "--pipeline-parallel-size",
+      "1",
+      "--data-parallel-size",
+      "1",
+      "--distributed-executor-backend",
+      "mp",
+      "--max-model-len",
+      "2048",
+      "--max-num-seqs",
+      "4",
+      "--max-num-batched-tokens",
+      "2048",
+      "--gpu-memory-utilization",
+      "0.9",
+      "--enable-prefix-caching",
+      "--enable-chunked-prefill"
+    ],
+    "descendant_pids_at_ready": [
+      22943,
+      22944,
+      23079
+    ],
+    "events": [
+      {
+        "detail": "/workspace/d8-vllm-env/bin/python -m vllm.entrypoints.openai.api_server --model Qwen/Qwen2.5-0.5B-Instruct --tokenizer Qwen/Qwen2.5-0.5B-Instruct --no-trust-remote-code --dtype float16 --seed 1234 --served-model-name qwen2.5-0.5b-instruct-tp1-planning-only --host 127.0.0.1 --port 57315 --master-addr 127.0.0.1 --master-port 29501 --tensor-parallel-size 1 --pipeline-parallel-size 1 --data-parallel-size 1 --distributed-executor-backend mp --max-model-len 2048 --max-num-seqs 4 --max-num-batched-tokens 2048 --gpu-memory-utilization 0.9 --enable-prefix-caching --enable-chunked-prefill",
+        "event": "starting",
+        "ts": 1786925285.5307376
+      },
+      {
+        "detail": "pid=22807 pgid=22807",
+        "event": "started",
+        "ts": 1786925285.53147
+      },
+      {
+        "detail": "readiness_latency_s=40.01",
+        "event": "ready",
+        "ts": 1786925325.5413218
+      },
+      {
+        "detail": "[22943, 22944, 23079]",
+        "event": "descendants_at_ready",
+        "ts": 1786925325.5435963
+      },
+      {
+        "detail": "",
+        "event": "stopping",
+        "ts": 1786925327.5299182
+      },
+      {
+        "detail": "exit_code=0 escalated=False final_remaining_descendants=[] preserved_prior_terminal_state=False",
+        "event": "stopped",
+        "ts": 1786925328.532711
+      }
+    ],
+    "exit_code": 0,
+    "host": "127.0.0.1",
+    "log_path": "/workspace/heterogeneous-inference-runtime/results/runtime_paths/distributed_d8_vllm_nccl_attribution/break_even/raw/qwen2.5-0.5b/logs/d8_tp1_unprofiled_server.log",
+    "pgid": 22807,
+    "pid": 22807,
+    "port": 57315,
+    "readiness_latency_s": 40.010446310043335,
+    "ready_ts": 1786925325.5413153,
+    "start_ts": 1786925285.530869,
+    "state": "STOPPED",
+    "stop_ts": 1786925328.5326672
+  },
+  "launch_spec": {
+    "cli_arguments": {
+      "all_arguments_supported": true,
+      "argument_compatibility": [
+        {
+          "dest": "model",
+          "installed_version_support_status": "supported",
+          "requested_argument": "model",
+          "resolved_default": "Qwen/Qwen3-0.6B",
+          "resolved_spelling": "--model",
+          "resolved_type": "str",
+          "source": "compiler_plan"
+        },
+        {
+          "dest": "tokenizer",
+          "installed_version_support_status": "supported",
+          "requested_argument": "tokenizer",
+          "resolved_default": null,
+          "resolved_spelling": "--tokenizer",
+          "resolved_type": "str",
+          "source": "compiler_plan"
+        },
+        {
+          "dest": "trust_remote_code",
+          "installed_version_support_status": "supported",
+          "requested_argument": "trust_remote_code",
+          "resolved_default": false,
+          "resolved_spelling": "--trust-remote-code",
+          "resolved_type": null,
+          "source": "capability_profile"
+        },
+        {
+          "dest": "dtype",
+          "installed_version_support_status": "supported",
+          "requested_argument": "dtype",
+          "resolved_default": "auto",
+          "resolved_spelling": "--dtype",
+          "resolved_type": "str",
+          "source": "explicit_D3B_default"
+        },
+        {
+          "dest": "seed",
+          "installed_version_support_status": "supported",
+          "requested_argument": "seed",
+          "resolved_default": 0,
+          "resolved_spelling": "--seed",
+          "resolved_type": "int",
+          "source": "compiler_plan"
+        },
+        {
+          "dest": "served_model_name",
+          "installed_version_support_status": "supported",
+          "requested_argument": "served_model_name",
+          "resolved_default": null,
+          "resolved_spelling": "--served-model-name",
+          "resolved_type": "_optional_type",
+          "source": "explicit_D3B_default"
+        },
+        {
+          "dest": "host",
+          "installed_version_support_status": "supported",
+          "requested_argument": "host",
+          "resolved_default": null,
+          "resolved_spelling": "--host",
+          "resolved_type": "_optional_type",
+          "source": "explicit_D3B_default"
+        },
+        {
+          "dest": "port",
+          "installed_version_support_status": "supported",
+          "requested_argument": "port",
+          "resolved_default": 8000,
+          "resolved_spelling": "--port",
+          "resolved_type": "int",
+          "source": "capability_profile"
+        },
+        {
+          "dest": "master_addr",
+          "installed_version_support_status": "supported",
+          "requested_argument": "master_addr",
+          "resolved_default": "127.0.0.1",
+          "resolved_spelling": "--master-addr",
+          "resolved_type": "str",
+          "source": "capability_profile"
+        },
+        {
+          "dest": "master_port",
+          "installed_version_support_status": "supported",
+          "requested_argument": "master_port",
+          "resolved_default": 29501,
+          "resolved_spelling": "--master-port",
+          "resolved_type": "int",
+          "source": "capability_profile"
+        },
+        {
+          "dest": "tensor_parallel_size",
+          "installed_version_support_status": "supported",
+          "requested_argument": "tensor_parallel_size",
+          "resolved_default": 1,
+          "resolved_spelling": "--tensor-parallel-size",
+          "resolved_type": "int",
+          "source": "compiler_plan"
+        },
+        {
+          "dest": "pipeline_parallel_size",
+          "installed_version_support_status": "supported",
+          "requested_argument": "pipeline_parallel_size",
+          "resolved_default": 1,
+          "resolved_spelling": "--pipeline-parallel-size",
+          "resolved_type": "int",
+          "source": "compiler_plan"
+        },
+        {
+          "dest": "data_parallel_size",
+          "installed_version_support_status": "supported",
+          "requested_argument": "data_parallel_size",
+          "resolved_default": 1,
+          "resolved_spelling": "--data-parallel-size",
+          "resolved_type": "int",
+          "source": "capability_profile"
+        },
+        {
+          "dest": "distributed_executor_backend",
+          "installed_version_support_status": "supported",
+          "requested_argument": "distributed_executor_backend",
+          "resolved_default": null,
+          "resolved_spelling": "--distributed-executor-backend",
+          "resolved_type": "_optional_type",
+          "source": "explicit_D3B_default"
+        },
+        {
+          "dest": "max_model_len",
+          "installed_version_support_status": "supported",
+          "requested_argument": "max_model_len",
+          "resolved_default": null,
+          "resolved_spelling": "--max-model-len",
+          "resolved_type": "human_readable_int_or_auto",
+          "source": "explicit_D3B_default"
+        },
+        {
+          "dest": "max_num_seqs",
+          "installed_version_support_status": "supported",
+          "requested_argument": "max_num_seqs",
+          "resolved_default": null,
+          "resolved_spelling": "--max-num-seqs",
+          "resolved_type": "int",
+          "source": "explicit_D3B_default"
+        },
+        {
+          "dest": "max_num_batched_tokens",
+          "installed_version_support_status": "supported",
+          "requested_argument": "max_num_batched_tokens",
+          "resolved_default": null,
+          "resolved_spelling": "--max-num-batched-tokens",
+          "resolved_type": "human_readable_int",
+          "source": "explicit_D3B_default"
+        },
+        {
+          "dest": "gpu_memory_utilization",
+          "installed_version_support_status": "supported",
+          "requested_argument": "gpu_memory_utilization",
+          "resolved_default": 0.92,
+          "resolved_spelling": "--gpu-memory-utilization",
+          "resolved_type": "float",
+          "source": "explicit_D3B_default"
+        },
+        {
+          "dest": "enable_prefix_caching",
+          "installed_version_support_status": "supported",
+          "requested_argument": "enable_prefix_caching",
+          "resolved_default": null,
+          "resolved_spelling": "--enable-prefix-caching",
+          "resolved_type": null,
+          "source": "explicit_D3B_default"
+        },
+        {
+          "dest": "enable_chunked_prefill",
+          "installed_version_support_status": "supported",
+          "requested_argument": "enable_chunked_prefill",
+          "resolved_default": null,
+          "resolved_spelling": "--enable-chunked-prefill",
+          "resolved_type": null,
+          "source": "explicit_D3B_default"
+        }
+      ],
+      "argv": [
+        ".venv/bin/python",
+        "-m",
+        "vllm.entrypoints.openai.api_server",
+        "--model",
+        "Qwen/Qwen2.5-0.5B-Instruct",
+        "--tokenizer",
+        "Qwen/Qwen2.5-0.5B-Instruct",
+        "--no-trust-remote-code",
+        "--dtype",
+        "float16",
+        "--seed",
+        "1234",
+        "--served-model-name",
+        "qwen2.5-0.5b-instruct-tp1-planning-only",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8000",
+        "--master-addr",
+        "127.0.0.1",
+        "--master-port",
+        "29501",
+        "--tensor-parallel-size",
+        "1",
+        "--pipeline-parallel-size",
+        "1",
+        "--data-parallel-size",
+        "1",
+        "--distributed-executor-backend",
+        "mp",
+        "--max-model-len",
+        "2048",
+        "--max-num-seqs",
+        "4",
+        "--max-num-batched-tokens",
+        "2048",
+        "--gpu-memory-utilization",
+        "0.9",
+        "--enable-prefix-caching",
+        "--enable-chunked-prefill"
+      ],
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "0",
+        "MASTER_ADDR": "127.0.0.1",
+        "MASTER_PORT": "29501",
+        "NCCL_DEBUG": "INFO",
+        "TOKENIZERS_PARALLELISM": "false",
+        "VLLM_WORKER_MULTIPROC_METHOD": "spawn",
+        "WORLD_SIZE": "1"
+      },
+      "expected_gpu_assignment": {
+        "0": 0
+      },
+      "expected_process_count": 1,
+      "shell_command": ".venv/bin/python -m vllm.entrypoints.openai.api_server --model Qwen/Qwen2.5-0.5B-Instruct --tokenizer Qwen/Qwen2.5-0.5B-Instruct --no-trust-remote-code --dtype float16 --seed 1234 --served-model-name qwen2.5-0.5b-instruct-tp1-planning-only --host 127.0.0.1 --port 8000 --master-addr 127.0.0.1 --master-port 29501 --tensor-parallel-size 1 --pipeline-parallel-size 1 --data-parallel-size 1 --distributed-executor-backend mp --max-model-len 2048 --max-num-seqs 4 --max-num-batched-tokens 2048 --gpu-memory-utilization 0.9 --enable-prefix-caching --enable-chunked-prefill",
+      "unsupported_arguments": [],
+      "working_directory": "/workspace/heterogeneous-inference-runtime"
+    },
+    "d3b_mode": "planning_only",
+    "data_parallel_size": 1,
+    "device_type": "cuda",
+    "distributed_executor_backend": "mp",
+    "dtype": "float16",
+    "enable_chunked_prefill": true,
+    "enable_prefix_caching": true,
+    "environment": {
+      "CUDA_VISIBLE_DEVICES": "0",
+      "MASTER_ADDR": "127.0.0.1",
+      "MASTER_PORT": "29501",
+      "NCCL_DEBUG": "INFO",
+      "TOKENIZERS_PARALLELISM": "false",
+      "VLLM_WORKER_MULTIPROC_METHOD": "spawn",
+      "WORLD_SIZE": "1"
+    },
+    "execution_readiness_state": "DRY_RUN_VALIDATED",
+    "field_provenance": {
+      "data_parallel_size": {
+        "reason": "Matches installed vLLM registry default for --data-parallel-size (1); D2 plan carries no data-parallel concept.",
+        "source": "capability_profile",
+        "value_summary": "1"
+      },
+      "device_type": {
+        "reason": "torch.cuda.is_available() probed at materialization time.",
+        "source": "runtime_discovery",
+        "value_summary": "'cuda'"
+      },
+      "distributed_executor_backend": {
+        "reason": "D2 plan declares a tensor-parallel strategy but not a vLLM executor backend choice; 'mp' (multiprocessing) is picked as the single-node default over 'ray'/'external_launcher'/'uni'.",
+        "source": "explicit_D3B_default",
+        "value_summary": "'mp'"
+      },
+      "dtype": {
+        "reason": "Neither D2 nor D3A declares a serving dtype for the distributed plan; float16 is pinned explicitly for deterministic, reproducible CLI generation rather than leaving 'auto' (the installed registry default) to resolve differently across runs.",
+        "source": "explicit_D3B_default",
+        "value_summary": "'float16'"
+      },
+      "enable_chunked_prefill": {
+        "reason": "Registry default leaves this unset (None/auto); D3B explicitly enables it.",
+        "source": "explicit_D3B_default",
+        "value_summary": "True"
+      },
+      "enable_prefix_caching": {
+        "reason": "Registry default leaves this unset (None/auto); D3B explicitly enables it.",
+        "source": "explicit_D3B_default",
+        "value_summary": "True"
+      },
+      "gpu_memory_utilization": {
+        "reason": "Set below the installed registry default (0.92) given the small 4GB-class GPU on this host (caller-overridable).",
+        "source": "explicit_D3B_default",
+        "value_summary": "0.9"
+      },
+      "host": {
+        "reason": "Installed registry default for --host is None (bind-all); D3B pins loopback explicitly for a safe planning default.",
+        "source": "explicit_D3B_default",
+        "value_summary": "'127.0.0.1'"
+      },
+      "master_address": {
+        "reason": "Matches installed vLLM registry default for --master-addr.",
+        "source": "capability_profile",
+        "value_summary": "'127.0.0.1'"
+      },
+      "master_port": {
+        "reason": "Matches installed vLLM registry default for --master-port.",
+        "source": "capability_profile",
+        "value_summary": "29501"
+      },
+      "max_model_len": {
+        "reason": "Neither D2 nor D3A declares a serving context length; 2048 is a conservative D3B default well within the real model's max_position_embeddings (caller-overridable for D5 memory-pressure experiments; this call used the default).",
+        "source": "explicit_D3B_default",
+        "value_summary": "2048"
+      },
+      "max_num_batched_tokens": {
+        "reason": "Conservative default token budget per step; not decided by the compiler plan (caller-overridable).",
+        "source": "explicit_D3B_default",
+        "value_summary": "2048"
+      },
+      "max_num_seqs": {
+        "reason": "Conservative default batch width appropriate for a 4GB-class GPU; not decided by the compiler plan (caller-overridable).",
+        "source": "explicit_D3B_default",
+        "value_summary": "4"
+      },
+      "model": {
+        "reason": "D3A validated that the compiler's abbreviated model_identity.model_id ('qwen2.5-0.5b') corresponds to this real, locally-cached HF checkpoint.",
+        "source": "compiler_plan",
+        "value_summary": "'Qwen/Qwen2.5-0.5B-Instruct'"
+      },
+      "pipeline_parallel_size": {
+        "reason": "Read directly from ExecutionPlan.distributed.pipeline_parallel_size (or the TP1 absence convention).",
+        "source": "compiler_plan",
+        "value_summary": "1"
+      },
+      "port": {
+        "reason": "Matches installed vLLM registry default for --port (8000).",
+        "source": "capability_profile",
+        "value_summary": "8000"
+      },
+      "rank_count": {
+        "reason": "Equal to the number of compiler-declared ranks.",
+        "source": "compiler_plan",
+        "value_summary": "1"
+      },
+      "revision": {
+        "reason": "Matches installed vLLM registry default for --revision (None).",
+        "source": "capability_profile",
+        "value_summary": "None"
+      },
+      "seed": {
+        "reason": "Reused verbatim from D3A's live_model_execution.json seed, preserving determinism continuity across D2/D3A/D3B.",
+        "source": "compiler_plan",
+        "value_summary": "1234"
+      },
+      "served_model_name": {
+        "reason": "D2/D3A plans do not declare a served name; D3B names it after the model and candidate id.",
+        "source": "explicit_D3B_default",
+        "value_summary": "'qwen2.5-0.5b-instruct-tp1-planning-only'"
+      },
+      "tensor_parallel_size": {
+        "reason": "Read directly from ExecutionPlan.distributed.tensor_parallel_size (or the TP1 absence convention).",
+        "source": "compiler_plan",
+        "value_summary": "1"
+      },
+      "tokenizer": {
+        "reason": "Same identity as model; no separate compiler tokenizer decision exists.",
+        "source": "compiler_plan",
+        "value_summary": "'Qwen/Qwen2.5-0.5B-Instruct'"
+      },
+      "trust_remote_code": {
+        "reason": "Matches installed vLLM registry default (False); real Qwen2.5 config does not require custom remote code.",
+        "source": "capability_profile",
+        "value_summary": "False"
+      },
+      "visible_devices": {
+        "reason": "Directly probed via torch.cuda.device_count() on this host at materialization time.",
+        "source": "runtime_discovery",
+        "value_summary": "(0, 1)"
+      },
+      "world_size": {
+        "reason": "Read directly from ExecutionPlan.distributed.world_size (or the TP1 absence convention).",
+        "source": "compiler_plan",
+        "value_summary": "1"
+      }
+    },
+    "gpu_memory_utilization": 0.9,
+    "host": "127.0.0.1",
+    "master_address": "127.0.0.1",
+    "master_port": 29501,
+    "max_model_len": 2048,
+    "max_num_batched_tokens": 2048,
+    "max_num_seqs": 4,
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "pipeline_parallel_size": 1,
+    "port": 8000,
+    "preflight_status": "passed",
+    "rank_count": 1,
+    "rank_placements": [
+      {
+        "logical_gpu_index": 0,
+        "physical_device_index": 0,
+        "placement_policy_source": "explicit_D3B_default",
+        "rank_id": 0,
+        "rank_id_source": "compiler_plan"
+      }
+    ],
+    "rejection_reasons": [],
+    "revision": null,
+    "schema_version": "1.0.0",
+    "seed": 1234,
+    "served_model_name": "qwen2.5-0.5b-instruct-tp1-planning-only",
+    "source_candidate_id": "tp1",
+    "source_execution_plan_id": "nvidia-gtx1650-maxq_serving_plan",
+    "source_execution_plan_path": "/workspace/heterogeneous-inference-runtime/results/runtime_paths/distributed_d2_qwen_pipeline/real_qwen_tp1_execution_plan.json",
+    "source_operator_ids": [],
+    "tensor_parallel_size": 1,
+    "tokenizer": "Qwen/Qwen2.5-0.5B-Instruct",
+    "trust_remote_code": false,
+    "truth_boundary": "A vLLM distributed launch specification is materialized launch intent derived from a compiler-selected TP plan, validated fail-closed against the actual installed vLLM version and actual host hardware. It is not a claim of successful vLLM execution, NCCL initialization, multi-GPU serving, or any measured distributed performance.",
+    "visible_devices": [
+      0,
+      1
+    ],
+    "whole_model_tp_evidence_source_artifact_hash": null,
+    "whole_model_tp_evidence_status": "not_established_operator_level_only",
+    "world_size": 1
+  },
+  "nccl_transport_evidence": null,
+  "profiled": false,
+  "server_log": "/workspace/heterogeneous-inference-runtime/results/runtime_paths/distributed_d8_vllm_nccl_attribution/break_even/raw/qwen2.5-0.5b/logs/d8_tp1_unprofiled_server.log",
+  "status": "measured",
+  "stop_result": {
+    "escalated": false,
+    "final_remaining_descendant_pids": [],
+    "graceful": true,
+    "pre_stop_descendant_pids": [
+      22943,
+      22944,
+      23079
+    ],
+    "preserved_prior_terminal_state": false,
+    "shutdown_latency_s": 2.991351842880249,
+    "zero_orphans": true
+  },
+  "tensor_parallel_size": 1,
+  "tp_profile_nvtx": false,
+  "workload_results": [
+    {
+      "aggregate_throughput_tokens_per_s": 451.8498825142237,
+      "mean_e2e_latency_s": 0.07051338357850909,
+      "mean_tpot_s": 0.0017729412831906832,
+      "mean_ttft_s": 0.01555220379959792,
+      "p50_tpot_s": 0.0017984722921204183,
+      "p50_ttft_s": 0.015762533992528915,
+      "p95_e2e_latency_s": 0.0720199350034818,
+      "p95_tpot_s": 0.0018048342880642703,
+      "p95_ttft_s": 0.016070072073489428,
+      "per_request": [
+        {
+          "e2e_latency_s": 0.0720199350034818,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c1-measured-0-0",
+          "request_index": 0,
+          "request_kind": "measured",
+          "tpot_s": 0.0018048342880642703,
+          "ttft_s": 0.016070072073489428
+        },
+        {
+          "e2e_latency_s": 0.0712363199563697,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c1-measured-1-0",
+          "request_index": 1,
+          "request_kind": "measured",
+          "tpot_s": 0.0018016492587424094,
+          "ttft_s": 0.015385192935355008
+        },
+        {
+          "e2e_latency_s": 0.07155099196825176,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c1-measured-2-0",
+          "request_index": 2,
+          "request_kind": "measured",
+          "tpot_s": 0.0017984722921204183,
+          "ttft_s": 0.0157983509125188
+        },
+        {
+          "e2e_latency_s": 0.06836469599511474,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c1-measured-3-0",
+          "request_index": 3,
+          "request_kind": "measured",
+          "tpot_s": 0.0017296718358392677,
+          "ttft_s": 0.014744869084097445
+        },
+        {
+          "e2e_latency_s": 0.06939497496932745,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c1-measured-4-0",
+          "request_index": 4,
+          "request_kind": "measured",
+          "tpot_s": 0.0017300787411870496,
+          "ttft_s": 0.015762533992528915
+        }
+      ],
+      "requests_ok": 5,
+      "requests_total": 5,
+      "tp_degree": 1,
+      "tpot_cv": 0.022210691018424655,
+      "tpot_sample_count": 5,
+      "wall_clock_batch_s": 0.354099903954193,
+      "workload_id": "in32_out32_c1"
+    },
+    {
+      "aggregate_throughput_tokens_per_s": 1402.7914130353158,
+      "mean_e2e_latency_s": 0.08824949425761588,
+      "mean_tpot_s": 0.002043633122981015,
+      "mean_ttft_s": 0.024896867445204408,
+      "p50_tpot_s": 0.00214601022702071,
+      "p50_ttft_s": 0.027872662991285324,
+      "p95_e2e_latency_s": 0.09497655706945807,
+      "p95_tpot_s": 0.0022573309702678553,
+      "p95_ttft_s": 0.030724199954420328,
+      "per_request": [
+        {
+          "e2e_latency_s": 0.08693509409204125,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c4-measured-0-0",
+          "request_index": 0,
+          "request_kind": "measured",
+          "tpot_s": 0.0022573309702678553,
+          "ttft_s": 0.016957834013737738
+        },
+        {
+          "e2e_latency_s": 0.08976384694688022,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c4-measured-0-1",
+          "request_index": 1,
+          "request_kind": "measured",
+          "tpot_s": 0.0019045047416922547,
+          "ttft_s": 0.030724199954420328
+        },
+        {
+          "e2e_latency_s": 0.08906796597875655,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c4-measured-0-2",
+          "request_index": 2,
+          "request_kind": "measured",
+          "tpot_s": 0.0019097316469396314,
+          "ttft_s": 0.029866284923627973
+        },
+        {
+          "e2e_latency_s": 0.08789947908371687,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c4-measured-0-3",
+          "request_index": 3,
+          "request_kind": "measured",
+          "tpot_s": 0.0019093393573477383,
+          "ttft_s": 0.02870995900593698
+        },
+        {
+          "e2e_latency_s": 0.08630111091770232,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c4-measured-1-0",
+          "request_index": 4,
+          "request_kind": "measured",
+          "tpot_s": 0.002155918545360046,
+          "ttft_s": 0.01946763601154089
+        },
+        {
+          "e2e_latency_s": 0.0860603969777003,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c4-measured-1-1",
+          "request_index": 5,
+          "request_kind": "measured",
+          "tpot_s": 0.002162021934054792,
+          "ttft_s": 0.019037717022001743
+        },
+        {
+          "e2e_latency_s": 0.08863865991588682,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c4-measured-1-2",
+          "request_index": 6,
+          "request_kind": "measured",
+          "tpot_s": 0.0018970888716379,
+          "ttft_s": 0.02982890489511192
+        },
+        {
+          "e2e_latency_s": 0.0878487239824608,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c4-measured-1-3",
+          "request_index": 7,
+          "request_kind": "measured",
+          "tpot_s": 0.0018984556438461427,
+          "ttft_s": 0.028996599023230374
+        },
+        {
+          "e2e_latency_s": 0.08482077496591955,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c4-measured-2-0",
+          "request_index": 8,
+          "request_kind": "measured",
+          "tpot_s": 0.0021525130967699714,
+          "ttft_s": 0.018092868966050446
+        },
+        {
+          "e2e_latency_s": 0.08456039405427873,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c4-measured-2-1",
+          "request_index": 9,
+          "request_kind": "measured",
+          "tpot_s": 0.0021568690313987673,
+          "ttft_s": 0.01769745408091694
+        },
+        {
+          "e2e_latency_s": 0.0870465439511463,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c4-measured-2-2",
+          "request_index": 10,
+          "request_kind": "measured",
+          "tpot_s": 0.0018988227727071893,
+          "ttft_s": 0.028183037997223437
+        },
+        {
+          "e2e_latency_s": 0.08616727800108492,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c4-measured-2-3",
+          "request_index": 11,
+          "request_kind": "measured",
+          "tpot_s": 0.001893219290181033,
+          "ttft_s": 0.0274774800054729
+        },
+        {
+          "e2e_latency_s": 0.08458858809899539,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c4-measured-3-0",
+          "request_index": 12,
+          "request_kind": "measured",
+          "tpot_s": 0.0021495937121911875,
+          "ttft_s": 0.017951183021068573
+        },
+        {
+          "e2e_latency_s": 0.08456707699224353,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c4-measured-3-1",
+          "request_index": 13,
+          "request_kind": "measured",
+          "tpot_s": 0.002149239193738228,
+          "ttft_s": 0.017940661986358464
+        },
+        {
+          "e2e_latency_s": 0.08661283703986555,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c4-measured-3-2",
+          "request_index": 14,
+          "request_kind": "measured",
+          "tpot_s": 0.0018948443241477494,
+          "ttft_s": 0.027872662991285324
+        },
+        {
+          "e2e_latency_s": 0.08603768504690379,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c4-measured-3-3",
+          "request_index": 15,
+          "request_kind": "measured",
+          "tpot_s": 0.0019080362267672054,
+          "ttft_s": 0.02688856201712042
+        },
+        {
+          "e2e_latency_s": 0.09579600905999541,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c4-measured-4-0",
+          "request_index": 16,
+          "request_kind": "measured",
+          "tpot_s": 0.002152389290952875,
+          "ttft_s": 0.029071941040456295
+        },
+        {
+          "e2e_latency_s": 0.09494541899766773,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c4-measured-4-1",
+          "request_index": 17,
+          "request_kind": "measured",
+          "tpot_s": 0.00214601022702071,
+          "ttft_s": 0.028419101960025728
+        },
+        {
+          "e2e_latency_s": 0.09235544397961348,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c4-measured-4-2",
+          "request_index": 18,
+          "request_kind": "measured",
+          "tpot_s": 0.0023982339020397875,
+          "ttft_s": 0.01801019301638007
+        },
+        {
+          "e2e_latency_s": 0.09497655706945807,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c4-measured-4-3",
+          "request_index": 19,
+          "request_kind": "measured",
+          "tpot_s": 0.001878499680559241,
+          "ttft_s": 0.036743066972121596
+        }
+      ],
+      "requests_ok": 20,
+      "requests_total": 20,
+      "tp_degree": 1,
+      "tpot_cv": 0.0775040716379331,
+      "tpot_sample_count": 20,
+      "wall_clock_batch_s": 0.4562331890920177,
+      "workload_id": "in32_out32_c4"
+    },
+    {
+      "aggregate_throughput_tokens_per_s": 1440.533535298148,
+      "mean_e2e_latency_s": 0.13483081187587231,
+      "mean_tpot_s": 0.002134888562385083,
+      "mean_ttft_s": 0.06864926644193474,
+      "p50_tpot_s": 0.0021597770936486703,
+      "p50_ttft_s": 0.09356867696624249,
+      "p95_e2e_latency_s": 0.18454594793729484,
+      "p95_tpot_s": 0.0024450200331968164,
+      "p95_ttft_s": 0.12442603800445795,
+      "per_request": [
+        {
+          "e2e_latency_s": 0.09731017798185349,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-0-0",
+          "request_index": 0,
+          "request_kind": "measured",
+          "tpot_s": 0.002499691259506489,
+          "ttft_s": 0.019819748937152326
+        },
+        {
+          "e2e_latency_s": 0.0966275839600712,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-0-1",
+          "request_index": 1,
+          "request_kind": "measured",
+          "tpot_s": 0.0025040100614029553,
+          "ttft_s": 0.01900327205657959
+        },
+        {
+          "e2e_latency_s": 0.10789153294172138,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-0-2",
+          "request_index": 2,
+          "request_kind": "measured",
+          "tpot_s": 0.0022197560963010594,
+          "ttft_s": 0.03907909395638853
+        },
+        {
+          "e2e_latency_s": 0.18265575100667775,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-0-3",
+          "request_index": 3,
+          "request_kind": "measured",
+          "tpot_s": 0.0024450200331968164,
+          "ttft_s": 0.10686012997757643
+        },
+        {
+          "e2e_latency_s": 0.0959428760688752,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-0-4",
+          "request_index": 4,
+          "request_kind": "measured",
+          "tpot_s": 0.0022143388069385,
+          "ttft_s": 0.027298373053781688
+        },
+        {
+          "e2e_latency_s": 0.18093718693125993,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-0-5",
+          "request_index": 5,
+          "request_kind": "measured",
+          "tpot_s": 0.0024440937427683703,
+          "ttft_s": 0.10517028090544045
+        },
+        {
+          "e2e_latency_s": 0.18295021494850516,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-0-6",
+          "request_index": 6,
+          "request_kind": "measured",
+          "tpot_s": 0.0018878766756144263,
+          "ttft_s": 0.12442603800445795
+        },
+        {
+          "e2e_latency_s": 0.1805393589893356,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-0-7",
+          "request_index": 7,
+          "request_kind": "measured",
+          "tpot_s": 0.002166319739884667,
+          "ttft_s": 0.11338344705291092
+        },
+        {
+          "e2e_latency_s": 0.10059029201511294,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-1-0",
+          "request_index": 8,
+          "request_kind": "measured",
+          "tpot_s": 0.002191808322564729,
+          "ttft_s": 0.032644234015606344
+        },
+        {
+          "e2e_latency_s": 0.11028237990103662,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-1-1",
+          "request_index": 9,
+          "request_kind": "measured",
+          "tpot_s": 0.002184738900752798,
+          "ttft_s": 0.042555473977699876
+        },
+        {
+          "e2e_latency_s": 0.0976467119762674,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-1-2",
+          "request_index": 10,
+          "request_kind": "measured",
+          "tpot_s": 0.0024432321304395316,
+          "ttft_s": 0.021906515932641923
+        },
+        {
+          "e2e_latency_s": 0.18449313892051578,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-1-3",
+          "request_index": 11,
+          "request_kind": "measured",
+          "tpot_s": 0.0024379841915722336,
+          "ttft_s": 0.10891562898177654
+        },
+        {
+          "e2e_latency_s": 0.1873497449560091,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-1-4",
+          "request_index": 12,
+          "request_kind": "measured",
+          "tpot_s": 0.0019015252868074082,
+          "ttft_s": 0.12840246106497943
+        },
+        {
+          "e2e_latency_s": 0.10777172609232366,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-1-5",
+          "request_index": 13,
+          "request_kind": "measured",
+          "tpot_s": 0.00219156980634697,
+          "ttft_s": 0.039833062095567584
+        },
+        {
+          "e2e_latency_s": 0.18454594793729484,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-1-6",
+          "request_index": 14,
+          "request_kind": "measured",
+          "tpot_s": 0.002170782968131525,
+          "ttft_s": 0.11725167592521757
+        },
+        {
+          "e2e_latency_s": 0.18549663794692606,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-1-7",
+          "request_index": 15,
+          "request_kind": "measured",
+          "tpot_s": 0.0018950796107791604,
+          "ttft_s": 0.12674917001277208
+        },
+        {
+          "e2e_latency_s": 0.08852474601007998,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-2-0",
+          "request_index": 16,
+          "request_kind": "measured",
+          "tpot_s": 0.0021696999676585676,
+          "ttft_s": 0.021264047012664378
+        },
+        {
+          "e2e_latency_s": 0.10024880897253752,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-2-1",
+          "request_index": 17,
+          "request_kind": "measured",
+          "tpot_s": 0.0021837615791047292,
+          "ttft_s": 0.03255220002029091
+        },
+        {
+          "e2e_latency_s": 0.09948130592238158,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-2-2",
+          "request_index": 18,
+          "request_kind": "measured",
+          "tpot_s": 0.0021766036140522167,
+          "ttft_s": 0.03200659388676286
+        },
+        {
+          "e2e_latency_s": 0.16613344801589847,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-2-3",
+          "request_index": 19,
+          "request_kind": "measured",
+          "tpot_s": 0.0021683406460309223,
+          "ttft_s": 0.09891488798893988
+        },
+        {
+          "e2e_latency_s": 0.09895527502521873,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-2-4",
+          "request_index": 20,
+          "request_kind": "measured",
+          "tpot_s": 0.002186982809836345,
+          "ttft_s": 0.03115880792029202
+        },
+        {
+          "e2e_latency_s": 0.16848014493007213,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-2-5",
+          "request_index": 21,
+          "request_kind": "measured",
+          "tpot_s": 0.001908866226703169,
+          "ttft_s": 0.1093052919022739
+        },
+        {
+          "e2e_latency_s": 0.16752335301134735,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-2-6",
+          "request_index": 22,
+          "request_kind": "measured",
+          "tpot_s": 0.0019137712285643624,
+          "ttft_s": 0.10819644492585212
+        },
+        {
+          "e2e_latency_s": 0.16636302892584354,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-2-7",
+          "request_index": 23,
+          "request_kind": "measured",
+          "tpot_s": 0.0019009884168964721,
+          "ttft_s": 0.1074323880020529
+        },
+        {
+          "e2e_latency_s": 0.09948864800389856,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-3-0",
+          "request_index": 24,
+          "request_kind": "measured",
+          "tpot_s": 0.002139115612202835,
+          "ttft_s": 0.033176064025610685
+        },
+        {
+          "e2e_latency_s": 0.0992250629933551,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-3-1",
+          "request_index": 25,
+          "request_kind": "measured",
+          "tpot_s": 0.00214752338586315,
+          "ttft_s": 0.032651838031597435
+        },
+        {
+          "e2e_latency_s": 0.08690163097344339,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-3-2",
+          "request_index": 26,
+          "request_kind": "measured",
+          "tpot_s": 0.0021530819320750814,
+          "ttft_s": 0.020156091079115868
+        },
+        {
+          "e2e_latency_s": 0.0975376779679209,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-3-3",
+          "request_index": 27,
+          "request_kind": "measured",
+          "tpot_s": 0.002136746320062347,
+          "ttft_s": 0.03129854204598814
+        },
+        {
+          "e2e_latency_s": 0.1634988699806854,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-3-4",
+          "request_index": 28,
+          "request_kind": "measured",
+          "tpot_s": 0.0021529710633800395,
+          "ttft_s": 0.09675676701590419
+        },
+        {
+          "e2e_latency_s": 0.1665159979602322,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-3-5",
+          "request_index": 29,
+          "request_kind": "measured",
+          "tpot_s": 0.0019095018731370087,
+          "ttft_s": 0.10732143989298493
+        },
+        {
+          "e2e_latency_s": 0.16559792903717607,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-3-6",
+          "request_index": 30,
+          "request_kind": "measured",
+          "tpot_s": 0.0019064380321651697,
+          "ttft_s": 0.10649835004005581
+        },
+        {
+          "e2e_latency_s": 0.16517041600309312,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-3-7",
+          "request_index": 31,
+          "request_kind": "measured",
+          "tpot_s": 0.0019151072896596406,
+          "ttft_s": 0.10580209002364427
+        },
+        {
+          "e2e_latency_s": 0.08372646500356495,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-4-0",
+          "request_index": 32,
+          "request_kind": "measured",
+          "tpot_s": 0.002157406160427678,
+          "ttft_s": 0.016846874030306935
+        },
+        {
+          "e2e_latency_s": 0.09450348594691604,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-4-1",
+          "request_index": 33,
+          "request_kind": "measured",
+          "tpot_s": 0.002158576096858709,
+          "ttft_s": 0.027587626944296062
+        },
+        {
+          "e2e_latency_s": 0.09396554494742304,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-4-2",
+          "request_index": 34,
+          "request_kind": "measured",
+          "tpot_s": 0.0021597770936486703,
+          "ttft_s": 0.027012455044314265
+        },
+        {
+          "e2e_latency_s": 0.1600651879562065,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-4-3",
+          "request_index": 35,
+          "request_kind": "measured",
+          "tpot_s": 0.002145048741611742,
+          "ttft_s": 0.09356867696624249
+        },
+        {
+          "e2e_latency_s": 0.09278471197467297,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-4-4",
+          "request_index": 36,
+          "request_kind": "measured",
+          "tpot_s": 0.002166427968580636,
+          "ttft_s": 0.02562544494867325
+        },
+        {
+          "e2e_latency_s": 0.162370695034042,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-4-5",
+          "request_index": 37,
+          "request_kind": "measured",
+          "tpot_s": 0.0019102542578513103,
+          "ttft_s": 0.10315281304065138
+        },
+        {
+          "e2e_latency_s": 0.16191999893635511,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-4-6",
+          "request_index": 38,
+          "request_kind": "measured",
+          "tpot_s": 0.0019129118694353007,
+          "ttft_s": 0.10261973098386079
+        },
+        {
+          "e2e_latency_s": 0.1612187789287418,
+          "error": null,
+          "ok": true,
+          "output_token_count": 32,
+          "prompt_token_count": null,
+          "request_id": "d8-tp1-in32_out32_c8-measured-4-7",
+          "request_index": 39,
+          "request_kind": "measured",
+          "tpot_s": 0.0019178126765895755,
+          "ttft_s": 0.10176658595446497
+        }
+      ],
+      "requests_ok": 40,
+      "requests_total": 40,
+      "tp_degree": 1,
+      "tpot_cv": 0.0858937554447586,
+      "tpot_sample_count": 40,
+      "wall_clock_batch_s": 0.8885596680920571,
+      "workload_id": "in32_out32_c8"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "corrective_flips": 2,
+  "harmful_flips": 0,
+  "rows": [
+    {
+      "baseline": "d6",
+      "corrective": true,
+      "from": "tp1",
+      "harmful": false,
+      "measured_winner": "tp2",
+      "model_key": "qwen2.5-7b",
+      "to": "tp2",
+      "workload_id": "in32_out32_c8"
+    },
+    {
+      "baseline": "d7",
+      "corrective": true,
+      "from": "tp1",
+      "harmful": false,
+      "measured_winner": "tp2",
+      "model_key": "qwen2.5-7b",
+      "to": "tp2",
+      "workload_id": "in32_out32_c8"
+    }
+  ]
+}

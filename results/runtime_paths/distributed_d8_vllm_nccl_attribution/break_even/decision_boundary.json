@@ -1,0 +1,20 @@
+{
+  "analysis": {
+    "bytes_per_call": "reported via collective byte summaries; authoritative per-call metadata is in raw per_decode_step_collectives.json",
+    "collective_count": "reported in communication_scaling.json",
+    "concurrency": "c1/c4/c8 cells included where feasible",
+    "model_compute_increase": "compare 0.5B vs larger-model TP1/TP2 TPOT and compute_saving_us",
+    "runtime_residual": "reported per cell; current estimator leaves residual at 0 when decomposing TP2 TPOT into compute estimate plus exposed NCCL"
+  },
+  "first_tp2_favorable_cell": {
+    "hf_model_id": "Qwen/Qwen2.5-7B-Instruct",
+    "measured_winner": "tp2",
+    "model_key": "qwen2.5-7b",
+    "tp_compute_savings_us": 6821.515478691379,
+    "workload_id": "in32_out32_c1"
+  },
+  "status": "boundary_found",
+  "success_criterion_met": true,
+  "tp1_favorable_cell_count": 3,
+  "tp2_favorable_cell_count": 3
+}

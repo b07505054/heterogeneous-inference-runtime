@@ -1,0 +1,23 @@
+{
+  "d6": {
+    "accuracy": 0.8333333333333334,
+    "correct": 5,
+    "max_regret_us": 6019.228146666841,
+    "mean_regret_us": 1003.2046911111402,
+    "total": 6
+  },
+  "d7": {
+    "accuracy": 0.8333333333333334,
+    "correct": 5,
+    "max_regret_us": 6019.228146666841,
+    "mean_regret_us": 1003.2046911111402,
+    "total": 6
+  },
+  "d9": {
+    "accuracy": 1.0,
+    "correct": 6,
+    "max_regret_us": 0.0,
+    "mean_regret_us": 0.0,
+    "total": 6
+  }
+}

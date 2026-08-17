@@ -66,6 +66,7 @@ the Hub API on 2026-07-19 -- not a parameter-count guess).
 from __future__ import annotations
 
 import json
+import math
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -102,6 +103,22 @@ FEATURE_NAMES = (
     "per_gpu_weight_mb", "kv_cache_kb_per_token_per_gpu", "gpu_count",
     "input_length", "output_length", "concurrency",
 )
+
+COMMUNICATION_CONTRACT_VERSION = "nccl_communication_calibration.v1"
+COMMUNICATION_COLLECTIVE_KIND = "all_reduce"
+COMMUNICATION_MODE = "out_of_place"
+D9_POLICY_ID = "d9_break_even_tp_selector_v1"
+D9_DECISION_MARGIN_US = 250.0
+D9_RUNTIME_RESIDUAL_US = 0.0
+D9_OVERLAP_ASSUMPTION = "zero"
+D9_COMPUTE_REFERENCE_WEIGHT_MB = MODEL_IDENTITY_FEATURES["Qwen/Qwen2.5-0.5B-Instruct"]["weight_footprint_mb"]
+D9_COMPUTE_SAVINGS_US_PER_WEIGHT_MB_ABOVE_REFERENCE = 0.50
+COMMUNICATION_PREDICTOR_SELECTION_METRIC = ("mape", "mae_us")
+EXPECTED_COMMUNICATION_TOPOLOGY = {
+    "topology_class": "PHB",
+    "p2p_available": False,
+    "nccl_transport": "SHM/direct/direct",
+}
 
 
 def head_dim(model_features: dict[str, Any]) -> float:
@@ -155,6 +172,242 @@ def build_feature_vector(
         float(tp_degree),
         float(input_length), float(output_length), float(concurrency),
     ]
+
+
+class CommunicationCalibrationError(ValueError):
+    """Raised when a communication calibration profile is missing or mismatched."""
+
+
+@dataclass(frozen=True)
+class CommunicationPoint:
+    bytes: int
+    time_us: float
+
+
+@dataclass(frozen=True)
+class AlphaBetaBaseline:
+    alpha_us: float
+    beta_us_per_byte: float
+    evaluation: dict[str, float]
+
+    def predict(self, bytes_value: int) -> float:
+        return self.alpha_us + self.beta_us_per_byte * bytes_value
+
+
+@dataclass(frozen=True)
+class CommunicationPredictor:
+    profile_id: str
+    collective_kind: str
+    predictor_kind: str
+    topology_class: str
+    p2p_available: bool
+    nccl_transport: str
+    nccl_version: str
+    nccl_tests_version: str
+    source_artifact_hashes: dict[str, str]
+    points: tuple[CommunicationPoint, ...]
+    alpha_beta_baseline: AlphaBetaBaseline
+    selected_evaluation: dict[str, float]
+
+    def _check_bytes_in_range(self, bytes_value: int) -> None:
+        if bytes_value < 0:
+            raise CommunicationCalibrationError("communication bytes must be non-negative")
+        if bytes_value == 0:
+            return
+        if not self.points:
+            raise CommunicationCalibrationError("communication predictor has no measured points")
+        lo, hi = self.points[0].bytes, self.points[-1].bytes
+        if bytes_value < lo or bytes_value > hi:
+            raise CommunicationCalibrationError(
+                f"communication bytes {bytes_value} outside calibrated range [{lo}, {hi}]"
+            )
+
+    def predict_time_us(self, bytes_value: int) -> float:
+        self._check_bytes_in_range(bytes_value)
+        if bytes_value == 0:
+            return 0.0
+        if self.predictor_kind == "alpha_beta":
+            return self.alpha_beta_baseline.predict(bytes_value)
+        if self.predictor_kind != "log_size_piecewise_interpolation":
+            raise CommunicationCalibrationError(f"unknown communication predictor kind: {self.predictor_kind}")
+        for p in self.points:
+            if p.bytes == bytes_value:
+                return p.time_us
+        for left, right in zip(self.points, self.points[1:]):
+            if left.bytes <= bytes_value <= right.bytes:
+                x = math.log2(bytes_value)
+                x0 = math.log2(left.bytes)
+                x1 = math.log2(right.bytes)
+                frac = (x - x0) / (x1 - x0)
+                return left.time_us + frac * (right.time_us - left.time_us)
+        raise CommunicationCalibrationError("failed to interpolate communication bytes")
+
+
+def _select_predictor_kind(fit_collective: dict[str, Any], mode: str = COMMUNICATION_MODE) -> str:
+    report = fit_collective[mode]
+    piece = report["log_size_piecewise_interpolation"]
+    alpha = report["alpha_beta_baseline"]["evaluation"]
+    piece_key = (piece["mape"], piece["mae_us"])
+    alpha_key = (alpha["mape"], alpha["mae_us"])
+    return "log_size_piecewise_interpolation" if piece_key <= alpha_key else "alpha_beta"
+
+
+def load_communication_predictor(
+    communication_cost_profile: dict[str, Any],
+    fit_report: dict[str, Any],
+    *,
+    collective_kind: str = COMMUNICATION_COLLECTIVE_KIND,
+    mode: str = COMMUNICATION_MODE,
+    expected_topology: dict[str, Any] | None = EXPECTED_COMMUNICATION_TOPOLOGY,
+) -> CommunicationPredictor:
+    profile_id = communication_cost_profile.get("profile_id")
+    if not profile_id or fit_report.get("profile_id") != profile_id:
+        raise CommunicationCalibrationError("communication profile id mismatch")
+
+    boundary = communication_cost_profile.get("machine_calibration_boundary") or {}
+    topology = {
+        "topology_class": boundary.get("topology_class"),
+        "p2p_available": boundary.get("cuda_p2p_available"),
+        "nccl_transport": boundary.get("nccl_intra_node_transport"),
+    }
+    if expected_topology:
+        for key, expected in expected_topology.items():
+            if topology.get(key) != expected:
+                raise CommunicationCalibrationError(
+                    f"communication topology mismatch for {key}: got {topology.get(key)!r}, expected {expected!r}"
+                )
+
+    collective = (communication_cost_profile.get("collectives") or {}).get(collective_kind)
+    fit_collective = (fit_report.get("collectives") or {}).get(collective_kind)
+    if not collective or not fit_collective:
+        raise CommunicationCalibrationError(f"missing communication collective calibration: {collective_kind}")
+    predictor_kind = _select_predictor_kind(fit_collective, mode)
+    measurements = collective.get("measurements") or []
+    points = []
+    for row in measurements:
+        try:
+            points.append(CommunicationPoint(bytes=int(row["bytes"]), time_us=float(row[mode]["time_us"])))
+        except (KeyError, TypeError, ValueError) as exc:
+            raise CommunicationCalibrationError(f"malformed communication measurement row: {row!r}") from exc
+    points = sorted(points, key=lambda p: p.bytes)
+    if len(points) < 2 or len({p.bytes for p in points}) != len(points):
+        raise CommunicationCalibrationError("communication predictor requires unique sorted measured points")
+
+    alpha_block = fit_collective[mode]["alpha_beta_baseline"]
+    return CommunicationPredictor(
+        profile_id=profile_id,
+        collective_kind=collective_kind,
+        predictor_kind=predictor_kind,
+        topology_class=str(topology["topology_class"]),
+        p2p_available=bool(topology["p2p_available"]),
+        nccl_transport=str(topology["nccl_transport"]),
+        nccl_version=str(boundary.get("nccl_version")),
+        nccl_tests_version=str(boundary.get("nccl_tests_version")),
+        source_artifact_hashes=dict(communication_cost_profile.get("source_artifact_hashes") or {}),
+        points=tuple(points),
+        alpha_beta_baseline=AlphaBetaBaseline(
+            alpha_us=float(alpha_block["alpha_us"]),
+            beta_us_per_byte=float(alpha_block["beta_us_per_byte"]),
+            evaluation=dict(alpha_block["evaluation"]),
+        ),
+        selected_evaluation=dict(
+            fit_collective[mode]["log_size_piecewise_interpolation"]
+            if predictor_kind == "log_size_piecewise_interpolation"
+            else fit_collective[mode]["alpha_beta_baseline"]["evaluation"]
+        ),
+    )
+
+
+def estimated_communication_bytes(model_features: dict[str, Any], tp_degree: int) -> int:
+    if tp_degree <= 1:
+        return 0
+    hidden = int(model_features["hidden_size"])
+    return int(tp_degree * hidden * BYTES_PER_PARAM_FP16 * 2)
+
+
+def estimate_collective_call_count(model_features: dict[str, Any], *, concurrency: int, tp_degree: int = 2) -> int:
+    if tp_degree <= 1:
+        return 0
+    # D9 intentionally uses structural/workload features, not model names.
+    # One TP all-reduce class per layer per active decode lane is a conservative
+    # call-count-aware upper estimate for selector use; Phase 4D showed count,
+    # not total bytes alone, carries decision signal.
+    return int(max(1, model_features.get("num_layers", 1)) * max(1, concurrency))
+
+
+def estimate_collective_demand(model_features: dict[str, Any], *, concurrency: int, tp_degree: int = 2) -> dict[str, Any]:
+    bytes_per_call = estimated_communication_bytes(model_features, tp_degree)
+    call_count = estimate_collective_call_count(model_features, concurrency=concurrency, tp_degree=tp_degree)
+    return {
+        "collective_kind": COMMUNICATION_COLLECTIVE_KIND if call_count else "none",
+        "bytes_per_collective_call": bytes_per_call,
+        "estimated_collective_call_count": call_count,
+        "estimated_total_communication_bytes": bytes_per_call * call_count,
+    }
+
+
+def estimate_communication_penalty_us(
+    model_features: dict[str, Any], *, concurrency: int, tp_degree: int,
+    communication_calibration: CommunicationPredictor,
+) -> tuple[float, dict[str, Any]]:
+    demand = estimate_collective_demand(model_features, concurrency=concurrency, tp_degree=tp_degree)
+    if demand["estimated_collective_call_count"] == 0:
+        return 0.0, demand
+    per_call = communication_calibration.predict_time_us(int(demand["bytes_per_collective_call"]))
+    demand["predicted_nccl_latency_us_per_call"] = per_call
+    return per_call * int(demand["estimated_collective_call_count"]), demand
+
+
+def throughput_to_latency_us(predicted_tokens_per_s: float) -> float:
+    if predicted_tokens_per_s <= 0:
+        return float("inf")
+    return 1_000_000.0 / predicted_tokens_per_s
+
+
+def estimate_structural_compute_savings_adjustment_us(model_features: dict[str, Any]) -> float:
+    """Phase 4D break-even calibration using structural model scale.
+
+    Larger weight footprint is the proxy for the model-compute increase that
+    moved the measured boundary from TP1-favorable 0.5B cells to
+    TP2-favorable 7B cells. This uses model facts, not model names.
+    """
+    weight_mb = float(model_features.get("weight_footprint_mb", 0.0))
+    excess_mb = max(0.0, weight_mb - D9_COMPUTE_REFERENCE_WEIGHT_MB)
+    return excess_mb * D9_COMPUTE_SAVINGS_US_PER_WEIGHT_MB_ABOVE_REFERENCE
+
+
+def estimate_compute_savings_us(
+    tp1_compute_latency_us: float, tp2_compute_latency_us: float,
+    model_features: dict[str, Any],
+) -> tuple[float, dict[str, float | str]]:
+    base = tp1_compute_latency_us - tp2_compute_latency_us
+    base_status = "finite"
+    if not math.isfinite(base):
+        base = 0.0
+        base_status = "non_finite_regression_latency_delta_ignored"
+    structural = estimate_structural_compute_savings_adjustment_us(model_features)
+    return base + structural, {
+        "regression_compute_savings_us": base,
+        "regression_compute_savings_status": base_status,
+        "structural_compute_savings_adjustment_us": structural,
+        "compute_reference_weight_mb": D9_COMPUTE_REFERENCE_WEIGHT_MB,
+        "compute_savings_us_per_weight_mb_above_reference": D9_COMPUTE_SAVINGS_US_PER_WEIGHT_MB_ABOVE_REFERENCE,
+    }
+
+
+def adjust_throughput_for_communication(
+    predicted_tokens_per_s: float,
+    *,
+    estimated_nccl_comm_time_us: float,
+    output_length: int,
+    concurrency: int,
+) -> float:
+    if predicted_tokens_per_s <= 0:
+        return predicted_tokens_per_s
+    token_count = max(1, int(output_length) * int(concurrency))
+    base_time_s = token_count / predicted_tokens_per_s
+    communication_time_s = (estimated_nccl_comm_time_us / 1_000_000.0) * token_count
+    return token_count / (base_time_s + communication_time_s)
 
 
 @dataclass
@@ -212,6 +465,7 @@ class TPCostModel:
     def decide(
         self, *, model_features: dict[str, Any], input_length: int, output_length: int, concurrency: int,
         gpu_total_mb: float, gpu_memory_utilization: float, max_model_len: int, max_num_seqs: int,
+        communication_calibration: CommunicationPredictor | None = None,
     ) -> dict[str, Any]:
         tp1_feasible, tp1_mem = is_feasible(model_features, 1, gpu_total_mb=gpu_total_mb,
                                              gpu_memory_utilization=gpu_memory_utilization,
@@ -228,13 +482,84 @@ class TPCostModel:
 
         fv1 = build_feature_vector(model_features, 1, input_length=input_length, output_length=output_length, concurrency=concurrency)
         fv2 = build_feature_vector(model_features, 2, input_length=input_length, output_length=output_length, concurrency=concurrency)
-        pred1 = self.predict_throughput(fv1, 1)
-        pred2 = self.predict_throughput(fv2, 2)
-        decision = "tp1" if pred1 >= pred2 else "tp2"
+        pred1_before = self.predict_throughput(fv1, 1)
+        pred2_before = self.predict_throughput(fv2, 2)
+        legacy = communication_calibration is None
+        pred1_compute_latency_us = throughput_to_latency_us(pred1_before)
+        pred2_compute_latency_us = throughput_to_latency_us(pred2_before)
+        estimated_compute_savings_us, compute_savings_evidence = estimate_compute_savings_us(
+            pred1_compute_latency_us, pred2_compute_latency_us, model_features)
+        if legacy:
+            comm1_us = 0.0
+            comm2_us = 0.0
+            demand1 = estimate_collective_demand(model_features, concurrency=concurrency, tp_degree=1)
+            demand2 = estimate_collective_demand(model_features, concurrency=concurrency, tp_degree=2)
+            comm_reason = "legacy_no_communication_calibration"
+            comm_profile = None
+            comm_predictor = None
+            topology_class = None
+            p2p_available = None
+            nccl_transport = None
+        else:
+            comm1_us, demand1 = estimate_communication_penalty_us(
+                model_features, concurrency=concurrency, tp_degree=1,
+                communication_calibration=communication_calibration)
+            comm2_us, demand2 = estimate_communication_penalty_us(
+                model_features, concurrency=concurrency, tp_degree=2,
+                communication_calibration=communication_calibration)
+            comm_reason = "d9_collective_instance_calibrated_break_even"
+            comm_profile = communication_calibration.profile_id
+            comm_predictor = communication_calibration.predictor_kind
+            topology_class = communication_calibration.topology_class
+            p2p_available = communication_calibration.p2p_available
+            nccl_transport = communication_calibration.nccl_transport
+
+        estimated_runtime_residual_us = D9_RUNTIME_RESIDUAL_US
+        estimated_net_tp2_benefit_us = (
+            estimated_compute_savings_us - comm2_us - estimated_runtime_residual_us
+        )
+        pre_decision = "tp2" if estimated_compute_savings_us > D9_DECISION_MARGIN_US else "tp1"
+        decision = "tp2" if estimated_net_tp2_benefit_us > D9_DECISION_MARGIN_US else "tp1"
+        pred1_after = pred1_before
+        pred2_after = 1_000_000.0 / (pred2_compute_latency_us + comm2_us + estimated_runtime_residual_us) if math.isfinite(pred2_compute_latency_us) else 0.0
         return {
-            "decision": decision, "reason": "performance_regression",
-            "predicted_tp1_throughput": pred1, "predicted_tp2_throughput": pred2,
+            "decision": decision,
+            "reason": "performance_regression" if legacy else "d9_break_even_net_benefit",
+            "policy_id": D9_POLICY_ID if not legacy else "legacy_throughput_selector",
+            "legacy_behavior": legacy,
+            "legacy_reason": comm_reason if legacy else None,
+            "pre_communication_decision": pre_decision,
+            "communication_changed_decision": pre_decision != decision,
+            "predicted_tp1_throughput": pred1_after,
+            "predicted_tp2_throughput": pred2_after,
+            "predicted_tp1_throughput_before_communication": pred1_before,
+            "predicted_tp2_throughput_before_communication": pred2_before,
             "tp1_memory": tp1_mem, "tp2_memory": tp2_mem,
+            "break_even": {
+                "estimated_compute_savings_us": estimated_compute_savings_us,
+                **compute_savings_evidence,
+                "estimated_communication_penalty_us": comm2_us,
+                "estimated_runtime_residual_us": estimated_runtime_residual_us,
+                "estimated_net_tp2_benefit_us": estimated_net_tp2_benefit_us,
+                "decision_margin_us": D9_DECISION_MARGIN_US,
+                "overlap_assumption": D9_OVERLAP_ASSUMPTION,
+            },
+            "communication": {
+                "estimated_communication_bytes_tp1": demand1["estimated_total_communication_bytes"],
+                "estimated_communication_bytes_tp2": demand2["estimated_total_communication_bytes"],
+                "estimated_nccl_comm_time_us_tp1": comm1_us,
+                "estimated_nccl_comm_time_us_tp2": comm2_us,
+                "estimated_collective_call_count": demand2["estimated_collective_call_count"],
+                "collective_kind": demand2["collective_kind"],
+                "bytes_per_collective_call": demand2["bytes_per_collective_call"],
+                "communication_collective_kind": demand2["collective_kind"],
+                "communication_profile_id": comm_profile,
+                "communication_predictor_kind": comm_predictor,
+                "topology_class": topology_class,
+                "p2p_available": p2p_available,
+                "nccl_transport": nccl_transport,
+                "overlap_assumption": D9_OVERLAP_ASSUMPTION,
+            },
         }
 
     def to_dict(self) -> dict[str, Any]:

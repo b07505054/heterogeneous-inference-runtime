@@ -1,0 +1,35 @@
+{
+  "accounting": "Phase 4B wall-clock interval union with measured request IDs; summed-rank NCCL time is diagnostic only.",
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "normal_measured_repetitions_per_cell": {
+    "in32_out32_c1": 5,
+    "in32_out32_c4": 20,
+    "in32_out32_c8": 40
+  },
+  "profiled_tp2_representative_requests_per_cell": {
+    "in32_out32_c1": 1,
+    "in32_out32_c4": 4,
+    "in32_out32_c8": 8
+  },
+  "status": "measured",
+  "workloads": [
+    {
+      "concurrency": 1,
+      "input_length": 32,
+      "output_length": 32,
+      "workload_id": "in32_out32_c1"
+    },
+    {
+      "concurrency": 4,
+      "input_length": 32,
+      "output_length": 32,
+      "workload_id": "in32_out32_c4"
+    },
+    {
+      "concurrency": 8,
+      "input_length": 32,
+      "output_length": 32,
+      "workload_id": "in32_out32_c8"
+    }
+  ]
+}

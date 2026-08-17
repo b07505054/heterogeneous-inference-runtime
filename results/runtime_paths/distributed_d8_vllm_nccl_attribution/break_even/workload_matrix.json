@@ -1,0 +1,55 @@
+{
+  "cells": [
+    {
+      "hf_model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "measured_winner": "tp1",
+      "model_key": "qwen2.5-0.5b",
+      "workload_id": "in32_out32_c1"
+    },
+    {
+      "hf_model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "measured_winner": "tp1",
+      "model_key": "qwen2.5-0.5b",
+      "workload_id": "in32_out32_c4"
+    },
+    {
+      "hf_model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "measured_winner": "tp1",
+      "model_key": "qwen2.5-0.5b",
+      "workload_id": "in32_out32_c8"
+    },
+    {
+      "hf_model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "measured_winner": "tp2",
+      "model_key": "qwen2.5-7b",
+      "workload_id": "in32_out32_c1"
+    },
+    {
+      "hf_model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "measured_winner": "tp2",
+      "model_key": "qwen2.5-7b",
+      "workload_id": "in32_out32_c4"
+    },
+    {
+      "hf_model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "measured_winner": "tp2",
+      "model_key": "qwen2.5-7b",
+      "workload_id": "in32_out32_c8"
+    }
+  ],
+  "runs": [
+    {
+      "hf_model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "model_key": "qwen2.5-0.5b",
+      "output_dir": "results/runtime_paths/distributed_d8_vllm_nccl_attribution/break_even/raw/qwen2.5-0.5b",
+      "status": "measured"
+    },
+    {
+      "hf_model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "model_key": "qwen2.5-7b",
+      "output_dir": "results/runtime_paths/distributed_d8_vllm_nccl_attribution/break_even/raw/qwen2.5-7b",
+      "status": "measured"
+    }
+  ],
+  "status": "measured"
+}

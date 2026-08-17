@@ -1,0 +1,1536 @@
+{
+  "rows": [
+    {
+      "collective_bytes_per_decode_step": {
+        "count": 31,
+        "max_us": 1046528.0,
+        "mean_us": 677954.0645161291,
+        "p50_us": 645120.0,
+        "p95_us": 982016.0
+      },
+      "collective_call_count_per_decode_step": {
+        "count": 31,
+        "max_us": 146.0,
+        "mean_us": 94.58064516129032,
+        "p50_us": 90.0,
+        "p95_us": 137.0
+      },
+      "collective_kinds_per_decode_step": [
+        [
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ]
+      ],
+      "exposed_nccl_fraction_of_decode_critical_path": {
+        "count": 31,
+        "max_us": 0.5381858505877816,
+        "mean_us": 0.3897838030990928,
+        "p50_us": 0.4079659315634234,
+        "p95_us": 0.46190536327564535
+      },
+      "exposed_nccl_wall_us_per_decode_step": {
+        "count": 31,
+        "max_us": 1935.488,
+        "mean_us": 949.1660322580645,
+        "p50_us": 956.255,
+        "p95_us": 1449.7045
+      },
+      "invalid_decode_steps": 0,
+      "measured_decode_steps": 31,
+      "nccl_compute_overlap_wall_us_per_decode_step": {
+        "count": 31,
+        "max_us": 27.941,
+        "mean_us": 15.879967741935484,
+        "p50_us": 16.094,
+        "p95_us": 24.433500000000002
+      },
+      "nccl_wall_union_us_per_decode_step": {
+        "count": 31,
+        "max_us": 1958.694,
+        "mean_us": 965.046,
+        "p50_us": 983.883,
+        "p95_us": 1473.5015
+      },
+      "overlap_ratio_per_decode_step": {
+        "count": 31,
+        "max_us": 0.028398701878170472,
+        "mean_us": 0.0167460856545932,
+        "p50_us": 0.016551670233630106,
+        "p95_us": 0.02430340400623595
+      },
+      "sample_rows": [
+        {
+          "collective_bytes": null,
+          "collective_call_count": 50,
+          "collective_kinds": [
+            "all_reduce"
+          ],
+          "collectives": [
+            {
+              "collective_bytes": null,
+              "collective_call_count": 50,
+              "collective_kind": "all_reduce",
+              "collective_metadata_range_count": 0,
+              "estimated_collective_bytes": 358400,
+              "nccl_wall_union_us": 338.401,
+              "observed_kernel_names_sample": [
+                "ncclDevKernel_AllReduce_Sum_f16_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)"
+              ],
+              "sum_rank_nccl_gpu_time_us": 560.865
+            }
+          ],
+          "compute_wall_union_us": 575.171,
+          "consistency_checks": {
+            "exposed_le_nccl_wall_le_decode_wall": true,
+            "overlap_le_nccl_wall": true
+          },
+          "cross_rank_nccl_interval_union_us": 338.401,
+          "decode_duration_us": 1782.644,
+          "decode_step": 35,
+          "decode_step_critical_path_duration_us": 1782.644,
+          "decode_step_wall_us": 1782.644,
+          "estimated_collective_bytes": 358400,
+          "exposed_nccl_duration_us": 332.986,
+          "exposed_nccl_fraction_of_decode_critical_path": 0.1867933249712225,
+          "exposed_nccl_wall_us": 332.986,
+          "invalid_reasons": [],
+          "max_per_rank_nccl_duration_us": 331.169,
+          "nccl_compute_overlap_duration_us": 5.415,
+          "nccl_compute_overlap_wall_us": 5.415,
+          "nccl_fraction_of_decode_critical_path": 0.18983094773830334,
+          "nccl_wall_union_us": 338.401,
+          "nvtx_text": "vllm.step phase=decode step=35 tokens=1 requests=1 ctx_tokens=0 ctx_requests=0 decode_tokens=1 decode_requests=1 req_ids=cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3",
+          "overlap_ratio": 0.01600172576322174,
+          "phase": "decode",
+          "rank0_nccl_gpu_time_us": 229.696,
+          "rank0_nccl_kernel_count": 25,
+          "rank1_nccl_gpu_time_us": 331.169,
+          "rank1_nccl_kernel_count": 25,
+          "rank_diagnostics": {
+            "rank0": {
+              "device_ids": [
+                0
+              ],
+              "kernel_count": 25,
+              "nccl_gpu_time_us": 229.696,
+              "nccl_wall_union_us": 229.696,
+              "pids": [
+                24410
+              ]
+            },
+            "rank1": {
+              "device_ids": [
+                1
+              ],
+              "kernel_count": 25,
+              "nccl_gpu_time_us": 331.169,
+              "nccl_wall_union_us": 331.169,
+              "pids": [
+                24411
+              ]
+            }
+          },
+          "rank_range_count": 2,
+          "raw_nccl_duration_us": 560.865,
+          "request_ids": [
+            "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+          ],
+          "scheduled_requests": 1,
+          "scheduled_tokens": 1,
+          "step_id": 35,
+          "sum_rank_nccl_gpu_time_us": 560.865,
+          "summed_per_rank_nccl_duration_us": 560.865,
+          "valid": true,
+          "workload_id": "in32_out32_c1"
+        },
+        {
+          "collective_bytes": null,
+          "collective_call_count": 48,
+          "collective_kinds": [
+            "all_gather",
+            "all_reduce"
+          ],
+          "collectives": [
+            {
+              "collective_bytes": null,
+              "collective_call_count": 2,
+              "collective_kind": "all_gather",
+              "collective_metadata_range_count": 0,
+              "estimated_collective_bytes": 14336,
+              "nccl_wall_union_us": 96.16,
+              "observed_kernel_names_sample": [
+                "ncclDevKernel_AllGather_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)"
+              ],
+              "sum_rank_nccl_gpu_time_us": 190.177
+            },
+            {
+              "collective_bytes": null,
+              "collective_call_count": 46,
+              "collective_kind": "all_reduce",
+              "collective_metadata_range_count": 0,
+              "estimated_collective_bytes": 329728,
+              "nccl_wall_union_us": 384.96999999999997,
+              "observed_kernel_names_sample": [
+                "ncclDevKernel_AllReduce_Sum_f16_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)"
+              ],
+              "sum_rank_nccl_gpu_time_us": 583.937
+            }
+          ],
+          "compute_wall_union_us": 697.887,
+          "consistency_checks": {
+            "exposed_le_nccl_wall_le_decode_wall": true,
+            "overlap_le_nccl_wall": true
+          },
+          "cross_rank_nccl_interval_union_us": 481.13,
+          "decode_duration_us": 1687.656,
+          "decode_step": 36,
+          "decode_step_critical_path_duration_us": 1687.656,
+          "decode_step_wall_us": 1687.656,
+          "estimated_collective_bytes": 344064,
+          "exposed_nccl_duration_us": 473.721,
+          "exposed_nccl_fraction_of_decode_critical_path": 0.2806976066212546,
+          "exposed_nccl_wall_us": 473.721,
+          "invalid_reasons": [],
+          "max_per_rank_nccl_duration_us": 479.746,
+          "nccl_compute_overlap_duration_us": 7.409,
+          "nccl_compute_overlap_wall_us": 7.409,
+          "nccl_fraction_of_decode_critical_path": 0.2850877192982456,
+          "nccl_wall_union_us": 481.13,
+          "nvtx_text": "vllm.step phase=decode step=36 tokens=1 requests=1 ctx_tokens=0 ctx_requests=0 decode_tokens=1 decode_requests=1 req_ids=cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3",
+          "overlap_ratio": 0.015399164466983976,
+          "phase": "decode",
+          "rank0_nccl_gpu_time_us": 294.368,
+          "rank0_nccl_kernel_count": 24,
+          "rank1_nccl_gpu_time_us": 479.746,
+          "rank1_nccl_kernel_count": 24,
+          "rank_diagnostics": {
+            "rank0": {
+              "device_ids": [
+                0
+              ],
+              "kernel_count": 24,
+              "nccl_gpu_time_us": 294.368,
+              "nccl_wall_union_us": 290.291,
+              "pids": [
+                24410
+              ]
+            },
+            "rank1": {
+              "device_ids": [
+                1
+              ],
+              "kernel_count": 24,
+              "nccl_gpu_time_us": 479.746,
+              "nccl_wall_union_us": 476.168,
+              "pids": [
+                24411
+              ]
+            }
+          },
+          "rank_range_count": 2,
+          "raw_nccl_duration_us": 774.114,
+          "request_ids": [
+            "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+          ],
+          "scheduled_requests": 1,
+          "scheduled_tokens": 1,
+          "step_id": 36,
+          "sum_rank_nccl_gpu_time_us": 774.114,
+          "summed_per_rank_nccl_duration_us": 774.114,
+          "valid": true,
+          "workload_id": "in32_out32_c1"
+        },
+        {
+          "collective_bytes": null,
+          "collective_call_count": 90,
+          "collective_kinds": [
+            "all_gather",
+            "all_reduce"
+          ],
+          "collectives": [
+            {
+              "collective_bytes": null,
+              "collective_call_count": 2,
+              "collective_kind": "all_gather",
+              "collective_metadata_range_count": 0,
+              "estimated_collective_bytes": 14336,
+              "nccl_wall_union_us": 97.504,
+              "observed_kernel_names_sample": [
+                "ncclDevKernel_AllGather_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)"
+              ],
+              "sum_rank_nccl_gpu_time_us": 193.856
+            },
+            {
+              "collective_bytes": null,
+              "collective_call_count": 88,
+              "collective_kind": "all_reduce",
+              "collective_metadata_range_count": 0,
+              "estimated_collective_bytes": 630784,
+              "nccl_wall_union_us": 512.229,
+              "observed_kernel_names_sample": [
+                "ncclDevKernel_AllReduce_Sum_f16_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)"
+              ],
+              "sum_rank_nccl_gpu_time_us": 888.034
+            }
+          ],
+          "compute_wall_union_us": 1161.64,
+          "consistency_checks": {
+            "exposed_le_nccl_wall_le_decode_wall": true,
+            "overlap_le_nccl_wall": true
+          },
+          "cross_rank_nccl_interval_union_us": 609.7330000000001,
+          "decode_duration_us": 2293.427,
+          "decode_step": 37,
+          "decode_step_critical_path_duration_us": 2293.427,
+          "decode_step_wall_us": 2293.427,
+          "estimated_collective_bytes": 645120,
+          "exposed_nccl_duration_us": 602.1790000000001,
+          "exposed_nccl_fraction_of_decode_critical_path": 0.2625673282820862,
+          "exposed_nccl_wall_us": 602.1790000000001,
+          "invalid_reasons": [],
+          "max_per_rank_nccl_duration_us": 604.8340000000001,
+          "nccl_compute_overlap_duration_us": 7.554,
+          "nccl_compute_overlap_wall_us": 7.554,
+          "nccl_fraction_of_decode_critical_path": 0.26586108910377354,
+          "nccl_wall_union_us": 609.7330000000001,
+          "nvtx_text": "vllm.step phase=decode step=37 tokens=1 requests=1 ctx_tokens=0 ctx_requests=0 decode_tokens=1 decode_requests=1 req_ids=cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3",
+          "overlap_ratio": 0.012389029296429748,
+          "phase": "decode",
+          "rank0_nccl_gpu_time_us": 477.05600000000004,
+          "rank0_nccl_kernel_count": 45,
+          "rank1_nccl_gpu_time_us": 604.8340000000001,
+          "rank1_nccl_kernel_count": 45,
+          "rank_diagnostics": {
+            "rank0": {
+              "device_ids": [
+                0
+              ],
+              "kernel_count": 45,
+              "nccl_gpu_time_us": 477.05600000000004,
+              "nccl_wall_union_us": 477.05600000000004,
+              "pids": [
+                24410
+              ]
+            },
+            "rank1": {
+              "device_ids": [
+                1
+              ],
+              "kernel_count": 45,
+              "nccl_gpu_time_us": 604.8340000000001,
+              "nccl_wall_union_us": 604.8340000000001,
+              "pids": [
+                24411
+              ]
+            }
+          },
+          "rank_range_count": 2,
+          "raw_nccl_duration_us": 1081.89,
+          "request_ids": [
+            "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+          ],
+          "scheduled_requests": 1,
+          "scheduled_tokens": 1,
+          "step_id": 37,
+          "sum_rank_nccl_gpu_time_us": 1081.89,
+          "summed_per_rank_nccl_duration_us": 1081.89,
+          "valid": true,
+          "workload_id": "in32_out32_c1"
+        }
+      ],
+      "workload_id": "in32_out32_c1"
+    },
+    {
+      "collective_bytes_per_decode_step": {
+        "count": 32,
+        "max_us": 5970944.0,
+        "mean_us": 1049440.0,
+        "p50_us": 906752.0,
+        "p95_us": 997785.5999999999
+      },
+      "collective_call_count_per_decode_step": {
+        "count": 32,
+        "max_us": 148.0,
+        "mean_us": 123.5,
+        "p50_us": 126.0,
+        "p95_us": 130.89999999999998
+      },
+      "collective_kinds_per_decode_step": [
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ]
+      ],
+      "exposed_nccl_fraction_of_decode_critical_path": {
+        "count": 32,
+        "max_us": 0.7251455932940948,
+        "mean_us": 0.40615259322802083,
+        "p50_us": 0.3904355135731997,
+        "p95_us": 0.4596990920319879
+      },
+      "exposed_nccl_wall_us_per_decode_step": {
+        "count": 32,
+        "max_us": 14349.305,
+        "mean_us": 1624.22778125,
+        "p50_us": 1198.4375,
+        "p95_us": 1446.0547499999998
+      },
+      "invalid_decode_steps": 0,
+      "measured_decode_steps": 32,
+      "nccl_compute_overlap_wall_us_per_decode_step": {
+        "count": 32,
+        "max_us": 1114.429,
+        "mean_us": 48.857406250000004,
+        "p50_us": 14.4685,
+        "p95_us": 20.301449999999996
+      },
+      "nccl_wall_union_us_per_decode_step": {
+        "count": 32,
+        "max_us": 15463.734,
+        "mean_us": 1673.0851875,
+        "p50_us": 1213.069,
+        "p95_us": 1465.6466999999998
+      },
+      "overlap_ratio_per_decode_step": {
+        "count": 32,
+        "max_us": 0.07206726396095536,
+        "mean_us": 0.013653308175260948,
+        "p50_us": 0.01183617447934697,
+        "p95_us": 0.014926264080148015
+      },
+      "sample_rows": [
+        {
+          "collective_bytes": 5970944,
+          "collective_call_count": 100,
+          "collective_kinds": [
+            "all_gather",
+            "all_reduce"
+          ],
+          "collectives": [
+            {
+              "collective_bytes": null,
+              "collective_call_count": 2,
+              "collective_kind": "all_gather",
+              "collective_metadata_range_count": 0,
+              "estimated_collective_bytes": 14336,
+              "nccl_wall_union_us": 268.143,
+              "observed_kernel_names_sample": [
+                "ncclDevKernel_AllGather_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)"
+              ],
+              "sum_rank_nccl_gpu_time_us": 578.915
+            },
+            {
+              "collective_bytes": 5970944,
+              "collective_call_count": 98,
+              "collective_kind": "all_reduce",
+              "collective_metadata_range_count": 98,
+              "estimated_collective_bytes": 702464,
+              "nccl_wall_union_us": 15195.591,
+              "observed_kernel_names_sample": [
+                "ncclDevKernel_AllReduce_Sum_f16_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)"
+              ],
+              "sum_rank_nccl_gpu_time_us": 16658.515
+            }
+          ],
+          "compute_wall_union_us": 2337.867,
+          "consistency_checks": {
+            "exposed_le_nccl_wall_le_decode_wall": true,
+            "overlap_le_nccl_wall": true
+          },
+          "cross_rank_nccl_interval_union_us": 15463.734,
+          "decode_duration_us": 19788.171,
+          "decode_step": 103,
+          "decode_step_critical_path_duration_us": 19788.171,
+          "decode_step_wall_us": 19788.171,
+          "estimated_collective_bytes": 716800,
+          "exposed_nccl_duration_us": 14349.305,
+          "exposed_nccl_fraction_of_decode_critical_path": 0.7251455932940948,
+          "exposed_nccl_wall_us": 14349.305,
+          "invalid_reasons": [],
+          "max_per_rank_nccl_duration_us": 15467.314,
+          "nccl_compute_overlap_duration_us": 1114.429,
+          "nccl_compute_overlap_wall_us": 1114.429,
+          "nccl_fraction_of_decode_critical_path": 0.7814635319252093,
+          "nccl_wall_union_us": 15463.734,
+          "nvtx_text": "vllm.step phase=decode step=103 tokens=34 requests=4 ctx_tokens=32 ctx_requests=2 decode_tokens=2 decode_requests=2 req_ids=cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3|cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec|cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2|cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5",
+          "overlap_ratio": 0.07206726396095536,
+          "phase": "decode",
+          "rank0_nccl_gpu_time_us": 1770.116,
+          "rank0_nccl_kernel_count": 50,
+          "rank1_nccl_gpu_time_us": 15467.314,
+          "rank1_nccl_kernel_count": 50,
+          "rank_diagnostics": {
+            "rank0": {
+              "device_ids": [
+                0
+              ],
+              "kernel_count": 50,
+              "nccl_gpu_time_us": 1770.116,
+              "nccl_wall_union_us": 1663.331,
+              "pids": [
+                24410
+              ]
+            },
+            "rank1": {
+              "device_ids": [
+                1
+              ],
+              "kernel_count": 50,
+              "nccl_gpu_time_us": 15467.314,
+              "nccl_wall_union_us": 15359.903,
+              "pids": [
+                24411
+              ]
+            }
+          },
+          "rank_range_count": 2,
+          "raw_nccl_duration_us": 17237.43,
+          "request_ids": [
+            "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+            "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+            "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+            "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+          ],
+          "scheduled_requests": 4,
+          "scheduled_tokens": 34,
+          "step_id": 103,
+          "sum_rank_nccl_gpu_time_us": 17237.43,
+          "summed_per_rank_nccl_duration_us": 17237.43,
+          "valid": true,
+          "workload_id": "in32_out32_c4"
+        },
+        {
+          "collective_bytes": null,
+          "collective_call_count": 64,
+          "collective_kinds": [
+            "all_reduce"
+          ],
+          "collectives": [
+            {
+              "collective_bytes": null,
+              "collective_call_count": 64,
+              "collective_kind": "all_reduce",
+              "collective_metadata_range_count": 0,
+              "estimated_collective_bytes": 458752,
+              "nccl_wall_union_us": 1331.398,
+              "observed_kernel_names_sample": [
+                "ncclDevKernel_AllReduce_Sum_f16_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)"
+              ],
+              "sum_rank_nccl_gpu_time_us": 1632.903
+            }
+          ],
+          "compute_wall_union_us": 825.346,
+          "consistency_checks": {
+            "exposed_le_nccl_wall_le_decode_wall": true,
+            "overlap_le_nccl_wall": true
+          },
+          "cross_rank_nccl_interval_union_us": 1331.398,
+          "decode_duration_us": 2991.96,
+          "decode_step": 104,
+          "decode_step_critical_path_duration_us": 2991.96,
+          "decode_step_wall_us": 2991.96,
+          "estimated_collective_bytes": 458752,
+          "exposed_nccl_duration_us": 1315.8539999999998,
+          "exposed_nccl_fraction_of_decode_critical_path": 0.43979665503549503,
+          "exposed_nccl_wall_us": 1315.8539999999998,
+          "invalid_reasons": [],
+          "max_per_rank_nccl_duration_us": 1303.59,
+          "nccl_compute_overlap_duration_us": 15.544,
+          "nccl_compute_overlap_wall_us": 15.544,
+          "nccl_fraction_of_decode_critical_path": 0.4449919116565729,
+          "nccl_wall_union_us": 1331.398,
+          "nvtx_text": "vllm.step phase=decode step=104 tokens=4 requests=4 ctx_tokens=0 ctx_requests=0 decode_tokens=4 decode_requests=4 req_ids=cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3|cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec|cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2|cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5",
+          "overlap_ratio": 0.011674946184386638,
+          "phase": "decode",
+          "rank0_nccl_gpu_time_us": 329.313,
+          "rank0_nccl_kernel_count": 32,
+          "rank1_nccl_gpu_time_us": 1303.59,
+          "rank1_nccl_kernel_count": 32,
+          "rank_diagnostics": {
+            "rank0": {
+              "device_ids": [
+                0
+              ],
+              "kernel_count": 32,
+              "nccl_gpu_time_us": 329.313,
+              "nccl_wall_union_us": 329.313,
+              "pids": [
+                24410
+              ]
+            },
+            "rank1": {
+              "device_ids": [
+                1
+              ],
+              "kernel_count": 32,
+              "nccl_gpu_time_us": 1303.59,
+              "nccl_wall_union_us": 1303.59,
+              "pids": [
+                24411
+              ]
+            }
+          },
+          "rank_range_count": 2,
+          "raw_nccl_duration_us": 1632.903,
+          "request_ids": [
+            "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+            "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+            "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+            "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+          ],
+          "scheduled_requests": 4,
+          "scheduled_tokens": 4,
+          "step_id": 104,
+          "sum_rank_nccl_gpu_time_us": 1632.903,
+          "summed_per_rank_nccl_duration_us": 1632.9029999999998,
+          "valid": true,
+          "workload_id": "in32_out32_c4"
+        },
+        {
+          "collective_bytes": null,
+          "collective_call_count": 96,
+          "collective_kinds": [
+            "all_gather",
+            "all_reduce"
+          ],
+          "collectives": [
+            {
+              "collective_bytes": null,
+              "collective_call_count": 2,
+              "collective_kind": "all_gather",
+              "collective_metadata_range_count": 0,
+              "estimated_collective_bytes": 14336,
+              "nccl_wall_union_us": 209.182,
+              "observed_kernel_names_sample": [
+                "ncclDevKernel_AllGather_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)"
+              ],
+              "sum_rank_nccl_gpu_time_us": 413.474
+            },
+            {
+              "collective_bytes": null,
+              "collective_call_count": 94,
+              "collective_kind": "all_reduce",
+              "collective_metadata_range_count": 0,
+              "estimated_collective_bytes": 673792,
+              "nccl_wall_union_us": 1192.931,
+              "observed_kernel_names_sample": [
+                "ncclDevKernel_AllReduce_Sum_f16_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)"
+              ],
+              "sum_rank_nccl_gpu_time_us": 1646.663
+            }
+          ],
+          "compute_wall_union_us": 1320.09,
+          "consistency_checks": {
+            "exposed_le_nccl_wall_le_decode_wall": true,
+            "overlap_le_nccl_wall": true
+          },
+          "cross_rank_nccl_interval_union_us": 1402.113,
+          "decode_duration_us": 2861.094,
+          "decode_step": 105,
+          "decode_step_critical_path_duration_us": 2861.094,
+          "decode_step_wall_us": 2861.094,
+          "estimated_collective_bytes": 688128,
+          "exposed_nccl_duration_us": 1384.839,
+          "exposed_nccl_fraction_of_decode_critical_path": 0.48402429280547926,
+          "exposed_nccl_wall_us": 1384.839,
+          "invalid_reasons": [],
+          "max_per_rank_nccl_duration_us": 1356.4869999999999,
+          "nccl_compute_overlap_duration_us": 17.274,
+          "nccl_compute_overlap_wall_us": 17.274,
+          "nccl_fraction_of_decode_critical_path": 0.49006184347665616,
+          "nccl_wall_union_us": 1402.113,
+          "nvtx_text": "vllm.step phase=decode step=105 tokens=4 requests=4 ctx_tokens=0 ctx_requests=0 decode_tokens=4 decode_requests=4 req_ids=cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3|cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec|cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2|cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5",
+          "overlap_ratio": 0.012319977063189628,
+          "phase": "decode",
+          "rank0_nccl_gpu_time_us": 703.65,
+          "rank0_nccl_kernel_count": 48,
+          "rank1_nccl_gpu_time_us": 1356.4869999999999,
+          "rank1_nccl_kernel_count": 48,
+          "rank_diagnostics": {
+            "rank0": {
+              "device_ids": [
+                0
+              ],
+              "kernel_count": 48,
+              "nccl_gpu_time_us": 703.65,
+              "nccl_wall_union_us": 694.5989999999999,
+              "pids": [
+                24410
+              ]
+            },
+            "rank1": {
+              "device_ids": [
+                1
+              ],
+              "kernel_count": 48,
+              "nccl_gpu_time_us": 1356.4869999999999,
+              "nccl_wall_union_us": 1348.933,
+              "pids": [
+                24411
+              ]
+            }
+          },
+          "rank_range_count": 2,
+          "raw_nccl_duration_us": 2060.1369999999997,
+          "request_ids": [
+            "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+            "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+            "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+            "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+          ],
+          "scheduled_requests": 4,
+          "scheduled_tokens": 4,
+          "step_id": 105,
+          "sum_rank_nccl_gpu_time_us": 2060.1369999999997,
+          "summed_per_rank_nccl_duration_us": 2060.1369999999997,
+          "valid": true,
+          "workload_id": "in32_out32_c4"
+        }
+      ],
+      "workload_id": "in32_out32_c4"
+    },
+    {
+      "collective_bytes_per_decode_step": {
+        "count": 64,
+        "max_us": 6085632.0,
+        "mean_us": 1049104.0,
+        "p50_us": 903168.0,
+        "p95_us": 1068748.7999999998
+      },
+      "collective_call_count_per_decode_step": {
+        "count": 64,
+        "max_us": 150.0,
+        "mean_us": 123.765625,
+        "p50_us": 125.5,
+        "p95_us": 142.0
+      },
+      "collective_kinds_per_decode_step": [
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ],
+        [
+          "all_gather",
+          "all_reduce"
+        ]
+      ],
+      "exposed_nccl_fraction_of_decode_critical_path": {
+        "count": 64,
+        "max_us": 0.8425497247658454,
+        "mean_us": 0.4100917249619401,
+        "p50_us": 0.3868650183033707,
+        "p95_us": 0.4880781539862253
+      },
+      "exposed_nccl_wall_us_per_decode_step": {
+        "count": 64,
+        "max_us": 16759.362999999998,
+        "mean_us": 1663.0665,
+        "p50_us": 1167.0095000000001,
+        "p95_us": 1954.3934499999978
+      },
+      "invalid_decode_steps": 0,
+      "measured_decode_steps": 64,
+      "nccl_compute_overlap_wall_us_per_decode_step": {
+        "count": 64,
+        "max_us": 1327.74,
+        "mean_us": 54.74771875,
+        "p50_us": 13.8295,
+        "p95_us": 28.688049999999997
+      },
+      "nccl_wall_union_us_per_decode_step": {
+        "count": 64,
+        "max_us": 18087.103,
+        "mean_us": 1717.81421875,
+        "p50_us": 1181.1575,
+        "p95_us": 1982.1895999999974
+      },
+      "overlap_ratio_per_decode_step": {
+        "count": 64,
+        "max_us": 0.07845967239678592,
+        "mean_us": 0.014886281231287971,
+        "p50_us": 0.011883646099713832,
+        "p95_us": 0.01817662248379614
+      },
+      "sample_rows": [
+        {
+          "collective_bytes": 5970944,
+          "collective_call_count": 100,
+          "collective_kinds": [
+            "all_gather",
+            "all_reduce"
+          ],
+          "collectives": [
+            {
+              "collective_bytes": null,
+              "collective_call_count": 2,
+              "collective_kind": "all_gather",
+              "collective_metadata_range_count": 0,
+              "estimated_collective_bytes": 14336,
+              "nccl_wall_union_us": 221.231,
+              "observed_kernel_names_sample": [
+                "ncclDevKernel_AllGather_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)"
+              ],
+              "sum_rank_nccl_gpu_time_us": 570.1790000000001
+            },
+            {
+              "collective_bytes": 5970944,
+              "collective_call_count": 98,
+              "collective_kind": "all_reduce",
+              "collective_metadata_range_count": 98,
+              "estimated_collective_bytes": 702464,
+              "nccl_wall_union_us": 13671.03,
+              "observed_kernel_names_sample": [
+                "ncclDevKernel_AllReduce_Sum_f16_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)"
+              ],
+              "sum_rank_nccl_gpu_time_us": 15241.771
+            }
+          ],
+          "compute_wall_union_us": 2332.313,
+          "consistency_checks": {
+            "exposed_le_nccl_wall_le_decode_wall": true,
+            "overlap_le_nccl_wall": true
+          },
+          "cross_rank_nccl_interval_union_us": 13892.261,
+          "decode_duration_us": 17847.348,
+          "decode_step": 172,
+          "decode_step_critical_path_duration_us": 17847.348,
+          "decode_step_wall_us": 17847.348,
+          "estimated_collective_bytes": 716800,
+          "exposed_nccl_duration_us": 12879.198,
+          "exposed_nccl_fraction_of_decode_critical_path": 0.721630911214372,
+          "exposed_nccl_wall_us": 12879.198,
+          "invalid_reasons": [],
+          "max_per_rank_nccl_duration_us": 13935.816,
+          "nccl_compute_overlap_duration_us": 1013.063,
+          "nccl_compute_overlap_wall_us": 1013.063,
+          "nccl_fraction_of_decode_critical_path": 0.7783935742161804,
+          "nccl_wall_union_us": 13892.261,
+          "nvtx_text": "vllm.step phase=decode step=172 tokens=34 requests=4 ctx_tokens=32 ctx_requests=2 decode_tokens=2 decode_requests=2 req_ids=cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130|cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28|cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0|cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e",
+          "overlap_ratio": 0.07292283092003526,
+          "phase": "decode",
+          "rank0_nccl_gpu_time_us": 1876.134,
+          "rank0_nccl_kernel_count": 50,
+          "rank1_nccl_gpu_time_us": 13935.816,
+          "rank1_nccl_kernel_count": 50,
+          "rank_diagnostics": {
+            "rank0": {
+              "device_ids": [
+                0
+              ],
+              "kernel_count": 50,
+              "nccl_gpu_time_us": 1876.134,
+              "nccl_wall_union_us": 1733.983,
+              "pids": [
+                24410
+              ]
+            },
+            "rank1": {
+              "device_ids": [
+                1
+              ],
+              "kernel_count": 50,
+              "nccl_gpu_time_us": 13935.816,
+              "nccl_wall_union_us": 13794.197,
+              "pids": [
+                24411
+              ]
+            }
+          },
+          "rank_range_count": 2,
+          "raw_nccl_duration_us": 15811.95,
+          "request_ids": [
+            "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+            "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+            "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+            "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+          ],
+          "scheduled_requests": 4,
+          "scheduled_tokens": 34,
+          "step_id": 172,
+          "sum_rank_nccl_gpu_time_us": 15811.95,
+          "summed_per_rank_nccl_duration_us": 15811.95,
+          "valid": true,
+          "workload_id": "in32_out32_c8"
+        },
+        {
+          "collective_bytes": null,
+          "collective_call_count": 58,
+          "collective_kinds": [
+            "all_reduce"
+          ],
+          "collectives": [
+            {
+              "collective_bytes": null,
+              "collective_call_count": 58,
+              "collective_kind": "all_reduce",
+              "collective_metadata_range_count": 0,
+              "estimated_collective_bytes": 415744,
+              "nccl_wall_union_us": 901.014,
+              "observed_kernel_names_sample": [
+                "ncclDevKernel_AllReduce_Sum_f16_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)"
+              ],
+              "sum_rank_nccl_gpu_time_us": 1189.413
+            }
+          ],
+          "compute_wall_union_us": 718.064,
+          "consistency_checks": {
+            "exposed_le_nccl_wall_le_decode_wall": true,
+            "overlap_le_nccl_wall": true
+          },
+          "cross_rank_nccl_interval_union_us": 901.014,
+          "decode_duration_us": 2472.423,
+          "decode_step": 173,
+          "decode_step_critical_path_duration_us": 2472.423,
+          "decode_step_wall_us": 2472.423,
+          "estimated_collective_bytes": 415744,
+          "exposed_nccl_duration_us": 887.045,
+          "exposed_nccl_fraction_of_decode_critical_path": 0.3587755816864671,
+          "exposed_nccl_wall_us": 887.045,
+          "invalid_reasons": [],
+          "max_per_rank_nccl_duration_us": 888.804,
+          "nccl_compute_overlap_duration_us": 13.969,
+          "nccl_compute_overlap_wall_us": 13.969,
+          "nccl_fraction_of_decode_critical_path": 0.36442550485899866,
+          "nccl_wall_union_us": 901.014,
+          "nvtx_text": "vllm.step phase=decode step=173 tokens=4 requests=4 ctx_tokens=0 ctx_requests=0 decode_tokens=4 decode_requests=4 req_ids=cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130|cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28|cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0|cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e",
+          "overlap_ratio": 0.015503643672573343,
+          "phase": "decode",
+          "rank0_nccl_gpu_time_us": 300.609,
+          "rank0_nccl_kernel_count": 29,
+          "rank1_nccl_gpu_time_us": 888.804,
+          "rank1_nccl_kernel_count": 29,
+          "rank_diagnostics": {
+            "rank0": {
+              "device_ids": [
+                0
+              ],
+              "kernel_count": 29,
+              "nccl_gpu_time_us": 300.609,
+              "nccl_wall_union_us": 290.809,
+              "pids": [
+                24410
+              ]
+            },
+            "rank1": {
+              "device_ids": [
+                1
+              ],
+              "kernel_count": 29,
+              "nccl_gpu_time_us": 888.804,
+              "nccl_wall_union_us": 879.593,
+              "pids": [
+                24411
+              ]
+            }
+          },
+          "rank_range_count": 2,
+          "raw_nccl_duration_us": 1189.413,
+          "request_ids": [
+            "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+            "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+            "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+            "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+          ],
+          "scheduled_requests": 4,
+          "scheduled_tokens": 4,
+          "step_id": 173,
+          "sum_rank_nccl_gpu_time_us": 1189.413,
+          "summed_per_rank_nccl_duration_us": 1189.413,
+          "valid": true,
+          "workload_id": "in32_out32_c8"
+        },
+        {
+          "collective_bytes": null,
+          "collective_call_count": 88,
+          "collective_kinds": [
+            "all_gather",
+            "all_reduce"
+          ],
+          "collectives": [
+            {
+              "collective_bytes": null,
+              "collective_call_count": 2,
+              "collective_kind": "all_gather",
+              "collective_metadata_range_count": 0,
+              "estimated_collective_bytes": 14336,
+              "nccl_wall_union_us": 211.606,
+              "observed_kernel_names_sample": [
+                "ncclDevKernel_AllGather_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)"
+              ],
+              "sum_rank_nccl_gpu_time_us": 417.794
+            },
+            {
+              "collective_bytes": null,
+              "collective_call_count": 86,
+              "collective_kind": "all_reduce",
+              "collective_metadata_range_count": 0,
+              "estimated_collective_bytes": 616448,
+              "nccl_wall_union_us": 1032.233,
+              "observed_kernel_names_sample": [
+                "ncclDevKernel_AllReduce_Sum_f16_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)"
+              ],
+              "sum_rank_nccl_gpu_time_us": 1445.897
+            }
+          ],
+          "compute_wall_union_us": 1245.046,
+          "consistency_checks": {
+            "exposed_le_nccl_wall_le_decode_wall": true,
+            "overlap_le_nccl_wall": true
+          },
+          "cross_rank_nccl_interval_union_us": 1243.839,
+          "decode_duration_us": 2610.853,
+          "decode_step": 174,
+          "decode_step_critical_path_duration_us": 2610.853,
+          "decode_step_wall_us": 2610.853,
+          "estimated_collective_bytes": 630784,
+          "exposed_nccl_duration_us": 1226.701,
+          "exposed_nccl_fraction_of_decode_critical_path": 0.4698468278374922,
+          "exposed_nccl_wall_us": 1226.701,
+          "invalid_reasons": [],
+          "max_per_rank_nccl_duration_us": 1204.807,
+          "nccl_compute_overlap_duration_us": 17.138,
+          "nccl_compute_overlap_wall_us": 17.138,
+          "nccl_fraction_of_decode_critical_path": 0.47641096607124184,
+          "nccl_wall_union_us": 1243.839,
+          "nvtx_text": "vllm.step phase=decode step=174 tokens=4 requests=4 ctx_tokens=0 ctx_requests=0 decode_tokens=4 decode_requests=4 req_ids=cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130|cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28|cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0|cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e",
+          "overlap_ratio": 0.013778310536974642,
+          "phase": "decode",
+          "rank0_nccl_gpu_time_us": 658.884,
+          "rank0_nccl_kernel_count": 44,
+          "rank1_nccl_gpu_time_us": 1204.807,
+          "rank1_nccl_kernel_count": 44,
+          "rank_diagnostics": {
+            "rank0": {
+              "device_ids": [
+                0
+              ],
+              "kernel_count": 44,
+              "nccl_gpu_time_us": 658.884,
+              "nccl_wall_union_us": 658.884,
+              "pids": [
+                24410
+              ]
+            },
+            "rank1": {
+              "device_ids": [
+                1
+              ],
+              "kernel_count": 44,
+              "nccl_gpu_time_us": 1204.807,
+              "nccl_wall_union_us": 1204.807,
+              "pids": [
+                24411
+              ]
+            }
+          },
+          "rank_range_count": 2,
+          "raw_nccl_duration_us": 1863.691,
+          "request_ids": [
+            "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+            "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+            "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+            "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+          ],
+          "scheduled_requests": 4,
+          "scheduled_tokens": 4,
+          "step_id": 174,
+          "sum_rank_nccl_gpu_time_us": 1863.691,
+          "summed_per_rank_nccl_duration_us": 1863.691,
+          "valid": true,
+          "workload_id": "in32_out32_c8"
+        }
+      ],
+      "workload_id": "in32_out32_c8"
+    }
+  ],
+  "status": "measured"
+}

@@ -1,0 +1,241 @@
+{
+  "mean_compiler_regret_pct": 0.0,
+  "n_held_out_cells": 21,
+  "oracle_match_rate": 1.0,
+  "per_cell": [
+    {
+      "actual_tp1_throughput": 517.7671312013252,
+      "actual_tp2_throughput": 482.7661803431268,
+      "communication_changed_decision": false,
+      "compiler_regret_pct": 0.0,
+      "compiler_selected_tp": "tp1",
+      "match": true,
+      "model_label": "qwen05b",
+      "oracle_choice": "tp1",
+      "workload_id": "in1024_out128_c1"
+    },
+    {
+      "actual_tp1_throughput": 898.3398420099574,
+      "actual_tp2_throughput": 867.1039151282118,
+      "communication_changed_decision": false,
+      "compiler_regret_pct": 0.0,
+      "compiler_selected_tp": "tp1",
+      "match": true,
+      "model_label": "qwen05b",
+      "oracle_choice": "tp1",
+      "workload_id": "in1024_out128_c2"
+    },
+    {
+      "actual_tp1_throughput": 1700.4997658208463,
+      "actual_tp2_throughput": 1632.004104369584,
+      "communication_changed_decision": false,
+      "compiler_regret_pct": 0.0,
+      "compiler_selected_tp": "tp1",
+      "match": true,
+      "model_label": "qwen05b",
+      "oracle_choice": "tp1",
+      "workload_id": "in1024_out128_c4"
+    },
+    {
+      "actual_tp1_throughput": 1772.4687533111426,
+      "actual_tp2_throughput": 1673.7760310746728,
+      "communication_changed_decision": false,
+      "compiler_regret_pct": 0.0,
+      "compiler_selected_tp": "tp1",
+      "match": true,
+      "model_label": "qwen05b",
+      "oracle_choice": "tp1",
+      "workload_id": "in1024_out128_c8"
+    },
+    {
+      "actual_tp1_throughput": 1894.2398629048482,
+      "actual_tp2_throughput": 1777.693063004754,
+      "communication_changed_decision": false,
+      "compiler_regret_pct": 0.0,
+      "compiler_selected_tp": "tp1",
+      "match": true,
+      "model_label": "qwen05b",
+      "oracle_choice": "tp1",
+      "workload_id": "in1024_out256_c8"
+    },
+    {
+      "actual_tp1_throughput": 415.01804637461214,
+      "actual_tp2_throughput": 381.8374085105852,
+      "communication_changed_decision": false,
+      "compiler_regret_pct": 0.0,
+      "compiler_selected_tp": "tp1",
+      "match": true,
+      "model_label": "qwen05b",
+      "oracle_choice": "tp1",
+      "workload_id": "in1024_out32_c1"
+    },
+    {
+      "actual_tp1_throughput": 1142.6796108254696,
+      "actual_tp2_throughput": 1124.7067901236967,
+      "communication_changed_decision": false,
+      "compiler_regret_pct": 0.0,
+      "compiler_selected_tp": "tp1",
+      "match": true,
+      "model_label": "qwen05b",
+      "oracle_choice": "tp1",
+      "workload_id": "in1024_out32_c4"
+    },
+    {
+      "actual_tp1_throughput": 1283.7822239964987,
+      "actual_tp2_throughput": 1198.809507431808,
+      "communication_changed_decision": false,
+      "compiler_regret_pct": 0.0,
+      "compiler_selected_tp": "tp1",
+      "match": true,
+      "model_label": "qwen05b",
+      "oracle_choice": "tp1",
+      "workload_id": "in1024_out32_c8"
+    },
+    {
+      "actual_tp1_throughput": 908.0215648888548,
+      "actual_tp2_throughput": 878.5809096305018,
+      "communication_changed_decision": false,
+      "compiler_regret_pct": 0.0,
+      "compiler_selected_tp": "tp1",
+      "match": true,
+      "model_label": "qwen05b",
+      "oracle_choice": "tp1",
+      "workload_id": "in256_out128_c2"
+    },
+    {
+      "actual_tp1_throughput": 1832.0443671631485,
+      "actual_tp2_throughput": 1667.2832647723044,
+      "communication_changed_decision": false,
+      "compiler_regret_pct": 0.0,
+      "compiler_selected_tp": "tp1",
+      "match": true,
+      "model_label": "qwen05b",
+      "oracle_choice": "tp1",
+      "workload_id": "in256_out128_c8"
+    },
+    {
+      "actual_tp1_throughput": 1914.325141035264,
+      "actual_tp2_throughput": 1729.3506436596058,
+      "communication_changed_decision": false,
+      "compiler_regret_pct": 0.0,
+      "compiler_selected_tp": "tp1",
+      "match": true,
+      "model_label": "qwen05b",
+      "oracle_choice": "tp1",
+      "workload_id": "in256_out256_c4"
+    },
+    {
+      "actual_tp1_throughput": 679.7156043904032,
+      "actual_tp2_throughput": 630.4486013107337,
+      "communication_changed_decision": false,
+      "compiler_regret_pct": 0.0,
+      "compiler_selected_tp": "tp1",
+      "match": true,
+      "model_label": "qwen05b",
+      "oracle_choice": "tp1",
+      "workload_id": "in256_out32_c2"
+    },
+    {
+      "actual_tp1_throughput": 1381.955590947277,
+      "actual_tp2_throughput": 1259.0759801602908,
+      "communication_changed_decision": false,
+      "compiler_regret_pct": 0.0,
+      "compiler_selected_tp": "tp1",
+      "match": true,
+      "model_label": "qwen05b",
+      "oracle_choice": "tp1",
+      "workload_id": "in256_out32_c8"
+    },
+    {
+      "actual_tp1_throughput": 1806.4102377754934,
+      "actual_tp2_throughput": 1654.7888206335745,
+      "communication_changed_decision": false,
+      "compiler_regret_pct": 0.0,
+      "compiler_selected_tp": "tp1",
+      "match": true,
+      "model_label": "qwen05b",
+      "oracle_choice": "tp1",
+      "workload_id": "in32_out128_c4"
+    },
+    {
+      "actual_tp1_throughput": 1769.7446849423047,
+      "actual_tp2_throughput": 1688.3543969457253,
+      "communication_changed_decision": false,
+      "compiler_regret_pct": 0.0,
+      "compiler_selected_tp": "tp1",
+      "match": true,
+      "model_label": "qwen05b",
+      "oracle_choice": "tp1",
+      "workload_id": "in32_out256_c8"
+    },
+    {
+      "actual_tp1_throughput": 448.02608080337853,
+      "actual_tp2_throughput": 380.64155915071683,
+      "communication_changed_decision": false,
+      "compiler_regret_pct": 0.0,
+      "compiler_selected_tp": "tp1",
+      "match": true,
+      "model_label": "qwen05b",
+      "oracle_choice": "tp1",
+      "workload_id": "in32_out32_c1"
+    },
+    {
+      "actual_tp1_throughput": 1324.2489664054056,
+      "actual_tp2_throughput": 1180.1811737358837,
+      "communication_changed_decision": false,
+      "compiler_regret_pct": 0.0,
+      "compiler_selected_tp": "tp1",
+      "match": true,
+      "model_label": "qwen05b",
+      "oracle_choice": "tp1",
+      "workload_id": "in32_out32_c4"
+    },
+    {
+      "actual_tp1_throughput": 61.829791291066755,
+      "actual_tp2_throughput": 104.47913795338869,
+      "communication_changed_decision": false,
+      "compiler_regret_pct": 0.0,
+      "compiler_selected_tp": "tp2",
+      "match": true,
+      "model_label": "qwen7b",
+      "oracle_choice": "tp2",
+      "workload_id": "in1024_out32_c1"
+    },
+    {
+      "actual_tp1_throughput": 223.52830861088677,
+      "actual_tp2_throughput": 349.8991166311512,
+      "communication_changed_decision": false,
+      "compiler_regret_pct": 0.0,
+      "compiler_selected_tp": "tp2",
+      "match": true,
+      "model_label": "qwen7b",
+      "oracle_choice": "tp2",
+      "workload_id": "in1024_out32_c4"
+    },
+    {
+      "actual_tp1_throughput": 62.63761750208427,
+      "actual_tp2_throughput": 105.85942643620955,
+      "communication_changed_decision": false,
+      "compiler_regret_pct": 0.0,
+      "compiler_selected_tp": "tp2",
+      "match": true,
+      "model_label": "qwen7b",
+      "oracle_choice": "tp2",
+      "workload_id": "in32_out32_c1"
+    },
+    {
+      "actual_tp1_throughput": 227.94195314355284,
+      "actual_tp2_throughput": 357.08722855784674,
+      "communication_changed_decision": false,
+      "compiler_regret_pct": 0.0,
+      "compiler_selected_tp": "tp2",
+      "match": true,
+      "model_label": "qwen7b",
+      "oracle_choice": "tp2",
+      "workload_id": "in32_out32_c4"
+    }
+  ],
+  "tp1_selections": 17,
+  "tp2_selections": 4,
+  "worst_case_compiler_regret_pct": 0.0
+}

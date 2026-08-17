@@ -1,0 +1,271 @@
+{
+  "call_count_aware_exposed_prediction": {
+    "definition": "predicted_raw_comm_us sums Phase 1 predictions for rank0 collective calls per decode step; overlap-aware multiplies by (1 - measured step overlap_ratio).",
+    "overall_overlap_aware": {
+      "count": 127,
+      "mae_us": 851.7992303009352,
+      "mape": 0.47731076348272233,
+      "max_abs_error_us": 15096.990919197087
+    },
+    "overall_zero_overlap_baseline": {
+      "count": 127,
+      "mae_us": 840.91720416173,
+      "mape": 0.47014236758867406,
+      "max_abs_error_us": 14965.291527844012
+    },
+    "per_cell": [
+      {
+        "overlap_aware": {
+          "count": 31,
+          "mae_us": 463.52055403064776,
+          "mape": 0.4649661890668403,
+          "max_abs_error_us": 1306.0549918857332
+        },
+        "workload_id": "in32_out32_c1",
+        "zero_overlap_baseline": {
+          "count": 31,
+          "mae_us": 455.2918572494841,
+          "mape": 0.45578983685482627,
+          "max_abs_error_us": 1298.5082530858544
+        }
+      },
+      {
+        "overlap_aware": {
+          "count": 32,
+          "mae_us": 952.4015349437734,
+          "mape": 0.48205036210366264,
+          "max_abs_error_us": 12735.71641828151
+        },
+        "workload_id": "in32_out32_c4",
+        "zero_overlap_baseline": {
+          "count": 32,
+          "mae_us": 941.079399955679,
+          "mape": 0.47565649099829405,
+          "max_abs_error_us": 12610.398160042805
+        }
+      },
+      {
+        "overlap_aware": {
+          "count": 64,
+          "mae_us": 989.5705617979365,
+          "mape": 0.480920367404945,
+          "max_abs_error_us": 15096.990919197087
+        },
+        "workload_id": "in32_out32_c8",
+        "zero_overlap_baseline": {
+          "count": 64,
+          "mae_us": 977.6233836753744,
+          "mape": 0.4743373129580715,
+          "max_abs_error_us": 14965.291527844012
+        }
+      }
+    ]
+  },
+  "per_collective_kernel_prediction": [
+    {
+      "all_samples": {
+        "error_by_collective_kind": {
+          "all_gather": {
+            "count": 60,
+            "mae_us": 86.91077139034815,
+            "max_abs_error_us": 95.42133805701482
+          },
+          "all_reduce": {
+            "count": 2872,
+            "mae_us": 6.470397960073814,
+            "max_abs_error_us": 1254.1423819171473
+          }
+        },
+        "error_by_message_size_bucket": {
+          "<16KiB": {
+            "count": 2932,
+            "mae_us": 8.116517470925267,
+            "max_abs_error_us": 1254.1423819171473
+          }
+        },
+        "mae_us": 8.116517470925267,
+        "mape": 0.2090233739045856,
+        "max_abs_error_us": 1254.1423819171473,
+        "max_relative_error": 0.991746178112217,
+        "p50_abs_error_us": 1.7976180828526722,
+        "p95_abs_error_us": 2.501618082852673
+      },
+      "outlier_counts_by_abs_error_threshold_us": {
+        "10": 92,
+        "100": 29,
+        "50": 92
+      },
+      "sample_count": 2932,
+      "steady_state_samples": {
+        "error_by_collective_kind": {
+          "all_gather": {
+            "count": 60,
+            "mae_us": 86.91077139034815,
+            "max_abs_error_us": 95.42133805701482
+          },
+          "all_reduce": {
+            "count": 2793,
+            "mae_us": 1.6508089036562703,
+            "max_abs_error_us": 82.01138191714733
+          }
+        },
+        "error_by_message_size_bucket": {
+          "<16KiB": {
+            "count": 2853,
+            "mae_us": 3.4438680516413784,
+            "max_abs_error_us": 95.42133805701482
+          }
+        },
+        "mae_us": 3.4438680516413784,
+        "mape": 0.20262804164513865,
+        "max_abs_error_us": 95.42133805701482,
+        "max_relative_error": 0.8989800465124248,
+        "p50_abs_error_us": 1.7976180828526722,
+        "p95_abs_error_us": 2.501618082852673
+      },
+      "workload_id": "in32_out32_c1"
+    },
+    {
+      "all_samples": {
+        "error_by_collective_kind": {
+          "all_gather": {
+            "count": 62,
+            "mae_us": 200.72446708927288,
+            "max_abs_error_us": 364.8313380570148
+          },
+          "all_reduce": {
+            "count": 3890,
+            "mae_us": 7.048100197684296,
+            "max_abs_error_us": 991.2323819171473
+          }
+        },
+        "error_by_message_size_bucket": {
+          "16KiB-1MiB": {
+            "count": 98,
+            "mae_us": 138.01396674051296,
+            "max_abs_error_us": 507.8059351425672
+          },
+          "<16KiB": {
+            "count": 3854,
+            "mae_us": 6.8335905521423355,
+            "max_abs_error_us": 991.2323819171473
+          }
+        },
+        "mae_us": 10.086545224829663,
+        "mape": 0.10064539561226615,
+        "max_abs_error_us": 991.2323819171473,
+        "max_relative_error": 0.9895797836784045,
+        "p50_abs_error_us": 0.741618082852673,
+        "p95_abs_error_us": 2.1207819171473217
+      },
+      "outlier_counts_by_abs_error_threshold_us": {
+        "10": 142,
+        "100": 142,
+        "50": 142
+      },
+      "sample_count": 3952,
+      "steady_state_samples": {
+        "error_by_collective_kind": {
+          "all_reduce": {
+            "count": 3810,
+            "mae_us": 0.7374399232479146,
+            "max_abs_error_us": 8.581064857432853
+          }
+        },
+        "error_by_message_size_bucket": {
+          "16KiB-1MiB": {
+            "count": 49,
+            "mae_us": 3.3018962976424153,
+            "max_abs_error_us": 8.581064857432853
+          },
+          "<16KiB": {
+            "count": 3761,
+            "mae_us": 0.7040290319037693,
+            "max_abs_error_us": 3.0663819171473268
+          }
+        },
+        "mae_us": 0.7374399232479146,
+        "mape": 0.06999117080797515,
+        "max_abs_error_us": 8.581064857432853,
+        "max_relative_error": 0.32153270598894085,
+        "p50_abs_error_us": 0.709618082852673,
+        "p95_abs_error_us": 1.6263819171473273
+      },
+      "workload_id": "in32_out32_c4"
+    },
+    {
+      "all_samples": {
+        "error_by_collective_kind": {
+          "all_gather": {
+            "count": 128,
+            "mae_us": 201.13702555701482,
+            "max_abs_error_us": 352.12733805701487
+          },
+          "all_reduce": {
+            "count": 7793,
+            "mae_us": 7.516015516102541,
+            "max_abs_error_us": 2231.206935142567
+          }
+        },
+        "error_by_message_size_bucket": {
+          "16KiB-1MiB": {
+            "count": 202,
+            "mae_us": 139.2810101696882,
+            "max_abs_error_us": 2231.206935142567
+          },
+          "<16KiB": {
+            "count": 7719,
+            "mae_us": 7.278544388393313,
+            "max_abs_error_us": 1638.5953819171473
+          }
+        },
+        "mae_us": 10.644848906487185,
+        "mape": 0.10168796263894171,
+        "max_abs_error_us": 2231.206935142567,
+        "max_relative_error": 0.9936704613656291,
+        "p50_abs_error_us": 0.741618082852673,
+        "p95_abs_error_us": 2.202381917147328
+      },
+      "outlier_counts_by_abs_error_threshold_us": {
+        "10": 299,
+        "100": 295,
+        "50": 296
+      },
+      "sample_count": 7921,
+      "steady_state_samples": {
+        "error_by_collective_kind": {
+          "all_gather": {
+            "count": 1,
+            "mae_us": 99.87033805701482,
+            "max_abs_error_us": 99.87033805701482
+          },
+          "all_reduce": {
+            "count": 7625,
+            "mae_us": 0.7384356939612419,
+            "max_abs_error_us": 23.578381917147325
+          }
+        },
+        "error_by_message_size_bucket": {
+          "16KiB-1MiB": {
+            "count": 101,
+            "mae_us": 2.136286061319333,
+            "max_abs_error_us": 6.7250648574328515
+          },
+          "<16KiB": {
+            "count": 7525,
+            "mae_us": 0.7328475232316586,
+            "max_abs_error_us": 99.87033805701482
+          }
+        },
+        "mae_us": 0.7514348943760141,
+        "mape": 0.06989901340550629,
+        "max_abs_error_us": 99.87033805701482,
+        "max_relative_error": 0.903043936388513,
+        "p50_abs_error_us": 0.741618082852673,
+        "p95_abs_error_us": 1.5623819171473272
+      },
+      "workload_id": "in32_out32_c8"
+    }
+  ],
+  "status": "measured"
+}

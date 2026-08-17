@@ -1,0 +1,34 @@
+{
+  "communication_penalty_source": "mean per-decode-step exposed_nccl_wall_us from wall-clock interval union, not summed per-rank GPU kernel duration",
+  "explains_measured_winner": true,
+  "formula": "TP2 wins iff TP compute savings > exposed communication penalty + runtime residual",
+  "profiler_perturbation": {
+    "nsight_timing_is_profiler_perturbed": true,
+    "nsys_minus_normal_tpot_us": 157.95422838099512,
+    "nsys_overhead_pct": 1.7678901910499496,
+    "nvtx_minus_normal_tpot_us": -0.32652920532746066,
+    "nvtx_overhead_pct": -0.0036546522692469364,
+    "tp2_normal_tpot_us": 8934.617612601049,
+    "tp2_nsys_tpot_us": 9092.571840982044,
+    "tp2_nvtx_no_nsys_tpot_us": 8934.291083395721
+  },
+  "rows": [
+    {
+      "explains_measured_winner": true,
+      "exposed_communication_penalty_us": 645.7646,
+      "inequality_holds": true,
+      "mean_nccl_wall_union_us_per_decode_step": 715.6841923076927,
+      "mean_sum_rank_nccl_gpu_time_us_per_decode_step": 1138.2285692307692,
+      "measured_winner": "tp2",
+      "rhs_penalty_plus_residual_us": 645.7646,
+      "runtime_residual_us": 0.0,
+      "total_exposed_nccl_wall_us_across_measured_steps": 83949.398,
+      "tp1_decode_latency_us": 15610.406865485973,
+      "tp2_compute_excluding_exposed_comm_estimate_us": 8288.853012601048,
+      "tp2_decode_latency_us": 8934.617612601049,
+      "tp_compute_savings_us": 7321.553852884925,
+      "workload_id": "in32_out32_c1"
+    }
+  ],
+  "status": "measured"
+}

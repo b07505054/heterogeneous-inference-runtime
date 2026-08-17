@@ -1,0 +1,23 @@
+{
+  "communication_changed_decision": false,
+  "communication_predictor_kind": "log_size_piecewise_interpolation",
+  "communication_profile_id": "2x_rtx4090_phb_single_numa_p2p_unavailable_nccl_shm_direct",
+  "compiler_selected_tp": "tp1",
+  "estimated_communication_bytes_tp1": 0,
+  "estimated_communication_bytes_tp2": 7168,
+  "estimated_nccl_comm_time_us_tp1": 0.0,
+  "estimated_nccl_comm_time_us_tp2": 10.437618082852673,
+  "model_label": "qwen05b",
+  "nccl_transport": "SHM/direct/direct",
+  "p2p_available": false,
+  "plan_has_distributed_key": false,
+  "plan_tensor_parallel_size": 1,
+  "policy_id": "d7_nccl_aware_profitability_selector_v1",
+  "pre_communication_selected_tp": "tp1",
+  "predicted_tp1_throughput": 750.8157326623077,
+  "predicted_tp1_throughput_before_communication": 750.8157326623077,
+  "predicted_tp2_throughput": 674.2321267897701,
+  "predicted_tp2_throughput_before_communication": 679.0105805297753,
+  "selection_reason": "profitable_tp1_selected_nccl_adjusted_throughput_higher",
+  "workload_id": "in256_out32_c2"
+}

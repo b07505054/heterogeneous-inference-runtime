@@ -1,0 +1,73 @@
+{
+  "correct_count": 5,
+  "formula": "TP2 wins iff compute_saving_us > communication_penalty_us + runtime_residual_us",
+  "rows": [
+    {
+      "communication_penalty_us": 1568.0704516129033,
+      "compute_saving_us": 1506.452108677345,
+      "explains_measured_winner": true,
+      "inequality_holds": false,
+      "measured_winner": "tp1",
+      "predicted_winner_from_inequality": "tp1",
+      "runtime_residual_us": 0.0,
+      "tp1_mean_tpot_us": 1777.170321363355,
+      "tp2_compute_excluding_exposed_comm_estimate_us": 270.71821268601,
+      "tp2_mean_tpot_us": 1838.7886642989133,
+      "workload_id": "in32_out32_c1"
+    },
+    {
+      "communication_penalty_us": 1530.3584516129033,
+      "compute_saving_us": 1472.9558387010657,
+      "explains_measured_winner": true,
+      "inequality_holds": false,
+      "measured_winner": "tp1",
+      "predicted_winner_from_inequality": "tp1",
+      "runtime_residual_us": 0.0,
+      "tp1_mean_tpot_us": 1747.4965034653583,
+      "tp2_compute_excluding_exposed_comm_estimate_us": 274.5406647642926,
+      "tp2_mean_tpot_us": 1804.899116377196,
+      "workload_id": "in128_out32_c1"
+    },
+    {
+      "communication_penalty_us": 1473.9325984251968,
+      "compute_saving_us": 1435.5326090751505,
+      "explains_measured_winner": true,
+      "inequality_holds": false,
+      "measured_winner": "tp1",
+      "predicted_winner_from_inequality": "tp1",
+      "runtime_residual_us": 0.0,
+      "tp1_mean_tpot_us": 1732.2328029655096,
+      "tp2_compute_excluding_exposed_comm_estimate_us": 296.70019389035906,
+      "tp2_mean_tpot_us": 1770.632792315556,
+      "workload_id": "in32_out128_c1"
+    },
+    {
+      "communication_penalty_us": 1855.1925757575757,
+      "compute_saving_us": 1770.66437119321,
+      "explains_measured_winner": true,
+      "inequality_holds": false,
+      "measured_winner": "tp1",
+      "predicted_winner_from_inequality": "tp1",
+      "runtime_residual_us": 0.0,
+      "tp1_mean_tpot_us": 2198.452465686827,
+      "tp2_compute_excluding_exposed_comm_estimate_us": 427.7880944936171,
+      "tp2_mean_tpot_us": 2282.980670251193,
+      "workload_id": "in32_out32_c4"
+    },
+    {
+      "communication_penalty_us": 1819.0311363636365,
+      "compute_saving_us": 1537.9549191807546,
+      "explains_measured_winner": true,
+      "inequality_holds": false,
+      "measured_winner": "tp1",
+      "predicted_winner_from_inequality": "tp1",
+      "runtime_residual_us": 0.0,
+      "tp1_mean_tpot_us": 2138.7650704597154,
+      "tp2_compute_excluding_exposed_comm_estimate_us": 600.8101512789608,
+      "tp2_mean_tpot_us": 2419.8412876425973,
+      "workload_id": "in32_out32_c8"
+    }
+  ],
+  "status": "measured",
+  "total_count": 5
+}

@@ -1,0 +1,81 @@
+{
+  "dependency_inventory": {
+    "can_collect_nsys": true,
+    "can_run_real_vllm": true,
+    "modules": {
+      "numpy": "/workspace/d8-vllm-env/lib/python3.12/site-packages/numpy/__init__.py",
+      "requests": "/workspace/d8-vllm-env/lib/python3.12/site-packages/requests/__init__.py",
+      "torch": "/workspace/d8-vllm-env/lib/python3.12/site-packages/torch/__init__.py",
+      "transformers": "/workspace/d8-vllm-env/lib/python3.12/site-packages/transformers/__init__.py",
+      "vllm": "/workspace/d8-vllm-env/lib/python3.12/site-packages/vllm/__init__.py"
+    },
+    "nsys_path": "/usr/local/bin/nsys",
+    "nsys_version": {
+      "argv": [
+        "/usr/local/bin/nsys",
+        "--version"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "NVIDIA Nsight Systems version 2025.3.1.0\n"
+    },
+    "python_executable": "/workspace/d8-vllm-env/bin/python"
+  },
+  "dtype": "from materialized D2/D4A launch spec",
+  "matched_fields": [
+    "model",
+    "prompt_lengths",
+    "output_lengths",
+    "concurrency",
+    "dtype",
+    "vllm_launch_materializer",
+    "warmup_requests",
+    "measured_repetitions"
+  ],
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "source_inputs": {
+    "d7_artifacts": "/workspace/heterogeneous-inference-runtime/results/runtime_paths/distributed_d7_nccl_aware_tp_selection",
+    "phase1_fit_report": "/workspace/heterogeneous-inference-runtime/results/runtime_paths/nccl_calibration/fit_report.json",
+    "phase1_profile": "/workspace/heterogeneous-inference-runtime/results/runtime_paths/nccl_calibration/communication_cost_profile.json",
+    "tp1_plan": "/workspace/heterogeneous-inference-runtime/results/runtime_paths/distributed_d2_qwen_pipeline/real_qwen_tp1_execution_plan.json",
+    "tp2_plan": "/workspace/heterogeneous-inference-runtime/results/runtime_paths/distributed_d2_qwen_pipeline/real_qwen_tp2_execution_plan.json"
+  },
+  "status": "ready",
+  "warmup_procedure": {
+    "measured_repetitions_per_workload": 5,
+    "warmup_excluded_from_measurements": true,
+    "warmup_requests_per_workload": 2
+  },
+  "workloads": [
+    {
+      "concurrency": 1,
+      "input_length": 32,
+      "output_length": 32,
+      "workload_id": "in32_out32_c1"
+    },
+    {
+      "concurrency": 1,
+      "input_length": 128,
+      "output_length": 32,
+      "workload_id": "in128_out32_c1"
+    },
+    {
+      "concurrency": 1,
+      "input_length": 32,
+      "output_length": 128,
+      "workload_id": "in32_out128_c1"
+    },
+    {
+      "concurrency": 4,
+      "input_length": 32,
+      "output_length": 32,
+      "workload_id": "in32_out32_c4"
+    },
+    {
+      "concurrency": 8,
+      "input_length": 32,
+      "output_length": 32,
+      "workload_id": "in32_out32_c8"
+    }
+  ]
+}

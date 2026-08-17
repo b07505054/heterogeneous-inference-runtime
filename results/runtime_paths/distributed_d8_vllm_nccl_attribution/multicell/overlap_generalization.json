@@ -1,0 +1,160 @@
+{
+  "call_count_by_workload": {
+    "in128_out32_c1": {
+      "count": 31,
+      "max_us": 176.0,
+      "mean_us": 129.5483870967742,
+      "p50_us": 144.0,
+      "p95_us": 162.0
+    },
+    "in32_out128_c1": {
+      "count": 127,
+      "max_us": 158.0,
+      "mean_us": 149.22834645669292,
+      "p50_us": 149.0,
+      "p95_us": 158.0
+    },
+    "in32_out32_c1": {
+      "count": 31,
+      "max_us": 156.0,
+      "mean_us": 148.09677419354838,
+      "p50_us": 150.0,
+      "p95_us": 155.0
+    },
+    "in32_out32_c4": {
+      "count": 33,
+      "max_us": 188.0,
+      "mean_us": 128.45454545454547,
+      "p50_us": 128.0,
+      "p95_us": 148.0
+    },
+    "in32_out32_c8": {
+      "count": 66,
+      "max_us": 200.0,
+      "mean_us": 126.31818181818181,
+      "p50_us": 128.0,
+      "p95_us": 142.0
+    }
+  },
+  "generalization_answers": {
+    "A_collective_call_count_changes_with_concurrency": {
+      "answer": "yes_per_step_count_decreases_for_c4_c8_while_scheduled_work_per_step_changes",
+      "evidence": {
+        "c1_mean_calls_per_step": 148.09677419354838,
+        "c4_mean_calls_per_step": 128.45454545454547,
+        "c8_mean_calls_per_step": 126.31818181818181
+      }
+    },
+    "A_collective_call_count_changes_with_input_length": {
+      "answer": "yes_in_this_trace",
+      "evidence": {
+        "in128_out32_c1_mean_calls_per_step": 129.5483870967742,
+        "in32_out32_c1_mean_calls_per_step": 148.09677419354838
+      }
+    },
+    "A_collective_call_count_changes_with_output_length": {
+      "answer": "per_step_count_roughly_stable_but_total_decode_steps_scale_with_output_length",
+      "evidence": {
+        "in32_out128_c1_decode_steps": 127,
+        "in32_out128_c1_mean_calls_per_step": 149.22834645669292,
+        "in32_out32_c1_decode_steps": 31,
+        "in32_out32_c1_mean_calls_per_step": 148.09677419354838
+      }
+    },
+    "B_overlap_ratio_materially_changes_across_cells": {
+      "answer": "yes_but_absolute_overlap_remains_small",
+      "evidence": {
+        "baseline_overlap_ratio_mean": 0.037547862511118746,
+        "max_overlap_ratio_mean": 0.037547862511118746,
+        "min_overlap_ratio_mean": 0.016065694926109264
+      }
+    },
+    "C_microbenchmark_prediction_steady_state_accuracy": {
+      "answer": "steady_state_per_kernel_prediction_is_low_us_for_all_reduce_but_all_gather_and cold/capture/replay outliers remain important",
+      "evidence": {
+        "in128_out32_c1": 3.1201310358309366,
+        "in32_out128_c1": 3.030320222574011,
+        "in32_out32_c1": 2.3815699597363524,
+        "in32_out32_c4": 2.0186974059454683,
+        "in32_out32_c8": 1.7944375808496886
+      }
+    },
+    "D_zero_overlap_d7_materially_worse_than_overlap_aware": {
+      "answer": "no_not_for_this_matrix; zero_overlap_MAE_was_slightly_lower_than_overlap_aware_MAE",
+      "evidence": {
+        "overlap_aware_mae_us": 881.416745748277,
+        "zero_overlap_mae_us": 865.504474628274
+      }
+    },
+    "E_strongest_decision_signal": {
+      "answer": "compute_savings_vs_exposed_communication_penalty; bytes alone are weak because all observed collective messages are in the same small-size bucket",
+      "ranked_signals": [
+        "compute_savings",
+        "exposed_communication_penalty",
+        "collective_count",
+        "overlap_ratio",
+        "bytes"
+      ]
+    }
+  },
+  "observations_vs_baseline": [
+    {
+      "collective_call_count_mean_delta": -18.548387096774178,
+      "comparison": "in32_out32_c1 -> in128_out32_c1",
+      "overlap_ratio_mean_delta": -0.019567744712320367
+    },
+    {
+      "collective_call_count_mean_delta": 1.131572263144534,
+      "comparison": "in32_out32_c1 -> in32_out128_c1",
+      "overlap_ratio_mean_delta": -0.01866929295548485
+    },
+    {
+      "collective_call_count_mean_delta": -19.642228739002917,
+      "comparison": "in32_out32_c1 -> in32_out32_c4",
+      "overlap_ratio_mean_delta": -0.021482167585009482
+    },
+    {
+      "collective_call_count_mean_delta": -21.77859237536657,
+      "comparison": "in32_out32_c1 -> in32_out32_c8",
+      "overlap_ratio_mean_delta": -0.02034280311397043
+    }
+  ],
+  "overlap_ratio_by_workload": {
+    "in128_out32_c1": {
+      "count": 31,
+      "max_us": 0.02380987566227484,
+      "mean_us": 0.01798011779879838,
+      "p50_us": 0.01881444529310674,
+      "p95_us": 0.023327248109593593
+    },
+    "in32_out128_c1": {
+      "count": 127,
+      "max_us": 0.07493074724497134,
+      "mean_us": 0.018878569555633894,
+      "p50_us": 0.018532761076125413,
+      "p95_us": 0.021553160014977455
+    },
+    "in32_out32_c1": {
+      "count": 31,
+      "max_us": 0.053399353970356334,
+      "mean_us": 0.037547862511118746,
+      "p50_us": 0.03956220403383005,
+      "p95_us": 0.04994349181182667
+    },
+    "in32_out32_c4": {
+      "count": 33,
+      "max_us": 0.07079249238934766,
+      "mean_us": 0.016065694926109264,
+      "p50_us": 0.01229935009161475,
+      "p95_us": 0.04175201864309032
+    },
+    "in32_out32_c8": {
+      "count": 66,
+      "max_us": 0.07923814513490454,
+      "mean_us": 0.017205059397148316,
+      "p50_us": 0.013091593368704989,
+      "p95_us": 0.06171863329713203
+    }
+  },
+  "status": "measured"
+}

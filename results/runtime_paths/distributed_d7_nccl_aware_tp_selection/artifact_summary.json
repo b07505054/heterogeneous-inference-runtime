@@ -1,0 +1,11 @@
+{
+  "communication_predictor_kind": "log_size_piecewise_interpolation",
+  "n_decision_flips_vs_d6": 0,
+  "n_held_out_cells": 21,
+  "nccl_transport": "SHM/direct/direct",
+  "oracle_match_rate": 1.0,
+  "p2p_available": false,
+  "profile_id": "2x_rtx4090_phb_single_numa_p2p_unavailable_nccl_shm_direct",
+  "topology_class": "PHB",
+  "truth_boundary": "D7 NCCL-aware offline compiler-equivalent validation using Phase 1 measured nccl-tests calibration; no vLLM source modified or launched."
+}

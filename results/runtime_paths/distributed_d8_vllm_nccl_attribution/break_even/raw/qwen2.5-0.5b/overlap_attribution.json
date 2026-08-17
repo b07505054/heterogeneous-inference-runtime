@@ -1,0 +1,2205 @@
+{
+  "candidate_d8_correction": "exposed_comm_time = nccl_wall_union_us - nccl_compute_overlap_wall_us",
+  "d7_assumption_assessment": "overly_pessimistic_if_it_used_sum_rank_gpu_time; conservative_if_it_used_raw_wall_union_without_overlap",
+  "definition": "NCCL wall time is the union of NCCL CUDA kernel intervals across ranks inside measured-request decode-step NVTX ranges. Overlap is the wall-clock intersection of that union with useful non-NCCL CUDA kernel intervals in the same decode-step range.",
+  "exposed_nccl_time_us": 187835.6920000001,
+  "exposed_nccl_wall_us": 187835.6920000001,
+  "measured_overlap_ratio": 0.028747188232563847,
+  "nccl_compute_overlap_duration_us": 5559.5700000000015,
+  "nccl_compute_overlap_wall_us": 5559.5700000000015,
+  "nccl_wall_union_us": 193395.262,
+  "per_step": [
+    {
+      "decode_step_wall_us": 1782.644,
+      "exposed_nccl_wall_us": 332.986,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 5.415,
+      "nccl_fraction_of_decode_critical_path": 0.18983094773830334,
+      "nccl_wall_union_us": 338.401,
+      "overlap_ratio": 0.01600172576322174,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 35,
+      "sum_rank_nccl_gpu_time_us": 560.865,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 1687.656,
+      "exposed_nccl_wall_us": 473.721,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 7.409,
+      "nccl_fraction_of_decode_critical_path": 0.2850877192982456,
+      "nccl_wall_union_us": 481.13,
+      "overlap_ratio": 0.015399164466983976,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 36,
+      "sum_rank_nccl_gpu_time_us": 774.114,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2293.427,
+      "exposed_nccl_wall_us": 602.1790000000001,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 7.554,
+      "nccl_fraction_of_decode_critical_path": 0.26586108910377354,
+      "nccl_wall_union_us": 609.7330000000001,
+      "overlap_ratio": 0.012389029296429748,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 37,
+      "sum_rank_nccl_gpu_time_us": 1081.89,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2788.057,
+      "exposed_nccl_wall_us": 1225.03,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 18.912,
+      "nccl_fraction_of_decode_critical_path": 0.4461680661478586,
+      "nccl_wall_union_us": 1243.942,
+      "overlap_ratio": 0.015203281181920056,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 38,
+      "sum_rank_nccl_gpu_time_us": 1643.271,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3596.319,
+      "exposed_nccl_wall_us": 1935.488,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 23.206,
+      "nccl_fraction_of_decode_critical_path": 0.5446385595938513,
+      "nccl_wall_union_us": 1958.694,
+      "overlap_ratio": 0.011847690348773213,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 39,
+      "sum_rank_nccl_gpu_time_us": 2570.793,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3577.052,
+      "exposed_nccl_wall_us": 1638.257,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 25.661,
+      "nccl_fraction_of_decode_critical_path": 0.46516461041103124,
+      "nccl_wall_union_us": 1663.9180000000001,
+      "overlap_ratio": 0.015422034018503315,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 40,
+      "sum_rank_nccl_gpu_time_us": 2381.896,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3203.048,
+      "exposed_nccl_wall_us": 1261.152,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 21.933,
+      "nccl_fraction_of_decode_critical_path": 0.4005825076614525,
+      "nccl_wall_union_us": 1283.085,
+      "overlap_ratio": 0.017093957142356116,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 41,
+      "sum_rank_nccl_gpu_time_us": 2763.789,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2724.087,
+      "exposed_nccl_wall_us": 1014.328,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 21.663,
+      "nccl_fraction_of_decode_critical_path": 0.38030760397887436,
+      "nccl_wall_union_us": 1035.991,
+      "overlap_ratio": 0.02091041331440138,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 42,
+      "sum_rank_nccl_gpu_time_us": 1659.207,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2556.02,
+      "exposed_nccl_wall_us": 1008.2600000000001,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 18.9,
+      "nccl_fraction_of_decode_critical_path": 0.4018591403823132,
+      "nccl_wall_union_us": 1027.16,
+      "overlap_ratio": 0.01840024923088905,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 43,
+      "sum_rank_nccl_gpu_time_us": 1596.23,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2408.272,
+      "exposed_nccl_wall_us": 955.942,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 27.941,
+      "nccl_fraction_of_decode_critical_path": 0.4085431379844138,
+      "nccl_wall_union_us": 983.883,
+      "overlap_ratio": 0.028398701878170472,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 44,
+      "sum_rank_nccl_gpu_time_us": 1515.622,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2328.042,
+      "exposed_nccl_wall_us": 897.433,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 15.55,
+      "nccl_fraction_of_decode_critical_path": 0.3921677529872743,
+      "nccl_wall_union_us": 912.983,
+      "overlap_ratio": 0.01703208055352619,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 45,
+      "sum_rank_nccl_gpu_time_us": 1437.091,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2168.811,
+      "exposed_nccl_wall_us": 884.8009999999999,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 16.128,
+      "nccl_fraction_of_decode_critical_path": 0.4154022641899178,
+      "nccl_wall_union_us": 900.929,
+      "overlap_ratio": 0.01790152165153969,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 46,
+      "sum_rank_nccl_gpu_time_us": 1373.703,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2121.031,
+      "exposed_nccl_wall_us": 849.924,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 18.887,
+      "nccl_fraction_of_decode_critical_path": 0.4096173040375176,
+      "nccl_wall_union_us": 868.811,
+      "overlap_ratio": 0.021738905239459445,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 47,
+      "sum_rank_nccl_gpu_time_us": 1336.93,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2061.449,
+      "exposed_nccl_wall_us": 837.669,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 10.365,
+      "nccl_fraction_of_decode_critical_path": 0.41137762806647166,
+      "nccl_wall_union_us": 848.034,
+      "overlap_ratio": 0.012222387309942762,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 48,
+      "sum_rank_nccl_gpu_time_us": 1300.6770000000001,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 1960.421,
+      "exposed_nccl_wall_us": 828.053,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 14.26,
+      "nccl_fraction_of_decode_critical_path": 0.4296592415608688,
+      "nccl_wall_union_us": 842.313,
+      "overlap_ratio": 0.016929573685791385,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 49,
+      "sum_rank_nccl_gpu_time_us": 1265.158,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 1884.336,
+      "exposed_nccl_wall_us": 762.956,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 21.065,
+      "nccl_fraction_of_decode_critical_path": 0.41607282353041075,
+      "nccl_wall_union_us": 784.0210000000001,
+      "overlap_ratio": 0.026867902773012455,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 50,
+      "sum_rank_nccl_gpu_time_us": 1174.3400000000001,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 1882.804,
+      "exposed_nccl_wall_us": 586.861,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 6.122,
+      "nccl_fraction_of_decode_critical_path": 0.31494674963511865,
+      "nccl_wall_union_us": 592.983,
+      "overlap_ratio": 0.010324073371411998,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 51,
+      "sum_rank_nccl_gpu_time_us": 1003.333,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 1735.737,
+      "exposed_nccl_wall_us": 441.379,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 9.037,
+      "nccl_fraction_of_decode_critical_path": 0.259495534173668,
+      "nccl_wall_union_us": 450.416,
+      "overlap_ratio": 0.020063674469823455,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 52,
+      "sum_rank_nccl_gpu_time_us": 810.789,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 1658.221,
+      "exposed_nccl_wall_us": 458.90500000000003,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 8.674,
+      "nccl_fraction_of_decode_critical_path": 0.28197628663489366,
+      "nccl_wall_union_us": 467.579,
+      "overlap_ratio": 0.018550875894768584,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 53,
+      "sum_rank_nccl_gpu_time_us": 785.731,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 1808.654,
+      "exposed_nccl_wall_us": 627.878,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.014,
+      "nccl_fraction_of_decode_critical_path": 0.3543474871368432,
+      "nccl_wall_union_us": 640.892,
+      "overlap_ratio": 0.020306073410184554,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 54,
+      "sum_rank_nccl_gpu_time_us": 983.524,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 1929.431,
+      "exposed_nccl_wall_us": 814.783,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 14.603,
+      "nccl_fraction_of_decode_critical_path": 0.42986040962335526,
+      "nccl_wall_union_us": 829.386,
+      "overlap_ratio": 0.017607000841586427,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 55,
+      "sum_rank_nccl_gpu_time_us": 1213.701,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2074.704,
+      "exposed_nccl_wall_us": 956.255,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 16.094,
+      "nccl_fraction_of_decode_critical_path": 0.4686687835951538,
+      "nccl_wall_union_us": 972.349,
+      "overlap_ratio": 0.016551670233630106,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 56,
+      "sum_rank_nccl_gpu_time_us": 1380.07,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2193.106,
+      "exposed_nccl_wall_us": 1015.187,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.657,
+      "nccl_fraction_of_decode_critical_path": 0.4691264352931413,
+      "nccl_wall_union_us": 1028.844,
+      "overlap_ratio": 0.013274121246758497,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 57,
+      "sum_rank_nccl_gpu_time_us": 1452.809,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2351.225,
+      "exposed_nccl_wall_us": 1034.037,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.25,
+      "nccl_fraction_of_decode_critical_path": 0.4454218545651735,
+      "nccl_wall_union_us": 1047.287,
+      "overlap_ratio": 0.012651737298371888,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 58,
+      "sum_rank_nccl_gpu_time_us": 1510.345,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2454.66,
+      "exposed_nccl_wall_us": 1076.528,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 15.705,
+      "nccl_fraction_of_decode_critical_path": 0.4449630498724874,
+      "nccl_wall_union_us": 1092.233,
+      "overlap_ratio": 0.014378800127811557,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 59,
+      "sum_rank_nccl_gpu_time_us": 1577.928,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2559.207,
+      "exposed_nccl_wall_us": 1107.07,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.967,
+      "nccl_fraction_of_decode_critical_path": 0.4380407680973052,
+      "nccl_wall_union_us": 1121.037,
+      "overlap_ratio": 0.01245900001516453,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 60,
+      "sum_rank_nccl_gpu_time_us": 1635.309,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2607.588,
+      "exposed_nccl_wall_us": 1115.741,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 18.835,
+      "nccl_fraction_of_decode_critical_path": 0.4351055458147529,
+      "nccl_wall_union_us": 1134.576,
+      "overlap_ratio": 0.016600915231769403,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 61,
+      "sum_rank_nccl_gpu_time_us": 1660.4270000000001,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2723.105,
+      "exposed_nccl_wall_us": 1137.998,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 16.552,
+      "nccl_fraction_of_decode_critical_path": 0.4239829165603236,
+      "nccl_wall_union_us": 1154.55,
+      "overlap_ratio": 0.014336321510545234,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 62,
+      "sum_rank_nccl_gpu_time_us": 1714.757,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2844.022,
+      "exposed_nccl_wall_us": 1178.124,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 21.221,
+      "nccl_fraction_of_decode_critical_path": 0.42170735669414655,
+      "nccl_wall_union_us": 1199.345,
+      "overlap_ratio": 0.01769382454589797,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 63,
+      "sum_rank_nccl_gpu_time_us": 1794.185,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2876.273,
+      "exposed_nccl_wall_us": 1197.74,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 17.89,
+      "nccl_fraction_of_decode_critical_path": 0.42264068814052075,
+      "nccl_wall_union_us": 1215.63,
+      "overlap_ratio": 0.01471664898036409,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 64,
+      "sum_rank_nccl_gpu_time_us": 1801.645,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2854.383,
+      "exposed_nccl_wall_us": 1167.482,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 18.809,
+      "nccl_fraction_of_decode_critical_path": 0.4156033020095762,
+      "nccl_wall_union_us": 1186.291,
+      "overlap_ratio": 0.015855300259379868,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c1-measured-0-0-0-bf2eeac3"
+      ],
+      "step_id": 65,
+      "sum_rank_nccl_gpu_time_us": 1789.028,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 19788.171,
+      "exposed_nccl_wall_us": 14349.305,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 1114.429,
+      "nccl_fraction_of_decode_critical_path": 0.7814635319252093,
+      "nccl_wall_union_us": 15463.734,
+      "overlap_ratio": 0.07206726396095536,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 103,
+      "sum_rank_nccl_gpu_time_us": 17237.43,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2991.96,
+      "exposed_nccl_wall_us": 1315.8539999999998,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 15.544,
+      "nccl_fraction_of_decode_critical_path": 0.4449919116565729,
+      "nccl_wall_union_us": 1331.398,
+      "overlap_ratio": 0.011674946184386638,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 104,
+      "sum_rank_nccl_gpu_time_us": 1632.903,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2861.094,
+      "exposed_nccl_wall_us": 1384.839,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 17.274,
+      "nccl_fraction_of_decode_critical_path": 0.49006184347665616,
+      "nccl_wall_union_us": 1402.113,
+      "overlap_ratio": 0.012319977063189628,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 105,
+      "sum_rank_nccl_gpu_time_us": 2060.1369999999997,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3095.615,
+      "exposed_nccl_wall_us": 1188.8649999999998,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.967,
+      "nccl_fraction_of_decode_critical_path": 0.3885599468926207,
+      "nccl_wall_union_us": 1202.8319999999999,
+      "overlap_ratio": 0.011611762906208018,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 106,
+      "sum_rank_nccl_gpu_time_us": 2012.1390000000001,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3048.838,
+      "exposed_nccl_wall_us": 1186.818,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.723,
+      "nccl_fraction_of_decode_critical_path": 0.3937700199223441,
+      "nccl_wall_union_us": 1200.541,
+      "overlap_ratio": 0.011430680001765873,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 107,
+      "sum_rank_nccl_gpu_time_us": 2003.913,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3009.764,
+      "exposed_nccl_wall_us": 1145.434,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.518,
+      "nccl_fraction_of_decode_critical_path": 0.3850640781137657,
+      "nccl_wall_union_us": 1158.952,
+      "overlap_ratio": 0.01166398608397932,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 108,
+      "sum_rank_nccl_gpu_time_us": 1968.072,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3026.256,
+      "exposed_nccl_wall_us": 1199.513,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 14.123,
+      "nccl_fraction_of_decode_critical_path": 0.4010354708920858,
+      "nccl_wall_union_us": 1213.636,
+      "overlap_ratio": 0.011636932325672606,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 109,
+      "sum_rank_nccl_gpu_time_us": 2006.763,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3011.517,
+      "exposed_nccl_wall_us": 1123.703,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 15.843,
+      "nccl_fraction_of_decode_critical_path": 0.378396004405753,
+      "nccl_wall_union_us": 1139.546,
+      "overlap_ratio": 0.013902905192067718,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 110,
+      "sum_rank_nccl_gpu_time_us": 1955.848,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2945.804,
+      "exposed_nccl_wall_us": 1144.748,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 14.042,
+      "nccl_fraction_of_decode_critical_path": 0.39336968786789617,
+      "nccl_wall_union_us": 1158.79,
+      "overlap_ratio": 0.012117812545845236,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 111,
+      "sum_rank_nccl_gpu_time_us": 1954.44,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2982.614,
+      "exposed_nccl_wall_us": 1155.993,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 15.284,
+      "nccl_fraction_of_decode_critical_path": 0.3927015027757531,
+      "nccl_wall_union_us": 1171.277,
+      "overlap_ratio": 0.013049005487173401,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 112,
+      "sum_rank_nccl_gpu_time_us": 1955.848,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2962.024,
+      "exposed_nccl_wall_us": 1112.787,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 10.772,
+      "nccl_fraction_of_decode_critical_path": 0.37932136944197614,
+      "nccl_wall_union_us": 1123.559,
+      "overlap_ratio": 0.009587391494349652,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 113,
+      "sum_rank_nccl_gpu_time_us": 1922.5049999999999,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2991.429,
+      "exposed_nccl_wall_us": 1214.528,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 15.215,
+      "nccl_fraction_of_decode_critical_path": 0.41108881407514597,
+      "nccl_wall_union_us": 1229.743,
+      "overlap_ratio": 0.012372503848365066,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 114,
+      "sum_rank_nccl_gpu_time_us": 2002.829,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3110.715,
+      "exposed_nccl_wall_us": 1202.0240000000001,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.745,
+      "nccl_fraction_of_decode_critical_path": 0.39083265422901164,
+      "nccl_wall_union_us": 1215.769,
+      "overlap_ratio": 0.011305601639785189,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 115,
+      "sum_rank_nccl_gpu_time_us": 2035.272,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3042.726,
+      "exposed_nccl_wall_us": 1206.762,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 10.307,
+      "nccl_fraction_of_decode_critical_path": 0.3999929668330306,
+      "nccl_wall_union_us": 1217.069,
+      "overlap_ratio": 0.00846870637572726,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 116,
+      "sum_rank_nccl_gpu_time_us": 2007.944,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3060.53,
+      "exposed_nccl_wall_us": 1158.933,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 8.611,
+      "nccl_fraction_of_decode_critical_path": 0.3814842527274688,
+      "nccl_wall_union_us": 1167.544,
+      "overlap_ratio": 0.007375310909053534,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 117,
+      "sum_rank_nccl_gpu_time_us": 1985.831,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3029.982,
+      "exposed_nccl_wall_us": 1209.611,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 16.715,
+      "nccl_fraction_of_decode_critical_path": 0.4047304571446299,
+      "nccl_wall_union_us": 1226.326,
+      "overlap_ratio": 0.013630144023693537,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 118,
+      "sum_rank_nccl_gpu_time_us": 2001.002,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3163.544,
+      "exposed_nccl_wall_us": 1220.745,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 14.547,
+      "nccl_fraction_of_decode_critical_path": 0.3904772622097243,
+      "nccl_wall_union_us": 1235.292,
+      "overlap_ratio": 0.011776163044850935,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 119,
+      "sum_rank_nccl_gpu_time_us": 2058.793,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3153.024,
+      "exposed_nccl_wall_us": 1289.625,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 15.372,
+      "nccl_fraction_of_decode_critical_path": 0.41388742997198885,
+      "nccl_wall_union_us": 1304.997,
+      "overlap_ratio": 0.011779337423764191,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 120,
+      "sum_rank_nccl_gpu_time_us": 2120.488,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3167.891,
+      "exposed_nccl_wall_us": 1253.8790000000001,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 14.368,
+      "nccl_fraction_of_decode_critical_path": 0.4003442668955466,
+      "nccl_wall_union_us": 1268.247,
+      "overlap_ratio": 0.011329023447325323,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 121,
+      "sum_rank_nccl_gpu_time_us": 2089.546,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3093.181,
+      "exposed_nccl_wall_us": 1225.95,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 12.949,
+      "nccl_fraction_of_decode_critical_path": 0.40052586641389565,
+      "nccl_wall_union_us": 1238.8990000000001,
+      "overlap_ratio": 0.010452022319817837,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 122,
+      "sum_rank_nccl_gpu_time_us": 2036.907,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3068.244,
+      "exposed_nccl_wall_us": 1178.283,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 14.182,
+      "nccl_fraction_of_decode_critical_path": 0.3886473826723037,
+      "nccl_wall_union_us": 1192.465,
+      "overlap_ratio": 0.011893011534929748,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 123,
+      "sum_rank_nccl_gpu_time_us": 1997.612,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3089.886,
+      "exposed_nccl_wall_us": 1248.0420000000001,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 9.944,
+      "nccl_fraction_of_decode_critical_path": 0.40713023069459525,
+      "nccl_wall_union_us": 1257.986,
+      "overlap_ratio": 0.007904698462463016,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 124,
+      "sum_rank_nccl_gpu_time_us": 2062.7,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3066.782,
+      "exposed_nccl_wall_us": 1170.807,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 15.501,
+      "nccl_fraction_of_decode_critical_path": 0.3868250172330475,
+      "nccl_wall_union_us": 1186.308,
+      "overlap_ratio": 0.013066589789498173,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 125,
+      "sum_rank_nccl_gpu_time_us": 2002.3129999999999,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3017.529,
+      "exposed_nccl_wall_us": 1180.3419999999999,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 14.39,
+      "nccl_fraction_of_decode_critical_path": 0.3959305776348794,
+      "nccl_wall_union_us": 1194.732,
+      "overlap_ratio": 0.012044542206955201,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 126,
+      "sum_rank_nccl_gpu_time_us": 1984.551,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3072.352,
+      "exposed_nccl_wall_us": 1197.324,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.041,
+      "nccl_fraction_of_decode_critical_path": 0.39395388288841904,
+      "nccl_wall_union_us": 1210.365,
+      "overlap_ratio": 0.010774435810685207,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 127,
+      "sum_rank_nccl_gpu_time_us": 2018.41,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3057.003,
+      "exposed_nccl_wall_us": 1224.145,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 15.823,
+      "nccl_fraction_of_decode_critical_path": 0.4056155653102074,
+      "nccl_wall_union_us": 1239.968,
+      "overlap_ratio": 0.012760813182275671,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 128,
+      "sum_rank_nccl_gpu_time_us": 2022.921,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3082.732,
+      "exposed_nccl_wall_us": 1192.948,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 14.991,
+      "nccl_fraction_of_decode_critical_path": 0.3918404194720787,
+      "nccl_wall_union_us": 1207.939,
+      "overlap_ratio": 0.012410394895768742,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 129,
+      "sum_rank_nccl_gpu_time_us": 2009.83,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3043.458,
+      "exposed_nccl_wall_us": 1212.247,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 14.095,
+      "nccl_fraction_of_decode_critical_path": 0.40294362531041994,
+      "nccl_wall_union_us": 1226.342,
+      "overlap_ratio": 0.011493531168303784,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 130,
+      "sum_rank_nccl_gpu_time_us": 2030.311,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3059.709,
+      "exposed_nccl_wall_us": 1176.883,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 14.993,
+      "nccl_fraction_of_decode_critical_path": 0.38953900517990436,
+      "nccl_wall_union_us": 1191.876,
+      "overlap_ratio": 0.012579328722115389,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 131,
+      "sum_rank_nccl_gpu_time_us": 1990.437,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3063.736,
+      "exposed_nccl_wall_us": 1186.116,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 18.564,
+      "nccl_fraction_of_decode_critical_path": 0.39320620314544075,
+      "nccl_wall_union_us": 1204.68,
+      "overlap_ratio": 0.015409901384600059,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 132,
+      "sum_rank_nccl_gpu_time_us": 2008.3619999999999,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3027.298,
+      "exposed_nccl_wall_us": 1197.3619999999999,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 15.14,
+      "nccl_fraction_of_decode_critical_path": 0.40052284248197567,
+      "nccl_wall_union_us": 1212.502,
+      "overlap_ratio": 0.012486577341728098,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-0-0-931c9cd3",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-1-0-857ffaec",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 133,
+      "sum_rank_nccl_gpu_time_us": 2001.287,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3663.907,
+      "exposed_nccl_wall_us": 1520.874,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 22.425,
+      "nccl_fraction_of_decode_critical_path": 0.4212167503159878,
+      "nccl_wall_union_us": 1543.299,
+      "overlap_ratio": 0.014530560831050886,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-2-0-be1a70a2",
+        "cmpl-d8-tp2-in32_out32_c4-measured-0-3-0-997a7ae5"
+      ],
+      "step_id": 134,
+      "sum_rank_nccl_gpu_time_us": 2415.244,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 17847.348,
+      "exposed_nccl_wall_us": 12879.198,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 1013.063,
+      "nccl_fraction_of_decode_critical_path": 0.7783935742161804,
+      "nccl_wall_union_us": 13892.261,
+      "overlap_ratio": 0.07292283092003526,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 172,
+      "sum_rank_nccl_gpu_time_us": 15811.95,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2472.423,
+      "exposed_nccl_wall_us": 887.045,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.969,
+      "nccl_fraction_of_decode_critical_path": 0.36442550485899866,
+      "nccl_wall_union_us": 901.014,
+      "overlap_ratio": 0.015503643672573343,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 173,
+      "sum_rank_nccl_gpu_time_us": 1189.413,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2610.853,
+      "exposed_nccl_wall_us": 1226.701,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 17.138,
+      "nccl_fraction_of_decode_critical_path": 0.47641096607124184,
+      "nccl_wall_union_us": 1243.839,
+      "overlap_ratio": 0.013778310536974642,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 174,
+      "sum_rank_nccl_gpu_time_us": 1863.691,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3105.273,
+      "exposed_nccl_wall_us": 1383.342,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 19.907,
+      "nccl_fraction_of_decode_critical_path": 0.45189231349385384,
+      "nccl_wall_union_us": 1403.249,
+      "overlap_ratio": 0.014186363218502205,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 175,
+      "sum_rank_nccl_gpu_time_us": 2160.265,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3618.24,
+      "exposed_nccl_wall_us": 1474.519,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 17.107,
+      "nccl_fraction_of_decode_critical_path": 0.4122518130361723,
+      "nccl_wall_union_us": 1491.626,
+      "overlap_ratio": 0.011468692554299805,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 176,
+      "sum_rank_nccl_gpu_time_us": 2410.795,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3665.889,
+      "exposed_nccl_wall_us": 1596.682,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 21.898,
+      "nccl_fraction_of_decode_critical_path": 0.44152455243462085,
+      "nccl_wall_union_us": 1618.58,
+      "overlap_ratio": 0.013529142828899407,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 177,
+      "sum_rank_nccl_gpu_time_us": 2497.932,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3692.54,
+      "exposed_nccl_wall_us": 1527.7820000000002,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 20.012,
+      "nccl_fraction_of_decode_critical_path": 0.41916783569033783,
+      "nccl_wall_union_us": 1547.794,
+      "overlap_ratio": 0.012929369153776278,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 178,
+      "sum_rank_nccl_gpu_time_us": 3091.597,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3437.009,
+      "exposed_nccl_wall_us": 1381.9170000000001,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 16.175,
+      "nccl_fraction_of_decode_critical_path": 0.4067757750998034,
+      "nccl_wall_union_us": 1398.092,
+      "overlap_ratio": 0.011569338784572116,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 179,
+      "sum_rank_nccl_gpu_time_us": 2280.582,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3224.298,
+      "exposed_nccl_wall_us": 1280.491,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 15.607,
+      "nccl_fraction_of_decode_critical_path": 0.4019783531174848,
+      "nccl_wall_union_us": 1296.098,
+      "overlap_ratio": 0.012041527723983834,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 180,
+      "sum_rank_nccl_gpu_time_us": 2138.406,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3089.173,
+      "exposed_nccl_wall_us": 1193.328,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 15.939,
+      "nccl_fraction_of_decode_critical_path": 0.3914533112907565,
+      "nccl_wall_union_us": 1209.267,
+      "overlap_ratio": 0.013180711951951057,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 181,
+      "sum_rank_nccl_gpu_time_us": 2016.806,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2998.924,
+      "exposed_nccl_wall_us": 1156.584,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 14.511,
+      "nccl_fraction_of_decode_critical_path": 0.3905050611485986,
+      "nccl_wall_union_us": 1171.095,
+      "overlap_ratio": 0.012390967427920023,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 182,
+      "sum_rank_nccl_gpu_time_us": 1969.447,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3025.694,
+      "exposed_nccl_wall_us": 1178.058,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 11.455,
+      "nccl_fraction_of_decode_critical_path": 0.3931372438852045,
+      "nccl_wall_union_us": 1189.513,
+      "overlap_ratio": 0.009629991433468993,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 183,
+      "sum_rank_nccl_gpu_time_us": 1989.095,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3015.363,
+      "exposed_nccl_wall_us": 1157.975,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 14.525,
+      "nccl_fraction_of_decode_critical_path": 0.3888420730771055,
+      "nccl_wall_union_us": 1172.5,
+      "overlap_ratio": 0.012388059701492538,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 184,
+      "sum_rank_nccl_gpu_time_us": 1970.7269999999999,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3032.027,
+      "exposed_nccl_wall_us": 1172.99,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 12.635,
+      "nccl_fraction_of_decode_critical_path": 0.39103378696825586,
+      "nccl_wall_union_us": 1185.625,
+      "overlap_ratio": 0.010656826568265682,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 185,
+      "sum_rank_nccl_gpu_time_us": 1977.609,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3021.417,
+      "exposed_nccl_wall_us": 1169.441,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 11.849,
+      "nccl_fraction_of_decode_critical_path": 0.3909721829194712,
+      "nccl_wall_union_us": 1181.29,
+      "overlap_ratio": 0.010030559811731243,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 186,
+      "sum_rank_nccl_gpu_time_us": 1993.961,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2998.823,
+      "exposed_nccl_wall_us": 1164.792,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 15.535,
+      "nccl_fraction_of_decode_critical_path": 0.3935967544599998,
+      "nccl_wall_union_us": 1180.327,
+      "overlap_ratio": 0.013161606910627309,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 187,
+      "sum_rank_nccl_gpu_time_us": 1984.426,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3039.18,
+      "exposed_nccl_wall_us": 1180.882,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 11.143,
+      "nccl_fraction_of_decode_critical_path": 0.39221928283286944,
+      "nccl_wall_union_us": 1192.025,
+      "overlap_ratio": 0.009347958306243577,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 188,
+      "sum_rank_nccl_gpu_time_us": 1992.4279999999999,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3021.988,
+      "exposed_nccl_wall_us": 1168.379,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 16.411,
+      "nccl_fraction_of_decode_critical_path": 0.3920564873189437,
+      "nccl_wall_union_us": 1184.79,
+      "overlap_ratio": 0.013851399826129526,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 189,
+      "sum_rank_nccl_gpu_time_us": 1979.625,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3005.276,
+      "exposed_nccl_wall_us": 1166.815,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 16.117,
+      "nccl_fraction_of_decode_critical_path": 0.3936184230666335,
+      "nccl_wall_union_us": 1182.932,
+      "overlap_ratio": 0.013624620857327387,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 190,
+      "sum_rank_nccl_gpu_time_us": 1969.735,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3023.62,
+      "exposed_nccl_wall_us": 1165.6779999999999,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 14.218,
+      "nccl_fraction_of_decode_critical_path": 0.39022628504904716,
+      "nccl_wall_union_us": 1179.896,
+      "overlap_ratio": 0.01205021459518466,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 191,
+      "sum_rank_nccl_gpu_time_us": 1981.065,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3001.89,
+      "exposed_nccl_wall_us": 1179.583,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 12.495,
+      "nccl_fraction_of_decode_critical_path": 0.3971091545659568,
+      "nccl_wall_union_us": 1192.078,
+      "overlap_ratio": 0.010481696667499945,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 192,
+      "sum_rank_nccl_gpu_time_us": 2000.234,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3019.082,
+      "exposed_nccl_wall_us": 1167.626,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 14.011,
+      "nccl_fraction_of_decode_critical_path": 0.39138950184195065,
+      "nccl_wall_union_us": 1181.637,
+      "overlap_ratio": 0.011857279350595825,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 193,
+      "sum_rank_nccl_gpu_time_us": 1980.009,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3019.493,
+      "exposed_nccl_wall_us": 1184.306,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.503,
+      "nccl_fraction_of_decode_critical_path": 0.3966920936726795,
+      "nccl_wall_union_us": 1197.809,
+      "overlap_ratio": 0.011273082770291425,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 194,
+      "sum_rank_nccl_gpu_time_us": 2000.268,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3008.232,
+      "exposed_nccl_wall_us": 1156.4550000000002,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 10.908,
+      "nccl_fraction_of_decode_critical_path": 0.3880561738589311,
+      "nccl_wall_union_us": 1167.363,
+      "overlap_ratio": 0.009344137170700116,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 195,
+      "sum_rank_nccl_gpu_time_us": 1963.338,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3051.683,
+      "exposed_nccl_wall_us": 1210.395,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 16.376,
+      "nccl_fraction_of_decode_critical_path": 0.4019981760884076,
+      "nccl_wall_union_us": 1226.771,
+      "overlap_ratio": 0.013348864621025441,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 196,
+      "sum_rank_nccl_gpu_time_us": 2021.223,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3059.728,
+      "exposed_nccl_wall_us": 1181.696,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 11.313,
+      "nccl_fraction_of_decode_critical_path": 0.38990688061160994,
+      "nccl_wall_union_us": 1193.009,
+      "overlap_ratio": 0.00948274489127911,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 197,
+      "sum_rank_nccl_gpu_time_us": 2005.704,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3005.036,
+      "exposed_nccl_wall_us": 1157.159,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 12.696,
+      "nccl_fraction_of_decode_critical_path": 0.3892981648139989,
+      "nccl_wall_union_us": 1169.855,
+      "overlap_ratio": 0.01085262703497442,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 198,
+      "sum_rank_nccl_gpu_time_us": 1968.199,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3014.463,
+      "exposed_nccl_wall_us": 1172.3049999999998,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.851,
+      "nccl_fraction_of_decode_critical_path": 0.39348832611314183,
+      "nccl_wall_union_us": 1186.156,
+      "overlap_ratio": 0.01167721615032087,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 199,
+      "sum_rank_nccl_gpu_time_us": 1972.552,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3002.411,
+      "exposed_nccl_wall_us": 1157.184,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.721,
+      "nccl_fraction_of_decode_critical_path": 0.3899882461128739,
+      "nccl_wall_union_us": 1170.905,
+      "overlap_ratio": 0.01171828628283251,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 200,
+      "sum_rank_nccl_gpu_time_us": 1972.46,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3009.405,
+      "exposed_nccl_wall_us": 1155.9470000000001,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 12.193,
+      "nccl_fraction_of_decode_critical_path": 0.38816310865436854,
+      "nccl_wall_union_us": 1168.14,
+      "overlap_ratio": 0.010437961203280428,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 201,
+      "sum_rank_nccl_gpu_time_us": 1969.61,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3004.134,
+      "exposed_nccl_wall_us": 1170.49,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 12.924,
+      "nccl_fraction_of_decode_critical_path": 0.3939284998605255,
+      "nccl_wall_union_us": 1183.414,
+      "overlap_ratio": 0.010920945670745825,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-0-0-9320e130",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-1-0-ba8c0b28",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 202,
+      "sum_rank_nccl_gpu_time_us": 1978.76,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3534.992,
+      "exposed_nccl_wall_us": 1506.652,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 27.844,
+      "nccl_fraction_of_decode_critical_path": 0.4340875453183487,
+      "nccl_wall_union_us": 1534.496,
+      "overlap_ratio": 0.018145371509603152,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-2-0-87a324a0",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-3-0-a574d50e"
+      ],
+      "step_id": 203,
+      "sum_rank_nccl_gpu_time_us": 2353.133,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 19891.245,
+      "exposed_nccl_wall_us": 16759.362999999998,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 1327.74,
+      "nccl_fraction_of_decode_critical_path": 0.909299694413296,
+      "nccl_wall_union_us": 18087.103,
+      "overlap_ratio": 0.07340810742328388,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 205,
+      "sum_rank_nccl_gpu_time_us": 20100.291,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 4465.164,
+      "exposed_nccl_wall_us": 3132.475,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 266.698,
+      "nccl_fraction_of_decode_critical_path": 0.7612649837721526,
+      "nccl_wall_union_us": 3399.173,
+      "overlap_ratio": 0.07845967239678592,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 206,
+      "sum_rank_nccl_gpu_time_us": 4077.555,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 4106.529,
+      "exposed_nccl_wall_us": 2017.519,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 28.837,
+      "nccl_fraction_of_decode_critical_path": 0.49831767899362206,
+      "nccl_wall_union_us": 2046.356,
+      "overlap_ratio": 0.0140918784414833,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 207,
+      "sum_rank_nccl_gpu_time_us": 3949.971,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3143.326,
+      "exposed_nccl_wall_us": 1189.735,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 14.537,
+      "nccl_fraction_of_decode_critical_path": 0.3831202999625237,
+      "nccl_wall_union_us": 1204.272,
+      "overlap_ratio": 0.012071193218807712,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 208,
+      "sum_rank_nccl_gpu_time_us": 2039.527,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3019.212,
+      "exposed_nccl_wall_us": 1180.532,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.781,
+      "nccl_fraction_of_decode_critical_path": 0.39557109603432944,
+      "nccl_wall_union_us": 1194.3129999999999,
+      "overlap_ratio": 0.011538851205672216,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 209,
+      "sum_rank_nccl_gpu_time_us": 1997.096,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2996.631,
+      "exposed_nccl_wall_us": 1143.121,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 14.24,
+      "nccl_fraction_of_decode_critical_path": 0.3862207258751579,
+      "nccl_wall_union_us": 1157.361,
+      "overlap_ratio": 0.012303853335303332,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 210,
+      "sum_rank_nccl_gpu_time_us": 1945.191,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2966.012,
+      "exposed_nccl_wall_us": 1123.182,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.736,
+      "nccl_fraction_of_decode_critical_path": 0.38331537431406215,
+      "nccl_wall_union_us": 1136.9180000000001,
+      "overlap_ratio": 0.012081786021507267,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 211,
+      "sum_rank_nccl_gpu_time_us": 1924.392,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2930.034,
+      "exposed_nccl_wall_us": 1133.523,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.663,
+      "nccl_fraction_of_decode_critical_path": 0.3915265147093856,
+      "nccl_wall_union_us": 1147.186,
+      "overlap_ratio": 0.011910012848831837,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 212,
+      "sum_rank_nccl_gpu_time_us": 1922.632,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3006.589,
+      "exposed_nccl_wall_us": 1169.208,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 14.292,
+      "nccl_fraction_of_decode_critical_path": 0.39363544535019585,
+      "nccl_wall_union_us": 1183.5,
+      "overlap_ratio": 0.012076045627376426,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 213,
+      "sum_rank_nccl_gpu_time_us": 1982.442,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2986.661,
+      "exposed_nccl_wall_us": 1144.9660000000001,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.801,
+      "nccl_fraction_of_decode_critical_path": 0.38798075844563545,
+      "nccl_wall_union_us": 1158.767,
+      "overlap_ratio": 0.011910073379721721,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 214,
+      "sum_rank_nccl_gpu_time_us": 1942.793,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3044.891,
+      "exposed_nccl_wall_us": 1205.761,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 10.714,
+      "nccl_fraction_of_decode_critical_path": 0.3995134801212917,
+      "nccl_wall_union_us": 1216.475,
+      "overlap_ratio": 0.008807414866725581,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 215,
+      "sum_rank_nccl_gpu_time_us": 2020.776,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3029.752,
+      "exposed_nccl_wall_us": 1156.537,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 14.92,
+      "nccl_fraction_of_decode_critical_path": 0.3866511186394134,
+      "nccl_wall_union_us": 1171.457,
+      "overlap_ratio": 0.012736276278173248,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 216,
+      "sum_rank_nccl_gpu_time_us": 1985.478,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2964.529,
+      "exposed_nccl_wall_us": 1145.483,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.428,
+      "nccl_fraction_of_decode_critical_path": 0.39092584353197424,
+      "nccl_wall_union_us": 1158.911,
+      "overlap_ratio": 0.011586739620212423,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 217,
+      "sum_rank_nccl_gpu_time_us": 1954.472,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2949.27,
+      "exposed_nccl_wall_us": 1117.22,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.739,
+      "nccl_fraction_of_decode_critical_path": 0.3834708249838096,
+      "nccl_wall_union_us": 1130.959,
+      "overlap_ratio": 0.012148097322714617,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 218,
+      "sum_rank_nccl_gpu_time_us": 1918.249,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2953.699,
+      "exposed_nccl_wall_us": 1136.972,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 12.387,
+      "nccl_fraction_of_decode_critical_path": 0.38912529678887386,
+      "nccl_wall_union_us": 1149.359,
+      "overlap_ratio": 0.010777311527555795,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 219,
+      "sum_rank_nccl_gpu_time_us": 1943.402,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3003.502,
+      "exposed_nccl_wall_us": 1177.377,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.808,
+      "nccl_fraction_of_decode_critical_path": 0.39659870377978773,
+      "nccl_wall_union_us": 1191.185,
+      "overlap_ratio": 0.01159181823142501,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 220,
+      "sum_rank_nccl_gpu_time_us": 1982.217,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3012.44,
+      "exposed_nccl_wall_us": 1153.299,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 11.016,
+      "nccl_fraction_of_decode_critical_path": 0.38650230378032424,
+      "nccl_wall_union_us": 1164.315,
+      "overlap_ratio": 0.009461357106968474,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 221,
+      "sum_rank_nccl_gpu_time_us": 1970.695,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2984.345,
+      "exposed_nccl_wall_us": 1154.972,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 12.063,
+      "nccl_fraction_of_decode_critical_path": 0.39105230796037327,
+      "nccl_wall_union_us": 1167.035,
+      "overlap_ratio": 0.0103364509204951,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 222,
+      "sum_rank_nccl_gpu_time_us": 1961.447,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2953.859,
+      "exposed_nccl_wall_us": 1129.0939999999998,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.342,
+      "nccl_fraction_of_decode_critical_path": 0.3867605054946766,
+      "nccl_wall_union_us": 1142.436,
+      "overlap_ratio": 0.011678553546982063,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 223,
+      "sum_rank_nccl_gpu_time_us": 1935.371,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2981.441,
+      "exposed_nccl_wall_us": 1165.6970000000001,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 15.328,
+      "nccl_fraction_of_decode_critical_path": 0.39612556478561883,
+      "nccl_wall_union_us": 1181.025,
+      "overlap_ratio": 0.012978556762134585,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 224,
+      "sum_rank_nccl_gpu_time_us": 1969.3529999999998,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2982.573,
+      "exposed_nccl_wall_us": 1145.073,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 15.325,
+      "nccl_fraction_of_decode_critical_path": 0.3890593792674983,
+      "nccl_wall_union_us": 1160.3980000000001,
+      "overlap_ratio": 0.013206675640599172,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 225,
+      "sum_rank_nccl_gpu_time_us": 1947.628,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2957.457,
+      "exposed_nccl_wall_us": 1132.54,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 11.63,
+      "nccl_fraction_of_decode_critical_path": 0.38687629270687623,
+      "nccl_wall_union_us": 1144.17,
+      "overlap_ratio": 0.010164573446253617,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 226,
+      "sum_rank_nccl_gpu_time_us": 1917.64,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2974.238,
+      "exposed_nccl_wall_us": 1143.9360000000001,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 14.311,
+      "nccl_fraction_of_decode_critical_path": 0.3894264682248025,
+      "nccl_wall_union_us": 1158.247,
+      "overlap_ratio": 0.012355741046598869,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 227,
+      "sum_rank_nccl_gpu_time_us": 1945.96,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2952.557,
+      "exposed_nccl_wall_us": 1131.602,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 14.608,
+      "nccl_fraction_of_decode_critical_path": 0.38820927081170664,
+      "nccl_wall_union_us": 1146.21,
+      "overlap_ratio": 0.012744610498948709,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 228,
+      "sum_rank_nccl_gpu_time_us": 1936.17,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2981.402,
+      "exposed_nccl_wall_us": 1167.2040000000002,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 11.964,
+      "nccl_fraction_of_decode_critical_path": 0.39550788521641833,
+      "nccl_wall_union_us": 1179.1680000000001,
+      "overlap_ratio": 0.010146136937230318,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 229,
+      "sum_rank_nccl_gpu_time_us": 1968.869,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2987.111,
+      "exposed_nccl_wall_us": 1129.828,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.329,
+      "nccl_fraction_of_decode_critical_path": 0.38269652517097624,
+      "nccl_wall_union_us": 1143.157,
+      "overlap_ratio": 0.011659815755841062,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 230,
+      "sum_rank_nccl_gpu_time_us": 1932.361,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2919.855,
+      "exposed_nccl_wall_us": 1116.259,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 12.928,
+      "nccl_fraction_of_decode_critical_path": 0.38672708062557903,
+      "nccl_wall_union_us": 1129.1870000000001,
+      "overlap_ratio": 0.011448945126006586,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 231,
+      "sum_rank_nccl_gpu_time_us": 1907.592,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2951.334,
+      "exposed_nccl_wall_us": 1152.651,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 10.916,
+      "nccl_fraction_of_decode_critical_path": 0.3942512097919111,
+      "nccl_wall_union_us": 1163.567,
+      "overlap_ratio": 0.009381496725156351,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 232,
+      "sum_rank_nccl_gpu_time_us": 1956.327,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2980.178,
+      "exposed_nccl_wall_us": 1147.6009999999999,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.689,
+      "nccl_fraction_of_decode_critical_path": 0.38967135520093094,
+      "nccl_wall_union_us": 1161.29,
+      "overlap_ratio": 0.01178775327437591,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 233,
+      "sum_rank_nccl_gpu_time_us": 1946.693,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2961.424,
+      "exposed_nccl_wall_us": 1135.199,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 11.745,
+      "nccl_fraction_of_decode_critical_path": 0.3872947608988108,
+      "nccl_wall_union_us": 1146.944,
+      "overlap_ratio": 0.01024025584509793,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 234,
+      "sum_rank_nccl_gpu_time_us": 1925.9289999999999,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 2967.415,
+      "exposed_nccl_wall_us": 1131.79,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 13.361,
+      "nccl_fraction_of_decode_critical_path": 0.3859086106931454,
+      "nccl_wall_union_us": 1145.151,
+      "overlap_ratio": 0.011667456955458276,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-4-0-8990e0ef",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-5-0-b754aa59",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 235,
+      "sum_rank_nccl_gpu_time_us": 1926.631,
+      "valid": true
+    },
+    {
+      "decode_step_wall_us": 3423.673,
+      "exposed_nccl_wall_us": 1454.1399999999999,
+      "invalid_reasons": [],
+      "nccl_compute_overlap_wall_us": 26.929,
+      "nccl_fraction_of_decode_critical_path": 0.4325965125758214,
+      "nccl_wall_union_us": 1481.069,
+      "overlap_ratio": 0.0181821373615949,
+      "request_ids": [
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-6-0-8d88e826",
+        "cmpl-d8-tp2-in32_out32_c8-measured-0-7-0-b3fd67fd"
+      ],
+      "step_id": 236,
+      "sum_rank_nccl_gpu_time_us": 2273.1929999999998,
+      "valid": true
+    }
+  ],
+  "profiler_perturbed": true,
+  "raw_nccl_time_us": 289705.1330000001,
+  "status": "measured",
+  "sum_rank_nccl_gpu_time_us": 289705.1330000001,
+  "total_gpu_compute_wall_union_us": 199251.69699999996
+}

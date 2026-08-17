@@ -1,0 +1,33 @@
+{
+  "machine_boundary": {
+    "cuda_p2p_available": false,
+    "gpu_count": 2,
+    "gpu_model": "NVIDIA GeForce RTX 4090",
+    "nccl_intra_node_transport": "SHM/direct/direct",
+    "numa_count": 1,
+    "topology_class": "PHB"
+  },
+  "nccl_tests_version": "2.19.7",
+  "nccl_version": "22803",
+  "nvidia_smi_gpu_query": {
+    "argv": [
+      "nvidia-smi",
+      "--query-gpu=index,name,uuid,driver_version,memory.total,pci.bus_id",
+      "--format=csv,noheader"
+    ],
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "0, NVIDIA GeForce RTX 4090, GPU-efef9623-5d80-5d7b-1848-701e6d7b3efb, 580.82.09, 24564 MiB, 00000000:04:00.0\n1, NVIDIA GeForce RTX 4090, GPU-dd9b3958-270e-d807-2127-32cef6e11358, 580.82.09, 24564 MiB, 00000000:05:00.0\n"
+  },
+  "nvidia_smi_topo_m": {
+    "argv": [
+      "nvidia-smi",
+      "topo",
+      "-m"
+    ],
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "\t\u001b[4mGPU0\tGPU1\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tPHB\t0-63\t0\t\tN/A\nGPU1\tPHB\t X \t0-63\t0\t\tN/A\n\nLegend:\n\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\n"
+  },
+  "phase1_profile_id": "2x_rtx4090_phb_single_numa_p2p_unavailable_nccl_shm_direct"
+}

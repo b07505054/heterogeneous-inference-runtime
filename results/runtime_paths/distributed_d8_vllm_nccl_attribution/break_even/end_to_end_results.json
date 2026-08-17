@@ -1,0 +1,1155 @@
+{
+  "cells": [
+    {
+      "break_even": {
+        "communication_penalty_us": 949.1660322580645,
+        "compute_saving_us": 909.87037384895,
+        "explains_measured_winner": true,
+        "inequality_holds": false,
+        "measured_winner": "tp1",
+        "predicted_winner_from_inequality": "tp1",
+        "runtime_residual_us": 0.0,
+        "tp1_mean_tpot_us": 1772.9412831906832,
+        "tp2_compute_excluding_exposed_comm_estimate_us": 863.0709093417332,
+        "tp2_mean_tpot_us": 1812.2369415997978,
+        "workload_id": "in32_out32_c1"
+      },
+      "collective_bytes_per_call": {
+        "cv": 0.0,
+        "mean_us": 7168.0,
+        "p50_us": 7168.0,
+        "p95_us": 7168.0,
+        "sample_count": 2932
+      },
+      "collective_bytes_per_decode_step": {
+        "count": 31,
+        "max_us": 1046528.0,
+        "mean_us": 677954.0645161291,
+        "p50_us": 645120.0,
+        "p95_us": 982016.0
+      },
+      "collective_calls_per_decode_step": {
+        "count": 31,
+        "max_us": 146.0,
+        "mean_us": 94.58064516129032,
+        "p50_us": 90.0,
+        "p95_us": 137.0
+      },
+      "hf_model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "kernel_prediction": {
+        "all_samples": {
+          "error_by_collective_kind": {
+            "all_gather": {
+              "count": 60,
+              "mae_us": 86.91077139034815,
+              "max_abs_error_us": 95.42133805701482
+            },
+            "all_reduce": {
+              "count": 2872,
+              "mae_us": 6.470397960073814,
+              "max_abs_error_us": 1254.1423819171473
+            }
+          },
+          "error_by_message_size_bucket": {
+            "<16KiB": {
+              "count": 2932,
+              "mae_us": 8.116517470925267,
+              "max_abs_error_us": 1254.1423819171473
+            }
+          },
+          "mae_us": 8.116517470925267,
+          "mape": 0.2090233739045856,
+          "max_abs_error_us": 1254.1423819171473,
+          "max_relative_error": 0.991746178112217,
+          "p50_abs_error_us": 1.7976180828526722,
+          "p95_abs_error_us": 2.501618082852673
+        },
+        "outlier_counts_by_abs_error_threshold_us": {
+          "10": 92,
+          "100": 29,
+          "50": 92
+        },
+        "sample_count": 2932,
+        "steady_state_samples": {
+          "error_by_collective_kind": {
+            "all_gather": {
+              "count": 60,
+              "mae_us": 86.91077139034815,
+              "max_abs_error_us": 95.42133805701482
+            },
+            "all_reduce": {
+              "count": 2793,
+              "mae_us": 1.6508089036562703,
+              "max_abs_error_us": 82.01138191714733
+            }
+          },
+          "error_by_message_size_bucket": {
+            "<16KiB": {
+              "count": 2853,
+              "mae_us": 3.4438680516413784,
+              "max_abs_error_us": 95.42133805701482
+            }
+          },
+          "mae_us": 3.4438680516413784,
+          "mape": 0.20262804164513865,
+          "max_abs_error_us": 95.42133805701482,
+          "max_relative_error": 0.8989800465124248,
+          "p50_abs_error_us": 1.7976180828526722,
+          "p95_abs_error_us": 2.501618082852673
+        },
+        "workload_id": "in32_out32_c1"
+      },
+      "measured_exposed_nccl_wall_us": {
+        "count": 31,
+        "max_us": 1935.488,
+        "mean_us": 949.1660322580645,
+        "p50_us": 956.255,
+        "p95_us": 1449.7045
+      },
+      "measured_winner": "tp1",
+      "model_key": "qwen2.5-0.5b",
+      "predicted_raw_nccl_comm_us_per_decode_step": {
+        "cv": 0.2855747623768167,
+        "mean_us": 493.87417500858044,
+        "p50_us": 469.9778575885028,
+        "p95_us": 715.2618825355406,
+        "sample_count": 31
+      },
+      "profiler_perturbation": {
+        "nsight_timing_is_profiler_perturbed": true,
+        "nsys_overhead_pct": 36.69669107241143,
+        "nvtx_overhead_pct": 0.9699664849644138,
+        "tp2_normal_mean_tpot_us": 1812.2369415997978,
+        "tp2_nsys_representative_tpot_us": 2477.2679335587927,
+        "tp2_nvtx_no_nsys_mean_tpot_us": 1829.81503256146
+      },
+      "runtime_residual_us": 0.0,
+      "tp1_tpot": {
+        "cv": 0.022210691018424666,
+        "mean_us": 1772.9412831906832,
+        "p50_us": 1798.4722921204184,
+        "p95_us": 1804.1972821998982,
+        "raw_samples_us": [
+          1804.8342880642704,
+          1801.6492587424095,
+          1798.4722921204184,
+          1729.6718358392677,
+          1730.0787411870497
+        ],
+        "sample_count": 5
+      },
+      "tp2_tpot": {
+        "cv": 0.02435641342387463,
+        "mean_us": 1812.2369415997978,
+        "p50_us": 1787.2738066099346,
+        "p95_us": 1872.940546262168,
+        "raw_samples_us": [
+          1885.8680944709527,
+          1821.2303534270295,
+          1781.7925489056975,
+          1787.2738066099346,
+          1785.0199045853751
+        ],
+        "sample_count": 5
+      },
+      "tp_compute_savings_us": 909.87037384895,
+      "workload_id": "in32_out32_c1"
+    },
+    {
+      "break_even": {
+        "communication_penalty_us": 1624.22778125,
+        "compute_saving_us": 1406.8040191528264,
+        "explains_measured_winner": true,
+        "inequality_holds": false,
+        "measured_winner": "tp1",
+        "predicted_winner_from_inequality": "tp1",
+        "runtime_residual_us": 0.0,
+        "tp1_mean_tpot_us": 2043.6331229810153,
+        "tp2_compute_excluding_exposed_comm_estimate_us": 636.8291038281889,
+        "tp2_mean_tpot_us": 2261.0568850781888,
+        "workload_id": "in32_out32_c4"
+      },
+      "collective_bytes_per_call": {
+        "cv": 0.9835357625033156,
+        "mean_us": 8501.117408906883,
+        "p50_us": 7168.0,
+        "p95_us": 7168.0,
+        "sample_count": 3952
+      },
+      "collective_bytes_per_decode_step": {
+        "count": 32,
+        "max_us": 5970944.0,
+        "mean_us": 1049440.0,
+        "p50_us": 906752.0,
+        "p95_us": 997785.5999999999
+      },
+      "collective_calls_per_decode_step": {
+        "count": 32,
+        "max_us": 148.0,
+        "mean_us": 123.5,
+        "p50_us": 126.0,
+        "p95_us": 130.89999999999998
+      },
+      "hf_model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "kernel_prediction": {
+        "all_samples": {
+          "error_by_collective_kind": {
+            "all_gather": {
+              "count": 62,
+              "mae_us": 200.72446708927288,
+              "max_abs_error_us": 364.8313380570148
+            },
+            "all_reduce": {
+              "count": 3890,
+              "mae_us": 7.048100197684296,
+              "max_abs_error_us": 991.2323819171473
+            }
+          },
+          "error_by_message_size_bucket": {
+            "16KiB-1MiB": {
+              "count": 98,
+              "mae_us": 138.01396674051296,
+              "max_abs_error_us": 507.8059351425672
+            },
+            "<16KiB": {
+              "count": 3854,
+              "mae_us": 6.8335905521423355,
+              "max_abs_error_us": 991.2323819171473
+            }
+          },
+          "mae_us": 10.086545224829663,
+          "mape": 0.10064539561226615,
+          "max_abs_error_us": 991.2323819171473,
+          "max_relative_error": 0.9895797836784045,
+          "p50_abs_error_us": 0.741618082852673,
+          "p95_abs_error_us": 2.1207819171473217
+        },
+        "outlier_counts_by_abs_error_threshold_us": {
+          "10": 142,
+          "100": 142,
+          "50": 142
+        },
+        "sample_count": 3952,
+        "steady_state_samples": {
+          "error_by_collective_kind": {
+            "all_reduce": {
+              "count": 3810,
+              "mae_us": 0.7374399232479146,
+              "max_abs_error_us": 8.581064857432853
+            }
+          },
+          "error_by_message_size_bucket": {
+            "16KiB-1MiB": {
+              "count": 49,
+              "mae_us": 3.3018962976424153,
+              "max_abs_error_us": 8.581064857432853
+            },
+            "<16KiB": {
+              "count": 3761,
+              "mae_us": 0.7040290319037693,
+              "max_abs_error_us": 3.0663819171473268
+            }
+          },
+          "mae_us": 0.7374399232479146,
+          "mape": 0.06999117080797515,
+          "max_abs_error_us": 8.581064857432853,
+          "max_relative_error": 0.32153270598894085,
+          "p50_abs_error_us": 0.709618082852673,
+          "p95_abs_error_us": 1.6263819171473273
+        },
+        "workload_id": "in32_out32_c4"
+      },
+      "measured_exposed_nccl_wall_us": {
+        "count": 32,
+        "max_us": 14349.305,
+        "mean_us": 1624.22778125,
+        "p50_us": 1198.4375,
+        "p95_us": 1446.0547499999998
+      },
+      "measured_winner": "tp1",
+      "model_key": "qwen2.5-0.5b",
+      "predicted_raw_nccl_comm_us_per_decode_step": {
+        "cv": 0.2993130156741189,
+        "mean_us": 683.148381294321,
+        "p50_us": 663.0737921212772,
+        "p95_us": 726.7432624266785,
+        "sample_count": 32
+      },
+      "profiler_perturbation": {
+        "nsight_timing_is_profiler_perturbed": true,
+        "nsys_overhead_pct": 28.17123094847168,
+        "nvtx_overhead_pct": 1.2625789583464901,
+        "tp2_normal_mean_tpot_us": 2261.0568850781888,
+        "tp2_nsys_representative_tpot_us": 2898.0244420498852,
+        "tp2_nvtx_no_nsys_mean_tpot_us": 2289.6045135454306
+      },
+      "runtime_residual_us": 0.0,
+      "tp1_tpot": {
+        "cv": 0.0775040716379331,
+        "mean_us": 2043.6331229810153,
+        "p50_us": 2027.8709369801707,
+        "p95_us": 2264.376116856452,
+        "raw_samples_us": [
+          2257.3309702678553,
+          1904.5047416922548,
+          1909.7316469396314,
+          1909.3393573477383,
+          2155.9185453600458,
+          2162.021934054792,
+          1897.0888716379,
+          1898.4556438461427,
+          2152.5130967699715,
+          2156.869031398767,
+          1898.8227727071894,
+          1893.219290181033,
+          2149.5937121911875,
+          2149.239193738228,
+          1894.8443241477494,
+          1908.0362267672053,
+          2152.389290952875,
+          2146.01022702071,
+          2398.2339020397876,
+          1878.499680559241
+        ],
+        "sample_count": 20
+      },
+      "tp2_tpot": {
+        "cv": 0.09704846370387038,
+        "mean_us": 2261.0568850781888,
+        "p50_us": 2119.3491110968735,
+        "p95_us": 2567.2969460907966,
+        "raw_samples_us": [
+          2120.4110986042406,
+          2553.329352409609,
+          2108.1851953039727,
+          2118.0440634188635,
+          2118.6655822900993,
+          2464.7933859077675,
+          2110.139485598812,
+          2110.4546444069956,
+          2832.6812260333572,
+          2478.707645599159,
+          2469.165806448267,
+          2095.654512935829,
+          2110.0115489154578,
+          2465.059064448841,
+          2110.011192158826,
+          2115.7513875814693,
+          2118.791645062306,
+          2476.9442876981147,
+          2119.906577131441,
+          2124.429999610349
+        ],
+        "sample_count": 20
+      },
+      "tp_compute_savings_us": 1406.8040191528264,
+      "workload_id": "in32_out32_c4"
+    },
+    {
+      "break_even": {
+        "communication_penalty_us": 1663.0665,
+        "compute_saving_us": 1499.4897011109347,
+        "explains_measured_winner": true,
+        "inequality_holds": false,
+        "measured_winner": "tp1",
+        "predicted_winner_from_inequality": "tp1",
+        "runtime_residual_us": 0.0,
+        "tp1_mean_tpot_us": 2134.888562385083,
+        "tp2_compute_excluding_exposed_comm_estimate_us": 635.3988612741482,
+        "tp2_mean_tpot_us": 2298.465361274148,
+        "workload_id": "in32_out32_c8"
+      },
+      "collective_bytes_per_call": {
+        "cv": 0.9920325981207847,
+        "mean_us": 8538.073475571266,
+        "p50_us": 7168.0,
+        "p95_us": 7168.0,
+        "sample_count": 7921
+      },
+      "collective_bytes_per_decode_step": {
+        "count": 64,
+        "max_us": 6085632.0,
+        "mean_us": 1049104.0,
+        "p50_us": 903168.0,
+        "p95_us": 1068748.7999999998
+      },
+      "collective_calls_per_decode_step": {
+        "count": 64,
+        "max_us": 150.0,
+        "mean_us": 123.765625,
+        "p50_us": 125.5,
+        "p95_us": 142.0
+      },
+      "hf_model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "kernel_prediction": {
+        "all_samples": {
+          "error_by_collective_kind": {
+            "all_gather": {
+              "count": 128,
+              "mae_us": 201.13702555701482,
+              "max_abs_error_us": 352.12733805701487
+            },
+            "all_reduce": {
+              "count": 7793,
+              "mae_us": 7.516015516102541,
+              "max_abs_error_us": 2231.206935142567
+            }
+          },
+          "error_by_message_size_bucket": {
+            "16KiB-1MiB": {
+              "count": 202,
+              "mae_us": 139.2810101696882,
+              "max_abs_error_us": 2231.206935142567
+            },
+            "<16KiB": {
+              "count": 7719,
+              "mae_us": 7.278544388393313,
+              "max_abs_error_us": 1638.5953819171473
+            }
+          },
+          "mae_us": 10.644848906487185,
+          "mape": 0.10168796263894171,
+          "max_abs_error_us": 2231.206935142567,
+          "max_relative_error": 0.9936704613656291,
+          "p50_abs_error_us": 0.741618082852673,
+          "p95_abs_error_us": 2.202381917147328
+        },
+        "outlier_counts_by_abs_error_threshold_us": {
+          "10": 299,
+          "100": 295,
+          "50": 296
+        },
+        "sample_count": 7921,
+        "steady_state_samples": {
+          "error_by_collective_kind": {
+            "all_gather": {
+              "count": 1,
+              "mae_us": 99.87033805701482,
+              "max_abs_error_us": 99.87033805701482
+            },
+            "all_reduce": {
+              "count": 7625,
+              "mae_us": 0.7384356939612419,
+              "max_abs_error_us": 23.578381917147325
+            }
+          },
+          "error_by_message_size_bucket": {
+            "16KiB-1MiB": {
+              "count": 101,
+              "mae_us": 2.136286061319333,
+              "max_abs_error_us": 6.7250648574328515
+            },
+            "<16KiB": {
+              "count": 7525,
+              "mae_us": 0.7328475232316586,
+              "max_abs_error_us": 99.87033805701482
+            }
+          },
+          "mae_us": 0.7514348943760141,
+          "mape": 0.06989901340550629,
+          "max_abs_error_us": 99.87033805701482,
+          "max_relative_error": 0.903043936388513,
+          "p50_abs_error_us": 0.741618082852673,
+          "p95_abs_error_us": 1.5623819171473272
+        },
+        "workload_id": "in32_out32_c8"
+      },
+      "measured_exposed_nccl_wall_us": {
+        "count": 64,
+        "max_us": 16759.362999999998,
+        "mean_us": 1663.0665,
+        "p50_us": 1167.0095000000001,
+        "p95_us": 1954.3934499999978
+      },
+      "measured_winner": "tp1",
+      "model_key": "qwen2.5-0.5b",
+      "predicted_raw_nccl_comm_us_per_decode_step": {
+        "cv": 0.3031197321119243,
+        "mean_us": 685.4431163246255,
+        "p50_us": 657.8549830798509,
+        "p95_us": 778.4094719367992,
+        "sample_count": 64
+      },
+      "profiler_perturbation": {
+        "nsight_timing_is_profiler_perturbed": true,
+        "nsys_overhead_pct": 24.29887935405951,
+        "nvtx_overhead_pct": 3.638271736897316,
+        "tp2_normal_mean_tpot_us": 2298.465361274148,
+        "tp2_nsys_representative_tpot_us": 2856.9666864050014,
+        "tp2_nvtx_no_nsys_mean_tpot_us": 2382.08977689576
+      },
+      "runtime_residual_us": 0.0,
+      "tp1_tpot": {
+        "cv": 0.0858937554447586,
+        "mean_us": 2134.888562385083,
+        "p50_us": 2159.17659525369,
+        "p95_us": 2447.7535945122995,
+        "raw_samples_us": [
+          2499.6912595064887,
+          2504.010061402955,
+          2219.756096301059,
+          2445.0200331968163,
+          2214.3388069385,
+          2444.0937427683702,
+          1887.8766756144264,
+          2166.319739884667,
+          2191.8083225647288,
+          2184.738900752798,
+          2443.232130439532,
+          2437.9841915722336,
+          1901.525286807408,
+          2191.56980634697,
+          2170.782968131525,
+          1895.0796107791602,
+          2169.6999676585674,
+          2183.761579104729,
+          2176.6036140522165,
+          2168.3406460309225,
+          2186.982809836345,
+          1908.8662267031689,
+          1913.7712285643624,
+          1900.9884168964722,
+          2139.115612202835,
+          2147.52338586315,
+          2153.0819320750816,
+          2136.746320062347,
+          2152.9710633800396,
+          1909.5018731370087,
+          1906.4380321651697,
+          1915.1072896596406,
+          2157.4061604276776,
+          2158.576096858709,
+          2159.7770936486704,
+          2145.048741611742,
+          2166.427968580636,
+          1910.2542578513103,
+          1912.9118694353006,
+          1917.8126765895754
+        ],
+        "sample_count": 40
+      },
+      "tp2_tpot": {
+        "cv": 0.0779352149493799,
+        "mean_us": 2298.465361274148,
+        "p50_us": 2444.723694239773,
+        "p95_us": 2483.147928573852,
+        "raw_samples_us": [
+          2117.1346156587524,
+          2482.3929678889053,
+          2487.6367082939514,
+          2118.884033763841,
+          2491.1946759769517,
+          2482.911677009636,
+          2103.0096780328504,
+          2100.602190400804,
+          2130.0169023414774,
+          2482.779515576699,
+          2126.5364822841457,
+          2473.292969948342,
+          2109.438192189461,
+          2121.9113240799597,
+          2109.076549869872,
+          2116.907095055907,
+          2460.188934609534,
+          2108.523580846527,
+          2476.503193799046,
+          2467.213097148605,
+          2464.1486440574927,
+          2455.8294549464217,
+          2116.2594165352566,
+          2104.250999588159,
+          2455.8885488659143,
+          2446.634709955223,
+          2468.1716759298597,
+          2442.812678524323,
+          2462.534906132327,
+          2109.9814837197623,
+          2109.6382575530197,
+          2109.922645162911,
+          2454.8634180739045,
+          2469.670936285007,
+          2454.3337095829265,
+          2108.2511314401227,
+          2454.052191047418,
+          2461.071580558294,
+          2115.595548774206,
+          2108.5481294581004
+        ],
+        "sample_count": 40
+      },
+      "tp_compute_savings_us": 1499.4897011109347,
+      "workload_id": "in32_out32_c8"
+    },
+    {
+      "break_even": {
+        "communication_penalty_us": 145.72622580645162,
+        "compute_saving_us": 6821.515478691379,
+        "explains_measured_winner": true,
+        "inequality_holds": true,
+        "measured_winner": "tp2",
+        "predicted_winner_from_inequality": "tp2",
+        "runtime_residual_us": 0.0,
+        "tp1_mean_tpot_us": 15610.406865485975,
+        "tp2_compute_excluding_exposed_comm_estimate_us": 8788.891386794596,
+        "tp2_mean_tpot_us": 8934.617612601047,
+        "workload_id": "in32_out32_c1"
+      },
+      "collective_bytes_per_call": {
+        "cv": 0.0,
+        "mean_us": 28672.0,
+        "p50_us": 28672.0,
+        "p95_us": 28672.0,
+        "sample_count": 904
+      },
+      "collective_bytes_per_decode_step": {
+        "count": 31,
+        "max_us": 1146880.0,
+        "mean_us": 836112.5161290322,
+        "p50_us": 802816.0,
+        "p95_us": 1089536.0
+      },
+      "collective_calls_per_decode_step": {
+        "count": 31,
+        "max_us": 40.0,
+        "mean_us": 29.161290322580644,
+        "p50_us": 28.0,
+        "p95_us": 38.0
+      },
+      "hf_model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "kernel_prediction": {
+        "all_samples": {
+          "error_by_collective_kind": {
+            "all_reduce": {
+              "count": 904,
+              "mae_us": 11.423093591631147,
+              "max_abs_error_us": 105.18477870639185
+            }
+          },
+          "error_by_message_size_bucket": {
+            "<16KiB": {
+              "count": 904,
+              "mae_us": 11.423093591631147,
+              "max_abs_error_us": 105.18477870639185
+            }
+          },
+          "mae_us": 11.423093591631147,
+          "mape": 1.1964268593435148,
+          "max_abs_error_us": 105.18477870639185,
+          "max_relative_error": 1.3932928875928485,
+          "p50_abs_error_us": 11.471221293608156,
+          "p95_abs_error_us": 11.967221293608155
+        },
+        "outlier_counts_by_abs_error_threshold_us": {
+          "10": 884,
+          "100": 1,
+          "50": 1
+        },
+        "sample_count": 904,
+        "steady_state_samples": {
+          "error_by_collective_kind": {
+            "all_reduce": {
+              "count": 888,
+              "mae_us": 11.333902599914461,
+              "max_abs_error_us": 12.127221293608155
+            }
+          },
+          "error_by_message_size_bucket": {
+            "<16KiB": {
+              "count": 888,
+              "mae_us": 11.333902599914461,
+              "max_abs_error_us": 12.127221293608155
+            }
+          },
+          "mae_us": 11.333902599914461,
+          "mape": 1.1999678020927191,
+          "max_abs_error_us": 12.127221293608155,
+          "max_relative_error": 1.3932928875928485,
+          "p50_abs_error_us": 11.487221293608156,
+          "p95_abs_error_us": 11.967221293608155
+        },
+        "workload_id": "in32_out32_c1"
+      },
+      "measured_exposed_nccl_wall_us": {
+        "count": 31,
+        "max_us": 199.407,
+        "mean_us": 145.72622580645162,
+        "p50_us": 137.407,
+        "p95_us": 187.606
+      },
+      "measured_winner": "tp2",
+      "model_key": "qwen2.5-7b",
+      "predicted_raw_nccl_comm_us_per_decode_step": {
+        "cv": 0.18126117581124568,
+        "mean_us": 303.7326459584157,
+        "p50_us": 291.63709811051416,
+        "p95_us": 395.793204578555,
+        "sample_count": 31
+      },
+      "profiler_perturbation": {
+        "nsight_timing_is_profiler_perturbed": true,
+        "nsys_overhead_pct": 1.7678901910499705,
+        "nvtx_overhead_pct": -0.0036546522692265777,
+        "tp2_normal_mean_tpot_us": 8934.617612601047,
+        "tp2_nsys_representative_tpot_us": 9092.571840982044,
+        "tp2_nvtx_no_nsys_mean_tpot_us": 8934.291083395721
+      },
+      "runtime_residual_us": 0.0,
+      "tp1_tpot": {
+        "cv": 0.00018833391107659763,
+        "mean_us": 15610.406865485975,
+        "p50_us": 15610.782192989944,
+        "p95_us": 15613.26962114582,
+        "raw_samples_us": [
+          15606.969872850084,
+          15607.823129563083,
+          15613.162807459314,
+          15610.782192989944,
+          15613.296324567447
+        ],
+        "sample_count": 5
+      },
+      "tp2_tpot": {
+        "cv": 0.0008233241815395995,
+        "mean_us": 8934.617612601047,
+        "p50_us": 8933.180353544172,
+        "p95_us": 8944.29673470797,
+        "raw_samples_us": [
+          8932.16432192393,
+          8933.180353544172,
+          8927.38464678968,
+          8933.317096483323,
+          8947.041644264133
+        ],
+        "sample_count": 5
+      },
+      "tp_compute_savings_us": 6821.515478691379,
+      "workload_id": "in32_out32_c1"
+    },
+    {
+      "break_even": {
+        "communication_penalty_us": 691.8627878787878,
+        "compute_saving_us": 6856.623300531626,
+        "explains_measured_winner": true,
+        "inequality_holds": true,
+        "measured_winner": "tp2",
+        "predicted_winner_from_inequality": "tp2",
+        "runtime_residual_us": 0.0,
+        "tp1_mean_tpot_us": 16275.038467645045,
+        "tp2_compute_excluding_exposed_comm_estimate_us": 9418.415167113419,
+        "tp2_mean_tpot_us": 10110.277954992207,
+        "workload_id": "in32_out32_c4"
+      },
+      "collective_bytes_per_call": {
+        "cv": 0.8413003450664365,
+        "mean_us": 49606.10600706714,
+        "p50_us": 28672.0,
+        "p95_us": 136192.0,
+        "sample_count": 1132
+      },
+      "collective_bytes_per_decode_step": {
+        "count": 33,
+        "max_us": 15525888.0,
+        "mean_us": 1701639.7575757576,
+        "p50_us": 745472.0,
+        "p95_us": 6778060.799999981
+      },
+      "collective_calls_per_decode_step": {
+        "count": 33,
+        "max_us": 114.0,
+        "mean_us": 34.303030303030305,
+        "p50_us": 26.0,
+        "p95_us": 76.79999999999991
+      },
+      "hf_model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "kernel_prediction": {
+        "all_samples": {
+          "error_by_collective_kind": {
+            "all_gather": {
+              "count": 2,
+              "mae_us": 224.00802160709304,
+              "max_abs_error_us": 260.48802160709306
+            },
+            "all_reduce": {
+              "count": 1130,
+              "mae_us": 7.9883754775322755,
+              "max_abs_error_us": 493.5707787063919
+            }
+          },
+          "error_by_message_size_bucket": {
+            "16KiB-1MiB": {
+              "count": 228,
+              "mae_us": 32.255612395141846,
+              "max_abs_error_us": 291.02668255352165
+            },
+            "<16KiB": {
+              "count": 904,
+              "mae_us": 2.3457972419616344,
+              "max_abs_error_us": 493.5707787063919
+            }
+          },
+          "mae_us": 8.370035629704644,
+          "mape": 0.09731820767680256,
+          "max_abs_error_us": 493.5707787063919,
+          "max_relative_error": 0.9595040040792839,
+          "p50_abs_error_us": 1.183221293608156,
+          "p95_abs_error_us": 17.442682553521674
+        },
+        "outlier_counts_by_abs_error_threshold_us": {
+          "10": 78,
+          "100": 31,
+          "50": 38
+        },
+        "sample_count": 1132,
+        "steady_state_samples": {
+          "error_by_collective_kind": {
+            "all_reduce": {
+              "count": 1101,
+              "mae_us": 2.6942474109050627,
+              "max_abs_error_us": 98.82375729686726
+            }
+          },
+          "error_by_message_size_bucket": {
+            "16KiB-1MiB": {
+              "count": 200,
+              "mae_us": 8.936762572968671,
+              "max_abs_error_us": 98.82375729686726
+            },
+            "<16KiB": {
+              "count": 901,
+              "mae_us": 1.308561470380399,
+              "max_abs_error_us": 9.342221293608155
+            }
+          },
+          "mae_us": 2.6942474109050627,
+          "mape": 0.07882111794648619,
+          "max_abs_error_us": 98.82375729686726,
+          "max_relative_error": 0.8131448597448128,
+          "p50_abs_error_us": 1.151221293608156,
+          "p95_abs_error_us": 8.799221293608156
+        },
+        "workload_id": "in32_out32_c4"
+      },
+      "measured_exposed_nccl_wall_us": {
+        "count": 33,
+        "max_us": 8836.333999999999,
+        "mean_us": 691.8627878787878,
+        "p50_us": 264.282,
+        "p95_us": 2253.7683999999945
+      },
+      "measured_winner": "tp2",
+      "model_key": "qwen2.5-7b",
+      "predicted_raw_nccl_comm_us_per_decode_step": {
+        "cv": 1.6321341535909666,
+        "mean_us": 511.3418397072127,
+        "p50_us": 270.80587681690605,
+        "p95_us": 1774.5281858117096,
+        "sample_count": 33
+      },
+      "profiler_perturbation": {
+        "nsight_timing_is_profiler_perturbed": true,
+        "nsys_overhead_pct": 4.763542948634394,
+        "nvtx_overhead_pct": -1.2979144986261264,
+        "tp2_normal_mean_tpot_us": 10110.277954992207,
+        "tp2_nsys_representative_tpot_us": 10591.885387604576,
+        "tp2_nvtx_no_nsys_mean_tpot_us": 9979.055191562962
+      },
+      "runtime_residual_us": 0.0,
+      "tp1_tpot": {
+        "cv": 0.04947248393588436,
+        "mean_us": 16275.038467645045,
+        "p50_us": 16034.397548214802,
+        "p95_us": 18626.8140171324,
+        "raw_samples_us": [
+          18628.806288864827,
+          15971.82393719953,
+          18626.709160725433,
+          15980.52128833989,
+          16055.339196276282,
+          15982.249064461117,
+          15980.199388709041,
+          16044.57151505255,
+          16033.140352867063,
+          16044.207934981152,
+          16037.50145107868,
+          15972.895352470297,
+          15993.789161345172,
+          16006.739385756513,
+          16052.493840576179,
+          15995.265194965948,
+          16035.654743562542,
+          16046.10668014615,
+          16036.437835634475,
+          15976.317579888047
+        ],
+        "sample_count": 20
+      },
+      "tp2_tpot": {
+        "cv": 0.06465668281442712,
+        "mean_us": 10110.277954992207,
+        "p50_us": 9939.3320476426,
+        "p95_us": 10403.614952003643,
+        "raw_samples_us": [
+          9876.23006691255,
+          12841.049870926767,
+          9872.511126882127,
+          9871.35280945128,
+          9888.435935511465,
+          9886.924676867504,
+          10094.022194314148,
+          9896.033128062565,
+          9989.413710671568,
+          9982.630967222634,
+          9983.621192194762,
+          9812.040194388359,
+          10118.090096981294,
+          10117.310839104317,
+          9867.156517782038,
+          9868.749871759886,
+          10047.029546131529,
+          9864.659934875464,
+          10275.328903639267,
+          10052.967516164626
+        ],
+        "sample_count": 20
+      },
+      "tp_compute_savings_us": 6856.623300531626,
+      "workload_id": "in32_out32_c4"
+    },
+    {
+      "break_even": {
+        "communication_penalty_us": 857.5820151515152,
+        "compute_saving_us": 6876.8101618183555,
+        "explains_measured_winner": true,
+        "inequality_holds": true,
+        "measured_winner": "tp2",
+        "predicted_winner_from_inequality": "tp2",
+        "runtime_residual_us": 0.0,
+        "tp1_mean_tpot_us": 16031.16224747106,
+        "tp2_compute_excluding_exposed_comm_estimate_us": 9154.352085652705,
+        "tp2_mean_tpot_us": 10011.93410080422,
+        "workload_id": "in32_out32_c8"
+      },
+      "collective_bytes_per_call": {
+        "cv": 0.9664448511648348,
+        "mean_us": 60045.44395410415,
+        "p50_us": 28672.0,
+        "p95_us": 211456.0,
+        "sample_count": 2266
+      },
+      "collective_bytes_per_decode_step": {
+        "count": 66,
+        "max_us": 26966016.0,
+        "mean_us": 2017248.9696969697,
+        "p50_us": 688128.0,
+        "p95_us": 14708736.0
+      },
+      "collective_calls_per_decode_step": {
+        "count": 66,
+        "max_us": 202.0,
+        "mean_us": 34.333333333333336,
+        "p50_us": 24.0,
+        "p95_us": 114.0
+      },
+      "hf_model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "kernel_prediction": {
+        "all_samples": {
+          "error_by_collective_kind": {
+            "all_gather": {
+              "count": 8,
+              "mae_us": 159.34402160709305,
+              "max_abs_error_us": 206.63202160709304
+            },
+            "all_reduce": {
+              "count": 2258,
+              "mae_us": 19.184741700726278,
+              "max_abs_error_us": 751.8447787063919
+            }
+          },
+          "error_by_message_size_bucket": {
+            "16KiB-1MiB": {
+              "count": 570,
+              "mae_us": 55.74700174812366,
+              "max_abs_error_us": 457.3006825535216
+            },
+            "<16KiB": {
+              "count": 1696,
+              "mae_us": 7.557846660770163,
+              "max_abs_error_us": 751.8447787063919
+            }
+          },
+          "mae_us": 19.67956704902766,
+          "mape": 0.48336999501264805,
+          "max_abs_error_us": 751.8447787063919,
+          "max_relative_error": 8.845702468498429,
+          "p50_abs_error_us": 1.1002199251944411,
+          "p95_abs_error_us": 100.85142995810995
+        },
+        "outlier_counts_by_abs_error_threshold_us": {
+          "10": 378,
+          "100": 171,
+          "50": 317
+        },
+        "sample_count": 2266,
+        "steady_state_samples": {
+          "error_by_collective_kind": {
+            "all_gather": {
+              "count": 2,
+              "mae_us": 96.71202160709305,
+              "max_abs_error_us": 97.99202160709305
+            },
+            "all_reduce": {
+              "count": 2093,
+              "mae_us": 7.989689368294432,
+              "max_abs_error_us": 99.98742995810994
+            }
+          },
+          "error_by_message_size_bucket": {
+            "16KiB-1MiB": {
+              "count": 413,
+              "mae_us": 17.70130100165116,
+              "max_abs_error_us": 99.98742995810994
+            },
+            "<16KiB": {
+              "count": 1682,
+              "mae_us": 5.710586550162011,
+              "max_abs_error_us": 97.99202160709305
+            }
+          },
+          "mae_us": 8.074388492150087,
+          "mape": 0.19515212177421787,
+          "max_abs_error_us": 99.98742995810994,
+          "max_relative_error": 7.620993137051063,
+          "p50_abs_error_us": 0.9912212936081559,
+          "p95_abs_error_us": 86.75377870639184
+        },
+        "workload_id": "in32_out32_c8"
+      },
+      "measured_exposed_nccl_wall_us": {
+        "count": 66,
+        "max_us": 10088.777,
+        "mean_us": 857.5820151515152,
+        "p50_us": 251.94100000000003,
+        "p95_us": 6155.70775
+      },
+      "measured_winner": "tp2",
+      "model_key": "qwen2.5-7b",
+      "predicted_raw_nccl_comm_us_per_decode_step": {
+        "cv": 2.018705537475679,
+        "mean_us": 591.1787280309825,
+        "p50_us": 249.97465552329788,
+        "p95_us": 3729.0140636944834,
+        "sample_count": 66
+      },
+      "profiler_perturbation": {
+        "nsight_timing_is_profiler_perturbed": true,
+        "nsys_overhead_pct": 5.638748398593427,
+        "nvtx_overhead_pct": 0.25497794180790756,
+        "tp2_normal_mean_tpot_us": 10011.93410080422,
+        "tp2_nsys_representative_tpot_us": 10576.481874581546,
+        "tp2_nvtx_no_nsys_mean_tpot_us": 10037.462324309614
+      },
+      "runtime_residual_us": 0.0,
+      "tp1_tpot": {
+        "cv": 0.0019424368031856914,
+        "mean_us": 16031.16224747106,
+        "p50_us": 16043.317887271121,
+        "p95_us": 16063.907798642535,
+        "raw_samples_us": [
+          16046.632839847478,
+          16043.525031437317,
+          16050.715029479996,
+          16050.251227082503,
+          16040.176483652285,
+          15973.02529074612,
+          15979.33197063544,
+          16041.699353785763,
+          16057.988354605774,
+          16060.1663876385,
+          15996.582483151746,
+          16048.035449198178,
+          16030.96138475643,
+          15991.054032178174,
+          16064.789611846209,
+          15996.899613509735,
+          16049.424546860879,
+          16053.905549098648,
+          16041.577838721774,
+          16057.90538803464,
+          16043.516033659538,
+          16049.678227113138,
+          15978.978710219024,
+          15982.757130968233,
+          16063.861387421288,
+          16044.76512875408,
+          16042.604644392288,
+          16049.926773825238,
+          16041.337418550203,
+          16043.119740882707,
+          15975.66735525165,
+          15981.934611655532,
+          16061.459773129995,
+          16069.404450395414,
+          16048.356740465088,
+          16034.851680629916,
+          16039.60058081054,
+          16059.178385823485,
+          15985.26606516492,
+          15975.577193462559
+        ],
+        "sample_count": 40
+      },
+      "tp2_tpot": {
+        "cv": 0.01087249143986676,
+        "mean_us": 10011.93410080422,
+        "p50_us": 10002.42451423659,
+        "p95_us": 10168.732635136093,
+        "raw_samples_us": [
+          10083.433225630753,
+          10087.133741997663,
+          10069.721937930633,
+          9847.123675318737,
+          10048.60022540895,
+          10056.464775134958,
+          10077.925740681108,
+          9848.525646262831,
+          10076.97396656318,
+          10070.828259021284,
+          10292.38261417636,
+          9991.330549030776,
+          9989.33003058717,
+          10157.301969405624,
+          9982.775419860358,
+          9840.528356782612,
+          9989.714903396463,
+          10076.867679374353,
+          10001.883643018384,
+          9994.362064096476,
+          10053.707320513506,
+          9881.601451084978,
+          9880.569162628344,
+          9900.443676498628,
+          10079.594389084847,
+          10016.007645566377,
+          10044.401744380593,
+          9995.107032028176,
+          9885.301967451891,
+          9883.737127717224,
+          10002.965385454798,
+          9892.048870003033,
+          9976.059840541453,
+          9981.115224711117,
+          10062.899128834328,
+          10059.62616088049,
+          10162.224741502396,
+          10300.16306322068,
+          9992.855676119365,
+          9843.726000267892
+        ],
+        "sample_count": 40
+      },
+      "tp_compute_savings_us": 6876.8101618183555,
+      "workload_id": "in32_out32_c8"
+    }
+  ],
+  "status": "measured"
+}
